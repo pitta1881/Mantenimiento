@@ -26,6 +26,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/about\">Sobre nosotros</a></li>
         <li><a href=\"/turno/crear\">Solicitar turno</a></li>
         <li><a href=\"/verTurnos\">Ver Turnos</a></li>
+        <li><a href=\"/verPedidos\">Ver Pedidos</a></li>
     </ol>
 </nav>";
     }
@@ -48,7 +49,8 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/about\">Sobre nosotros</a></li>
         <li><a href=\"/turno/crear\">Solicitar turno</a></li>
         <li><a href=\"/verTurnos\">Ver Turnos</a></li>
+        <li><a href=\"/verPedidos\">Ver Pedidos</a></li>
     </ol>
-</nav>", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\PAW\\TP4\\2019_TP4_PAW-master\\2019_TP4_PAW\\app\\views\\partials\\nav.html");
+</nav>", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

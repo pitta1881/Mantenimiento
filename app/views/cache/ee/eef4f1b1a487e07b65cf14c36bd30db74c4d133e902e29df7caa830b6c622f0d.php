@@ -98,6 +98,6 @@ class __TwigTemplate_e1087d1a0146b267d3c688af5f91057582914bb5399b702f44979ba25bb
 {% block main %}
 <h3>Ivan Costa - Legajo: xxxxxxx - costaivan34@gmail.com</h3>
 <h3>Patricio Pittavino - Legajo: 121476 - pitta1881@gmail.com</h3>
-{% endblock %}", "about.html", "E:\\PATO\\UNIV\\2019\\PAW\\TP4\\2019_TP4_PAW-master\\2019_TP4_PAW\\app\\views\\about.html");
+{% endblock %}", "about.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\about.html");
     }
 }

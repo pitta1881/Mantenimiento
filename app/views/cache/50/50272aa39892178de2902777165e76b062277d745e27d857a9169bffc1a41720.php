@@ -208,6 +208,6 @@ class __TwigTemplate_77f2e73b56e70dc8d2be45d4afdf3d1684f4b2345792ac2114e7e2527b4
     <input type=\"submit\">
     <input type=\"reset\">
 </form>
-{% endblock %}", "formulario.create.html", "E:\\PATO\\UNIV\\2019\\PAW\\TP4\\2019_TP4_PAW-master\\2019_TP4_PAW\\app\\views\\formulario.create.html");
+{% endblock %}", "formulario.create.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\formulario.create.html");
     }
 }

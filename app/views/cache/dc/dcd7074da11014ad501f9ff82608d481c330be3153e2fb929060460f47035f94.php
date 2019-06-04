@@ -176,6 +176,6 @@ class __TwigTemplate_6cc7393bfc876c48546b8e6112964a8a95940df35b76383196f0904702c
     <h2 class='error'>No hay turnos</h2>
     {% endfor %}
 </table>
-{% endblock %}", "verTurnos.html", "E:\\PATO\\UNIV\\2019\\PAW\\TP4\\2019_TP4_PAW-master\\2019_TP4_PAW\\app\\views\\verTurnos.html");
+{% endblock %}", "verTurnos.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTurnos.html");
     }
 }

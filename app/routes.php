@@ -8,5 +8,7 @@
     $router->post('turno/validar', 'formularioController@validar');
     $router->get('fichaTurno', 'formularioController@ficha');
 
+    $router->get('verPedidos', 'pedidoController@index');
+
     $router->get('not_found', 'ProjectController@notFound');
     $router->get('internal_error', 'ProjectController@internalError');
