@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Tarea Nueva{% endblock %}
+
+{% block header %}
+{{ include('partials/nav.html') }}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h2>Crear Tarea</h2>
+<form action="/turno/validar" method="POST" oninput="valor.value= parseInt(height.value)">
+    <fieldset>
+        <legend>Datos personales</legend>
+        <label for="name">Nombre</label><span class="asterisco">*</span>
+        <input type="text" name="name" autofocus required autocomplete="name">
+        <label for="email">E-Mail</label><span class="asterisco">*</span>
+        <input type="email" name="email" required autocomplete="email">
+        <label for="phone">Telefono</label><span class="asterisco">*</span>
+        <input type="tel" name="phone" required autocomplete="phone">
+        <label for="age">Edad</label>
+        <input type="number" name="age" min="0" max="150" autocomplete="age">
+        <label for="calzado">Talla de calzado</label>
+        <input type="number" name="calzado" min="20" max="45">
+        <label for="height">Altura (cm) --> </label>
+        <strong>
+            <output name="valor" for="height">Utilice el deslizador</output>
+        </strong>
+        <input type="range" name="height" min="1" max="300" value="170" class="altura">
+        <label for="birth">Fecha de nacimiento</label><span class="asterisco">*</span>
+        <input type="date" name="birth" required>
+        <label for="haircolor">Color de pelo natural</label>
+        <select name="haircolor">
+            {% for hair in datos["colorPelo"] %}
+            <option value={{ hair }}>{{ hair }}</option>
+            {% endfor %}}
+        </select>
+    </fieldset>
+    <fieldset>
+        <legend>Datos sobre el turno</legend>
+        <label for="adate">Fecha</label><span class="asterisco">*</span>
+        <input type="date" name="adate" required>
+        <label for="atime">Hora (8:00 a 17:00)</label><span class="asterisco">*</span>
+        <select name="atime" required>
+            {% for hora in datos["horaTurnos"] %}
+            <option value={{ hora }}>{{ hora }}</option>
+            {% endfor %}}
+        </select>
+    </fieldset>
+    <input type="submit">
+    <input type="reset">
+</form>
+{% endblock %}

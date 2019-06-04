@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block header %}
+{{ include('partials/nav.html') }}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h3>Ivan Costa - Legajo: xxxxxxx - costaivan34@gmail.com</h3>
+<h3>Patricio Pittavino - Legajo: 121476 - pitta1881@gmail.com</h3>
+{% endblock %}
