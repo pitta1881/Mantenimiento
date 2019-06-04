@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Pedidos{% endblock %}
+
+{% block header %}
+{{ include('partials/nav.html') }}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h1>Listado de Pedidos</h1>
+<table>
+    <th>Nº Turno</th>
+    <th>Fecha</th>
+    <th>Hora </th>
+    <th>Nombre del Paciente</th>
+    <th>Telefono</th>
+    <th>E-mail</th>
+    <th>Enlace</th>
+    {% for pedido in todosPedidos %}
+    <tr>
+        <td>{{ pedido.numeroTurno }}</td>
+        <td>{{ pedido.adate }}</td>
+        <td>{{ pedido.atime }}</td>
+        <td>{{ pedido.name }}</td>
+        <td>{{ pedido.phone }}</td>
+        <td>{{ pedido.email }}</td>
+        <td><a href='/fichaPedido?numeroPedido={{ pedido.numeroTurno }}'>Ir a Pedido</a></td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Pedidos</h2>
+    {% endfor %}
+</table>
+{% endblock %}
