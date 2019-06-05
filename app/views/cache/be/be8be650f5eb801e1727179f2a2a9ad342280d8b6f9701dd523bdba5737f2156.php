@@ -52,7 +52,8 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
 <div class=\"login\">
     <div class=\"login-triangle\"></div>
 
-    <h2 class=\"login-header\">Ingreso a Mantenimiento</h2>
+    <div class=\"divI\"><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></div>
+    <h2 class=\"login-header\">Ingreso a<br> Mantenimiento</h2>
 
     <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
         <p>
@@ -99,7 +100,8 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
 <div class=\"login\">
     <div class=\"login-triangle\"></div>
 
-    <h2 class=\"login-header\">Ingreso a Mantenimiento</h2>
+    <div class=\"divI\"><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></div>
+    <h2 class=\"login-header\">Ingreso a<br> Mantenimiento</h2>
 
     <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
         <p>

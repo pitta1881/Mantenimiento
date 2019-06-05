@@ -65,10 +65,31 @@ body main {
     background: #456;
     font-family: 'Open Sans', sans-serif;
 }
+.divI {
+    position: absolute;
+    background-color: white;
+    right: 500px;
+    height: 1000px;
+    width: 1000px;
+}
+.imagen {
+    position: absolute;
+    margin: 0 0 0 0;
+    right: 200px;
+    top: 60px;
+    height: 500px;
+    width: 500px;
+}
 .login {
-    width: 400px;
-    margin: 16px auto;
+    top: 0;
+    position: fixed;
+    height: 1000px;
+    width: 506px;
     font-size: 16px;
+    left: 860px;
+}
+.login form {
+    height: 1000px;
 }
 
 /* Reset top and bottom margins from certain elements */
@@ -93,8 +114,10 @@ laber {
     border-bottom-color: #28d;
 }
 .login-header {
+    height: 50px;
     background: #28d;
-    padding: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
     font-size: 1.4em;
     font-weight: normal;
     text-align: center;
@@ -102,6 +125,7 @@ laber {
     color: #fff;
 }
 .login-container {
+    padding-top: 25px;
     background: #ebebeb;
     padding: 12px;
 }
