@@ -3,18 +3,10 @@ body {
     /* background-color: steelblue; */
     background-color: rgb(50, 50, 50);
 }
-.divI {
-    position: absolute;
-    background-color: white;
-    right: 500px;
-    top: 0px;
-    height: 40px;
-    width: 40px;
-}
 .imagen {
     position: absolute;
     margin: 0 0 0 0;
-    right: 1280px;
+    right: 1298px;
     top: 8px;
     height: 59px;
     width: 60px;
@@ -36,13 +28,19 @@ main {
 
 nav.main-nav {
     background-color: #17c;
-    padding: 20px;
+    padding: 20px 0px;
     text-align: center;
 }
 nav.main-nav ol {
+    position: inherit;
+    margin: 0 0 0 0;
+    right: 1298px;
+    top: 8px;
+    height: 60px;
+    width: 60px;
     list-style-type: none;
     margin: 0px;
-    padding: 10px 0px;
+    padding: 20px 0px;
     /* width: 100%; */
     background-color: #f1f1f1;
     color: black;
@@ -62,6 +60,8 @@ nav.main-nav ol li a {
     width: 60px;
 }
 nav.main-nav ol li a:hover {
+    padding-top: 20px;
+    padding-bottom: 20px;
     background-color: #F27329;
     color: white;
 }
