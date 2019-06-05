@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Tarea Nueva{% endblock %}
+
+{% block header %}
+{{ include('partials/nav.html') }}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h2>Crear Pedido</h2>
+<form action="/pedido/validar" method="POST">
+    <fieldset>
+        <legend>Datos Basicos</legend>
+        <label for="fechaInicio">Fecha</label>
+        <input type="text" name="fechaInicio" value="{{ arrayDatos.diaHoy }}" readonly>
+        <label for="estado">Estado</label>
+        <input type="text" name="estado" value="{{ arrayDatos.estados.0 }}" readonly>
+        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+        <input type="text" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+        <label for="sector">Sector</label>
+        <select name="sector">
+            {% for sector in arrayDatos.sectores %}
+            <option value={{ sector }}>{{ sector }}</option>
+            {% endfor %}
+        </select>
+    </fieldset>
+    <fieldset>
+        <legend>Prioridad<span class="asterisco">*</span></legend>
+        {% for prioridad in arrayDatos.prioridades %}
+        <label class="labelRadioInput"><input type="radio" name="prioridad" class="radioInput" required
+                value={{ prioridad }}>
+            {{ prioridad }}
+        </label>
+        {% endfor %}
+    </fieldset>
+    <input type="submit">
+    <input type="reset">
+</form>
+{% endblock %}

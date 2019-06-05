@@ -1,10 +1,11 @@
 body {
   font-family: Calibri;
   /* background-color: steelblue; */
-  background-color: rgb(50,50,50);
+  background-color: rgb(50, 50, 50);
 }
 
-header, main {
+header,
+main {
   /* max-width: 1024px; */
   background: #4e514e;
   margin: auto;
@@ -21,13 +22,14 @@ nav.main-nav {
 }
 
 nav.main-nav ol {
-    list-style-type: none;
-    margin: 0px;
-    padding: 10px 0px;;
-    /* width: 100%; */
-    background-color: #f1f1f1;
-    color: black;
-    display: inline;
+  list-style-type: none;
+  margin: 0px;
+  padding: 10px 0px;
+  ;
+  /* width: 100%; */
+  background-color: #f1f1f1;
+  color: black;
+  display: inline;
 }
 
 nav.main-nav ol li {
@@ -56,19 +58,21 @@ nav.main-nav ol li a:hover {
 
 h1 {
   color: white;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
+
 form {
-/*   background-color: rgb(135, 151, 179); */
-  background-color: rgba(255,255,255, 0.3)
+  /*   background-color: rgb(135, 151, 179); */
+  background-color: rgba(255, 255, 255, 0.3)
 }
 
 form label {
   color: white;
 }
 
-input, select {
-  color: rgb(50,50,50);
+input,
+select {
+  color: rgb(50, 50, 50);
   margin-bottom: 1em;
   width: 100%;
   width: 100%;
@@ -76,18 +80,18 @@ input, select {
   margin-bottom: 12px;
   box-sizing: border-box;
   border: none;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
 }
 
 input[type=submit] {
-  background-color: rgba(200,255,200,1);
+  background-color: rgba(200, 255, 200, 1);
   width: 60%;
   margin: 2%;
 }
 
 input[type=reset] {
-  background-color: rgba(255,200,200,1);
+  background-color: rgba(255, 200, 200, 1);
   width: 30%;
   margin: 2%;
 }
@@ -106,7 +110,8 @@ form output {
 /* Coloreo el asterisco de campo requerido */
 .asterisco {
   color: rgb(226, 47, 47);
-  font-weight: bold; /* Negrita */
+  font-weight: bold;
+  /* Negrita */
   margin: 0.5em;
 }
 
@@ -119,7 +124,7 @@ form output {
 
 dl {
   background-color: #4e514e;
-/*   width: 100%; */
+  /*   width: 100%; */
 }
 
 dt {
@@ -131,7 +136,8 @@ dt {
   padding: 10px;
 }
 
-dt:nth-child(4n+1) , dd:nth-child(4n+2) {
+dt:nth-child(4n+1),
+dd:nth-child(4n+2) {
   color: #8D9E8D;
   color: azure;
 }
@@ -148,11 +154,12 @@ table, td, th {
   border: 1px solid;
 }*/
 
-table{
-  width:100%;
+table {
+  width: 100%;
   /* table-layout: fixed; */
 }
-th{
+
+th {
   padding: 20px 15px;
   text-align: left;
   font-weight: 500;
@@ -160,18 +167,27 @@ th{
   color: #fff;
   text-transform: uppercase;
   /* border-left: 1px solid white; */
-  background-color: rgba(255,255,255,0.3);
-  border-bottom: solid 1px rgba(255,255,255,0.1);
-  border-right: 1px solid rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.3);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
-td{
+
+td {
   padding: 15px;
   text-align: left;
-  vertical-align:middle;
+  vertical-align: middle;
   font-weight: 300;
   /* font-size: 12px; */
   color: #fff;
-  background-color: rgba(255,255,255,0.1);
-  border-bottom: solid 1px rgba(255,255,255,0.1);
-  border-right: 1px solid rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.radioInput {
+  width: auto;
+}
+
+.labelRadioInput {
+  display: block;
 }

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block header %}
+{{ include('partials/nav.html') }}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h1>Su Pedido</h1>
+<dl>
+    <dt>Fecha Inicio:</dt>
+    <dd>{{ arrayPedido.fechaInicio }}</dd>
+    <dt>Estado:</dt>
+    <dd>{{ arrayPedido.estado }}</dd>
+    <dt>Descripcion:</dt>
+    <dd>{{ arrayPedido.descripcion }}</dd>
+    <dt>Sector:</dt>
+    <dd>{{ arrayPedido.sector }}</dd>
+    <dt>Prioridad:</dt>
+    <dd>{{ arrayPedido.prioridad }}</dd>
+</dl>
+{% endblock %}

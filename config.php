@@ -1,10 +1,9 @@
 <?php
-
 use Monolog\Logger as MonologLogger;
 
 return [
     'database' => [
-        'name' => 'tp4bdd',
+        'name' => 'Mantenimiento',
         'username' => 'root',
         'password' => '',
         'connection' => 'mysql:host=127.0.0.1',

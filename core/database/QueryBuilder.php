@@ -39,14 +39,15 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    /*
+        /*
     Selecciono un registro especifico cuyo PK viene por parametro 
+    PARA PEDIDO
     */
-    public function selectNumeroTurno($table, $numero)
+    public function selectNumeroPedido($table, $numero)
     {
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
-            WHERE numeroTurno={$numero}"
+            WHERE id={$numero}"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);

@@ -14,22 +14,22 @@
 {% block main %}
 <h1>Listado de Pedidos</h1>
 <table>
-    <th>Nº Turno</th>
-    <th>Fecha</th>
-    <th>Hora </th>
-    <th>Nombre del Paciente</th>
-    <th>Telefono</th>
-    <th>E-mail</th>
+    <th>Nº Pedido</th>
+    <th>Descripcion</th>
+    <th>Sector</th>
+    <th>Fecha Inicio</th>
+    <th>Tareas Asignadas</th>
+    <th>Estado</th>
     <th>Enlace</th>
     {% for pedido in todosPedidos %}
     <tr>
-        <td>{{ pedido.numeroTurno }}</td>
-        <td>{{ pedido.adate }}</td>
-        <td>{{ pedido.atime }}</td>
-        <td>{{ pedido.name }}</td>
-        <td>{{ pedido.phone }}</td>
-        <td>{{ pedido.email }}</td>
-        <td><a href='/fichaPedido?numeroPedido={{ pedido.numeroTurno }}'>Ir a Pedido</a></td>
+        <td>{{ pedido.id }}</td>
+        <td>{{ pedido.descripcion }}</td>
+        <td>{{ pedido.sector }}</td>
+        <td>{{ pedido.fechaInicio }}</td>
+        <td>PROXIMAMENTE</td>
+        <td>{{ pedido.estado }}</td>
+        <td><a href='/fichaPedido?id={{ pedido.id }}'>Ir a Pedido</a></td>
     </tr>
     {% else %}
     <h2 class='error'>No hay Pedidos</h2>

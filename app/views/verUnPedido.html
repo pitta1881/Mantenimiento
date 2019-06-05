@@ -14,25 +14,36 @@
 {% block main %}
 <h1>Su Pedido</h1>
 <dl>
-    <dt>Paciente:</dt>
-    <dd>{{ miPedido.name }}</dd>
-    <dt>E-mail:</dt>
-    <dd>{{ miPedido.email }}</dd>
-    <dt>Telefono:</dt>
-    <dd>{{ miPedido.phone }}</dd>
+    <dt>Nº Pedido:</dt>
+    <dd>{{ datosPedidoTareas.miPedido.id }}</dd>
+    <dt>Descripcion:</dt>
+    <dd>{{ datosPedidoTareas.miPedido.descripcion }}</dd>
     <dt>Fecha:</dt>
-    <dd>{{ miPedido.adate }}</dd>
-    <dt>Hora:</dt>
-    <dd>{{ miPedido.atime }}</dd>
-    <dt>Fecha de Nacimiento:</dt>
-    <dd>{{ miPedido.birth }}</dd>
-    <dt>Edad:</dt>
-    <dd>{{ miPedido.age }}</dd>
-    <dt>Calzado:</dt>
-    <dd>{{ miPedido.calzado }}</dd>
-    <dt>Altura:</dt>
-    <dd>{{ miPedido.height }} cm</dd>
-    <dt>Color de Pelo:</dt>
-    <dd>{{ miPedido.haircolor }}</dd>
+    <dd>{{ datosPedidoTareas.miPedido.fechaInicio }}</dd>
+    <dt>Estado:</dt>
+    <dd>{{ datosPedidoTareas.miPedido.estado }}</dd>
+    <dt>Sector:</dt>
+    <dd>{{ datosPedidoTareas.miPedido.sector }}</dd>
+    <dt>Prioridad:</dt>
+    <dd>{{ datosPedidoTareas.miPedido.prioridad }}</dd>
 </dl>
+<h2>TAREAS</h2>
+<table>
+    <th>Nº Tarea</th>
+    <th>Descripcion</th>
+    <th>Especializacion</th>
+    <th>Prioridad</th>
+    <th>Estado</th>
+    {% for tareas in datosPedidoTareas.tareas %}
+    <tr>
+        <td>{{ tareas.id }}</td>
+        <td>{{ tareas.descripcion }}</td>
+        <td>{{ tareas.especializacion }}</td>
+        <td>{{ tareas.prioridad }}</td>
+        <td>{{ tareas.estado }}</td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Tareas asignadas aún</h2>
+    {% endfor %}
+</table>
 {% endblock %}

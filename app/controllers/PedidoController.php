@@ -22,46 +22,58 @@ class PedidoController extends Controller
     /*muestra un solo pedido especifico ingresado por GET*/
     public function ficha()
     {
-        $unPedido = $this->model->getByNumeroPedido($_GET['numeroPedido']);
+        $unPedido = $this->model->getByIdPedido($_GET['id']);
         $miPedido = $unPedido[0];        //hago esto xq nose como es q toma que necesito solo el 1er elemento del array
-        return view('verUnPedido', compact('miPedido'));
+        $tareas = $this->model->getTareasByIdPedido($_GET['id']); //todavia no está esto
+        $datosPedidoTareas["miPedido"] = $miPedido;        
+        $datosPedidoTareas["tareas"] = $tareas;
+        return view('verUnPedido', compact('datosPedidoTareas'));
     }
 
     public function create()
     {
-        $hairColors = $this->model->getHairColors();
-        $horaTurnos = $this->model->getTurnos();
-        $datos["colorPelo"] = $hairColors;
-        $datos["horaTurnos"] = $horaTurnos;
-        return view('formulario.create',compact('datos'));
+       // $hairColors = $this->model->getHairColors();
+       // $datos["colorPelo"] = $hairColors;
+
+       //aca voy a hardcodear Sectores y Prioridad como para ver como quedaria
+       //al dia de ultima lo podria dejar asi, hay q ver como lo guarda en la bdd
+       $diaHoy = date("Y/m/d");
+       $sectores = $this->model->getSectores();
+       $prioridades = $this->model->getPrioridades();
+       $estados = $this->model->getEstados();
+       $arrayDatos["sectores"] = $sectores;
+       $arrayDatos["diaHoy"] = $diaHoy;
+       $arrayDatos["prioridades"] = $prioridades;
+       $arrayDatos["estados"] = $estados;
+       return view('crearPedido',compact('arrayDatos'));
     }
 
     public function validar(){
+       /*
+       //ACA SE PODRIA VALIDAR ALGO MAS ADELANTE
+       //
        $estaBien = $this->model->validarDatos($_POST);
        if ($estaBien) {
            $arrayTurno = $this->save();
            return view('verFormularioEnviado',compact('arrayTurno'));
        } else {
            echo "<h2>Algo salio Mal</h2>";
-       }
-       
+       }       
+       */
+      $arrayPedido = $this->save();
+      return view('verPedidoCreado',compact('arrayPedido'));
     }
 
     public function save()
     {
-        $turno = [
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'phone' => $_POST['phone'],
-            'age' => $_POST['age'],
-            'calzado' => $_POST['calzado'],
-            'height' => $_POST['height'],
-            'birth' => $_POST['birth'],
-            'haircolor' => $_POST['haircolor'],
-            'adate' => $_POST['adate'],
-            'atime' => $_POST['atime']
+        $pedido = [
+            'fechaInicio' => $_POST['fechaInicio'],
+            'estado' => $_POST['estado'],
+            'descripcion' => $_POST['descripcion'],
+            'sector' => $_POST['sector'],
+            'prioridad' => $_POST['prioridad']
         ];
-        $this->model->insert($turno);
-        return $turno;
+        $this->model->insert($pedido);
+        return $pedido;
     }
 }
