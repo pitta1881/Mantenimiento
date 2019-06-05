@@ -64,17 +64,15 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 </fieldset>
 <fieldset class=\"prioridad\">
     <legend>Insumos<span class=\"asterisco\">*</span></legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
+    <input type=\"button\" value=\"Gestion de Insumos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Compra\">
 </fieldset>
 <fieldset class=\"\">
     <legend>Otros<span class=\"asterisco\">*</span></legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
+    <input type=\"button\" value=\"Gestion de Agentes\">
+    <input type=\"button\" value=\"Gestion de Especialidades\">
+    <input type=\"button\" value=\"Gestion de Sectores\">
+    <input type=\"button\" value=\"Gestion de Usuarios\">
 </fieldset>
 ";
     }
@@ -107,17 +105,15 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 </fieldset>
 <fieldset class=\"prioridad\">
     <legend>Insumos<span class=\"asterisco\">*</span></legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
+    <input type=\"button\" value=\"Gestion de Insumos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Compra\">
 </fieldset>
 <fieldset class=\"\">
     <legend>Otros<span class=\"asterisco\">*</span></legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
+    <input type=\"button\" value=\"Gestion de Agentes\">
+    <input type=\"button\" value=\"Gestion de Especialidades\">
+    <input type=\"button\" value=\"Gestion de Sectores\">
+    <input type=\"button\" value=\"Gestion de Usuarios\">
 </fieldset>
 {% endblock %}
 ", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
