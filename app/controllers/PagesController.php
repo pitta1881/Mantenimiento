@@ -9,7 +9,7 @@ class PagesController
      */
     public function home()
     {
-        return view('index');
+        return view('index.home');
     }
 
     /**

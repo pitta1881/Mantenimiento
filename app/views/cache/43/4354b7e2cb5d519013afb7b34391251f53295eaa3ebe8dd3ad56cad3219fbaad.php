@@ -24,7 +24,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
-        <li><a href=\"/\">Home</a></li>
+        <li><a href=\"/home\">Home</a></li>
         <li><a href=\"/about\">Sobre nosotros</a></li>
         <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
@@ -57,7 +57,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
-        <li><a href=\"/\">Home</a></li>
+        <li><a href=\"/home\">Home</a></li>
         <li><a href=\"/about\">Sobre nosotros</a></li>
         <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>

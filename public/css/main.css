@@ -166,6 +166,30 @@ dd {
     padding: 10px;
     background-color: gray;
 }
+.general {
+    top: 50px;
+    left: 500px;
+    position: absolute;
+    height: 150px;
+    width: 60px;
+    display: flex;
+}
+.Insumos {
+    top: 50px;
+    left: 250px;
+    position: absolute;
+    height: 120px;
+    width: 60px;
+    display: flex;
+}
+.Otros {
+    top: 50px;
+    left: 750px;
+    position: absolute;
+    height: 180px;
+    width: 60px;
+    display: flex;
+}
 
 /*
 table, td, th {
