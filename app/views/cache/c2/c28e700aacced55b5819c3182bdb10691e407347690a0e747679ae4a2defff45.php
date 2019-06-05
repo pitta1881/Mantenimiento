@@ -1,7 +1,7 @@
 <?php
 
-/* verTodosPedidos.html */
-class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7ae3e74 extends Twig_Template
+/* verTodosPedidosParaModificar.html */
+class __TwigTemplate_2d8275ae52069c7de9b89ae50d99ffb5e632e8df241f5af7ec53c504395a7b5d extends Twig_Template
 {
     private $source;
 
@@ -12,7 +12,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
         $this->source = $this->getSourceContext();
 
         // line 1
-        $this->parent = $this->loadTemplate("base.html", "verTodosPedidos.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "verTodosPedidosParaModificar.html", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'header' => array($this, 'block_header'),
@@ -98,12 +98,8 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             // line 31
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "estado", array()), "html", null, true);
             echo "</td>
-        <td><a href='/fichaPedido?id=";
+        <td><a href='/pedido/modificar/seleccionado?id=";
             // line 32
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
-            echo "'><input type=\"button\" value=\"VER MAS\"></a>
-            <a href='/pedido/modificar/seleccionado?id=";
-            // line 33
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'><input type=\"button\" value=\"MODIFICAR\"></a></td>
     </tr>
@@ -111,21 +107,21 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 36
+            // line 35
             echo "    <h2 class='error'>No hay Pedidos</h2>
     ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pedido'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 38
+        // line 37
         echo "</table>
 ";
     }
 
     public function getTemplateName()
     {
-        return "verTodosPedidos.html";
+        return "verTodosPedidosParaModificar.html";
     }
 
     public function isTraitable()
@@ -135,7 +131,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function getDebugInfo()
     {
-        return array (  122 => 38,  115 => 36,  107 => 33,  103 => 32,  99 => 31,  94 => 29,  90 => 28,  86 => 27,  82 => 26,  79 => 25,  74 => 24,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  118 => 37,  111 => 35,  103 => 32,  99 => 31,  94 => 29,  90 => 28,  86 => 27,  82 => 26,  79 => 25,  74 => 24,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -171,13 +167,12 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
         <td>{{ pedido.fechaInicio }}</td>
         <td>PROXIMAMENTE</td>
         <td>{{ pedido.estado }}</td>
-        <td><a href='/fichaPedido?id={{ pedido.id }}'><input type=\"button\" value=\"VER MAS\"></a>
-            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'><input type=\"button\" value=\"MODIFICAR\"></a></td>
+        <td><a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'><input type=\"button\" value=\"MODIFICAR\"></a></td>
     </tr>
     {% else %}
     <h2 class='error'>No hay Pedidos</h2>
     {% endfor %}
 </table>
-{% endblock %}", "verTodosPedidos.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\verTodosPedidos.html");
+{% endblock %}", "verTodosPedidosParaModificar.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTodosPedidosParaModificar.html");
     }
 }

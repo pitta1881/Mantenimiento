@@ -24,12 +24,21 @@ class Pedido extends Model
 
     public function get()
     {
-        return $this->db->selectAll($this->table);
+        $pedido = $this->db->selectAll($this->table);
+        $miPedido = json_decode(json_encode($pedido), True);
+        foreach ($miPedido as $key => $value) {
+            $miPedido[$key]['sector'] = str_replace("_"," ",$value['sector']);
+        }        
+        return $miPedido;
     }
 
     public function getByIdPedido($id)
     {
-        return $this->db->selectNumeroPedido($this->table,$id);
+        
+        $pedido = $this->db->selectNumeroPedido($this->table,$id);
+        $miPedido = json_decode(json_encode($pedido), True);
+        $miPedido[0]['sector'] = str_replace("_"," ",$miPedido[0]['sector']);
+        return $miPedido;
     }
 
     public function getTareasByIdPedido($id)

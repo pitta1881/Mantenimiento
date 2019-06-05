@@ -16,16 +16,15 @@
         <label for="sector">Sector</label>
         <select name="sector">
             {% for sector in arrayDatos.sectores %}
-            <option value={{ sector }}>{{ sector }}</option>
+            <option value="{{ sector }}">{{ sector }}</option>
             {% endfor %}
         </select>
     </fieldset>
     <fieldset class="prioridad">
         <legend>Prioridad<span class="asterisco">*</span></legend>
         {% for prioridad in arrayDatos.prioridades %}
-        <label class="labelRadioInput">
-            <input type="radio" name="prioridad" class="radioInput" required value={{ prioridad }}> {{ prioridad }}
-        </label>
+        <label class="labelRadioInput"><input type="radio" name="prioridad" class="radioInput" required
+                value={{ prioridad }}>{{ prioridad }}</label>
         {% endfor %}
     </fieldset>
     <input type="submit">

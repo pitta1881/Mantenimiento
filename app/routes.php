@@ -7,10 +7,11 @@
     $router->get('fichaPedido', 'PedidoController@ficha');
     $router->get('pedido/crear', 'PedidoController@create');    
     $router->post('pedido/validar', 'PedidoController@validar');
+    $router->get('pedido/modificar/seleccionado', 'PedidoController@modificarPedidoSeleccionado');
 
-     $router->post('login/validar', 'LoginController@validarLogin');
+    $router->post('login/validar', 'LoginController@validarLogin');
 
 
 
-$router->get('not_found', 'ProjectController@notFound');
+    $router->get('not_found', 'ProjectController@notFound');
     $router->get('internal_error', 'ProjectController@internalError');

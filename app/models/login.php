@@ -12,6 +12,9 @@ class login extends Model{
         return $this->db->validarLogin($this->table,$user, $password);
     }
 
+    public function getUsuario($nombreUsuario){
+        return $this->db->buscarUsuario($tthis->table,$nombreUsuario);
+    }
     
 
     

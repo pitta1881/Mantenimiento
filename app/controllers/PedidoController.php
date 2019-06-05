@@ -37,14 +37,10 @@ class PedidoController extends Controller
 
        //aca voy a hardcodear Sectores y Prioridad como para ver como quedaria
        //al dia de ultima lo podria dejar asi, hay q ver como lo guarda en la bdd
-       $diaHoy = date("Y/m/d");
-       $sectores = $this->model->getSectores();
-       $prioridades = $this->model->getPrioridades();
-       $estados = $this->model->getEstados();
-       $arrayDatos["sectores"] = $sectores;
-       $arrayDatos["diaHoy"] = $diaHoy;
-       $arrayDatos["prioridades"] = $prioridades;
-       $arrayDatos["estados"] = $estados;
+       $arrayDatos["diaHoy"] = date("Y-m-d");
+       $arrayDatos["sectores"] = $this->model->getSectores();
+       $arrayDatos["prioridades"] = $this->model->getPrioridades();
+       $arrayDatos["estados"] = $this->model->getEstados();
        return view('crearPedido',compact('arrayDatos'));
     }
 
@@ -70,10 +66,26 @@ class PedidoController extends Controller
             'fechaInicio' => $_POST['fechaInicio'],
             'estado' => $_POST['estado'],
             'descripcion' => $_POST['descripcion'],
-            'sector' => $_POST['sector'],
+            'sector' => preg_replace('/\s+/', '_', $_POST['sector']),
             'prioridad' => $_POST['prioridad']
         ];
         $this->model->insert($pedido);
         return $pedido;
     }
+
+    public function modificarPedidoListado(){
+        $todosPedidos = $this->model->get();
+        return view('verTodosPedidosParaModificar', compact('todosPedidos'));
+    }
+
+    public function modificarPedidoSeleccionado(){
+        $unPedido = $this->model->getByIdPedido($_GET['id']);
+        $miPedido = $unPedido[0]; 
+        $arrayDatos["sectores"] = $this->model->getSectores();
+        $arrayDatos["prioridades"] = $this->model->getPrioridades();
+        $arrayDatos["estados"] = $this->model->getEstados();
+        $arrayDatos["miPedido"] = $miPedido;
+        return view('modificarPedido',compact('arrayDatos'));
+    }
+
 }

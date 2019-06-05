@@ -29,7 +29,8 @@
         <td>{{ pedido.fechaInicio }}</td>
         <td>PROXIMAMENTE</td>
         <td>{{ pedido.estado }}</td>
-        <td><a href='/fichaPedido?id={{ pedido.id }}'>Ir a Pedido</a></td>
+        <td><a href='/fichaPedido?id={{ pedido.id }}'><input type="button" value="VER MAS"></a>
+            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'><input type="button" value="MODIFICAR"></a></td>
     </tr>
     {% else %}
     <h2 class='error'>No hay Pedidos</h2>

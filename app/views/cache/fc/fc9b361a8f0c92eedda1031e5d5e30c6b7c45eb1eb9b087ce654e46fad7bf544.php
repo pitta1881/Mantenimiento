@@ -98,6 +98,10 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 {% block main %}
 <h1>Sobre este proyecto</h1>
 <p>aca iria un home</p>
+<<<<<<< Updated upstream
 {% endblock %}", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
+=======
+{% endblock %}", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
+>>>>>>> Stashed changes
     }
 }
