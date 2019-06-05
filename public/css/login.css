@@ -125,9 +125,8 @@ laber {
     color: #fff;
 }
 .login-container {
-    padding-top: 25px;
+    padding: 30px 12px 0px 12px;
     background: #ebebeb;
-    padding: 12px;
 }
 
 /* Every row inside .login-container is defined with p tags */

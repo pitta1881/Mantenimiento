@@ -21,13 +21,15 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
     {
         // line 1
         echo "<nav class=\"main-nav\">
+    <img class=\"imagen\" src=\"../app/views/sommer2.jpg\">
     <ol>
         <li><a href=\"/\">Home</a></li>
         <li><a href=\"/about\">Sobre nosotros</a></li>
         <li><a href=\"/pedido/crear\">Crear Pedidos</a></li>
         <li><a href=\"/pedido/verTodos\">Ver Pedidos</a></li>
     </ol>
-</nav>";
+</nav>
+";
     }
 
     public function getTemplateName()
@@ -43,12 +45,14 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
     public function getSourceContext()
     {
         return new Twig_Source("<nav class=\"main-nav\">
+    <img class=\"imagen\" src=\"../app/views/sommer2.jpg\">
     <ol>
         <li><a href=\"/\">Home</a></li>
         <li><a href=\"/about\">Sobre nosotros</a></li>
         <li><a href=\"/pedido/crear\">Crear Pedidos</a></li>
         <li><a href=\"/pedido/verTodos\">Ver Pedidos</a></li>
     </ol>
-</nav>", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>
+", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

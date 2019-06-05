@@ -18,7 +18,7 @@ class LoginController extends Controller{
         $password=$_POST['contraseña'];
         $statement= $this->model->buscarUsuario($user,$password);
         
-    if($stmt->num_rows === 0){
+    if($statement->num_rows === 0){
          return view ('index');
      }else{
         return view ('index.home');
