@@ -31,37 +31,51 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 3
     public function block_title($context, array $blocks = array())
     {
         echo "Home";
     }
 
-    // line 5
     public function block_header($context, array $blocks = array())
     {
-        // line 6
+        echo " ";
         echo twig_include($this->env, $context, "partials/nav.html");
-        echo "
-";
+        echo " ";
     }
 
-    // line 9
     public function block_head($context, array $blocks = array())
     {
-        // line 10
+        echo " ";
         $this->displayParentBlock("head", $context, $blocks);
         echo "
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\">
-";
+<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 14
+    // line 2
     public function block_main($context, array $blocks = array())
     {
-        // line 15
-        echo "<h1>Sobre este proyecto</h1>
-<p>aca iria un home</p>
+        // line 3
+        echo "<fieldset class=\"basicosPedido\">
+    <legend>General</legend>
+    <input type=\"button\" value=\"Gestion de Pedidos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
+    <input type=\"button\" value=\"Gestion de Actividades\">
+    <input type=\"button\" value=\"Gestion de Tareas\">
+</fieldset>
+<fieldset class=\"prioridad\">
+    <legend>Insumos<span class=\"asterisco\">*</span></legend>
+    <input type=\"button\" value=\"Gestion de Pedidos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
+    <input type=\"button\" value=\"Gestion de Actividades\">
+    <input type=\"button\" value=\"Gestion de Tareas\">
+</fieldset>
+<fieldset class=\"\">
+    <legend>Otros<span class=\"asterisco\">*</span></legend>
+    <input type=\"button\" value=\"Gestion de Pedidos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
+    <input type=\"button\" value=\"Gestion de Actividades\">
+    <input type=\"button\" value=\"Gestion de Tareas\">
+</fieldset>
 ";
     }
 
@@ -77,27 +91,35 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  58 => 3,  55 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %}
-
-{% block title %}Home{% endblock %}
-
-{% block header %}
-{{ include('partials/nav.html') }}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
+<fieldset class=\"basicosPedido\">
+    <legend>General</legend>
+    <input type=\"button\" value=\"Gestion de Pedidos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
+    <input type=\"button\" value=\"Gestion de Actividades\">
+    <input type=\"button\" value=\"Gestion de Tareas\">
+</fieldset>
+<fieldset class=\"prioridad\">
+    <legend>Insumos<span class=\"asterisco\">*</span></legend>
+    <input type=\"button\" value=\"Gestion de Pedidos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
+    <input type=\"button\" value=\"Gestion de Actividades\">
+    <input type=\"button\" value=\"Gestion de Tareas\">
+</fieldset>
+<fieldset class=\"\">
+    <legend>Otros<span class=\"asterisco\">*</span></legend>
+    <input type=\"button\" value=\"Gestion de Pedidos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
+    <input type=\"button\" value=\"Gestion de Actividades\">
+    <input type=\"button\" value=\"Gestion de Tareas\">
+</fieldset>
 {% endblock %}
-
-{% block head %}
-{{ parent() }}
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\">
-{% endblock %}
-
-{% block main %}
-<h1>Sobre este proyecto</h1>
-<p>aca iria un home</p>
-{% endblock %}", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
+", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

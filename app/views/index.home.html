@@ -1,17 +1,24 @@
-{% extends "base.html" %}
-
-{% block title %}Home{% endblock %}
-
-{% block header %}
-{{ include('partials/nav.html') }}
-{% endblock %}
-
-{% block head %}
-{{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP">
-{% endblock %}
-
-{% block main %}
-<h1>Sobre este proyecto</h1>
-<p>aca iria un home</p>
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<fieldset class="basicosPedido">
+    <legend>General</legend>
+    <input type="button" value="Gestion de Pedidos">
+    <input type="button" value="Gestion de Ordenes de Trabajo">
+    <input type="button" value="Gestion de Actividades">
+    <input type="button" value="Gestion de Tareas">
+</fieldset>
+<fieldset class="prioridad">
+    <legend>Insumos<span class="asterisco">*</span></legend>
+    <input type="button" value="Gestion de Pedidos">
+    <input type="button" value="Gestion de Ordenes de Trabajo">
+    <input type="button" value="Gestion de Actividades">
+    <input type="button" value="Gestion de Tareas">
+</fieldset>
+<fieldset class="">
+    <legend>Otros<span class="asterisco">*</span></legend>
+    <input type="button" value="Gestion de Pedidos">
+    <input type="button" value="Gestion de Ordenes de Trabajo">
+    <input type="button" value="Gestion de Actividades">
+    <input type="button" value="Gestion de Tareas">
+</fieldset>
 {% endblock %}
