@@ -58,7 +58,7 @@ class QueryBuilder
     {
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
-            WHERE nombre={$usuario} AND password={$password} "
+            WHERE nombre='{$usuario}' AND password='{$password}' "
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);

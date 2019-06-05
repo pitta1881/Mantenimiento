@@ -38,7 +38,7 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
 
     public function block_header($context, array $blocks = array())
     {
-        echo " ";
+        // line 2
         echo twig_include($this->env, $context, "partials/nav.html");
         echo " ";
     }
@@ -51,23 +51,23 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 2
+    // line 3
     public function block_main($context, array $blocks = array())
     {
-        // line 3
+        // line 4
         echo "<h1>Crear Pedido</h1>
 <form action=\"/pedido/validar\" method=\"POST\">
     <fieldset class=\"basicosPedido\">
         <legend>Datos Basicos</legend>
         <label for=\"fechaInicio\">Fecha</label>
         <input type=\"text\" name=\"fechaInicio\" value=\"";
-        // line 8
+        // line 9
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "diaHoy", array()), "html", null, true);
         echo "\" readonly>
         <br>
         <label for=\"estado\">Estado</label>
         <input type=\"text\" name=\"estado\" value=\"";
-        // line 11
+        // line 12
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "estados", array()), 0, array()), "html", null, true);
         echo "\" readonly>
         <br>
@@ -77,17 +77,12 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
         <label for=\"sector\">Sector</label>
         <select name=\"sector\">
             ";
-        // line 18
+        // line 19
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "sectores", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["sector"]) {
-<<<<<<< Updated upstream
-            // line 19
-            echo "            <option value=";
-=======
-            // line 28
+            // line 20
             echo "            <option value=\"";
->>>>>>> Stashed changes
             echo twig_escape_filter($this->env, $context["sector"], "html", null, true);
             echo "\">";
             echo twig_escape_filter($this->env, $context["sector"], "html", null, true);
@@ -97,26 +92,22 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['sector'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 21
+        // line 22
         echo "        </select>
     </fieldset>
     <fieldset class=\"prioridad\">
         <legend>Prioridad<span class=\"asterisco\">*</span></legend>
         ";
-        // line 25
+        // line 26
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "prioridades", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["prioridad"]) {
-            // line 26
-            echo "        <label class=\"labelRadioInput\">
-            <input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required value=";
             // line 27
+            echo "        <label class=\"labelRadioInput\"><input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required
+                value=";
+            // line 28
             echo twig_escape_filter($this->env, $context["prioridad"], "html", null, true);
-<<<<<<< Updated upstream
-            echo "> ";
-=======
             echo ">";
->>>>>>> Stashed changes
             echo twig_escape_filter($this->env, $context["prioridad"], "html", null, true);
             echo "</label>
         ";
@@ -124,11 +115,7 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['prioridad'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-<<<<<<< Updated upstream
         // line 30
-=======
-        // line 38
->>>>>>> Stashed changes
         echo "    </fieldset>
     <input type=\"submit\">
     <input type=\"reset\">
@@ -148,16 +135,13 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
 
     public function getDebugInfo()
     {
-<<<<<<< Updated upstream
-        return array (  120 => 30,  109 => 27,  106 => 26,  102 => 25,  96 => 21,  85 => 19,  81 => 18,  71 => 11,  65 => 8,  58 => 3,  55 => 2,  15 => 1,);
-=======
-        return array (  121 => 38,  111 => 36,  108 => 35,  104 => 34,  98 => 30,  87 => 28,  83 => 27,  75 => 22,  70 => 20,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
->>>>>>> Stashed changes
+        return array (  119 => 30,  109 => 28,  106 => 27,  102 => 26,  96 => 22,  85 => 20,  81 => 19,  71 => 12,  65 => 9,  58 => 4,  55 => 3,  42 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %}
+{{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
 <h1>Crear Pedido</h1>
 <form action=\"/pedido/validar\" method=\"POST\">
@@ -182,20 +166,13 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
     <fieldset class=\"prioridad\">
         <legend>Prioridad<span class=\"asterisco\">*</span></legend>
         {% for prioridad in arrayDatos.prioridades %}
-<<<<<<< Updated upstream
-        <label class=\"labelRadioInput\">
-            <input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required value={{ prioridad }}> {{ prioridad }}
-        </label>
-=======
         <label class=\"labelRadioInput\"><input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required
                 value={{ prioridad }}>{{ prioridad }}</label>
->>>>>>> Stashed changes
         {% endfor %}
     </fieldset>
     <input type=\"submit\">
     <input type=\"reset\">
 </form>
-{% endblock %}
-", "crearPedido.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\crearPedido.html");
+{% endblock %}", "crearPedido.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\crearPedido.html");
     }
 }

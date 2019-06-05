@@ -32,7 +32,6 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
 
     public function block_title($context, array $blocks = array())
     {
-<<<<<<< Updated upstream
         echo "Ingreso";
     }
 
@@ -63,43 +62,12 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         </p>
         <p>
             <label class=\"name\" for=\"contraseña\">Contraseña</label>
-            <input type=\"password\" placeholder=\"Contraseña\" name=\"contraseña\">
+            <input type=\"password\" placeholder=\"Contraseña\" name=\"password\">
         </p>
         <p>
             <input type=\"submit\" value=\"Ingresar\">
         </p>
     </form>
-=======
-        echo "Login";
-    }
-
-    // line 5
-    public function block_head($context, array $blocks = array())
-    {
-        // line 6
-        $this->displayParentBlock("head", $context, $blocks);
-        echo "
- <link rel=\"stylesheet\" href=\"/public/css/login.css\">
-";
-    }
-
-    // line 10
-    public function block_main($context, array $blocks = array())
-    {
-        // line 11
-        echo "
-
-<div class=\"login\">
-  <div class=\"login-triangle\"></div>
-  
-  <h2 class=\"login-header\">Log in</h2>
-
-  <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
-    <p><input type=\"text\" placeholder=\"Usuario\" name=\"nombre\"></p>
-    <p><input type=\"password\" placeholder=\"Contraseña\" name=\"contraseña\"></p>
-    <p><input type=\"submit\" value=\"Log in\"></p>
-  </form>
->>>>>>> Stashed changes
 </div>
 
 
@@ -120,11 +88,7 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
 
     public function getDebugInfo()
     {
-<<<<<<< Updated upstream
         return array (  50 => 3,  47 => 2,  15 => 1,);
-=======
-        return array (  53 => 11,  50 => 10,  43 => 6,  40 => 5,  34 => 3,  15 => 1,);
->>>>>>> Stashed changes
     }
 
     public function getSourceContext()
@@ -132,7 +96,6 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Ingreso{% endblock %} {% block head %} {{ parent() }}
 <link rel=\"stylesheet\" href=\"/public/css/login.css\"> {% endblock %} {% block main %}
 
-<<<<<<< Updated upstream
 
 <div class=\"login\">
     <div class=\"login-triangle\"></div>
@@ -147,44 +110,17 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         </p>
         <p>
             <label class=\"name\" for=\"contraseña\">Contraseña</label>
-            <input type=\"password\" placeholder=\"Contraseña\" name=\"contraseña\">
+            <input type=\"password\" placeholder=\"Contraseña\" name=\"password\">
         </p>
         <p>
             <input type=\"submit\" value=\"Ingresar\">
         </p>
     </form>
-=======
-{% block title %}Login{% endblock %}
-
-{% block head %}
-{{ parent() }}
- <link rel=\"stylesheet\" href=\"/public/css/login.css\">
-{% endblock %}
-
-{% block main %}
-
-
-<div class=\"login\">
-  <div class=\"login-triangle\"></div>
-  
-  <h2 class=\"login-header\">Log in</h2>
-
-  <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
-    <p><input type=\"text\" placeholder=\"Usuario\" name=\"nombre\"></p>
-    <p><input type=\"password\" placeholder=\"Contraseña\" name=\"contraseña\"></p>
-    <p><input type=\"submit\" value=\"Log in\"></p>
-  </form>
->>>>>>> Stashed changes
 </div>
 
 
 
 
-<<<<<<< Updated upstream
-{% endblock %}
-", "index.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.html");
-=======
 {% endblock %}", "index.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.html");
->>>>>>> Stashed changes
     }
 }

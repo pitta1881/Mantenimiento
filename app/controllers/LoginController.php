@@ -15,10 +15,9 @@ class LoginController extends Controller{
         //$arrayUsuarios=$this->model->get();
        // compact('arrayUsuarios');
         $user=$_POST['nombre'];
-        $password=$_POST['contraseña'];
-        $statement= $this->model->buscarUsuario($user,$password);
-        
-    if($statement->num_rows === 0){
+        $password=$_POST['password'];
+        $statement= $this->model->buscarUsuario($user,$password);        
+    if(empty($statement)){
          return view ('index');
      }else{
         return view ('index.home');

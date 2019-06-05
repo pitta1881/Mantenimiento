@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+{% extends "base.html" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %}
+{{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <h1>Crear Pedido</h1>
 <form action="/pedido/validar" method="POST">
