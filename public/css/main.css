@@ -126,15 +126,6 @@ form output {
     /* Negrita */
     margin: 0.5em;
 }
-.user {
-    color: white;
-    position: absolute;
-    margin: 0 0 0 0;
-    right: 60px;
-    top: 15px;
-    height: 59px;
-    width: 60px;
-}
 
 /* Coloreo el aviso de error */
 
@@ -166,29 +157,73 @@ dd {
     padding: 10px;
     background-color: gray;
 }
+.div input {
+    margin: 0 0 0 0;
+    top: 8px;
+    height: 60px;
+    width: 160px;
+    list-style-type: none;
+    margin: 0px;
+    padding: 20px 0px;
+    /* width: 100%; */
+    background-color: #f1f1f1;
+    color: black;
+    display: inline;
+}
+.div input:hover {
+    margin: 0 0 0 0;
+    top: 8px;
+    height: 60px;
+    width: 160px;
+    list-style-type: none;
+    margin: 0px;
+    padding: 20px 0px;
+    /* width: 100%; */
+    background-color: #F27329;
+    color: black;
+    display: inline;
+}
 .general {
     top: 50px;
     left: 500px;
     position: absolute;
-    height: 150px;
-    width: 60px;
+    height: 300px;
+    width: 120px;
     display: flex;
 }
 .Insumos {
     top: 50px;
     left: 250px;
     position: absolute;
-    height: 120px;
-    width: 60px;
+    height: 140px;
+    width: 120px;
     display: flex;
 }
 .Otros {
     top: 50px;
     left: 750px;
     position: absolute;
-    height: 180px;
-    width: 60px;
+    height: 320px;
+    width: 120px;
     display: flex;
+}
+legend {
+    text-align: center;
+}
+.salir {
+    height: 19px;
+    position: absolute;
+    top: 44px;
+    right: 24px;
+}
+.user {
+    color: white;
+    position: absolute;
+    margin: 0 0 0 0;
+    right: 60px;
+    top: 6px;
+    height: 59px;
+    width: 60px;
 }
 
 /*

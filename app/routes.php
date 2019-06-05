@@ -1,6 +1,7 @@
 <?php
-    $router->get('home', 'PagesController@home');
-   
+
+    $router->get('', 'PagesController@login');
+   $router->get('home', 'PagesController@home');
     $router->get('about', 'PagesController@about');
 
     $router->get('pedido/verTodos', 'PedidoController@index');

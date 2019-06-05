@@ -21,4 +21,10 @@ class PagesController
 
         return view('about', ['company' => $company]);
     }
+    public function login()
+    {
+        $company = 'Laracasts';
+
+        return view('index');
+    }
 }

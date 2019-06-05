@@ -34,6 +34,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/pedido/crear\">Crear Pedidos</a></li>
         <li><a href=\"/pedido/verTodos\">Ver Pedidos</a></li>
         <li>
+            <p><a href=\"\">Desconectar</a></p>
             <p class=\"user\">Usuario: Administrador</p>
         </li>
     </ol>
@@ -67,6 +68,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/pedido/crear\">Crear Pedidos</a></li>
         <li><a href=\"/pedido/verTodos\">Ver Pedidos</a></li>
         <li>
+            <p><a href=\"\">Desconectar</a></p>
             <p class=\"user\">Usuario: Administrador</p>
         </li>
     </ol>
