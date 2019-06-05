@@ -32,25 +32,26 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     ";
         // line 5
         $this->displayBlock('head', $context, $blocks);
-        // line 10
+        // line 9
         echo "</head>
 
 <body>
     <header>";
-        // line 13
+        // line 12
         $this->displayBlock('header', $context, $blocks);
         echo "</header>
     <main>";
-        // line 14
+        // line 13
         $this->displayBlock('main', $context, $blocks);
         echo "</main>
     <footer>";
-        // line 15
+        // line 14
         $this->displayBlock('footer', $context, $blocks);
         echo "</footer>
 </body>
 
-</html>";
+</html>
+";
     }
 
     // line 5
@@ -61,26 +62,25 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     <title>";
         // line 7
         $this->displayBlock('title', $context, $blocks);
-        echo " - PAW 2018</title>
-    <link rel=\"stylesheet\" href=\"/public/css/main.css\">
-    ";
+        echo " - Mantenimiento</title>
+    <link rel=\"stylesheet\" href=\"/public/css/main.css\"> ";
     }
 
     public function block_title($context, array $blocks = array())
     {
     }
 
-    // line 13
+    // line 12
     public function block_header($context, array $blocks = array())
     {
     }
 
-    // line 14
+    // line 13
     public function block_main($context, array $blocks = array())
     {
     }
 
-    // line 15
+    // line 14
     public function block_footer($context, array $blocks = array())
     {
     }
@@ -92,7 +92,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 
     public function getDebugInfo()
     {
-        return array (  84 => 15,  79 => 14,  74 => 13,  63 => 7,  60 => 6,  57 => 5,  49 => 15,  45 => 14,  41 => 13,  36 => 10,  34 => 5,  28 => 1,);
+        return array (  84 => 14,  79 => 13,  74 => 12,  64 => 7,  61 => 6,  58 => 5,  49 => 14,  45 => 13,  41 => 12,  36 => 9,  34 => 5,  28 => 1,);
     }
 
     public function getSourceContext()
@@ -103,9 +103,8 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 <head>
     {% block head %}
     <meta charset=\"utf-8\">
-    <title>{% block title %}{% endblock %} - PAW 2018</title>
-    <link rel=\"stylesheet\" href=\"/public/css/main.css\">
-    {% endblock %}
+    <title>{% block title %}{% endblock %} - Mantenimiento</title>
+    <link rel=\"stylesheet\" href=\"/public/css/main.css\"> {% endblock %}
 </head>
 
 <body>
@@ -114,6 +113,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     <footer>{% block footer %}{% endblock %}</footer>
 </body>
 
-</html>", "base.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\base.html");
+</html>
+", "base.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\base.html");
     }
 }

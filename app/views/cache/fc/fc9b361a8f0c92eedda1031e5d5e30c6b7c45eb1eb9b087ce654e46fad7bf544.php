@@ -1,7 +1,7 @@
 <?php
 
-/* about.html */
-class __TwigTemplate_e1087d1a0146b267d3c688af5f91057582914bb5399b702f44979ba25bbe5c14 extends Twig_Template
+/* index.home.html */
+class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450a8a88 extends Twig_Template
 {
     private $source;
 
@@ -12,7 +12,7 @@ class __TwigTemplate_e1087d1a0146b267d3c688af5f91057582914bb5399b702f44979ba25bb
         $this->source = $this->getSourceContext();
 
         // line 1
-        $this->parent = $this->loadTemplate("base.html", "about.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "index.home.html", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'header' => array($this, 'block_header'),
@@ -34,7 +34,7 @@ class __TwigTemplate_e1087d1a0146b267d3c688af5f91057582914bb5399b702f44979ba25bb
     // line 3
     public function block_title($context, array $blocks = array())
     {
-        echo "About";
+        echo "Home";
     }
 
     // line 5
@@ -60,17 +60,14 @@ class __TwigTemplate_e1087d1a0146b267d3c688af5f91057582914bb5399b702f44979ba25bb
     public function block_main($context, array $blocks = array())
     {
         // line 15
-        echo "<h3>Ivan Costa - Legajo: xxxxxxx - XXXXXX@gmail.com</h3>
-<h3>Valentin Nardoni - Legajo: xxxxxxx - XXXXXX@gmail.com</h3>
-<h3>Facundo Otero - Legajo: xxxxxxx - XXXXXX@gmail.com</h3>
-<h3>Cristian Cravero - Legajo: xxxxxxx - XXXXXX@gmail.com</h3>
-<h3>Patricio Pittavino - Legajo: 121476 - pitta1881@gmail.com</h3>
+        echo "<h1>Sobre este proyecto</h1>
+<p>aca iria un home</p>
 ";
     }
 
     public function getTemplateName()
     {
-        return "about.html";
+        return "index.home.html";
     }
 
     public function isTraitable()
@@ -87,7 +84,7 @@ class __TwigTemplate_e1087d1a0146b267d3c688af5f91057582914bb5399b702f44979ba25bb
     {
         return new Twig_Source("{% extends \"base.html\" %}
 
-{% block title %}About{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block header %}
 {{ include('partials/nav.html') }}
@@ -99,11 +96,8 @@ class __TwigTemplate_e1087d1a0146b267d3c688af5f91057582914bb5399b702f44979ba25bb
 {% endblock %}
 
 {% block main %}
-<h3>Ivan Costa - Legajo: xxxxxxx - XXXXXX@gmail.com</h3>
-<h3>Valentin Nardoni - Legajo: xxxxxxx - XXXXXX@gmail.com</h3>
-<h3>Facundo Otero - Legajo: xxxxxxx - XXXXXX@gmail.com</h3>
-<h3>Cristian Cravero - Legajo: xxxxxxx - XXXXXX@gmail.com</h3>
-<h3>Patricio Pittavino - Legajo: 121476 - pitta1881@gmail.com</h3>
-{% endblock %}", "about.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\about.html");
+<h1>Sobre este proyecto</h1>
+<p>aca iria un home</p>
+{% endblock %}", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

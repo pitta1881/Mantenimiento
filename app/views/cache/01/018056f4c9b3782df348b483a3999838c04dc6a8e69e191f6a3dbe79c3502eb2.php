@@ -173,6 +173,6 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <h2 class='error'>No hay Pedidos</h2>
     {% endfor %}
 </table>
-{% endblock %}", "verTodosPedidos.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTodosPedidos.html");
+{% endblock %}", "verTodosPedidos.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\verTodosPedidos.html");
     }
 }

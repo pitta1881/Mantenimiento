@@ -210,6 +210,6 @@ class __TwigTemplate_cab918a9572bba5d95e089ff146a20bc45f3ee35e97b8b05e2550327ef4
     <h2 class='error'>No hay Tareas asignadas aún</h2>
     {% endfor %}
 </table>
-{% endblock %}", "verUnPedido.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verUnPedido.html");
+{% endblock %}", "verUnPedido.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\verUnPedido.html");
     }
 }

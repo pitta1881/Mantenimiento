@@ -4,22 +4,15 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class login extends Model
-{
+class login extends Model{
     protected $table = 'usuarios';
 
-    
 
-
-
-    public function get()
-    {
-        return $this->db->selectAll($this->table);
+    public function buscarUsuario($user, $password){
+        return $this->db->validarLogin($this->table,$user, $password);
     }
 
     
 
     
 }
-
-    

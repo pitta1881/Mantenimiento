@@ -52,6 +52,17 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+    
+    
+    public function validarLogin($table, $usuario ,$password)
+    {
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE nombre={$usuario} AND password={$password} "
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 
     /**
      * Insert a record into a table.

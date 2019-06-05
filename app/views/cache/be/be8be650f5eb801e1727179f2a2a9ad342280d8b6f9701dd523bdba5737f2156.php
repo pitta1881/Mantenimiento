@@ -15,7 +15,6 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         $this->parent = $this->loadTemplate("base.html", "index.html", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
-            'header' => array($this, 'block_header'),
             'head' => array($this, 'block_head'),
             'main' => array($this, 'block_main'),
         );
@@ -31,37 +30,48 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 3
     public function block_title($context, array $blocks = array())
     {
-        echo "Home";
+        echo "Ingreso";
     }
 
-    // line 5
-    public function block_header($context, array $blocks = array())
-    {
-        // line 6
-        echo twig_include($this->env, $context, "partials/nav.html");
-        echo "
-";
-    }
-
-    // line 9
     public function block_head($context, array $blocks = array())
     {
-        // line 10
+        echo " ";
         $this->displayParentBlock("head", $context, $blocks);
         echo "
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\">
-";
+<link rel=\"stylesheet\" href=\"/public/css/login.css\"> ";
     }
 
-    // line 14
+    // line 2
     public function block_main($context, array $blocks = array())
     {
-        // line 15
-        echo "<h1>Sobre este proyecto</h1>
-<p>aca iria un home</p>
+        // line 3
+        echo "
+
+<div class=\"login\">
+    <div class=\"login-triangle\"></div>
+
+    <h2 class=\"login-header\">Ingreso a Mantenimiento</h2>
+
+    <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
+        <p>
+            <label class=\"name\" for=\"nombre\">Nombre de Usuario</label>
+            <input type=\"text\" placeholder=\"Usuario\" name=\"nombre\">
+        </p>
+        <p>
+            <label class=\"name\" for=\"contraseña\">Contraseña</label>
+            <input type=\"password\" placeholder=\"Contraseña\" name=\"contraseña\">
+        </p>
+        <p>
+            <input type=\"submit\" value=\"Ingresar\">
+        </p>
+    </form>
+</div>
+
+
+
+
 ";
     }
 
@@ -77,27 +87,39 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
 
     public function getDebugInfo()
     {
-        return array (  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  50 => 3,  47 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Ingreso{% endblock %} {% block head %} {{ parent() }}
+<link rel=\"stylesheet\" href=\"/public/css/login.css\"> {% endblock %} {% block main %}
 
-{% block title %}Home{% endblock %}
 
-{% block header %}
-{{ include('partials/nav.html') }}
+<div class=\"login\">
+    <div class=\"login-triangle\"></div>
+
+    <h2 class=\"login-header\">Ingreso a Mantenimiento</h2>
+
+    <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
+        <p>
+            <label class=\"name\" for=\"nombre\">Nombre de Usuario</label>
+            <input type=\"text\" placeholder=\"Usuario\" name=\"nombre\">
+        </p>
+        <p>
+            <label class=\"name\" for=\"contraseña\">Contraseña</label>
+            <input type=\"password\" placeholder=\"Contraseña\" name=\"contraseña\">
+        </p>
+        <p>
+            <input type=\"submit\" value=\"Ingresar\">
+        </p>
+    </form>
+</div>
+
+
+
+
 {% endblock %}
-
-{% block head %}
-{{ parent() }}
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\">
-{% endblock %}
-
-{% block main %}
-<h1>Sobre este proyecto</h1>
-<p>aca iria un home</p>
-{% endblock %}", "index.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.html");
+", "index.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.html");
     }
 }
