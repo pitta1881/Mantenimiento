@@ -56,6 +56,9 @@ class Pedido extends Model
     {
         return $this->db->selectTareasPorNPedido($this->tableTarea,$id);
     }
-    
-    
+
+    public function getTareaEspecialidades(){
+        $tarea = new Tarea();
+        return $tarea->getEspecialidades();
+    }    
 }

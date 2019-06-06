@@ -4,9 +4,11 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Pedido;
+use App\Models\Tarea;
 
 class PedidoController extends Controller
 {
+    
     public function __construct()
     {
         $this->model = new Pedido();
@@ -32,11 +34,6 @@ class PedidoController extends Controller
 
     public function create()
     {
-       // $hairColors = $this->model->getHairColors();
-       // $datos["colorPelo"] = $hairColors;
-
-       //aca voy a hardcodear Sectores y Prioridad como para ver como quedaria
-       //al dia de ultima lo podria dejar asi, hay q ver como lo guarda en la bdd
        $arrayDatos["diaHoy"] = date("Y-m-d");
        $arrayDatos["sectores"] = $this->model->getSectores();
        $arrayDatos["prioridades"] = $this->model->getPrioridades();
@@ -90,7 +87,12 @@ class PedidoController extends Controller
 
     public function verTareas(){
     $todasTareas = $this->model->getTareasByIdPedido($_GET['id']);
-    return view('verTodasTareas', compact('todasTareas'));
+    $datos['todasTareas'] = $todasTareas;
+    $datos['idPedido'] = $_GET['id'];
+    $datos["prioridades"] = $this->model->getPrioridades();
+    $datos["estados"] = $this->model->getEstados();
+    $datos['especialidades'] = $this->model->getTareaEspecialidades();
+    return view('verTodasTareas', compact('datos'));
     }
 
     public function modificar(){

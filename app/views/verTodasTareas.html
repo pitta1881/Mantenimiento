@@ -12,23 +12,54 @@
 {% endblock %}
 
 {% block main %}
-<h1>TAREAS</h1>
+<h1>TAREAS CORRESPONDIENTES AL PEDIDO Nº {{ datos.idPedido }} </h1>
+<input type="button" value="CREAR NUEVA TAREA" onclick="mostrarFormulario()">
+<script>
+    function mostrarFormulario() {
+        var formularioTarea = document.getElementById('formularioTarea');
+        if (formularioTarea.style.display == "block") {
+            formularioTarea.style.display = "none";
+        } else {
+            formularioTarea.style.display = "block"
+        }
+    }
+</script>
+<form action="tarea/guardar" method="post" id="formularioTarea" style="display: none">
+    <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+    <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+    <label for="especialidades">Especialidad</label><span class="asterisco">*</span>
+    <select name="especialidades">
+        {% for especialidad in datos.especialidades %}
+        <option value="{{ especialidad }}">{{ especialidad }}</option>
+        {% endfor %}
+    </select>
+    <label for="prioridades">Prioridad</label><span class="asterisco">*</span>
+    <select name="prioridades">
+        {% for prioridad in datos.prioridades %}
+        <option value="{{ prioridad }}">{{ prioridad }}</option>
+        {% endfor %}
+    </select>
+    <label for="estado">Estado</label>
+    <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly>
+    <input type="submit" value="Crear Tarea">
+</form>
 <table>
     <th>Nº Tarea</th>
     <th>Descripcion</th>
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
-    {% for tareas in todasTareas %}
+    {% for tareas in datos.todasTareas %}
     <tr>
-        <td>{{ todasTareas.id }}</td>
-        <td>{{ todasTareas.descripcion }}</td>
-        <td>{{ todasTareas.especializacion }}</td>
-        <td>{{ todasTareas.prioridad }}</td>
-        <td>{{ todasTareas.estado }}</td>
+        <td>{{ tareas.id }}</td>
+        <td>{{ tareas.descripcion }}</td>
+        <td>{{ tareas.especializacion }}</td>
+        <td>{{ tareas.prioridad }}</td>
+        <td>{{ tareas.estado }}</td>
     </tr>
-    {% else %}
-    <h2 class='error'>No hay Tareas asignadas aún</h2>
     {% endfor %}
 </table>
+{% if tareas|length == 0 %}
+<h2 class='error'>No hay Tareas asignadas aún</h2>
+{% endif %}
 {% endblock %}

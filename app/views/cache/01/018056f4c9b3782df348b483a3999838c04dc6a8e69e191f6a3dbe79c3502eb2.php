@@ -38,7 +38,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function block_header($context, array $blocks = array())
     {
-        echo " ";
+        // line 2
         echo twig_include($this->env, $context, "partials/nav.html");
         echo " ";
     }
@@ -51,10 +51,10 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 2
+    // line 3
     public function block_main($context, array $blocks = array())
     {
-        // line 3
+        // line 4
         echo "<h1>Listado de Pedidos</h1>
 <a href=\"/pedido/crear\">
     <input type=\"button\" value=\"Crear Pedido\">
@@ -79,64 +79,69 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <th>Prioridad</th>
     <th>Enlace</th>
     ";
-        // line 26
+        // line 27
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["todosPedidos"] ?? null));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["pedido"]) {
-            // line 27
+            // line 28
             echo "    <tr>
         <td>";
-            // line 28
+            // line 29
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 29
+            // line 30
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "descripcion", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 30
+            // line 31
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "sector", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 31
+            // line 32
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "fechaInicio", array()), "html", null, true);
             echo "</td>
         <td>PROXIMAMENTE</td>
         <td>";
-            // line 33
+            // line 34
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "estado", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 34
+            // line 35
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "prioridad", array()), "html", null, true);
             echo "</td>
         <td>
             <a href='/fichaPedido?id=";
-            // line 36
+            // line 37
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"VER MAS\">
             </a>
             <a href='/pedido/modificar/seleccionado?id=";
-            // line 39
+            // line 40
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"MODIFICAR\">
             </a>
+            <a href='/pedido/verTareas?id=";
+            // line 43
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
+            echo "'>
+                <input type=\"button\" value=\"VER TAREAS\">
         </td>
     </tr>
     ";
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 45
+            // line 48
             echo "    <h2 class='error'>No hay Pedidos</h2> ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pedido'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 46
+        // line 49
         echo "</table>
 ";
     }
@@ -153,12 +158,13 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function getDebugInfo()
     {
-        return array (  140 => 46,  134 => 45,  123 => 39,  117 => 36,  112 => 34,  108 => 33,  103 => 31,  99 => 30,  95 => 29,  91 => 28,  88 => 27,  83 => 26,  58 => 3,  55 => 2,  15 => 1,);
+        return array (  145 => 49,  139 => 48,  129 => 43,  123 => 40,  117 => 37,  112 => 35,  108 => 34,  103 => 32,  99 => 31,  95 => 30,  91 => 29,  88 => 28,  83 => 27,  58 => 4,  55 => 3,  42 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %}
+{{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
 <h1>Listado de Pedidos</h1>
 <a href=\"/pedido/crear\">
@@ -199,12 +205,13 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
                 <input type=\"button\" value=\"MODIFICAR\">
             </a>
+            <a href='/pedido/verTareas?id={{ pedido.id }}'>
+                <input type=\"button\" value=\"VER TAREAS\">
         </td>
     </tr>
     {% else %}
     <h2 class='error'>No hay Pedidos</h2> {% endfor %}
 </table>
-{% endblock %}
-", "verTodosPedidos.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\verTodosPedidos.html");
+{% endblock %}", "verTodosPedidos.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTodosPedidos.html");
     }
 }

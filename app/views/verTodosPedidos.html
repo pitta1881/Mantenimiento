@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+{% extends "base.html" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %}
+{{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <h1>Listado de Pedidos</h1>
 <a href="/pedido/crear">
@@ -39,6 +40,8 @@
             <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
                 <input type="button" value="MODIFICAR">
             </a>
+            <a href='/pedido/verTareas?id={{ pedido.id }}'>
+                <input type="button" value="VER TAREAS">
         </td>
     </tr>
     {% else %}
