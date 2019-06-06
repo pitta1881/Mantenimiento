@@ -72,7 +72,14 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
-
+public function comparaUsuario($table, $usuario )
+{  $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE nombre='{$usuario}'  "
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
     /**
      * Insert a record into a table.
      *
