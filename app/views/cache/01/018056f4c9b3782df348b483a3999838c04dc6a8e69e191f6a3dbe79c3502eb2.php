@@ -31,36 +31,44 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 3
     public function block_title($context, array $blocks = array())
     {
         echo "Lista de Pedidos";
     }
 
-    // line 5
     public function block_header($context, array $blocks = array())
     {
-        // line 6
+        echo " ";
         echo twig_include($this->env, $context, "partials/nav.html");
-        echo "
-";
+        echo " ";
     }
 
-    // line 9
     public function block_head($context, array $blocks = array())
     {
-        // line 10
+        echo " ";
         $this->displayParentBlock("head", $context, $blocks);
         echo "
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\">
-";
+<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 14
+    // line 2
     public function block_main($context, array $blocks = array())
     {
-        // line 15
+        // line 3
         echo "<h1>Listado de Pedidos</h1>
+<a href=\"/pedido/crear\">
+    <input type=\"button\" value=\"Crear Pedido\">
+</a>
+<select>
+    <option value=\"NPedido\">Nº PEDIDO</option>
+    <option value=\"Sector\">SECTOR</option>
+    <option value=\"mercedes\">FECHA INICIO</option>
+    <option value=\"audi\">ESTADO</option>
+    <option value=\"audi\">PRIORIDAD</option>
+</select>
+
+<input type=\"Search\" value=\"Escribe parametro\">
+<input type=\"button\" value=\"Buscar\">
 <table>
     <th>Nº Pedido</th>
     <th>Descripcion</th>
@@ -71,59 +79,64 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <th>Prioridad</th>
     <th>Enlace</th>
     ";
-        // line 25
+        // line 26
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["todosPedidos"] ?? null));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["pedido"]) {
-            // line 26
+            // line 27
             echo "    <tr>
         <td>";
-            // line 27
+            // line 28
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 28
+            // line 29
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "descripcion", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 29
+            // line 30
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "sector", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 30
+            // line 31
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "fechaInicio", array()), "html", null, true);
             echo "</td>
         <td>PROXIMAMENTE</td>
         <td>";
-            // line 32
+            // line 33
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "estado", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 33
+            // line 34
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "prioridad", array()), "html", null, true);
             echo "</td>
-        <td><a href='/fichaPedido?id=";
-            // line 34
+        <td>
+            <a href='/fichaPedido?id=";
+            // line 36
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
-            echo "'><input type=\"button\" value=\"VER MAS\"></a>
+            echo "'>
+                <input type=\"button\" value=\"VER MAS\">
+            </a>
             <a href='/pedido/modificar/seleccionado?id=";
-            // line 35
+            // line 39
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
-            echo "'><input type=\"button\" value=\"MODIFICAR\"></a></td>
+            echo "'>
+                <input type=\"button\" value=\"MODIFICAR\">
+            </a>
+        </td>
     </tr>
     ";
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 38
-            echo "    <h2 class='error'>No hay Pedidos</h2>
-    ";
+            // line 45
+            echo "    <h2 class='error'>No hay Pedidos</h2> ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pedido'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 40
+        // line 46
         echo "</table>
 ";
     }
@@ -140,26 +153,27 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function getDebugInfo()
     {
-        return array (  127 => 40,  120 => 38,  112 => 35,  108 => 34,  104 => 33,  100 => 32,  95 => 30,  91 => 29,  87 => 28,  83 => 27,  80 => 26,  75 => 25,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  140 => 46,  134 => 45,  123 => 39,  117 => 36,  112 => 34,  108 => 33,  103 => 31,  99 => 30,  95 => 29,  91 => 28,  88 => 27,  83 => 26,  58 => 3,  55 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %}
-
-{% block title %}Lista de Pedidos{% endblock %}
-
-{% block header %}
-{{ include('partials/nav.html') }}
-{% endblock %}
-
-{% block head %}
-{{ parent() }}
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\">
-{% endblock %}
-
-{% block main %}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
 <h1>Listado de Pedidos</h1>
+<a href=\"/pedido/crear\">
+    <input type=\"button\" value=\"Crear Pedido\">
+</a>
+<select>
+    <option value=\"NPedido\">Nº PEDIDO</option>
+    <option value=\"Sector\">SECTOR</option>
+    <option value=\"mercedes\">FECHA INICIO</option>
+    <option value=\"audi\">ESTADO</option>
+    <option value=\"audi\">PRIORIDAD</option>
+</select>
+
+<input type=\"Search\" value=\"Escribe parametro\">
+<input type=\"button\" value=\"Buscar\">
 <table>
     <th>Nº Pedido</th>
     <th>Descripcion</th>
@@ -178,13 +192,19 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
         <td>PROXIMAMENTE</td>
         <td>{{ pedido.estado }}</td>
         <td>{{ pedido.prioridad }}</td>
-        <td><a href='/fichaPedido?id={{ pedido.id }}'><input type=\"button\" value=\"VER MAS\"></a>
-            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'><input type=\"button\" value=\"MODIFICAR\"></a></td>
+        <td>
+            <a href='/fichaPedido?id={{ pedido.id }}'>
+                <input type=\"button\" value=\"VER MAS\">
+            </a>
+            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
+                <input type=\"button\" value=\"MODIFICAR\">
+            </a>
+        </td>
     </tr>
     {% else %}
-    <h2 class='error'>No hay Pedidos</h2>
-    {% endfor %}
+    <h2 class='error'>No hay Pedidos</h2> {% endfor %}
 </table>
-{% endblock %}", "verTodosPedidos.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTodosPedidos.html");
+{% endblock %}
+", "verTodosPedidos.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\verTodosPedidos.html");
     }
 }

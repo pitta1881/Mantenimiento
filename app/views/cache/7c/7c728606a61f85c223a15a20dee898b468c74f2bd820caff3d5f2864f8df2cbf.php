@@ -1,7 +1,7 @@
 <?php
 
-/* partials/nav.html */
-class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455e055b extends Twig_Template
+/* partials/navUsuarios.html */
+class __TwigTemplate_8b7346d55849db5b230d9c7ccba8f0c08d8dfc7f503ae3a182cfe3ea60dc7ea3 extends Twig_Template
 {
     private $source;
 
@@ -25,25 +25,21 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
         <li><a href=\"/home\">Home</a></li>
-        <li><a href=\"/about\">Sobre nosotros</a></li>
-        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
-        <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
-        <li><a href=\"/pedido/verTodos\">Ordenes de Trabajo</a></li>
-        <li><a href=\"/pedido/verTodos\">Tareas</a></li>
-        <li>
+       <li><a href=\"/about\">Sobre nosotros</a></li>
+           
+           <li>
             <p class=\"salir\">
                 <a href=\"/\"></a>
                 Desconectar</p>
             <p class=\"user\">Usuario: Administrador</p>
         </li>
     </ol>
-</nav>
-";
+</nav>";
     }
 
     public function getTemplateName()
     {
-        return "partials/nav.html";
+        return "partials/navUsuarios.html";
     }
 
     public function getDebugInfo()
@@ -58,19 +54,15 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
         <li><a href=\"/home\">Home</a></li>
-        <li><a href=\"/about\">Sobre nosotros</a></li>
-        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
-        <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
-        <li><a href=\"/pedido/verTodos\">Ordenes de Trabajo</a></li>
-        <li><a href=\"/pedido/verTodos\">Tareas</a></li>
-        <li>
+       <li><a href=\"/about\">Sobre nosotros</a></li>
+           
+           <li>
             <p class=\"salir\">
                 <a href=\"/\"></a>
                 Desconectar</p>
             <p class=\"user\">Usuario: Administrador</p>
         </li>
     </ol>
-</nav>
-", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>", "partials/navUsuarios.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\navUsuarios.html");
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-/* partials/nav.html */
-class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455e055b extends Twig_Template
+/* partials/navAdminUsuarios.html */
+class __TwigTemplate_d62d58feec8079354a1acd0bf369aa49ed0c9908401570b4e84ff7baf1b1f9fa extends Twig_Template
 {
     private $source;
 
@@ -26,10 +26,12 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
         <li><a href=\"/home\">Home</a></li>
         <li><a href=\"/about\">Sobre nosotros</a></li>
-        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
-        <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
-        <li><a href=\"/pedido/verTodos\">Ordenes de Trabajo</a></li>
-        <li><a href=\"/pedido/verTodos\">Tareas</a></li>
+        <li><a href=\"/usuario/gestionUsuario\">Gestion Usuarios</a></li>
+        <li><a href=\"/usuario/altaUsuario\">Agregar Usuario</a></li>
+        <li><a href=\"/usuario/modificarUsuario\">Modificar Usuario</a></li>
+        <li><a href=\"/usuario/eliminarUsuario\">Eliminar Usuario</a></li>
+
+       
         <li>
             <p class=\"salir\">
                 <a href=\"/\"></a>
@@ -43,7 +45,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getTemplateName()
     {
-        return "partials/nav.html";
+        return "partials/navAdminUsuarios.html";
     }
 
     public function getDebugInfo()
@@ -59,10 +61,12 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
         <li><a href=\"/home\">Home</a></li>
         <li><a href=\"/about\">Sobre nosotros</a></li>
-        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
-        <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
-        <li><a href=\"/pedido/verTodos\">Ordenes de Trabajo</a></li>
-        <li><a href=\"/pedido/verTodos\">Tareas</a></li>
+        <li><a href=\"/usuario/gestionUsuario\">Gestion Usuarios</a></li>
+        <li><a href=\"/usuario/altaUsuario\">Agregar Usuario</a></li>
+        <li><a href=\"/usuario/modificarUsuario\">Modificar Usuario</a></li>
+        <li><a href=\"/usuario/eliminarUsuario\">Eliminar Usuario</a></li>
+
+       
         <li>
             <p class=\"salir\">
                 <a href=\"/\"></a>
@@ -71,6 +75,6 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         </li>
     </ol>
 </nav>
-", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
+", "partials/navAdminUsuarios.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\navAdminUsuarios.html");
     }
 }

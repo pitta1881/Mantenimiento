@@ -1,18 +1,19 @@
-{% extends "base.html" %}
-
-{% block title %}Lista de Pedidos{% endblock %}
-
-{% block header %}
-{{ include('partials/nav.html') }}
-{% endblock %}
-
-{% block head %}
-{{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP">
-{% endblock %}
-
-{% block main %}
+{% extends "base.html" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <h1>Listado de Pedidos</h1>
+<a href="/pedido/crear">
+    <input type="button" value="Crear Pedido">
+</a>
+<select>
+    <option value="NPedido">Nº PEDIDO</option>
+    <option value="Sector">SECTOR</option>
+    <option value="mercedes">FECHA INICIO</option>
+    <option value="audi">ESTADO</option>
+    <option value="audi">PRIORIDAD</option>
+</select>
+
+<input type="Search" value="Escribe parametro">
+<input type="button" value="Buscar">
 <table>
     <th>Nº Pedido</th>
     <th>Descripcion</th>
@@ -31,11 +32,16 @@
         <td>PROXIMAMENTE</td>
         <td>{{ pedido.estado }}</td>
         <td>{{ pedido.prioridad }}</td>
-        <td><a href='/fichaPedido?id={{ pedido.id }}'><input type="button" value="VER MAS"></a>
-            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'><input type="button" value="MODIFICAR"></a></td>
+        <td>
+            <a href='/fichaPedido?id={{ pedido.id }}'>
+                <input type="button" value="VER MAS">
+            </a>
+            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
+                <input type="button" value="MODIFICAR">
+            </a>
+        </td>
     </tr>
     {% else %}
-    <h2 class='error'>No hay Pedidos</h2>
-    {% endfor %}
+    <h2 class='error'>No hay Pedidos</h2> {% endfor %}
 </table>
 {% endblock %}

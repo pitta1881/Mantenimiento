@@ -70,11 +70,20 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 <fieldset class=\"Otros div\">
     <legend>Otros</legend>
-    <input type=\"button\" value=\"Gestion de Agentes\">
-    <input type=\"button\" value=\"Gestion de Especialidades\">
-    <input type=\"button\" value=\"Gestion de Sectores\">
-    <input type=\"button\" value=\"Gestion de Usuarios\">
-    <input type=\"button\" value=\"Gestion de Usuarios\">
+    <nav>
+        <ol>
+            <li> <a href=\"/usuario/gestionUsuario\">Gestion de Usuarios</a></li>
+
+            <!--faltan hacer estas-->
+
+            <li> <a href=\"/usuario/gestionAgentes\">Gestion de Agentes</a></li>
+            <li> <a href=\"/usuario/gestionEspecialidades\">Gestion de Especialidades</a></li>
+            <li> <a href=\"/usuario/gestionSectores\">Gestion de sectores</a></li>
+            <li> <a href=\"/usuario/gestionInformes\">Gestion de Informes</a></li>
+
+
+        </ol>
+    </nav>
 </fieldset>
 
 ";
@@ -114,11 +123,20 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 <fieldset class=\"Otros div\">
     <legend>Otros</legend>
-    <input type=\"button\" value=\"Gestion de Agentes\">
-    <input type=\"button\" value=\"Gestion de Especialidades\">
-    <input type=\"button\" value=\"Gestion de Sectores\">
-    <input type=\"button\" value=\"Gestion de Usuarios\">
-    <input type=\"button\" value=\"Gestion de Usuarios\">
+    <nav>
+        <ol>
+            <li> <a href=\"/usuario/gestionUsuario\">Gestion de Usuarios</a></li>
+
+            <!--faltan hacer estas-->
+
+            <li> <a href=\"/usuario/gestionAgentes\">Gestion de Agentes</a></li>
+            <li> <a href=\"/usuario/gestionEspecialidades\">Gestion de Especialidades</a></li>
+            <li> <a href=\"/usuario/gestionSectores\">Gestion de sectores</a></li>
+            <li> <a href=\"/usuario/gestionInformes\">Gestion de Informes</a></li>
+
+
+        </ol>
+    </nav>
 </fieldset>
 
 {% endblock %}
