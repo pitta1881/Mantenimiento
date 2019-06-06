@@ -59,16 +59,19 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 <a href=\"/pedido/crear\">
     <input type=\"button\" value=\"Crear Pedido\">
 </a>
-<select>
-    <option value=\"NPedido\">Nº PEDIDO</option>
-    <option value=\"Sector\">SECTOR</option>
-    <option value=\"mercedes\">FECHA INICIO</option>
-    <option value=\"audi\">ESTADO</option>
-    <option value=\"audi\">PRIORIDAD</option>
-</select>
+<form action=\"/pedido/buscarPor\" method=\"POST\">
+    <select name=\"filtro\">
+        <option value=\"id\">Nº PEDIDO</option>
+        <option value=\"sector\">SECTOR</option>
+        <option value=\"fechaInicio\">FECHA INICIO</option>
+        <option value=\"estado\">ESTADO</option>
+        <option value=\"prioridad\">PRIORIDAD</option>
+    </select>
 
-<input type=\"Search\" value=\"Escribe parametro\">
-<input type=\"button\" value=\"Buscar\">
+    <input name=\"textBusqueda\" type=\"Search\" placeholder=\"Escribe parametro\">
+    <input type=\"submit\" value=\"Buscar\">
+</form>
+
 <table>
     <th>Nº Pedido</th>
     <th>Descripcion</th>
@@ -79,11 +82,16 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <th>Prioridad</th>
     <th>Enlace</th>
     ";
+<<<<<<< HEAD
         // line 27
+=======
+        // line 29
+>>>>>>> master
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["todosPedidos"] ?? null));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["pedido"]) {
+<<<<<<< HEAD
             // line 28
             echo "    <tr>
         <td>";
@@ -100,26 +108,60 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             echo "</td>
         <td>";
             // line 32
+=======
+            // line 30
+            echo "    <tr>
+        <td>";
+            // line 31
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
+            echo "</td>
+        <td>";
+            // line 32
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "descripcion", array()), "html", null, true);
+            echo "</td>
+        <td>";
+            // line 33
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "sector", array()), "html", null, true);
+            echo "</td>
+        <td>";
+            // line 34
+>>>>>>> master
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "fechaInicio", array()), "html", null, true);
             echo "</td>
         <td>PROXIMAMENTE</td>
         <td>";
+<<<<<<< HEAD
             // line 34
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "estado", array()), "html", null, true);
             echo "</td>
         <td>";
             // line 35
+=======
+            // line 36
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "estado", array()), "html", null, true);
+            echo "</td>
+        <td>";
+            // line 37
+>>>>>>> master
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "prioridad", array()), "html", null, true);
             echo "</td>
         <td>
             <a href='/fichaPedido?id=";
+<<<<<<< HEAD
             // line 37
+=======
+            // line 39
+>>>>>>> master
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"VER MAS\">
             </a>
             <a href='/pedido/modificar/seleccionado?id=";
+<<<<<<< HEAD
             // line 40
+=======
+            // line 42
+>>>>>>> master
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"MODIFICAR\">
@@ -158,7 +200,11 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function getDebugInfo()
     {
+<<<<<<< HEAD
         return array (  145 => 49,  139 => 48,  129 => 43,  123 => 40,  117 => 37,  112 => 35,  108 => 34,  103 => 32,  99 => 31,  95 => 30,  91 => 29,  88 => 28,  83 => 27,  58 => 4,  55 => 3,  42 => 2,  15 => 1,);
+=======
+        return array (  143 => 49,  137 => 48,  126 => 42,  120 => 39,  115 => 37,  111 => 36,  106 => 34,  102 => 33,  98 => 32,  94 => 31,  91 => 30,  86 => 29,  58 => 3,  55 => 2,  15 => 1,);
+>>>>>>> master
     }
 
     public function getSourceContext()
@@ -170,16 +216,19 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 <a href=\"/pedido/crear\">
     <input type=\"button\" value=\"Crear Pedido\">
 </a>
-<select>
-    <option value=\"NPedido\">Nº PEDIDO</option>
-    <option value=\"Sector\">SECTOR</option>
-    <option value=\"mercedes\">FECHA INICIO</option>
-    <option value=\"audi\">ESTADO</option>
-    <option value=\"audi\">PRIORIDAD</option>
-</select>
+<form action=\"/pedido/buscarPor\" method=\"POST\">
+    <select name=\"filtro\">
+        <option value=\"id\">Nº PEDIDO</option>
+        <option value=\"sector\">SECTOR</option>
+        <option value=\"fechaInicio\">FECHA INICIO</option>
+        <option value=\"estado\">ESTADO</option>
+        <option value=\"prioridad\">PRIORIDAD</option>
+    </select>
 
-<input type=\"Search\" value=\"Escribe parametro\">
-<input type=\"button\" value=\"Buscar\">
+    <input name=\"textBusqueda\" type=\"Search\" placeholder=\"Escribe parametro\">
+    <input type=\"submit\" value=\"Buscar\">
+</form>
+
 <table>
     <th>Nº Pedido</th>
     <th>Descripcion</th>

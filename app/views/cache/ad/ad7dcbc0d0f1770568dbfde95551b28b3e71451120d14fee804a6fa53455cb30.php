@@ -281,6 +281,10 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
     <input type=\"reset\">
 </form>
 
+<<<<<<< HEAD
 {% endblock %}", "modificarPedido.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\modificarPedido.html");
+=======
+    {% endblock %}", "modificarPedido.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\modificarPedido.html");
+>>>>>>> master
     }
 }

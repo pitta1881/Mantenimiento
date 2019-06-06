@@ -5,16 +5,19 @@
 <a href="/pedido/crear">
     <input type="button" value="Crear Pedido">
 </a>
-<select>
-    <option value="NPedido">Nº PEDIDO</option>
-    <option value="Sector">SECTOR</option>
-    <option value="mercedes">FECHA INICIO</option>
-    <option value="audi">ESTADO</option>
-    <option value="audi">PRIORIDAD</option>
-</select>
+<form action="/pedido/buscarPor" method="POST">
+    <select name="filtro">
+        <option value="id">Nº PEDIDO</option>
+        <option value="sector">SECTOR</option>
+        <option value="fechaInicio">FECHA INICIO</option>
+        <option value="estado">ESTADO</option>
+        <option value="prioridad">PRIORIDAD</option>
+    </select>
 
-<input type="Search" value="Escribe parametro">
-<input type="button" value="Buscar">
+    <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+    <input type="submit" value="Buscar">
+</form>
+
 <table>
     <th>Nº Pedido</th>
     <th>Descripcion</th>
