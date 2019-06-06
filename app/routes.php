@@ -15,6 +15,9 @@
     $router->get('pedido/verTareas', 'PedidoController@verTareas');
     $router->post('pedido/modificar', 'PedidoController@modificar');
 
+//rutas tareas
+    $router->post('pedido/tarea/guardar', 'TareaController@guardar');
+
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');
 $router->get('usuario/gestionUsuario','UsuariosControler@vistaGestionUsuario');

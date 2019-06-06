@@ -25,16 +25,18 @@
     }
 </script>
 <form action="tarea/guardar" method="post" id="formularioTarea" style="display: none">
+    <label for="idPedido">Pedido</label>
+    <input type="text" name="idPedido" value="{{ datos.idPedido }}" readonly>
     <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
     <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
-    <label for="especialidades">Especialidad</label><span class="asterisco">*</span>
-    <select name="especialidades">
-        {% for especialidad in datos.especialidades %}
-        <option value="{{ especialidad }}">{{ especialidad }}</option>
+    <label for="especializacion">Especializacion</label><span class="asterisco">*</span>
+    <select name="especializacion">
+        {% for especializacion in datos.especializaciones %}
+        <option value="{{ especializacion }}">{{ especializacion }}</option>
         {% endfor %}
     </select>
-    <label for="prioridades">Prioridad</label><span class="asterisco">*</span>
-    <select name="prioridades">
+    <label for="prioridad">Prioridad</label><span class="asterisco">*</span>
+    <select name="prioridad">
         {% for prioridad in datos.prioridades %}
         <option value="{{ prioridad }}">{{ prioridad }}</option>
         {% endfor %}
@@ -51,7 +53,7 @@
     <th>Estado</th>
     {% for tareas in datos.todasTareas %}
     <tr>
-        <td>{{ tareas.id }}</td>
+        <td>{{ tareas.idTarea }}</td>
         <td>{{ tareas.descripcion }}</td>
         <td>{{ tareas.especializacion }}</td>
         <td>{{ tareas.prioridad }}</td>
@@ -59,7 +61,7 @@
     </tr>
     {% endfor %}
 </table>
-{% if tareas|length == 0 %}
+{% if datos.todasTareas|length == 0 %}
 <h2 class='error'>No hay Tareas asignadas aún</h2>
 {% endif %}
 {% endblock %}

@@ -123,10 +123,8 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
             try {
                 $statement = $this->pdo->prepare($sql);
                 $statement->execute($parameters);
-                var_dump($sql);
             } catch (Exception $e) {
                 $this->sendToLog($e);
-                var_dump($sql);
             }   
     }
 
@@ -151,4 +149,23 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
         }
         return $cleaned_params;
     }
+
+    public function idTareaSiguiente($table,$idPedido){
+        $statement = $this->pdo->prepare(
+           "SELECT MAX(idTarea) FROM $table
+        WHERE idPedido = $idPedido"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function countTareasAsignadas($table,$idPedido){ //table = tarea
+        $statement = $this->pdo->prepare(
+           "SELECT COUNT(idTarea) FROM $table
+        WHERE idPedido = $idPedido"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+    
 }

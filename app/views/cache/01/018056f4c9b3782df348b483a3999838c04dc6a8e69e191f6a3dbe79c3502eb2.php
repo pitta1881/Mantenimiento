@@ -105,7 +105,10 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             // line 35
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "fechaInicio", array()), "html", null, true);
             echo "</td>
-        <td>PROXIMAMENTE</td>
+        <td>";
+            // line 36
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "tareasAsignadas", array()), "html", null, true);
+            echo "</td>
         <td>";
             // line 37
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "estado", array()), "html", null, true);
@@ -161,7 +164,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function getDebugInfo()
     {
-        return array (  148 => 52,  142 => 51,  132 => 46,  126 => 43,  120 => 40,  115 => 38,  111 => 37,  106 => 35,  102 => 34,  98 => 33,  94 => 32,  91 => 31,  86 => 30,  58 => 4,  55 => 3,  42 => 2,  15 => 1,);
+        return array (  151 => 52,  145 => 51,  135 => 46,  129 => 43,  123 => 40,  118 => 38,  114 => 37,  110 => 36,  106 => 35,  102 => 34,  98 => 33,  94 => 32,  91 => 31,  86 => 30,  58 => 4,  55 => 3,  42 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -201,7 +204,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
         <td>{{ pedido.descripcion }}</td>
         <td>{{ pedido.sector }}</td>
         <td>{{ pedido.fechaInicio }}</td>
-        <td>PROXIMAMENTE</td>
+        <td>{{ pedido.tareasAsignadas }}</td>
         <td>{{ pedido.estado }}</td>
         <td>{{ pedido.prioridad }}</td>
         <td>

@@ -75,36 +75,41 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
     }
 </script>
 <form action=\"tarea/guardar\" method=\"post\" id=\"formularioTarea\" style=\"display: none\">
+    <label for=\"idPedido\">Pedido</label>
+    <input type=\"text\" name=\"idPedido\" value=\"";
+        // line 29
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "idPedido", array()), "html", null, true);
+        echo "\" readonly>
     <label for=\"descripcion\">Descripcion</label><span class=\"asterisco\">*</span>
     <input type=\"textarea\" name=\"descripcion\" autofocus required placeholder=\"Ingrese la descripcion..\">
-    <label for=\"especialidades\">Especialidad</label><span class=\"asterisco\">*</span>
-    <select name=\"especialidades\">
+    <label for=\"especializacion\">Especializacion</label><span class=\"asterisco\">*</span>
+    <select name=\"especializacion\">
         ";
-        // line 32
+        // line 34
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "especialidades", array()));
-        foreach ($context['_seq'] as $context["_key"] => $context["especialidad"]) {
-            // line 33
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "especializaciones", array()));
+        foreach ($context['_seq'] as $context["_key"] => $context["especializacion"]) {
+            // line 35
             echo "        <option value=\"";
-            echo twig_escape_filter($this->env, $context["especialidad"], "html", null, true);
+            echo twig_escape_filter($this->env, $context["especializacion"], "html", null, true);
             echo "\">";
-            echo twig_escape_filter($this->env, $context["especialidad"], "html", null, true);
+            echo twig_escape_filter($this->env, $context["especializacion"], "html", null, true);
             echo "</option>
         ";
         }
         $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['especialidad'], $context['_parent'], $context['loop']);
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['especializacion'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 35
+        // line 37
         echo "    </select>
-    <label for=\"prioridades\">Prioridad</label><span class=\"asterisco\">*</span>
-    <select name=\"prioridades\">
+    <label for=\"prioridad\">Prioridad</label><span class=\"asterisco\">*</span>
+    <select name=\"prioridad\">
         ";
-        // line 38
+        // line 40
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "prioridades", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["prioridad"]) {
-            // line 39
+            // line 41
             echo "        <option value=\"";
             echo twig_escape_filter($this->env, $context["prioridad"], "html", null, true);
             echo "\">";
@@ -115,11 +120,11 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['prioridad'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 41
+        // line 43
         echo "    </select>
     <label for=\"estado\">Estado</label>
     <input type=\"text\" name=\"estado\" value=\"";
-        // line 43
+        // line 45
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "estados", array()), 0, array()), "html", null, true);
         echo "\" readonly>
     <input type=\"submit\" value=\"Crear Tarea\">
@@ -131,30 +136,30 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
     <th>Prioridad</th>
     <th>Estado</th>
     ";
-        // line 52
+        // line 54
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todasTareas", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["tareas"]) {
-            // line 53
+            // line 55
             echo "    <tr>
         <td>";
-            // line 54
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "id", array()), "html", null, true);
-            echo "</td>
-        <td>";
-            // line 55
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "descripcion", array()), "html", null, true);
-            echo "</td>
-        <td>";
             // line 56
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "especializacion", array()), "html", null, true);
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idTarea", array()), "html", null, true);
             echo "</td>
         <td>";
             // line 57
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "prioridad", array()), "html", null, true);
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "descripcion", array()), "html", null, true);
             echo "</td>
         <td>";
             // line 58
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "especializacion", array()), "html", null, true);
+            echo "</td>
+        <td>";
+            // line 59
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "prioridad", array()), "html", null, true);
+            echo "</td>
+        <td>";
+            // line 60
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "estado", array()), "html", null, true);
             echo "</td>
     </tr>
@@ -163,12 +168,12 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tareas'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 61
+        // line 63
         echo "</table>
 ";
-        // line 62
-        if ((twig_length_filter($this->env, ($context["tareas"] ?? null)) == 0)) {
-            // line 63
+        // line 64
+        if ((twig_length_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todasTareas", array())) == 0)) {
+            // line 65
             echo "<h2 class='error'>No hay Tareas asignadas aún</h2>
 ";
         }
@@ -186,7 +191,7 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
 
     public function getDebugInfo()
     {
-        return array (  172 => 63,  170 => 62,  167 => 61,  158 => 58,  154 => 57,  150 => 56,  146 => 55,  142 => 54,  139 => 53,  135 => 52,  123 => 43,  119 => 41,  108 => 39,  104 => 38,  99 => 35,  88 => 33,  84 => 32,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  177 => 65,  175 => 64,  172 => 63,  163 => 60,  159 => 59,  155 => 58,  151 => 57,  147 => 56,  144 => 55,  140 => 54,  128 => 45,  124 => 43,  113 => 41,  109 => 40,  104 => 37,  93 => 35,  89 => 34,  81 => 29,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -218,16 +223,18 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
     }
 </script>
 <form action=\"tarea/guardar\" method=\"post\" id=\"formularioTarea\" style=\"display: none\">
+    <label for=\"idPedido\">Pedido</label>
+    <input type=\"text\" name=\"idPedido\" value=\"{{ datos.idPedido }}\" readonly>
     <label for=\"descripcion\">Descripcion</label><span class=\"asterisco\">*</span>
     <input type=\"textarea\" name=\"descripcion\" autofocus required placeholder=\"Ingrese la descripcion..\">
-    <label for=\"especialidades\">Especialidad</label><span class=\"asterisco\">*</span>
-    <select name=\"especialidades\">
-        {% for especialidad in datos.especialidades %}
-        <option value=\"{{ especialidad }}\">{{ especialidad }}</option>
+    <label for=\"especializacion\">Especializacion</label><span class=\"asterisco\">*</span>
+    <select name=\"especializacion\">
+        {% for especializacion in datos.especializaciones %}
+        <option value=\"{{ especializacion }}\">{{ especializacion }}</option>
         {% endfor %}
     </select>
-    <label for=\"prioridades\">Prioridad</label><span class=\"asterisco\">*</span>
-    <select name=\"prioridades\">
+    <label for=\"prioridad\">Prioridad</label><span class=\"asterisco\">*</span>
+    <select name=\"prioridad\">
         {% for prioridad in datos.prioridades %}
         <option value=\"{{ prioridad }}\">{{ prioridad }}</option>
         {% endfor %}
@@ -244,7 +251,7 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
     <th>Estado</th>
     {% for tareas in datos.todasTareas %}
     <tr>
-        <td>{{ tareas.id }}</td>
+        <td>{{ tareas.idTarea }}</td>
         <td>{{ tareas.descripcion }}</td>
         <td>{{ tareas.especializacion }}</td>
         <td>{{ tareas.prioridad }}</td>
@@ -252,7 +259,7 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
     </tr>
     {% endfor %}
 </table>
-{% if tareas|length == 0 %}
+{% if datos.todasTareas|length == 0 %}
 <h2 class='error'>No hay Tareas asignadas aún</h2>
 {% endif %}
 {% endblock %}", "verTodasTareas.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTodasTareas.html");

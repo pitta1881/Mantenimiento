@@ -58,12 +58,18 @@ class Pedido extends Model{
     }
 
 
-    public function getTareasByIdPedido($id){
-        return $this->db->selectTareasPorNPedido($this->tableTarea,$id);
+    public function getTareasByIdPedido($idPedido){
+        return $this->db->selectTareasPorNPedido($this->tableTarea,$idPedido);
     }
 
-    public function getTareaEspecialidades(){
+    public function getTareasAsignadasAPedido($idPedido){
+        $contadorTareasObj = $this->db->countTareasAsignadas($this->tableTarea,$idPedido);
+     //   echo $contadorTareasObj[0][0];
+        return $contadorTareasObj[0][0];
+    }
+
+    public function getTareaEspecializaciones(){
         $tarea = new Tarea();
-        return $tarea->getEspecialidades();
+        return $tarea->getEspecializaciones();
     }    
 }

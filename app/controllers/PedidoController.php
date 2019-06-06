@@ -14,6 +14,13 @@ class PedidoController extends Controller{
     /*Show all pedidos*/
     public function index(){
         $todosPedidos = $this->model->get();
+        foreach ($todosPedidos as $indice => $datos) {
+            foreach ($datos as $key => $value) {
+                if ($key == 'id') {
+                    $todosPedidos[$indice]['tareasAsignadas'] = $this->model->getTareasAsignadasAPedido($value);
+                }
+            }
+        }        
         return view('verTodosPedidos', compact('todosPedidos'));
     }
 
@@ -86,7 +93,7 @@ class PedidoController extends Controller{
     $datos['idPedido'] = $_GET['id'];
     $datos["prioridades"] = $this->model->getPrioridades();
     $datos["estados"] = $this->model->getEstados();
-    $datos['especialidades'] = $this->model->getTareaEspecialidades();
+    $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
     return view('verTodasTareas', compact('datos'));
     }
 
