@@ -2,12 +2,16 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <fieldset class="Insumos div">
     <legend>Insumos</legend>
+
     <input type="button" value="Gestion de Insumos">
     <input type="button" value="Gestion de Ordenes de Compra">
 </fieldset>
 <fieldset class="general div">
     <legend>General</legend>
-    <input type="button" value="Gestion de Pedidos">
+    <a href="/pedido/verTodos">
+        <input type="button" value="Gestion de Pedidos">
+    </a>
+
     <input type="button" value="Gestion de Ordenes de Trabajo">
     <input type="button" value="Gestion de Actividades">
     <input type="button" value="Gestion de Tareas">

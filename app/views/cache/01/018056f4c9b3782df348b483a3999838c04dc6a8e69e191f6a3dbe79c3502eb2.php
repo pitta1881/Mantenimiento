@@ -67,7 +67,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <option value=\"audi\">PRIORIDAD</option>
 </select>
 
-<input type=\"Search\" value=\"Escribe parametro\">
+<input type=\"Search\" placeholder=\"Escribe parametro\">
 <input type=\"button\" value=\"Buscar\">
 <table>
     <th>Nº Pedido</th>
@@ -172,7 +172,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <option value=\"audi\">PRIORIDAD</option>
 </select>
 
-<input type=\"Search\" value=\"Escribe parametro\">
+<input type=\"Search\" placeholder=\"Escribe parametro\">
 <input type=\"button\" value=\"Buscar\">
 <table>
     <th>Nº Pedido</th>
