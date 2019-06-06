@@ -9,7 +9,7 @@ class PagesController
      */
     public function home()
     {
-        return view('index');
+        return view('index.home');
     }
 
     /**
@@ -20,5 +20,11 @@ class PagesController
         $company = 'Laracasts';
 
         return view('about', ['company' => $company]);
+    }
+    public function login()
+    {
+        $company = 'Laracasts';
+
+        return view('index');
     }
 }

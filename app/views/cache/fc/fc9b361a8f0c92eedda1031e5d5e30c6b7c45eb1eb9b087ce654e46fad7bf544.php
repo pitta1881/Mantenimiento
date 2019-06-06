@@ -55,27 +55,28 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
     public function block_main($context, array $blocks = array())
     {
         // line 3
-        echo "<fieldset class=\"basicosPedido\">
+        echo "<fieldset class=\"Insumos div\">
+    <legend>Insumos</legend>
+    <input type=\"button\" value=\"Gestion de Insumos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Compra\">
+</fieldset>
+<fieldset class=\"general div\">
     <legend>General</legend>
     <input type=\"button\" value=\"Gestion de Pedidos\">
     <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
     <input type=\"button\" value=\"Gestion de Actividades\">
     <input type=\"button\" value=\"Gestion de Tareas\">
 </fieldset>
-<fieldset class=\"prioridad\">
-    <legend>Insumos<span class=\"asterisco\">*</span></legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
+
+<fieldset class=\"Otros div\">
+    <legend>Otros</legend>
+    <input type=\"button\" value=\"Gestion de Agentes\">
+    <input type=\"button\" value=\"Gestion de Especialidades\">
+    <input type=\"button\" value=\"Gestion de Sectores\">
+    <input type=\"button\" value=\"Gestion de Usuarios\">
+    <input type=\"button\" value=\"Gestion de Usuarios\">
 </fieldset>
-<fieldset class=\"\">
-    <legend>Otros<span class=\"asterisco\">*</span></legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
-</fieldset>
+
 ";
     }
 
@@ -98,27 +99,28 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
     {
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
-<fieldset class=\"basicosPedido\">
+<fieldset class=\"Insumos div\">
+    <legend>Insumos</legend>
+    <input type=\"button\" value=\"Gestion de Insumos\">
+    <input type=\"button\" value=\"Gestion de Ordenes de Compra\">
+</fieldset>
+<fieldset class=\"general div\">
     <legend>General</legend>
     <input type=\"button\" value=\"Gestion de Pedidos\">
     <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
     <input type=\"button\" value=\"Gestion de Actividades\">
     <input type=\"button\" value=\"Gestion de Tareas\">
 </fieldset>
-<fieldset class=\"prioridad\">
-    <legend>Insumos<span class=\"asterisco\">*</span></legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
+
+<fieldset class=\"Otros div\">
+    <legend>Otros</legend>
+    <input type=\"button\" value=\"Gestion de Agentes\">
+    <input type=\"button\" value=\"Gestion de Especialidades\">
+    <input type=\"button\" value=\"Gestion de Sectores\">
+    <input type=\"button\" value=\"Gestion de Usuarios\">
+    <input type=\"button\" value=\"Gestion de Usuarios\">
 </fieldset>
-<fieldset class=\"\">
-    <legend>Otros<span class=\"asterisco\">*</span></legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
-</fieldset>
+
 {% endblock %}
 ", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
     }

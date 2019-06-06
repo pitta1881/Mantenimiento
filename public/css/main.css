@@ -98,8 +98,6 @@ input,
 select {
     color: rgb(50, 50, 50);
     margin-bottom: 1em;
-    width: 100%;
-    width: 40%;
     padding: 4px 10px;
     margin-bottom: 12px;
     box-sizing: border-box;
@@ -175,6 +173,86 @@ dd {
     margin: 1px;
     padding: 10px;
     background-color: gray;
+}
+.div input {
+    border-color: black;
+    border: 1px;
+    margin: 0 0 0 0;
+    top: 8px;
+    height: 60px;
+    width: 160px;
+    list-style-type: none;
+    margin: 0px;
+    padding: 20px 0px;
+    /* width: 100%; */
+    background-color: #f1f1f1;
+    color: black;
+    display: inline;
+}
+.div input:hover {
+    border-color: black;
+    border: 1px;
+    margin: 0 0 0 0;
+    top: 8px;
+    height: 60px;
+    width: 160px;
+    list-style-type: none;
+    margin: 0px;
+    padding: 20px 0px;
+    /* width: 100%; */
+    background-color: #F27329;
+    color: black;
+    display: inline;
+}
+.general {
+    top: 50px;
+    left: 500px;
+    position: absolute;
+    height: 300px;
+    width: 120px;
+    display: flex;
+}
+.Insumos {
+    top: 50px;
+    left: 250px;
+    position: absolute;
+    height: 140px;
+    width: 120px;
+    display: flex;
+}
+.Otros {
+    top: 50px;
+    left: 750px;
+    position: absolute;
+    height: 320px;
+    width: 120px;
+    display: flex;
+}
+legend {
+    text-align: center;
+}
+.salir {
+    border-color: black;
+    border: 1px;
+    height: 19px;
+    position: absolute;
+    top: 30px;
+    right: 28px;
+}
+.salir a {
+    height: 15px;
+    position: absolute;
+    top: -8px;
+    right: -15px;
+}
+.user {
+    color: white;
+    position: absolute;
+    margin: 0 0 0 0;
+    right: 60px;
+    top: 6px;
+    height: 59px;
+    width: 60px;
 }
 
 /*

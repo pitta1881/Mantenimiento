@@ -135,6 +135,10 @@ class __TwigTemplate_4e232d987c1e4a771d96f5e621061f9f2933d8f4b59345245326d41aa63
     <dt>Prioridad:</dt>
     <dd>{{ arrayPedido.prioridad }}</dd>
 </dl>
+<<<<<<< HEAD
 {% endblock %}", "verPedidoCreado.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verPedidoCreado.html");
+=======
+{% endblock %}", "verPedidoCreado.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\verPedidoCreado.html");
+>>>>>>> master
     }
 }
