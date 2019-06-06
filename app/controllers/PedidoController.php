@@ -110,7 +110,7 @@ class PedidoController extends Controller{
      }
     
     
-       public function buscarpor(){
+       public function buscarPor(){
         $filter = $_POST['filtro'];
         $value = $_POST['textBusqueda'];
         $todosPedidos = $this->model->getAllbyFilter($filter,$value);
