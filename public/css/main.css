@@ -158,6 +158,8 @@ dd {
     background-color: gray;
 }
 .div input {
+    border-color: black;
+    border: 1px;
     margin: 0 0 0 0;
     top: 8px;
     height: 60px;
@@ -171,6 +173,8 @@ dd {
     display: inline;
 }
 .div input:hover {
+    border-color: black;
+    border: 1px;
     margin: 0 0 0 0;
     top: 8px;
     height: 60px;
@@ -211,10 +215,18 @@ legend {
     text-align: center;
 }
 .salir {
+    border-color: black;
+    border: 1px;
     height: 19px;
     position: absolute;
-    top: 44px;
-    right: 24px;
+    top: 30px;
+    right: 28px;
+}
+.salir a {
+    height: 15px;
+    position: absolute;
+    top: -8px;
+    right: -15px;
 }
 .user {
     color: white;
