@@ -88,4 +88,27 @@ class PedidoController extends Controller
         return view('modificarPedido',compact('arrayDatos'));
     }
 
+    public function verTareas(){
+    $todasTareas = $this->model->getTareasByIdPedido($_GET['id']);
+    return view('verTodasTareas', compact('todasTareas'));
+    }
+
+    public function modificar(){
+       $arrayPedido = $this->saveModificar();
+       return view('verPedidoCreado',compact('arrayPedido'));
+     }
+
+     public function saveModificar()
+     {
+        $idPedido = $_POST['id'];
+         $pedido = [
+             'fechaInicio' => $_POST['fechaInicio'],
+             'estado' => $_POST['estado'],
+             'descripcion' => $_POST['descripcion'],
+             'sector' => preg_replace('/\s+/', '_', $_POST['sector']),
+             'prioridad' => $_POST['prioridad']
+         ];
+         $this->model->update($pedido,$idPedido);
+         return $pedido;
+     }
 }

@@ -8,6 +8,8 @@
     $router->get('pedido/crear', 'PedidoController@create');    
     $router->post('pedido/validar', 'PedidoController@validar');
     $router->get('pedido/modificar/seleccionado', 'PedidoController@modificarPedidoSeleccionado');
+    $router->get('pedido/verTareas', 'PedidoController@verTareas');
+    $router->post('pedido/modificar', 'PedidoController@modificar');
 
     $router->post('login/validar', 'LoginController@validarLogin');
 

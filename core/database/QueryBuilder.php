@@ -53,6 +53,15 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
     
+    public function selectTareasPorNPedido($table, $numero){ //table = tarea
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idPedido={$numero}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
     
     public function validarLogin($table, $usuario ,$password)
     {
@@ -86,6 +95,27 @@ class QueryBuilder
         } catch (Exception $e) {
             $this->sendToLog($e);
         }
+        
+    }
+
+    /**
+     * update a record .
+     *
+     * @param  string $table
+     * @param  array  $parameters
+     */
+    public function update($table, $parameters, $id)
+    {
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET fechaInicio=:fechaInicio, estado=:estado, descripcion=:descripcion, sector=:sector, prioridad=:prioridad WHERE id=$id"; //recontra HARDCODEADO
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+                var_dump($sql);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+                var_dump($sql);
+            }   
     }
 
     private function sendToLog(Exception $e)

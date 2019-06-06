@@ -7,6 +7,7 @@ use App\Core\Model;
 class Pedido extends Model
 {
     protected $table = 'pedido';
+    protected $tableTarea = 'tarea';
 
     //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getSectores() {
@@ -33,24 +34,28 @@ class Pedido extends Model
     }
 
     public function getByIdPedido($id)
-    {
-        
+    {        
         $pedido = $this->db->selectNumeroPedido($this->table,$id);
         $miPedido = json_decode(json_encode($pedido), True);
         $miPedido[0]['sector'] = str_replace("_"," ",$miPedido[0]['sector']);
         return $miPedido;
     }
 
+    public function insert(array $pedido)
+    {
+        $this->db->insert($this->table, $pedido);
+    }
+
+    public function update (array $pedidoModificado,$idPedido)
+    {
+        $this->db->update($this->table, $pedidoModificado,$idPedido);
+    }
+
+
     public function getTareasByIdPedido($id)
     {
-        return [];
+        return $this->db->selectTareasPorNPedido($this->tableTarea,$id);
     }
     
-
-    public function insert(array $turnosFormulario)
-    {
-        $this->db->insert($this->table, $turnosFormulario);
-    }
-
     
 }

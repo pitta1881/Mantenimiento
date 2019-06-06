@@ -20,6 +20,7 @@
     <th>Fecha Inicio</th>
     <th>Tareas Asignadas</th>
     <th>Estado</th>
+    <th>Prioridad</th>
     <th>Enlace</th>
     {% for pedido in todosPedidos %}
     <tr>
@@ -29,6 +30,7 @@
         <td>{{ pedido.fechaInicio }}</td>
         <td>PROXIMAMENTE</td>
         <td>{{ pedido.estado }}</td>
+        <td>{{ pedido.prioridad }}</td>
         <td><a href='/fichaPedido?id={{ pedido.id }}'><input type="button" value="VER MAS"></a>
             <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'><input type="button" value="MODIFICAR"></a></td>
     </tr>

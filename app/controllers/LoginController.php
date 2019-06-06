@@ -21,12 +21,6 @@ class LoginController extends Controller{
          return view ('index');
      }else{
         return view ('index.home');
-          
-        }
-        
+        }       
     }
-
-               
-
-
 }

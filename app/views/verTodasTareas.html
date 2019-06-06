@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block header %}
+{{ include('partials/nav.html') }}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h1>TAREAS</h1>
+<table>
+    <th>Nº Tarea</th>
+    <th>Descripcion</th>
+    <th>Especializacion</th>
+    <th>Prioridad</th>
+    <th>Estado</th>
+    {% for tareas in todasTareas %}
+    <tr>
+        <td>{{ todasTareas.id }}</td>
+        <td>{{ todasTareas.descripcion }}</td>
+        <td>{{ todasTareas.especializacion }}</td>
+        <td>{{ todasTareas.prioridad }}</td>
+        <td>{{ todasTareas.estado }}</td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Tareas asignadas aún</h2>
+    {% endfor %}
+</table>
+{% endblock %}

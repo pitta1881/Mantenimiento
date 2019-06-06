@@ -60,30 +60,37 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
     public function block_main($context, array $blocks = array())
     {
         // line 15
-        echo "<h2>Modificar Pedido</h2>
-<form action=\"/pedido/validar\" method=\"POST\">
+        echo "<h2>Modificar Pedido Nº ";
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
+        echo "</h2>
+<form action=\"/pedido/modificar\" method=\"POST\">
     <fieldset>
         <legend>Datos Basicos</legend>
+        <label for=\"id\">Numero de Pedido</label>
+        <input type=\"text\" name=\"id\" value=\"";
+        // line 20
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
+        echo "\" readonly>
         <label for=\"fechaInicio\">Fecha</label>
         <input type=\"date\" name=\"fechaInicio\" value=\"";
-        // line 20
+        // line 22
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "fechaInicio", array()), "html", null, true);
         echo "\"
             min=\"";
-        // line 21
+        // line 23
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "fechaInicio", array()), "html", null, true);
         echo "\">
         <label for=\"estado\">Estado</label>
         <select name=\"estado\">
             ";
-        // line 24
+        // line 26
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "estados", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["estado"]) {
-            // line 25
+            // line 27
             echo "            ";
             if (($context["estado"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "estado", array()))) {
-                // line 26
+                // line 28
                 echo "            <option value=";
                 echo twig_escape_filter($this->env, $context["estado"], "html", null, true);
                 echo " selected>";
@@ -91,7 +98,7 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
                 echo " </option>
             ";
             } else {
-                // line 28
+                // line 30
                 echo "            <option value=";
                 echo twig_escape_filter($this->env, $context["estado"], "html", null, true);
                 echo ">";
@@ -99,40 +106,40 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
                 echo "</option>
             ";
             }
-            // line 30
+            // line 32
             echo "            ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['estado'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 31
+        // line 33
         echo "        </select>
         <label for=\"descripcion\">Descripcion</label><span class=\"asterisco\">*</span>
         <input type=\"text\" name=\"descripcion\" autofocus required value=\"";
-        // line 33
+        // line 35
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "descripcion", array()), "html", null, true);
         echo "\">
         <label for=\"sector\">Sector</label>
         <select name=\"sector\">
             ";
-        // line 36
+        // line 38
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "sectores", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["sector"]) {
-            // line 37
+            // line 39
             echo "            ";
             if (($context["sector"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "sector", array()))) {
-                // line 38
+                // line 40
                 echo "            <!--NO FUNCIONA, SEGURO EL TEMA DE LOS ESPACIOS-->
             <option value=";
-                // line 39
+                // line 41
                 echo twig_escape_filter($this->env, $context["sector"], "html", null, true);
                 echo " selected>";
                 echo twig_escape_filter($this->env, $context["sector"], "html", null, true);
                 echo "</option>
             ";
             } else {
-                // line 41
+                // line 43
                 echo "            <option value=";
                 echo twig_escape_filter($this->env, $context["sector"], "html", null, true);
                 echo ">";
@@ -140,57 +147,62 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
                 echo "</option>
             ";
             }
-            // line 43
+            // line 45
             echo "            ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['sector'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 44
+        // line 46
         echo "        </select>
     </fieldset>
     <fieldset>
         <legend>Prioridad<span class=\"asterisco\">*</span></legend>
         ";
-        // line 48
+        // line 50
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "prioridades", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["prioridad"]) {
-            // line 49
+            // line 51
             echo "        ";
             if (($context["prioridad"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "prioridad", array()))) {
-                // line 50
+                // line 52
                 echo "        <label class=\"labelRadioInput\"><input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required checked
                 value=\"";
-                // line 51
+                // line 53
                 echo twig_escape_filter($this->env, $context["prioridad"], "html", null, true);
                 echo "\">";
                 echo twig_escape_filter($this->env, $context["prioridad"], "html", null, true);
                 echo "</label>
         ";
             } else {
-                // line 53
+                // line 55
                 echo "        <label class=\"labelRadioInput\"><input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required
                 value=\"";
-                // line 54
+                // line 56
                 echo twig_escape_filter($this->env, $context["prioridad"], "html", null, true);
                 echo "\">";
                 echo twig_escape_filter($this->env, $context["prioridad"], "html", null, true);
                 echo "</label>
         ";
             }
-            // line 56
+            // line 58
             echo "        ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['prioridad'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 57
+        // line 59
         echo "    </fieldset>
     <input type=\"submit\">
     <input type=\"reset\">
 </form>
-";
+<a href='/pedido/verTareas?id=";
+        // line 63
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
+        echo "'><input type=\"button\" value=\"VER TAREAS\">
+
+    ";
     }
 
     public function getTemplateName()
@@ -205,7 +217,7 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
 
     public function getDebugInfo()
     {
-        return array (  189 => 57,  183 => 56,  176 => 54,  173 => 53,  166 => 51,  163 => 50,  160 => 49,  156 => 48,  150 => 44,  144 => 43,  136 => 41,  129 => 39,  126 => 38,  123 => 37,  119 => 36,  113 => 33,  109 => 31,  103 => 30,  95 => 28,  87 => 26,  84 => 25,  80 => 24,  74 => 21,  70 => 20,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  202 => 63,  196 => 59,  190 => 58,  183 => 56,  180 => 55,  173 => 53,  170 => 52,  167 => 51,  163 => 50,  157 => 46,  151 => 45,  143 => 43,  136 => 41,  133 => 40,  130 => 39,  126 => 38,  120 => 35,  116 => 33,  110 => 32,  102 => 30,  94 => 28,  91 => 27,  87 => 26,  81 => 23,  77 => 22,  72 => 20,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -224,10 +236,12 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
 {% endblock %}
 
 {% block main %}
-<h2>Modificar Pedido</h2>
-<form action=\"/pedido/validar\" method=\"POST\">
+<h2>Modificar Pedido Nº {{ arrayDatos.miPedido.id }}</h2>
+<form action=\"/pedido/modificar\" method=\"POST\">
     <fieldset>
         <legend>Datos Basicos</legend>
+        <label for=\"id\">Numero de Pedido</label>
+        <input type=\"text\" name=\"id\" value=\"{{ arrayDatos.miPedido.id }}\" readonly>
         <label for=\"fechaInicio\">Fecha</label>
         <input type=\"date\" name=\"fechaInicio\" value=\"{{ arrayDatos.miPedido.fechaInicio }}\"
             min=\"{{ arrayDatos.miPedido.fechaInicio }}\">
@@ -270,6 +284,8 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
     <input type=\"submit\">
     <input type=\"reset\">
 </form>
-{% endblock %}", "modificarPedido.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\modificarPedido.html");
+<a href='/pedido/verTareas?id={{ arrayDatos.miPedido.id }}'><input type=\"button\" value=\"VER TAREAS\">
+
+    {% endblock %}", "modificarPedido.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\modificarPedido.html");
     }
 }

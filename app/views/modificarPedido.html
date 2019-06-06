@@ -12,10 +12,12 @@
 {% endblock %}
 
 {% block main %}
-<h2>Modificar Pedido</h2>
-<form action="/pedido/validar" method="POST">
+<h2>Modificar Pedido Nº {{ arrayDatos.miPedido.id }}</h2>
+<form action="/pedido/modificar" method="POST">
     <fieldset>
         <legend>Datos Basicos</legend>
+        <label for="id">Numero de Pedido</label>
+        <input type="text" name="id" value="{{ arrayDatos.miPedido.id }}" readonly>
         <label for="fechaInicio">Fecha</label>
         <input type="date" name="fechaInicio" value="{{ arrayDatos.miPedido.fechaInicio }}"
             min="{{ arrayDatos.miPedido.fechaInicio }}">
@@ -58,4 +60,6 @@
     <input type="submit">
     <input type="reset">
 </form>
-{% endblock %}
+<a href='/pedido/verTareas?id={{ arrayDatos.miPedido.id }}'><input type="button" value="VER TAREAS">
+
+    {% endblock %}

@@ -68,42 +68,47 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <th>Fecha Inicio</th>
     <th>Tareas Asignadas</th>
     <th>Estado</th>
+    <th>Prioridad</th>
     <th>Enlace</th>
     ";
-        // line 24
+        // line 25
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["todosPedidos"] ?? null));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["pedido"]) {
-            // line 25
+            // line 26
             echo "    <tr>
         <td>";
-            // line 26
+            // line 27
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 27
+            // line 28
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "descripcion", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 28
+            // line 29
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "sector", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 29
+            // line 30
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "fechaInicio", array()), "html", null, true);
             echo "</td>
         <td>PROXIMAMENTE</td>
         <td>";
-            // line 31
+            // line 32
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "estado", array()), "html", null, true);
             echo "</td>
+        <td>";
+            // line 33
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "prioridad", array()), "html", null, true);
+            echo "</td>
         <td><a href='/fichaPedido?id=";
-            // line 32
+            // line 34
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'><input type=\"button\" value=\"VER MAS\"></a>
             <a href='/pedido/modificar/seleccionado?id=";
-            // line 33
+            // line 35
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'><input type=\"button\" value=\"MODIFICAR\"></a></td>
     </tr>
@@ -111,14 +116,14 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 36
+            // line 38
             echo "    <h2 class='error'>No hay Pedidos</h2>
     ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pedido'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 38
+        // line 40
         echo "</table>
 ";
     }
@@ -135,7 +140,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function getDebugInfo()
     {
-        return array (  122 => 38,  115 => 36,  107 => 33,  103 => 32,  99 => 31,  94 => 29,  90 => 28,  86 => 27,  82 => 26,  79 => 25,  74 => 24,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  127 => 40,  120 => 38,  112 => 35,  108 => 34,  104 => 33,  100 => 32,  95 => 30,  91 => 29,  87 => 28,  83 => 27,  80 => 26,  75 => 25,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -162,6 +167,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <th>Fecha Inicio</th>
     <th>Tareas Asignadas</th>
     <th>Estado</th>
+    <th>Prioridad</th>
     <th>Enlace</th>
     {% for pedido in todosPedidos %}
     <tr>
@@ -171,6 +177,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
         <td>{{ pedido.fechaInicio }}</td>
         <td>PROXIMAMENTE</td>
         <td>{{ pedido.estado }}</td>
+        <td>{{ pedido.prioridad }}</td>
         <td><a href='/fichaPedido?id={{ pedido.id }}'><input type=\"button\" value=\"VER MAS\"></a>
             <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'><input type=\"button\" value=\"MODIFICAR\"></a></td>
     </tr>
@@ -178,6 +185,6 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <h2 class='error'>No hay Pedidos</h2>
     {% endfor %}
 </table>
-{% endblock %}", "verTodosPedidos.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\verTodosPedidos.html");
+{% endblock %}", "verTodosPedidos.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTodosPedidos.html");
     }
 }
