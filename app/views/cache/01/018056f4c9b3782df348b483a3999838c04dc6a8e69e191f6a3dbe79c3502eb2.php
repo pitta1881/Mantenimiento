@@ -59,16 +59,19 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 <a href=\"/pedido/crear\">
     <input type=\"button\" value=\"Crear Pedido\">
 </a>
-<select>
-    <option value=\"NPedido\">Nº PEDIDO</option>
-    <option value=\"Sector\">SECTOR</option>
-    <option value=\"mercedes\">FECHA INICIO</option>
-    <option value=\"audi\">ESTADO</option>
-    <option value=\"audi\">PRIORIDAD</option>
-</select>
+<form action=\"/pedido/buscarPor\" method=\"POST\">
+    <select name=\"filtro\">
+        <option value=\"id\">Nº PEDIDO</option>
+        <option value=\"sector\">SECTOR</option>
+        <option value=\"fechaInicio\">FECHA INICIO</option>
+        <option value=\"estado\">ESTADO</option>
+        <option value=\"prioridad\">PRIORIDAD</option>
+    </select>
 
-<input type=\"Search\" placeholder=\"Escribe parametro\">
-<input type=\"button\" value=\"Buscar\">
+    <input name=\"textBusqueda\" type=\"Search\" placeholder=\"Escribe parametro\">
+    <input type=\"submit\" value=\"Buscar\">
+</form>
+
 <table>
     <th>Nº Pedido</th>
     <th>Descripcion</th>
@@ -79,47 +82,47 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     <th>Prioridad</th>
     <th>Enlace</th>
     ";
-        // line 26
+        // line 29
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["todosPedidos"] ?? null));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["pedido"]) {
-            // line 27
+            // line 30
             echo "    <tr>
         <td>";
-            // line 28
+            // line 31
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 29
+            // line 32
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "descripcion", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 30
+            // line 33
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "sector", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 31
+            // line 34
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "fechaInicio", array()), "html", null, true);
             echo "</td>
         <td>PROXIMAMENTE</td>
         <td>";
-            // line 33
+            // line 36
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "estado", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 34
+            // line 37
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "prioridad", array()), "html", null, true);
             echo "</td>
         <td>
             <a href='/fichaPedido?id=";
-            // line 36
+            // line 39
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"VER MAS\">
             </a>
             <a href='/pedido/modificar/seleccionado?id=";
-            // line 39
+            // line 42
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"MODIFICAR\">
@@ -130,13 +133,13 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 45
+            // line 48
             echo "    <h2 class='error'>No hay Pedidos</h2> ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pedido'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 46
+        // line 49
         echo "</table>
 ";
     }
@@ -153,7 +156,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function getDebugInfo()
     {
-        return array (  140 => 46,  134 => 45,  123 => 39,  117 => 36,  112 => 34,  108 => 33,  103 => 31,  99 => 30,  95 => 29,  91 => 28,  88 => 27,  83 => 26,  58 => 3,  55 => 2,  15 => 1,);
+        return array (  143 => 49,  137 => 48,  126 => 42,  120 => 39,  115 => 37,  111 => 36,  106 => 34,  102 => 33,  98 => 32,  94 => 31,  91 => 30,  86 => 29,  58 => 3,  55 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -164,16 +167,19 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 <a href=\"/pedido/crear\">
     <input type=\"button\" value=\"Crear Pedido\">
 </a>
-<select>
-    <option value=\"NPedido\">Nº PEDIDO</option>
-    <option value=\"Sector\">SECTOR</option>
-    <option value=\"mercedes\">FECHA INICIO</option>
-    <option value=\"audi\">ESTADO</option>
-    <option value=\"audi\">PRIORIDAD</option>
-</select>
+<form action=\"/pedido/buscarPor\" method=\"POST\">
+    <select name=\"filtro\">
+        <option value=\"id\">Nº PEDIDO</option>
+        <option value=\"sector\">SECTOR</option>
+        <option value=\"fechaInicio\">FECHA INICIO</option>
+        <option value=\"estado\">ESTADO</option>
+        <option value=\"prioridad\">PRIORIDAD</option>
+    </select>
 
-<input type=\"Search\" placeholder=\"Escribe parametro\">
-<input type=\"button\" value=\"Buscar\">
+    <input name=\"textBusqueda\" type=\"Search\" placeholder=\"Escribe parametro\">
+    <input type=\"submit\" value=\"Buscar\">
+</form>
+
 <table>
     <th>Nº Pedido</th>
     <th>Descripcion</th>

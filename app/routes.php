@@ -10,6 +10,7 @@
     $router->get('fichaPedido', 'PedidoController@ficha');
     $router->get('pedido/crear', 'PedidoController@create');    
     $router->post('pedido/validar', 'PedidoController@validar');
+ $router->post('pedido/buscar', 'PedidoController@buscarpor');
     $router->get('pedido/modificar/seleccionado', 'PedidoController@modificarPedidoSeleccionado');
     $router->get('pedido/verTareas', 'PedidoController@verTareas');
     $router->post('pedido/modificar', 'PedidoController@modificar');

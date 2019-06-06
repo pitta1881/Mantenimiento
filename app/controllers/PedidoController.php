@@ -5,23 +5,19 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Pedido;
 
-class PedidoController extends Controller
-{
-    public function __construct()
-    {
+class PedidoController extends Controller{
+    public function __construct(){
         $this->model = new Pedido();
     }
 
     /*Show all pedidos*/
-    public function index()
-    {
+    public function index(){
         $todosPedidos = $this->model->get();
         return view('verTodosPedidos', compact('todosPedidos'));
     }
 
     /*muestra un solo pedido especifico ingresado por GET*/
-    public function ficha()
-    {
+    public function ficha(){
         $unPedido = $this->model->getByIdPedido($_GET['id']);
         $miPedido = $unPedido[0];        //hago esto xq nose como es q toma que necesito solo el 1er elemento del array
         $tareas = $this->model->getTareasByIdPedido($_GET['id']); //todavia no está esto
@@ -110,5 +106,15 @@ class PedidoController extends Controller
          ];
          $this->model->update($pedido,$idPedido);
          return $pedido;
+     }
+    
+    
+       public function buscarpor(){
+        $filter = $_POST['filtro'];
+        $value = $_POST['textBusqueda'];
+        $todosPedidos = $this->model->getAllbyFilter($filter,$value);
+           
+        return view('verTodosPedidos', compact('todosPedidos'));
+         
      }
 }
