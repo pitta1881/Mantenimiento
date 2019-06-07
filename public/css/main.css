@@ -119,6 +119,15 @@ input[type=reset] {
     margin: 2%;
 }
 
+input[type=button] {
+    background-color: rgba(0, 0, 0);
+    color: white;
+}
+
+input[type=button]:hover {
+    transform: scale(1.1);
+}
+
 form output {
     /* border: 2px solid black; */
     background-color: rgb(156, 236, 82);
@@ -174,6 +183,7 @@ dd {
     padding: 10px;
     background-color: gray;
 }
+
 .div input {
     border-color: black;
     border: 1px;
@@ -189,6 +199,7 @@ dd {
     color: black;
     display: inline;
 }
+
 .div input:hover {
     border-color: black;
     border: 1px;
@@ -204,6 +215,7 @@ dd {
     color: black;
     display: inline;
 }
+
 .general {
     top: 50px;
     left: 500px;
@@ -212,6 +224,7 @@ dd {
     width: 120px;
     display: flex;
 }
+
 .Insumos {
     top: 50px;
     left: 250px;
@@ -220,6 +233,7 @@ dd {
     width: 120px;
     display: flex;
 }
+
 .Otros {
     top: 50px;
     left: 750px;
@@ -228,9 +242,11 @@ dd {
     width: 120px;
     display: flex;
 }
+
 legend {
     text-align: center;
 }
+
 .salir {
     border-color: black;
     border: 1px;
@@ -239,12 +255,14 @@ legend {
     top: 30px;
     right: 28px;
 }
+
 .salir a {
     height: 15px;
     position: absolute;
     top: -8px;
     right: -15px;
 }
+
 .user {
     color: white;
     position: absolute;

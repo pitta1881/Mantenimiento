@@ -1,7 +1,7 @@
 <?php
 
-/* partials/navAdminPermisos.html */
-class __TwigTemplate_e39cd0016bd3cf84bcb73283254d4143b827c0b4890fb8c5033aba3f3f424399 extends Twig_Template
+/* partials/navAdminUsuarios.html */
+class __TwigTemplate_d62d58feec8079354a1acd0bf369aa49ed0c9908401570b4e84ff7baf1b1f9fa extends Twig_Template
 {
     private $source;
 
@@ -27,9 +27,9 @@ class __TwigTemplate_e39cd0016bd3cf84bcb73283254d4143b827c0b4890fb8c5033aba3f3f4
         <li><a href=\"/home\">Home</a></li>
         <li><a href=\"/about\">Sobre nosotros</a></li>
         <li><a href=\"/usuario/gestionUsuario\">Gestion Usuarios</a></li>
-        <li><a href=\"/usuario/asignarPermiso\">Asignar Permiso</a></li>
-       
-        <li><a href=\"/usuario/eliminarPermiso\">eliminar Permiso</a></li>
+        <li><a href=\"/usuario/altaUsuario\">Agregar Usuario</a></li>
+        <li><a href=\"/usuario/modificarUsuario\">Modificar Usuario</a></li>
+        <li><a href=\"/usuario/eliminarUsuario\">Eliminar Usuario</a></li>
 
        
         <li>
@@ -45,7 +45,7 @@ class __TwigTemplate_e39cd0016bd3cf84bcb73283254d4143b827c0b4890fb8c5033aba3f3f4
 
     public function getTemplateName()
     {
-        return "partials/navAdminPermisos.html";
+        return "partials/navAdminUsuarios.html";
     }
 
     public function getDebugInfo()
@@ -62,9 +62,9 @@ class __TwigTemplate_e39cd0016bd3cf84bcb73283254d4143b827c0b4890fb8c5033aba3f3f4
         <li><a href=\"/home\">Home</a></li>
         <li><a href=\"/about\">Sobre nosotros</a></li>
         <li><a href=\"/usuario/gestionUsuario\">Gestion Usuarios</a></li>
-        <li><a href=\"/usuario/asignarPermiso\">Asignar Permiso</a></li>
-       
-        <li><a href=\"/usuario/eliminarPermiso\">eliminar Permiso</a></li>
+        <li><a href=\"/usuario/altaUsuario\">Agregar Usuario</a></li>
+        <li><a href=\"/usuario/modificarUsuario\">Modificar Usuario</a></li>
+        <li><a href=\"/usuario/eliminarUsuario\">Eliminar Usuario</a></li>
 
        
         <li>
@@ -75,6 +75,6 @@ class __TwigTemplate_e39cd0016bd3cf84bcb73283254d4143b827c0b4890fb8c5033aba3f3f4
         </li>
     </ol>
 </nav>
-", "partials/navAdminPermisos.html", "C:\\Users\\cacu\\Desktop\\unlu\\seminario profesional\\sistema\\7.16\\Nueva carpeta\\Mantenimiento-master\\app\\views\\partials\\navAdminPermisos.html");
+", "partials/navAdminUsuarios.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\navAdminUsuarios.html");
     }
 }

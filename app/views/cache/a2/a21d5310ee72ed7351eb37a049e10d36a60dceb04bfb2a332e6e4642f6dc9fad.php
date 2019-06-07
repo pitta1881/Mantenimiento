@@ -1,7 +1,7 @@
 <?php
 
-/* administracionRol.alta.html */
-class __TwigTemplate_363085e6a48740ace4263f689197309d30ad1156c9e61ece7cba734bec731462 extends Twig_Template
+/* administracionUsuario.html */
+class __TwigTemplate_495d4e5c5f4b5bbcfe0f49342eef93ce6b223037458c3e6f53049e20fcb72be9 extends Twig_Template
 {
     private $source;
 
@@ -12,12 +12,11 @@ class __TwigTemplate_363085e6a48740ace4263f689197309d30ad1156c9e61ece7cba734bec7
         $this->source = $this->getSourceContext();
 
         // line 1
-        $this->parent = $this->loadTemplate("base.html", "administracionRol.alta.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "administracionUsuario.html", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'header' => array($this, 'block_header'),
             'head' => array($this, 'block_head'),
-            'main' => array($this, 'block_main'),
         );
     }
 
@@ -41,7 +40,7 @@ class __TwigTemplate_363085e6a48740ace4263f689197309d30ad1156c9e61ece7cba734bec7
     public function block_header($context, array $blocks = array())
     {
         // line 6
-        echo twig_include($this->env, $context, "partials/navAdminRol.html");
+        echo twig_include($this->env, $context, "partials/navAdminUsuarios.html");
         echo "
 ";
     }
@@ -56,24 +55,9 @@ class __TwigTemplate_363085e6a48740ace4263f689197309d30ad1156c9e61ece7cba734bec7
 ";
     }
 
-    // line 13
-    public function block_main($context, array $blocks = array())
-    {
-        // line 14
-        echo "<!--   descomentar al hacer
-<form action=\"/usuario/validarRol\" method=\"POST\">
-<label for=\"nombre\">Nombre</label>
-<input type=\"text\" name=\"nombreUsuario\" placeholder=\"Usuario\"><br>
-<label for=\"nombre\">Descripcion</label>
-<input type=\"text\" name=\"descripcion\" placeholder=\"descripcion\">
-<input type=\"submit\" value=\"Agregar\">
-</form>       -->
-";
-    }
-
     public function getTemplateName()
     {
-        return "administracionRol.alta.html";
+        return "administracionUsuario.html";
     }
 
     public function isTraitable()
@@ -83,7 +67,7 @@ class __TwigTemplate_363085e6a48740ace4263f689197309d30ad1156c9e61ece7cba734bec7
 
     public function getDebugInfo()
     {
-        return array (  63 => 14,  60 => 13,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  52 => 10,  49 => 9,  43 => 6,  40 => 5,  34 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -93,22 +77,14 @@ class __TwigTemplate_363085e6a48740ace4263f689197309d30ad1156c9e61ece7cba734bec7
 {% block title %}Gestion de usuarios{% endblock %}
 
 {% block header %}
-{{ include('partials/navAdminRol.html') }}
+{{ include('partials/navAdminUsuarios.html') }}
 {% endblock %}
 
 {% block head %}
 {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\">
 {% endblock %}
-{% block main %}
-<!--   descomentar al hacer
-<form action=\"/usuario/validarRol\" method=\"POST\">
-<label for=\"nombre\">Nombre</label>
-<input type=\"text\" name=\"nombreUsuario\" placeholder=\"Usuario\"><br>
-<label for=\"nombre\">Descripcion</label>
-<input type=\"text\" name=\"descripcion\" placeholder=\"descripcion\">
-<input type=\"submit\" value=\"Agregar\">
-</form>       -->
-{% endblock %}", "administracionRol.alta.html", "C:\\Users\\cacu\\Desktop\\unlu\\seminario profesional\\sistema\\7.16\\Nueva carpeta\\Mantenimiento-master\\app\\views\\administracionRol.alta.html");
+     
+     ", "administracionUsuario.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\administracionUsuario.html");
     }
 }

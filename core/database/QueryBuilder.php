@@ -30,8 +30,7 @@ class QueryBuilder
      *
      * @param string $table
      */
-    public function selectAll($table)
-    {
+    public function selectAll($table){
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table}"
         );
@@ -43,8 +42,7 @@ class QueryBuilder
     Selecciono un registro especifico cuyo PK viene por parametro 
     PARA PEDIDO
     */
-    public function selectNumeroPedido($table, $numero)
-    {
+    public function selectNumeroPedido($table, $numero){
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
             WHERE id={$numero}"
@@ -63,8 +61,7 @@ class QueryBuilder
     }
 
     
-    public function validarLogin($table, $usuario ,$password)
-    {
+    public function validarLogin($table, $usuario ,$password){
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
             WHERE nombre='{$usuario}' AND password='{$password}' "
@@ -72,8 +69,7 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
-public function comparaUsuario($table, $usuario )
-{  $statement = $this->pdo->prepare(
+public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
             WHERE nombre='{$usuario}'  "
         );
@@ -86,8 +82,7 @@ public function comparaUsuario($table, $usuario )
      * @param  string $table
      * @param  array  $parameters
      */
-    public function insert($table, $parameters)
-    {
+    public function insert($table, $parameters){
         $parameters = $this->cleanParameterName($parameters);
         $sql = sprintf(
             'insert into %s (%s) values (%s)',
@@ -104,6 +99,17 @@ public function comparaUsuario($table, $usuario )
         }
         
     }
+    
+    
+    public function buscar($table,$filter,$value){
+            $statement = $this->pdo->prepare(
+               "SELECT * FROM {$table} 
+            WHERE {$filter} = '{$value}' ORDER BY '{$filter}'  "
+   
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 
     /**
      * update a record .
@@ -111,17 +117,14 @@ public function comparaUsuario($table, $usuario )
      * @param  string $table
      * @param  array  $parameters
      */
-    public function update($table, $parameters, $id)
-    {
+    public function update($table, $parameters, $id){
         $parameters = $this->cleanParameterName($parameters);
         $sql = "UPDATE $table SET fechaInicio=:fechaInicio, estado=:estado, descripcion=:descripcion, sector=:sector, prioridad=:prioridad WHERE id=$id"; //recontra HARDCODEADO
             try {
                 $statement = $this->pdo->prepare($sql);
                 $statement->execute($parameters);
-                var_dump($sql);
             } catch (Exception $e) {
                 $this->sendToLog($e);
-                var_dump($sql);
             }   
     }
 
@@ -146,4 +149,33 @@ public function comparaUsuario($table, $usuario )
         }
         return $cleaned_params;
     }
+
+    public function idTareaSiguiente($table,$idPedido){
+        $statement = $this->pdo->prepare(
+           "SELECT MAX(idTarea) FROM $table
+        WHERE idPedido = $idPedido"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function countTareasAsignadas($table,$idPedido){ //table = tarea
+        $statement = $this->pdo->prepare(
+           "SELECT COUNT(idTarea) FROM $table
+        WHERE idPedido = $idPedido"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+    
+
+    
+    public function deleteTarea($table,$idPedido,$idTarea){ //table = tarea
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idPedido = $idPedido AND idTarea = $idTarea"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
 }

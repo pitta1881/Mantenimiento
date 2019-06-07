@@ -57,12 +57,16 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         // line 3
         echo "<fieldset class=\"Insumos div\">
     <legend>Insumos</legend>
+
     <input type=\"button\" value=\"Gestion de Insumos\">
     <input type=\"button\" value=\"Gestion de Ordenes de Compra\">
 </fieldset>
 <fieldset class=\"general div\">
     <legend>General</legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
+    <a href=\"/pedido/verTodos\">
+        <input type=\"button\" value=\"Gestion de Pedidos\">
+    </a>
+
     <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
     <input type=\"button\" value=\"Gestion de Actividades\">
     <input type=\"button\" value=\"Gestion de Tareas\">
@@ -70,11 +74,27 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 <fieldset class=\"Otros div\">
     <legend>Otros</legend>
-    <input type=\"button\" value=\"Gestion de Agentes\">
-    <input type=\"button\" value=\"Gestion de Especialidades\">
-    <input type=\"button\" value=\"Gestion de Sectores\">
-    <input type=\"button\" value=\"Gestion de Usuarios\">
-    <input type=\"button\" value=\"Gestion de Usuarios\">
+    <nav>
+        <a href=\"/usuario/gestionUsuario\">
+            <input type=\"button\" value=\"Gestion de Usuarios\">
+        </a>
+        <!--faltan hacer estas-->
+        <a href=\"/usuario/gestionAgentes\">
+            <input type=\"button\" value=\"Gestion de Agentes\">
+        </a>
+        <a href=\"/usuario/gestionEspecialidades\">
+            <input type=\"button\" value=\"Gestion de Especialidades\">
+        </a>
+        <a href=\"/usuario/gestionSectores\">
+            <input type=\"button\" value=\"Gestion de sectores\">
+        </a>
+        <a href=\"/usuario/gestionInformes\">
+            <input type=\"button\" value=\"Gestion de Informes\">
+        </a>
+
+
+
+    </nav>
 </fieldset>
 
 ";
@@ -101,12 +121,16 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
 <fieldset class=\"Insumos div\">
     <legend>Insumos</legend>
+
     <input type=\"button\" value=\"Gestion de Insumos\">
     <input type=\"button\" value=\"Gestion de Ordenes de Compra\">
 </fieldset>
 <fieldset class=\"general div\">
     <legend>General</legend>
-    <input type=\"button\" value=\"Gestion de Pedidos\">
+    <a href=\"/pedido/verTodos\">
+        <input type=\"button\" value=\"Gestion de Pedidos\">
+    </a>
+
     <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
     <input type=\"button\" value=\"Gestion de Actividades\">
     <input type=\"button\" value=\"Gestion de Tareas\">
@@ -114,14 +138,30 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 <fieldset class=\"Otros div\">
     <legend>Otros</legend>
-    <input type=\"button\" value=\"Gestion de Agentes\">
-    <input type=\"button\" value=\"Gestion de Especialidades\">
-    <input type=\"button\" value=\"Gestion de Sectores\">
-    <input type=\"button\" value=\"Gestion de Usuarios\">
-    <input type=\"button\" value=\"Gestion de Usuarios\">
+    <nav>
+        <a href=\"/usuario/gestionUsuario\">
+            <input type=\"button\" value=\"Gestion de Usuarios\">
+        </a>
+        <!--faltan hacer estas-->
+        <a href=\"/usuario/gestionAgentes\">
+            <input type=\"button\" value=\"Gestion de Agentes\">
+        </a>
+        <a href=\"/usuario/gestionEspecialidades\">
+            <input type=\"button\" value=\"Gestion de Especialidades\">
+        </a>
+        <a href=\"/usuario/gestionSectores\">
+            <input type=\"button\" value=\"Gestion de sectores\">
+        </a>
+        <a href=\"/usuario/gestionInformes\">
+            <input type=\"button\" value=\"Gestion de Informes\">
+        </a>
+
+
+
+    </nav>
 </fieldset>
 
 {% endblock %}
-", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
+", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

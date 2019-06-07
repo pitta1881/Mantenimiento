@@ -4,24 +4,28 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Pedido;
+use App\Models\Tarea;
 
-class PedidoController extends Controller
-{
-    public function __construct()
-    {
+class PedidoController extends Controller{
+    public function __construct(){
         $this->model = new Pedido();
     }
 
     /*Show all pedidos*/
-    public function index()
-    {
+    public function index(){
         $todosPedidos = $this->model->get();
+        foreach ($todosPedidos as $indice => $datos) {
+            foreach ($datos as $key => $value) {
+                if ($key == 'id') {
+                    $todosPedidos[$indice]['tareasAsignadas'] = $this->model->getTareasAsignadasAPedido($value);
+                }
+            }
+        }        
         return view('verTodosPedidos', compact('todosPedidos'));
     }
 
     /*muestra un solo pedido especifico ingresado por GET*/
-    public function ficha()
-    {
+    public function ficha(){
         $unPedido = $this->model->getByIdPedido($_GET['id']);
         $miPedido = $unPedido[0];        //hago esto xq nose como es q toma que necesito solo el 1er elemento del array
         $tareas = $this->model->getTareasByIdPedido($_GET['id']); //todavia no está esto
@@ -32,11 +36,6 @@ class PedidoController extends Controller
 
     public function create()
     {
-       // $hairColors = $this->model->getHairColors();
-       // $datos["colorPelo"] = $hairColors;
-
-       //aca voy a hardcodear Sectores y Prioridad como para ver como quedaria
-       //al dia de ultima lo podria dejar asi, hay q ver como lo guarda en la bdd
        $arrayDatos["diaHoy"] = date("Y-m-d");
        $arrayDatos["sectores"] = $this->model->getSectores();
        $arrayDatos["prioridades"] = $this->model->getPrioridades();
@@ -89,8 +88,13 @@ class PedidoController extends Controller
     }
 
     public function verTareas(){
-    $todasTareas = $this->model->getTareasByIdPedido($_GET['id']);
-    return view('verTodasTareas', compact('todasTareas'));
+    $todasTareas = $this->model->getTareasByIdPedido($_GET['idPedido']);
+    $datos['todasTareas'] = $todasTareas;
+    $datos['idPedido'] = $_GET['idPedido'];
+    $datos["prioridades"] = $this->model->getPrioridades();
+    $datos["estados"] = $this->model->getEstados();
+    $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
+    return view('verTodasTareas', compact('datos'));
     }
 
     public function modificar(){
@@ -110,5 +114,15 @@ class PedidoController extends Controller
          ];
          $this->model->update($pedido,$idPedido);
          return $pedido;
+     }
+    
+    
+       public function buscarPor(){
+        $filter = $_POST['filtro'];
+        $value = $_POST['textBusqueda'];
+        $todosPedidos = $this->model->getAllbyFilter($filter,$value);
+           
+        return view('verTodosPedidos', compact('todosPedidos'));
+         
      }
 }

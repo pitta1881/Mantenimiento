@@ -10,9 +10,14 @@
     $router->get('fichaPedido', 'PedidoController@ficha');
     $router->get('pedido/crear', 'PedidoController@create');    
     $router->post('pedido/validar', 'PedidoController@validar');
+    $router->post('pedido/buscar', 'PedidoController@buscarPor');
     $router->get('pedido/modificar/seleccionado', 'PedidoController@modificarPedidoSeleccionado');
     $router->get('pedido/verTareas', 'PedidoController@verTareas');
     $router->post('pedido/modificar', 'PedidoController@modificar');
+
+//rutas tareas
+    $router->post('pedido/tarea/guardar', 'TareaController@guardar');
+    $router->get('pedido/tarea/eliminar', 'TareaController@eliminar');
 
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');

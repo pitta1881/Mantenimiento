@@ -197,12 +197,8 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
     <input type=\"submit\">
     <input type=\"reset\">
 </form>
-<a href='/pedido/verTareas?id=";
-        // line 63
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
-        echo "'><input type=\"button\" value=\"VER TAREAS\">
 
-    ";
+";
     }
 
     public function getTemplateName()
@@ -217,7 +213,7 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
 
     public function getDebugInfo()
     {
-        return array (  202 => 63,  196 => 59,  190 => 58,  183 => 56,  180 => 55,  173 => 53,  170 => 52,  167 => 51,  163 => 50,  157 => 46,  151 => 45,  143 => 43,  136 => 41,  133 => 40,  130 => 39,  126 => 38,  120 => 35,  116 => 33,  110 => 32,  102 => 30,  94 => 28,  91 => 27,  87 => 26,  81 => 23,  77 => 22,  72 => 20,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  196 => 59,  190 => 58,  183 => 56,  180 => 55,  173 => 53,  170 => 52,  167 => 51,  163 => 50,  157 => 46,  151 => 45,  143 => 43,  136 => 41,  133 => 40,  130 => 39,  126 => 38,  120 => 35,  116 => 33,  110 => 32,  102 => 30,  94 => 28,  91 => 27,  87 => 26,  81 => 23,  77 => 22,  72 => 20,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -284,8 +280,7 @@ class __TwigTemplate_dffff815d87ccfdf4f2cd62f1f587fe9930fd48d311ddd2403314a368bc
     <input type=\"submit\">
     <input type=\"reset\">
 </form>
-<a href='/pedido/verTareas?id={{ arrayDatos.miPedido.id }}'><input type=\"button\" value=\"VER TAREAS\">
 
-    {% endblock %}", "modificarPedido.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\modificarPedido.html");
+{% endblock %}", "modificarPedido.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\modificarPedido.html");
     }
 }
