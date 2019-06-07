@@ -17,7 +17,9 @@
 
 //rutas tareas
     $router->post('pedido/tarea/guardar', 'TareaController@guardar');
+    $router->get('tarea/modificar/seleccionado', 'TareaController@modificarTareaSeleccionada');
     $router->get('pedido/tarea/eliminar', 'TareaController@eliminar');
+    $router->post('tarea/modificar/guardar', 'TareaController@modificar');
 
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');

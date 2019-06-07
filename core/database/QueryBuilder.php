@@ -177,14 +177,34 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
- public function selectAllRoles($tableRol){
+
+    public function selectAllRoles($tableRol){
         $statement = $this->pdo->prepare(
-            "SELECT * FROM {$tableRol}"
+            "SELECT * FROM $tableRol"
        
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
-   
-    
-}
+   }
+
+    public function selectTareaByIdId($table, $nPedido, $nTarea){ //table = tarea
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idPedido={$nPedido} AND idTarea={$nTarea}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function updateTarea($table, $parameters, $nTarea, $nPedido){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET estado=:estado, descripcion=:descripcion, prioridad=:prioridad, especializacion=:especializacion
+        WHERE idTarea=$nTarea AND idPedido=$nPedido"; //recontra HARDCODEADO
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
 }

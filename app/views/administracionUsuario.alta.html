@@ -12,29 +12,16 @@
 {% endblock %}
 {% block main %}
 <form action="/usuario/validarUsuario" method="POST">
-<label for="nombre">Nombre</label>
-<input type="text" name="nombreUsuario" placeholder="Usuario"><br>
-<label for="nombre">Contraseña</label>
-<input type="text" name="password" placeholder="contraseña">
-<select name="roles" id="rol"   >
-
-           
-           <!--aca van roles  q se toman de la bd para que aparezcan en el select-->   
-
-           
-           {% for nombre in nombresRoles%}
-            <option value={nombre.nombreRol}>{{nombre.nombreRol}}
-         
-            </option>
-            
-            {% endfor %}}
-
-</select>
-
-
-<input type="submit" value="Agregar">
+    <label for="nombre">Nombre</label>
+    <input type="text" name="nombreUsuario" placeholder="Usuario"><br>
+    <label for="nombre">Contraseña</label>
+    <input type="text" name="password" placeholder="contraseña">
+    <select name="roles" id="rol">
+        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
+        {% for nombre in nombresRoles %}
+        <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
+        {% endfor %}}
+    </select>
+    <input type="submit" value="Agregar">
 </form>
-
-
-
 {% endblock %}

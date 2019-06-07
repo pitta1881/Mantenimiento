@@ -22,7 +22,8 @@ public function vistaAdministracionUsuario(){
     
 }
 public function vistaAltaUsuario(){
-    return view('administracionUsuario.alta');
+    $nombresRoles=$this->model->getRoles();
+    return view('administracionUsuario.alta',compact('nombresRoles'));
 }
     
   public function vistamodificarUsuario(){
@@ -96,15 +97,6 @@ $this->saveUsuario();
       
             
  }
-
-//roles que van a aparecer en el select del alta de usuario
-    public function selectRol(){
-        $nombresRoles=$this->model->getRoles();
-   
-      
-           return view('administracionUsuario.alta',compact('nombresRoles'));
-    }
-    
     
 }
        

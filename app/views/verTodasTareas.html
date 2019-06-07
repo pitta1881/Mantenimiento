@@ -59,7 +59,9 @@
         <td>{{ tareas.especializacion }}</td>
         <td>{{ tareas.prioridad }}</td>
         <td>{{ tareas.estado }}</td>
-        <td><a href="#"><input type="button" value="Modificar"></a>
+        <td><a href="/tarea/modificar/seleccionado?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}"><input
+                    type="button" value="Modificar"></a>
+            <a href="#"><input type="button" value="Ver Insumos"></a>
             <input type="button" value="Eliminar"
                 onclick="confirmacion( '{{ datos.idPedido }}','{{ tareas.idTarea }}' )">
         </td>

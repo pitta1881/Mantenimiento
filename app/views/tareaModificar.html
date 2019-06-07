@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Tarea Nueva{% endblock %}
+
+{% block header %}
+{{ include('partials/nav.html') }}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h2>Modificar Tarea Nº {{ arrayDatos.unaTarea.idTarea }} del Pedido Nº {{ arrayDatos.unaTarea.idPedido }}</h2>
+<form action="/tarea/modificar/guardar" method="post" id="formularioTarea">
+    <label for="idTarea">Tarea</label><span class="asterisco">*</span>
+    <input type="text" name="idTarea" value="{{ arrayDatos.unaTarea.idTarea }}" readonly>
+    <label for="idPedido">Pedido</label><span class="asterisco">*</span>
+    <input type="text" name="idPedido" value="{{ arrayDatos.unaTarea.idPedido }}" readonly>
+    <label for="descripcion">Descripcion</label>
+    <input type="textarea" name="descripcion" autofocus required value="{{ arrayDatos.unaTarea.descripcion }}">
+    <label for="especializacion">Especializacion</label>
+    <select name="especializacion">
+        {% for especializacion in arrayDatos.especializaciones %}
+        {% if especializacion == arrayDatos.unaTarea.especializacion %}
+        <option value="{{ especializacion }}" selected>{{ especializacion }}</option>
+        {% else %}
+        <option value="{{ especializacion }}">{{ especializacion }}</option>
+        {% endif %}
+
+        {% endfor %}
+    </select>
+    <label for="prioridad">Prioridad</label>
+    <select name="prioridad">
+        {% for prioridad in arrayDatos.prioridades %}
+        {% if prioridad == arrayDatos.unaTarea.prioridad %}
+        <option value="{{ prioridad }}" selected>{{ prioridad }}</option>
+        {% else %}
+        <option value="{{ prioridad }}">{{ prioridad }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    <label for="estado">Estado</label><span class="asterisco">*</span>
+    <input type="text" name="estado" value="{{ arrayDatos.unaTarea.estado }}" readonly>
+    <input type="submit" value="Guardar Cambios">
+</form>
+{% endblock %}

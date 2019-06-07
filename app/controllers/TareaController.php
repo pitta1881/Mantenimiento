@@ -29,4 +29,27 @@ class TareaController extends Controller{
         $this->model->delete($_GET['idPedido'],$_GET['idTarea']);
         redirect("pedido/verTareas?idPedido=".$_GET['idPedido']);
     }
+
+    public function modificarTareaSeleccionada(){
+        $unaTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
+        $miTarea = $unaTarea[0]; 
+        $arrayDatos["prioridades"] = $this->model->getPrioridades();
+        $arrayDatos["estados"] = $this->model->getEstados();
+        $arrayDatos["especializaciones"] = $this->model->getEspecializaciones();
+        $arrayDatos["unaTarea"] = $miTarea;
+        return view('tareaModificar',compact('arrayDatos'));
+    }
+
+    public function modificar(){
+        $idTarea = $_POST['idTarea'];
+        $idPedido = $_POST['idPedido'];
+        $tarea = [
+            'estado' => $_POST['estado'],
+            'descripcion' => $_POST['descripcion'],
+            'prioridad' => $_POST['prioridad'],
+            'especializacion' => $_POST['especializacion']
+        ];
+        $this->model->update($tarea,$idTarea,$idPedido);
+        redirect("fichaPedido?id=".$idPedido);
+     }
 }

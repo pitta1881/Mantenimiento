@@ -98,26 +98,19 @@ class PedidoController extends Controller{
     }
 
     public function modificar(){
-       $arrayPedido = $this->saveModificar();
-       return view('verPedidoCreado',compact('arrayPedido'));
-     }
-
-     public function saveModificar()
-     {
         $idPedido = $_POST['id'];
-         $pedido = [
+         $arrayPedido = [
              'fechaInicio' => $_POST['fechaInicio'],
              'estado' => $_POST['estado'],
              'descripcion' => $_POST['descripcion'],
              'sector' => preg_replace('/\s+/', '_', $_POST['sector']),
              'prioridad' => $_POST['prioridad']
          ];
-         $this->model->update($pedido,$idPedido);
-         return $pedido;
+         $this->model->update($arrayPedido,$idPedido);
+       return view('verPedidoCreado',compact('arrayPedido'));
      }
     
-    
-       public function buscarPor(){
+    public function buscarPor(){
         $filter = $_POST['filtro'];
         $value = $_POST['textBusqueda'];
         $todosPedidos = $this->model->getAllbyFilter($filter,$value);
