@@ -3,7 +3,7 @@
 {% block title %}Lista de Tareas{% endblock %}
 
 {% block header %}
-{% set nombreUsuario = datosPedidoTareas.userLogueado %}
+{% set nombreUsuario = datos.userLogueado %}
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
 {% endblock %}
 
@@ -17,19 +17,19 @@
 <h1>Su Pedido</h1>
 <dl>
     <dt>Nº Pedido:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.id }}</dd>
+    <dd>{{ datos.miPedido.id }}</dd>
     <dt>Usuario Creador:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.nombreUsuario }}</dd>
+    <dd>{{ datos.miPedido.nombreUsuario }}</dd>
     <dt>Descripcion:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.descripcion }}</dd>
+    <dd>{{ datos.miPedido.descripcion }}</dd>
     <dt>Fecha:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.fechaInicio }}</dd>
+    <dd>{{ datos.miPedido.fechaInicio }}</dd>
     <dt>Estado:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.estado }}</dd>
+    <dd>{{ datos.miPedido.estado }}</dd>
     <dt>Sector:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.sector }}</dd>
+    <dd>{{ datos.miPedido.sector }}</dd>
     <dt>Prioridad:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.prioridad }}</dd>
+    <dd>{{ datos.miPedido.prioridad }}</dd>
 </dl>
 <h2>TAREAS</h2>
 <table>
@@ -38,7 +38,7 @@
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
-    {% for tareas in datosPedidoTareas.tareas %}
+    {% for tareas in datos.tareas %}
     <tr>
         <td>{{ tareas.idTarea }}</td>
         <td>{{ tareas.descripcion }}</td>

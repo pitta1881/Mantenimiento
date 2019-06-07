@@ -41,7 +41,7 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
     public function block_header($context, array $blocks = array())
     {
         // line 6
-        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "userLogueado", array());
+        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         // line 7
         $this->loadTemplate("partials/nav.html", "pedidoModificar.html", 7)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
         echo "}
@@ -63,7 +63,7 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
     {
         // line 16
         echo "<h2>Modificar Pedido Nº ";
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
         echo "</h2>
 <form action=\"/pedido/modificar\" method=\"POST\">
     <fieldset>
@@ -71,32 +71,32 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
         <label for=\"id\">Numero de Pedido</label>
         <input type=\"text\" name=\"id\" value=\"";
         // line 21
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
         echo "\" readonly>
         <label for=\"nombreUsuario\">Usuario Creador</label>
         <input type=\"text\" name=\"nombreUsuario\" value=\"";
         // line 23
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "nombreUsuario", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "nombreUsuario", array()), "html", null, true);
         echo "\" readonly>
         <label for=\"fechaInicio\">Fecha</label>
         <input type=\"date\" name=\"fechaInicio\" value=\"";
         // line 25
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "fechaInicio", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "fechaInicio", array()), "html", null, true);
         echo "\"
             min=\"";
         // line 26
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "fechaInicio", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "fechaInicio", array()), "html", null, true);
         echo "\">
         <label for=\"estado\">Estado</label>
         <select name=\"estado\">
             ";
         // line 29
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "estados", array()));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "estados", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["estado"]) {
             // line 30
             echo "            ";
-            if (($context["estado"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "estado", array()))) {
+            if (($context["estado"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "estado", array()))) {
                 // line 31
                 echo "            <option value=";
                 echo twig_escape_filter($this->env, $context["estado"], "html", null, true);
@@ -124,18 +124,18 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
         <label for=\"descripcion\">Descripcion</label><span class=\"asterisco\">*</span>
         <input type=\"text\" name=\"descripcion\" autofocus required value=\"";
         // line 38
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "descripcion", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "descripcion", array()), "html", null, true);
         echo "\">
         <label for=\"sector\">Sector</label>
         <select name=\"sector\">
             ";
         // line 41
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "sectores", array()));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "sectores", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["sector"]) {
             // line 42
             echo "            ";
-            if (($context["sector"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "sector", array()))) {
+            if (($context["sector"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "sector", array()))) {
                 // line 43
                 echo "            <!--NO FUNCIONA, SEGURO EL TEMA DE LOS ESPACIOS-->
             <option value=";
@@ -168,11 +168,11 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
         ";
         // line 53
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "prioridades", array()));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "prioridades", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["prioridad"]) {
             // line 54
             echo "        ";
-            if (($context["prioridad"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "miPedido", array()), "prioridad", array()))) {
+            if (($context["prioridad"] == twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "prioridad", array()))) {
                 // line 55
                 echo "        <label class=\"labelRadioInput\"><input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required checked
                 value=\"";
@@ -230,7 +230,7 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
 {% block title %}Crear Tarea Nueva{% endblock %}
 
 {% block header %}
-{% set nombreUsuario = arrayDatos.userLogueado %}
+{% set nombreUsuario = datos.userLogueado %}
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
 {% endblock %}
 
@@ -240,21 +240,21 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
 {% endblock %}
 
 {% block main %}
-<h2>Modificar Pedido Nº {{ arrayDatos.miPedido.id }}</h2>
+<h2>Modificar Pedido Nº {{ datos.miPedido.id }}</h2>
 <form action=\"/pedido/modificar\" method=\"POST\">
     <fieldset>
         <legend>Datos Basicos</legend>
         <label for=\"id\">Numero de Pedido</label>
-        <input type=\"text\" name=\"id\" value=\"{{ arrayDatos.miPedido.id }}\" readonly>
+        <input type=\"text\" name=\"id\" value=\"{{ datos.miPedido.id }}\" readonly>
         <label for=\"nombreUsuario\">Usuario Creador</label>
-        <input type=\"text\" name=\"nombreUsuario\" value=\"{{ arrayDatos.miPedido.nombreUsuario }}\" readonly>
+        <input type=\"text\" name=\"nombreUsuario\" value=\"{{ datos.miPedido.nombreUsuario }}\" readonly>
         <label for=\"fechaInicio\">Fecha</label>
-        <input type=\"date\" name=\"fechaInicio\" value=\"{{ arrayDatos.miPedido.fechaInicio }}\"
-            min=\"{{ arrayDatos.miPedido.fechaInicio }}\">
+        <input type=\"date\" name=\"fechaInicio\" value=\"{{ datos.miPedido.fechaInicio }}\"
+            min=\"{{ datos.miPedido.fechaInicio }}\">
         <label for=\"estado\">Estado</label>
         <select name=\"estado\">
-            {% for estado in arrayDatos.estados %}
-            {% if estado == arrayDatos.miPedido.estado %}
+            {% for estado in datos.estados %}
+            {% if estado == datos.miPedido.estado %}
             <option value={{ estado }} selected>{{ estado }} </option>
             {% else %}
             <option value={{ estado }}>{{ estado }}</option>
@@ -262,11 +262,11 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
             {% endfor %}
         </select>
         <label for=\"descripcion\">Descripcion</label><span class=\"asterisco\">*</span>
-        <input type=\"text\" name=\"descripcion\" autofocus required value=\"{{ arrayDatos.miPedido.descripcion}}\">
+        <input type=\"text\" name=\"descripcion\" autofocus required value=\"{{ datos.miPedido.descripcion}}\">
         <label for=\"sector\">Sector</label>
         <select name=\"sector\">
-            {% for sector in arrayDatos.sectores %}
-            {% if sector == arrayDatos.miPedido.sector %}
+            {% for sector in datos.sectores %}
+            {% if sector == datos.miPedido.sector %}
             <!--NO FUNCIONA, SEGURO EL TEMA DE LOS ESPACIOS-->
             <option value={{ sector }} selected>{{ sector }}</option>
             {% else %}
@@ -277,8 +277,8 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
     </fieldset>
     <fieldset>
         <legend>Prioridad<span class=\"asterisco\">*</span></legend>
-        {% for prioridad in arrayDatos.prioridades %}
-        {% if prioridad == arrayDatos.miPedido.prioridad %}
+        {% for prioridad in datos.prioridades %}
+        {% if prioridad == datos.miPedido.prioridad %}
         <label class=\"labelRadioInput\"><input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required checked
                 value=\"{{ prioridad }}\">{{ prioridad }}</label>
         {% else %}
@@ -291,6 +291,6 @@ class __TwigTemplate_ea88369093cb7f3a84bafbebd40b6edb4ba1c3db5411b0e61f379210b62
     <input type=\"reset\">
 </form>
 
-{% endblock %}", "pedidoModificar.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\pedidoModificar.html");
+{% endblock %}", "pedidoModificar.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\pedidoModificar.html");
     }
 }

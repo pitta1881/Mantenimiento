@@ -41,7 +41,7 @@ class __TwigTemplate_d4e2a1d8ad0f867737c182b4fbc5dc2a5fbe9d4e33e372d648d3d1b08fc
     public function block_header($context, array $blocks = array())
     {
         // line 6
-        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "userLogueado", array());
+        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         // line 7
         $this->loadTemplate("partials/nav.html", "pedidoVerFicha.html", 7)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
         echo "}
@@ -68,37 +68,37 @@ class __TwigTemplate_d4e2a1d8ad0f867737c182b4fbc5dc2a5fbe9d4e33e372d648d3d1b08fc
     <dt>Nº Pedido:</dt>
     <dd>";
         // line 20
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "id", array()), "html", null, true);
         echo "</dd>
     <dt>Usuario Creador:</dt>
     <dd>";
         // line 22
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "miPedido", array()), "nombreUsuario", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "nombreUsuario", array()), "html", null, true);
         echo "</dd>
     <dt>Descripcion:</dt>
     <dd>";
         // line 24
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "miPedido", array()), "descripcion", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "descripcion", array()), "html", null, true);
         echo "</dd>
     <dt>Fecha:</dt>
     <dd>";
         // line 26
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "miPedido", array()), "fechaInicio", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "fechaInicio", array()), "html", null, true);
         echo "</dd>
     <dt>Estado:</dt>
     <dd>";
         // line 28
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "miPedido", array()), "estado", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "estado", array()), "html", null, true);
         echo "</dd>
     <dt>Sector:</dt>
     <dd>";
         // line 30
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "miPedido", array()), "sector", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "sector", array()), "html", null, true);
         echo "</dd>
     <dt>Prioridad:</dt>
     <dd>";
         // line 32
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "miPedido", array()), "prioridad", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "miPedido", array()), "prioridad", array()), "html", null, true);
         echo "</dd>
 </dl>
 <h2>TAREAS</h2>
@@ -111,7 +111,7 @@ class __TwigTemplate_d4e2a1d8ad0f867737c182b4fbc5dc2a5fbe9d4e33e372d648d3d1b08fc
     ";
         // line 41
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datosPedidoTareas"] ?? null), "tareas", array()));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareas", array()));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["tareas"]) {
             // line 42
@@ -175,7 +175,7 @@ class __TwigTemplate_d4e2a1d8ad0f867737c182b4fbc5dc2a5fbe9d4e33e372d648d3d1b08fc
 {% block title %}Lista de Tareas{% endblock %}
 
 {% block header %}
-{% set nombreUsuario = datosPedidoTareas.userLogueado %}
+{% set nombreUsuario = datos.userLogueado %}
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
 {% endblock %}
 
@@ -189,19 +189,19 @@ class __TwigTemplate_d4e2a1d8ad0f867737c182b4fbc5dc2a5fbe9d4e33e372d648d3d1b08fc
 <h1>Su Pedido</h1>
 <dl>
     <dt>Nº Pedido:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.id }}</dd>
+    <dd>{{ datos.miPedido.id }}</dd>
     <dt>Usuario Creador:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.nombreUsuario }}</dd>
+    <dd>{{ datos.miPedido.nombreUsuario }}</dd>
     <dt>Descripcion:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.descripcion }}</dd>
+    <dd>{{ datos.miPedido.descripcion }}</dd>
     <dt>Fecha:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.fechaInicio }}</dd>
+    <dd>{{ datos.miPedido.fechaInicio }}</dd>
     <dt>Estado:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.estado }}</dd>
+    <dd>{{ datos.miPedido.estado }}</dd>
     <dt>Sector:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.sector }}</dd>
+    <dd>{{ datos.miPedido.sector }}</dd>
     <dt>Prioridad:</dt>
-    <dd>{{ datosPedidoTareas.miPedido.prioridad }}</dd>
+    <dd>{{ datos.miPedido.prioridad }}</dd>
 </dl>
 <h2>TAREAS</h2>
 <table>
@@ -210,7 +210,7 @@ class __TwigTemplate_d4e2a1d8ad0f867737c182b4fbc5dc2a5fbe9d4e33e372d648d3d1b08fc
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
-    {% for tareas in datosPedidoTareas.tareas %}
+    {% for tareas in datos.tareas %}
     <tr>
         <td>{{ tareas.idTarea }}</td>
         <td>{{ tareas.descripcion }}</td>
@@ -222,6 +222,6 @@ class __TwigTemplate_d4e2a1d8ad0f867737c182b4fbc5dc2a5fbe9d4e33e372d648d3d1b08fc
     <h2 class='error'>No hay Tareas asignadas aún</h2>
     {% endfor %}
 </table>
-{% endblock %}", "pedidoVerFicha.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\pedidoVerFicha.html");
+{% endblock %}", "pedidoVerFicha.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\pedidoVerFicha.html");
     }
 }

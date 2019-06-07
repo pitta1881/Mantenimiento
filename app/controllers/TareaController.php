@@ -8,6 +8,7 @@ use App\Models\Tarea;
 class TareaController extends Controller{
     public function __construct(){
         $this->model = new Tarea();
+        session_start();
     }
 
     public function guardar()
@@ -33,11 +34,12 @@ class TareaController extends Controller{
     public function modificarTareaSeleccionada(){
         $unaTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
         $miTarea = $unaTarea[0]; 
-        $arrayDatos["prioridades"] = $this->model->getPrioridades();
-        $arrayDatos["estados"] = $this->model->getEstados();
-        $arrayDatos["especializaciones"] = $this->model->getEspecializaciones();
-        $arrayDatos["unaTarea"] = $miTarea;
-        return view('tareaModificar',compact('arrayDatos'));
+        $datos["prioridades"] = $this->model->getPrioridades();
+        $datos["estados"] = $this->model->getEstados();
+        $datos["especializaciones"] = $this->model->getEspecializaciones();
+        $datos["unaTarea"] = $miTarea;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('tareaModificar',compact('datos'));
     }
 
     public function modificar(){

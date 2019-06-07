@@ -33,20 +33,20 @@ class PedidoController extends Controller{
         $unPedido = $this->model->getByIdPedido($_GET['id']);
         $miPedido = $unPedido[0];        //hago esto xq nose como es q toma que necesito solo el 1er elemento del array
         $tareas = $this->model->getTareasByIdPedido($_GET['id']); //todavia no está esto
-        $datosPedidoTareas["miPedido"] = $miPedido;        
-        $datosPedidoTareas["tareas"] = $tareas;
-        $datosPedidoTareas["userLogueado"] = $_SESSION['user'];
-        return view('pedidoVerFicha', compact('datosPedidoTareas'));
+        $datos["miPedido"] = $miPedido;        
+        $datos["tareas"] = $tareas;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('pedidoVerFicha', compact('datos'));
     }
 
     public function create()
     {
-       $arrayDatos["diaHoy"] = date("Y-m-d");
-       $arrayDatos["sectores"] = $this->model->getSectores();
-       $arrayDatos["prioridades"] = $this->model->getPrioridades();
-       $arrayDatos["estados"] = $this->model->getEstados();
-       $arrayDatos["userLogueado"] = $_SESSION['user'];
-       return view('pedidoCrear',compact('arrayDatos'));
+       $datos["diaHoy"] = date("Y-m-d");
+       $datos["sectores"] = $this->model->getSectores();
+       $datos["prioridades"] = $this->model->getPrioridades();
+       $datos["estados"] = $this->model->getEstados();
+       $datos["userLogueado"] = $_SESSION['user'];
+       return view('pedidoCrear',compact('datos'));
     }
 
     public function validar(){
@@ -84,12 +84,12 @@ class PedidoController extends Controller{
     public function modificarPedidoSeleccionado(){
         $unPedido = $this->model->getByIdPedido($_GET['id']);
         $miPedido = $unPedido[0]; 
-        $arrayDatos["sectores"] = $this->model->getSectores();
-        $arrayDatos["prioridades"] = $this->model->getPrioridades();
-        $arrayDatos["estados"] = $this->model->getEstados();
-        $arrayDatos["miPedido"] = $miPedido;
-        $arrayDatos["userLogueado"] = $_SESSION['user'];
-        return view('pedidoModificar',compact('arrayDatos'));
+        $datos["sectores"] = $this->model->getSectores();
+        $datos["prioridades"] = $this->model->getPrioridades();
+        $datos["estados"] = $this->model->getEstados();
+        $datos["miPedido"] = $miPedido;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('pedidoModificar',compact('datos'));
     }
 
     public function verTareas(){

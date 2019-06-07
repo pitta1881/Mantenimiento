@@ -3,7 +3,8 @@
 {% block title %}Crear Tarea Nueva{% endblock %}
 
 {% block header %}
-{{ include('partials/nav.html') }}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
 {% endblock %}
 
 {% block head %}
@@ -12,18 +13,18 @@
 {% endblock %}
 
 {% block main %}
-<h2>Modificar Tarea Nº {{ arrayDatos.unaTarea.idTarea }} del Pedido Nº {{ arrayDatos.unaTarea.idPedido }}</h2>
+<h2>Modificar Tarea Nº {{ datos.unaTarea.idTarea }} del Pedido Nº {{ datos.unaTarea.idPedido }}</h2>
 <form action="/tarea/modificar/guardar" method="post" id="formularioTarea">
     <label for="idTarea">Tarea</label><span class="asterisco">*</span>
-    <input type="text" name="idTarea" value="{{ arrayDatos.unaTarea.idTarea }}" readonly>
+    <input type="text" name="idTarea" value="{{ datos.unaTarea.idTarea }}" readonly>
     <label for="idPedido">Pedido</label><span class="asterisco">*</span>
-    <input type="text" name="idPedido" value="{{ arrayDatos.unaTarea.idPedido }}" readonly>
+    <input type="text" name="idPedido" value="{{ datos.unaTarea.idPedido }}" readonly>
     <label for="descripcion">Descripcion</label>
-    <input type="textarea" name="descripcion" autofocus required value="{{ arrayDatos.unaTarea.descripcion }}">
+    <input type="textarea" name="descripcion" autofocus required value="{{ datos.unaTarea.descripcion }}">
     <label for="especializacion">Especializacion</label>
     <select name="especializacion">
-        {% for especializacion in arrayDatos.especializaciones %}
-        {% if especializacion == arrayDatos.unaTarea.especializacion %}
+        {% for especializacion in datos.especializaciones %}
+        {% if especializacion == datos.unaTarea.especializacion %}
         <option value="{{ especializacion }}" selected>{{ especializacion }}</option>
         {% else %}
         <option value="{{ especializacion }}">{{ especializacion }}</option>
@@ -33,8 +34,8 @@
     </select>
     <label for="prioridad">Prioridad</label>
     <select name="prioridad">
-        {% for prioridad in arrayDatos.prioridades %}
-        {% if prioridad == arrayDatos.unaTarea.prioridad %}
+        {% for prioridad in datos.prioridades %}
+        {% if prioridad == datos.unaTarea.prioridad %}
         <option value="{{ prioridad }}" selected>{{ prioridad }}</option>
         {% else %}
         <option value="{{ prioridad }}">{{ prioridad }}</option>
@@ -42,7 +43,7 @@
         {% endfor %}
     </select>
     <label for="estado">Estado</label><span class="asterisco">*</span>
-    <input type="text" name="estado" value="{{ arrayDatos.unaTarea.estado }}" readonly>
+    <input type="text" name="estado" value="{{ datos.unaTarea.estado }}" readonly>
     <input type="submit" value="Guardar Cambios">
 </form>
 {% endblock %}

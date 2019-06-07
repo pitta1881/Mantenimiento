@@ -3,7 +3,7 @@
 {% block title %}Crear Tarea Nueva{% endblock %}
 
 {% block header %}
-{% set nombreUsuario = arrayDatos.userLogueado %}
+{% set nombreUsuario = datos.userLogueado %}
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
 {% endblock %}
 
@@ -13,21 +13,21 @@
 {% endblock %}
 
 {% block main %}
-<h2>Modificar Pedido Nº {{ arrayDatos.miPedido.id }}</h2>
+<h2>Modificar Pedido Nº {{ datos.miPedido.id }}</h2>
 <form action="/pedido/modificar" method="POST">
     <fieldset>
         <legend>Datos Basicos</legend>
         <label for="id">Numero de Pedido</label>
-        <input type="text" name="id" value="{{ arrayDatos.miPedido.id }}" readonly>
+        <input type="text" name="id" value="{{ datos.miPedido.id }}" readonly>
         <label for="nombreUsuario">Usuario Creador</label>
-        <input type="text" name="nombreUsuario" value="{{ arrayDatos.miPedido.nombreUsuario }}" readonly>
+        <input type="text" name="nombreUsuario" value="{{ datos.miPedido.nombreUsuario }}" readonly>
         <label for="fechaInicio">Fecha</label>
-        <input type="date" name="fechaInicio" value="{{ arrayDatos.miPedido.fechaInicio }}"
-            min="{{ arrayDatos.miPedido.fechaInicio }}">
+        <input type="date" name="fechaInicio" value="{{ datos.miPedido.fechaInicio }}"
+            min="{{ datos.miPedido.fechaInicio }}">
         <label for="estado">Estado</label>
         <select name="estado">
-            {% for estado in arrayDatos.estados %}
-            {% if estado == arrayDatos.miPedido.estado %}
+            {% for estado in datos.estados %}
+            {% if estado == datos.miPedido.estado %}
             <option value={{ estado }} selected>{{ estado }} </option>
             {% else %}
             <option value={{ estado }}>{{ estado }}</option>
@@ -35,11 +35,11 @@
             {% endfor %}
         </select>
         <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-        <input type="text" name="descripcion" autofocus required value="{{ arrayDatos.miPedido.descripcion}}">
+        <input type="text" name="descripcion" autofocus required value="{{ datos.miPedido.descripcion}}">
         <label for="sector">Sector</label>
         <select name="sector">
-            {% for sector in arrayDatos.sectores %}
-            {% if sector == arrayDatos.miPedido.sector %}
+            {% for sector in datos.sectores %}
+            {% if sector == datos.miPedido.sector %}
             <!--NO FUNCIONA, SEGURO EL TEMA DE LOS ESPACIOS-->
             <option value={{ sector }} selected>{{ sector }}</option>
             {% else %}
@@ -50,8 +50,8 @@
     </fieldset>
     <fieldset>
         <legend>Prioridad<span class="asterisco">*</span></legend>
-        {% for prioridad in arrayDatos.prioridades %}
-        {% if prioridad == arrayDatos.miPedido.prioridad %}
+        {% for prioridad in datos.prioridades %}
+        {% if prioridad == datos.miPedido.prioridad %}
         <label class="labelRadioInput"><input type="radio" name="prioridad" class="radioInput" required checked
                 value="{{ prioridad }}">{{ prioridad }}</label>
         {% else %}
