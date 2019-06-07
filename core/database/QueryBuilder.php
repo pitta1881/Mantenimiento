@@ -177,9 +177,10 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
+
  public function selectAllRoles($tableRol){
         $statement = $this->pdo->prepare(
-            "SELECT * FROM {$tableRol}"
+            "SELECT * FROM $tableRol"
        
         );
         $statement->execute();

@@ -34,7 +34,8 @@ class Usuarios extends Model
 
 public function getRoles(){
     $roles = $this->db->selectAllRoles($this->tableRol);
-       
+    $misRoles = json_decode(json_encode($roles), True);
+    return $misRoles; 
 }
    
     
