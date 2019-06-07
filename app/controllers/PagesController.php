@@ -9,7 +9,9 @@ class PagesController
      */
     public function home()
     {
-        return view('index.home');
+        session_start();
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('index.home',compact('datos'));
     }
 
     /**

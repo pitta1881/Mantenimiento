@@ -39,7 +39,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
     public function block_header($context, array $blocks = array())
     {
         // line 2
-        $context["nombreUsuario"] = ($context["userLogueado"] ?? null);
+        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         // line 3
         $this->loadTemplate("partials/nav.html", "index.home.html", 3)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
         echo "}
@@ -122,7 +122,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %}
-{% set nombreUsuario = userLogueado %}
+{% set nombreUsuario = datos.userLogueado %}
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
@@ -168,6 +168,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
     </nav>
 </fieldset>
 
-{% endblock %}", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
+{% endblock %}", "index.home.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\index.home.html");
     }
 }
