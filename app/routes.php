@@ -23,6 +23,7 @@
 
 //rutas OT
     $router->get('OT/verTodos', 'OTController@index');
+    $router->get('ot/crear', 'OTController@verTareasSinAsignar');
 
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');

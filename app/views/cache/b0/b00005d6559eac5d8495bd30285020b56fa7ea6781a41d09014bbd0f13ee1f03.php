@@ -173,14 +173,13 @@ class __TwigTemplate_d5b1159b6ee82ffeeb780d63a4971ff57eac9d00c335f73901ed3397804
             echo "\"><input
                     type=\"button\" value=\"Modificar\"></a>
             <a href=\"#\"><input type=\"button\" value=\"Ver Insumos\"></a>
-            <a href=\"/pedido/tarea/eliminar?idPedido=";
-            // line 66
+            <input type=\"button\" value=\"Eliminar\"
+                onclick=\"confirmacion( '";
+            // line 67
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "idPedido", array()), "html", null, true);
-            echo "&idTarea=";
+            echo "','";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idTarea", array()), "html", null, true);
-            echo "\"
-                onclick=\"confirm('¿Esta seguro que desea eliminar la tarea?')\">
-                <input type=\"button\" value=\"Eliminar\"></a>
+            echo "' )\">
         </td>
     </tr>
     ";
@@ -188,15 +187,26 @@ class __TwigTemplate_d5b1159b6ee82ffeeb780d63a4971ff57eac9d00c335f73901ed3397804
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tareas'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 72
+        // line 71
         echo "</table>
 ";
-        // line 73
+        // line 72
         if ((twig_length_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todasTareas", array())) == 0)) {
-            // line 74
+            // line 73
             echo "<h2 class='error'>No hay Tareas asignadas aún</h2>
 ";
         }
+        // line 75
+        echo "<script>
+    function confirmacion(nPedido, nTarea) {
+        var retorno = confirm(\"¿Esta seguro que desea eliminar la tarea?\");
+        if (retorno) {
+            location.replace(\"/pedido/tarea/eliminar?idPedido=\" + nPedido + \"&idTarea=\" + nTarea);
+            alert(\"nose xq ahora falla la pagina pero elimina bien!\");
+        }
+    }
+</script>
+";
     }
 
     public function getTemplateName()
@@ -211,7 +221,7 @@ class __TwigTemplate_d5b1159b6ee82ffeeb780d63a4971ff57eac9d00c335f73901ed3397804
 
     public function getDebugInfo()
     {
-        return array (  197 => 74,  195 => 73,  192 => 72,  178 => 66,  170 => 63,  166 => 62,  162 => 61,  158 => 60,  154 => 59,  150 => 58,  147 => 57,  143 => 56,  130 => 46,  126 => 44,  115 => 42,  111 => 41,  106 => 38,  95 => 36,  91 => 35,  83 => 30,  65 => 16,  62 => 15,  55 => 11,  52 => 10,  46 => 7,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  200 => 75,  196 => 73,  194 => 72,  191 => 71,  179 => 67,  170 => 63,  166 => 62,  162 => 61,  158 => 60,  154 => 59,  150 => 58,  147 => 57,  143 => 56,  130 => 46,  126 => 44,  115 => 42,  111 => 41,  106 => 38,  95 => 36,  91 => 35,  83 => 30,  65 => 16,  62 => 15,  55 => 11,  52 => 10,  46 => 7,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -281,9 +291,8 @@ class __TwigTemplate_d5b1159b6ee82ffeeb780d63a4971ff57eac9d00c335f73901ed3397804
         <td><a href=\"/tarea/modificar/seleccionado?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}\"><input
                     type=\"button\" value=\"Modificar\"></a>
             <a href=\"#\"><input type=\"button\" value=\"Ver Insumos\"></a>
-            <a href=\"/pedido/tarea/eliminar?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}\"
-                onclick=\"confirm('¿Esta seguro que desea eliminar la tarea?')\">
-                <input type=\"button\" value=\"Eliminar\"></a>
+            <input type=\"button\" value=\"Eliminar\"
+                onclick=\"confirmacion( '{{ datos.idPedido }}','{{ tareas.idTarea }}' )\">
         </td>
     </tr>
     {% endfor %}
@@ -291,6 +300,15 @@ class __TwigTemplate_d5b1159b6ee82ffeeb780d63a4971ff57eac9d00c335f73901ed3397804
 {% if datos.todasTareas|length == 0 %}
 <h2 class='error'>No hay Tareas asignadas aún</h2>
 {% endif %}
+<script>
+    function confirmacion(nPedido, nTarea) {
+        var retorno = confirm(\"¿Esta seguro que desea eliminar la tarea?\");
+        if (retorno) {
+            location.replace(\"/pedido/tarea/eliminar?idPedido=\" + nPedido + \"&idTarea=\" + nTarea);
+            alert(\"nose xq ahora falla la pagina pero elimina bien!\");
+        }
+    }
+</script>
 {% endblock %}", "tareasVerTodas.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\tareasVerTodas.html");
     }
 }

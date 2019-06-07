@@ -19,4 +19,12 @@ class OTController extends Controller{
         $datos["userLogueado"] = $_SESSION['user'];
         return view('OTVerTodos', compact('datos'));
     }
+
+    public function verTareasSinAsignar(){
+        $tareasSinAsignar = $this->model->verTareasSinAsignar();
+        $datos['tareasSinAsignar'] = $tareasSinAsignar;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('OTTareasSinAsignar',compact('datos'));
+    }
+
 }

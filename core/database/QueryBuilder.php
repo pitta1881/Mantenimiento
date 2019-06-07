@@ -223,4 +223,12 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function selectTareasSinAsignar($tableTarea){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableTarea WHERE estado='Iniciado'"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+   }
 }

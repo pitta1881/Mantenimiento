@@ -39,7 +39,7 @@ class __TwigTemplate_c4b22470c6ce39fb642dda5abc8ea568d096add81bb897c2b557664dd62
     public function block_header($context, array $blocks = array())
     {
         // line 2
-        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "userLogueado", array());
+        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         // line 3
         $this->loadTemplate("partials/nav.html", "pedidoCrear.html", 3)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
         echo "} ";
@@ -64,18 +64,18 @@ class __TwigTemplate_c4b22470c6ce39fb642dda5abc8ea568d096add81bb897c2b557664dd62
         <label for=\"nombreUsuario\">Usuario Creador</label>
         <input type=\"text\" name=\"nombreUsuario\" value=\"";
         // line 11
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "userLogueado", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array()), "html", null, true);
         echo "\" readonly>
         <label for=\"fechaInicio\">Fecha</label>
         <input type=\"text\" name=\"fechaInicio\" value=\"";
         // line 13
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "diaHoy", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "diaHoy", array()), "html", null, true);
         echo "\" readonly>
         <br>
         <label for=\"estado\">Estado</label>
         <input type=\"text\" name=\"estado\" value=\"";
         // line 16
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "estados", array()), 0, array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "estados", array()), 0, array()), "html", null, true);
         echo "\" readonly>
         <br>
         <label for=\"descripcion\">Descripcion</label><span class=\"asterisco\">*</span>
@@ -86,7 +86,7 @@ class __TwigTemplate_c4b22470c6ce39fb642dda5abc8ea568d096add81bb897c2b557664dd62
             ";
         // line 23
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "sectores", array()));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "sectores", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["sector"]) {
             // line 24
             echo "            <option value=\"";
@@ -107,7 +107,7 @@ class __TwigTemplate_c4b22470c6ce39fb642dda5abc8ea568d096add81bb897c2b557664dd62
         ";
         // line 30
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "prioridades", array()));
+        $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "prioridades", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["prioridad"]) {
             // line 31
             echo "        <label class=\"labelRadioInput\"><input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required
@@ -148,7 +148,7 @@ class __TwigTemplate_c4b22470c6ce39fb642dda5abc8ea568d096add81bb897c2b557664dd62
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %}
-{% set nombreUsuario = arrayDatos.userLogueado %}
+{% set nombreUsuario = datos.userLogueado %}
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %}
 {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
@@ -157,26 +157,26 @@ class __TwigTemplate_c4b22470c6ce39fb642dda5abc8ea568d096add81bb897c2b557664dd62
     <fieldset class=\"basicosPedido\">
         <legend>Datos Basicos</legend>
         <label for=\"nombreUsuario\">Usuario Creador</label>
-        <input type=\"text\" name=\"nombreUsuario\" value=\"{{ arrayDatos.userLogueado }}\" readonly>
+        <input type=\"text\" name=\"nombreUsuario\" value=\"{{ datos.userLogueado }}\" readonly>
         <label for=\"fechaInicio\">Fecha</label>
-        <input type=\"text\" name=\"fechaInicio\" value=\"{{ arrayDatos.diaHoy }}\" readonly>
+        <input type=\"text\" name=\"fechaInicio\" value=\"{{ datos.diaHoy }}\" readonly>
         <br>
         <label for=\"estado\">Estado</label>
-        <input type=\"text\" name=\"estado\" value=\"{{ arrayDatos.estados.0 }}\" readonly>
+        <input type=\"text\" name=\"estado\" value=\"{{ datos.estados.0 }}\" readonly>
         <br>
         <label for=\"descripcion\">Descripcion</label><span class=\"asterisco\">*</span>
         <input type=\"textarea\" name=\"descripcion\" autofocus required placeholder=\"Ingrese la descripcion..\">
         <br>
         <label for=\"sector\">Sector</label>
         <select name=\"sector\">
-            {% for sector in arrayDatos.sectores %}
+            {% for sector in datos.sectores %}
             <option value=\"{{ sector }}\">{{ sector }}</option>
             {% endfor %}
         </select>
     </fieldset>
     <fieldset class=\"prioridad\">
         <legend>Prioridad<span class=\"asterisco\">*</span></legend>
-        {% for prioridad in arrayDatos.prioridades %}
+        {% for prioridad in datos.prioridades %}
         <label class=\"labelRadioInput\"><input type=\"radio\" name=\"prioridad\" class=\"radioInput\" required
                 value={{ prioridad }}>{{ prioridad }}</label>
         {% endfor %}
@@ -184,6 +184,6 @@ class __TwigTemplate_c4b22470c6ce39fb642dda5abc8ea568d096add81bb897c2b557664dd62
     <input type=\"submit\">
     <input type=\"reset\">
 </form>
-{% endblock %}", "pedidoCrear.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\pedidoCrear.html");
+{% endblock %}", "pedidoCrear.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\pedidoCrear.html");
     }
 }

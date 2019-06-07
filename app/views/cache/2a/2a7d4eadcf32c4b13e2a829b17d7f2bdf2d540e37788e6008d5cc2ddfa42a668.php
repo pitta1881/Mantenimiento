@@ -61,7 +61,6 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
 <a href=\"/ot/crear\">
     <input type=\"button\" value=\"Crear OT\">
 </a>
-
 <table>
     <th>Nº OT</th>
     <th>Fecha de Inicio</th>
@@ -70,40 +69,40 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
     <th>Tareas Asignadas</th>
     <th>Accion</th>
     ";
-        // line 18
+        // line 17
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todasOT", array()));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["OT"]) {
-            // line 19
+            // line 18
             echo "    <tr>
         <td>";
-            // line 20
+            // line 19
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "idOT", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 21
+            // line 20
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "fechaInicio", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 22
+            // line 21
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "fechaFin", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 23
+            // line 22
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "fechaInicio", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 24
+            // line 23
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "estado", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 25
+            // line 24
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "tareasAsignadas", array()), "html", null, true);
             echo "</td>
         <td>
             <a href='/OT/verTareas?idOT=";
-            // line 27
+            // line 26
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"VER TAREAS\"></a>
@@ -113,13 +112,13 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 32
+            // line 31
             echo "    <h2 class='error'>No hay OTs</h2> ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['OT'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 33
+        // line 32
         echo "</table>
 ";
     }
@@ -136,7 +135,7 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
 
     public function getDebugInfo()
     {
-        return array (  123 => 33,  117 => 32,  107 => 27,  102 => 25,  98 => 24,  94 => 23,  90 => 22,  86 => 21,  82 => 20,  79 => 19,  74 => 18,  60 => 6,  57 => 5,  51 => 4,  44 => 3,  42 => 2,  15 => 1,);
+        return array (  122 => 32,  116 => 31,  106 => 26,  101 => 24,  97 => 23,  93 => 22,  89 => 21,  85 => 20,  81 => 19,  78 => 18,  73 => 17,  60 => 6,  57 => 5,  51 => 4,  44 => 3,  42 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -150,7 +149,6 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
 <a href=\"/ot/crear\">
     <input type=\"button\" value=\"Crear OT\">
 </a>
-
 <table>
     <th>Nº OT</th>
     <th>Fecha de Inicio</th>
