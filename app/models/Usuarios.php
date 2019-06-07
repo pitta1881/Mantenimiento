@@ -7,7 +7,7 @@ use App\Core\Model;
 class Usuarios extends Model
 {
     protected $table = 'usuarios';
-    
+    protected $tableRol='rol';
 
     
     public function get()
@@ -32,7 +32,10 @@ class Usuarios extends Model
         $this->db->update($this->table, $usuarioModificado,$nombre);
     }
 
-
+public function getRoles(){
+    $roles = $this->db->selectAllRoles($this->tableRol);
+       
+}
    
     
     

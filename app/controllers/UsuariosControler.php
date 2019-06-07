@@ -93,11 +93,19 @@ $this->saveUsuario();
             'password' => $_POST['password']
         ];
         $this->model->insert($usuario);
-        return $usuario;
+      
             
  }
 
-
+//roles que van a aparecer en el select del alta de usuario
+    public function selectRol(){
+        $nombresRoles=$this->model->getRoles();
+   
+      
+           return view('administracionUsuario.alta',compact('nombresRoles'));
+    }
+    
+    
 }
        
        
