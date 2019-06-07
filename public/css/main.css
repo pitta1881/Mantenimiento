@@ -63,6 +63,7 @@ nav.main-nav ol li a {
     text-decoration: none;
     height: 60px;
     width: 60px;
+
 }
 
 nav.main-nav ol li a:hover {
@@ -70,6 +71,7 @@ nav.main-nav ol li a:hover {
     padding-bottom: 20px;
     background-color: #F27329;
     color: white;
+
 }
 
 .active {
