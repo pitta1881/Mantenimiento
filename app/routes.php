@@ -21,6 +21,9 @@
     $router->get('pedido/tarea/eliminar', 'TareaController@eliminar');
     $router->post('tarea/modificar/guardar', 'TareaController@modificar');
 
+//rutas OT
+    $router->get('OT/verTodos', 'OTController@index');
+
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');
 $router->get('usuario/gestionUsuario','UsuariosControler@vistaGestionUsuario');

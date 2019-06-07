@@ -25,17 +25,16 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
         <li><a href=\"/home\">Inicio</a></li>
-
         <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
-        <li><a href=\"/pedido/verTodos\">Ordenes de Trabajo</a></li>
+        <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/pedido/verTodos\">Tareas</a></li>
         <li>
             <p class=\"salir\">
                 <a href=\"/\"></a>
                 Desconectar</p>
             <p class=\"user\">Usuario:";
-        // line 15
+        // line 14
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
         echo "</p>
         </li>
@@ -55,7 +54,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-        return array (  39 => 15,  23 => 1,);
+        return array (  38 => 14,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -65,10 +64,9 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
         <li><a href=\"/home\">Inicio</a></li>
-
         <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
-        <li><a href=\"/pedido/verTodos\">Ordenes de Trabajo</a></li>
+        <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/pedido/verTodos\">Tareas</a></li>
         <li>
             <p class=\"salir\">
@@ -77,6 +75,6 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p class=\"user\">Usuario:{{ nombreUsuario }}</p>
         </li>
     </ol>
-</nav>", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>", "partials/nav.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

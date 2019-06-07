@@ -215,4 +215,12 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
+
+    public function selectAllOT($tableOT){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$tableOT}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 }
