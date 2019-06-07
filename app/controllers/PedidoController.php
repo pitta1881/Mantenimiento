@@ -7,8 +7,10 @@ use App\Models\Pedido;
 use App\Models\Tarea;
 
 class PedidoController extends Controller{
+
     public function __construct(){
         $this->model = new Pedido();
+        session_start();
     }
 
     /*Show all pedidos*/
@@ -21,7 +23,9 @@ class PedidoController extends Controller{
                 }
             }
         }        
-        return view('verTodosPedidos', compact('todosPedidos'));
+        $datos['todosPedidos'] = $todosPedidos;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('pedidosVerTodos', compact('datos'));
     }
 
     /*muestra un solo pedido especifico ingresado por GET*/
@@ -31,7 +35,8 @@ class PedidoController extends Controller{
         $tareas = $this->model->getTareasByIdPedido($_GET['id']); //todavia no está esto
         $datosPedidoTareas["miPedido"] = $miPedido;        
         $datosPedidoTareas["tareas"] = $tareas;
-        return view('verUnPedido', compact('datosPedidoTareas'));
+        $datosPedidoTareas["userLogueado"] = $_SESSION['user'];
+        return view('pedidoVerFicha', compact('datosPedidoTareas'));
     }
 
     public function create()
@@ -40,7 +45,8 @@ class PedidoController extends Controller{
        $arrayDatos["sectores"] = $this->model->getSectores();
        $arrayDatos["prioridades"] = $this->model->getPrioridades();
        $arrayDatos["estados"] = $this->model->getEstados();
-       return view('crearPedido',compact('arrayDatos'));
+       $arrayDatos["userLogueado"] = $_SESSION['user'];
+       return view('pedidoCrear',compact('arrayDatos'));
     }
 
     public function validar(){
@@ -55,8 +61,10 @@ class PedidoController extends Controller{
            echo "<h2>Algo salio Mal</h2>";
        }       
        */
-      $arrayPedido = $this->save();
-      return view('verPedidoCreado',compact('arrayPedido'));
+      $datos['arrayPedido'] = $this->save();
+      $datos["userLogueado"] = $_SESSION['user'];
+      $idNuevoPedido = $this->model->getIdUltimoPedido();
+      redirect("fichaPedido?id=".$idNuevoPedido);
     }
 
     public function save()
@@ -66,15 +74,11 @@ class PedidoController extends Controller{
             'estado' => $_POST['estado'],
             'descripcion' => $_POST['descripcion'],
             'sector' => preg_replace('/\s+/', '_', $_POST['sector']),
-            'prioridad' => $_POST['prioridad']
+            'prioridad' => $_POST['prioridad'],
+            'nombreUsuario' => $_POST['nombreUsuario']
         ];
         $this->model->insert($pedido);
         return $pedido;
-    }
-
-    public function modificarPedidoListado(){
-        $todosPedidos = $this->model->get();
-        return view('verTodosPedidosParaModificar', compact('todosPedidos'));
     }
 
     public function modificarPedidoSeleccionado(){
@@ -84,7 +88,8 @@ class PedidoController extends Controller{
         $arrayDatos["prioridades"] = $this->model->getPrioridades();
         $arrayDatos["estados"] = $this->model->getEstados();
         $arrayDatos["miPedido"] = $miPedido;
-        return view('modificarPedido',compact('arrayDatos'));
+        $arrayDatos["userLogueado"] = $_SESSION['user'];
+        return view('pedidoModificar',compact('arrayDatos'));
     }
 
     public function verTareas(){
@@ -94,7 +99,8 @@ class PedidoController extends Controller{
     $datos["prioridades"] = $this->model->getPrioridades();
     $datos["estados"] = $this->model->getEstados();
     $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
-    return view('verTodasTareas', compact('datos'));
+    $datos["userLogueado"] = $_SESSION['user'];
+    return view('tareasVerTodas', compact('datos'));
     }
 
     public function modificar(){
@@ -104,18 +110,18 @@ class PedidoController extends Controller{
              'estado' => $_POST['estado'],
              'descripcion' => $_POST['descripcion'],
              'sector' => preg_replace('/\s+/', '_', $_POST['sector']),
-             'prioridad' => $_POST['prioridad']
+             'prioridad' => $_POST['prioridad'],
          ];
-         $this->model->update($arrayPedido,$idPedido);
-       return view('verPedidoCreado',compact('arrayPedido'));
+         $this->model->updatePedido($arrayPedido,$idPedido);
+         redirect("fichaPedido?id=".$idPedido);
      }
     
     public function buscarPor(){
         $filter = $_POST['filtro'];
         $value = $_POST['textBusqueda'];
-        $todosPedidos = $this->model->getAllbyFilter($filter,$value);
-           
-        return view('verTodosPedidos', compact('todosPedidos'));
+        $datos['todosPedidos'] = $this->model->getAllbyFilter($filter,$value);
+        $datos['userLogueado'] = $_SESSION['user'];           
+        return view('pedidosVerTodos', compact('datos'));
          
      }
 }

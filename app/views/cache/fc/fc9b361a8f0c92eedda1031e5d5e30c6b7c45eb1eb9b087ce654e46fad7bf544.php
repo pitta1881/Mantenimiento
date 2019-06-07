@@ -38,11 +38,15 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function block_header($context, array $blocks = array())
     {
-        echo " ";
-        echo twig_include($this->env, $context, "partials/nav.html");
-        echo " ";
+        // line 2
+        $context["nombreUsuario"] = ($context["userLogueado"] ?? null);
+        // line 3
+        $this->loadTemplate("partials/nav.html", "index.home.html", 3)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        echo "}
+";
     }
 
+    // line 4
     public function block_head($context, array $blocks = array())
     {
         echo " ";
@@ -51,10 +55,10 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 2
+    // line 5
     public function block_main($context, array $blocks = array())
     {
-        // line 3
+        // line 6
         echo "<fieldset class=\"Insumos div\">
     <legend>Insumos</legend>
 
@@ -112,12 +116,15 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  58 => 3,  55 => 2,  15 => 1,);
+        return array (  62 => 6,  59 => 5,  50 => 4,  44 => 3,  42 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %}
+{% set nombreUsuario = userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
 <fieldset class=\"Insumos div\">
     <legend>Insumos</legend>
@@ -161,7 +168,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
     </nav>
 </fieldset>
 
-{% endblock %}
-", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
+{% endblock %}", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

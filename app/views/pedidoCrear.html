@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %}
+{% set nombreUsuario = arrayDatos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<h1>Crear Pedido</h1>
+<form action="/pedido/validar" method="POST">
+    <fieldset class="basicosPedido">
+        <legend>Datos Basicos</legend>
+        <label for="nombreUsuario">Usuario Creador</label>
+        <input type="text" name="nombreUsuario" value="{{ arrayDatos.userLogueado }}" readonly>
+        <label for="fechaInicio">Fecha</label>
+        <input type="text" name="fechaInicio" value="{{ arrayDatos.diaHoy }}" readonly>
+        <br>
+        <label for="estado">Estado</label>
+        <input type="text" name="estado" value="{{ arrayDatos.estados.0 }}" readonly>
+        <br>
+        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+        <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+        <br>
+        <label for="sector">Sector</label>
+        <select name="sector">
+            {% for sector in arrayDatos.sectores %}
+            <option value="{{ sector }}">{{ sector }}</option>
+            {% endfor %}
+        </select>
+    </fieldset>
+    <fieldset class="prioridad">
+        <legend>Prioridad<span class="asterisco">*</span></legend>
+        {% for prioridad in arrayDatos.prioridades %}
+        <label class="labelRadioInput"><input type="radio" name="prioridad" class="radioInput" required
+                value={{ prioridad }}>{{ prioridad }}</label>
+        {% endfor %}
+    </fieldset>
+    <input type="submit">
+    <input type="reset">
+</form>
+{% endblock %}

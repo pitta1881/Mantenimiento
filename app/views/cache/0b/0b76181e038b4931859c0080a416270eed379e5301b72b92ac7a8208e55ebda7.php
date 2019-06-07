@@ -1,7 +1,7 @@
 <?php
 
-/* crearPedido.html */
-class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08f9708 extends Twig_Template
+/* pedidoCrear.html */
+class __TwigTemplate_c4b22470c6ce39fb642dda5abc8ea568d096add81bb897c2b557664dd6258004 extends Twig_Template
 {
     private $source;
 
@@ -12,7 +12,7 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
         $this->source = $this->getSourceContext();
 
         // line 1
-        $this->parent = $this->loadTemplate("base.html", "crearPedido.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "pedidoCrear.html", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'header' => array($this, 'block_header'),
@@ -39,9 +39,9 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
     public function block_header($context, array $blocks = array())
     {
         // line 2
-        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "nombreUsuario", array());
+        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "userLogueado", array());
         // line 3
-        $this->loadTemplate("partials/nav.html", "crearPedido.html", 3)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        $this->loadTemplate("partials/nav.html", "pedidoCrear.html", 3)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
         echo "} ";
     }
 
@@ -64,7 +64,7 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
         <label for=\"nombreUsuario\">Usuario Creador</label>
         <input type=\"text\" name=\"nombreUsuario\" value=\"";
         // line 11
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "nombreUsuario", array()), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["arrayDatos"] ?? null), "userLogueado", array()), "html", null, true);
         echo "\" readonly>
         <label for=\"fechaInicio\">Fecha</label>
         <input type=\"text\" name=\"fechaInicio\" value=\"";
@@ -132,7 +132,7 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
 
     public function getTemplateName()
     {
-        return "crearPedido.html";
+        return "pedidoCrear.html";
     }
 
     public function isTraitable()
@@ -148,7 +148,7 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %}
-{% set nombreUsuario = arrayDatos.nombreUsuario %}
+{% set nombreUsuario = arrayDatos.userLogueado %}
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %}
 {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
@@ -157,7 +157,7 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
     <fieldset class=\"basicosPedido\">
         <legend>Datos Basicos</legend>
         <label for=\"nombreUsuario\">Usuario Creador</label>
-        <input type=\"text\" name=\"nombreUsuario\" value=\"{{ arrayDatos.nombreUsuario }}\" readonly>
+        <input type=\"text\" name=\"nombreUsuario\" value=\"{{ arrayDatos.userLogueado }}\" readonly>
         <label for=\"fechaInicio\">Fecha</label>
         <input type=\"text\" name=\"fechaInicio\" value=\"{{ arrayDatos.diaHoy }}\" readonly>
         <br>
@@ -184,6 +184,6 @@ class __TwigTemplate_a961314eb9c2536bc4399168424b893a05382145ac84cb41cdebdd43a08
     <input type=\"submit\">
     <input type=\"reset\">
 </form>
-{% endblock %}", "crearPedido.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\crearPedido.html");
+{% endblock %}", "pedidoCrear.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\pedidoCrear.html");
     }
 }

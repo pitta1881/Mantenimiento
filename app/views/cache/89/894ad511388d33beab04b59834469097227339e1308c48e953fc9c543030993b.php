@@ -1,7 +1,7 @@
 <?php
 
-/* verTodosPedidos.html */
-class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7ae3e74 extends Twig_Template
+/* pedidosVerTodos.html */
+class __TwigTemplate_9a75d230ecf9e70db7ba0e619d334a75ec3a7e5fd86630d8299b3d4707722ec7 extends Twig_Template
 {
     private $source;
 
@@ -12,7 +12,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
         $this->source = $this->getSourceContext();
 
         // line 1
-        $this->parent = $this->loadTemplate("base.html", "verTodosPedidos.html", 1);
+        $this->parent = $this->loadTemplate("base.html", "pedidosVerTodos.html", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'header' => array($this, 'block_header'),
@@ -39,9 +39,9 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     public function block_header($context, array $blocks = array())
     {
         // line 2
-        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "user", array());
+        $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         // line 3
-        $this->loadTemplate("partials/nav.html", "verTodosPedidos.html", 3)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        $this->loadTemplate("partials/nav.html", "pedidosVerTodos.html", 3)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
         echo "} ";
     }
 
@@ -161,7 +161,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
 
     public function getTemplateName()
     {
-        return "verTodosPedidos.html";
+        return "pedidosVerTodos.html";
     }
 
     public function isTraitable()
@@ -177,7 +177,7 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %}
-{% set nombreUsuario = datos.user %}
+{% set nombreUsuario = datos.userLogueado %}
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %}
 {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
@@ -232,6 +232,6 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
     {% else %}
     <h2 class='error'>No hay Pedidos</h2> {% endfor %}
 </table>
-{% endblock %}", "verTodosPedidos.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTodosPedidos.html");
+{% endblock %}", "pedidosVerTodos.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\pedidosVerTodos.html");
     }
 }

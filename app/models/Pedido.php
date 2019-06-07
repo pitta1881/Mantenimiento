@@ -33,7 +33,7 @@ class Pedido extends Model{
     }
     
     public function getAllbyFilter($filter,$value){
-          $pedido = $this->db->buscar('pedido',$filter,$value);
+        $pedido = $this->db->buscar($this->table,$filter,$value);
         $miPedido = json_decode(json_encode($pedido), True);
         foreach ($miPedido as $key => $value) {
             $miPedido[$key]['sector'] = str_replace("_"," ",$value['sector']);
@@ -53,8 +53,8 @@ class Pedido extends Model{
         $this->db->insert($this->table, $pedido);
     }
 
-    public function update (array $pedidoModificado,$idPedido){
-        $this->db->update($this->table, $pedidoModificado,$idPedido);
+    public function updatePedido (array $pedidoModificado,$idPedido){
+        $this->db->updatePedido($this->table, $pedidoModificado,$idPedido);
     }
 
 
@@ -72,4 +72,9 @@ class Pedido extends Model{
         $tarea = new Tarea();
         return $tarea->getEspecializaciones();
     }    
+
+    public function getIdUltimoPedido(){
+        $ultimo =  $this->db->getIdUltimoPedidoDB($this->table);
+        return $ultimo[0][0];
+    }
 }

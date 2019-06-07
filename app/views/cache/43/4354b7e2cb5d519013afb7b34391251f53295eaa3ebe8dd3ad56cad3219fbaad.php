@@ -34,11 +34,13 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p class=\"salir\">
                 <a href=\"/\"></a>
                 Desconectar</p>
-            <p class=\"user\">Usuario: Administrador</p>
+            <p class=\"user\">Usuario:";
+        // line 15
+        echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
+        echo "</p>
         </li>
     </ol>
-</nav>
-";
+</nav>";
     }
 
     public function getTemplateName()
@@ -46,9 +48,14 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         return "partials/nav.html";
     }
 
+    public function isTraitable()
+    {
+        return false;
+    }
+
     public function getDebugInfo()
     {
-        return array (  23 => 1,);
+        return array (  39 => 15,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -67,10 +74,9 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p class=\"salir\">
                 <a href=\"/\"></a>
                 Desconectar</p>
-            <p class=\"user\">Usuario: Administrador</p>
+            <p class=\"user\">Usuario:{{ nombreUsuario }}</p>
         </li>
     </ol>
-</nav>
-", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

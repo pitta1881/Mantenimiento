@@ -16,11 +16,14 @@ class LoginController extends Controller{
        // compact('arrayUsuarios');
         $user=$_POST['nombre'];
         $password=$_POST['password'];
-        $statement= $this->model->buscarUsuario($user,$password);        
+        $statement= $this->model->buscarUsuario($user,$password); 
     if(empty($statement)){
          return view ('index');
      }else{
-        return view ('index.home');
+         session_start();
+         $_SESSION['user']=$_POST['nombre'];
+         $userLogueado = $_SESSION['user'];
+        return view ('index.home',compact('userLogueado'));
         }       
     }
 }

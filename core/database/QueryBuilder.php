@@ -104,7 +104,7 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
     public function buscar($table,$filter,$value){
             $statement = $this->pdo->prepare(
                "SELECT * FROM {$table} 
-            WHERE {$filter} = '{$value}' ORDER BY '{$filter}'  "
+            WHERE {$filter} = '{$value}' ORDER BY '{$filter}'"
    
         );
         $statement->execute();
@@ -117,7 +117,7 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
      * @param  string $table
      * @param  array  $parameters
      */
-    public function update($table, $parameters, $id){
+    public function updatePedido($table, $parameters, $id){
         $parameters = $this->cleanParameterName($parameters);
         $sql = "UPDATE $table SET fechaInicio=:fechaInicio, estado=:estado, descripcion=:descripcion, sector=:sector, prioridad=:prioridad WHERE id=$id"; //recontra HARDCODEADO
             try {
@@ -206,5 +206,13 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
             } catch (Exception $e) {
                 $this->sendToLog($e);
             }   
+    }
+
+    public function getIdUltimoPedidoDB($table){
+        $statement = $this->pdo->prepare(
+           "SELECT MAX(id) FROM $table"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
     }
 }
