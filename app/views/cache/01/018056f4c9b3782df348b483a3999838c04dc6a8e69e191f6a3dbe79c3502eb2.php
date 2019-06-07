@@ -130,11 +130,11 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             echo "'>
                 <input type=\"button\" value=\"MODIFICAR\">
             </a>
-            <a href='/pedido/verTareas?id=";
+            <a href='/pedido/verTareas?idPedido=";
             // line 46
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
-                <input type=\"button\" value=\"VER TAREAS\">
+                <input type=\"button\" value=\"VER TAREAS\"></a>
         </td>
     </tr>
     ";
@@ -214,8 +214,8 @@ class __TwigTemplate_9996f5daa2955a939f4581ed305606effad3abdf4d0afa1d4c86ab87b7a
             <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
                 <input type=\"button\" value=\"MODIFICAR\">
             </a>
-            <a href='/pedido/verTareas?id={{ pedido.id }}'>
-                <input type=\"button\" value=\"VER TAREAS\">
+            <a href='/pedido/verTareas?idPedido={{ pedido.id }}'>
+                <input type=\"button\" value=\"VER TAREAS\"></a>
         </td>
     </tr>
     {% else %}

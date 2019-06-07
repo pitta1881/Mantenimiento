@@ -88,9 +88,9 @@ class PedidoController extends Controller{
     }
 
     public function verTareas(){
-    $todasTareas = $this->model->getTareasByIdPedido($_GET['id']);
+    $todasTareas = $this->model->getTareasByIdPedido($_GET['idPedido']);
     $datos['todasTareas'] = $todasTareas;
-    $datos['idPedido'] = $_GET['id'];
+    $datos['idPedido'] = $_GET['idPedido'];
     $datos["prioridades"] = $this->model->getPrioridades();
     $datos["estados"] = $this->model->getEstados();
     $datos['especializaciones'] = $this->model->getTareaEspecializaciones();

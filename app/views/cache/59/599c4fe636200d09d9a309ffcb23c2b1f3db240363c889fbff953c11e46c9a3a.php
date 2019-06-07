@@ -135,48 +135,69 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
+    <th>Accion</th>
     ";
-        // line 54
+        // line 55
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todasTareas", array()));
         foreach ($context['_seq'] as $context["_key"] => $context["tareas"]) {
-            // line 55
+            // line 56
             echo "    <tr>
         <td>";
-            // line 56
+            // line 57
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idTarea", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 57
+            // line 58
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "descripcion", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 58
+            // line 59
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "especializacion", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 59
+            // line 60
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "prioridad", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 60
+            // line 61
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "estado", array()), "html", null, true);
             echo "</td>
+        <td><a href=\"#\"><input type=\"button\" value=\"Modificar\"></a>
+            <input type=\"button\" value=\"Eliminar\"
+                onclick=\"confirmacion( '";
+            // line 64
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "idPedido", array()), "html", null, true);
+            echo "','";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idTarea", array()), "html", null, true);
+            echo "' )\">
+        </td>
     </tr>
     ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tareas'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 63
+        // line 68
         echo "</table>
 ";
-        // line 64
+        // line 69
         if ((twig_length_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todasTareas", array())) == 0)) {
-            // line 65
+            // line 70
             echo "<h2 class='error'>No hay Tareas asignadas aún</h2>
 ";
         }
+        // line 72
+        echo "<script>
+    function confirmacion(nPedido, nTarea) {
+        var retorno = confirm(\"¿Esta seguro que desea eliminar la tarea?\");
+        if (retorno) {
+            location.replace(\"/pedido/tarea/eliminar?idPedido=\" + nPedido + \"&idTarea=\" + nTarea);
+            alert(\"nose xq ahora falla la pagina pero elimina bien!\");
+        }
+    }
+</script>
+";
     }
 
     public function getTemplateName()
@@ -191,7 +212,7 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
 
     public function getDebugInfo()
     {
-        return array (  177 => 65,  175 => 64,  172 => 63,  163 => 60,  159 => 59,  155 => 58,  151 => 57,  147 => 56,  144 => 55,  140 => 54,  128 => 45,  124 => 43,  113 => 41,  109 => 40,  104 => 37,  93 => 35,  89 => 34,  81 => 29,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  191 => 72,  187 => 70,  185 => 69,  182 => 68,  170 => 64,  164 => 61,  160 => 60,  156 => 59,  152 => 58,  148 => 57,  145 => 56,  141 => 55,  128 => 45,  124 => 43,  113 => 41,  109 => 40,  104 => 37,  93 => 35,  89 => 34,  81 => 29,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -249,6 +270,7 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
+    <th>Accion</th>
     {% for tareas in datos.todasTareas %}
     <tr>
         <td>{{ tareas.idTarea }}</td>
@@ -256,12 +278,25 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
         <td>{{ tareas.especializacion }}</td>
         <td>{{ tareas.prioridad }}</td>
         <td>{{ tareas.estado }}</td>
+        <td><a href=\"#\"><input type=\"button\" value=\"Modificar\"></a>
+            <input type=\"button\" value=\"Eliminar\"
+                onclick=\"confirmacion( '{{ datos.idPedido }}','{{ tareas.idTarea }}' )\">
+        </td>
     </tr>
     {% endfor %}
 </table>
 {% if datos.todasTareas|length == 0 %}
 <h2 class='error'>No hay Tareas asignadas aún</h2>
 {% endif %}
+<script>
+    function confirmacion(nPedido, nTarea) {
+        var retorno = confirm(\"¿Esta seguro que desea eliminar la tarea?\");
+        if (retorno) {
+            location.replace(\"/pedido/tarea/eliminar?idPedido=\" + nPedido + \"&idTarea=\" + nTarea);
+            alert(\"nose xq ahora falla la pagina pero elimina bien!\");
+        }
+    }
+</script>
 {% endblock %}", "verTodasTareas.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\verTodasTareas.html");
     }
 }

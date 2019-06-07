@@ -25,4 +25,8 @@ class TareaController extends Controller{
         redirect("fichaPedido?id=".$tarea['idPedido']);
     }
 
+    public function eliminar(){
+        $this->model->delete($_GET['idPedido'],$_GET['idTarea']);
+        redirect("pedido/verTareas?idPedido=".$_GET['idPedido']);
+    }
 }

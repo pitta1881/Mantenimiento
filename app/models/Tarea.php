@@ -41,6 +41,9 @@ class Tarea extends Model
     {
         return $this->db->selectTareasPorNPedido($this->tableTarea,$id);
     }
-    
+
+    public function delete($nPedido, $nTarea){
+        $this->db->deleteTarea($this->table,$nPedido,$nTarea);
+    }    
     
 }

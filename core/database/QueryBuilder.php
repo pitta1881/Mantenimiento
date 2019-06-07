@@ -168,4 +168,14 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
     
+
+    
+    public function deleteTarea($table,$idPedido,$idTarea){ //table = tarea
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idPedido = $idPedido AND idTarea = $idTarea"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
 }

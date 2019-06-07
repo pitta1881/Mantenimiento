@@ -51,6 +51,7 @@
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
+    <th>Accion</th>
     {% for tareas in datos.todasTareas %}
     <tr>
         <td>{{ tareas.idTarea }}</td>
@@ -58,10 +59,23 @@
         <td>{{ tareas.especializacion }}</td>
         <td>{{ tareas.prioridad }}</td>
         <td>{{ tareas.estado }}</td>
+        <td><a href="#"><input type="button" value="Modificar"></a>
+            <input type="button" value="Eliminar"
+                onclick="confirmacion( '{{ datos.idPedido }}','{{ tareas.idTarea }}' )">
+        </td>
     </tr>
     {% endfor %}
 </table>
 {% if datos.todasTareas|length == 0 %}
 <h2 class='error'>No hay Tareas asignadas aún</h2>
 {% endif %}
+<script>
+    function confirmacion(nPedido, nTarea) {
+        var retorno = confirm("¿Esta seguro que desea eliminar la tarea?");
+        if (retorno) {
+            location.replace("/pedido/tarea/eliminar?idPedido=" + nPedido + "&idTarea=" + nTarea);
+            alert("nose xq ahora falla la pagina pero elimina bien!");
+        }
+    }
+</script>
 {% endblock %}
