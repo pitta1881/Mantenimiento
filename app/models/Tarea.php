@@ -13,6 +13,14 @@ class Tarea extends Model
         return array("ALBAnIL","ELECTRICISTA","PLOMERO","PINTOR","GASISTA");
     }
 
+    public function getPrioridades() {
+        return array("Baja","Media","Alta","Urgente");
+    }
+
+    public function getEstados() {
+        return array("Iniciado","En Curso","Pendiente","Finalizado");
+    }
+
     public function insert(array $tarea)
     {
         $this->db->insert($this->table, $tarea);
@@ -31,9 +39,9 @@ class Tarea extends Model
     }
 
     
-    public function updateTarea (array $tareaModificada,$idPedido)
+    public function update (array $tareaModificada,$idTarea,$idPedido)
     {
-        $this->db->updateTarea($this->table, $tareaModificado,$idPedido);
+        $this->db->updateTarea($this->table, $tareaModificada,$idTarea,$idPedido);
     }
 
     
@@ -46,4 +54,8 @@ class Tarea extends Model
         $this->db->deleteTarea($this->table,$nPedido,$nTarea);
     }    
     
+    public function getByIdPedidoIdTarea($idPedido,$idTarea){
+        return $this->db->selectTareaByIdId($this->table,$idPedido,$idTarea);
+    }
+
 }

@@ -163,10 +163,17 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
             // line 61
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "estado", array()), "html", null, true);
             echo "</td>
-        <td><a href=\"#\"><input type=\"button\" value=\"Modificar\"></a>
+        <td><a href=\"/tarea/modificar/seleccionado?idPedido=";
+            // line 62
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "idPedido", array()), "html", null, true);
+            echo "&idTarea=";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idTarea", array()), "html", null, true);
+            echo "\"><input
+                    type=\"button\" value=\"Modificar\"></a>
+            <a href=\"#\"><input type=\"button\" value=\"Ver Insumos\"></a>
             <input type=\"button\" value=\"Eliminar\"
                 onclick=\"confirmacion( '";
-            // line 64
+            // line 66
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "idPedido", array()), "html", null, true);
             echo "','";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idTarea", array()), "html", null, true);
@@ -178,16 +185,16 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tareas'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 68
+        // line 70
         echo "</table>
 ";
-        // line 69
+        // line 71
         if ((twig_length_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todasTareas", array())) == 0)) {
-            // line 70
+            // line 72
             echo "<h2 class='error'>No hay Tareas asignadas aún</h2>
 ";
         }
-        // line 72
+        // line 74
         echo "<script>
     function confirmacion(nPedido, nTarea) {
         var retorno = confirm(\"¿Esta seguro que desea eliminar la tarea?\");
@@ -212,7 +219,7 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
 
     public function getDebugInfo()
     {
-        return array (  191 => 72,  187 => 70,  185 => 69,  182 => 68,  170 => 64,  164 => 61,  160 => 60,  156 => 59,  152 => 58,  148 => 57,  145 => 56,  141 => 55,  128 => 45,  124 => 43,  113 => 41,  109 => 40,  104 => 37,  93 => 35,  89 => 34,  81 => 29,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  198 => 74,  194 => 72,  192 => 71,  189 => 70,  177 => 66,  168 => 62,  164 => 61,  160 => 60,  156 => 59,  152 => 58,  148 => 57,  145 => 56,  141 => 55,  128 => 45,  124 => 43,  113 => 41,  109 => 40,  104 => 37,  93 => 35,  89 => 34,  81 => 29,  63 => 15,  60 => 14,  53 => 10,  50 => 9,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -278,7 +285,9 @@ class __TwigTemplate_8b1a74e8f677ea4332f5fcfb65108c335222aafeaf8ecd2546c28751356
         <td>{{ tareas.especializacion }}</td>
         <td>{{ tareas.prioridad }}</td>
         <td>{{ tareas.estado }}</td>
-        <td><a href=\"#\"><input type=\"button\" value=\"Modificar\"></a>
+        <td><a href=\"/tarea/modificar/seleccionado?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}\"><input
+                    type=\"button\" value=\"Modificar\"></a>
+            <a href=\"#\"><input type=\"button\" value=\"Ver Insumos\"></a>
             <input type=\"button\" value=\"Eliminar\"
                 onclick=\"confirmacion( '{{ datos.idPedido }}','{{ tareas.idTarea }}' )\">
         </td>
