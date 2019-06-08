@@ -28,8 +28,22 @@ class OTController extends Controller{
     }
 
     public function crearOT(){
-        $this->model->newOT();
-        
+        $idOTCreada = $this->model->newOT();
+        $i = 0;
+        var_dump($_POST);
+        foreach ($_POST as $idPedido => $idTarea) {
+            $itemOT = [
+                'idOT' => $idOTCreada,
+                'idPedido' => $idPedido,
+                'idTarea' => $idTarea
+            ];
+            $this->model->insertItemOT($itemOT);
+            $datosItem[$i++] = $itemOT;
+        }
+        $datos['itemOT'] = $datosItem;
+        $datos["userLogueado"] = $_SESSION['user'];
+        //cambiar estados tareas
+        return view('OTverItem',compact('datos'));
     }
 
 }

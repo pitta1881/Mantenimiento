@@ -99,27 +99,26 @@ class __TwigTemplate_9a4a8b3d712d31bf71e00361f166e4de6695344508732b9acd7f15a8ed1
             // line 32
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "prioridad", array()), "html", null, true);
             echo "</td>
-            <td> <input type=\"checkbox\" name=\"";
+            <td><input type=\"checkbox\" name=\"";
             // line 33
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idPedido", array()), "html", null, true);
             echo "\" value=\"";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idTarea", array()), "html", null, true);
-            echo "\">
-            </td>
+            echo "\"></td>
         </tr>
         ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tareas'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 37
+        // line 36
         echo "    </table>
     <input type=\"submit\" value=\"Crear OT\">
 </form>
 ";
-        // line 40
+        // line 39
         if ((twig_length_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array())) == 0)) {
-            // line 41
+            // line 40
             echo "<h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
 ";
         }
@@ -137,7 +136,7 @@ class __TwigTemplate_9a4a8b3d712d31bf71e00361f166e4de6695344508732b9acd7f15a8ed1
 
     public function getDebugInfo()
     {
-        return array (  123 => 41,  121 => 40,  116 => 37,  104 => 33,  100 => 32,  96 => 31,  92 => 30,  88 => 29,  84 => 28,  81 => 27,  77 => 26,  65 => 16,  62 => 15,  55 => 11,  52 => 10,  46 => 7,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
+        return array (  122 => 40,  120 => 39,  115 => 36,  104 => 33,  100 => 32,  96 => 31,  92 => 30,  88 => 29,  84 => 28,  81 => 27,  77 => 26,  65 => 16,  62 => 15,  55 => 11,  52 => 10,  46 => 7,  44 => 6,  41 => 5,  35 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -174,8 +173,7 @@ class __TwigTemplate_9a4a8b3d712d31bf71e00361f166e4de6695344508732b9acd7f15a8ed1
             <td>{{ tareas.descripcion }}</td>
             <td>{{ tareas.especializacion }}</td>
             <td>{{ tareas.prioridad }}</td>
-            <td> <input type=\"checkbox\" name=\"{{ tareas.idPedido }}\" value=\"{{ tareas.idTarea }}\">
-            </td>
+            <td><input type=\"checkbox\" name=\"{{ tareas.idPedido }}\" value=\"{{ tareas.idTarea }}\"></td>
         </tr>
         {% endfor %}
     </table>
@@ -184,6 +182,6 @@ class __TwigTemplate_9a4a8b3d712d31bf71e00361f166e4de6695344508732b9acd7f15a8ed1
 {% if datos.tareasSinAsignar|length == 0 %}
 <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
 {% endif %}
-{% endblock %}", "OTTareasSinAsignar.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\OTTareasSinAsignar.html");
+{% endblock %}", "OTTareasSinAsignar.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\OTTareasSinAsignar.html");
     }
 }

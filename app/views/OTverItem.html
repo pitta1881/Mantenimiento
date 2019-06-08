@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Lista de OTs{% endblock %} {% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<h1>Listado de Ordenes de Trabajo</h1>
+<table>
+    <th>Nº OT</th>
+    <th>Nº Pedido</th>
+    <th>Nº Tarea</th>
+    {% for itemOT in datos.itemOT %}
+    <tr>
+        <td>{{ itemOT.idOT }}</td>
+        <td>{{ itemOT.idPedido }}</td>
+        <td>{{ itemOT.idTarea }}</td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay OTs</h2> {% endfor %}
+</table>
+{% endblock %}

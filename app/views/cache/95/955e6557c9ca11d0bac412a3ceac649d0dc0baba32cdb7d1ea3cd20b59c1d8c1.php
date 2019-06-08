@@ -62,7 +62,7 @@ class __TwigTemplate_e8f824899d236990d9102a25c8069e8b0dd1053c13de8ac7d35c6a197d0
         // line 14
         echo "<form action=\"/usuario/validarUsuario\" method=\"POST\">
     <label for=\"nombre\">Nombre</label>
-    <input type=\"text\" name=\"nombreUsuario\" placeholder=\"Usuario\"><br>
+    <input type=\"text\" name=\"nombre\" placeholder=\"Usuario\"><br>
     <label for=\"nombre\">Contraseña</label>
     <input type=\"text\" name=\"password\" placeholder=\"contraseña\">
     <select name=\"roles\" id=\"rol\">
@@ -123,7 +123,7 @@ class __TwigTemplate_e8f824899d236990d9102a25c8069e8b0dd1053c13de8ac7d35c6a197d0
 {% block main %}
 <form action=\"/usuario/validarUsuario\" method=\"POST\">
     <label for=\"nombre\">Nombre</label>
-    <input type=\"text\" name=\"nombreUsuario\" placeholder=\"Usuario\"><br>
+    <input type=\"text\" name=\"nombre\" placeholder=\"Usuario\"><br>
     <label for=\"nombre\">Contraseña</label>
     <input type=\"text\" name=\"password\" placeholder=\"contraseña\">
     <select name=\"roles\" id=\"rol\">
