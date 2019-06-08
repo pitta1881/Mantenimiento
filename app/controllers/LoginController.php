@@ -18,6 +18,9 @@ class LoginController extends Controller{
         $password=$_POST['password'];
         $statement= $this->model->buscarUsuario($user,$password); 
     if(empty($statement)){
+        echo '<script language="javascript">';
+        echo 'alert("Usuario o Contraseña Incorrecta")';
+        echo '</script>';
         return view ('index');
      }else{
          session_start();
