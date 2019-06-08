@@ -90,19 +90,15 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
             echo "</td>
         <td>";
             // line 22
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "fechaInicio", array()), "html", null, true);
-            echo "</td>
-        <td>";
-            // line 23
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "estado", array()), "html", null, true);
             echo "</td>
         <td>";
-            // line 24
+            // line 23
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "tareasAsignadas", array()), "html", null, true);
             echo "</td>
         <td>
             <a href='/OT/verTareas?idOT=";
-            // line 26
+            // line 25
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["OT"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"VER TAREAS\"></a>
@@ -112,13 +108,13 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 31
+            // line 30
             echo "    <h2 class='error'>No hay OTs</h2> ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['OT'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 32
+        // line 31
         echo "</table>
 ";
     }
@@ -135,7 +131,7 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
 
     public function getDebugInfo()
     {
-        return array (  122 => 32,  116 => 31,  106 => 26,  101 => 24,  97 => 23,  93 => 22,  89 => 21,  85 => 20,  81 => 19,  78 => 18,  73 => 17,  60 => 6,  57 => 5,  51 => 4,  44 => 3,  42 => 2,  15 => 1,);
+        return array (  118 => 31,  112 => 30,  102 => 25,  97 => 23,  93 => 22,  89 => 21,  85 => 20,  81 => 19,  78 => 18,  73 => 17,  60 => 6,  57 => 5,  51 => 4,  44 => 3,  42 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -161,7 +157,6 @@ class __TwigTemplate_9335debac7625fc03c4fe094d93a201fee7ba116ea466fed50a74fc6afa
         <td>{{ OT.idOT }}</td>
         <td>{{ OT.fechaInicio }}</td>
         <td>{{ OT.fechaFin }}</td>
-        <td>{{ OT.fechaInicio }}</td>
         <td>{{ OT.estado }}</td>
         <td>{{ OT.tareasAsignadas }}</td>
         <td>

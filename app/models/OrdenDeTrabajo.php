@@ -24,10 +24,15 @@ class OrdenDeTrabajo extends Model
 
     public function newOT(){
         $this->db->newOT($this->tableOT);
+        $ultimoOT = $this->db->getIdUltimoOT($this->tableOT);
+        if (is_null($ultimoOT)){
+            $ultimoOT = 0;
+        }
+        return $ultimoOT[0][0];
     }
 
-    public function crearItemOT(){
-
+    public function insertItemOT($datos){
+        $this->db->insert($this->tableItem,$datos);
     }
 
 

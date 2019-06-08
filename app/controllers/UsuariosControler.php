@@ -73,29 +73,21 @@ public function vistaAltaPersona(){
     
     
     public function validarUsuario(){
-       $nombreUsuario=$_POST['nombreUsuario'];
+       $datos['nombre']=$_POST['nombre'];
+       $datos['password']=$_POST['password'];
        
-        $statement= $this->model->buscarUsuario($nombreUsuario);        
+        $statement= $this->model->buscarUsuario($datos['nombre']);      
     if(empty($statement)){
-       
-        
+        $this->saveUsuario($datos);
         return view('administracionUsuario.alta');
-     
     }else{
-$this->saveUsuario();
-       
+        echo 'ya hay uno';
         return view('administracionUsuario.alta');
     }       
     }
 
- public function saveUsuario( ){
-        $usuario= [
-            'nombreUsuario' => $_POST['nombreUsuario'],
-            'password' => $_POST['password']
-        ];
-        $this->model->insert($usuario);
-      
-            
+ public function saveUsuario($datos){
+        $this->model->insert($datos);            
  }
     
 }
