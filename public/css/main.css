@@ -1,15 +1,20 @@
+header {
+    width: 99vw;
+    height: 10vh;
+    top: 0;
+}
+footer {
+    position: absolute;
+    top: 100vh;
+    height: 1vh;
+    background-color: #17c;
+}
 body {
+    border: 1vh;
     font-family: Calibri;
     /* background-color: steelblue; */
-    background-color: rgb(50, 50, 50);
-}
-.imagen {
-    position: absolute;
-    margin: 0 0 0 0;
-    right: 1298px;
-    top: 8px;
-    height: 59px;
-    width: 60px;
+    /*    background-color: rgb(50, 50, 50);*/
+    background-color: #F2F2F2;
 }
 main {
     position: absolute;
@@ -17,7 +22,7 @@ main {
     width: 98.9vw;
     /* max-width: 1024px; */
     height: 540px;
-    background: #4e514e;
+    /*background: #4e514e;*/
     background: #F2F2F2;
     margin: auto;
     /* background: white; 
@@ -25,52 +30,6 @@ main {
 }
 a {
     text-decoration: none;
-}
-
-/* Nav styles */
-
-nav.main-nav {
-    background-color: #17c;
-    padding: 20px 0px;
-    text-align: center;
-}
-nav.main-nav ol {
-    position: inherit;
-    margin: 0 0 0 0;
-    right: 1298px;
-    top: 8px;
-    height: 60px;
-    width: 60px;
-    list-style-type: none;
-    margin: 0px;
-    padding: 20px 0px;
-    /* width: 100%; */
-    background-color: #f1f1f1;
-    color: black;
-    display: inline;
-}
-nav.main-nav ol li {
-    height: 60px;
-    width: 60px;
-    display: inline;
-}
-nav.main-nav ol li a {
-    /* display: block; */
-    color: #000;
-    padding: 10px 30px;
-    text-decoration: none;
-    height: 60px;
-    width: 60px;
-}
-nav.main-nav ol li a:hover {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: #F27329;
-    color: white;
-}
-.active {
-    background-color: rgb(156, 236, 82);
-    color: white;
 }
 
 /* Mis cosas */
@@ -224,29 +183,6 @@ dd {
 }
 legend {
     text-align: center;
-}
-.salir {
-    border-color: black;
-    border: 1px;
-    height: 19px;
-    position: absolute;
-    top: 30px;
-    right: 28px;
-}
-.salir a {
-    height: 15px;
-    position: absolute;
-    top: -8px;
-    right: -15px;
-}
-.user {
-    color: white;
-    position: absolute;
-    margin: 0 0 0 0;
-    right: 60px;
-    top: 6px;
-    height: 59px;
-    width: 60px;
 }
 
 /*

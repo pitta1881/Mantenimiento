@@ -63,6 +63,6 @@ class __TwigTemplate_8b7346d55849db5b230d9c7ccba8f0c08d8dfc7f503ae3a182cfe3ea60d
             <p class=\"user\">Usuario: Administrador</p>
         </li>
     </ol>
-</nav>", "partials/navUsuarios.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\partials\\navUsuarios.html");
+</nav>", "partials/navUsuarios.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\navUsuarios.html");
     }
 }

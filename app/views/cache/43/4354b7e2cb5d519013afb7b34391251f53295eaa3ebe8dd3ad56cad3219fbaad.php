@@ -30,16 +30,15 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/pedido/verTodos\">Tareas</a></li>
         <li>
-            <p class=\"salir\">
-                <a href=\"/\"></a>
-                Desconectar</p>
-            <p class=\"user\">Usuario:";
-        // line 14
+            <p class=\"user\">Usuario: ";
+        // line 11
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
         echo "</p>
         </li>
+        <li><a class=\"salir\" href=\"/\">Cerrar Sesión</a></li>
     </ol>
-</nav>";
+</nav>
+";
     }
 
     public function getTemplateName()
@@ -54,7 +53,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-        return array (  38 => 14,  23 => 1,);
+        return array (  35 => 11,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -69,12 +68,11 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/pedido/verTodos\">Tareas</a></li>
         <li>
-            <p class=\"salir\">
-                <a href=\"/\"></a>
-                Desconectar</p>
-            <p class=\"user\">Usuario:{{ nombreUsuario }}</p>
+            <p class=\"user\">Usuario: {{ nombreUsuario }}</p>
         </li>
+        <li><a class=\"salir\" href=\"/\">Cerrar Sesión</a></li>
     </ol>
-</nav>", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>
+", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

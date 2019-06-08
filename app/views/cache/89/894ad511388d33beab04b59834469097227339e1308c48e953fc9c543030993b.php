@@ -129,16 +129,17 @@ class __TwigTemplate_9a75d230ecf9e70db7ba0e619d334a75ec3a7e5fd86630d8299b3d47077
             // line 41
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
-                <input type=\"button\" value=\"VER MAS\">
+                <img src=\"../app/views/mas1.png\">
+
             </a>
             <a href='/pedido/modificar/seleccionado?id=";
-            // line 44
+            // line 45
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"MODIFICAR\">
             </a>
             <a href='/pedido/verTareas?idPedido=";
-            // line 47
+            // line 48
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["pedido"], "id", array()), "html", null, true);
             echo "'>
                 <input type=\"button\" value=\"VER TAREAS\">
@@ -149,13 +150,13 @@ class __TwigTemplate_9a75d230ecf9e70db7ba0e619d334a75ec3a7e5fd86630d8299b3d47077
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 53
+            // line 54
             echo "    <h2 class='error'>No hay Pedidos</h2> ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pedido'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 54
+        // line 55
         echo "</table>
 ";
     }
@@ -172,7 +173,7 @@ class __TwigTemplate_9a75d230ecf9e70db7ba0e619d334a75ec3a7e5fd86630d8299b3d47077
 
     public function getDebugInfo()
     {
-        return array (  159 => 54,  153 => 53,  142 => 47,  136 => 44,  130 => 41,  125 => 39,  121 => 38,  117 => 37,  113 => 36,  109 => 35,  105 => 34,  101 => 33,  97 => 32,  94 => 31,  89 => 30,  60 => 3,  57 => 2,  15 => 1,);
+        return array (  160 => 55,  154 => 54,  143 => 48,  137 => 45,  130 => 41,  125 => 39,  121 => 38,  117 => 37,  113 => 36,  109 => 35,  105 => 34,  101 => 33,  97 => 32,  94 => 31,  89 => 30,  60 => 3,  57 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -218,7 +219,8 @@ class __TwigTemplate_9a75d230ecf9e70db7ba0e619d334a75ec3a7e5fd86630d8299b3d47077
         <td>{{ pedido.nombreUsuario }}</td>
         <td>
             <a href='/fichaPedido?id={{ pedido.id }}'>
-                <input type=\"button\" value=\"VER MAS\">
+                <img src=\"../app/views/mas1.png\">
+
             </a>
             <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
                 <input type=\"button\" value=\"MODIFICAR\">

@@ -50,10 +50,8 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         echo "
 
 <div class=\"login\">
-    <div class=\"login-triangle\"></div>
-
     <div class=\"divI\"><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></div>
-    <h2 class=\"login-header\">Ingreso a<br> Mantenimiento</h2>
+    <h2 class=\"login-header\">Ingreso </h2>
 
     <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
         <p>
@@ -98,10 +96,8 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
 
 
 <div class=\"login\">
-    <div class=\"login-triangle\"></div>
-
     <div class=\"divI\"><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></div>
-    <h2 class=\"login-header\">Ingreso a<br> Mantenimiento</h2>
+    <h2 class=\"login-header\">Ingreso </h2>
 
     <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
         <p>
@@ -121,6 +117,7 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
 
 
 
-{% endblock %}", "index.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.html");
+{% endblock %}
+", "index.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.html");
     }
 }
