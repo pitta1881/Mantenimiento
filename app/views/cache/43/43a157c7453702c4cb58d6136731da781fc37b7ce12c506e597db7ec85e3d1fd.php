@@ -99,10 +99,10 @@ class __TwigTemplate_9a4a8b3d712d31bf71e00361f166e4de6695344508732b9acd7f15a8ed1
             // line 32
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "prioridad", array()), "html", null, true);
             echo "</td>
-            <td> <input type=\"checkbox\" name=\"selTarea\" value=\"";
+            <td> <input type=\"checkbox\" name=\"";
             // line 33
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idPedido", array()), "html", null, true);
-            echo "_";
+            echo "\" value=\"";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tareas"], "idTarea", array()), "html", null, true);
             echo "\">
             </td>
@@ -174,7 +174,7 @@ class __TwigTemplate_9a4a8b3d712d31bf71e00361f166e4de6695344508732b9acd7f15a8ed1
             <td>{{ tareas.descripcion }}</td>
             <td>{{ tareas.especializacion }}</td>
             <td>{{ tareas.prioridad }}</td>
-            <td> <input type=\"checkbox\" name=\"selTarea\" value=\"{{ tareas.idPedido }}_{{ tareas.idTarea }}\">
+            <td> <input type=\"checkbox\" name=\"{{ tareas.idPedido }}\" value=\"{{ tareas.idTarea }}\">
             </td>
         </tr>
         {% endfor %}
@@ -184,6 +184,6 @@ class __TwigTemplate_9a4a8b3d712d31bf71e00361f166e4de6695344508732b9acd7f15a8ed1
 {% if datos.tareasSinAsignar|length == 0 %}
 <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
 {% endif %}
-{% endblock %}", "OTTareasSinAsignar.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\OTTareasSinAsignar.html");
+{% endblock %}", "OTTareasSinAsignar.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\OTTareasSinAsignar.html");
     }
 }

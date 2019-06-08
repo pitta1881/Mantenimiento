@@ -10,4 +10,3 @@ CREATE TABLE tarea
     PRIMARY KEY (idTarea,idPedido),
     FOREIGN KEY (idPedido) REFERENCES pedido(id) ON DELETE CASCADE
 ) ;
-    /*idOrdenDeTrabajo integer PRIMARY KEY,*/

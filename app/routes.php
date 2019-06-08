@@ -24,6 +24,7 @@
 //rutas OT
     $router->get('OT/verTodos', 'OTController@index');
     $router->get('ot/crear', 'OTController@verTareasSinAsignar');
+    $router->post('ot/crear/seleccionados', 'OTController@crearOT');
 
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');

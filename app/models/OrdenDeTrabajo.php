@@ -22,4 +22,13 @@ class OrdenDeTrabajo extends Model
         return $misTareas;
     }
 
+    public function newOT(){
+        $this->db->newOT($this->tableOT);
+    }
+
+    public function crearItemOT(){
+
+    }
+
+
 }

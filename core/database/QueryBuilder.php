@@ -231,4 +231,12 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
    }
+
+   public function newOT($tableOT){
+       $hoy = date("Y-m-d");
+        $statement = $this->pdo->prepare(
+        "INSERT INTO $tableOT(fechaInicio,estado) VALUES ('$hoy','Iniciado')"
+    );
+    $statement->execute();
+    }
 }

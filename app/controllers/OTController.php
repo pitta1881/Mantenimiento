@@ -27,4 +27,9 @@ class OTController extends Controller{
         return view('OTTareasSinAsignar',compact('datos'));
     }
 
+    public function crearOT(){
+        $this->model->newOT();
+        
+    }
+
 }
