@@ -222,6 +222,6 @@ class __TwigTemplate_d4e2a1d8ad0f867737c182b4fbc5dc2a5fbe9d4e33e372d648d3d1b08fc
     <h2 class='error'>No hay Tareas asignadas aún</h2>
     {% endfor %}
 </table>
-{% endblock %}", "pedidoVerFicha.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\pedidoVerFicha.html");
+{% endblock %}", "pedidoVerFicha.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\pedidoVerFicha.html");
     }
 }

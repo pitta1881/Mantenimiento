@@ -1,7 +1,4 @@
-{% extends "base.html" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %}
-{% set nombreUsuario = datos.userLogueado %}
-{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %}
-{{ parent() }}
+{% extends "base.html" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <h1>Listado de Pedidos</h1>
 <a href="/pedido/crear">
@@ -25,11 +22,11 @@
     <th>Descripcion</th>
     <th>Sector</th>
     <th>Fecha Inicio</th>
-    <th>Tareas Asignadas</th>
+    <th>Tareas</th>
     <th>Estado</th>
     <th>Prioridad</th>
-    <th>Usuario Iniciador</th>
-    <th>Enlace</th>
+    <th>Usuario</th>
+    <th></th>
     {% for pedido in datos.todosPedidos %}
     <tr>
         <td>{{ pedido.id }}</td>
@@ -48,7 +45,8 @@
                 <input type="button" value="MODIFICAR">
             </a>
             <a href='/pedido/verTareas?idPedido={{ pedido.id }}'>
-                <input type="button" value="VER TAREAS"></a>
+                <input type="button" value="VER TAREAS">
+            </a>
         </td>
     </tr>
     {% else %}

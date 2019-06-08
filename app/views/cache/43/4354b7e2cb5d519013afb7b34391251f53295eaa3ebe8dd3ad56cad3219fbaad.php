@@ -75,6 +75,6 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p class=\"user\">Usuario:{{ nombreUsuario }}</p>
         </li>
     </ol>
-</nav>", "partials/nav.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }
