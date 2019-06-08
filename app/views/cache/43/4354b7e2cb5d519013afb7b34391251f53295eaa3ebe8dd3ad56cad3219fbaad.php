@@ -29,16 +29,8 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li>
-<<<<<<< HEAD
             <p class=\"user\">Usuario: ";
-        // line 11
-=======
-            <p class=\"salir\">
-                <a href=\"/\"></a>
-                Desconectar</p>
-            <p class=\"user\">Usuario:";
-        // line 13
->>>>>>> master
+        // line 10
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
         echo "</p>
         </li>
@@ -60,11 +52,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-<<<<<<< HEAD
-        return array (  35 => 11,  23 => 1,);
-=======
-        return array (  37 => 13,  23 => 1,);
->>>>>>> master
+        return array (  34 => 10,  23 => 1,);
     }
 
     public function getSourceContext()
