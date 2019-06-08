@@ -18,7 +18,7 @@ class LoginController extends Controller{
         $password=$_POST['password'];
         $statement= $this->model->buscarUsuario($user,$password); 
     if(empty($statement)){
-         return view ('index');
+        return view ('index');
      }else{
          session_start();
          $_SESSION['user']=$_POST['nombre'];

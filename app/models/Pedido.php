@@ -11,7 +11,7 @@ class Pedido extends Model{
 
     //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getSectores() {
-        return array("DAC","CONTABILIDAD","DIRECCION","GUARDIA MEDICA","PABELLON 1","PABELLON 2");
+        return array("DAC","CONTABILIDAD","DIRECCION","GUARDIA_MEDICA","PABELLON_1","PABELLON_2");
     }
 
     public function getPrioridades() {
@@ -19,7 +19,7 @@ class Pedido extends Model{
     }
 
     public function getEstados() {
-        return array("Iniciado","En Curso","Pendiente","Finalizado");
+        return array("Iniciado","En_Curso","Pendiente","Finalizado");
     }
 
 
