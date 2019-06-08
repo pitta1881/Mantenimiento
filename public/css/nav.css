@@ -47,14 +47,19 @@ nav.main-nav ol li a:hover {
     background-color: rgb(156, 236, 82);
     color: white;
 }
+.titulo {
+    top: 4px;
+    position: absolute;
+    right: 1070px;
+}
 .user {
     color: black;
     position: absolute;
     margin: 0 0 0 0;
-    right: 200px;
+    right: 250px;
     top: 30px;
     height: 59px;
-    width: 60px;
+    width: 90px;
 }
 .salir {
     border-color: black;

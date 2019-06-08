@@ -23,16 +23,18 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         echo "<nav class=\"main-nav\">
 
     <ol>
-        <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
+        <li><img class=\"imagen\" src=\"../app/views/sommer4.jpg\"></li>
+        <li>
+            <h3 class=\"titulo\">Sistema de Mantenimiento</h3></li>
         <li><a href=\"/home\">Inicio</a></li>
         <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li>
-            <p class=\"user\">Usuario: ";
-        // line 10
+            <h3 class=\"user\">Usuario: ";
+        // line 12
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
-        echo "</p>
+        echo "</h3>
         </li>
         <li><a class=\"salir\" href=\"/\">Cerrar Sesión</a></li>
     </ol>
@@ -52,7 +54,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-        return array (  34 => 10,  23 => 1,);
+        return array (  36 => 12,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -60,13 +62,15 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         return new Twig_Source("<nav class=\"main-nav\">
 
     <ol>
-        <li><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></li>
+        <li><img class=\"imagen\" src=\"../app/views/sommer4.jpg\"></li>
+        <li>
+            <h3 class=\"titulo\">Sistema de Mantenimiento</h3></li>
         <li><a href=\"/home\">Inicio</a></li>
         <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li>
-            <p class=\"user\">Usuario: {{ nombreUsuario }}</p>
+            <h3 class=\"user\">Usuario: {{ nombreUsuario }}</h3>
         </li>
         <li><a class=\"salir\" href=\"/\">Cerrar Sesión</a></li>
     </ol>
