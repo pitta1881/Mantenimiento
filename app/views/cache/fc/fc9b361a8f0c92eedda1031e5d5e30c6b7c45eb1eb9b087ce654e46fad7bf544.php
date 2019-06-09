@@ -64,7 +64,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/OT/verTodos\">Actividades</a></li>
         <li><a href=\"/OT/verTodos\">Tareas</a></li>
-        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
+        <li><a href=\"/usuario/AdministracionUsuario\">Usuarios</a></li>
         <li><a href=\"/OT/verTodos\">Agentes</a></li>
         <li><a href=\"/OT/verTodos\">Especialidades</a></li>
         <li><a href=\"/OT/verTodos\">Sectores</a></li>
@@ -137,7 +137,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/OT/verTodos\">Actividades</a></li>
         <li><a href=\"/OT/verTodos\">Tareas</a></li>
-        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
+        <li><a href=\"/usuario/AdministracionUsuario\">Usuarios</a></li>
         <li><a href=\"/OT/verTodos\">Agentes</a></li>
         <li><a href=\"/OT/verTodos\">Especialidades</a></li>
         <li><a href=\"/OT/verTodos\">Sectores</a></li>
