@@ -1,5 +1,5 @@
 header {
-    width: 100vw;
+    width: 99vw;
     height: 10vh;
     top: 0;
 }
@@ -169,10 +169,10 @@ dd {
     list-style-type: none;
     position: absolute;
     display: block;
-    top: 125px;
-    left: 235px;
-    width: 520px;
-    height: 400px;
+    top: 16vh;
+    left: 56.3vw;
+    width: 41.50vw;
+    height: 60vh;
     box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);
 }
 .contenido2 {
@@ -180,10 +180,10 @@ dd {
     list-style-type: none;
     position: absolute;
     display: block;
-    top: 125px;
-    left: 780px;
-    width: 552px;
-    height: 400px;
+    top: 16vh;
+    left: 14.5vw;
+    width: 41.50vw;
+    height: 60vh;
     box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);
 }
 .contenido {
@@ -194,10 +194,10 @@ dd {
     text-align: center;
     position: absolute;
     display: block;
-    top: 100px;
-    left: 235px;
-    width: 1100px;
-    height: 100px;
+    top: 0vh;
+    left: 14.3vw;
+    width: 83.4vw;
+    height: 15vh;
     box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);
 }
 .contenido li h4 {
@@ -211,17 +211,22 @@ dd {
     top: 0;
     position: relative;
     display: block;
-    width: 200px;
+    width: 20vw;
 }
 .Otros ul {
-    margin-top: 0px;
+    border-right: solid 1px rgba(0, 0, 0, .3);
+    border-bottom: solid s1px rgba(0, 0, 0, .3);
+    margin-top: 0vh;
     padding-left: 0;
-    top: 100px;
+    top: -0.2vh;
+    left: -0.5vw;
     position: relative;
+    width: 14vw;
+    height: 40vw;
 }
 .Otros ul li {
     padding: none;
-    width: 200px;
+    width: 14vw;
     margin: 0px 0px 0px 0px;
     list-style-type: square;
     position: relative;
