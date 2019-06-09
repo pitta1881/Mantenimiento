@@ -30,14 +30,15 @@ class OTController extends Controller{
     public function crearOT(){
         $idOTCreada = $this->model->newOT();
         $i = 0;
-        var_dump($_POST);
         foreach ($_POST as $idPedido => $idTarea) {
+            $idPedidoFinal = explode('_',$idPedido)[1];
             $itemOT = [
                 'idOT' => $idOTCreada,
-                'idPedido' => $idPedido,
+                'idPedido' => $idPedidoFinal,
                 'idTarea' => $idTarea
             ];
             $this->model->insertItemOT($itemOT);
+            //$this->model->cambiarEstadoTarea($idPedidoFinal,$idTarea);
             $datosItem[$i++] = $itemOT;
         }
         $datos['itemOT'] = $datosItem;

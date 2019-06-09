@@ -21,6 +21,9 @@ class PedidoController extends Controller{
                 if ($key == 'id') {
                     $todosPedidos[$indice]['tareasAsignadas'] = $this->model->getTareasAsignadasAPedido($value);
                 }
+                if ($key == 'fechaInicio') {
+                    $todosPedidos[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todosPedidos[$indice]['fechaInicio']));
+                }
             }
         }        
         $datos['todosPedidos'] = $todosPedidos;
@@ -33,7 +36,8 @@ class PedidoController extends Controller{
         $unPedido = $this->model->getByIdPedido($_GET['id']);
         $miPedido = $unPedido[0];        //hago esto xq nose como es q toma que necesito solo el 1er elemento del array
         $tareas = $this->model->getTareasByIdPedido($_GET['id']); //todavia no está esto
-        $datos["miPedido"] = $miPedido;        
+        $datos["miPedido"] = $miPedido;  
+        $datos["miPedido"]["fechaInicio"] = date("d/m/Y",strtotime($datos['miPedido']['fechaInicio']));  
         $datos["tareas"] = $tareas;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('pedidoVerFicha', compact('datos'));

@@ -23,6 +23,7 @@
         <th>Especializacion</th>
         <th>Prioridad</th>
         <th>Seleccionar</th>
+        {% set i = 1 %}
         {% for tareas in datos.tareasSinAsignar %}
         <tr>
             <td>{{ tareas.idPedido }}</td>
@@ -30,7 +31,8 @@
             <td>{{ tareas.descripcion }}</td>
             <td>{{ tareas.especializacion }}</td>
             <td>{{ tareas.prioridad }}</td>
-            <td><input type="checkbox" name="{{ tareas.idPedido }}" value="{{ tareas.idTarea }}"></td>
+            <td><input type="checkbox" name=" {{ i }}_{{ tareas.idPedido }}" value="{{ tareas.idTarea }}"></td>
+            {% set i = i + 1 %}
         </tr>
         {% endfor %}
     </table>

@@ -226,7 +226,7 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
 
     public function selectTareasSinAsignar($tableTarea){
         $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableTarea WHERE estado='Iniciado'"
+            "SELECT * FROM $tableTarea WHERE estado='Iniciado' ORDER BY idPedido ASC"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
