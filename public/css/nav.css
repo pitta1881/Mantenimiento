@@ -3,43 +3,43 @@
 nav.main-nav {
     width: 99vw;
     background: #f8f8f8 url(../img/pattern.jpg) left top repeat;
-    border-bottom: solid 1.5px rgba(0, 0, 0, .3);
+    border-bottom: solid 0.2vw rgba(0, 0, 0, .3);
     /* box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);*/
     background-color: #f1f1f1;
-    padding: 20px 0px;
+    padding: 1.4vw 0vw;
     text-align: center;
 }
 nav.main-nav ol {
     position: inherit;
     margin: 0 0 0 0;
-    right: 1298px;
-    top: 8px;
-    height: 60px;
-    width: 60px;
+    right: 95vh;
+    top: 8vh;
+    height: 6vh;
+    width: 6vw;
     list-style-type: none;
-    margin: 0px;
-    padding: 0px 0px;
+    margin: 0vh;
+    padding: 0vh 0vw;
     /* width: 100%; */
     background-color: #f1f1f1;
     color: black;
     display: inline;
 }
 nav.main-nav ol li {
-    height: 60px;
-    width: 60px;
+    height: 2vh;
+    width: 2vw;
     display: inline;
 }
 nav.main-nav ol li a {
     /* display: block; */
     color: #000;
-    padding: 10px 30px;
+    padding: 2vh 2vw;
     text-decoration: none;
-    height: 60px;
-    width: 60px;
+    height: 2vh;
+    width: 2vw;
 }
 nav.main-nav ol li a:hover {
-    padding-top: 30px;
-    padding-bottom: 20px;
+    padding-top: 6vh;
+    padding-bottom: 3vh;
     background-color: #F27329;
     color: white;
 }
@@ -48,38 +48,24 @@ nav.main-nav ol li a:hover {
     color: white;
 }
 .titulo {
-    top: 4px;
+    top: 1vh;
     position: absolute;
-    right: 1070px;
+    right: 75vw;
 }
 .user {
     color: black;
     position: absolute;
     margin: 0 0 0 0;
-    right: -30px;
-    top: 28px;
-    height: 59px;
-    width: 300px;
-}
-a .salir {
-    color: #000;
-    padding: 10px 30px;
-    text-decoration: none;
-}
-a .salir {
-    color: red;
-}
-a .salir:hover {
-    padding-top: 0px;
-    padding-bottom: 0px;
-    background-color: none;
-    color: white;
+    right: 0vw;
+    top: 4.50vh;
+    height: 5vh;
+    width: 20vw;
 }
 .imagen {
     position: absolute;
     margin: 0 0 0 0;
-    right: 1295px;
-    top: 0px;
-    height: 65px;
-    width: 70px;
+    right: 93.6vw;
+    top: 0vh;
+    height: 10.2vh;
+    width: 5vw;
 }

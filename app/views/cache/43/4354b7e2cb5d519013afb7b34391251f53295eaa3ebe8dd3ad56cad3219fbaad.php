@@ -35,7 +35,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p class=\"user\">";
         // line 13
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
-        echo " |<a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
+        echo " |<a href=\"/\">Cerrar Sesión</a></p>
         </li>
         <!--   <li>
             <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
@@ -74,7 +74,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/OT/verTodos\">Actividades</a></li>
         <li><a href=\"/OT/verTodos\">Tareas</a></li>
         <li>
-            <p class=\"user\">{{ nombreUsuario }} |<a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
+            <p class=\"user\">{{ nombreUsuario }} |<a href=\"/\">Cerrar Sesión</a></p>
         </li>
         <!--   <li>
             <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
