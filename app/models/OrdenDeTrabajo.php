@@ -35,5 +35,9 @@ class OrdenDeTrabajo extends Model
         $this->db->insert($this->tableItem,$datos);
     }
 
+    public function cambiarEstadoTarea($idPedido,$idTarea){
+        $this->db->updateEstadoTarea($this->tableTarea,$idPedido,$idTarea);
+    }
+
 
 }

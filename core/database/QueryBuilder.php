@@ -247,4 +247,13 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_NUM);
     }
+
+    public function updateEstadoTarea($tableTarea, $nPedido, $nTarea){
+        $statement = $this->pdo->prepare(
+            "UPDATE $tableTarea SET estado='En Curso' WHERE idPedido=$nPedido AND idTarea=$nTarea"
+        );
+        $statement->execute();
+    }
+
+
 }

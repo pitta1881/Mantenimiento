@@ -38,12 +38,11 @@ class OTController extends Controller{
                 'idTarea' => $idTarea
             ];
             $this->model->insertItemOT($itemOT);
-            //$this->model->cambiarEstadoTarea($idPedidoFinal,$idTarea);
+            $this->model->cambiarEstadoTarea($idPedidoFinal,$idTarea);
             $datosItem[$i++] = $itemOT;
         }
         $datos['itemOT'] = $datosItem;
         $datos["userLogueado"] = $_SESSION['user'];
-        //cambiar estados tareas
         return view('OTverItem',compact('datos'));
     }
 
