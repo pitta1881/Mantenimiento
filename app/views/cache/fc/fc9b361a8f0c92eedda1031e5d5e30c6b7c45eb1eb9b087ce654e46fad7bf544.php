@@ -38,15 +38,13 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function block_header($context, array $blocks = array())
     {
-        // line 2
+        echo " ";
         $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
-        // line 3
-        $this->loadTemplate("partials/nav.html", "index.home.html", 3)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
-        echo "}
-";
+        echo " ";
+        $this->loadTemplate("partials/nav.html", "index.home.html", 1)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        echo "} ";
     }
 
-    // line 4
     public function block_head($context, array $blocks = array())
     {
         echo " ";
@@ -55,51 +53,27 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 5
+    // line 2
     public function block_main($context, array $blocks = array())
     {
-        // line 6
-        echo "<fieldset class=\"Insumos div\">
+        // line 3
+        echo "<br>
+<!--  <fieldset class=\"Insumos div\">
     <legend>Insumos</legend>
+    ";
+        // line 6
+        $this->loadTemplate("partials/navInsumos.html", "index.home.html", 6)->display($context);
+        // line 7
+        echo "</fieldset>-->
 
-    <input type=\"button\" value=\"Gestion de Insumos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Compra\">
-</fieldset>
-<fieldset class=\"general div\">
-    <legend>General</legend>
-    <a href=\"/pedido/verTodos\">
-        <input type=\"button\" value=\"Gestion de Pedidos\">
-    </a>
 
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
-</fieldset>
-
-<fieldset class=\"Otros div\">
+<!--  <fieldset class=\"Otros div\">
     <legend>Otros</legend>
-    <nav>
-        <a href=\"/usuario/gestionUsuario\">
-            <input type=\"button\" value=\"Gestion de Usuarios\">
-        </a>
-        <!--faltan hacer estas-->
-        <a href=\"/usuario/gestionAgentes\">
-            <input type=\"button\" value=\"Gestion de Agentes\">
-        </a>
-        <a href=\"/usuario/gestionEspecialidades\">
-            <input type=\"button\" value=\"Gestion de Especialidades\">
-        </a>
-        <a href=\"/usuario/gestionSectores\">
-            <input type=\"button\" value=\"Gestion de sectores\">
-        </a>
-        <a href=\"/usuario/gestionInformes\">
-            <input type=\"button\" value=\"Gestion de Informes\">
-        </a>
-
-
-
-    </nav>
-</fieldset>
+    ";
+        // line 12
+        $this->loadTemplate("partials/navOtros.html", "index.home.html", 12)->display($context);
+        // line 13
+        echo "</fieldset>-->
 
 ";
     }
@@ -116,58 +90,26 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  62 => 6,  59 => 5,  50 => 4,  44 => 3,  42 => 2,  15 => 1,);
+        return array (  76 => 13,  74 => 12,  67 => 7,  65 => 6,  60 => 3,  57 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %}
-{% set nombreUsuario = datos.userLogueado %}
-{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
-{% endblock %} {% block head %} {{ parent() }}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
-<fieldset class=\"Insumos div\">
+<br>
+<!--  <fieldset class=\"Insumos div\">
     <legend>Insumos</legend>
+    {% include 'partials/navInsumos.html' %}
+</fieldset>-->
 
-    <input type=\"button\" value=\"Gestion de Insumos\">
-    <input type=\"button\" value=\"Gestion de Ordenes de Compra\">
-</fieldset>
-<fieldset class=\"general div\">
-    <legend>General</legend>
-    <a href=\"/pedido/verTodos\">
-        <input type=\"button\" value=\"Gestion de Pedidos\">
-    </a>
 
-    <input type=\"button\" value=\"Gestion de Ordenes de Trabajo\">
-    <input type=\"button\" value=\"Gestion de Actividades\">
-    <input type=\"button\" value=\"Gestion de Tareas\">
-</fieldset>
-
-<fieldset class=\"Otros div\">
+<!--  <fieldset class=\"Otros div\">
     <legend>Otros</legend>
-    <nav>
-        <a href=\"/usuario/gestionUsuario\">
-            <input type=\"button\" value=\"Gestion de Usuarios\">
-        </a>
-        <!--faltan hacer estas-->
-        <a href=\"/usuario/gestionAgentes\">
-            <input type=\"button\" value=\"Gestion de Agentes\">
-        </a>
-        <a href=\"/usuario/gestionEspecialidades\">
-            <input type=\"button\" value=\"Gestion de Especialidades\">
-        </a>
-        <a href=\"/usuario/gestionSectores\">
-            <input type=\"button\" value=\"Gestion de sectores\">
-        </a>
-        <a href=\"/usuario/gestionInformes\">
-            <input type=\"button\" value=\"Gestion de Informes\">
-        </a>
+    {% include 'partials/navOtros.html' %}
+</fieldset>-->
 
-
-
-    </nav>
-</fieldset>
-
-{% endblock %}", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
+{% endblock %}
+", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

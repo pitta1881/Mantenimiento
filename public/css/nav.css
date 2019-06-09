@@ -56,20 +56,25 @@ nav.main-nav ol li a:hover {
     color: black;
     position: absolute;
     margin: 0 0 0 0;
-    right: 250px;
-    top: 30px;
-    height: 59px;
-    width: 90px;
-}
-.salir {
-    border-color: black;
-    border: 1px;
-    height: 19px;
-    position: absolute;
-    top: 30px;
     right: 0px;
+    top: 28px;
+    height: 59px;
+    width: 300px;
 }
-.salir a {}
+a .salir {
+    color: #000;
+    padding: 10px 30px;
+    text-decoration: none;
+}
+a .salir {
+    color: red;
+}
+a .salir:hover {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: none;
+    color: white;
+}
 .imagen {
     position: absolute;
     margin: 0 0 0 0;

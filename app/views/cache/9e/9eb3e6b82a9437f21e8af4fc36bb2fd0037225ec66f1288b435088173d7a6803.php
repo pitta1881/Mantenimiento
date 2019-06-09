@@ -18,7 +18,6 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
             'title' => array($this, 'block_title'),
             'header' => array($this, 'block_header'),
             'main' => array($this, 'block_main'),
-            'footer' => array($this, 'block_footer'),
         );
     }
 
@@ -44,10 +43,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
         // line 14
         $this->displayBlock('main', $context, $blocks);
         echo "</main>
-    <footer>";
-        // line 15
-        $this->displayBlock('footer', $context, $blocks);
-        echo "</footer>
+
 </body>
 
 </html>
@@ -81,11 +77,6 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     {
     }
 
-    // line 15
-    public function block_footer($context, array $blocks = array())
-    {
-    }
-
     public function getTemplateName()
     {
         return "base.html";
@@ -93,7 +84,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 
     public function getDebugInfo()
     {
-        return array (  85 => 15,  80 => 14,  75 => 13,  64 => 7,  61 => 6,  58 => 5,  49 => 15,  45 => 14,  41 => 13,  36 => 10,  34 => 5,  28 => 1,);
+        return array (  76 => 14,  71 => 13,  60 => 7,  57 => 6,  54 => 5,  44 => 14,  40 => 13,  35 => 10,  33 => 5,  27 => 1,);
     }
 
     public function getSourceContext()
@@ -112,7 +103,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 <body>
     <header>{% block header %}{% endblock %}</header>
     <main>{% block main %}{% endblock %}</main>
-    <footer>{% block footer %}{% endblock %}</footer>
+
 </body>
 
 </html>

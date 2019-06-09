@@ -27,16 +27,19 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li>
             <h3 class=\"titulo\">Sistema de Mantenimiento</h3></li>
         <li><a href=\"/home\">Inicio</a></li>
-        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
+        <li><a href=\"/OT/verTodos\">Actividades</a></li>
+        <li><a href=\"/OT/verTodos\">Tareas</a></li>
         <li>
-            <h3 class=\"user\">Usuario: ";
-        // line 12
+            <p class=\"user\">";
+        // line 13
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
-        echo "</h3>
+        echo " |<a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
         </li>
-        <li><a class=\"salir\" href=\"/\">Cerrar Sesión</a></li>
+        <!--   <li>
+            <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
+        </li> -->
     </ol>
 </nav>
 ";
@@ -54,7 +57,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-        return array (  36 => 12,  23 => 1,);
+        return array (  37 => 13,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -66,13 +69,16 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li>
             <h3 class=\"titulo\">Sistema de Mantenimiento</h3></li>
         <li><a href=\"/home\">Inicio</a></li>
-        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
+        <li><a href=\"/OT/verTodos\">Actividades</a></li>
+        <li><a href=\"/OT/verTodos\">Tareas</a></li>
         <li>
-            <h3 class=\"user\">Usuario: {{ nombreUsuario }}</h3>
+            <p class=\"user\">{{ nombreUsuario }} |<a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
         </li>
-        <li><a class=\"salir\" href=\"/\">Cerrar Sesión</a></li>
+        <!--   <li>
+            <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
+        </li> -->
     </ol>
 </nav>
 ", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
