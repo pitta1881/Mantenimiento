@@ -54,7 +54,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     public function block_head($context, array $blocks = array())
     {
         // line 6
-        echo "    <meta charset=\"utf-8\">
+        echo "    <meta charset=\"utf-8\" name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
     <title>";
         // line 7
         $this->displayBlock('title', $context, $blocks);
@@ -94,7 +94,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 
 <head>
     {% block head %}
-    <meta charset=\"utf-8\">
+    <meta charset=\"utf-8\" name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
     <title>{% block title %}{% endblock %} - Mantenimiento</title>
     <link rel=\"stylesheet\" href=\"/public/css/main.css\">
     <link rel=\"stylesheet\" href=\"/public/css/nav.css\"> {% endblock %}
