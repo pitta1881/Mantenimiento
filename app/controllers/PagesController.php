@@ -2,15 +2,14 @@
 
 namespace App\Controllers;
 
-class PagesController
-{
+class PagesController{
     /**
      * Show the home page.
      */
     public function home()
     {
         session_start();
-        $datos["userLogueado"] = $_SESSION['user'];
+        $datos["userLogueado"] = $_SESSION['user'];    
         return view('index.home',compact('datos'));
     }
 

@@ -91,6 +91,8 @@ class PedidoController extends Controller{
         $datos["userLogueado"] = $_SESSION['user'];
         return view('pedidoModificar',compact('datos'));
     }
+    
+     
 
     public function verTareas(){
     $todasTareas = $this->model->getTareasByIdPedido($_GET['idPedido']);
