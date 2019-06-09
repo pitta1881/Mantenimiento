@@ -1,10 +1,10 @@
 /* Nav styles   #17c  */
 
 nav.main-nav {
-    width: 100vw;
+    width: 99vw;
     background: #f8f8f8 url(../img/pattern.jpg) left top repeat;
-    border-bottom: solid 1px rgba(0, 0, 0, .3);
-    /*  box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);*/
+    border-bottom: solid 1.5px rgba(0, 0, 0, .3);
+    /* box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);*/
     background-color: #f1f1f1;
     padding: 20px 0px;
     text-align: center;
@@ -18,7 +18,7 @@ nav.main-nav ol {
     width: 60px;
     list-style-type: none;
     margin: 0px;
-    padding: 20px 0px;
+    padding: 0px 0px;
     /* width: 100%; */
     background-color: #f1f1f1;
     color: black;
@@ -38,7 +38,7 @@ nav.main-nav ol li a {
     width: 60px;
 }
 nav.main-nav ol li a:hover {
-    padding-top: 20px;
+    padding-top: 30px;
     padding-bottom: 20px;
     background-color: #F27329;
     color: white;
@@ -56,7 +56,7 @@ nav.main-nav ol li a:hover {
     color: black;
     position: absolute;
     margin: 0 0 0 0;
-    right: 0px;
+    right: -30px;
     top: 28px;
     height: 59px;
     width: 300px;
@@ -78,8 +78,8 @@ a .salir:hover {
 .imagen {
     position: absolute;
     margin: 0 0 0 0;
-    right: 1300px;
-    top: 8px;
-    height: 59px;
-    width: 60px;
+    right: 1295px;
+    top: 0px;
+    height: 65px;
+    width: 70px;
 }

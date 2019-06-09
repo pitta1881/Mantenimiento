@@ -1,15 +1,54 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-<br>
-<!--  <fieldset class="Insumos div">
-    <legend>Insumos</legend>
-    {% include 'partials/navInsumos.html' %}
-</fieldset>-->
+
+<nav class="Otros">
+    <ul>
+        <li><a href="/pedido/verTodos">Pedidos</a></li>
+        <li><a href="/OT/verTodos">Ordenes de Trabajo</a></li>
+        <li><a href="/OT/verTodos">Actividades</a></li>
+        <li><a href="/OT/verTodos">Tareas</a></li>
+        <li><a href="/pedido/verTodos">Usuarios</a></li>
+        <li><a href="/OT/verTodos">Agentes</a></li>
+        <li><a href="/OT/verTodos">Especialidades</a></li>
+        <li><a href="/OT/verTodos">Sectores</a></li>
+        <li><a href="/OT/verTodos">Informes</a></li>
+        <li><a href="/pedido/verTodos">Insumos</a></li>
+        <li><a href="/OT/verTodos">Ordenes de Compra</a></li>
+
+    </ul>
+</nav>
+
+<ul class="contenido">
+
+    <li>
+        <h4>Pedidos Activos: 55555555</h4>
+
+    </li>
+    <li>
+        <h4>Pedidos Finalizados:55555555</h4>
+
+    </li>
+    <li>
+        <h4>Ordenes de Trabajo Activas: 55555555</h4>
+
+    </li>
+    <li>
+        <h4>Ordenes de Trabajo Finalizadas: 55555555</h4>
+
+    </li>
+
+</ul>
+
+<div class="contenido1">
 
 
-<!--  <fieldset class="Otros div">
-    <legend>Otros</legend>
-    {% include 'partials/navOtros.html' %}
-</fieldset>-->
+</div>
+
+<div class="contenido2">
+
+
+</div>
+
+
 
 {% endblock %}
