@@ -57,23 +57,56 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
     public function block_main($context, array $blocks = array())
     {
         // line 3
-        echo "<br>
-<!--  <fieldset class=\"Insumos div\">
-    <legend>Insumos</legend>
-    ";
-        // line 6
-        $this->loadTemplate("partials/navInsumos.html", "index.home.html", 6)->display($context);
-        // line 7
-        echo "</fieldset>-->
+        echo "
+<nav class=\"Otros\">
+    <ul>
+        <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
+        <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
+        <li><a href=\"/OT/verTodos\">Actividades</a></li>
+        <li><a href=\"/OT/verTodos\">Tareas</a></li>
+        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
+        <li><a href=\"/OT/verTodos\">Agentes</a></li>
+        <li><a href=\"/OT/verTodos\">Especialidades</a></li>
+        <li><a href=\"/OT/verTodos\">Sectores</a></li>
+        <li><a href=\"/OT/verTodos\">Informes</a></li>
+        <li><a href=\"/pedido/verTodos\">Insumos</a></li>
+        <li><a href=\"/OT/verTodos\">Ordenes de Compra</a></li>
+
+    </ul>
+</nav>
+
+<ul class=\"contenido\">
+
+    <li>
+        <h4>Pedidos Activos: 55555555</h4>
+
+    </li>
+    <li>
+        <h4>Pedidos Finalizados:55555555</h4>
+
+    </li>
+    <li>
+        <h4>Ordenes de Trabajo Activas: 55555555</h4>
+
+    </li>
+    <li>
+        <h4>Ordenes de Trabajo Finalizadas: 55555555</h4>
+
+    </li>
+
+</ul>
+
+<div class=\"contenido1\">
+    <h4>Especialidades mas frecuentes</h4>
+
+</div>
+
+<div class=\"contenido2\">
+    <h4>Proximos Eventos</h4>
+
+</div>
 
 
-<!--  <fieldset class=\"Otros div\">
-    <legend>Otros</legend>
-    ";
-        // line 12
-        $this->loadTemplate("partials/navOtros.html", "index.home.html", 12)->display($context);
-        // line 13
-        echo "</fieldset>-->
 
 ";
     }
@@ -90,24 +123,63 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  76 => 13,  74 => 12,  67 => 7,  65 => 6,  60 => 3,  57 => 2,  15 => 1,);
+        return array (  60 => 3,  57 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
-<br>
-<!--  <fieldset class=\"Insumos div\">
-    <legend>Insumos</legend>
-    {% include 'partials/navInsumos.html' %}
-</fieldset>-->
+
+<nav class=\"Otros\">
+    <ul>
+        <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
+        <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
+        <li><a href=\"/OT/verTodos\">Actividades</a></li>
+        <li><a href=\"/OT/verTodos\">Tareas</a></li>
+        <li><a href=\"/pedido/verTodos\">Usuarios</a></li>
+        <li><a href=\"/OT/verTodos\">Agentes</a></li>
+        <li><a href=\"/OT/verTodos\">Especialidades</a></li>
+        <li><a href=\"/OT/verTodos\">Sectores</a></li>
+        <li><a href=\"/OT/verTodos\">Informes</a></li>
+        <li><a href=\"/pedido/verTodos\">Insumos</a></li>
+        <li><a href=\"/OT/verTodos\">Ordenes de Compra</a></li>
+
+    </ul>
+</nav>
+
+<ul class=\"contenido\">
+
+    <li>
+        <h4>Pedidos Activos: 55555555</h4>
+
+    </li>
+    <li>
+        <h4>Pedidos Finalizados:55555555</h4>
+
+    </li>
+    <li>
+        <h4>Ordenes de Trabajo Activas: 55555555</h4>
+
+    </li>
+    <li>
+        <h4>Ordenes de Trabajo Finalizadas: 55555555</h4>
+
+    </li>
+
+</ul>
+
+<div class=\"contenido1\">
+    <h4>Especialidades mas frecuentes</h4>
+
+</div>
+
+<div class=\"contenido2\">
+    <h4>Proximos Eventos</h4>
+
+</div>
 
 
-<!--  <fieldset class=\"Otros div\">
-    <legend>Otros</legend>
-    {% include 'partials/navOtros.html' %}
-</fieldset>-->
 
 {% endblock %}
 ", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
