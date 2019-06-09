@@ -97,12 +97,12 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 </ul>
 
 <div class=\"contenido1\">
-
+    <h4>Especialidades mas frecuentes</h4>
 
 </div>
 
 <div class=\"contenido2\">
-
+    <h4>Proximos Eventos</h4>
 
 </div>
 
@@ -170,12 +170,12 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 </ul>
 
 <div class=\"contenido1\">
-
+    <h4>Especialidades mas frecuentes</h4>
 
 </div>
 
 <div class=\"contenido2\">
-
+    <h4>Proximos Eventos</h4>
 
 </div>
 

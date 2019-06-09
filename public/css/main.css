@@ -170,7 +170,7 @@ dd {
     position: absolute;
     display: block;
     top: 125px;
-    left: 240px;
+    left: 235px;
     width: 520px;
     height: 400px;
     box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);
@@ -181,8 +181,8 @@ dd {
     position: absolute;
     display: block;
     top: 125px;
-    left: 790px;
-    width: 500px;
+    left: 780px;
+    width: 552px;
     height: 400px;
     box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);
 }
