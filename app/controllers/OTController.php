@@ -14,7 +14,7 @@ class OTController extends Controller{
 
     /*Show all pedidos*/
     public function index(){
-        $todasOT = $this->model->get();        
+        $todasOT = $this->model->get();
         $datos['todasOT'] = $todasOT;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('OTVerTodos', compact('datos'));

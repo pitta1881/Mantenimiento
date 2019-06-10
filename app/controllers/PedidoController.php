@@ -15,17 +15,7 @@ class PedidoController extends Controller{
 
     /*Show all pedidos*/
     public function index(){
-        $todosPedidos = $this->model->get();
-        foreach ($todosPedidos as $indice => $datos) {
-            foreach ($datos as $key => $value) {
-                if ($key == 'id') {
-                    $todosPedidos[$indice]['tareasAsignadas'] = $this->model->getTareasAsignadasAPedido($value);
-                }
-                if ($key == 'fechaInicio') {
-                    $todosPedidos[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todosPedidos[$indice]['fechaInicio']));
-                }
-            }
-        }        
+        $todosPedidos = $this->model->get();      
         $datos['todosPedidos'] = $todosPedidos;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('pedidosVerTodos', compact('datos'));
@@ -33,12 +23,8 @@ class PedidoController extends Controller{
 
     /*muestra un solo pedido especifico ingresado por GET*/
     public function ficha(){
-        $unPedido = $this->model->getByIdPedido($_GET['id']);
-        $miPedido = $unPedido[0];        //hago esto xq nose como es q toma que necesito solo el 1er elemento del array
-        $tareas = $this->model->getTareasByIdPedido($_GET['id']); //todavia no está esto
+        $miPedido = $this->model->getByIdPedido($_GET['id']);
         $datos["miPedido"] = $miPedido;  
-        $datos["miPedido"]["fechaInicio"] = date("d/m/Y",strtotime($datos['miPedido']['fechaInicio']));  
-        $datos["tareas"] = $tareas;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('pedidoVerFicha', compact('datos'));
     }
@@ -53,26 +39,7 @@ class PedidoController extends Controller{
        return view('pedidoCrear',compact('datos'));
     }
 
-    public function validar(){
-       /*
-       //ACA SE PODRIA VALIDAR ALGO MAS ADELANTE
-       //
-       $estaBien = $this->model->validarDatos($_POST);
-       if ($estaBien) {
-           $arrayTurno = $this->save();
-           return view('verFormularioEnviado',compact('arrayTurno'));
-       } else {
-           echo "<h2>Algo salio Mal</h2>";
-       }       
-       */
-      $datos['arrayPedido'] = $this->save();
-      $datos["userLogueado"] = $_SESSION['user'];
-      $idNuevoPedido = $this->model->getIdUltimoPedido();
-      redirect("fichaPedido?id=".$idNuevoPedido);
-    }
-
-    public function save()
-    {
+    public function guardar(){
         $pedido = [
             'fechaInicio' => $_POST['fechaInicio'],
             'estado' => $_POST['estado'],
@@ -82,16 +49,18 @@ class PedidoController extends Controller{
             'nombreUsuario' => $_POST['nombreUsuario']
         ];
         $this->model->insert($pedido);
-        return $pedido;
+      $datos['arrayPedido'] = $pedido;
+      $datos["userLogueado"] = $_SESSION['user'];
+      $idNuevoPedido = $this->model->getIdUltimoPedido();
+      redirect("fichaPedido?id=".$idNuevoPedido);
     }
 
     public function modificarPedidoSeleccionado(){
         $unPedido = $this->model->getByIdPedido($_GET['id']);
-        $miPedido = $unPedido[0]; 
         $datos["sectores"] = $this->model->getSectores();
         $datos["prioridades"] = $this->model->getPrioridades();
         $datos["estados"] = $this->model->getEstados();
-        $datos["miPedido"] = $miPedido;
+        $datos["miPedido"] = $unPedido;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('pedidoModificar',compact('datos'));
     }
@@ -125,7 +94,6 @@ class PedidoController extends Controller{
         $value = $_POST['textBusqueda'];
         $datos['todosPedidos'] = $this->model->getAllbyFilter($filter,$value);
         $datos['userLogueado'] = $_SESSION['user'];           
-        return view('pedidosVerTodos', compact('datos'));
-         
+        return view('pedidosVerTodos', compact('datos'));         
      }
 }

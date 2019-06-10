@@ -38,7 +38,7 @@
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
-    {% for tareas in datos.tareas %}
+    {% for tareas in datos.miPedido.tareas %}
     <tr>
         <td>{{ tareas.idTarea }}</td>
         <td>{{ tareas.descripcion }}</td>

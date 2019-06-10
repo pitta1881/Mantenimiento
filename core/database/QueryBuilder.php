@@ -173,9 +173,8 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
     public function deleteTarea($table,$idPedido,$idTarea){ //table = tarea
         $statement = $this->pdo->prepare(
            "DELETE FROM $table  WHERE idPedido = $idPedido AND idTarea = $idTarea"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_NUM);
+        );
+        $statement->execute();
     }
 
     public function selectAllRoles($tableRol){
@@ -216,14 +215,6 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function selectAllOT($tableOT){
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$tableOT}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
     public function selectTareasSinAsignar($tableTarea){
         $statement = $this->pdo->prepare(
             "SELECT * FROM $tableTarea WHERE estado='Iniciado' ORDER BY idPedido ASC"
@@ -253,6 +244,16 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
             "UPDATE $tableTarea SET estado='En Curso' WHERE idPedido=$nPedido AND idTarea=$nTarea"
         );
         $statement->execute();
+    }
+
+    
+    public function getCantTareasOT($tableItem,$idOT){ //table = itemOT
+        $statement = $this->pdo->prepare(
+           "SELECT COUNT(idTarea) FROM $tableItem
+        WHERE idOT = $idOT"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
 

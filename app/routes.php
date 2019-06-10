@@ -9,7 +9,7 @@
     $router->get('pedido/verTodos', 'PedidoController@index');
     $router->get('fichaPedido', 'PedidoController@ficha');
     $router->get('pedido/crear', 'PedidoController@create');    
-    $router->post('pedido/validar', 'PedidoController@validar');
+    $router->post('pedido/guardar', 'PedidoController@guardar');
     $router->post('pedido/buscar', 'PedidoController@buscarPor');
     $router->get('pedido/modificar/seleccionado', 'PedidoController@modificarPedidoSeleccionado');
     $router->get('pedido/verTareas', 'PedidoController@verTareas');
@@ -18,7 +18,7 @@
 //rutas tareas
     $router->post('pedido/tarea/guardar', 'TareaController@guardar');
     $router->get('tarea/modificar/seleccionado', 'TareaController@modificarTareaSeleccionada');
-    $router->get('pedido/tarea/eliminar', 'TareaController@eliminar');
+    $router->post('pedido/tarea/eliminar', 'TareaController@eliminar');
     $router->post('tarea/modificar/guardar', 'TareaController@modificar');
 
 //rutas OT

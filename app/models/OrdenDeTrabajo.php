@@ -11,9 +11,20 @@ class OrdenDeTrabajo extends Model
     protected $tableTarea = 'tarea';
 
     public function get(){
-        $ot = $this->db->selectAllOT($this->tableOT);
-        $miOT = json_decode(json_encode($ot), True);
-        return $miOT;
+        $ot = $this->db->selectAll($this->tableOT);
+        $todasOT = json_decode(json_encode($ot), True);
+        foreach ($todasOT as $indice => $datos) {
+            $todasOT[$indice]['cantTareas'] = $this->getCantTareasAsignadas($datos['idOT']);
+            foreach ($datos as $key => $value) {
+                if ($key == 'fechaInicio') {
+                    $todasOT[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todasOT[$indice]['fechaInicio']));
+                }
+                if (($key == 'fechaFin') && (is_null($value))) {
+                    $todasOT[$indice]['fechaFin'] = 'En Curso';
+                }
+            }        
+        }
+        return $todasOT;
     }
 
     public function verTareasSinAsignar(){
@@ -37,6 +48,11 @@ class OrdenDeTrabajo extends Model
 
     public function cambiarEstadoTarea($idPedido,$idTarea){
         $this->db->updateEstadoTarea($this->tableTarea,$idPedido,$idTarea);
+    }
+
+    public function getCantTareasAsignadas($idOT){
+        $contadorTareas = $this->db->getCantTareasOT($this->tableItem,$idOT);
+        return $contadorTareas[0][0];
     }
 
 

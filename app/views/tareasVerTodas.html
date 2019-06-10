@@ -63,8 +63,17 @@
         <td><a href="/tarea/modificar/seleccionado?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}"><input
                     type="button" value="Modificar"></a>
             <a href="#"><input type="button" value="Ver Insumos"></a>
-            <input type="button" value="Eliminar"
-                onclick="confirmacion( '{{ datos.idPedido }}','{{ tareas.idTarea }}' )">
+            {% if tareas.estado == 'Iniciado' %}
+            <form action="/pedido/tarea/eliminar" method="post">
+                <input type="text" name="idPedido" value="{{ tareas.idPedido }}" hidden>
+                <input type="text" name="idTarea" value="{{ tareas.idTarea }}" hidden>
+                <input type="button" value="Eliminar" id="btnEliminar"
+                    onclick="document.getElementById('eliminarSi').style.display='inline-block';document.getElementById('eliminarNo').style.display='inline-block';document.getElementById('btnEliminar').style.display='none'">
+                <input type="submit" value="Si" id="eliminarSi" style="display: none">
+                <input type="reset" value="No" id="eliminarNo" style="display: none"
+                    onclick="document.getElementById('eliminarSi').style.display='none';document.getElementById('eliminarNo').style.display='none';document.getElementById('btnEliminar').style.display='inline-block'">
+            </form>
+            {% endif %}
         </td>
     </tr>
     {% endfor %}
@@ -73,12 +82,6 @@
 <h2 class='error'>No hay Tareas asignadas aún</h2>
 {% endif %}
 <script>
-    function confirmacion(nPedido, nTarea) {
-        var retorno = confirm("¿Esta seguro que desea eliminar la tarea?");
-        if (retorno) {
-            location.replace("/pedido/tarea/eliminar?idPedido=" + nPedido + "&idTarea=" + nTarea);
-            alert("nose xq ahora falla la pagina pero elimina bien!");
-        }
-    }
+
 </script>
 {% endblock %}

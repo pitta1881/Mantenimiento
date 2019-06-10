@@ -23,13 +23,12 @@ class TareaController extends Controller{
             'especializacion' => $_POST['especializacion']
         ];
         $this->model->insert($tarea);
-        redirect("fichaPedido?id=".$tarea['idPedido']);
+        redirect("pedido/verTareas?idPedido=".$tarea['idPedido']);
     }
 
     public function eliminar(){
-        $this->model->delete($_GET['idPedido'],$_GET['idTarea']);
-        redirect("pedido/verTareas?idPedido=".$_GET['idPedido']);
-        
+        $this->model->delete($_POST['idPedido'],$_POST['idTarea']);
+        redirect("pedido/verTareas?idPedido=".$_POST['idPedido']);
     }
 
     public function modificarTareaSeleccionada(){

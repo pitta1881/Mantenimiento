@@ -25,11 +25,19 @@ class Pedido extends Model{
 
     public function get(){
         $pedido = $this->db->selectAll($this->table);
-        $miPedido = json_decode(json_encode($pedido), True);
-        foreach ($miPedido as $key => $value) {
-            $miPedido[$key]['sector'] = str_replace("_"," ",$value['sector']);
-        }        
-        return $miPedido;
+        $todosPedidos = json_decode(json_encode($pedido), True);      
+        foreach ($todosPedidos as $indice => $datos) {
+            $todosPedidos[$indice]['sector'] = str_replace("_"," ",$datos['sector']);
+            foreach ($datos as $key => $value) {
+                if ($key == 'id') {
+                    $todosPedidos[$indice]['tareasAsignadas'] = $this->getTareasAsignadasAPedido($value);
+                }
+                if ($key == 'fechaInicio') {
+                    $todosPedidos[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todosPedidos[$indice]['fechaInicio']));
+                }
+            }
+        }  
+        return $todosPedidos;
     }
     
     public function getAllbyFilter($filter,$value){
@@ -46,7 +54,10 @@ class Pedido extends Model{
         $pedido = $this->db->selectNumeroPedido($this->table,$id);
         $miPedido = json_decode(json_encode($pedido), True);
         $miPedido[0]['sector'] = str_replace("_"," ",$miPedido[0]['sector']);
-        return $miPedido;
+        $tareas = $this->getTareasByIdPedido($id);
+        $miPedido[0]['fechaInicio'] = date("d/m/Y",strtotime($miPedido[0]['fechaInicio']));
+        $miPedido[0]['tareas'] = $tareas;
+        return $miPedido[0];
     }
 
     public function insert(array $pedido){
@@ -64,7 +75,6 @@ class Pedido extends Model{
 
     public function getTareasAsignadasAPedido($idPedido){
         $contadorTareasObj = $this->db->countTareasAsignadas($this->tableTarea,$idPedido);
-     //   echo $contadorTareasObj[0][0];
         return $contadorTareasObj[0][0];
     }
 
