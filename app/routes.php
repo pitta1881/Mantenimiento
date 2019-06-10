@@ -55,6 +55,20 @@ $router->get('usuario/AdministracionPersonas','UsuariosControler@vistaAdministra
 $router->get('usuario/modificarPersona','UsuariosControler@vistamodificarPersona');
 $router->get('usuario/eliminarPersona','UsuariosControler@vistaeliminarUsuario');
 
+//rutas agentes
+
+$router->get('agente/administracionAgentes','agentesController@vistaAdministracionAgentes');
+$router->post('agente/validarAgente','agentesController@validarAgente');
+
+$router->get('agente/altaAgente','agentesController@vistaAltaAgente');
+
+
+
+
+
+
+
+
 
 
 $router->get('not_found', 'ProjectController@notFound');

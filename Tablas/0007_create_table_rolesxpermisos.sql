@@ -6,4 +6,4 @@ CREATE TABLE rolesxpermisos (
     PRIMARY KEY (idRol,idPermiso),
     FOREIGN KEY (idRol) REFERENCES roles(idRol),
     FOREIGN KEY (idPermiso) REFERENCES permisos(idPermiso)
-)
+);

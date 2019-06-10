@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} 
+{% block header %}  
+{% include 'partials/nav.html' %} 
+{% endblock %} 
+{% block head %} 
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+ {% endblock %} 
+ {% block main %}
+{% block main %}
+<form action="/agente/validarAgente" method="POST">
+    <label for="nombre">Nombre</label>
+    <input type="text" name="nombre" placeholder="Usuario"><br>
+    <label for="apellido">Contraseña</label>
+    <input type="text" name="apellido" placeholder="Apellido">
+    <!--<select name="especialidades" id="e">
+        
+        {% for especialidad in especialidades %}
+        <option value={{ especialidad.nombreEspecialidad }}>{{ especialidad.nombreEspecialidad }}</option>
+        {% endfor %}}
+    </select>-->
+    <input type="submit" value="Agregar">
+</form>
+{% endblock %}
