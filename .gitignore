@@ -1,3 +1,4 @@
 /app/views/cache
 /logs/mvc.log
-/logs/
+/logs/*.log
+logs/*.log
