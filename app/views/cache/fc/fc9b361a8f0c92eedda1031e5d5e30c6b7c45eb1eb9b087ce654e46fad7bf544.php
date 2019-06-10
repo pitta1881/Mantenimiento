@@ -38,13 +38,15 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function block_header($context, array $blocks = array())
     {
-        echo " ";
+        // line 2
         $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         echo " ";
-        $this->loadTemplate("partials/nav.html", "index.home.html", 1)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
-        echo "} ";
+        $this->loadTemplate("partials/nav.html", "index.home.html", 2)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        echo "}
+";
     }
 
+    // line 3
     public function block_head($context, array $blocks = array())
     {
         echo " ";
@@ -53,10 +55,10 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 2
+    // line 4
     public function block_main($context, array $blocks = array())
     {
-        // line 3
+        // line 5
         echo "
 <nav class=\"Otros\">
     <ul>
@@ -79,29 +81,29 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     <li>
         <h4>Pedidos Activos:";
-        // line 24
+        // line 26
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
         echo " </h4>
 
     </li>
     <li>
         <h4>Tareas sin Asignar:";
-        // line 28
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
+        // line 30
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Agentes Disponibles: ";
-        // line 32
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
+        // line 34
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "agentesDisponibles", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Ordenes de Trabajo Activas:";
-        // line 36
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
+        // line 38
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "otActivas", array()), "html", null, true);
         echo " </h4>
 
     </li>
@@ -135,12 +137,14 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  104 => 36,  97 => 32,  90 => 28,  83 => 24,  60 => 3,  57 => 2,  15 => 1,);
+        return array (  106 => 38,  99 => 34,  92 => 30,  85 => 26,  62 => 5,  59 => 4,  50 => 3,  42 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %}
+{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
 
 <nav class=\"Otros\">
@@ -167,15 +171,15 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     </li>
     <li>
-        <h4>Tareas sin Asignar:{{ datos.cantidadPedidos}}</h4>
+        <h4>Tareas sin Asignar:{{ datos.tareasSinAsignar}}</h4>
 
     </li>
     <li>
-        <h4>Agentes Disponibles: {{ datos.cantidadPedidos}}</h4>
+        <h4>Agentes Disponibles: {{ datos.agentesDisponibles}}</h4>
 
     </li>
     <li>
-        <h4>Ordenes de Trabajo Activas:{{ datos.cantidadPedidos}} </h4>
+        <h4>Ordenes de Trabajo Activas:{{ datos.otActivas}} </h4>
 
     </li>
 
@@ -193,7 +197,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 
 
-{% endblock %}
-", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
+{% endblock %}", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %}
+{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 
 <nav class="Otros">
@@ -21,19 +23,19 @@
 <ul class="contenido">
 
     <li>
-        <h4>Pedidos Activos:{{ datos.cantidadPedidos}} </h4>
+        <h4>Pedidos Activos:{{ datos.cantidadPedido[0}} </h4>
 
     </li>
     <li>
-        <h4>Tareas sin Asignar:{{ datos.cantidadPedidos}}</h4>
+        <h4>Tareas sin Asignar:{{ datos.tareasSinAsignar}}</h4>
 
     </li>
     <li>
-        <h4>Agentes Disponibles: {{ datos.cantidadPedidos}}</h4>
+        <h4>Agentes Disponibles: {{ datos.agentesDisponibles}}</h4>
 
     </li>
     <li>
-        <h4>Ordenes de Trabajo Activas:{{ datos.cantidadPedidos}} </h4>
+        <h4>Ordenes de Trabajo Activas:{{ datos.otActivas}} </h4>
 
     </li>
 

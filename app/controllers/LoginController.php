@@ -25,6 +25,10 @@ class LoginController extends Controller{
      }else{
          session_start();
          $_SESSION['user']=$_POST['nombre'];
+         $datos['cantidadPedidos'] = $this->model->getActivos('pedido','id');
+         $datos['tareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
+         $datos['agentesDisponibles'] = 0;
+         $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
          $datos['userLogueado'] = $_SESSION['user'];
         return view ('index.home',compact('datos'));
         }       

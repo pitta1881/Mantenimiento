@@ -111,14 +111,12 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function getActivos(){
+    public function getActivos($table,$columna){
             $statement = $this->pdo->prepare(
-               "SELECT COUNT('id') FROM pedido 
-            WHERE estado = 'Iniciado'"
-   
+               "SELECT COUNT($columna) FROM $table WHERE estado = 'Iniciado'"   
         );
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
+        return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
     

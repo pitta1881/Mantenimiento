@@ -10,4 +10,10 @@ class login extends Model{
     public function buscarUsuario($user, $password){
         return $this->db->validarLogin($this->table,$user, $password);
     }
+
+    public function getActivos($tabla,$columna){
+        $cantidad = $this->db->getActivos($tabla,$columna);
+        var_dump($cantidad);
+        return $cantidad[0];
+    }
 }
