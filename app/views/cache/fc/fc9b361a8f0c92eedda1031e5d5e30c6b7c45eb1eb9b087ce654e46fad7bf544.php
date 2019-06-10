@@ -78,19 +78,31 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <ul class=\"contenido\">
 
     <li>
-        <h4>Pedidos Activos: 55555555</h4>
+        <h4>Pedidos Activos:";
+        // line 24
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
+        echo " </h4>
 
     </li>
     <li>
-        <h4>Pedidos Finalizados:55555555</h4>
+        <h4>Tareas sin Asignar:";
+        // line 28
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
+        echo "</h4>
 
     </li>
     <li>
-        <h4>Ordenes de Trabajo Activas: 55555555</h4>
+        <h4>Agentes Disponibles: ";
+        // line 32
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
+        echo "</h4>
 
     </li>
     <li>
-        <h4>Ordenes de Trabajo Finalizadas: 55555555</h4>
+        <h4>Ordenes de Trabajo Activas:";
+        // line 36
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
+        echo " </h4>
 
     </li>
 
@@ -123,7 +135,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  60 => 3,  57 => 2,  15 => 1,);
+        return array (  104 => 36,  97 => 32,  90 => 28,  83 => 24,  60 => 3,  57 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -151,19 +163,19 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <ul class=\"contenido\">
 
     <li>
-        <h4>Pedidos Activos: 55555555</h4>
+        <h4>Pedidos Activos:{{ datos.cantidadPedidos}} </h4>
 
     </li>
     <li>
-        <h4>Pedidos Finalizados:55555555</h4>
+        <h4>Tareas sin Asignar:{{ datos.cantidadPedidos}}</h4>
 
     </li>
     <li>
-        <h4>Ordenes de Trabajo Activas: 55555555</h4>
+        <h4>Agentes Disponibles: {{ datos.cantidadPedidos}}</h4>
 
     </li>
     <li>
-        <h4>Ordenes de Trabajo Finalizadas: 55555555</h4>
+        <h4>Ordenes de Trabajo Activas:{{ datos.cantidadPedidos}} </h4>
 
     </li>
 
