@@ -2,7 +2,7 @@
 
     $router->get('', 'PagesController@login');
    $router->get('home', 'PagesController@home');
-    $router->get('about', 'PagesController@about');
+   $router->get('cerrarSesion', 'PagesController@cerrarSesion');
 
 
 //rutas pedidos

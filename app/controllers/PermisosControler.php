@@ -64,7 +64,7 @@ class PedidoController extends Controller
     {
         $pedido = [
             'fechaInicio' => $_POST['fechaInicio'],
-            'estado' => $_POST['estado'],
+            'estado' => preg_replace('/\s+/', '_', $_POST['estado']),
             'descripcion' => $_POST['descripcion'],
             'sector' => preg_replace('/\s+/', '_', $_POST['sector']),
             'prioridad' => $_POST['prioridad']

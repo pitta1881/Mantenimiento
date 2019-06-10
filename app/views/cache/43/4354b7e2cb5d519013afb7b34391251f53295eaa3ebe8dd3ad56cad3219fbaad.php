@@ -25,7 +25,8 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer4.jpg\"></li>
         <li>
-            <h3 class=\"titulo\">Sistema de Mantenimiento</h3></li>
+            <h3 class=\"titulo\">Sistema de Mantenimiento</h3>
+        </li>
         <li><a href=\"/home\">Inicio</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
@@ -33,16 +34,15 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         <li><a href=\"/OT/verTodos\">Tareas</a></li>
         <li>
             <p class=\"user\">";
-        // line 13
+        // line 14
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
-        echo " |<a href=\"/\">Cerrar Sesión</a></p>
+        echo " |<a href=\"/cerrarSesion\">Cerrar Sesión</a></p>
         </li>
         <!--   <li>
             <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
         </li> -->
     </ol>
-</nav>
-";
+</nav>";
     }
 
     public function getTemplateName()
@@ -57,7 +57,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-        return array (  37 => 13,  23 => 1,);
+        return array (  38 => 14,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -67,20 +67,20 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer4.jpg\"></li>
         <li>
-            <h3 class=\"titulo\">Sistema de Mantenimiento</h3></li>
+            <h3 class=\"titulo\">Sistema de Mantenimiento</h3>
+        </li>
         <li><a href=\"/home\">Inicio</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/OT/verTodos\">Actividades</a></li>
         <li><a href=\"/OT/verTodos\">Tareas</a></li>
         <li>
-            <p class=\"user\">{{ nombreUsuario }} |<a href=\"/\">Cerrar Sesión</a></p>
+            <p class=\"user\">{{ nombreUsuario }} |<a href=\"/cerrarSesion\">Cerrar Sesión</a></p>
         </li>
         <!--   <li>
             <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
         </li> -->
     </ol>
-</nav>
-", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

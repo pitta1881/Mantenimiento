@@ -73,7 +73,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <li><a href=\"/OT/verTodos\">Informes</a></li>
         <li><a href=\"/pedido/verTodos\">Insumos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Compra</a></li>
-
     </ul>
 </nav>
 
@@ -81,28 +80,28 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     <li>
         <h4>Pedidos Activos:";
-        // line 26
+        // line 25
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
         echo " </h4>
 
     </li>
     <li>
         <h4>Tareas sin Asignar:";
-        // line 30
+        // line 29
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Agentes Disponibles: ";
-        // line 34
+        // line 33
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "agentesDisponibles", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Ordenes de Trabajo Activas:";
-        // line 38
+        // line 37
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "otActivas", array()), "html", null, true);
         echo " </h4>
 
@@ -137,7 +136,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  106 => 38,  99 => 34,  92 => 30,  85 => 26,  62 => 5,  59 => 4,  50 => 3,  42 => 2,  15 => 1,);
+        return array (  105 => 37,  98 => 33,  91 => 29,  84 => 25,  62 => 5,  59 => 4,  50 => 3,  42 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -160,7 +159,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <li><a href=\"/OT/verTodos\">Informes</a></li>
         <li><a href=\"/pedido/verTodos\">Insumos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Compra</a></li>
-
     </ul>
 </nav>
 

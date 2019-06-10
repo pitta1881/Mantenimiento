@@ -57,6 +57,7 @@ class PedidoController extends Controller{
 
     public function modificarPedidoSeleccionado(){
         $unPedido = $this->model->getByIdPedido($_GET['id']);
+        $unPedido['fechaInicio'] = date("Y-d-m",strtotime($unPedido['fechaInicio']));
         $datos["sectores"] = $this->model->getSectores();
         $datos["prioridades"] = $this->model->getPrioridades();
         $datos["estados"] = $this->model->getEstados();
@@ -82,7 +83,7 @@ class PedidoController extends Controller{
         $idPedido = $_POST['id'];
          $arrayPedido = [
              'fechaInicio' => $_POST['fechaInicio'],
-             'estado' => $_POST['estado'],
+             'estado' => preg_replace('/\s+/', '_', $_POST['estado']),
              'descripcion' => $_POST['descripcion'],
              'sector' => preg_replace('/\s+/', '_', $_POST['sector']),
              'prioridad' => $_POST['prioridad'],

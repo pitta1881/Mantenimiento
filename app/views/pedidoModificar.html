@@ -18,14 +18,15 @@
     <fieldset>
         <legend>Datos Basicos</legend>
         <label for="id">Numero de Pedido</label>
-        <input type="text" name="id" value="{{ datos.miPedido.id }}" readonly>
+        <input type="text" name="id" value="{{ datos.miPedido.id }}" readonly class="inputDisabled">
         <label for="nombreUsuario">Usuario Creador</label>
-        <input type="text" name="nombreUsuario" value="{{ datos.miPedido.nombreUsuario }}" readonly>
+        <input type="text" name="nombreUsuario" value="{{ datos.miPedido.nombreUsuario }}" readonly
+            class="inputDisabled">
         <label for="fechaInicio">Fecha</label>
         <input type="date" name="fechaInicio" value="{{ datos.miPedido.fechaInicio }}"
             min="{{ datos.miPedido.fechaInicio }}">
         <label for="estado">Estado</label>
-        <select name="estado">
+        <select name="estado" class="inputDisabled">
             {% for estado in datos.estados %}
             {% if estado == datos.miPedido.estado %}
             <option value={{ estado }} selected>{{ estado }} </option>

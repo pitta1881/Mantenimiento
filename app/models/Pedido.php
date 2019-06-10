@@ -19,7 +19,7 @@ class Pedido extends Model{
     }
 
     public function getEstados() {
-        return array("Iniciado","En_Curso","Pendiente","Finalizado");
+        return array("Iniciado","En Curso","Pendiente","Finalizado");
     }
 
 
