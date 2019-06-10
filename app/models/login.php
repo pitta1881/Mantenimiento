@@ -11,9 +11,4 @@ class login extends Model{
         return $this->db->validarLogin($this->table,$user, $password);
     }
 
-    public function getActivos($tabla,$columna){
-        $cantidad = $this->db->getActivos($tabla,$columna);
-        var_dump($cantidad);
-        return $cantidad[0];
-    }
 }

@@ -2,15 +2,25 @@
 
 namespace App\Controllers;
 
-class PagesController{
-    /**
-     * Show the home page.
-     */
-    public function home()
-    {
+use App\Core\Controller;
+use App\Models\pages;
+
+
+class PagesController extends Controller{
+    
+    public function __construct(){
+        $this->model = new Pages();
         session_start();
-        $datos["userLogueado"] = $_SESSION['user'];    
-        return view('index.home',compact('datos'));
+    }
+
+    public function home()
+    {        
+         $datos['cantidadPedidos'] = $this->model->getActivos('pedido','id');
+         $datos['tareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
+         $datos['agentesDisponibles'] = 'PROXIMAMENTE';
+         $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
+         $datos['userLogueado'] = $_SESSION['user'];
+         return view ('index.home',compact('datos'));
     }
 
     /**

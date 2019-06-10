@@ -31,14 +31,38 @@
             <td>{{ tareas.descripcion }}</td>
             <td>{{ tareas.especializacion }}</td>
             <td>{{ tareas.prioridad }}</td>
-            <td><input type="checkbox" name=" {{ i }}_{{ tareas.idPedido }}" value="{{ tareas.idTarea }}"></td>
+            <td><input type="checkbox" class="clsCasilla" name=" {{ i }}_{{ tareas.idPedido }}"
+                    value="{{ tareas.idTarea }}" onclick="deRequireCb('clsCasilla')" required></td>
             {% set i = i + 1 %}
         </tr>
         {% endfor %}
     </table>
+    {% if datos.tareasSinAsignar|length == 0 %}
+    <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
+    {% else %}
     <input type="submit" value="Crear OT">
+    {% endif %}
 </form>
-{% if datos.tareasSinAsignar|length == 0 %}
-<h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
-{% endif %}
+<script>
+    function deRequireCb(elClass) {
+        el = document.getElementsByClassName(elClass);
+
+        var atLeastOneChecked = false; //at least one cb is checked
+        for (i = 0; i < el.length; i++) {
+            if (el[i].checked === true) {
+                atLeastOneChecked = true;
+            }
+        }
+
+        if (atLeastOneChecked === true) {
+            for (i = 0; i < el.length; i++) {
+                el[i].required = false;
+            }
+        } else {
+            for (i = 0; i < el.length; i++) {
+                el[i].required = true;
+            }
+        }
+    }
+</script>
 {% endblock %}
