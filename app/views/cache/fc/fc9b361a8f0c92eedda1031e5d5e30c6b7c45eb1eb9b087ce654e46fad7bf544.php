@@ -38,15 +38,13 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function block_header($context, array $blocks = array())
     {
-        // line 2
+        echo " ";
         $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         echo " ";
-        $this->loadTemplate("partials/nav.html", "index.home.html", 2)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
-        echo "}
-";
+        $this->loadTemplate("partials/nav.html", "index.home.html", 1)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        echo "} ";
     }
 
-    // line 3
     public function block_head($context, array $blocks = array())
     {
         echo " ";
@@ -55,12 +53,101 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 4
+    // line 2
     public function block_main($context, array $blocks = array())
     {
-        // line 5
+        // line 3
         echo "
-<nav class=\"Otros\">
+
+
+<nav class=\"main-menu\">
+    <ul>
+        <li>
+            <a href=\"http://justinfarrow.com\"><i class=\"fa fa-home fa-2x\"></i><span class=\"nav-text\">Dashboard</span></a>
+        </li>
+        <li class=\"has-subnav\">
+            <a href=\"#\">
+                <i class=\"fa fa-laptop fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Stars Components
+                        </span>
+            </a>
+
+        </li>
+        <li class=\"has-subnav\">
+            <a href=\"#\">
+                <i class=\"fa fa-list fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Forms
+                        </span>
+            </a>
+
+        </li>
+        <li class=\"has-subnav\">
+            <a href=\"#\">
+                <i class=\"fa fa-folder-open fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Pages
+                        </span>
+            </a>
+
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-bar-chart-o fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Graphs and Statistics
+                        </span>
+            </a>
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-font fa-2x\"></i>
+                <span class=\"nav-text\">
+                           Quotes
+                        </span>
+            </a>
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-table fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Tables
+                        </span>
+            </a>
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-map-marker fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Maps
+                        </span>
+            </a>
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-info fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Documentation
+                        </span>
+            </a>
+        </li>
+    </ul>
+
+    <ul class=\"logout\">
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-power-off fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Logout
+                        </span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+<!--<nav class=\"Otros\">
     <ul>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
@@ -74,34 +161,34 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <li><a href=\"/pedido/verTodos\">Insumos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Compra</a></li>
     </ul>
-</nav>
+</nav>-->
 
 <ul class=\"contenido\">
 
     <li>
         <h4>Pedidos Activos:";
-        // line 25
+        // line 112
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
         echo " </h4>
 
     </li>
     <li>
         <h4>Tareas sin Asignar:";
-        // line 29
+        // line 116
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Agentes Disponibles: ";
-        // line 33
+        // line 120
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "agentesDisponibles", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Ordenes de Trabajo Activas:";
-        // line 37
+        // line 124
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "otActivas", array()), "html", null, true);
         echo " </h4>
 
@@ -136,17 +223,104 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  105 => 37,  98 => 33,  91 => 29,  84 => 25,  62 => 5,  59 => 4,  50 => 3,  42 => 2,  15 => 1,);
+        return array (  192 => 124,  185 => 120,  178 => 116,  171 => 112,  60 => 3,  57 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %}
-{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
-{% endblock %} {% block head %} {{ parent() }}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
 
-<nav class=\"Otros\">
+
+
+<nav class=\"main-menu\">
+    <ul>
+        <li>
+            <a href=\"http://justinfarrow.com\"><i class=\"fa fa-home fa-2x\"></i><span class=\"nav-text\">Dashboard</span></a>
+        </li>
+        <li class=\"has-subnav\">
+            <a href=\"#\">
+                <i class=\"fa fa-laptop fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Stars Components
+                        </span>
+            </a>
+
+        </li>
+        <li class=\"has-subnav\">
+            <a href=\"#\">
+                <i class=\"fa fa-list fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Forms
+                        </span>
+            </a>
+
+        </li>
+        <li class=\"has-subnav\">
+            <a href=\"#\">
+                <i class=\"fa fa-folder-open fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Pages
+                        </span>
+            </a>
+
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-bar-chart-o fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Graphs and Statistics
+                        </span>
+            </a>
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-font fa-2x\"></i>
+                <span class=\"nav-text\">
+                           Quotes
+                        </span>
+            </a>
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-table fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Tables
+                        </span>
+            </a>
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-map-marker fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Maps
+                        </span>
+            </a>
+        </li>
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-info fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Documentation
+                        </span>
+            </a>
+        </li>
+    </ul>
+
+    <ul class=\"logout\">
+        <li>
+            <a href=\"#\">
+                <i class=\"fa fa-power-off fa-2x\"></i>
+                <span class=\"nav-text\">
+                            Logout
+                        </span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+<!--<nav class=\"Otros\">
     <ul>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
@@ -160,7 +334,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <li><a href=\"/pedido/verTodos\">Insumos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Compra</a></li>
     </ul>
-</nav>
+</nav>-->
 
 <ul class=\"contenido\">
 
@@ -195,6 +369,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 
 
-{% endblock %}", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
+{% endblock %}
+", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
     }
 }
