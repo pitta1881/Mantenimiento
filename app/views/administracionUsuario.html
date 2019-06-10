@@ -4,11 +4,27 @@
 
 {% block header %}
 {{ include('partials/nav.html') }}
+
 {% endblock %}
 
 {% block head %}
 {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP">
 {% endblock %}
+     {% block main %}
+     <nav class="Otros">
+
+    <ul>
+    
      
-     
+       
+        <li><a href="/usuario/gestionUsuario">Gestion de Usuario</a></li>
+        <li><a href="/usuario/altaUsuario">Agregar Usuario</a></li>
+        <li><a href="/usuario/modificarUsuario">Modificar Usuario</a></li>
+        <li><a href="/usuario/eliminarUsuario">Eliminar Usuario</a></li>
+
+       
+       
+    </ul>
+</nav>
+{% endblock %}

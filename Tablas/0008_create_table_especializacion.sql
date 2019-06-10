@@ -1,7 +1,6 @@
 USE Mantenimiento;
 
 CREATE TABLE especializacion (
-    idEspecializacion INTEGER AUTO INCREMENTAL;
-    nombre varchar(20);
-    PRIMARY KEY (idEspecializacion)
-)
+    idEspecializacion PRIMARY KEY  INTEGER AUTO_INCREMENT,
+    nombre varchar(20)
+    );

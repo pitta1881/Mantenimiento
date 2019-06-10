@@ -76,6 +76,13 @@ public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->pre
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+    public function comparaAgente($table, $nombre,$apellido ){  $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE nombre='{$nombre}' AND apellido='{$apellido}'  "
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
     /**
      * Insert a record into a table.
      *
