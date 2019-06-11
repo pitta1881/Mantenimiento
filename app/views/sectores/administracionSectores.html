@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %} Gestion de Sectores {% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
+
+{% block main %}
+<input type="button" value="CREAR NUEVO SECTOR" onclick="mostrarFormulario()">
+<script>
+    function mostrarFormulario() {
+        var formularioSector = document.getElementById('formularioInsumo');
+        if (formularioInsumo.style.display == "block") {
+            formularioInsumo.style.display = "none";
+        } else {
+            formularioInsumo.style.display = "block"
+        }
+    }
+</script>
+<form action="/sectores/administracionSectores/guardarSector" method="post" id="formularioInsumo" style="display: none">
+    <fieldset class="basicosSectores">
+        <legend> Alta de Sector</legend>
+        <label for="nombreInsumo">Nombre del Sector</label>
+        <input type="text" name="nombreSector" autofocus>
+        <label for="tipo">Tipo</label><span class="asterisco">*</span>
+        <input type="textarea" name="tipo" required placeholder="Ingrese el tipo de sector.."><br>
+    <label for="responsable">Nombre del Responsable</label>
+        <input type="text" name="responsable" autofocus>
+    
+     <label for="telefono">Telefono</label>
+        <input type="text" name="telefono" autofocus>
+    
+     <label for="email">Email</label>
+        <input type="email" name="email" autofocus>
+    
+    
+    </fieldset>
+    <input type="submit">
+</form>
+<table>
+    <th>Nº Sector</th>
+    <th>Nombre</th>
+    <th>Tipo</th>
+    <th>Responsable</th>
+    <th>Telefono</th>
+    <th>Email</th>
+    <th>Accion</th>
+    {% for sector in sector.todosSectores %}
+    <tr>
+        <td>{{ sector.idSector }}</td>
+        <td>{{ sector.nombreSector }}</td>
+        <td>{{ sector.tipo }}</td>
+        <td>{{ sector.responsable }}</td>
+        <td>{{ sector.telefono }}</td>
+        <td>{{ sector.email }}</td>
+        
+           <td>
+            <a href='/sectores/modificar/seleccionado?idSector={{ sector.idSector }}'>
+                <input type="button" value="MODIFICAR">
+            </a>
+            <form action="/sectores/eliminar" method="post">
+                <input type="text" name="idInsumo" value="{{ sector.idSector }}" hidden>
+                <input type="button" value="Eliminar" id="btnEliminar{{ sector.idInsumo }}"
+                    onclick="document.getElementById('eliminarSi{{ sector.idSector }}').style.display='inline-block';document.getElementById('eliminarNo{{ sector.idSector }}').style.display='inline-block';document.getElementById('btnEliminar{{ sector.idSector }}').style.display='none'">
+                <input type="submit" value="Si" id="eliminarSi{{ sector.idSector }}" style="display: none">
+                <input type="reset" value="No" id="eliminarNo{{ sector.idSector }}" style="display: none"
+                    onclick="document.getElementById('eliminarSi{{ sector.idSector }}').style.display='none';document.getElementById('eliminarNo{{ sector.idSector }}').style.display='none';document.getElementById('btnEliminar{{ sector.idSector }}').style.display='inline-block'">
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Sectores</h2> {% endfor %}
+</table>
+{% endblock %}
