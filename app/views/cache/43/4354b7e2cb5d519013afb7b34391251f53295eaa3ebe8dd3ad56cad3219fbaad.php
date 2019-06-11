@@ -24,17 +24,21 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer4.jpg\"></li>
+
         <li>
-            <h3 class=\"titulo\">Sistema de Mantenimiento</h3>
+            <h4 class=\"titulo\">Sistema de Mantenimiento</h4>
         </li>
-        <li><a href=\"/home\">Inicio</a></li>
+        <li>
+            <h3 class=\"titulo1\">TITULO PESTAÑA</h3>
+        </li>
+        <!-- <li><a href=\"/home\">Inicio</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/OT/verTodos\">Actividades</a></li>
-        <li><a href=\"/OT/verTodos\">Tareas</a></li>
+        <li><a href=\"/OT/verTodos\">Tareas</a></li>-->
         <li>
             <p class=\"user\">";
-        // line 14
+        // line 18
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
         echo " |<a href=\"/cerrarSesion\">Cerrar Sesión</a></p>
         </li>
@@ -42,7 +46,8 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
         </li> -->
     </ol>
-</nav>";
+</nav>
+";
     }
 
     public function getTemplateName()
@@ -57,7 +62,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-        return array (  38 => 14,  23 => 1,);
+        return array (  42 => 18,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -66,14 +71,18 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     <ol>
         <li><img class=\"imagen\" src=\"../app/views/sommer4.jpg\"></li>
+
         <li>
-            <h3 class=\"titulo\">Sistema de Mantenimiento</h3>
+            <h4 class=\"titulo\">Sistema de Mantenimiento</h4>
         </li>
-        <li><a href=\"/home\">Inicio</a></li>
+        <li>
+            <h3 class=\"titulo1\">TITULO PESTAÑA</h3>
+        </li>
+        <!-- <li><a href=\"/home\">Inicio</a></li>
         <li><a href=\"/pedido/verTodos\">Pedidos</a></li>
         <li><a href=\"/OT/verTodos\">Ordenes de Trabajo</a></li>
         <li><a href=\"/OT/verTodos\">Actividades</a></li>
-        <li><a href=\"/OT/verTodos\">Tareas</a></li>
+        <li><a href=\"/OT/verTodos\">Tareas</a></li>-->
         <li>
             <p class=\"user\">{{ nombreUsuario }} |<a href=\"/cerrarSesion\">Cerrar Sesión</a></p>
         </li>
@@ -81,6 +90,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
         </li> -->
     </ol>
-</nav>", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>
+", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

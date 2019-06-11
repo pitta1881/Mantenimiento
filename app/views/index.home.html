@@ -1,8 +1,7 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %} {% include 'partials/nav1.html' %}
 
-
-
+<!--
 <nav class="main-menu">
     <ul>
         <li>
@@ -105,7 +104,6 @@
         <li><a href="/OT/verTodos">Ordenes de Compra</a></li>
     </ul>
 </nav>-->
-
 <ul class="contenido">
 
     <li>

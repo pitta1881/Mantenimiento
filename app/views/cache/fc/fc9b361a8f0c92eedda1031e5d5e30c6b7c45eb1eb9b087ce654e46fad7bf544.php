@@ -56,10 +56,11 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
     // line 2
     public function block_main($context, array $blocks = array())
     {
+        echo " ";
+        $this->loadTemplate("partials/nav1.html", "index.home.html", 2)->display($context);
         // line 3
         echo "
-
-
+<!--
 <nav class=\"main-menu\">
     <ul>
         <li>
@@ -162,33 +163,32 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <li><a href=\"/OT/verTodos\">Ordenes de Compra</a></li>
     </ul>
 </nav>-->
-
 <ul class=\"contenido\">
 
     <li>
         <h4>Pedidos Activos:";
-        // line 112
+        // line 110
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
         echo " </h4>
 
     </li>
     <li>
         <h4>Tareas sin Asignar:";
-        // line 116
+        // line 114
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Agentes Disponibles: ";
-        // line 120
+        // line 118
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "agentesDisponibles", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Ordenes de Trabajo Activas:";
-        // line 124
+        // line 122
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "otActivas", array()), "html", null, true);
         echo " </h4>
 
@@ -223,16 +223,15 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  192 => 124,  185 => 120,  178 => 116,  171 => 112,  60 => 3,  57 => 2,  15 => 1,);
+        return array (  192 => 122,  185 => 118,  178 => 114,  171 => 110,  62 => 3,  57 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
+<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %} {% include 'partials/nav1.html' %}
 
-
-
+<!--
 <nav class=\"main-menu\">
     <ul>
         <li>
@@ -335,7 +334,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <li><a href=\"/OT/verTodos\">Ordenes de Compra</a></li>
     </ul>
 </nav>-->
-
 <ul class=\"contenido\">
 
     <li>
@@ -370,6 +368,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 
 {% endblock %}
-", "index.home.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.home.html");
+", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

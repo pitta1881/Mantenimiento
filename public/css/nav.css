@@ -1,6 +1,7 @@
 /* Nav styles   #17c  */
 
 nav.main-nav {
+    height: 3vh;
     width: 99vw;
     background: #f8f8f8 url(../img/pattern.jpg) left top repeat;
     border-bottom: solid 0.2vw rgba(0, 0, 0, .3);
@@ -46,6 +47,12 @@ nav.main-nav ol li a:hover {
 .active {
     background-color: rgb(156, 236, 82);
     color: white;
+}
+.titulo1 {
+    height: 10vh;
+    top: 1vh;
+    position: absolute;
+    right: 50vw;
 }
 .titulo {
     top: 1vh;

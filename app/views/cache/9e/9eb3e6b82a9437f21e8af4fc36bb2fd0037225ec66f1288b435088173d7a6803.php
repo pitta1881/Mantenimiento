@@ -31,16 +31,16 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     ";
         // line 5
         $this->displayBlock('head', $context, $blocks);
-        // line 10
+        // line 11
         echo "</head>
 
 <body>
     <header>";
-        // line 13
+        // line 14
         $this->displayBlock('header', $context, $blocks);
         echo "</header>
     <main>";
-        // line 14
+        // line 15
         $this->displayBlock('main', $context, $blocks);
         echo "</main>
 
@@ -60,19 +60,20 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
         $this->displayBlock('title', $context, $blocks);
         echo " - Mantenimiento</title>
     <link rel=\"stylesheet\" href=\"/public/css/main.css\">
-    <link rel=\"stylesheet\" href=\"/public/css/nav.css\"> ";
+    <link rel=\"stylesheet\" href=\"/public/css/nav.css\">
+    <link rel=\"stylesheet\" href=\"/public/css/nav1.css\"> ";
     }
 
     public function block_title($context, array $blocks = array())
     {
     }
 
-    // line 13
+    // line 14
     public function block_header($context, array $blocks = array())
     {
     }
 
-    // line 14
+    // line 15
     public function block_main($context, array $blocks = array())
     {
     }
@@ -84,7 +85,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 
     public function getDebugInfo()
     {
-        return array (  76 => 14,  71 => 13,  60 => 7,  57 => 6,  54 => 5,  44 => 14,  40 => 13,  35 => 10,  33 => 5,  27 => 1,);
+        return array (  77 => 15,  72 => 14,  60 => 7,  57 => 6,  54 => 5,  44 => 15,  40 => 14,  35 => 11,  33 => 5,  27 => 1,);
     }
 
     public function getSourceContext()
@@ -97,7 +98,8 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     <meta charset=\"utf-8\" name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
     <title>{% block title %}{% endblock %} - Mantenimiento</title>
     <link rel=\"stylesheet\" href=\"/public/css/main.css\">
-    <link rel=\"stylesheet\" href=\"/public/css/nav.css\"> {% endblock %}
+    <link rel=\"stylesheet\" href=\"/public/css/nav.css\">
+    <link rel=\"stylesheet\" href=\"/public/css/nav1.css\"> {% endblock %}
 </head>
 
 <body>
@@ -107,6 +109,6 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 </body>
 
 </html>
-", "base.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\base.html");
+", "base.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\base.html");
     }
 }
