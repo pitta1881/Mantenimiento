@@ -6,20 +6,39 @@ use App\Core\Controller;
 use App\Models\Insumos;
 
 class InsumosController extends Controller{
-   public function __construct()
+   
+    public function __construct()
     {
       $this->model = new Insumos();
     
    }
+    
     public function vistaAdministracionInsumos(){
         
         return view('/insumos/insumos.administracion');    
     }
     
 
-public function vistaAgregarInsumos(){
-    return view('insumos.administracion.agregarInsumos');
-}
+    public function vistaAgregarInsumo(){
+        return view('/insumos/insumos.administracion.agregarInsumo');
+    }
+    
+    public function guardarInsumo() {
+        $datos['nombreInsumo'] = $_POST['nombreInsumo'];
+        $datos['descripcion'] = $_POST['descripcion'];
+        
+        $statement = $this->model->buscarInsumo($datos['nombreInsumo']);
+        
+        if (empty($statement)) {
+            $this->saveInsumo($datos);
+            return view('/insumos/insumos.administracion.agregarInsumo');
+        }
+    }
+    
+    public function saveInsumo($datos){
+        var_dump($datos);
+        $this->model->insert($datos);           
+    }
 /*    
   public function vistamodificarUsuario(){
     return view('administracionUsuario.modificar');

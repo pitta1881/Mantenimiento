@@ -60,9 +60,10 @@ $router->post('agente/validarAgente','agentesController@validarAgente');
 $router->get('agente/altaAgente','agentesController@vistaAltaAgente');
 
 //rutas insumos
+    $router->get('insumos/administracionInsumos', 'InsumosController@vistaAdministracionInsumos');
+    $router->get('insumos/administracionInsumos/agregarInsumo', 'InsumosController@vistaAgregarInsumo');
+    $router->post('insumos/administracionInsumos/guardarInsumo', 'InsumosController@guardarInsumo');
 
-$router->get('insumos/administracionInsumos', 'insumosController@vistaAdministracionInsumos');
-$router->get('insumos/administracionInsumos.agregarInsumos', 'insumosController@vistaAgregarInsumos');
 
 
 

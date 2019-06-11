@@ -12,18 +12,18 @@ class Insumos extends Model
     {
         $insumos = $this->db->selectAll($this->table);
     }
-
-   public function buscarUsuario($user){
-       //comparo si existe el nombre de usuario 
-       return $this->db->comparaUsuario($this->table,$user);
+*/
+   public function buscarInsumo($nombreInsumo){
+       //comparo si existe el insumo
+       return $this->db->comparaInsumo($this->table,$nombreInsumo);
     }
 
-    public function insert(array $usuarios)
+    public function insert(array $datos)
     {
-        $this->db->insert($this->table, $usuarios);
+        $this->db->insert($this->table, $datos);
     }
 
-    public function update (array $usuarioModificado,$nombre)
+ /*   public function update (array $usuarioModificado,$nombre)
     {
         $this->db->update($this->table, $usuarioModificado,$nombre);
     }

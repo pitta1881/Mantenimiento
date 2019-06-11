@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Alta de Insumo{% endblock %}
+
+{% block header %}
+{{ include('partials/nav.html') }}
+
+
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+    <h1>Cargar Insumo</h1>
+    <form action="/insumos/administracionInsumos/guardarInsumo" method="POST">
+        <fieldset class="basicosPedido">
+            <legend> Alta de Insumo</legend>
+            <label for="nombreInsumo">Nombre del Insumo</label>
+            <input type="text" name="nombreInsumo">
+            
+            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+            <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion.."><br>
+        </fieldset>
+        <input type="submit">
+        <input type="reset">    
+    </form>
+{% endblock %}

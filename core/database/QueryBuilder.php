@@ -69,19 +69,33 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
-public function comparaUsuario($table, $usuario ){  $statement = $this->pdo->prepare(
+    
+    public function comparaUsuario($table, $usuario ){  
+        $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
             WHERE nombre='{$usuario}'  "
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
-    public function comparaAgente($table, $nombre,$apellido ){  $statement = $this->pdo->prepare(
+    
+    public function comparaAgente($table, $nombre,$apellido ){  
+        $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
             WHERE nombre='{$nombre}' AND apellido='{$apellido}'  "
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+    
+    public function comparaInsumos($table, $nombreInsumo) {
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table}
+            WHERE nombreInsumo='{$nombreInsumo}'"
+        );
+        $statemente->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+        
     }
     /**
      * Insert a record into a table.
