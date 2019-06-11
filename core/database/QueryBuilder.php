@@ -97,6 +97,18 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
         
     }
+    
+    public function comparaSectores($table, $nombreSector) {
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table}
+            WHERE nombreInsumo='{$nombreSector}'"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+        
+    }
+    
+    
     /**
      * Insert a record into a table.
      *
@@ -338,5 +350,31 @@ class QueryBuilder
            "DELETE FROM $table  WHERE idAgente = $idAgente"
         );
         $statement->execute();
+    }
+
+public function updateSector($table, $parameters, $nSector){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET nombreSector=:nombreSector, tipo=:tipo, responsable=:responsable, telefono=:telefono, email=:email WHERE idSector=$nSector";
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+    public function deleteSector($table,$idSector){ 
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idSector = $idSector"
+        );
+        $statement->execute();
+    }
+public function selectSectorById($table, $nSector){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idSector={$nSector}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 }

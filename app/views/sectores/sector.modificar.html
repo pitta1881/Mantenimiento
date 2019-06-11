@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Modificar Sector{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h1>Modificar Insumo</h1>
+<form action="/sectores/administracionSectores/modificarSector" method="POST">
+    <fieldset class="basicosPedido">
+        <legend> Modificar Sector</legend>
+        <label for="idInsumo">Numero de Sector</label>
+        <input type="text" name="idSector" value="{{ datos.sector.idSector }}" readonly class="inputDisabled">
+        <label for="nombreSector">Nombre del Sector</label>
+        <input type="text" name="nombreSector" value="{{ datos.sector.nombreSector }}">
+        <label for="tipo">Tipo</label><span class="asterisco">*</span>
+        <input type="textarea" name="tipo" autofocus required value="{{ datos.sector.tipo }}"><br>
+    </fieldset>
+    <input type="reset" value="Volver" onclick="history.back()">
+    <input type="submit">
+<label for="responsable">Responsable</label>
+        <input type="text" name="responsable" value="{{ datos.sector.responsable }}" readonly class="inputDisabled">
+        
+        <label for="telefono">Telefono</label>
+        <input type="tel" name="telefono" value="{{ datos.sector.telefono }}" readonly class="inputDisabled">
+        <label for="email">Email</label>
+        <input type="email" name="email" value="{{ datos.sector.telefono }}" readonly class="inputDisabled">
+        
+        
+
+</form>
+{% endblock %}

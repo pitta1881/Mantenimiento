@@ -70,5 +70,16 @@ $router->post('agente/eliminar', 'agentesController@delete');
 
 
 
+//rutas sectores
+    $router->get('sectores/administracionSectores', 'SectoresController@vistaAdministracionSectores');
+    $router->post('sectores/administracionSectores/guardarSector', 'SectoresController@guardarSector');
+    $router->get('sectores/modificar/seleccionado', 'SectoresController@vistaModificar');
+    $router->post('sectores/administracionSectores/modificarSector', 'SectoresController@update');
+    $router->post('sectores/eliminar', 'SectoresController@delete');
+
+
+
+
+
     $router->get('not_found', 'ProjectController@notFound');
     $router->get('internal_error', 'ProjectController@internalError');
