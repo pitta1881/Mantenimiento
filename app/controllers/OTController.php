@@ -17,14 +17,14 @@ class OTController extends Controller{
         $todasOT = $this->model->get();
         $datos['todasOT'] = $todasOT;
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('OTVerTodos', compact('datos'));
+        return view('/ordendetrabajo/OTVerTodos', compact('datos'));
     }
 
     public function verTareasSinAsignar(){
         $tareasSinAsignar = $this->model->verTareasSinAsignar();
         $datos['tareasSinAsignar'] = $tareasSinAsignar;
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('OTTareasSinAsignar',compact('datos'));
+        return view('/ordendetrabajo/OTTareasSinAsignar',compact('datos'));
     }
 
     public function crearOT(){
@@ -43,7 +43,7 @@ class OTController extends Controller{
         }
         $datos['itemOT'] = $datosItem;
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('OTverItem',compact('datos'));
+        return view('/ordendetrabajo/OTverItem',compact('datos'));
     }
 
 }

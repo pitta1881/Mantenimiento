@@ -14,60 +14,60 @@ class UsuariosControler extends Controller
    }
     public function vistaGestionUsuario(){
         
-        return view('gestionUsuario');
+        return view('/usuarios/gestionUsuario');
     
     }
 public function vistaAdministracionUsuario(){
-    return view('administracionUsuario');
+    return view('/usuarios/administracionUsuario');
     
 }
 public function vistaAltaUsuario(){
     $nombresRoles=$this->model->getRoles();
-    return view('administracionUsuario.alta',compact('nombresRoles'));
+    return view('/usuarios/administracionUsuario.alta',compact('nombresRoles'));
 }
     
   public function vistamodificarUsuario(){
-    return view('administracionUsuario.modificar');
+    return view('/usuarios/administracionUsuario.modificar');
 }
     public function vistaeliminarUsuario(){
-    return view('administracionUsuario.eliminar');
+    return view('/usuarios/administracionUsuario.eliminar');
 }
     public function vistaAdministracionRol(){
-    return view('administracionRol');
+    return view('/usuarios/administracionRol');
     
 }
     public function vistaAltaRol(){
-          return view('administracionRol.alta');
+          return view('/usuarios/administracionRol.alta');
     }
     public function vistaModificarRol(){
-          return view('administracionRol.modificar');
+          return view('/usuarios/administracionRol.modificar');
     }
     public function vistaEliminarRol(){
-          return view('administracionRol.eliminar');
+          return view('/usuarios/administracionRol.eliminar');
     }
     public function vistaAdministracionPermisos(){
-           return view('administracionPermisos');
+           return view('/usuarios/administracionPermisos');
     }
      public function vistaAsignarPermiso(){
-          return view('administracionPermisos.asignar');
+          return view('/usuarios/administracionPermisos.asignar');
     }
     
      public function vistaEliminarPermiso(){
-          return view('administracionPermisos.eliminar');
+          return view('/usuarios/administracionPermisos.eliminar');
     }
     public function vistaAdministracionPersona(){
-    return view('administracionPersona');
+    return view('/usuarios/administracionPersona');
     
 }
 public function vistaAltaPersona(){
-    return view('administracionPersona.alta');
+    return view('/usuarios/administracionPersona.alta');
 }
     
   public function vistamodificarPersona(){
-    return view('administracionPersona.modificar');
+    return view('/usuarios/administracionPersona.modificar');
 }
     public function vistaeliminarPersona(){
-    return view('administracionPersona.eliminar');
+    return view('/usuarios/administracionPersona.eliminar');
 }
     
     

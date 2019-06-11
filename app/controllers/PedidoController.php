@@ -18,7 +18,7 @@ class PedidoController extends Controller{
         $todosPedidos = $this->model->get();      
         $datos['todosPedidos'] = $todosPedidos;
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('pedidosVerTodos', compact('datos'));
+        return view('/pedidos/pedidosVerTodos', compact('datos'));
     }
 
     /*muestra un solo pedido especifico ingresado por GET*/
@@ -26,7 +26,7 @@ class PedidoController extends Controller{
         $miPedido = $this->model->getByIdPedido($_GET['id']);
         $datos["miPedido"] = $miPedido;  
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('pedidoVerFicha', compact('datos'));
+        return view('/pedidos/pedidoVerFicha', compact('datos'));
     }
 
     public function create()
@@ -36,7 +36,7 @@ class PedidoController extends Controller{
        $datos["prioridades"] = $this->model->getPrioridades();
        $datos["estados"] = $this->model->getEstados();
        $datos["userLogueado"] = $_SESSION['user'];
-       return view('pedidoCrear',compact('datos'));
+       return view('/pedidos/pedidoCrear',compact('datos'));
     }
 
     public function guardar(){
@@ -63,7 +63,7 @@ class PedidoController extends Controller{
         $datos["estados"] = $this->model->getEstados();
         $datos["miPedido"] = $unPedido;
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('pedidoModificar',compact('datos'));
+        return view('/pedidos/pedidoModificar',compact('datos'));
     }
     
      
@@ -76,7 +76,7 @@ class PedidoController extends Controller{
     $datos["estados"] = $this->model->getEstados();
     $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
     $datos["userLogueado"] = $_SESSION['user'];
-    return view('tareasVerTodas', compact('datos'));
+    return view('/tareas/tareasVerTodas', compact('datos'));
     }
 
     public function modificar(){
@@ -97,6 +97,6 @@ class PedidoController extends Controller{
         $value = $_POST['textBusqueda'];
         $datos['todosPedidos'] = $this->model->getAllbyFilter($filter,$value);
         $datos['userLogueado'] = $_SESSION['user'];           
-        return view('pedidosVerTodos', compact('datos'));         
+        return view('/pedidos/pedidosVerTodos', compact('datos'));         
      }
 }

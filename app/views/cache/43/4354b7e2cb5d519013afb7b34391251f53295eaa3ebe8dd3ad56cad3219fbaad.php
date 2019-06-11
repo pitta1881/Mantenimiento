@@ -23,7 +23,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         echo "<nav class=\"main-nav\">
 
     <ol>
-        <li><a little=\"imagenSommer\" href=\"/home\"><img class=\"imagen\" src=\"../app/views/sommer4.jpg\"></a></li>
+        <li><a little=\"imagenSommer\" href=\"/home\"><img class=\"imagen\" src=\"/public/res/sommer4.jpg\"></a></li>
 
         <li>
             <h4 class=\"titulo\">Sistema de Mantenimiento</h4>
@@ -46,8 +46,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
         </li> -->
     </ol>
-</nav>
-";
+</nav>";
     }
 
     public function getTemplateName()
@@ -70,7 +69,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         return new Twig_Source("<nav class=\"main-nav\">
 
     <ol>
-        <li><a little=\"imagenSommer\" href=\"/home\"><img class=\"imagen\" src=\"../app/views/sommer4.jpg\"></a></li>
+        <li><a little=\"imagenSommer\" href=\"/home\"><img class=\"imagen\" src=\"/public/res/sommer4.jpg\"></a></li>
 
         <li>
             <h4 class=\"titulo\">Sistema de Mantenimiento</h4>
@@ -90,7 +89,6 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
             <p><a class=\"salir\" href=\"/\">Cerrar Sesión</a></p>
         </li> -->
     </ol>
-</nav>
-", "partials/nav.html", "C:\\Users\\Nardoni\\Documents\\GitHub\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

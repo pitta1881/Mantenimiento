@@ -2,9 +2,7 @@
     function myFunction() {
         var recuperoBoton = document.getElementsByClassName("close");
         document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
-        if ()
     }
-
 </script>
 
 
@@ -29,9 +27,8 @@
         </li>
         <li>
             <input type="button" value="Ordenes de Trabajo" onclick="myFunction()">
-
-            <ul class="close">
-                <li><a href="/pedido/verTodos">Crear Nuevo</a></li>
+            <ul class="open">
+                <li><a href="/ot/crear">Crear Nueva OT</a></li>
                 <li><a href="/OT/verTodos">Ver Todos</a></li>
 
             </ul>
@@ -64,9 +61,8 @@
         </li>
         <li>
             <input type="button" value="Agentes" onclick="myFunction()">
-            <ul class="close">
-                <li><a href="/pedido/verTodos">Crear Nuevo</a></li>
-                <li><a href="/OT/verTodos">Ver Todos</a></li>
+            <ul class="open">
+                <li><a href="/agente/administracionAgentes">Ver Todos</a></li>
 
             </ul>
         </li>
@@ -111,7 +107,7 @@
             </ul>
         </li>
         <li>
-            <input href="/cerrarSesion" type="button" value="Cerrar Sesion" onclick="myFunction()">
+            <a href="/cerrarSesion"><input type="button" value="Cerrar Sesion" onclick="myFunction()"></a>
         </li>
 
     </ul>

@@ -1,9 +1,8 @@
 {% extends "base.html" %} {% block title %}Ingreso{% endblock %} {% block head %} {{ parent() }}
 <link rel="stylesheet" href="/public/css/login.css"> {% endblock %} {% block main %}
 
-
 <div class="login">
-    <div class="divI"><img class="imagen" src="../app/views/sommer2.jpg"></div>
+    <div class="divI"><img class="imagen" src="/public/res/sommer2.jpg"></div>
     <h2 class="login-header">Ingreso </h2>
 
     <form action="/login/validar" method="POST" class="login-container">
@@ -20,8 +19,4 @@
         </p>
     </form>
 </div>
-
-
-
-
 {% endblock %}

@@ -39,7 +39,7 @@ class TareaController extends Controller{
         $datos["especializaciones"] = $this->model->getEspecializaciones();
         $datos["unaTarea"] = $miTarea;
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('tareaModificar',compact('datos'));
+        return view('/tareas/tareaModificar',compact('datos'));
     }
 
     public function modificar(){

@@ -15,7 +15,7 @@ class agentesController extends Controller
    }
     public function vistaAdministracionAgentes(){
         
-        return view('agentes.administracion');
+        return view('/agentes/agentes.administracion');
    
     }
        
@@ -24,7 +24,7 @@ class agentesController extends Controller
           $nombresEspecialidades=$this->model->getEspecializacion();
    
           
-          return view('agentes.alta',compact('nombresEspecialidades'));
+          return view('/agentes/agentes.alta',compact('nombresEspecialidades'));
          
     }
     
@@ -38,10 +38,10 @@ class agentesController extends Controller
      if(empty($statement)){
         $this->saveAgente($datos);
             $nombresEspecialidades=$this->model->getEspecializacion();    
-   return view('agentes.alta',compact('nombresEspecialidades'));
+   return view('/agentes/agentes.alta',compact('nombresEspecialidades'));
     }else{
        $nombresEspecialidades=$this->model->getEspecializacion(); 
-     return view('agentes.alta',compact('nombresEspecialidades'));
+     return view('/agentes/agentes.alta',compact('nombresEspecialidades'));
     }       
  }
 public function saveAgente($datos){
@@ -60,7 +60,7 @@ public function saveAgente($datos){
 
      public function vistaModificarAgente(){
         
-        return view('agentes.modificar');
+        return view('/agentes/agentes.modificar');
    
     }
 }

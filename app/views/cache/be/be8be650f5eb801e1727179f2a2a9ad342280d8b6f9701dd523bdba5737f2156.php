@@ -48,9 +48,8 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
     {
         // line 3
         echo "
-
 <div class=\"login\">
-    <div class=\"divI\"><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></div>
+    <div class=\"divI\"><img class=\"imagen\" src=\"/public/res/sommer2.jpg\"></div>
     <h2 class=\"login-header\">Ingreso </h2>
 
     <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
@@ -67,10 +66,6 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         </p>
     </form>
 </div>
-
-
-
-
 ";
     }
 
@@ -94,9 +89,8 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         return new Twig_Source("{% extends \"base.html\" %} {% block title %}Ingreso{% endblock %} {% block head %} {{ parent() }}
 <link rel=\"stylesheet\" href=\"/public/css/login.css\"> {% endblock %} {% block main %}
 
-
 <div class=\"login\">
-    <div class=\"divI\"><img class=\"imagen\" src=\"../app/views/sommer2.jpg\"></div>
+    <div class=\"divI\"><img class=\"imagen\" src=\"/public/res/sommer2.jpg\"></div>
     <h2 class=\"login-header\">Ingreso </h2>
 
     <form action=\"/login/validar\" method=\"POST\" class=\"login-container\">
@@ -113,11 +107,6 @@ class __TwigTemplate_c46ab31beca99da74ea3202ea2c353a38e43691388ce6d6894d75c4fba6
         </p>
     </form>
 </div>
-
-
-
-
-{% endblock %}
-", "index.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.html");
+{% endblock %}", "index.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\index.html");
     }
 }
