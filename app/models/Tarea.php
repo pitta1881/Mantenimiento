@@ -9,7 +9,6 @@ class Tarea extends Model
     protected $table = 'tarea';
     protected $tableEspecializacion='especializacion';
 
-    //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getEspecializaciones() {
         $array;
         $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);
@@ -63,7 +62,19 @@ class Tarea extends Model
     
     public function getByIdPedidoIdTarea($idPedido,$idTarea){
         $tarea = $this->db->selectTareaByIdId($this->table,$idPedido,$idTarea);
-        return $tarea[0];
+        $miTarea = json_decode(json_encode($tarea[0]), True);
+        $miTarea['especializacionNombre']=$this->getNombreEspecializacionPorId($miTarea['idEspecializacion']);
+        return $miTarea;
     }
+
+    public function getIdEspecializacionPorNombre($nombreEspecializacion) {
+        $id = $this->db->getIdFromNombreEspecializacion($this->tableEspecializacion, $nombreEspecializacion);
+        return $id[0][0];
+      } 
+
+      public function getNombreEspecializacionPorId($idEspecializacion) {
+        $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
+        return $nombre[0][0];
+      } 
 
 }

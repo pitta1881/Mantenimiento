@@ -14,13 +14,14 @@ class TareaController extends Controller{
     public function guardar()
     {
         $idTareaSiguiente = $this->model->buscarNTareaSiguiente($_POST['idPedido']);
+        $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']);
         $tarea = [
             'idTarea' =>$idTareaSiguiente,
             'idPedido' =>$_POST['idPedido'],
             'estado' => $_POST['estado'],
             'descripcion' => $_POST['descripcion'],
             'prioridad' => $_POST['prioridad'],
-            'especializacion' => $_POST['especializacion']
+            'idEspecializacion' => $idEspecializacion
         ];
         $this->model->insert($tarea);
         redirect("pedido/verTareas?idPedido=".$tarea['idPedido']);
@@ -44,11 +45,11 @@ class TareaController extends Controller{
     public function modificar(){
         $idTarea = $_POST['idTarea'];
         $idPedido = $_POST['idPedido'];
+        $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']);
         $tarea = [
-            'estado' => $_POST['estado'],
             'descripcion' => $_POST['descripcion'],
             'prioridad' => $_POST['prioridad'],
-            'especializacion' => $_POST['especializacion']
+            'idEspecializacion' => $idEspecializacion
         ];
         $this->model->update($tarea,$idTarea,$idPedido);
         redirect("fichaPedido?id=".$idPedido);

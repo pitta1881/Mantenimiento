@@ -24,7 +24,7 @@
     <label for="especializacion">Especializacion</label>
     <select name="especializacion">
         {% for especializacion in datos.especializaciones %}
-        {% if especializacion == datos.unaTarea.especializacion %}
+        {% if especializacion == datos.unaTarea.especializacionNombre %}
         <option value="{{ especializacion }}" selected>{{ especializacion }}</option>
         {% else %}
         <option value="{{ especializacion }}">{{ especializacion }}</option>

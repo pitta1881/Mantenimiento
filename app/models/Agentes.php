@@ -25,7 +25,7 @@ class Agentes extends Model
         $agentes = $this->db->selectAll($this->table);
         $todosAgentes = json_decode(json_encode($agentes), True);
         for ($i=0; $i < count($todosAgentes); $i++) { 
-          $todosAgentes[$i]['idEspecializacion']=$this->getNombreEspecializacionPorId($todosAgentes[$i]['idEspecializacion']);
+          $todosAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todosAgentes[$i]['idEspecializacion']);
         }
         return $todosAgentes;
     }
@@ -43,7 +43,7 @@ class Agentes extends Model
     public function getByIdAgente($idAgente){
       $agente = $this->db->selectAgenteById($this->table,$idAgente);
       $miAgente = json_decode(json_encode($agente), True);  
-      $miAgente[0]['idEspecializacion']=$this->getNombreEspecializacionPorId($miAgente[0]['idEspecializacion']);
+      $miAgente[0]['especializacionNombre']=$this->getNombreEspecializacionPorId($miAgente[0]['idEspecializacion']);
       return $miAgente[0];
     }
 

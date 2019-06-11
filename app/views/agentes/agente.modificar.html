@@ -25,7 +25,7 @@
         <input type="text" name="apellido" value="{{ datos.agente.apellido }}">
         <select name="especializacion">
             {% for especializacion in datos.especializaciones %}
-            {% if especializacion == datos.agente.idEspecializacion %}
+            {% if especializacion == datos.agente.especializacionNombre %}
             <option value="{{ especializacion }}" selected>{{ especializacion }}</option>
             {% else %}
             <option value="{{ especializacion }}">{{ especializacion }}</option>

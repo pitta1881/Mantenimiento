@@ -248,7 +248,7 @@ class QueryBuilder
 
     public function updateTarea($table, $parameters, $nTarea, $nPedido){
         $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET estado=:estado, descripcion=:descripcion, prioridad=:prioridad, especializacion=:especializacion
+        $sql = "UPDATE $table SET descripcion=:descripcion, prioridad=:prioridad, idEspecializacion=:idEspecializacion
         WHERE idTarea=$nTarea AND idPedido=$nPedido"; //recontra HARDCODEADO
             try {
                 $statement = $this->pdo->prepare($sql);

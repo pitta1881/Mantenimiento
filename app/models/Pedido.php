@@ -8,6 +8,7 @@ class Pedido extends Model{
     
     protected $table = 'pedido';
     protected $tableTarea = 'tarea';
+    protected $tableEspecializacion='especializacion';
 
     //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getSectores() {
@@ -65,7 +66,12 @@ class Pedido extends Model{
 
 
     public function getTareasByIdPedido($idPedido){
-        return $this->db->selectTareasPorNPedido($this->tableTarea,$idPedido);
+        $tareas = $this->db->selectTareasPorNPedido($this->tableTarea,$idPedido);
+        $todasTareas = json_decode(json_encode($tareas), True);
+        for ($i=0; $i < count($todasTareas); $i++) { 
+            $todasTareas[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todasTareas[$i]['idEspecializacion']);
+          }
+          return $todasTareas;
     }
 
     public function getTareasAsignadasAPedido($idPedido){
@@ -82,4 +88,9 @@ class Pedido extends Model{
         $ultimo =  $this->db->getIdUltimoPedidoDB($this->table);
         return $ultimo[0][0];
     }
+
+    public function getNombreEspecializacionPorId($idEspecializacion) {
+        $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
+        return $nombre[0][0];
+      }
 }
