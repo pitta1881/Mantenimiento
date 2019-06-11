@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Sectores;
 
-class InsumosController extends Controller{
+class SectoresController extends Controller{
    
     public function __construct()
     {
@@ -14,19 +14,19 @@ class InsumosController extends Controller{
    }
     
     public function vistaAdministracionSectores(){
-        $todosInsumos = $this->model->get();      
+        $todosSectores = $this->model->get();      
         $datos['todosSectores'] = $todosSectores;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/sectores/sectores.administracion', compact('datos'));
     }
     
-    public function guardarInsumo() {
+    public function guardarSector() {
         $datos['nombreSector'] = $_POST['nombreSector'];
         $datos['tipo'] = $_POST['tipo']; 
-           $datos['responsable'] = $_POST['responsable']; 
-           $datos['telefono'] = $_POST['telefono'];
-           $datos['email'] = $_POST['email']; 
-        $statement = $this->model->buscarInsumo($datos['nombreSector']);        
+        $datos['responsable'] = $_POST['responsable']; 
+        $datos['telefono'] = $_POST['telefono'];
+        $datos['email'] = $_POST['email']; 
+        $statement = $this->model->buscarSector($datos['nombreSector']);          
         if (empty($statement)) {
             $this->model->insert($datos); 
             return $this->vistaAdministracionSectores();
@@ -34,19 +34,19 @@ class InsumosController extends Controller{
     }
 
     public function vistaModificar(){
-        $insumo = $this->model->getByIdInsumo($_GET['idSector']);      
-        $datos['sector'] = $insumo;
+        $sector = $this->model->getByIdSector($_GET['idSector']);      
+        $datos['sector'] = $sector;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/sectores/sector.modificar', compact('datos'));
     }
 
     public function update(){
-        $idInsumo = $_POST['idSector'];
+        $idSector = $_POST['idSector'];
         $datos = [
             'nombreSector' => $_POST['nombreSector'],
-            'tipo' => $_POST['tipo'];
-            'responsable' => $_POST['responsable'];
-            'telefono' => $_POST['telefono'];
+            'tipo' => $_POST['tipo'],
+            'responsable' => $_POST['responsable'],
+            'telefono' => $_POST['telefono'],
             'email' => $_POST['email']
         ];
         $this->model->update($datos,$idSector);

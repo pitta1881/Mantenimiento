@@ -110,7 +110,7 @@ class QueryBuilder
     public function comparaSectores($table, $nombreSector) {
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table}
-            WHERE nombreInsumo='{$nombreSector}'"
+            WHERE nombreSector='{$nombreSector}'"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);

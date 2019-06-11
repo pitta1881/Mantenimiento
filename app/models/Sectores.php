@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class Insumos extends Model
+class Sectores extends Model
 {
     protected $table = 'sectores';
     
@@ -25,7 +25,7 @@ class Insumos extends Model
         $this->db->insert($this->table, $datos);
     }
 
-    public function getByIdInsumo($idSector){
+    public function getByIdSector($idSector){
         $sector = $this->db->selectSectorById($this->table,$idSector);
         $miSector = json_decode(json_encode($sector), True);  
         return $miSector[0];
