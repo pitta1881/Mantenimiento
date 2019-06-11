@@ -1,18 +1,71 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-     <nav class="Otros">
+{% extends "base.html" %}
 
-    <ul>
-    
-     
-       
-       
-        <li><a href="/agente/altaAgente">Agregar Agente</a></li>
-        <li><a href="/agente/modificarAgente">Modificar Agente</a></li>
-        <li><a href="/agente/eliminarAgente">Eliminar Agente </a></li>
+{% block title %} Gestion de agentes {% endblock %}
 
-       
-       
-    </ul>
-</nav>
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
+
+{% block main %}
+<input type="button" value="CARGAR NUEVO AGENTE" onclick="mostrarFormulario()">
+<script>
+    function mostrarFormulario() {
+        var formularioAgente = document.getElementById('formularioAgente');
+        if (formularioAgente.style.display == "block") {
+            formularioAgente.style.display = "none";
+        } else {
+            formularioAgente.style.display = "block"
+        }
+    }
+</script>
+<form action="/agente/administracionAgente/cargarNuevoAgente" method="post" id="formularioAgente" style="display: none">
+    <fieldset class="basicosAgente">
+        <legend> Alta de Agente</legend>
+        <label for="nombre">Nombre del Agente</label>
+        <input type="text" name="nombre" autofocus>
+        <label for="apellido">Apellido del Agente</label>
+        <input type="text" name="apellido">
+        <label for="especializacion">Especializacion</label>
+        <select name="especializacion">
+            {% for especializacion in datos.especializaciones %}
+            <option value="{{ especializacion }}">{{ especializacion }}</option>
+            {% endfor %}
+        </select>
+    </fieldset>
+    <input type="submit">
+</form>
+<table>
+    <th>Nº Agente</th>
+    <th>Nombre</th>
+    <th>Apellido</th>
+    <th>Especializacion</th>
+    <th>Accion</th>
+    {% for agente in datos.todosAgentes %}
+    <tr>
+        <td>{{ agente.idAgente }}</td>
+        <td>{{ agente.nombre }}</td>
+        <td>{{ agente.apellido }}</td>
+        <td>{{ agente.idEspecializacion }}</td>
+        <td>
+            <a href='/agente/modificar/seleccionado?idAgente={{ agente.idAgente }}'>
+                <input type="button" value="MODIFICAR">
+            </a>
+            <form action="/agente/eliminar" method="post">
+                <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
+                <input type="button" value="Eliminar" id="btnEliminar{{ agente.idAgente }}"
+                    onclick="document.getElementById('eliminarSi{{ agente.idAgente }}').style.display='inline-block';document.getElementById('eliminarNo{{ agente.idAgente }}').style.display='inline-block';document.getElementById('btnEliminar{{ agente.idAgente }}').style.display='none'">
+                <input type="submit" value="Si" id="eliminarSi{{ agente.idAgente }}" style="display: none">
+                <input type="reset" value="No" id="eliminarNo{{ agente.idAgente }}" style="display: none"
+                    onclick="document.getElementById('eliminarSi{{ agente.idAgente }}').style.display='none';document.getElementById('eliminarNo{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ agente.idAgente }}').style.display='inline-block'">
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay ningun agente cargado</h2> {% endfor %}
+</table>
 {% endblock %}

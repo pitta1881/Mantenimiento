@@ -10,57 +10,57 @@ class agentesController extends Controller
    public function __construct()
     {
       $this->model = new Agentes();
-   
-   
+      session_start();   
    }
+
+
     public function vistaAdministracionAgentes(){
-        
-        return view('/agentes/agentes.administracion');
-   
+        $todosAgentes = $this->model->get();      
+        $datos['todosAgentes'] = $todosAgentes;
+        $datos['especializaciones'] = $this->model->getEspecializaciones();
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/agentes/agentes.administracion', compact('datos'));
     }
        
     
-      public function vistaAltaAgente(){
-          $nombresEspecialidades=$this->model->getEspecializacion();
-   
-          
-          return view('/agentes/agentes.alta',compact('nombresEspecialidades'));
-         
+    public function guardarAgente() {
+        $datos['nombre'] = $_POST['nombre'];
+        $datos['apellido'] = $_POST['apellido'];   
+        $datos['idEspecializacion']= 1; //$_POST['especializacion']; tengo q buscar el id de especializacion
+        $statement = $this->model->buscarAgente($datos['nombre'],$datos['apellido']);        
+        if (empty($statement)) {
+            $this->model->insert($datos); 
+            return $this->vistaAdministracionAgentes();
+        }
     }
-    
- public function validarAgente(){
-       $datos['nombre']=$_POST['nombre'];
-       $datos['apellido']=$_POST['apellido'];
-      $datos['nombreEspecializacion']=$_POST['nombreEspecializacion'];
-    
-     $statement= $this->model->buscarAgente($datos['nombre'],$datos['apellido']);      
 
-     if(empty($statement)){
-        $this->saveAgente($datos);
-            $nombresEspecialidades=$this->model->getEspecializacion();    
-   return view('/agentes/agentes.alta',compact('nombresEspecialidades'));
-    }else{
-       $nombresEspecialidades=$this->model->getEspecializacion(); 
-     return view('/agentes/agentes.alta',compact('nombresEspecialidades'));
-    }       
- }
-public function saveAgente($datos){
-       var_dump($datos);
-    $this->model->insert($datos);            
- 
-}
+    public function vistaModificar(){
+        $agente = $this->model->getByIdAgente($_GET['idAgente']);      
+        $datos['agente'] = $agente;
+        $datos["userLogueado"] = $_SESSION['user'];
+        $datos['especializaciones'] = $this->model->getEspecializaciones(); 
+        return view('/agentes/agente.modificar', compact('datos'));
+    }
+
+    public function update(){
+        $idAgente = $_POST['idAgente'];
+        $datos = [
+            'nombre' => $_POST['nombre'],
+            'apellido' => $_POST['apellido'],
+            'idEspecializacion' => 1 //$_POST['especializacion']; tengo q buscar el id de especializacion
+        ];
+        $this->model->update($datos,$idAgente);
+        return $this->vistaAdministracionAgentes();
+     }
+
+     public function delete(){
+        $this->model->delete($_POST['idAgente']);
+        return $this->vistaAdministracionAgentes();
+    }
     
 
 //public function saveAgentexEspecializacion($datos,$arraySelect){
         //$this->model->insertEspecialidades($datos,$arraySelect);            
  
 //}
-    
-
-
-     public function vistaModificarAgente(){
-        
-        return view('/agentes/agentes.modificar');
-   
-    }
 }

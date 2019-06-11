@@ -82,7 +82,7 @@ class QueryBuilder
     public function comparaAgente($table, $nombre,$apellido ){  
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
-            WHERE nombre='{$nombre}' AND apellido='{$apellido}'  "
+            WHERE nombre='{$nombre}' AND apellido='{$apellido}'"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -309,6 +309,33 @@ class QueryBuilder
     public function deleteInsumo($table,$idInsumo){ //table = insumos
         $statement = $this->pdo->prepare(
            "DELETE FROM $table  WHERE idInsumo = $idInsumo"
+        );
+        $statement->execute();
+    }
+
+    public function selectAgenteById($table, $nAgente){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idAgente={$nAgente}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function updateAgente($table, $parameters, $nAgente){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET nombre=:nombre, apellido=:apellido, idEspecializacion=:idEspecializacion WHERE idAgente=$nAgente";
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+    public function deleteAgente($table,$idAgente){ //table = agentes
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idAgente = $idAgente"
         );
         $statement->execute();
     }

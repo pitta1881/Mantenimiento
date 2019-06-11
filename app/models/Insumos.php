@@ -13,7 +13,6 @@ class Insumos extends Model
         $insumos = $this->db->selectAll($this->table);
         $todosInsumos = json_decode(json_encode($insumos), True);
         return $todosInsumos;
-
     }
 
    public function buscarInsumo($nombreInsumo){

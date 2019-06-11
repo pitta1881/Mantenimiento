@@ -55,14 +55,16 @@
 //rutas agentes
 
 $router->get('agente/administracionAgentes','agentesController@vistaAdministracionAgentes');
-$router->post('agente/validarAgente','agentesController@validarAgente');
+$router->post('agente/administracionAgente/cargarNuevoAgente', 'agentesController@guardarAgente');
+$router->get('agente/modificar/seleccionado', 'agentesController@vistaModificar');
+$router->post('agente/administracionAgente/modificarAgente', 'agentesController@update');
+$router->post('agente/eliminar', 'agentesController@delete');
 
-$router->get('agente/altaAgente','agentesController@vistaAltaAgente');
 
 //rutas insumos
     $router->get('insumos/administracionInsumos', 'InsumosController@vistaAdministracionInsumos');
-    $router->get('insumo/modificar/seleccionado', 'InsumosController@vistaModificar');
     $router->post('insumos/administracionInsumos/guardarInsumo', 'InsumosController@guardarInsumo');
+    $router->get('insumo/modificar/seleccionado', 'InsumosController@vistaModificar');
     $router->post('insumos/administracionInsumos/modificarInsumo', 'InsumosController@update');
     $router->post('insumo/eliminar', 'InsumosController@delete');
 
