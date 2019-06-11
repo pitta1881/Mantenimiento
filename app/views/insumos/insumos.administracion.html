@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+
+{% block title %} Gestion de Insumos {% endblock %} 
+
+{% block header %} 
+    {% set nombreUsuario = datos.userLogueado %} 
+    {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} 
+{% endblock %} 
+
+{% block head %} 
+    {{ parent() }}
+    <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} 
+
+{% block main %}
+    <nav class="Otros">
+    <ul>
+        <li><a href="/insumos/administracionInsumos/agregarInsumos">Agregar Insumo</a></li>
+        <li><a href="/insumos/administracionInsumos/modificarInsumo">Modificar Insumo</a></li>
+        <li><a href="/insumos/administracionInsumos/eliminarInsumo">Eliminar Insumo</a></li>
+    </ul>
+    </nav>
+{% endblock %}

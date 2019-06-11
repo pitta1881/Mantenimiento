@@ -31,20 +31,26 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
+    // line 2
     public function block_title($context, array $blocks = array())
     {
         echo "Home";
     }
 
+    // line 3
     public function block_header($context, array $blocks = array())
     {
-        echo " ";
+        echo " 
+    ";
+        // line 4
         $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         echo " ";
-        $this->loadTemplate("partials/nav.html", "index.home.html", 1)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
-        echo "} ";
+        $this->loadTemplate("partials/nav.html", "index.home.html", 4)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        echo "} 
+";
     }
 
+    // line 5
     public function block_head($context, array $blocks = array())
     {
         echo " ";
@@ -53,12 +59,15 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 2
+    // line 8
     public function block_main($context, array $blocks = array())
     {
-        echo " ";
-        $this->loadTemplate("partials/nav1.html", "index.home.html", 2)->display($context);
-        // line 3
+        echo " 
+
+";
+        // line 10
+        $this->loadTemplate("partials/nav1.html", "index.home.html", 10)->display($context);
+        // line 11
         echo "
 <!--
 <nav class=\"main-menu\">
@@ -167,28 +176,28 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     <li>
         <h4>Pedidos Activos:";
-        // line 110
+        // line 118
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
         echo " </h4>
 
     </li>
     <li>
         <h4>Tareas sin Asignar:";
-        // line 114
+        // line 122
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Agentes Disponibles: ";
-        // line 118
+        // line 126
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "agentesDisponibles", array()), "html", null, true);
         echo "</h4>
 
     </li>
     <li>
         <h4>Ordenes de Trabajo Activas:";
-        // line 122
+        // line 130
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "otActivas", array()), "html", null, true);
         echo " </h4>
 
@@ -223,13 +232,21 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  192 => 122,  185 => 118,  178 => 114,  171 => 110,  62 => 3,  57 => 2,  15 => 1,);
+        return array (  201 => 130,  194 => 126,  187 => 122,  180 => 118,  71 => 11,  69 => 10,  63 => 8,  54 => 5,  46 => 4,  41 => 3,  35 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %} {% include 'partials/nav1.html' %}
+        return new Twig_Source("{% extends \"base.html\" %}
+{% block title %}Home{% endblock %} 
+{% block header %} 
+    {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} 
+{% endblock %} {% block head %} {{ parent() }}
+<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} 
+
+{% block main %} 
+
+{% include 'partials/nav1.html' %}
 
 <!--
 <nav class=\"main-menu\">
@@ -368,6 +385,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 
 {% endblock %}
-", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
+", "index.home.html", "C:\\Users\\Nardoni\\Documents\\GitHub\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

@@ -1,6 +1,6 @@
 <script>
     function myFunction() {
-        document.getElementsByClassName("close")
+        var recuperoBoton = document.getElementsByClassName("close");
         document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
         if ()
     }
@@ -55,7 +55,7 @@
             </ul>
         </li>
         <li>
-            <input type="button" value="Usuarios" onclick="myFunction()">
+            <a href="/usuario/gestionUsuario"><input type="button" value="Usuarios" onclick="myFunction()"></a>
             <ul class="close">
                 <li><a href="/pedido/verTodos">Crear Nuevo</a></li>
                 <li><a href="/OT/verTodos">Ver Todos</a></li>
@@ -95,7 +95,7 @@
             </ul>
         </li>
         <li>
-            <input type="button" value="Insumos" onclick="myFunction()">
+            <a href="insumos/administracionInsumos"><input type="button" value="Insumos" onclick="myFunction()"></a>
             <ul class="close">
                 <li><a href="/pedido/verTodos">Crear Nuevo</a></li>
                 <li><a href="/OT/verTodos">Ver Todos</a></li>

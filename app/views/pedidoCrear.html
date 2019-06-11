@@ -1,5 +1,24 @@
-{% extends "base.html" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+{% extends "base.html" %} 
+
+{% block title %}Crear Tarea Nueva{% endblock %} 
+
+{% block header %} 
+
+{% set nombreUsuario = datos.userLogueado %} 
+
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} 
+
+{% endblock %} 
+
+{% block head %} 
+
+{{ parent() }}
+
+<meta name="keywords" content="PAW,2018,Templates,PHP"> 
+
+{% endblock %} 
+
+{% block main %}
 <h1>Crear Pedido</h1>
 <form action="/pedido/guardar" method="POST">
     <fieldset class="basicosPedido">
