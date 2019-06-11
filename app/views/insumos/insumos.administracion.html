@@ -1,22 +1,63 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
-{% block title %} Gestion de Insumos {% endblock %} 
+{% block title %} Gestion de Insumos {% endblock %}
 
-{% block header %} 
-    {% set nombreUsuario = datos.userLogueado %} 
-    {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} 
-{% endblock %} 
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %}
 
-{% block head %} 
-    {{ parent() }}
-    <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} 
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
-    <nav class="Otros">
-    <ul>
-        <li><a href="/insumos/administracionInsumos/agregarInsumo">Agregar Insumo</a></li>
-        <li><a href="/insumos/administracionInsumos/modificarInsumo">Modificar Insumo</a></li>
-        <li><a href="/insumos/administracionInsumos/eliminarInsumo">Eliminar Insumo</a></li>
-    </ul>
-    </nav>
+<input type="button" value="CREAR NUEVO INSUMO" onclick="mostrarFormulario()">
+<script>
+    function mostrarFormulario() {
+        var formularioInsumo = document.getElementById('formularioInsumo');
+        if (formularioInsumo.style.display == "block") {
+            formularioInsumo.style.display = "none";
+        } else {
+            formularioInsumo.style.display = "block"
+        }
+    }
+</script>
+<form action="/insumos/administracionInsumos/guardarInsumo" method="post" id="formularioInsumo" style="display: none">
+    <fieldset class="basicosPedido">
+        <legend> Alta de Insumo</legend>
+        <label for="nombreInsumo">Nombre del Insumo</label>
+        <input type="text" name="nombreInsumo" autofocus>
+        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+        <input type="textarea" name="descripcion" required placeholder="Ingrese la descripcion.."><br>
+    </fieldset>
+    <input type="submit">
+</form>
+<table>
+    <th>Nº Insumo</th>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    <th>Accion</th>
+    {% for insumo in datos.todosInsumos %}
+    <tr>
+        <td>{{ insumo.idInsumo }}</td>
+        <td>{{ insumo.nombreInsumo }}</td>
+        <td>{{ insumo.descripcion }}</td>
+        <td>
+            <a href='/insumo/modificar/seleccionado?idInsumo={{ insumo.idInsumo }}'>
+                <input type="button" value="MODIFICAR">
+            </a>
+            <form action="/insumo/eliminar" method="post">
+                <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
+                <input type="button" value="Eliminar" id="btnEliminar{{ insumo.idInsumo }}"
+                    onclick="document.getElementById('eliminarSi{{ insumo.idInsumo }}').style.display='inline-block';document.getElementById('eliminarNo{{ insumo.idInsumo }}').style.display='inline-block';document.getElementById('btnEliminar{{ insumo.idInsumo }}').style.display='none'">
+                <input type="submit" value="Si" id="eliminarSi{{ insumo.idInsumo }}" style="display: none">
+                <input type="reset" value="No" id="eliminarNo{{ insumo.idInsumo }}" style="display: none"
+                    onclick="document.getElementById('eliminarSi{{ insumo.idInsumo }}').style.display='none';document.getElementById('eliminarNo{{ insumo.idInsumo }}').style.display='none';document.getElementById('btnEliminar{{ insumo.idInsumo }}').style.display='inline-block'">
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay insumo</h2> {% endfor %}
+</table>
 {% endblock %}

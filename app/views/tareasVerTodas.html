@@ -67,11 +67,13 @@
             <form action="/pedido/tarea/eliminar" method="post">
                 <input type="text" name="idPedido" value="{{ tareas.idPedido }}" hidden>
                 <input type="text" name="idTarea" value="{{ tareas.idTarea }}" hidden>
-                <input type="button" value="Eliminar" id="btnEliminar"
-                    onclick="document.getElementById('eliminarSi').style.display='inline-block';document.getElementById('eliminarNo').style.display='inline-block';document.getElementById('btnEliminar').style.display='none'">
-                <input type="submit" value="Si" id="eliminarSi" style="display: none">
-                <input type="reset" value="No" id="eliminarNo" style="display: none"
-                    onclick="document.getElementById('eliminarSi').style.display='none';document.getElementById('eliminarNo').style.display='none';document.getElementById('btnEliminar').style.display='inline-block'">
+                <input type="button" value="Eliminar" id="btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}"
+                    onclick="document.getElementById('eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}').style.display='inline-block';document.getElementById('eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}').style.display='inline-block';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}').style.display='none'">
+                <input type="submit" value="Si" id="eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}"
+                    style="display: none">
+                <input type="reset" value="No" id="eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}"
+                    style="display: none"
+                    onclick="document.getElementById('eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}').style.display='none';document.getElementById('eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}').style.display='none';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}').style.display='inline-block'">
             </form>
             {% endif %}
         </td>
@@ -81,7 +83,4 @@
 {% if datos.todasTareas|length == 0 %}
 <h2 class='error'>No hay Tareas asignadas aún</h2>
 {% endif %}
-<script>
-
-</script>
 {% endblock %}

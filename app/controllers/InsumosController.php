@@ -10,35 +10,48 @@ class InsumosController extends Controller{
     public function __construct()
     {
       $this->model = new Insumos();
-    
+      session_start();    
    }
     
     public function vistaAdministracionInsumos(){
-        
-        return view('/insumos/insumos.administracion');    
-    }
-    
-
-    public function vistaAgregarInsumo(){
-        return view('/insumos/insumos.administracion.agregarInsumo');
+        $todosInsumos = $this->model->get();      
+        $datos['todosInsumos'] = $todosInsumos;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/insumos/insumos.administracion', compact('datos'));
     }
     
     public function guardarInsumo() {
         $datos['nombreInsumo'] = $_POST['nombreInsumo'];
-        $datos['descripcion'] = $_POST['descripcion'];
-        
-        $statement = $this->model->buscarInsumo($datos['nombreInsumo']);
-        
+        $datos['descripcion'] = $_POST['descripcion'];        
+        $statement = $this->model->buscarInsumo($datos['nombreInsumo']);        
         if (empty($statement)) {
-            $this->saveInsumo($datos);
-            return view('/insumos/insumos.administracion.agregarInsumo');
+            $this->model->insert($datos); 
+            return $this->vistaAdministracionInsumos();
         }
     }
-    
-    public function saveInsumo($datos){
-        var_dump($datos);
-        $this->model->insert($datos);           
+
+    public function vistaModificar(){
+        $insumo = $this->model->getByIdInsumo($_GET['idInsumo']);      
+        $datos['insumo'] = $insumo;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/insumos/insumo.modificar', compact('datos'));
     }
+
+    public function update(){
+        $idInsumo = $_POST['idInsumo'];
+        $datos = [
+            'nombreInsumo' => $_POST['nombreInsumo'],
+            'descripcion' => $_POST['descripcion']
+        ];
+        $this->model->update($datos,$idInsumo);
+        return $this->vistaAdministracionInsumos();
+     }
+
+     public function delete(){
+        $this->model->delete($_POST['idInsumo']);
+        return $this->vistaAdministracionInsumos();
+    }
+
 /*    
   public function vistamodificarUsuario(){
     return view('administracionUsuario.modificar');

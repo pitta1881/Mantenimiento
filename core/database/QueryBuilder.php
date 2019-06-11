@@ -93,7 +93,7 @@ class QueryBuilder
             "SELECT * FROM {$table}
             WHERE nombreInsumo='{$nombreInsumo}'"
         );
-        $statemente->execute();
+        $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
         
     }
@@ -286,5 +286,30 @@ class QueryBuilder
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
+    public function selectInsumoById($table, $nInsumo){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idInsumo={$nInsumo}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 
+    public function updateInsumo($table, $parameters, $nInsumo){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET nombreInsumo=:nombreInsumo, descripcion=:descripcion WHERE idInsumo=$nInsumo";
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+    public function deleteInsumo($table,$idInsumo){ //table = insumos
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idInsumo = $idInsumo"
+        );
+        $statement->execute();
+    }
 }

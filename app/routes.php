@@ -61,17 +61,12 @@ $router->get('agente/altaAgente','agentesController@vistaAltaAgente');
 
 //rutas insumos
     $router->get('insumos/administracionInsumos', 'InsumosController@vistaAdministracionInsumos');
-    $router->get('insumos/administracionInsumos/agregarInsumo', 'InsumosController@vistaAgregarInsumo');
+    $router->get('insumo/modificar/seleccionado', 'InsumosController@vistaModificar');
     $router->post('insumos/administracionInsumos/guardarInsumo', 'InsumosController@guardarInsumo');
+    $router->post('insumos/administracionInsumos/modificarInsumo', 'InsumosController@update');
+    $router->post('insumo/eliminar', 'InsumosController@delete');
 
 
 
-
-
-
-
-
-
-
-$router->get('not_found', 'ProjectController@notFound');
+    $router->get('not_found', 'ProjectController@notFound');
     $router->get('internal_error', 'ProjectController@internalError');

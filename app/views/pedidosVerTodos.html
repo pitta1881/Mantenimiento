@@ -14,7 +14,6 @@
         <option value="estado">ESTADO</option>
         <option value="prioridad">PRIORIDAD</option>
     </select>
-
     <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
     <input type="submit" value="Buscar">
 </form>
@@ -28,7 +27,7 @@
     <th>Estado</th>
     <th>Prioridad</th>
     <th>Usuario</th>
-    <th></th>
+    <th>Accion</th>
     {% for pedido in datos.todosPedidos %}
     <tr>
         <td>{{ pedido.id }}</td>
