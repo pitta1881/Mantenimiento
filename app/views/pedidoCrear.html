@@ -1,19 +1,30 @@
-{% extends "base.html" %} {% block title %}Crear Tarea Nueva{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+{% extends "base.html" %}
+{% block title %}Crear Tarea Nueva
+{% endblock %}
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %}
+{% block head %}
+{{ parent() }}
+<meta content="PAW,2018,Templates,PHP" name="keywords">
+{% endblock %}
+{% block main %}
 <h1>Crear Pedido</h1>
 <form action="/pedido/guardar" method="POST">
     <fieldset class="basicosPedido">
         <legend>Datos Basicos</legend>
         <label for="nombreUsuario">Usuario Creador</label>
-        <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" readonly>
+        <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" readonly class="inputDisabled">
         <label for="fechaInicio">Fecha</label>
-        <input type="text" name="fechaInicio" value="{{ datos.diaHoy }}" readonly>
+        <input type="date" name="fechaInicio" value="{{ datos.diaHoy }}" readonly class="inputDisabled">
         <br>
         <label for="estado">Estado</label>
-        <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly>
+        <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
         <br>
-        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-        <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+        <label for="descripcion">Descripcion</label>
+        <span class="asterisco">*</span>
+        <input autofocus name="descripcion" placeholder="Ingrese la descripcion.." required type="textarea">
         <br>
         <label for="sector">Sector</label>
         <select name="sector">
@@ -23,13 +34,15 @@
         </select>
     </fieldset>
     <fieldset class="prioridad">
-        <legend>Prioridad<span class="asterisco">*</span></legend>
+        <legend>Prioridad<span class="asterisco">*</span>
+        </legend>
         {% for prioridad in datos.prioridades %}
         <label class="labelRadioInput">
-            <input type="radio" name="prioridad" class="radioInput" required value={{ prioridad }}>{{ prioridad }}</label>
+            <input type="radio" name="prioridad" class="radioInput" required
+                value={{ prioridad }}>{{ prioridad }}</label>
         {% endfor %}
     </fieldset>
-    <input type="submit">
     <input type="reset">
+    <input type="submit">
 </form>
 {% endblock %}
