@@ -87,6 +87,15 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function comparaEspecializacion($table, $nombre){  
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE nombre='{$nombre}'"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
     
     public function comparaInsumos($table, $nombreInsumo) {
         $statement = $this->pdo->prepare(
@@ -338,5 +347,56 @@ class QueryBuilder
            "DELETE FROM $table  WHERE idAgente = $idAgente"
         );
         $statement->execute();
+    }
+
+    public function selectEspecializacionById($table, $nEspecializacion){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idEspecializacion={$nEspecializacion}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function updateEspecializacion($table, $parameters, $nEspecializacion){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET nombre=:nombre WHERE idEspecializacion=$nEspecializacion";
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+    public function deleteEspecializacion($table,$idEspecializacion){ //table = agentes
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idEspecializacion = $idEspecializacion"
+        );
+        $statement->execute();
+    }
+
+    public function getEspecializaciones($table){ //table = especializacion
+        $statement = $this->pdo->prepare(
+           "SELECT nombre FROM $table"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function getIdFromNombreEspecializacion($tableEsp,$nombre){
+        $statement = $this->pdo->prepare(
+           "SELECT (idEspecializacion) FROM $tableEsp WHERE nombre='$nombre'"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function getNombreFromIdEspecializacion($tableEsp,$idEsp){
+        $statement = $this->pdo->prepare(
+           "SELECT (nombre) FROM $tableEsp WHERE idEspecializacion=$idEsp"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
     }
 }

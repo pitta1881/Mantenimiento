@@ -44,6 +44,7 @@
     <th>Nombre</th>
     <th>Apellido</th>
     <th>Especializacion</th>
+    <th>Disponibilidad</th>
     <th>Accion</th>
     {% for agente in datos.todosAgentes %}
     <tr>
@@ -51,6 +52,11 @@
         <td>{{ agente.nombre }}</td>
         <td>{{ agente.apellido }}</td>
         <td>{{ agente.idEspecializacion }}</td>
+        {% if agente.disponible == 1 %}
+        <td>DISPONIBLE</td>
+        {% else %}
+        <td>OCUPADO</td>
+        {% endif %}
         <td>
             <a href='/agente/modificar/seleccionado?idAgente={{ agente.idAgente }}'>
                 <input type="button" value="MODIFICAR">

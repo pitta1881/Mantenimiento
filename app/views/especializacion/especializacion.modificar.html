@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Alta de Insumo{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h1>Modificar Especializacion</h1>
+<form action="/especializacion/administracionEspecializacion/modificarEspecializacion" method="POST">
+    <fieldset class="basicosEspecializacion">
+        <legend> Modificar Especializacion</legend>
+        <label for="idEspecializacion">Numero de Especializacion</label>
+        <input type="text" name="idEspecializacion" value="{{ datos.especializacion.idEspecializacion }}" readonly
+            class="inputDisabled">
+        <label for="nombre">Nombre del Especializacion</label>
+        <input type="text" name="nombre" value="{{ datos.especializacion.nombre }}">
+    </fieldset>
+    <input type="reset" value="Volver" onclick="history.back()">
+    <input type="submit">
+</form>
+{% endblock %}

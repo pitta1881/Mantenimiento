@@ -25,10 +25,11 @@ class agentesController extends Controller
     
     public function guardarAgente() {
         $datos['nombre'] = $_POST['nombre'];
-        $datos['apellido'] = $_POST['apellido'];   
-        $datos['idEspecializacion']= 1; //$_POST['especializacion']; tengo q buscar el id de especializacion
-        $statement = $this->model->buscarAgente($datos['nombre'],$datos['apellido']);        
+        $datos['apellido'] = $_POST['apellido'];
+        $statement = $this->model->buscarAgente($datos['nombre'],$datos['apellido']);     
         if (empty($statement)) {
+            $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']);
+            $datos['idEspecializacion']= $idEspecializacion; 
             $this->model->insert($datos); 
             return $this->vistaAdministracionAgentes();
         }
@@ -44,10 +45,11 @@ class agentesController extends Controller
 
     public function update(){
         $idAgente = $_POST['idAgente'];
+        $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']); 
         $datos = [
             'nombre' => $_POST['nombre'],
             'apellido' => $_POST['apellido'],
-            'idEspecializacion' => 1 //$_POST['especializacion']; tengo q buscar el id de especializacion
+            'idEspecializacion' => $idEspecializacion
         ];
         $this->model->update($datos,$idAgente);
         return $this->vistaAdministracionAgentes();

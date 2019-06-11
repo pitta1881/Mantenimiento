@@ -33,11 +33,10 @@ class TareaController extends Controller{
 
     public function modificarTareaSeleccionada(){
         $unaTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
-        $miTarea = $unaTarea[0]; 
         $datos["prioridades"] = $this->model->getPrioridades();
         $datos["estados"] = $this->model->getEstados();
         $datos["especializaciones"] = $this->model->getEspecializaciones();
-        $datos["unaTarea"] = $miTarea;
+        $datos["unaTarea"] = $unaTarea;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/tareas/tareaModificar',compact('datos'));
     }

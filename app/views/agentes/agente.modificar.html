@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block main %}
-<h1>Modificar Insumo</h1>
+<h1>Modificar Agente</h1>
 <form action="/agente/administracionAgente/modificarAgente" method="POST">
     <fieldset class="basicosAgente">
         <legend> Modificar Agente</legend>
@@ -25,7 +25,11 @@
         <input type="text" name="apellido" value="{{ datos.agente.apellido }}">
         <select name="especializacion">
             {% for especializacion in datos.especializaciones %}
+            {% if especializacion == datos.agente.idEspecializacion %}
+            <option value="{{ especializacion }}" selected>{{ especializacion }}</option>
+            {% else %}
             <option value="{{ especializacion }}">{{ especializacion }}</option>
+            {% endif %}
             {% endfor %}
         </select>
     </fieldset>

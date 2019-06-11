@@ -60,6 +60,14 @@ $router->get('agente/modificar/seleccionado', 'agentesController@vistaModificar'
 $router->post('agente/administracionAgente/modificarAgente', 'agentesController@update');
 $router->post('agente/eliminar', 'agentesController@delete');
 
+//rutas especializaciones
+
+$router->get('especializacion/administracionEspecializacion','EspecializacionController@vistaAdministracionEspecializacion');
+$router->post('especializacion/administracionEspecializacion/cargarNuevaEspecializacion', 'EspecializacionController@guardarEspecializacion');
+$router->get('especializacion/modificar/seleccionado', 'EspecializacionController@vistaModificar');
+$router->post('especializacion/administracionEspecializacion/modificarEspecializacion', 'EspecializacionController@update');
+$router->post('especializacion/eliminar', 'EspecializacionController@delete');
+
 
 //rutas insumos
     $router->get('insumos/administracionInsumos', 'InsumosController@vistaAdministracionInsumos');

@@ -27,7 +27,7 @@
 </script>
 <form action="tarea/guardar" method="post" id="formularioTarea" style="display: none">
     <label for="idPedido">Pedido</label>
-    <input type="text" name="idPedido" value="{{ datos.idPedido }}" readonly>
+    <input type="text" name="idPedido" value="{{ datos.idPedido }}" readonly class="inputDisabled">
     <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
     <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
     <label for="especializacion">Especializacion</label><span class="asterisco">*</span>
@@ -43,7 +43,7 @@
         {% endfor %}
     </select>
     <label for="estado">Estado</label>
-    <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly>
+    <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
     <input type="submit" value="Crear Tarea">
 </form>
 <table>

@@ -10,7 +10,13 @@ class Agentes extends Model
     protected $tableEspecializacion='especializacion';
 
     public function getEspecializaciones() {
-      return array("ALBAnIL","ELECTRICISTA","PLOMERO","PINTOR","GASISTA");
+      $array;
+      $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);
+      $misEspecializaciones = json_decode(json_encode($especializaciones), True);
+      for ($i=0; $i < count($misEspecializaciones); $i++) { 
+        $array[$i]=$misEspecializaciones[$i]['nombre'];
+      }
+      return $array;
   }
 
     
@@ -18,6 +24,9 @@ class Agentes extends Model
     {
         $agentes = $this->db->selectAll($this->table);
         $todosAgentes = json_decode(json_encode($agentes), True);
+        for ($i=0; $i < count($todosAgentes); $i++) { 
+          $todosAgentes[$i]['idEspecializacion']=$this->getNombreEspecializacionPorId($todosAgentes[$i]['idEspecializacion']);
+        }
         return $todosAgentes;
     }
 
@@ -34,6 +43,7 @@ class Agentes extends Model
     public function getByIdAgente($idAgente){
       $agente = $this->db->selectAgenteById($this->table,$idAgente);
       $miAgente = json_decode(json_encode($agente), True);  
+      $miAgente[0]['idEspecializacion']=$this->getNombreEspecializacionPorId($miAgente[0]['idEspecializacion']);
       return $miAgente[0];
     }
 
@@ -46,20 +56,14 @@ class Agentes extends Model
       //habria que verificar que el insumo no este asignado a una tarea
       $this->db->deleteAgente($this->table,$nAgente);
     }  
-    /* public function insertEspecialidades(array $especialidades)
-    {       
-         for ($i=0;$i<count($especialidades);$i++) 
-      	{ 
-      $this->db->insert($this->tableEspecializacion, $especialidades);
-    }*/
 
+    public function getIdEspecializacionPorNombre($nombreEspecializacion) {
+      $id = $this->db->getIdFromNombreEspecializacion($this->tableEspecializacion, $nombreEspecializacion);
+      return $id[0][0];
+    } 
     
-   /*
-    public function getEspecializacion(){
-    $especializacion = $this->db->selectAllEspecializacion($this->tableEspecializacion);
-    $misEspecializaciones = json_decode(json_encode($especializacion), True);
-    return $misEspecializaciones; 
-  }
-    */
-   
+    public function getNombreEspecializacionPorId($idEspecializacion) {
+      $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
+      return $nombre[0][0];
+    } 
 }

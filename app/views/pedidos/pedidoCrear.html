@@ -1,22 +1,22 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
-{% block title %}Crear Tarea Nueva{% endblock %} 
+{% block title %}Crear Tarea Nueva{% endblock %}
 
-{% block header %} 
+{% block header %}
 
-{% set nombreUsuario = datos.userLogueado %} 
+{% set nombreUsuario = datos.userLogueado %}
 
-{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} 
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
 
-{% endblock %} 
+{% endblock %}
 
-{% block head %} 
+{% block head %}
 
 {{ parent() }}
 
-<meta name="keywords" content="PAW,2018,Templates,PHP"> 
+<meta name="keywords" content="PAW,2018,Templates,PHP">
 
-{% endblock %} 
+{% endblock %}
 
 {% block main %}
 <h1>Crear Pedido</h1>
@@ -24,12 +24,12 @@
     <fieldset class="basicosPedido">
         <legend>Datos Basicos</legend>
         <label for="nombreUsuario">Usuario Creador</label>
-        <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" readonly>
+        <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" readonly class="inputDisabled">
         <label for="fechaInicio">Fecha</label>
-        <input type="text" name="fechaInicio" value="{{ datos.diaHoy }}" readonly>
+        <input type="DATE" name="fechaInicio" value="{{ datos.diaHoy }}" readonly class="inputDisabled">
         <br>
         <label for="estado">Estado</label>
-        <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly>
+        <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
         <br>
         <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
         <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
@@ -45,7 +45,8 @@
         <legend>Prioridad<span class="asterisco">*</span></legend>
         {% for prioridad in datos.prioridades %}
         <label class="labelRadioInput">
-            <input type="radio" name="prioridad" class="radioInput" required value={{ prioridad }}>{{ prioridad }}</label>
+            <input type="radio" name="prioridad" class="radioInput" required
+                value={{ prioridad }}>{{ prioridad }}</label>
         {% endfor %}
     </fieldset>
     <input type="submit">

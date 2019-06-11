@@ -7,10 +7,17 @@ use App\Core\Model;
 class Tarea extends Model
 {
     protected $table = 'tarea';
+    protected $tableEspecializacion='especializacion';
 
     //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getEspecializaciones() {
-        return array("ALBAnIL","ELECTRICISTA","PLOMERO","PINTOR","GASISTA");
+        $array;
+        $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);
+        $misEspecializaciones = json_decode(json_encode($especializaciones), True);
+        for ($i=0; $i < count($misEspecializaciones); $i++) { 
+          $array[$i]=$misEspecializaciones[$i]['nombre'];
+        }
+        return $array;
     }
 
     public function getPrioridades() {
@@ -55,7 +62,8 @@ class Tarea extends Model
     }    
     
     public function getByIdPedidoIdTarea($idPedido,$idTarea){
-        return $this->db->selectTareaByIdId($this->table,$idPedido,$idTarea);
+        $tarea = $this->db->selectTareaByIdId($this->table,$idPedido,$idTarea);
+        return $tarea[0];
     }
 
 }
