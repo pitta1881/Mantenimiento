@@ -11,7 +11,7 @@ class Pedido extends Model{
 
     //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getSectores() {
-        return array("DAC","CONTABILIDAD","DIRECCION","GUARDIA_MEDICA","PABELLON_1","PABELLON_2");
+        return array("DAC","CONTABILIDAD","DIRECCION","GUARDIA MEDICA","PABELLON 1","PABELLON 2");
     }
 
     public function getPrioridades() {
@@ -27,7 +27,6 @@ class Pedido extends Model{
         $pedido = $this->db->selectAll($this->table);
         $todosPedidos = json_decode(json_encode($pedido), True);      
         foreach ($todosPedidos as $indice => $datos) {
-            $todosPedidos[$indice]['sector'] = str_replace("_"," ",$datos['sector']);
             foreach ($datos as $key => $value) {
                 if ($key == 'id') {
                     $todosPedidos[$indice]['tareasAsignadas'] = $this->getTareasAsignadasAPedido($value);
@@ -43,9 +42,6 @@ class Pedido extends Model{
     public function getAllbyFilter($filter,$value){
         $pedido = $this->db->buscar($this->table,$filter,$value);
         $miPedido = json_decode(json_encode($pedido), True);
-        foreach ($miPedido as $key => $value) {
-            $miPedido[$key]['sector'] = str_replace("_"," ",$value['sector']);
-        }        
         return $miPedido;
     }
     
@@ -53,7 +49,6 @@ class Pedido extends Model{
     public function getByIdPedido($id){        
         $pedido = $this->db->selectNumeroPedido($this->table,$id);
         $miPedido = json_decode(json_encode($pedido), True);
-        $miPedido[0]['sector'] = str_replace("_"," ",$miPedido[0]['sector']);
         $tareas = $this->getTareasByIdPedido($id);
         $miPedido[0]['fechaInicio'] = date("d/m/Y",strtotime($miPedido[0]['fechaInicio']));
         $miPedido[0]['tareas'] = $tareas;

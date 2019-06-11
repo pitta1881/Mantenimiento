@@ -83,9 +83,9 @@ class PedidoController extends Controller{
         $idPedido = $_POST['id'];
          $arrayPedido = [
              'fechaInicio' => $_POST['fechaInicio'],
-             'estado' => preg_replace('/\s+/', '_', $_POST['estado']),
+             'estado' => $_POST['estado'],
              'descripcion' => $_POST['descripcion'],
-             'sector' => preg_replace('/\s+/', '_', $_POST['sector']),
+             'sector' => $_POST['sector'],
              'prioridad' => $_POST['prioridad'],
          ];
          $this->model->updatePedido($arrayPedido,$idPedido);
