@@ -1,24 +1,45 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} 
-{% block header %}  
-{% include 'partials/nav.html' %} 
-{% endblock %} 
-{% block head %} 
-{{ parent() }}
+{% block title %}Gestion de Agentes{% endblock %}
+
+{% block header %}
+
+{{ include('partials/nav.html') }}
+
+{% endblock %}
+
+{% block head %}
+
 <meta name="keywords" content="PAW,2018,Templates,PHP">
- {% endblock %} 
- {% block main %}
+{% endblock %}
 {% block main %}
-<form action="/agente/validarAgente" method="POST">
+
+   
+  <nav class="Otros">
+
+    <ul>
+    
+     
+       
+       
+        <li><a href="/agente/altaAgente">Agregar Agente</a></li>
+        <li><a href="/agente/modificarAgente">Modificar Modificar</a></li>
+        <li><a href="/agente/eliminarAgente">Eliminar Agente</a></li>
+
+       
+       
+    </ul>
+</nav> 
+   
+   <form action="/agente/validarAgente" method="POST">
     <label for="nombre">Nombre</label>
-    <input type="text" name="nombre" placeholder="Usuario"><br>
+    <input type="text" name="nombre" placeholder="nombre"><br>
     <label for="apellido">Contraseña</label>
-    <input type="text" name="apellido" placeholder="Apellido">
-    <!--<select name="especialidades" id="e">
-        
-        {% for especialidad in especialidades %}
-        <option value={{ especialidad.nombreEspecialidad }}>{{ especialidad.nombreEspecialidad }}</option>
+    <input type="text" name="apellido" placeholder="apellido">
+    <select  name="nombreEspecializacion" id="nombreEspecializacion">
+     
+         {% for nombre in nombresEspecialidades %}
+        <option value={{ nombre.nombreEspecializacion }}>{{ nombre.nombreEspecializacion }}</option>
         {% endfor %}}
-    </select>-->
+    </select>
     <input type="submit" value="Agregar">
 </form>
 {% endblock %}

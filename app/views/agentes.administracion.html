@@ -1,23 +1,18 @@
-{% extends "base.html" %} 
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} {% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+     <nav class="Otros">
 
-{% block title %} Home {% endblock %} 
-
-{% block header %} 
-    {% set nombreUsuario = datos.userLogueado %} 
-    {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}} 
-{% endblock %} 
-
-{% block head %} 
-    {{ parent() }}
-    <meta name="keywords" content="PAW,2018,Templates,PHP"> 
-{% endblock %} 
-
-{% block main %}
-    <nav class="Otros">
     <ul>
+    
+     
+       
+       
         <li><a href="/agente/altaAgente">Agregar Agente</a></li>
-        <li><a href="/agente/modificarAgente">Modificar Modificar</a></li>
-        <li><a href="/agente/eliminarAgente">Eliminar Agente</a></li>
+        <li><a href="/agente/modificarAgente">Modificar Agente</a></li>
+        <li><a href="/agente/eliminarAgente">Eliminar Agente </a></li>
+
+       
+       
     </ul>
-    </nav>
+</nav>
 {% endblock %}

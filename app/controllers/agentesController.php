@@ -10,39 +10,57 @@ class agentesController extends Controller
    public function __construct()
     {
       $this->model = new Agentes();
-    
+   
+   
    }
     public function vistaAdministracionAgentes(){
         
         return view('agentes.administracion');
    
     }
-       public function vistaAltaAgente(){
-        
-        return view('agentes.alta');
+       
+    
+      public function vistaAltaAgente(){
+          $nombresEspecialidades=$this->model->getEspecializacion();
    
+          
+          return view('agentes.alta',compact('nombresEspecialidades'));
+         
     }
-    
-    
     
  public function validarAgente(){
        $datos['nombre']=$_POST['nombre'];
        $datos['apellido']=$_POST['apellido'];
-       
-        $statement= $this->model->buscarAgente($datos['nombre'],$datos['apellido']);      
-    if(empty($statement)){
+      $datos['nombreEspecializacion']=$_POST['nombreEspecializacion'];
+    
+     $statement= $this->model->buscarAgente($datos['nombre'],$datos['apellido']);      
+
+     if(empty($statement)){
         $this->saveAgente($datos);
-        return view('agentes.alta');
+            $nombresEspecialidades=$this->model->getEspecializacion();    
+   return view('agentes.alta',compact('nombresEspecialidades'));
     }else{
-       
-        return view('agentes.alta');
+       $nombresEspecialidades=$this->model->getEspecializacion(); 
+     return view('agentes.alta',compact('nombresEspecialidades'));
     }       
-    }
-
-
+ }
+public function saveAgente($datos){
+       var_dump($datos);
+    $this->model->insert($datos);            
+ 
 }
-/*
-public function vistaAltaUsuario(){
-    $nombresRoles=$this->model->getRoles();
-    return view('administracionUsuario.alta',compact('nombresRoles'));
-}*/
+    
+
+//public function saveAgentexEspecializacion($datos,$arraySelect){
+        //$this->model->insertEspecialidades($datos,$arraySelect);            
+ 
+//}
+    
+
+
+     public function vistaModificarAgente(){
+        
+        return view('agentes.modificar');
+   
+    }
+}
