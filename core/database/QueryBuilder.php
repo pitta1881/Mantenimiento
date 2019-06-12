@@ -161,6 +161,14 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
+    public function getAgentesDisponibles($table){
+        $statement = $this->pdo->prepare(
+           "SELECT COUNT(disponible) FROM $table WHERE disponible = 1"   
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+}
+
     
     /**
      * update a record .

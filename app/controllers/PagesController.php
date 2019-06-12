@@ -20,7 +20,7 @@ class PagesController extends Controller{
         } else {
          $datos['cantidadPedidos'] = $this->model->getActivos('pedido','id');
          $datos['tareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
-         $datos['agentesDisponibles'] = 'PROXIMAMENTE';
+         $datos['agentesDisponibles'] = $this->model->getAgentesDisponibles('agentes');
          $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
          $datos['userLogueado'] = $_SESSION['user'];
          return view ('index.home',compact('datos'));
