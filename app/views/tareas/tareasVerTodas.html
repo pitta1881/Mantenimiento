@@ -62,6 +62,8 @@
         <td>{{ tareas.estado }}</td>
         <td><a href="/tarea/modificar/seleccionado?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}"><input
                     type="button" value="Modificar"></a>
+            <a href="/tarea/agentes/asignar?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}"><input
+                    type="button" value="Asignar Agentes"></a>
             <a href="#"><input type="button" value="Ver Insumos"></a>
             {% if tareas.estado == 'Iniciado' %}
             <form action="/pedido/tarea/eliminar" method="post">

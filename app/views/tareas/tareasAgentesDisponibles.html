@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h3>Aca irian los filtros y metodos de ordenamiento</h3>
+<h1>AGENTES DISPONIBLES </h1>
+<form action="/tarea/asignarAgentes/seleccionados" method="post">
+    <table>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Especializacion</th>
+        <th>Disponibilidad</th>
+        <th>Seleccionar</th>
+        {% set i = 1 %}
+        {% for agente in datos.agentesDisponibles %}
+        <tr>
+            <td>{{ agente.nombre }}</td>
+            <td>{{ agente.apellido }}</td>
+            <td>{{ agente.especializacionNombre }}</td>
+            <td>Disponible</td>
+            <td><input type="checkbox" class="clsCasilla" name="{{ i }}_{{ datos.idPedido }}"
+                    value="{{ datos.idTarea }}_{{ agente.idAgente }}" onclick="deRequireCb('clsCasilla')" required></td>
+            {% set i = i + 1 %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% if datos.agentesDisponibles|length == 0 %}
+    <h2 class='error'>No hay Agentes o están todos Ocupados</h2>
+    {% else %}
+    <input type="submit" value="Asignar Agentes">
+    {% endif %}
+</form>
+<script>
+    function deRequireCb(elClass) {
+        el = document.getElementsByClassName(elClass);
+
+        var atLeastOneChecked = false; //at least one cb is checked
+        for (i = 0; i < el.length; i++) {
+            if (el[i].checked === true) {
+                atLeastOneChecked = true;
+            }
+        }
+
+        if (atLeastOneChecked === true) {
+            for (i = 0; i < el.length; i++) {
+                el[i].required = false;
+            }
+        } else {
+            for (i = 0; i < el.length; i++) {
+                el[i].required = true;
+            }
+        }
+    }
+</script>
+{% endblock %}

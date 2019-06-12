@@ -8,6 +8,7 @@ class Tarea extends Model
 {
     protected $table = 'tarea';
     protected $tableEspecializacion='especializacion';
+    protected $tableAgentes='agentes';
 
     public function getEspecializaciones() {
         $array;
@@ -77,4 +78,12 @@ class Tarea extends Model
         return $nombre[0][0];
       } 
 
+      public function verAgentesDisponibles(){
+        $agentes = $this->db->selectAgentesDisponibles($this->tableAgentes);
+        $misAgentes = json_decode(json_encode($agentes), True);
+        for ($i=0; $i < count($misAgentes); $i++) { 
+            $misAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($misAgentes[$i]['idEspecializacion']);
+          }
+        return $misAgentes;
+    }
 }

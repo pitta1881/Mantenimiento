@@ -469,4 +469,12 @@ public function selectSectorById($table, $nSector){
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
+
+    public function selectAgentesDisponibles($tableAgente){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableAgente WHERE disponible=1"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+   }
 }

@@ -19,11 +19,13 @@
     $router->get('tarea/modificar/seleccionado', 'TareaController@modificarTareaSeleccionada');
     $router->post('pedido/tarea/eliminar', 'TareaController@eliminar');
     $router->post('tarea/modificar/guardar', 'TareaController@modificar');
+    $router->get('tarea/agentes/asignar', 'TareaController@verAgentesDisponibles');
+    $router->post('tarea/asignarAgentes/seleccionados','TareaController@asignarAgentes');
 
 //rutas OT
     $router->get('OT/verTodos', 'OTController@index');
     $router->get('ot/crear', 'OTController@verTareasSinAsignar');
-    $router->post('ot/crear/seleccionados', 'OTController@crearOT');
+    $router->post('ot/crear/seleccionados','OTController@crearOT');
 
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');

@@ -54,4 +54,35 @@ class TareaController extends Controller{
         $this->model->update($tarea,$idTarea,$idPedido);
         redirect("fichaPedido?id=".$idPedido);
      }
+
+     public function verAgentesDisponibles(){
+        $agentesDisponibles = $this->model->verAgentesDisponibles();
+        $datos['idPedido'] = $_GET['idPedido'];
+        $datos['idTarea'] = $_GET['idTarea'];
+        $datos['agentesDisponibles'] = $agentesDisponibles;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/tareas/tareasAgentesDisponibles',compact('datos'));
+    }
+
+    public function asignarAgentes(){
+        /*
+        $idOTCreada = $this->model->newOT();
+        $i = 0;
+        foreach ($_POST as $idPedido => $idTarea) {
+            $idPedidoFinal = explode('_',$idPedido)[1];
+            $itemOT = [
+                'idOT' => $idOTCreada,
+                'idPedido' => $idPedidoFinal,
+                'idTarea' => $idTarea
+            ];
+            $this->model->insertItemOT($itemOT);
+            $this->model->cambiarEstadoTarea($idPedidoFinal,$idTarea);
+            $datosItem[$i++] = $itemOT;
+        }
+        $datos['itemOT'] = $datosItem;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/ordendetrabajo/OTverItem',compact('datos'));
+        */
+    }
+
 }
