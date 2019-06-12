@@ -9,10 +9,17 @@ class Pedido extends Model{
     protected $table = 'pedido';
     protected $tableTarea = 'tarea';
     protected $tableEspecializacion='especializacion';
+    protected $tableSectores='sectores';
 
     //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getSectores() {
-        return array("DAC","CONTABILIDAD","DIRECCION","GUARDIA MEDICA","PABELLON 1","PABELLON 2");
+        $array;
+        $sectores = $this->db->getSectores($this->tableSectores);
+        $misSectores = json_decode(json_encode($sectores), True);
+        for ($i=0; $i < count($misSectores); $i++) { 
+            $array[$i]=$misSectores[$i]['nombreSector'];
+        }
+        return $array;
     }
 
     public function getPrioridades() {
@@ -28,6 +35,7 @@ class Pedido extends Model{
         $pedido = $this->db->selectAll($this->table);
         $todosPedidos = json_decode(json_encode($pedido), True);      
         foreach ($todosPedidos as $indice => $datos) {
+            $todosPedidos[$indice]['nombreSector'] = $this->getNombreSectorPorId($todosPedidos[$indice]['idSector']);
             foreach ($datos as $key => $value) {
                 if ($key == 'id') {
                     $todosPedidos[$indice]['tareasAsignadas'] = $this->getTareasAsignadasAPedido($value);
@@ -52,6 +60,7 @@ class Pedido extends Model{
         $miPedido = json_decode(json_encode($pedido), True);
         $tareas = $this->getTareasByIdPedido($id);
         $miPedido[0]['fechaInicio'] = date("d/m/Y",strtotime($miPedido[0]['fechaInicio']));
+        $miPedido[0]['nombreSector'] = $this->getNombreSectorPorId($miPedido[0]['idSector']);
         $miPedido[0]['tareas'] = $tareas;
         return $miPedido[0];
     }
@@ -91,6 +100,16 @@ class Pedido extends Model{
 
     public function getNombreEspecializacionPorId($idEspecializacion) {
         $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
+        return $nombre[0][0];
+      }
+
+      public function getIdSectorPorNombre($nombreSector) {
+        $id = $this->db->getIdFromNombreSector($this->tableSectores, $nombreSector);
+        return $id[0][0];
+      } 
+
+      public function getNombreSectorPorId($idSector) {
+        $nombre = $this->db->getNombreFromIdSector($this->tableSectores, $idSector);
         return $nombre[0][0];
       }
 }

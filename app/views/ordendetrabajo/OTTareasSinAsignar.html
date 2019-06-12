@@ -4,7 +4,7 @@
 
 {% block header %}
 {% set nombreUsuario = datos.userLogueado %}
-{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %}
 
 {% block head %}
@@ -29,7 +29,7 @@
             <td>{{ tareas.idPedido }}</td>
             <td>{{ tareas.idTarea }}</td>
             <td>{{ tareas.descripcion }}</td>
-            <td>{{ tareas.especializacion }}</td>
+            <td>{{ tareas.especializacionNombre }}</td>
             <td>{{ tareas.prioridad }}</td>
             <td><input type="checkbox" class="clsCasilla" name=" {{ i }}_{{ tareas.idPedido }}"
                     value="{{ tareas.idTarea }}" onclick="deRequireCb('clsCasilla')" required></td>

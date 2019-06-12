@@ -1,9 +1,9 @@
 USE mantenimiento;
 CREATE TABLE tarea
 (
-    idTarea integer,
-    idPedido integer,
-    idEspecializacion integer,
+    idTarea integer NOT NULL,
+    idPedido integer NOT NULL,
+    idEspecializacion integer NOT NULL,
     estado TEXT NOT NULL,
     descripcion TEXT NOT NULL,
     prioridad TEXT NOT NULL,

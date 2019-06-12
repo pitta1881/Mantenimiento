@@ -170,7 +170,7 @@ class QueryBuilder
      */
     public function updatePedido($table, $parameters, $id){
         $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET fechaInicio=:fechaInicio, estado=:estado, descripcion=:descripcion, sector=:sector, prioridad=:prioridad WHERE id=$id"; //recontra HARDCODEADO
+        $sql = "UPDATE $table SET fechaInicio=:fechaInicio, estado=:estado, descripcion=:descripcion, idSector=:idSector, prioridad=:prioridad WHERE id=$id"; //recontra HARDCODEADO
             try {
                 $statement = $this->pdo->prepare($sql);
                 $statement->execute($parameters);
@@ -436,5 +436,29 @@ public function selectSectorById($table, $nSector){
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function getSectores($table){ //table = sectores
+        $statement = $this->pdo->prepare(
+           "SELECT nombreSector FROM $table"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function getIdFromNombreSector($tableSector,$nombre){
+        $statement = $this->pdo->prepare(
+           "SELECT (idSector) FROM $tableSector WHERE nombreSector='$nombre'"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function getNombreFromIdSector($tableSector,$idSector){
+        $statement = $this->pdo->prepare(
+           "SELECT (nombreSector) FROM $tableSector WHERE idSector=$idSector"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
     }
 }

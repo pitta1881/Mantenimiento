@@ -9,6 +9,7 @@ class OrdenDeTrabajo extends Model
     protected $tableOT = 'OrdenDeTrabajo';
     protected $tableItem = 'itemOT';
     protected $tableTarea = 'tarea';
+    protected $tableEspecializacion='especializacion';
 
     public function get(){
         $ot = $this->db->selectAll($this->tableOT);
@@ -30,6 +31,9 @@ class OrdenDeTrabajo extends Model
     public function verTareasSinAsignar(){
         $tareas = $this->db->selectTareasSinAsignar($this->tableTarea);
         $misTareas = json_decode(json_encode($tareas), True);
+        for ($i=0; $i < count($misTareas); $i++) { 
+            $misTareas[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($misTareas[$i]['idEspecializacion']);
+          }
         return $misTareas;
     }
 
@@ -54,6 +58,11 @@ class OrdenDeTrabajo extends Model
         $contadorTareas = $this->db->getCantTareasOT($this->tableItem,$idOT);
         return $contadorTareas[0][0];
     }
+
+    public function getNombreEspecializacionPorId($idEspecializacion) {
+        $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
+        return $nombre[0][0];
+      } 
 
 
 }

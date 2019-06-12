@@ -17,6 +17,10 @@ class PedidoController extends Controller{
     public function index(){
         $todosPedidos = $this->model->get();      
         $datos['todosPedidos'] = $todosPedidos;
+        $datos["diaHoy"] = date("Y-m-d");
+       $datos["sectores"] = $this->model->getSectores();
+       $datos["prioridades"] = $this->model->getPrioridades();
+       $datos["estados"] = $this->model->getEstados();
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/pedidos/pedidosVerTodos', compact('datos'));
     }
@@ -29,22 +33,14 @@ class PedidoController extends Controller{
         return view('/pedidos/pedidoVerFicha', compact('datos'));
     }
 
-    public function create()
-    {
-       $datos["diaHoy"] = date("Y-m-d");
-       $datos["sectores"] = $this->model->getSectores();
-       $datos["prioridades"] = $this->model->getPrioridades();
-       $datos["estados"] = $this->model->getEstados();
-       $datos["userLogueado"] = $_SESSION['user'];
-       return view('/pedidos/pedidoCrear',compact('datos'));
-    }
-
     public function guardar(){
+        $idSector = $this->model->getIdSectorPorNombre($_POST['sector']);
+        $datos['idSector']= $idSector;
         $pedido = [
             'fechaInicio' => $_POST['fechaInicio'],
             'estado' => $_POST['estado'],
             'descripcion' => $_POST['descripcion'],
-            'sector' => $_POST['sector'],
+            'idSector' => $idSector,
             'prioridad' => $_POST['prioridad'],
             'nombreUsuario' => $_POST['nombreUsuario']
         ];
@@ -52,6 +48,7 @@ class PedidoController extends Controller{
       $datos['arrayPedido'] = $pedido;
       $datos["userLogueado"] = $_SESSION['user'];
       $idNuevoPedido = $this->model->getIdUltimoPedido();
+      var_dump($idNuevoPedido);
       redirect("fichaPedido?id=".$idNuevoPedido);
     }
 
@@ -65,8 +62,7 @@ class PedidoController extends Controller{
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/pedidos/pedidoModificar',compact('datos'));
     }
-    
-     
+       
 
     public function verTareas(){
     $todasTareas = $this->model->getTareasByIdPedido($_GET['idPedido']);
@@ -81,11 +77,13 @@ class PedidoController extends Controller{
 
     public function modificar(){
         $idPedido = $_POST['id'];
+        $idSector = $this->model->getIdSectorPorNombre($_POST['sector']);
+        $datos['idSector']= $idSector;
          $arrayPedido = [
              'fechaInicio' => $_POST['fechaInicio'],
              'estado' => $_POST['estado'],
              'descripcion' => $_POST['descripcion'],
-             'sector' => $_POST['sector'],
+             'idSector' => $idSector,
              'prioridad' => $_POST['prioridad'],
          ];
          $this->model->updatePedido($arrayPedido,$idPedido);

@@ -4,7 +4,7 @@
 
 {% block header %}
 {% set nombreUsuario = datos.userLogueado %}
-{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %}
 
 {% block head %}
@@ -34,26 +34,23 @@
         <label for="sector">Sector</label>
         <select name="sector">
             {% for sector in datos.sectores %}
-            {% if sector == datos.miPedido.sector %}
-            <!--NO FUNCIONA, SEGURO EL TEMA DE LOS ESPACIOS-->
+            {% if sector == datos.miPedido.nombreSector %}
             <option value="{{ sector }}" selected>{{ sector }}</option>
             {% else %}
             <option value="{{ sector }}">{{ sector }}</option>
             {% endif %}
             {% endfor %}
         </select>
-    </fieldset>
-    <fieldset>
-        <legend>Prioridad<span class="asterisco">*</span></legend>
-        {% for prioridad in datos.prioridades %}
-        {% if prioridad == datos.miPedido.prioridad %}
-        <label class="labelRadioInput"><input type="radio" name="prioridad" class="radioInput" required checked
-                value="{{ prioridad }}">{{ prioridad }}</label>
-        {% else %}
-        <label class="labelRadioInput"><input type="radio" name="prioridad" class="radioInput" required
-                value="{{ prioridad }}">{{ prioridad }}</label>
-        {% endif %}
-        {% endfor %}
+        <label for="prioridad">Prioridad</label>
+        <select name="prioridad">
+            {% for prioridad in datos.prioridades %}
+            {% if prioridad == datos.miPedido.prioridad %}
+            <option value="{{ prioridad }}" selected>{{ prioridad }}</option>
+            {% else %}
+            <option value="{{ prioridad }}">{{ prioridad }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
     </fieldset>
     <input type="reset" value="Volver" onclick="history.back()">
     <input type="submit">

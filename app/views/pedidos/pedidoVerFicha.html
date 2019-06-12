@@ -4,7 +4,7 @@
 
 {% block header %}
 {% set nombreUsuario = datos.userLogueado %}
-{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %}
 
 {% block head %}
@@ -27,7 +27,7 @@
     <dt>Estado:</dt>
     <dd>{{ datos.miPedido.estado }}</dd>
     <dt>Sector:</dt>
-    <dd>{{ datos.miPedido.sector }}</dd>
+    <dd>{{ datos.miPedido.nombreSector }}</dd>
     <dt>Prioridad:</dt>
     <dd>{{ datos.miPedido.prioridad }}</dd>
 </dl>
