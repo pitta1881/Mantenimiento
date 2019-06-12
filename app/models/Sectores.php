@@ -17,6 +17,7 @@ class Sectores extends Model
 
    public function buscarSector($nombreSector){
        //comparo si existe el sector
+     
        return $this->db->comparaSectores($this->table,$nombreSector);
     }
 

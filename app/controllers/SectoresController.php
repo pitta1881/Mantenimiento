@@ -27,7 +27,9 @@ class SectoresController extends Controller{
         $datos['telefono'] = $_POST['telefono'];
         $datos['email'] = $_POST['email']; 
         $statement = $this->model->buscarSector($datos['nombreSector']);          
+       var_dump($statement);
         if (empty($statement)) {
+            
             $this->model->insert($datos); 
             return $this->vistaAdministracionSectores();
         }
