@@ -29,6 +29,10 @@ class TareaController extends Controller{
     }
 
     public function eliminar(){
+        $arrayAgentes = $this->model->getAgentesByIdId($_POST['idPedido'],$_POST['idTarea']);
+        foreach ($arrayAgentes as $key => $value) {
+            $this->model->desasignarAgente($_POST['idPedido'],$_POST['idTarea'],$arrayAgentes[$key]['idAgente']);
+        }
         $this->model->delete($_POST['idPedido'],$_POST['idTarea']);
         redirect("fichaPedido?id=".$_POST['idPedido']);
     }

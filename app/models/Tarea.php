@@ -108,5 +108,6 @@ class Tarea extends Model
 
     public function desasignarAgente($nPedido, $nTarea, $nAgente){
         $this->db->desasignarAgente($this->tableItemAgentes,$nPedido,$nTarea,$nAgente);
+        $this->cambiarEstadoAgente($nAgente,1);
     }
 }
