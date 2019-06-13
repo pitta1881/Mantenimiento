@@ -65,24 +65,31 @@ class TareaController extends Controller{
     }
 
     public function asignarAgentes(){
-        /*
-        $idOTCreada = $this->model->newOT();
         $i = 0;
-        foreach ($_POST as $idPedido => $idTarea) {
+        foreach ($_POST as $idPedido => $idTarea_Agente) {
             $idPedidoFinal = explode('_',$idPedido)[1];
-            $itemOT = [
-                'idOT' => $idOTCreada,
+            $idTareaFinal = explode('_',$idTarea_Agente)[0];
+            $idAgenteFinal = explode('_',$idTarea_Agente)[1];
+            $itemAgente = [
                 'idPedido' => $idPedidoFinal,
-                'idTarea' => $idTarea
+                'idTarea' => $idTareaFinal,
+                'idAgente' => $idAgenteFinal
             ];
-            $this->model->insertItemOT($itemOT);
-            $this->model->cambiarEstadoTarea($idPedidoFinal,$idTarea);
-            $datosItem[$i++] = $itemOT;
+            $this->model->insertItemAgente($itemAgente);
+            $this->model->cambiarEstadoAgente($idAgenteFinal);
+            $datosItem[$i++] = $itemAgente;
         }
-        $datos['itemOT'] = $datosItem;
+        $datos['itemAgente'] = $datosItem;
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('/ordendetrabajo/OTverItem',compact('datos'));
-        */
+        return view('/agentes/AgenteItemVerItem',compact('datos'));
     }
+
+        /*muestra un solo pedido especifico ingresado por GET*/
+        public function ficha(){
+            $miTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
+            $datos["miTarea"] = $miTarea;  
+            $datos["userLogueado"] = $_SESSION['user'];
+            return view('/tareas/tareaVerFicha', compact('datos'));
+        }
 
 }

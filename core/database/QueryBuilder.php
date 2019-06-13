@@ -477,4 +477,27 @@ public function selectSectorById($table, $nSector){
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
    }
+
+   public function updateEstadoAgente($tableAgente, $nAgente){
+    $statement = $this->pdo->prepare(
+        "UPDATE $tableAgente SET disponible=0 WHERE idAgente=$nAgente"
+    );
+    $statement->execute();
+    }
+
+    public function getAgentesAsignadosPorIdId($tableItemAgente,$idPedido,$idTarea){
+        $statement = $this->pdo->prepare(
+        "SELECT COUNT(idAgente) FROM $tableItemAgente WHERE idTarea=$idTarea AND idPedido=$idPedido"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function selectAgentesPorNPedidoNTarea($tableAgente, $tableItem, $nPedido, $nTarea){ 
+        $statement = $this->pdo->prepare(
+            "SELECT T1.idAgente,nombre,apellido,idEspecializacion FROM $tableItem T1 INNER JOIN $tableAgente T2 ON T1.idAgente=T2.idAgente WHERE idPedido=$nPedido AND idTarea=$nTarea"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 }

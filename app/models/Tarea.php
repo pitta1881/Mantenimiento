@@ -9,6 +9,7 @@ class Tarea extends Model
     protected $table = 'tarea';
     protected $tableEspecializacion='especializacion';
     protected $tableAgentes='agentes';
+    protected $tableItemAgentes='itemAgente';
 
     public function getEspecializaciones() {
         $array;
@@ -65,6 +66,7 @@ class Tarea extends Model
         $tarea = $this->db->selectTareaByIdId($this->table,$idPedido,$idTarea);
         $miTarea = json_decode(json_encode($tarea[0]), True);
         $miTarea['especializacionNombre']=$this->getNombreEspecializacionPorId($miTarea['idEspecializacion']);
+        $miTarea['agentes']=$this->getAgentesByIdId($miTarea['idPedido'],$miTarea['idTarea']);
         return $miTarea;
     }
 
@@ -85,5 +87,22 @@ class Tarea extends Model
             $misAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($misAgentes[$i]['idEspecializacion']);
           }
         return $misAgentes;
+    }
+
+    public function insertItemAgente($datos){
+        $this->db->insert($this->tableItemAgentes,$datos);
+    }
+
+    public function cambiarEstadoAgente($idAgente){
+        $this->db->updateEstadoAgente($this->tableAgentes,$idAgente);
+    }
+
+    public function getAgentesByIdId($idPedido, $idTarea){
+        $agentes = $this->db->selectAgentesPorNPedidoNTarea($this->tableAgentes,$this->tableItemAgentes,$idPedido,$idTarea);
+        $todosAgentes = json_decode(json_encode($agentes), True);
+        for ($i=0; $i < count($todosAgentes); $i++) { 
+            $todosAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todosAgentes[$i]['idEspecializacion']);
+          }
+          return $todosAgentes;
     }
 }

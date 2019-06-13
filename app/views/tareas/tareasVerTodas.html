@@ -52,6 +52,7 @@
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
+    <th>Agentes</th>
     <th>Accion</th>
     {% for tareas in datos.todasTareas %}
     <tr>
@@ -60,7 +61,11 @@
         <td>{{ tareas.especializacionNombre }}</td>
         <td>{{ tareas.prioridad }}</td>
         <td>{{ tareas.estado }}</td>
-        <td><a href="/tarea/modificar/seleccionado?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}"><input
+        <td>{{ tareas.agentesAsignados }}</td>
+        <td><a href='/fichaTarea?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}'>
+                <input type="button" value="VER MAS">
+            </a>
+            <a href="/tarea/modificar/seleccionado?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}"><input
                     type="button" value="Modificar"></a>
             <a href="/tarea/agentes/asignar?idPedido={{ datos.idPedido }}&idTarea={{ tareas.idTarea }}"><input
                     type="button" value="Asignar Agentes"></a>

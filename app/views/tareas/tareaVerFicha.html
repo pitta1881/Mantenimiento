@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<input type="button" value="IMPRIMIR" onclick="print()">
+<h1>Su Tarea</h1>
+<dl>
+    <dt>Nº Pedido:</dt>
+    <dd>{{ datos.miTarea.idPedido }}</dd>
+    <dt>Nº Tarea:</dt>
+    <dd>{{ datos.miTarea.idTarea }}</dd>
+    <dt>Especializacion:</dt>
+    <dd>{{ datos.miTarea.especializacionNombre }}</dd>
+    <dt>Descripcion:</dt>
+    <dd>{{ datos.miTarea.descripcion }}</dd>
+    <dt>Estado:</dt>
+    <dd>{{ datos.miTarea.estado }}</dd>
+    <dt>Prioridad:</dt>
+    <dd>{{ datos.miTarea.prioridad }}</dd>
+</dl>
+<h2>AGENTES</h2>
+<table>
+    <th>Nº Agente</th>
+    <th>Nombre</th>
+    <th>Apellido</th>
+    <th>Especializacion</th>
+    {% for agente in datos.miTarea.agentes %}
+    <tr>
+        <td>{{ agente.idAgente }}</td>
+        <td>{{ agente.nombre }}</td>
+        <td>{{ agente.apellido }}</td>
+        <td>{{ agente.especializacionNombre }}</td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Agentes asignados aún</h2>
+    {% endfor %}
+</table>
+{% endblock %}
