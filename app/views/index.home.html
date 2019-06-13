@@ -35,8 +35,9 @@
         {% set i = 1 %}
         {% for tarea in datos.tareasSinAsignar %}
         <tr>
-            <td>{{ tarea.idPedido }}</td>
-            <td>{{ tarea.idTarea }}</td>
+            <td> <a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido {{ tarea.idPedido }}</a></td>
+            <td> <a href="/fichaTarea?idPedido={{ tarea.idPedido }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
+                    {{ tarea.idTarea }}</a></td>
             <td>{{ tarea.descripcion }}</td>
             <td>{{ tarea.especializacionNombre }}</td>
             <td>{{ tarea.prioridad }}</td>

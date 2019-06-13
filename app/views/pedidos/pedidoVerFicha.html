@@ -32,19 +32,77 @@
     <dd>{{ datos.miPedido.prioridad }}</dd>
 </dl>
 <h2>TAREAS</h2>
+<input type="button" value="CREAR NUEVA TAREA" onclick="mostrarFormulario()">
+<script>
+    function mostrarFormulario() {
+        var formularioTarea = document.getElementById('formularioTarea');
+        if (formularioTarea.style.display == "block") {
+            formularioTarea.style.display = "none";
+        } else {
+            formularioTarea.style.display = "block"
+        }
+    }
+</script>
+<form action="tarea/guardar" method="post" id="formularioTarea" style="display: none">
+    <label for="idPedido">Pedido</label>
+    <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" readonly class="inputDisabled">
+    <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+    <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+    <label for="especializacion">Especializacion</label><span class="asterisco">*</span>
+    <select name="especializacion">
+        {% for especializacion in datos.especializaciones %}
+        <option value="{{ especializacion }}">{{ especializacion }}</option>
+        {% endfor %}
+    </select>
+    <label for="prioridad">Prioridad</label><span class="asterisco">*</span>
+    <select name="prioridad">
+        {% for prioridad in datos.prioridades %}
+        <option value="{{ prioridad }}">{{ prioridad }}</option>
+        {% endfor %}
+    </select>
+    <label for="estado">Estado</label>
+    <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
+    <input type="submit" value="Crear Tarea">
+</form>
 <table>
     <th>Nº Tarea</th>
     <th>Descripcion</th>
     <th>Especializacion</th>
     <th>Prioridad</th>
     <th>Estado</th>
-    {% for tareas in datos.miPedido.tareas %}
+    <th>Agentes</th>
+    <th>Accion</th>
+    {% for tarea in datos.miPedido.tareas %}
     <tr>
-        <td>{{ tareas.idTarea }}</td>
-        <td>{{ tareas.descripcion }}</td>
-        <td>{{ tareas.especializacionNombre }}</td>
-        <td>{{ tareas.prioridad }}</td>
-        <td>{{ tareas.estado }}</td>
+        <td><a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
+                {{ tarea.idTarea }}</a></td>
+        <td>{{ tarea.descripcion }}</td>
+        <td>{{ tarea.especializacionNombre }}</td>
+        <td>{{ tarea.prioridad }}</td>
+        <td>{{ tarea.estado }}</td>
+        <td>{{ tarea.agentesAsignados }}</td>
+        <td>
+            <a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> <input
+                    type="button" value="VER MAS"></a>
+            <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
+                    type="button" value="Modificar"></a>
+            <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
+                    type="button" value="Asignar Agentes"></a>
+            <a href="#"><input type="button" value="Ver Insumos"></a>
+            {% if tarea.estado == 'Iniciado' %}
+            <form action="/pedido/tarea/eliminar" method="post">
+                <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
+                <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
+                <input type="button" value="Eliminar" id="btnEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
+                    onclick="document.getElementById('eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('btnEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none'">
+                <input type="submit" value="Si" id="eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
+                    style="display: none">
+                <input type="reset" value="No" id="eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
+                    style="display: none"
+                    onclick="document.getElementById('eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('btnEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block'">
+            </form>
+            {% endif %}
+        </td>
     </tr>
     {% else %}
     <h2 class='error'>No hay Tareas asignadas aún</h2>

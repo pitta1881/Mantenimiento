@@ -28,7 +28,11 @@ class PedidoController extends Controller{
     /*muestra un solo pedido especifico ingresado por GET*/
     public function ficha(){
         $miPedido = $this->model->getByIdPedido($_GET['id']);
+        $todasTareas = $this->model->getTareasByIdPedido($_GET['id']);
         $datos["miPedido"] = $miPedido;  
+        $datos["prioridades"] = $this->model->getPrioridades();
+        $datos["estados"] = $this->model->getEstados();
+        $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/pedidos/pedidoVerFicha', compact('datos'));
     }

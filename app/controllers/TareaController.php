@@ -24,12 +24,13 @@ class TareaController extends Controller{
             'idEspecializacion' => $idEspecializacion
         ];
         $this->model->insert($tarea);
-        redirect("pedido/verTareas?idPedido=".$tarea['idPedido']);
+        //redirect("pedido/verTareas?idPedido=".$tarea['idPedido']);
+        redirect("fichaPedido?id=".$tarea['idPedido']);
     }
 
     public function eliminar(){
         $this->model->delete($_POST['idPedido'],$_POST['idTarea']);
-        redirect("pedido/verTareas?idPedido=".$_POST['idPedido']);
+        redirect("fichaPedido?id=".$_POST['idPedido']);
     }
 
     public function modificarTareaSeleccionada(){
@@ -81,7 +82,7 @@ class TareaController extends Controller{
         }
         $datos['itemAgente'] = $datosItem;
         $datos["userLogueado"] = $_SESSION['user'];
-        return view('/agentes/AgenteItemVerItem',compact('datos'));
+        redirect("fichaTarea?idPedido=".$idPedidoFinal."&idTarea=".$idTareaFinal);
     }
 
         /*muestra un solo pedido especifico ingresado por GET*/
