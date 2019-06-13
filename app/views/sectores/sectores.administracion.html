@@ -64,6 +64,7 @@
             <a href='/sectores/modificar/seleccionado?idSector={{ sector.idSector }}'>
                 <input type="button" value="MODIFICAR">
             </a>
+            {% if sector.usado == false %}
             <form action="/sectores/eliminar" method="post">
                 <input type="text" name="idSector" value="{{ sector.idSector }}" hidden>
                 <input type="button" value="Eliminar" id="btnEliminar{{ sector.idSector }}"
@@ -72,6 +73,7 @@
                 <input type="reset" value="No" id="eliminarNo{{ sector.idSector }}" style="display: none"
                     onclick="document.getElementById('eliminarSi{{ sector.idSector }}').style.display='none';document.getElementById('eliminarNo{{ sector.idSector }}').style.display='none';document.getElementById('btnEliminar{{ sector.idSector }}').style.display='inline-block'">
             </form>
+            {% endif %}
         </td>
     </tr>
     {% else %}

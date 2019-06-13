@@ -6,13 +6,24 @@ use App\Core\Model;
 
 class Especializacion extends Model
 {
-    protected $table ='especializacion';
+  protected $tableTarea = 'tarea';
+  protected $table='especializacion';
+  protected $tableAgentes='agentes';
 
 
    public function get()
     {
         $especializaciones = $this->db->selectAll($this->table);
         $todasEspecializaciones = json_decode(json_encode($especializaciones), True);
+        foreach ($todasEspecializaciones as $indice => $datos) {
+          $yaEstaUsado = [];
+          $yaEstaUsado = $this->db->getFromTareaAgenteConIdEspecializacion($this->tableTarea,$this->tableAgentes,$todasEspecializaciones[$indice]['idEspecializacion']);
+          if(empty($yaEstaUsado)){
+              $todasEspecializaciones[$indice]['usado'] = false;
+          } else{
+              $todasEspecializaciones[$indice]['usado'] = true;
+          }
+      }
         return $todasEspecializaciones;
     }
 
@@ -37,15 +48,8 @@ class Especializacion extends Model
     }
 
     public function delete($nEspecializacion){
-      //habria que verificar que la Especializacion no este asignado a una tarea o un agente
       $this->db->deleteEspecializacion($this->table,$nEspecializacion);
     }  
-    /* public function insertEspecialidades(array $especialidades)
-    {       
-         for ($i=0;$i<count($especialidades);$i++) 
-      	{ 
-      $this->db->insert($this->tableEspecializacion, $especialidades);
-    }*/
 
        
 }

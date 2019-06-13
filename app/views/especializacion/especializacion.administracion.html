@@ -44,6 +44,7 @@
             <a href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
                 <input type="button" value="MODIFICAR">
             </a>
+            {% if especializacion.usado == false %}
             <form action="/especializacion/eliminar" method="post">
                 <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
                 <input type="button" value="Eliminar" id="btnEliminar{{ especializacion.idEspecializacion }}"
@@ -54,6 +55,7 @@
                     style="display: none"
                     onclick="document.getElementById('eliminarSi{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('eliminarNo{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('btnEliminar{{ especializacion.idEspecializacion }}').style.display='inline-block'">
             </form>
+            {% endif %}
         </td>
     </tr>
     {% else %}

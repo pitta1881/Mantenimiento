@@ -61,6 +61,7 @@
             <a href='/agente/modificar/seleccionado?idAgente={{ agente.idAgente }}'>
                 <input type="button" value="MODIFICAR">
             </a>
+            {% if agente.usado == false %}
             <form action="/agente/eliminar" method="post">
                 <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
                 <input type="button" value="Eliminar" id="btnEliminar{{ agente.idAgente }}"
@@ -69,6 +70,7 @@
                 <input type="reset" value="No" id="eliminarNo{{ agente.idAgente }}" style="display: none"
                     onclick="document.getElementById('eliminarSi{{ agente.idAgente }}').style.display='none';document.getElementById('eliminarNo{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ agente.idAgente }}').style.display='inline-block'">
             </form>
+            {% endif %}
         </td>
     </tr>
     {% else %}

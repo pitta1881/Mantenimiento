@@ -564,6 +564,30 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    
+    public function getFromPedidoConIdSector($tablePedido,$nSector){ 
+        $statement = $this->pdo->prepare(
+           "SELECT id FROM $tablePedido WHERE idSector=$nSector"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function getFromItemAgenteConIdAgente($tableItemAgente,$nAgente){ 
+        $statement = $this->pdo->prepare(
+           "SELECT idPedido FROM $tableItemAgente WHERE idAgente=$nAgente"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function getFromTareaAgenteConIdEspecializacion($tableTarea,$tableAgente,$nEspecializacion){ 
+        $statement = $this->pdo->prepare(
+           "SELECT idAgente,idTarea FROM $tableTarea T1 JOIN $tableAgente T2 WHERE T1.idEspecializacion=$nEspecializacion OR T2.idEspecializacion=$nEspecializacion"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 
 
 

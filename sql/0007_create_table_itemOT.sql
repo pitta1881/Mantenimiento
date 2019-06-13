@@ -5,7 +5,6 @@ CREATE TABLE itemOT
     idPedido integer,
     idOT integer,
     PRIMARY KEY (idTarea,idPedido,idOT),
-    FOREIGN KEY (idTarea) REFERENCES tarea(idTarea),
-    FOREIGN KEY (idPedido) REFERENCES pedido(id),
+    FOREIGN KEY (idTarea,idPedido) REFERENCES tarea(idTarea,idPedido),
     FOREIGN KEY (idOT) REFERENCES OrdenDeTrabajo(idOT)
 ) ;

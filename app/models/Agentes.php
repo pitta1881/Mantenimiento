@@ -8,6 +8,7 @@ class Agentes extends Model
 {
     protected $table = 'agentes';
     protected $tableEspecializacion='especializacion';
+    protected $tableItemAgentes='itemAgente';
 
     public function getEspecializaciones() {
       $array;
@@ -26,6 +27,13 @@ class Agentes extends Model
         $todosAgentes = json_decode(json_encode($agentes), True);
         for ($i=0; $i < count($todosAgentes); $i++) { 
           $todosAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todosAgentes[$i]['idEspecializacion']);
+          $yaEstaUsado = [];
+          $yaEstaUsado = $this->db->getFromItemAgenteConIdAgente($this->tableItemAgentes,$todosAgentes[$i]['idAgente']);
+          if(empty($yaEstaUsado)){
+            $todosAgentes[$i]['usado'] = false;
+        } else{
+            $todosAgentes[$i]['usado'] = true;
+        }
         }
         return $todosAgentes;
     }

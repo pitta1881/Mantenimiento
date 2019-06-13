@@ -7,11 +7,21 @@ use App\Core\Model;
 class Sectores extends Model
 {
     protected $table = 'sectores';
+    protected $tablePedido = 'pedido';
     
     public function get()
     {
         $sectores = $this->db->selectAll($this->table);
         $todosSectores = json_decode(json_encode($sectores), True);
+        foreach ($todosSectores as $indice => $datos) {
+            $yaEstaUsado = [];
+            $yaEstaUsado = $this->db->getFromPedidoConIdSector($this->tablePedido,$todosSectores[$indice]['idSector']);
+            if(empty($yaEstaUsado)){
+                $todosSectores[$indice]['usado'] = false;
+            } else{
+                $todosSectores[$indice]['usado'] = true;
+            }
+        }
         return $todosSectores;
     }
 
