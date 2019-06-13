@@ -46,4 +46,11 @@ class OTController extends Controller{
         return view('/ordendetrabajo/OTverItem',compact('datos'));
     }
 
+    public function ficha(){
+        //$miOT = $this->model->getByIdOT($_GET['idOT']);
+        $datos["miOT"] = $miOT;  
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/ordendetrabajo/otVerFicha', compact('datos'));
+    }
+
 }

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<input type="button" value="IMPRIMIR" onclick="print()">
+<h1>Su Orden de Trabajo</h1>
+<dl>
+    <dt>Nº OT:</dt>
+    <dd>{{ datos.miOT.idOT }}</dd>
+    <dt>Nº OT:</dt>
+    <dd>{{ datos.miOT.fechaInicio }}</dd>
+    <dt>Nº OT:</dt>
+    <dd>{{ datos.miOT.fechaInicio }}</dd>
+    <dt>Estado:</dt>
+    <dd>{{ datos.miOT.estado }}</dd>
+</dl>
+<h2>TAREAS</h2>
+<table>
+    <th>Nº Tarea</th>
+    <th>Descripcion</th>
+    <th>Especializacion</th>
+    <th>Prioridad</th>
+    <th>Estado</th>
+    {% for tarea in datos.miOT.tareas %}
+    <tr>
+        <td>{{ tarea.idTarea }}</td>
+        <td>{{ tarea.descripcion }}</td>
+        <td>{{ tarea.especializacionNombre }}</td>
+        <td>{{ tarea.prioridad }}</td>
+        <td>{{ tarea.estado }}</td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Tareas asignadas aún</h2>
+    {% endfor %}
+</table>
+{% endblock %}

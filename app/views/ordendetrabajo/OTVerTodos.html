@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %}Lista de OTs{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %} {% endblock %} {% block head %} {{ parent() }}
+{% extends "base.html" %} {% block title %}Lista de OTs{% endblock %} {% block header %}
+{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <h1>Listado de Ordenes de Trabajo</h1>
 <a href="/ot/crear">
@@ -33,8 +35,8 @@
         <td>{{ OT.estado }}</td>
         <td>{{ OT.cantTareas }}</td>
         <td>
-            <a href='/OT/verTareas?idOT={{ OT.id }}'>
-                <input type="button" value="VER TAREAS">
+            <a href='/fichaOT?idOT={{ OT.idOT }}'>
+                <input type="button" value="VER MAS">
             </a>
         </td>
     </tr>
