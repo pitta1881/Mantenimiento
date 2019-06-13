@@ -93,8 +93,8 @@ class Tarea extends Model
         $this->db->insert($this->tableItemAgentes,$datos);
     }
 
-    public function cambiarEstadoAgente($idAgente){
-        $this->db->updateEstadoAgente($this->tableAgentes,$idAgente);
+    public function cambiarEstadoAgente($idAgente,$estado){
+        $this->db->updateEstadoAgente($this->tableAgentes,$idAgente,$estado);
     }
 
     public function getAgentesByIdId($idPedido, $idTarea){
@@ -104,5 +104,9 @@ class Tarea extends Model
             $todosAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todosAgentes[$i]['idEspecializacion']);
           }
           return $todosAgentes;
+    }
+
+    public function desasignarAgente($nPedido, $nTarea, $nAgente){
+        $this->db->desasignarAgente($this->tableItemAgentes,$nPedido,$nTarea,$nAgente);
     }
 }

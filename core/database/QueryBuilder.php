@@ -478,9 +478,9 @@ public function selectSectorById($table, $nSector){
         return $statement->fetchAll(PDO::FETCH_CLASS);
    }
 
-   public function updateEstadoAgente($tableAgente, $nAgente){
+   public function updateEstadoAgente($tableAgente, $nAgente, $estado){
     $statement = $this->pdo->prepare(
-        "UPDATE $tableAgente SET disponible=0 WHERE idAgente=$nAgente"
+        "UPDATE $tableAgente SET disponible=$estado WHERE idAgente=$nAgente"
     );
     $statement->execute();
     }
@@ -499,5 +499,12 @@ public function selectSectorById($table, $nSector){
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function desasignarAgente($tableItemAgentes,$idPedido,$idTarea,$idAgente){
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $tableItemAgentes  WHERE idPedido = $idPedido AND idTarea = $idTarea AND idAgente=$idAgente"
+        );
+        $statement->execute();
     }
 }

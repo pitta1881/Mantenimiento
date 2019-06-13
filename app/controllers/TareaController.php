@@ -76,7 +76,7 @@ class TareaController extends Controller{
                 'idAgente' => $idAgenteFinal
             ];
             $this->model->insertItemAgente($itemAgente);
-            $this->model->cambiarEstadoAgente($idAgenteFinal);
+            $this->model->cambiarEstadoAgente($idAgenteFinal,0);
             $datosItem[$i++] = $itemAgente;
         }
         $datos['itemAgente'] = $datosItem;
@@ -90,6 +90,12 @@ class TareaController extends Controller{
             $datos["miTarea"] = $miTarea;  
             $datos["userLogueado"] = $_SESSION['user'];
             return view('/tareas/tareaVerFicha', compact('datos'));
+        }
+
+        public function desasignarAgente(){
+            $this->model->desasignarAgente($_POST['idPedido'],$_POST['idTarea'],$_POST['idAgente']);
+            $this->model->cambiarEstadoAgente($_POST['idAgente'],1);
+            redirect("fichaTarea?idPedido=".$_POST['idPedido']."&idTarea=".$_POST['idTarea']);
         }
 
 }

@@ -35,12 +35,30 @@
     <th>Nombre</th>
     <th>Apellido</th>
     <th>Especializacion</th>
+    <th>Accion</th>
     {% for agente in datos.miTarea.agentes %}
     <tr>
         <td>{{ agente.idAgente }}</td>
         <td>{{ agente.nombre }}</td>
         <td>{{ agente.apellido }}</td>
         <td>{{ agente.especializacionNombre }}</td>
+        <td>
+            <form action="/tarea/agentes/desasignar" method="post">
+                <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
+                <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+                <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
+                <input type="button" value="Desasignar Agente"
+                    id="btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
+                    onclick="document.getElementById('eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none'">
+                <input type="submit" value="Si"
+                    id="eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
+                    style="display: none">
+                <input type="reset" value="No"
+                    id="eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
+                    style="display: none"
+                    onclick="document.getElementById('eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block'">
+            </form>
+        </td>
     </tr>
     {% else %}
     <h2 class='error'>No hay Agentes asignados aún</h2>
