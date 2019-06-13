@@ -1,192 +1,83 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %} 
-{% block header %} 
-    {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %} 
+{% block title %}Home{% endblock %}
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} 
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
-{% block main %} 
+{% block main %}
 
 {% include 'partials/nav1.html' %}
 
-<!--
-<nav class="main-menu">
-    <ul>
-        <li>
-            <a href="http://justinfarrow.com"><i class="fa fa-home fa-2x"></i><span class="nav-text">Dashboard</span></a>
-        </li>
-        <li class="has-subnav">
-            <a href="#">
-                <i class="fa fa-laptop fa-2x"></i>
-                <span class="nav-text">
-                            Stars Components
-                        </span>
-            </a>
-
-        </li>
-        <li class="has-subnav">
-            <a href="#">
-                <i class="fa fa-list fa-2x"></i>
-                <span class="nav-text">
-                            Forms
-                        </span>
-            </a>
-
-        </li>
-        <li class="has-subnav">
-            <a href="#">
-                <i class="fa fa-folder-open fa-2x"></i>
-                <span class="nav-text">
-                            Pages
-                        </span>
-            </a>
-
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-bar-chart-o fa-2x"></i>
-                <span class="nav-text">
-                            Graphs and Statistics
-                        </span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-font fa-2x"></i>
-                <span class="nav-text">
-                           Quotes
-                        </span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-table fa-2x"></i>
-                <span class="nav-text">
-                            Tables
-                        </span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-map-marker fa-2x"></i>
-                <span class="nav-text">
-                            Maps
-                        </span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-info fa-2x"></i>
-                <span class="nav-text">
-                            Documentation
-                        </span>
-            </a>
-        </li>
-    </ul>
-
-    <ul class="logout">
-        <li>
-            <a href="#">
-                <i class="fa fa-power-off fa-2x"></i>
-                <span class="nav-text">
-                            Logout
-                        </span>
-            </a>
-        </li>
-    </ul>
-</nav>
-
-
-<!--<nav class="Otros">
-    <ul>
-        <li><a href="/pedido/verTodos">Pedidos</a></li>
-        <li><a href="/OT/verTodos">Ordenes de Trabajo</a></li>
-        <li><a href="/OT/verTodos">Actividades</a></li>
-        <li><a href="/OT/verTodos">Tareas</a></li>
-        <li><a href="/usuario/gestionUsuario">Usuarios</a></li>
-        <li><a href="/agente/administracionAgentes">Agentes</a></li>
-        <li><a href="/OT/verTodos">Especialidades</a></li>
-        <li><a href="/OT/verTodos">Sectores</a></li>
-        <li><a href="/OT/verTodos">Informes</a></li>
-        <li><a href="/pedido/verTodos">Insumos</a></li>
-        <li><a href="/OT/verTodos">Ordenes de Compra</a></li>
-    </ul>
-</nav>-->
 <ul class="contenido">
-
     <li>
-        <h4>Pedidos Activos:{{ datos.cantidadPedidos}} </h4>
-
+        <h4>Pedidos Activos:{{ datos.cantidadPedidos }} </h4>
     </li>
     <li>
-        <h4>Tareas sin Asignar:{{ datos.tareasSinAsignar}}</h4>
-
+        <h4>Tareas sin Asignar:{{ datos.cantTareasSinAsignar }}</h4>
     </li>
     <li>
-        <h4>Agentes Disponibles: {{ datos.agentesDisponibles}}</h4>
-
+        <h4>Agentes Disponibles: {{ datos.agentesDisponibles }}</h4>
     </li>
     <li>
-        <h4>Ordenes de Trabajo Activas:{{ datos.otActivas}} </h4>
-
+        <h4>Ordenes de Trabajo Activas:{{ datos.otActivas }} </h4>
     </li>
-
 </ul>
 
 <div class="contenido1">
-    <h4>Especialidades mas frecuentes</h4>
-
+    <h4>Tareas sin Asignar</h4>
+    <table>
+        <th>Nº Pedido</th>
+        <th>Nº Tarea</th>
+        <th>Descripcion</th>
+        <th>Especializacion</th>
+        <th>Prioridad</th>
+        {% set i = 1 %}
+        {% for tarea in datos.tareasSinAsignar %}
+        <tr>
+            <td>{{ tarea.idPedido }}</td>
+            <td>{{ tarea.idTarea }}</td>
+            <td>{{ tarea.descripcion }}</td>
+            <td>{{ tarea.especializacionNombre }}</td>
+            <td>{{ tarea.prioridad }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% if datos.tareasSinAsignar|length == 0 %}
+    <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
+    {% endif %}
 </div>
 
 <div class="contenido2">
     <h4>Proximos Eventos</h4>
- 
-
-<table>
-    <th>Nº Evento</th>
-    <th>Nombre</th>
-    <th>Descripcion</th>
-    <th>Fecha Inicio</th>
-    <th>Fecha Fin</th>
-    
-    {% for evento in datos.todosEventos %}
- 
-  {% if evento.fechaInicio == "now"|date("Y/m/d") %}
-  
-   <tr  >
-   
-
-        <td style="background-color:yellow">{{ evento.idEvento }}</td>
-        <td style="background-color:yellow" >{{ evento.nombreEvento }}</td>
-        <td style="background-color:yellow" >{{ evento.descripcion }}</td>
-        <td style="background-color:yellow">{{ evento.fechaInicio }}</td>
-        <td style="background-color:yellow">{{ evento.fechaFin }}</td>
-                 
-    </tr>
-    {% else %}
-    <tr  >
-   
-
-        <td >{{ evento.idEvento }}</td>
-        <td >{{ evento.nombreEvento }}</td>
-        <td  >{{ evento.descripcion }}</td>
-        <td >{{ evento.fechaInicio }}</td>
-        <td >{{ evento.fechaFin }}</td>
-                 
-    </tr>
-    
-    {%endif%}
-    {% else %}
-    <h2 class='error'>No hay eventos</h2> 
-    {% endfor %}
-</table>
-
-
-
-
-
+    <table>
+        <th>Nº Evento</th>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        {% for evento in datos.todosEventos %}
+        {% if evento.fechaInicio == "now"|date("d/m/Y") %}
+        <tr>
+            <td style="background-color:lightgreen">{{ evento.idEvento }} <a href="/pedido/verTodos"><input
+                        type="button" value="Crear Pedido"></a> </td>
+            <td style="background-color:lightgreen">{{ evento.nombreEvento }}</td>
+            <td style="background-color:lightgreen">{{ evento.descripcion }}</td>
+            <td style="background-color:lightgreen">{{ evento.fechaInicio }}</td>
+            <td style="background-color:lightgreen">{{ evento.fechaFin }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td>{{ evento.idEvento }}</td>
+            <td>{{ evento.nombreEvento }}</td>
+            <td>{{ evento.descripcion }}</td>
+            <td>{{ evento.fechaInicio }}</td>
+            <td>{{ evento.fechaFin }}</td>
+        </tr>
+        {% endif %}
+        {% else %}
+        <h2 class='error'>No hay eventos</h2>
+        {% endfor %}
+    </table>
 </div>
-
-
-
 {% endblock %}

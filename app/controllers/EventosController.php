@@ -16,6 +16,7 @@ class EventosController extends Controller{
     public function vistaAdministracionEventos(){
         $todosEventos = $this->model->get();      
         $datos['todosEventos'] = $todosEventos;
+        $datos["diaHoy"] = date("Y-m-d");
         $datos["userLogueado"] = $_SESSION['user'];
   
         return view('/eventos/administracionEventos', compact('datos'));
@@ -35,7 +36,6 @@ $newDate2 = date("d/m/Y", strtotime($originalDate2));*/
         $datos['descripcion'] = $_POST['descripcion'];
         $datos['fechaInicio'] = $_POST['fechaInicio'];
         $datos['fechaFin'] =  $_POST['fechaFin'];
-        var_dump($datos);
         $statement = $this->model->buscarEvento($datos['nombreEvento']);        
        
         if (empty($statement)) {

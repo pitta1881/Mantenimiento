@@ -1,39 +1,39 @@
 {% extends "base.html" %} {% block title %}Gestion de Eventos{% endblock %} {% block header %}
 {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} 
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 {% block main %}
 <input type="button" value="CREAR NUEVO EVENTO" onclick="mostrarFormulario()">
 <script>
     function mostrarFormulario() {
         var formularioEventos = document.getElementById('formularioEventos');
-        if (formularioEventos .style.display == "block") {
-            formularioEventos .style.display = "none";
+        if (formularioEventos.style.display == "block") {
+            formularioEventos.style.display = "none";
         } else {
-            formularioEventos .style.display = "block"
+            formularioEventos.style.display = "block"
         }
     }
 </script>
 <form action="/eventos/administracionEventos/guardarEvento" method="post" id="formularioEventos" style="display: none">
     <fieldset class="basicosPedido">
         <legend> Alta de Evento</legend>
-        
-        <label for="nombreEvento">Nombre del Evento</label>
+
+        <label for="nombreEvento">Nombre del Evento</label><span class="asterisco">*</span>
         <input type="text" name="nombreEvento" autofocus>
-        
+
         <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
         <input type="textArea" name="descripcion" required placeholder="Ingrese la descripcion.."><br>
-       
-         <label for="fechaInicio">Fecha Inicio</label><span class="asterisco"></span>
-        <input type="date" name="fechaInicio"><br>
-        
-        <label for="fechaFin">Fecha Fin</label><span class="asterisco"></span>
-        <input type="date" name="fechaFin"><br>
+
+        <label for="fechaInicio">Fecha Inicio</label><span class="asterisco">*</span>
+        <input type="date" name="fechaInicio" value="{{ datos.diaHoy }}" min="{{ datos.diaHoy }}" required><br>
+
+        <label for="fechaFin">Fecha Fin</label><span class="asterisco">*</span>
+        <input type="date" name="fechaFin" min="{{ datos.diaHoy }}" required><br>
     </fieldset>
     <input type="submit">
 </form>
 
-   <table>
+<table>
     <th>Nº Evento</th>
     <th>Nombre</th>
     <th>Descripcion</th>
@@ -47,7 +47,7 @@
         <td>{{ evento.descripcion }}</td>
         <td>{{ evento.fechaInicio }}</td>
         <td>{{ evento.fechaFin }}</td>
-                   <td>
+        <td>
             <a href='/eventos/modificar/seleccionado?idEvento={{ evento.idEvento }}'>
                 <input type="button" value="MODIFICAR">
             </a>
@@ -63,5 +63,5 @@
     </tr>
     {% else %}
     <h2 class='error'>No hay eventos</h2> {% endfor %}
-</table> 
+</table>
 {% endblock %}

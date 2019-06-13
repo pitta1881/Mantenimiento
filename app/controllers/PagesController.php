@@ -19,17 +19,21 @@ class PagesController extends Controller{
             redirect("");
         } else {
          $datos['cantidadPedidos'] = $this->model->getActivos('pedido','id');
-         $datos['tareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
+         $datos['cantTareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
          $datos['agentesDisponibles'] = $this->model->getAgentesDisponibles('agentes');
          $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
          $datos['userLogueado'] = $_SESSION['user'];
         
-            
-            //tabla de eventos en home
-            $todosEventos = $this->model->get();
-            $datos['todosEventos']=$todosEventos;
+        //tabla de eventos en home
+        $todosEventos = $this->model->get();
+        $datos['todosEventos']=$todosEventos;
+
+        //tabla tareas sin asignar en home
+        $tareasSinAsignar = $this->model->getTareasSinAsignar();
+        $datos['tareasSinAsignar'] = $tareasSinAsignar;
         
-            return view ('index.home',compact('datos'));
+        
+        return view ('index.home',compact('datos'));
         }
     }
 

@@ -10,10 +10,18 @@ class Eventos extends Model
     
     public function get()
     {
-        $eventos = $this->db->selectAll($this->table);
-      
+        $eventos = $this->db->selectAll($this->table);      
         $todosEventos = json_decode(json_encode($eventos), True);
-        
+        foreach ($todosEventos as $indice => $datos) {
+            foreach ($datos as $key => $value) {
+                if ($key == 'fechaInicio') {
+                    $todosEventos[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todosEventos[$indice]['fechaInicio']));
+                }
+                if ($key == 'fechaFin') {
+                    $todosEventos[$indice]['fechaFin'] = date("d/m/Y", strtotime($todosEventos[$indice]['fechaFin']));
+                }
+            }
+        }          
         return $todosEventos;
     }
 
