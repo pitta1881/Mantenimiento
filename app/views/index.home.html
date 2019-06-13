@@ -140,6 +140,50 @@
 
 <div class="contenido2">
     <h4>Proximos Eventos</h4>
+ 
+
+<table>
+    <th>Nº Evento</th>
+    <th>Nombre</th>
+    <th>Descripcion</th>
+    <th>Fecha Inicio</th>
+    <th>Fecha Fin</th>
+    
+    {% for evento in datos.todosEventos %}
+ 
+  {% if evento.fechaInicio == "now"|date("Y/m/d") %}
+  
+   <tr  >
+   
+
+        <td style="background-color:yellow">{{ evento.idEvento }}</td>
+        <td style="background-color:yellow" >{{ evento.nombreEvento }}</td>
+        <td style="background-color:yellow" >{{ evento.descripcion }}</td>
+        <td style="background-color:yellow">{{ evento.fechaInicio }}</td>
+        <td style="background-color:yellow">{{ evento.fechaFin }}</td>
+                 
+    </tr>
+    {% else %}
+    <tr  >
+   
+
+        <td >{{ evento.idEvento }}</td>
+        <td >{{ evento.nombreEvento }}</td>
+        <td  >{{ evento.descripcion }}</td>
+        <td >{{ evento.fechaInicio }}</td>
+        <td >{{ evento.fechaFin }}</td>
+                 
+    </tr>
+    
+    {%endif%}
+    {% else %}
+    <h2 class='error'>No hay eventos</h2> 
+    {% endfor %}
+</table>
+
+
+
+
 
 </div>
 

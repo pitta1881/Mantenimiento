@@ -23,7 +23,13 @@ class PagesController extends Controller{
          $datos['agentesDisponibles'] = $this->model->getAgentesDisponibles('agentes');
          $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
          $datos['userLogueado'] = $_SESSION['user'];
-         return view ('index.home',compact('datos'));
+        
+            
+            //tabla de eventos en home
+            $todosEventos = $this->model->get();
+            $datos['todosEventos']=$todosEventos;
+        
+            return view ('index.home',compact('datos'));
         }
     }
 
@@ -37,4 +43,7 @@ class PagesController extends Controller{
         session_destroy();
         redirect('');
     }
+
+
+
 }

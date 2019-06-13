@@ -89,6 +89,12 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
     $router->post('sectores/administracionSectores/modificarSector', 'SectoresController@update');
     $router->post('sectores/eliminar', 'SectoresController@delete');
 
+//rutas Eventos
+    $router->get('eventos/administracionEventos', 'EventosController@vistaAdministracionEventos');
+    $router->post('eventos/administracionEventos/guardarEvento', 'EventosController@guardarEvento');
+    $router->get('eventos/modificar/seleccionado', 'EventosController@vistaModificar');
+    $router->post('eventos/administracionEventos/modificarEvento', 'EventosController@update');
+    $router->post('eventos/eliminar', 'EventosController@delete');
 
 
 

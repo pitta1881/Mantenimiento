@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Alta de Insumo{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<h1>Modificar Evento</h1>
+<form action="/eventos/administracionEventos/modificarEvento" method="POST">
+    <fieldset class="basicosPedidos">
+        <legend> Modificar Eventos</legend>
+        <label for="idEvento">Numero de Evento</label>
+        <input type="text" name="idEvento" value="{{ datos.evento.idEvento }}" readonly class="inputDisabled">
+        <label for="nombreEvento">Nombre del Evento</label>
+        <input type="text" name="nombreEvento" value="{{ datos.evento.nombreEvento }}">
+        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+        <input type="textarea" name="descripcion" autofocus required value="{{ datos.evento.descripcion }}"><br>
+      <label for="fechaInicio">Fecha Inicio</label><span class="asterisco">*</span>
+        <input type="date" name="fechaInicio" autofocus required value="{{ datos.evento.fechaInicio }}"><br>
+        
+        <label for="fechaFin">Fecha Fin</label><span class="asterisco">*</span>
+        <input type="date" name="fechaFin" autofocus required value="{{ datos.evento.fechaFin }}"><br>
+    
+    
+    </fieldset>
+    <input type="reset" value="Volver" onclick="history.back()">
+    <input type="submit">
+</form>
+{% endblock %}

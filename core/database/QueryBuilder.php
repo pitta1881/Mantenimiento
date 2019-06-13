@@ -117,6 +117,15 @@ class QueryBuilder
         
     }
     
+    public function comparaEventos($table, $nombreEvento) {
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table}
+            WHERE nombreEvento='{$nombreEvento}'"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+        
+    }
     
     /**
      * Insert a record into a table.
@@ -507,4 +516,59 @@ public function selectSectorById($table, $nSector){
         );
         $statement->execute();
     }
+
+
+public function deleteEvento($table,$idEvento){ 
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idEvento = $idEvento"
+        );
+        $statement->execute();
+    }
+public function selectEventoById($table, $nEvento){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idEvento={$nEvento}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function getEventos($table){ //table = sectores
+        $statement = $this->pdo->prepare(
+           "SELECT nombreEvento FROM $table"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+
+
+public function updateEvento($table, $parameters, $idEvento){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET fechaInicio=:fechaInicio, fechaFin=:fechaFin, descripcion=:descripcion, nombreEvento=:nombreEvento WHERE idEvento=$idEvento"; //recontra HARDCODEADO
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+
+
+ public function selectAllEventosOrdenados($table){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} ORDER BY fechaInicio ASC "
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+
+
+
+
+
+
+
 }
