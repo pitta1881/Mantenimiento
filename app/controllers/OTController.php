@@ -41,13 +41,11 @@ class OTController extends Controller{
             $this->model->cambiarEstadoTarea($idPedidoFinal,$idTarea);
             $datosItem[$i++] = $itemOT;
         }
-        $datos['itemOT'] = $datosItem;
-        $datos["userLogueado"] = $_SESSION['user'];
-        return view('/ordendetrabajo/OTverItem',compact('datos'));
+        redirect('fichaOT?idOT='.$idOTCreada);
     }
 
     public function ficha(){
-        //$miOT = $this->model->getByIdOT($_GET['idOT']);
+        $miOT = $this->model->getByIdOT($_GET['idOT']);
         $datos["miOT"] = $miOT;  
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/ordendetrabajo/otVerFicha', compact('datos'));

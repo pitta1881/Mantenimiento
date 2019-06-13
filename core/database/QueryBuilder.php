@@ -589,7 +589,22 @@ public function updateEvento($table, $parameters, $idEvento){
     return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function selectOTById($table, $nOT){ //table = ot
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idOT={$nOT}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 
+    public function selectTareasPorNOT($tableTarea, $tableItem, $nOT){ 
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableTarea T1 INNER JOIN $tableItem T2 ON T1.idPedido=T2.idPedido AND T1.idTarea=T2.idTarea WHERE idOT=$nOT"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 
 
 

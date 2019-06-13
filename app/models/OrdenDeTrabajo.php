@@ -64,5 +64,25 @@ class OrdenDeTrabajo extends Model
         return $nombre[0][0];
       } 
 
+    public function getByIdOT($idOT){
+        $OT = $this->db->selectOTById($this->tableOT,$idOT);
+        $miOT = json_decode(json_encode($OT[0]), True);
+        $miOT['fechaInicio'] = date("d/m/Y", strtotime($miOT['fechaInicio']));
+        if (is_null($miOT['fechaFin'])) {
+            $miOT['fechaFin'] = 'En Curso';
+        }
+        $miOT['tareas'] = $this->getTareasByIdOT($miOT['idOT']);
+        return $miOT;
+    }
+
+    public function getTareasByIdOT($idOT){
+        $tareas = $this->db->selectTareasPorNOT($this->tableTarea,$this->tableItem,$idOT);
+        $todasTareas = json_decode(json_encode($tareas), True);
+        for ($i=0; $i < count($todasTareas); $i++) { 
+            $todasTareas[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todasTareas[$i]['idEspecializacion']);
+        }
+        return $todasTareas;
+    }
+
 
 }

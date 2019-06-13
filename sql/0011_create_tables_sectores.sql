@@ -2,7 +2,7 @@ USE mantenimiento;
 
 CREATE TABLE sectores (
     idSector INTEGER AUTO_INCREMENT,
-    nombreSector VARCHAR(11) NOT NULL,
+    nombreSector TEXT NOT NULL,
     tipo TEXT NOT NULL,
     responsable TEXT NOT NULL,
     telefono integer ,

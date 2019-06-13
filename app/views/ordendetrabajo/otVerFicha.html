@@ -18,15 +18,16 @@
 <dl>
     <dt>Nº OT:</dt>
     <dd>{{ datos.miOT.idOT }}</dd>
-    <dt>Nº OT:</dt>
+    <dt>Fecha de Inicio:</dt>
     <dd>{{ datos.miOT.fechaInicio }}</dd>
-    <dt>Nº OT:</dt>
-    <dd>{{ datos.miOT.fechaInicio }}</dd>
+    <dt>Fecha de Fin:</dt>
+    <dd>{{ datos.miOT.fechaFin }}</dd>
     <dt>Estado:</dt>
     <dd>{{ datos.miOT.estado }}</dd>
 </dl>
 <h2>TAREAS</h2>
 <table>
+    <th>Nº Pedido</th>
     <th>Nº Tarea</th>
     <th>Descripcion</th>
     <th>Especializacion</th>
@@ -34,7 +35,9 @@
     <th>Estado</th>
     {% for tarea in datos.miOT.tareas %}
     <tr>
-        <td>{{ tarea.idTarea }}</td>
+        <td><a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido {{ tarea.idPedido }}</a></td>
+        <td><a href="/fichaTarea?idPedido={{ tarea.idPedido }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
+                {{ tarea.idTarea }}</a></td>
         <td>{{ tarea.descripcion }}</td>
         <td>{{ tarea.especializacionNombre }}</td>
         <td>{{ tarea.prioridad }}</td>
