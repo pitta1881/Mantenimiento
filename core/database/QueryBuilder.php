@@ -606,8 +606,27 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function getNombreSectorPorIdPedido($tablePedido,$tableSector,$nPedido){ 
+        $statement = $this->pdo->prepare(
+           "SELECT nombreSector FROM $tablePedido T1 INNER JOIN $tableSector T2 ON T1.idSector=T2.idSector WHERE T1.id=$nPedido"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
 
+    
+    public function selectOTPorNPedidoNTarea($tableOT, $tableItemOT, $nPedido, $nTarea){ 
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableOT T1 INNER JOIN $tableItemOT T2 ON T1.idOT=T2.idOT WHERE idPedido=$nPedido AND idTarea=$nTarea"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
 
-
-
+    public function updateFinalizarPedido($tablePedido, $nPedido){
+        $statement = $this->pdo->prepare(
+            "UPDATE $tablePedido SET estado='Finalizado' WHERE id=$nPedido"
+        );
+        $statement->execute();
+        }
 }

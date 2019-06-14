@@ -33,11 +33,11 @@
     </fieldset>
     <input type="submit">
 </form>
-<table>
-    <th>Nº Insumo</th>
-    <th>Nombre</th>
-    <th>Descripcion</th>
-    <th>Accion</th>
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nº Insumo</th>
+    <th onclick="sortTable(1,'miTabla')">Nombre</th>
+    <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+    <th onclick="sortTable(3,'miTabla')">Accion</th>
     {% for insumo in datos.todosInsumos %}
     <tr>
         <td>{{ insumo.idInsumo }}</td>

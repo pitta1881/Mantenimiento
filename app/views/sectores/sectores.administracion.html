@@ -43,14 +43,14 @@
     </fieldset>
     <input type="submit">
 </form>
-<table>
-    <th>Nº Sector</th>
-    <th>Nombre</th>
-    <th>Tipo</th>
-    <th>Responsable</th>
-    <th>Telefono</th>
-    <th>Email</th>
-    <th>Accion</th>
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nº Sector</th>
+    <th onclick="sortTable(1,'miTabla')">Nombre</th>
+    <th onclick="sortTable(2,'miTabla')">Tipo</th>
+    <th onclick="sortTable(3,'miTabla')">Responsable</th>
+    <th onclick="sortTable(4,'miTabla')">Telefono</th>
+    <th onclick="sortTable(5,'miTabla')">Email</th>
+    <th onclick="sortTable(6,'miTabla')">Accion</th>
     {% for sector in datos.todosSectores %}
     <tr>
         <td>{{ sector.idSector }}</td>

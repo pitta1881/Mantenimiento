@@ -56,16 +56,16 @@
     <input type="submit" value="Buscar">
 </form>
 
-<table>
-    <th>Nº Pedido</th>
-    <th>Descripcion</th>
-    <th>Sector</th>
-    <th>Fecha Inicio</th>
-    <th>Tareas</th>
-    <th>Estado</th>
-    <th>Prioridad</th>
-    <th>Usuario</th>
-    <th>Accion</th>
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
+    <th onclick="sortTable(1,'miTabla')">Descripcion</th>
+    <th onclick="sortTable(2,'miTabla')">Sector</th>
+    <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
+    <th onclick="sortTable(4,'miTabla')">Tareas</th>
+    <th onclick="sortTable(5,'miTabla')">Estado</th>
+    <th onclick="sortTable(6,'miTabla')">Prioridad</th>
+    <th onclick="sortTable(7,'miTabla')">Usuario</th>
+    <th onclick="sortTable(8,'miTabla')">Accion</th>
     {% for pedido in datos.todosPedidos %}
     <tr>
         <td>{{ pedido.id }}</td>

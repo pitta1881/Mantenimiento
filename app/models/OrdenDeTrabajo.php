@@ -10,6 +10,8 @@ class OrdenDeTrabajo extends Model
     protected $tableItem = 'itemOT';
     protected $tableTarea = 'tarea';
     protected $tableEspecializacion='especializacion';
+    protected $tablePedido='pedido';
+    protected $tableSector='sectores';
 
     public function get(){
         $ot = $this->db->selectAll($this->tableOT);
@@ -64,6 +66,11 @@ class OrdenDeTrabajo extends Model
         return $nombre[0][0];
       } 
 
+    public function getNombreSectorPorIdPedido($idPedido) {
+    $nombre = $this->db->getNombreSectorPorIdPedido($this->tablePedido, $this->tableSector, $idPedido);
+    return $nombre[0][0];
+    } 
+
     public function getByIdOT($idOT){
         $OT = $this->db->selectOTById($this->tableOT,$idOT);
         $miOT = json_decode(json_encode($OT[0]), True);
@@ -80,6 +87,7 @@ class OrdenDeTrabajo extends Model
         $todasTareas = json_decode(json_encode($tareas), True);
         for ($i=0; $i < count($todasTareas); $i++) { 
             $todasTareas[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todasTareas[$i]['idEspecializacion']);
+            $todasTareas[$i]['sector']=$this->getNombreSectorPorIdPedido($todasTareas[$i]['idPedido']);
         }
         return $todasTareas;
     }

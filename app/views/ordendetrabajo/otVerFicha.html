@@ -26,22 +26,24 @@
     <dd>{{ datos.miOT.estado }}</dd>
 </dl>
 <h2>TAREAS</h2>
-<table>
-    <th>Nº Pedido</th>
-    <th>Nº Tarea</th>
-    <th>Descripcion</th>
-    <th>Especializacion</th>
-    <th>Prioridad</th>
-    <th>Estado</th>
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
+    <th onclick="sortTable(1,'miTabla')">Nº Tarea</th>
+    <th onclick="sortTable(2,'miTabla')">Sector</th>
+    <th onclick="sortTable(3,'miTabla')">Descripcion</th>
+    <th onclick="sortTable(4,'miTabla')">Especializacion</th>
+    <th onclick="sortTable(5,'miTabla')">Prioridad</th>
+    <th onclick="sortTable(6,'miTabla')">Firma Conforme</th>
     {% for tarea in datos.miOT.tareas %}
     <tr>
         <td><a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido {{ tarea.idPedido }}</a></td>
         <td><a href="/fichaTarea?idPedido={{ tarea.idPedido }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
                 {{ tarea.idTarea }}</a></td>
+        <td>{{ tarea.sector }}</td>
         <td>{{ tarea.descripcion }}</td>
         <td>{{ tarea.especializacionNombre }}</td>
         <td>{{ tarea.prioridad }}</td>
-        <td>{{ tarea.estado }}</td>
+        <td>___________________</td>
     </tr>
     {% else %}
     <h2 class='error'>No hay Tareas asignadas aún</h2>

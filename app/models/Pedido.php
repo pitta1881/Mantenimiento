@@ -119,4 +119,8 @@ class Pedido extends Model{
         $cantidad = $this->db->getAgentesAsignadosPorIdId($this->tableItemAgentes, $idPedido, $idTarea);
         return $cantidad[0][0];
       }
+
+      public function updateFinalizarPedido($idPedido){
+        $this->db->updateFinalizarPedido($this->table,$idPedido);
+    }
 }

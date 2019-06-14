@@ -33,13 +33,13 @@
     <input type="submit">
 </form>
 
-<table>
-    <th>Nº Evento</th>
-    <th>Nombre</th>
-    <th>Descripcion</th>
-    <th>Fecha Inicio</th>
-    <th>Fecha Fin</th>
-    <th>Accion</th>
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nº Evento</th>
+    <th onclick="sortTable(1,'miTabla')">Nombre</th>
+    <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+    <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
+    <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
+    <th onclick="sortTable(5,'miTabla')">Accion</th>
     {% for evento in datos.todosEventos %}
     <tr>
         <td>{{ evento.idEvento }}</td>

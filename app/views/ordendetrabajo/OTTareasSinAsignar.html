@@ -16,13 +16,13 @@
 <h3>Aca irian los filtros y metodos de ordenamiento</h3>
 <h1>TAREAS SIN ASIGNAR </h1>
 <form action="/ot/crear/seleccionados" method="post">
-    <table>
-        <th>Nº Pedido</th>
-        <th>Nº Tarea</th>
-        <th>Descripcion</th>
-        <th>Especializacion</th>
-        <th>Prioridad</th>
-        <th>Seleccionar</th>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
+        <th onclick="sortTable(1,'miTabla')">Nº Tarea</th>
+        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+        <th onclick="sortTable(3,'miTabla')">Especializacion</th>
+        <th onclick="sortTable(4,'miTabla')">Prioridad</th>
+        <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
         {% set i = 1 %}
         {% for tareas in datos.tareasSinAsignar %}
         <tr>

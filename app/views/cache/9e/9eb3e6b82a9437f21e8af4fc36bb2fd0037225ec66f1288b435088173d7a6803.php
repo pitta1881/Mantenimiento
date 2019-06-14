@@ -31,23 +31,22 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     ";
         // line 5
         $this->displayBlock('head', $context, $blocks);
-        // line 11
+        // line 13
         echo "</head>
 
 <body>
     <header>";
-        // line 14
+        // line 16
         $this->displayBlock('header', $context, $blocks);
         echo "</header>
     <main>";
-        // line 15
+        // line 17
         $this->displayBlock('main', $context, $blocks);
         echo "</main>
 
 </body>
 
-</html>
-";
+</html>";
     }
 
     // line 5
@@ -61,19 +60,21 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
         echo " - Mantenimiento</title>
     <link rel=\"stylesheet\" href=\"/public/css/main.css\">
     <link rel=\"stylesheet\" href=\"/public/css/nav.css\">
-    <link rel=\"stylesheet\" href=\"/public/css/nav1.css\"> ";
+    <link rel=\"stylesheet\" href=\"/public/css/nav1.css\">
+    <script src=\"/public/js/ordenarTablas.js\"></script>
+    ";
     }
 
     public function block_title($context, array $blocks = array())
     {
     }
 
-    // line 14
+    // line 16
     public function block_header($context, array $blocks = array())
     {
     }
 
-    // line 15
+    // line 17
     public function block_main($context, array $blocks = array())
     {
     }
@@ -85,7 +86,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 
     public function getDebugInfo()
     {
-        return array (  77 => 15,  72 => 14,  60 => 7,  57 => 6,  54 => 5,  44 => 15,  40 => 14,  35 => 11,  33 => 5,  27 => 1,);
+        return array (  78 => 17,  73 => 16,  59 => 7,  56 => 6,  53 => 5,  44 => 17,  40 => 16,  35 => 13,  33 => 5,  27 => 1,);
     }
 
     public function getSourceContext()
@@ -99,7 +100,9 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     <title>{% block title %}{% endblock %} - Mantenimiento</title>
     <link rel=\"stylesheet\" href=\"/public/css/main.css\">
     <link rel=\"stylesheet\" href=\"/public/css/nav.css\">
-    <link rel=\"stylesheet\" href=\"/public/css/nav1.css\"> {% endblock %}
+    <link rel=\"stylesheet\" href=\"/public/css/nav1.css\">
+    <script src=\"/public/js/ordenarTablas.js\"></script>
+    {% endblock %}
 </head>
 
 <body>
@@ -108,7 +111,6 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 
 </body>
 
-</html>
-", "base.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\base.html");
+</html>", "base.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\base.html");
     }
 }

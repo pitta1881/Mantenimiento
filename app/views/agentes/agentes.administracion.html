@@ -39,13 +39,13 @@
     </fieldset>
     <input type="submit">
 </form>
-<table>
-    <th>Nº Agente</th>
-    <th>Nombre</th>
-    <th>Apellido</th>
-    <th>Especializacion</th>
-    <th>Disponibilidad</th>
-    <th>Accion</th>
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nº Agente</th>
+    <th onclick="sortTable(1,'miTabla')">Nombre</th>
+    <th onclick="sortTable(2,'miTabla')">Apellido</th>
+    <th onclick="sortTable(3,'miTabla')">Especializacion</th>
+    <th onclick="sortTable(4,'miTabla')">Disponibilidad</th>
+    <th onclick="sortTable(5,'miTabla')">Accion</th>
     {% for agente in datos.todosAgentes %}
     <tr>
         <td>{{ agente.idAgente }}</td>

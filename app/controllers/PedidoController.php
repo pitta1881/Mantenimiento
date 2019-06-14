@@ -101,4 +101,10 @@ class PedidoController extends Controller{
         $datos['userLogueado'] = $_SESSION['user'];           
         return view('/pedidos/pedidosVerTodos', compact('datos'));         
      }
+
+     public function finalizar(){
+         var_dump($_POST);
+         $this->model->updateFinalizarPedido($_POST['id']);
+         redirect("fichaPedido?id=".$_POST['id']);
+     }
 }

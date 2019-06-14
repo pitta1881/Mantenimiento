@@ -20,13 +20,13 @@
     <input type="submit" value="Buscar">
 </form>
 
-<table>
-    <th>Nº OT</th>
-    <th>Fecha de Inicio</th>
-    <th>Fecha de Fin</th>
-    <th>Estado</th>
-    <th>Tareas</th>
-    <th>Accion</th>
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nº OT</th>
+    <th onclick="sortTable(1,'miTabla')">Fecha de Inicio</th>
+    <th onclick="sortTable(2,'miTabla')">Fecha de Fin</th>
+    <th onclick="sortTable(3,'miTabla')">Estado</th>
+    <th onclick="sortTable(4,'miTabla')">Tareas</th>
+    <th onclick="sortTable(5,'miTabla')">Accion</th>
     {% for OT in datos.todasOT %}
     <tr>
         <td>{{ OT.idOT }}</td>

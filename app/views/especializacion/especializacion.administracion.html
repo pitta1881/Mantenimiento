@@ -32,10 +32,10 @@
     </fieldset>
     <input type="submit">
 </form>
-<table>
-    <th>ID Especializacion</th>
-    <th>Nombre</th>
-    <th>Accion</th>
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">ID Especializacion</th>
+    <th onclick="sortTable(1,'miTabla')">Nombre</th>
+    <th onclick="sortTable(2,'miTabla')">Accion</th>
     {% for especializacion in datos.todasEspecializaciones %}
     <tr>
         <td>{{ especializacion.idEspecializacion }}</td>

@@ -94,12 +94,12 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 <div class=\"contenido1\">
     <h4>Tareas sin Asignar</h4>
-    <table>
-        <th>Nº Pedido</th>
-        <th>Nº Tarea</th>
-        <th>Descripcion</th>
-        <th>Especializacion</th>
-        <th>Prioridad</th>
+    <table id=\"miTabla\">
+        <th onclick=\"sortTable(0,'miTabla')\">Nº Pedido</th>
+        <th onclick=\"sortTable(1,'miTabla')\">Nº Tarea</th>
+        <th onclick=\"sortTable(2,'miTabla')\">Descripcion</th>
+        <th onclick=\"sortTable(3,'miTabla')\">Especializacion</th>
+        <th onclick=\"sortTable(4,'miTabla')\">Prioridad</th>
         ";
         // line 35
         $context["i"] = 1;
@@ -158,12 +158,12 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 <div class=\"contenido2\">
     <h4>Proximos Eventos</h4>
-    <table>
-        <th>Nº Evento</th>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Fecha Inicio</th>
-        <th>Fecha Fin</th>
+    <table id=\"miTabla2\">
+        <th onclick=\"sortTable(0,'miTabla2')\">Nº Evento</th>
+        <th onclick=\"sortTable(1,'miTabla2')\">Nombre</th>
+        <th onclick=\"sortTable(2,'miTabla2')\">Descripcion</th>
+        <th onclick=\"sortTable(3,'miTabla2')\">Fecha Inicio</th>
+        <th onclick=\"sortTable(4,'miTabla2')\">Fecha Fin</th>
         ";
         // line 60
         $context['_parent'] = $context;
@@ -287,12 +287,12 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 <div class=\"contenido1\">
     <h4>Tareas sin Asignar</h4>
-    <table>
-        <th>Nº Pedido</th>
-        <th>Nº Tarea</th>
-        <th>Descripcion</th>
-        <th>Especializacion</th>
-        <th>Prioridad</th>
+    <table id=\"miTabla\">
+        <th onclick=\"sortTable(0,'miTabla')\">Nº Pedido</th>
+        <th onclick=\"sortTable(1,'miTabla')\">Nº Tarea</th>
+        <th onclick=\"sortTable(2,'miTabla')\">Descripcion</th>
+        <th onclick=\"sortTable(3,'miTabla')\">Especializacion</th>
+        <th onclick=\"sortTable(4,'miTabla')\">Prioridad</th>
         {% set i = 1 %}
         {% for tarea in datos.tareasSinAsignar %}
         <tr>
@@ -312,12 +312,12 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
 <div class=\"contenido2\">
     <h4>Proximos Eventos</h4>
-    <table>
-        <th>Nº Evento</th>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Fecha Inicio</th>
-        <th>Fecha Fin</th>
+    <table id=\"miTabla2\">
+        <th onclick=\"sortTable(0,'miTabla2')\">Nº Evento</th>
+        <th onclick=\"sortTable(1,'miTabla2')\">Nombre</th>
+        <th onclick=\"sortTable(2,'miTabla2')\">Descripcion</th>
+        <th onclick=\"sortTable(3,'miTabla2')\">Fecha Inicio</th>
+        <th onclick=\"sortTable(4,'miTabla2')\">Fecha Fin</th>
         {% for evento in datos.todosEventos %}
         {% if evento.fechaInicio == \"now\"|date(\"d/m/Y\") %}
         <tr>

@@ -10,6 +10,8 @@ class Tarea extends Model
     protected $tableEspecializacion='especializacion';
     protected $tableAgentes='agentes';
     protected $tableItemAgentes='itemAgente';
+    protected $tableItemOT='itemot';
+    protected $tableOT = 'OrdenDeTrabajo';
 
     public function getEspecializaciones() {
         $array;
@@ -67,6 +69,7 @@ class Tarea extends Model
         $miTarea = json_decode(json_encode($tarea[0]), True);
         $miTarea['especializacionNombre']=$this->getNombreEspecializacionPorId($miTarea['idEspecializacion']);
         $miTarea['agentes']=$this->getAgentesByIdId($miTarea['idPedido'],$miTarea['idTarea']);
+        $miTarea['miOT']=$this->getOTByIdId($miTarea['idPedido'],$miTarea['idTarea']);
         return $miTarea;
     }
 
@@ -109,5 +112,18 @@ class Tarea extends Model
     public function desasignarAgente($nPedido, $nTarea, $nAgente){
         $this->db->desasignarAgente($this->tableItemAgentes,$nPedido,$nTarea,$nAgente);
         $this->cambiarEstadoAgente($nAgente,1);
+    }
+    
+    public function getOTByIdId($idPedido, $idTarea){
+        $miOT = [];
+        $OT = $this->db->selectOTPorNPedidoNTarea($this->tableOT,$this->tableItemOT,$idPedido,$idTarea);
+        if (!empty($OT)) {
+            $miOT = json_decode(json_encode($OT[0]), True);
+            $miOT['fechaInicio'] = date("d/m/Y", strtotime($miOT['fechaInicio']));
+            if (is_null($miOT['fechaFin'])) {
+                $miOT['fechaFin'] = 'En Curso';
+            }
+        }        
+        return $miOT;
     }
 }
