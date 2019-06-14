@@ -11,7 +11,7 @@ class Agentes extends Model
     protected $tableItemAgentes='itemAgente';
 
     public function getEspecializaciones() {
-      $array;
+      $array = [];
       $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);
       $misEspecializaciones = json_decode(json_encode($especializaciones), True);
       for ($i=0; $i < count($misEspecializaciones); $i++) { 

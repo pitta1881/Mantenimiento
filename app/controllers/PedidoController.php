@@ -52,13 +52,12 @@ class PedidoController extends Controller{
       $datos['arrayPedido'] = $pedido;
       $datos["userLogueado"] = $_SESSION['user'];
       $idNuevoPedido = $this->model->getIdUltimoPedido();
-      var_dump($idNuevoPedido);
       redirect("fichaPedido?id=".$idNuevoPedido);
     }
 
     public function modificarPedidoSeleccionado(){
         $unPedido = $this->model->getByIdPedido($_GET['id']);
-        $unPedido['fechaInicio'] = date("Y-d-m",strtotime($unPedido['fechaInicio']));
+        $unPedido['fechaInicio'] = date("Y-m-d",strtotime(str_replace('/', '-', $unPedido['fechaInicio'])));
         $datos["sectores"] = $this->model->getSectores();
         $datos["prioridades"] = $this->model->getPrioridades();
         $datos["estados"] = $this->model->getEstados();

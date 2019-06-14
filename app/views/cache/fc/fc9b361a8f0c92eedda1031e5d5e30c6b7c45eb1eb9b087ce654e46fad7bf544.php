@@ -103,6 +103,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         echo "        ";
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array()));
+        $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["tarea"]) {
             // line 36
             echo "        <tr>
@@ -136,21 +137,19 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
             echo "</td>
         </tr>
         ";
+            $context['_iterated'] = true;
+        }
+        if (!$context['_iterated']) {
+            // line 45
+            echo "        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
+        ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tarea'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 45
+        // line 47
         echo "    </table>
-    ";
-        // line 46
-        if ((twig_length_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array())) == 0)) {
-            // line 47
-            echo "    <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
-    ";
-        }
-        // line 49
-        echo "</div>
+</div>
 
 <div class=\"contenido2\">
     <h4>Proximos Eventos</h4>
@@ -161,78 +160,78 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <th onclick=\"sortTable(3,'miTabla2')\">Fecha Inicio</th>
         <th onclick=\"sortTable(4,'miTabla2')\">Fecha Fin</th>
         ";
-        // line 59
+        // line 58
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todosEventos", array()));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["evento"]) {
-            // line 60
+            // line 59
             echo "        ";
             if ((twig_get_attribute($this->env, $this->source, $context["evento"], "fechaInicio", array()) == twig_date_format_filter($this->env, "now", "d/m/Y"))) {
-                // line 61
+                // line 60
                 echo "        <tr>
             <td style=\"background-color:lightgreen\">";
-                // line 62
+                // line 61
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "idEvento", array()), "html", null, true);
                 echo " <a href=\"/pedido/verTodos\"><input
                         type=\"button\" value=\"Crear Pedido\"></a> </td>
             <td style=\"background-color:lightgreen\">";
-                // line 64
+                // line 63
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "nombreEvento", array()), "html", null, true);
                 echo "</td>
             <td style=\"background-color:lightgreen\">";
-                // line 65
+                // line 64
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "descripcion", array()), "html", null, true);
                 echo "</td>
             <td style=\"background-color:lightgreen\">";
-                // line 66
+                // line 65
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaInicio", array()), "html", null, true);
                 echo "</td>
             <td style=\"background-color:lightgreen\">";
-                // line 67
+                // line 66
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaFin", array()), "html", null, true);
                 echo "</td>
         </tr>
         ";
             } else {
-                // line 70
+                // line 69
                 echo "        <tr>
             <td>";
-                // line 71
+                // line 70
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "idEvento", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 72
+                // line 71
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "nombreEvento", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 73
+                // line 72
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "descripcion", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 74
+                // line 73
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaInicio", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 75
+                // line 74
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaFin", array()), "html", null, true);
                 echo "</td>
         </tr>
         ";
             }
-            // line 78
+            // line 77
             echo "        ";
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 79
+            // line 78
             echo "        <h2 class='error'>No hay eventos</h2>
         ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['evento'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 81
+        // line 80
         echo "    </table>
 </div>
 ";
@@ -250,7 +249,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  236 => 81,  229 => 79,  224 => 78,  218 => 75,  214 => 74,  210 => 73,  206 => 72,  202 => 71,  199 => 70,  193 => 67,  189 => 66,  185 => 65,  181 => 64,  176 => 62,  173 => 61,  170 => 60,  165 => 59,  153 => 49,  149 => 47,  147 => 46,  144 => 45,  135 => 42,  131 => 41,  127 => 40,  123 => 39,  117 => 38,  111 => 37,  108 => 36,  103 => 35,  101 => 34,  86 => 22,  80 => 19,  74 => 16,  68 => 13,  62 => 9,  59 => 8,  50 => 5,  44 => 4,  41 => 3,  35 => 2,  15 => 1,);
+        return array (  235 => 80,  228 => 78,  223 => 77,  217 => 74,  213 => 73,  209 => 72,  205 => 71,  201 => 70,  198 => 69,  192 => 66,  188 => 65,  184 => 64,  180 => 63,  175 => 61,  172 => 60,  169 => 59,  164 => 58,  151 => 47,  144 => 45,  136 => 42,  132 => 41,  128 => 40,  124 => 39,  118 => 38,  112 => 37,  109 => 36,  103 => 35,  101 => 34,  86 => 22,  80 => 19,  74 => 16,  68 => 13,  62 => 9,  59 => 8,  50 => 5,  44 => 4,  41 => 3,  35 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -298,11 +297,10 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
             <td>{{ tarea.especializacionNombre }}</td>
             <td>{{ tarea.prioridad }}</td>
         </tr>
+        {% else %}
+        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
         {% endfor %}
     </table>
-    {% if datos.tareasSinAsignar|length == 0 %}
-    <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
-    {% endif %}
 </div>
 
 <div class=\"contenido2\">
@@ -337,6 +335,6 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         {% endfor %}
     </table>
 </div>
-{% endblock %}", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
+{% endblock %}", "index.home.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\index.home.html");
     }
 }

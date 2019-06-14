@@ -645,7 +645,6 @@ public function updateEvento($table, $parameters, $idEvento){
     }
 
     public function updateFechaFinOT($tableOT, $nOT,$fechaFin){
-        var_dump($fechaFin);
         $statement = $this->pdo->prepare(
             "UPDATE $tableOT SET fechaFin='$fechaFin' WHERE idOT=$nOT"
         );

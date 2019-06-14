@@ -15,6 +15,9 @@
     }
 </script>
 <form action="/pedido/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
+    {% if datos.sectores is empty %}
+    <h2>Primero debe añadir un Sector --> <a href="/sectores/administracionSectores">HAGA CLICK AQUI</a></h2>
+    {% else %}
     <fieldset class="basicosPedido">
         <legend>Datos Basicos</legend>
         <label for="nombreUsuario">Usuario Creador</label>
@@ -43,6 +46,7 @@
     </fieldset>
     <input type="reset">
     <input type="submit">
+    {% endif %}
 </form>
 <form action="/pedido/buscar" method="POST">
     <select name="filtro">

@@ -162,4 +162,12 @@ class Tarea extends Model
             $this->db->updateEstadoPedido($this->tablePedido,$idPedido,'Para Finalizar');
         }
     }
+
+    public function desocuparAgentes($idPedido,$idTarea){
+        $agentes = $this->db->selectAgentesPorNPedidoNTarea($this->tableAgentes,$this->tableItemAgentes,$idPedido,$idTarea);
+        $todosAgentes = json_decode(json_encode($agentes), True);
+        for ($i=0; $i < count($todosAgentes); $i++) { 
+            $this->cambiarEstadoAgente($todosAgentes[$i]['idAgente'],1);
+        }
+    }
 }

@@ -24,6 +24,10 @@
     }
 </script>
 <form action="/agente/administracionAgente/cargarNuevoAgente" method="post" id="formularioAgente" style="display: none">
+    {% if datos.especializaciones is empty %}
+    <h2>Primero debe añadir una Especializacion --> <a href="/especializacion/administracionEspecializacion">HAGA CLICK
+            AQUI</a></h2>
+    {% else %}
     <fieldset class="basicosAgente">
         <legend> Alta de Agente</legend>
         <label for="nombre">Nombre del Agente</label>
@@ -38,6 +42,7 @@
         </select>
     </fieldset>
     <input type="submit">
+    {% endif %}
 </form>
 <table id="miTabla">
     <th onclick="sortTable(0,'miTabla')">Nº Agente</th>

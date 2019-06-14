@@ -14,9 +14,8 @@ class Pedido extends Model{
     protected $tableOT = 'OrdenDeTrabajo';
     protected $tableItemOT='itemot';
 
-    //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getSectores() {
-        $array;
+        $array = [];
         $sectores = $this->db->getSectores($this->tableSectores);
         $misSectores = json_decode(json_encode($sectores), True);
         for ($i=0; $i < count($misSectores); $i++) { 

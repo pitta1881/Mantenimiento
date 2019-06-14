@@ -108,6 +108,7 @@ class TareaController extends Controller{
             if ($_POST['estado'] == "Finalizado") {
                 $this->model->verificarFinOT($_POST['idOT']);
                 $this->model->verificarFinPedido($_POST['idPedido']);
+                $this->model->desocuparAgentes($_POST['idPedido'],$_POST['idTarea']);
             }            
             header("location: ".$_SERVER['HTTP_REFERER'] ." "); //esto me vuelve a la pagina de donde hice el cambio, maravilloso
         }

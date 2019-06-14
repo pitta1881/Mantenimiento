@@ -41,11 +41,10 @@
             <td>{{ tarea.especializacionNombre }}</td>
             <td>{{ tarea.prioridad }}</td>
         </tr>
+        {% else %}
+        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
         {% endfor %}
     </table>
-    {% if datos.tareasSinAsignar|length == 0 %}
-    <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
-    {% endif %}
 </div>
 
 <div class="contenido2">
