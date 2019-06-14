@@ -24,6 +24,8 @@ class OrdenDeTrabajo extends Model
                 }
                 if (($key == 'fechaFin') && (is_null($value))) {
                     $todasOT[$indice]['fechaFin'] = 'En Curso';
+                } elseif (($key == 'fechaFin') && (!is_null($value))) {
+                    $todasOT[$indice]['fechaFin'] = date("d/m/Y", strtotime($todasOT[$indice]['fechaFin']));
                 }
             }        
         }
@@ -52,8 +54,8 @@ class OrdenDeTrabajo extends Model
         $this->db->insert($this->tableItem,$datos);
     }
 
-    public function cambiarEstadoTarea($idPedido,$idTarea){
-        $this->db->updateEstadoTarea($this->tableTarea,$idPedido,$idTarea);
+    public function updateEstadoTarea($idPedido,$idTarea,$estado){
+        $this->db->updateEstadoTarea($this->tableTarea,$idPedido,$idTarea,$estado);
     }
 
     public function getCantTareasAsignadas($idOT){
@@ -77,6 +79,8 @@ class OrdenDeTrabajo extends Model
         $miOT['fechaInicio'] = date("d/m/Y", strtotime($miOT['fechaInicio']));
         if (is_null($miOT['fechaFin'])) {
             $miOT['fechaFin'] = 'En Curso';
+        } else {
+            $miOT['fechaFin'] = date("d/m/Y", strtotime($miOT['fechaFin']));
         }
         $miOT['tareas'] = $this->getTareasByIdOT($miOT['idOT']);
         return $miOT;

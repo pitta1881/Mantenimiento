@@ -38,7 +38,7 @@ class OTController extends Controller{
                 'idTarea' => $idTarea
             ];
             $this->model->insertItemOT($itemOT);
-            $this->model->cambiarEstadoTarea($idPedidoFinal,$idTarea);
+            $this->model->updateEstadoTarea($idPedidoFinal,$idTarea,'En Curso');
             $datosItem[$i++] = $itemOT;
         }
         redirect('fichaOT?idOT='.$idOTCreada);

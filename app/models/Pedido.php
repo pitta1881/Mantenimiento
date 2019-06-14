@@ -46,6 +46,11 @@ class Pedido extends Model{
                 if ($key == 'fechaInicio') {
                     $todosPedidos[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todosPedidos[$indice]['fechaInicio']));
                 }
+                if (($key == 'fechaFin') && (is_null($value))) {
+                    $todosPedidos[$indice]['fechaFin'] = 'En Curso';
+                } elseif (($key == 'fechaFin') && (!is_null($value))) {
+                    $todosPedidos[$indice]['fechaFin'] = date("d/m/Y", strtotime($todosPedidos[$indice]['fechaFin']));
+                }
             }
         }  
         return $todosPedidos;
@@ -60,12 +65,17 @@ class Pedido extends Model{
    
     public function getByIdPedido($id){        
         $pedido = $this->db->selectNumeroPedido($this->table,$id);
-        $miPedido = json_decode(json_encode($pedido), True);
+        $miPedido = json_decode(json_encode($pedido[0]), True);
         $tareas = $this->getTareasByIdPedido($id);
-        $miPedido[0]['fechaInicio'] = date("d/m/Y",strtotime($miPedido[0]['fechaInicio']));
-        $miPedido[0]['nombreSector'] = $this->getNombreSectorPorId($miPedido[0]['idSector']);
-        $miPedido[0]['tareas'] = $tareas;
-        return $miPedido[0];
+        $miPedido['fechaInicio'] = date("d/m/Y",strtotime($miPedido['fechaInicio']));
+        if (is_null($miPedido['fechaFin'])) {
+            $miPedido['fechaFin'] = 'En Curso';
+        } else {
+            $miPedido['fechaFin'] = date("d/m/Y", strtotime($miPedido['fechaFin']));
+        }
+        $miPedido['nombreSector'] = $this->getNombreSectorPorId($miPedido['idSector']);
+        $miPedido['tareas'] = $tareas;
+        return $miPedido;
     }
 
     public function insert(array $pedido){
@@ -123,8 +133,11 @@ class Pedido extends Model{
         return $cantidad[0][0];
       }
 
-      public function updateFinalizarPedido($idPedido){
-        $this->db->updateFinalizarPedido($this->table,$idPedido);
+      public function updateEstadoPedido($idPedido,$estado){
+        $this->db->updateEstadoPedido($this->table,$idPedido,$estado);
+        if ($estado == "Finalizado") {
+            $this->db->updateFechaFinPedido($this->table,$idPedido,date("Y-m-d"));
+        }
     }
 
     public function getOTByIdId($idPedido, $idTarea){

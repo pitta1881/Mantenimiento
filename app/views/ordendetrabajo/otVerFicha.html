@@ -36,21 +36,28 @@
     <th onclick="sortTable(6,'miTabla')">Estado</th>
     <th onclick="sortTable(7,'miTabla')">Accion</th>
     {% for tarea in datos.miOT.tareas %}
+    {% set estilo = "" %}
+    {% if tarea.estado == "Finalizado" %}
+    {% set estilo = "style=background-color:lightcoral" %}
+    {% endif %}
     <tr>
-        <td><a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido {{ tarea.idPedido }}</a></td>
-        <td><a href="/fichaTarea?idPedido={{ tarea.idPedido }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
+        <td {{ estilo }}><a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido {{ tarea.idPedido }}</a>
+        </td>
+        <td {{ estilo }}><a href="/fichaTarea?idPedido={{ tarea.idPedido }}&idTarea={{ tarea.idTarea }}"
+                title="Ver Mas"> Tarea
                 {{ tarea.idTarea }}</a></td>
-        <td>{{ tarea.sector }}</td>
-        <td>{{ tarea.descripcion }}</td>
-        <td>{{ tarea.especializacionNombre }}</td>
-        <td>{{ tarea.prioridad }}</td>
-        <td>{{ tarea.estado }}</td>
-        <td>
-            {% if tarea.estado != 'Iniciado' %}
+        <td {{ estilo }}>{{ tarea.sector }}</td>
+        <td {{ estilo }}>{{ tarea.descripcion }}</td>
+        <td {{ estilo }}>{{ tarea.especializacionNombre }}</td>
+        <td {{ estilo }}>{{ tarea.prioridad }}</td>
+        <td {{ estilo }}>{{ tarea.estado }}</td>
+        <td {{ estilo }}>
+            {% if tarea.estado != 'Finalizado' %}
             {% set estados = ['En Curso','Pendiente','Finalizado'] %}
-            <form action="/tarea/cambiarEstado/seleccionado" method="post">
+            <form {{ estilo }} action="/tarea/cambiarEstado/seleccionado" method="post">
                 <input type="text" name="idPedido" value="{{ tarea.idPedido }}" hidden>
                 <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
+                <input type="text" name="idOT" value="{{ datos.miOT.idOT }}" hidden>
                 <label for="estado" id="estadoLabel{{ tarea.idPedido }}_{{ tarea.idTarea }}"
                     style="display: none">Estado</label>
                 <select name="estado" id="estadoSelect{{ tarea.idPedido }}_{{ tarea.idTarea }}" style="display: none">

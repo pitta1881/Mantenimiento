@@ -27,8 +27,10 @@
     <dd>{{ datos.miPedido.nombreUsuario }}</dd>
     <dt>Descripcion:</dt>
     <dd>{{ datos.miPedido.descripcion }}</dd>
-    <dt>Fecha:</dt>
+    <dt>Fecha Inicio:</dt>
     <dd>{{ datos.miPedido.fechaInicio }}</dd>
+    <dt>Fecha Fin:</dt>
+    <dd>{{ datos.miPedido.fechaFin }}</dd>
     <dt>Estado:</dt>
     <dd>{{ datos.miPedido.estado }}</dd>
     <dt>Sector:</dt>
@@ -86,22 +88,28 @@
     <th onclick="sortTable(7,'miTabla')">Accion</th>
     {% set pedidoFin = true %}
     {% for tarea in datos.miPedido.tareas %}
+    {% set estilo = "" %}
+    {% if tarea.estado == "Finalizado" %}
+    {% set estilo = "style=background-color:lightcoral" %}
+    {% endif %}
     <tr>
-        <td><a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
+        <td {{ estilo }}><a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"
+                title="Ver Mas"> Tarea
                 {{ tarea.idTarea }}</a></td>
-        <td>{% if tarea.idOT is empty  %}
+        <td {{ estilo }}>{% if tarea.idOT is empty  %}
             <a href="/ot/crear" title="Crear OT"> Tarea sin asignar</a>
             {% else %}
             <a href="/fichaOT?idOT={{ tarea.idOT }}" title="Ver Mas"> OT {{ tarea.idOT }}</a>
             {% endif %}
         </td>
-        <td>{{ tarea.descripcion }}</td>
-        <td>{{ tarea.especializacionNombre }}</td>
-        <td>{{ tarea.prioridad }}</td>
-        <td>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %} {% endif %}
+        <td {{ estilo }}>{{ tarea.descripcion }}</td>
+        <td {{ estilo }}>{{ tarea.especializacionNombre }}</td>
+        <td {{ estilo }}>{{ tarea.prioridad }}</td>
+        <td {{ estilo }}>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %}
+        {% endif %}
 
-        <td>{{ tarea.agentesAsignados }}</td>
-        <td>
+        <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
+        <td {{ estilo }}>
             <a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> <input
                     type="button" value="VER MAS"></a>
             {% if tarea.estado != "Finalizado" %}
@@ -129,7 +137,7 @@
     {% else %}
     <h2 class='error'>No hay Tareas asignadas aún</h2>
     {% endfor %}
-    {% if pedidoFin == true and datos.miPedido.estado != 'Finalizado' %}
+    {% if datos.miPedido.tareas|length > 0 and pedidoFin == true and datos.miPedido.estado != 'Finalizado' %}
     <script>
         var formFinPedido = document.getElementById("formFin");
         formFinPedido.style.display = "block";

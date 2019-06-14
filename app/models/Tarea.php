@@ -12,6 +12,7 @@ class Tarea extends Model
     protected $tableItemAgentes='itemAgente';
     protected $tableItemOT='itemot';
     protected $tableOT = 'OrdenDeTrabajo';
+    protected $tablePedido = 'pedido';
 
     public function getEspecializaciones() {
         $array;
@@ -122,12 +123,43 @@ class Tarea extends Model
             $miOT['fechaInicio'] = date("d/m/Y", strtotime($miOT['fechaInicio']));
             if (is_null($miOT['fechaFin'])) {
                 $miOT['fechaFin'] = 'En Curso';
+            } else {
+                $miOT['fechaFin'] = date("d/m/Y", strtotime($miOT['fechaFin']));
             }
         }        
         return $miOT;
     }
 
-    public function updateCambiarEstado($idPedido,$idTarea,$estado){
-        $this->db->updateCambiarEstado($this->table,$idPedido,$idTarea,$estado);
+    public function updateEstadoTarea($idPedido,$idTarea,$estado){
+        $this->db->updateEstadoTarea($this->table,$idPedido,$idTarea,$estado);
+    }
+
+    public function verificarFinOT($idOT){
+        $estadoFinOT = true;
+        $tareas = $this->db->selectTareasPorNOT($this->table,$this->tableItemOT,$idOT);
+        $todasTareas = json_decode(json_encode($tareas), True);
+        for ($i=0; $i < count($todasTareas); $i++) { 
+            if ($todasTareas[$i]['estado'] != "Finalizado") {
+                $estadoFinOT = false;
+            }
+        }
+        if ($estadoFinOT) {
+            $this->db->updateEstadoOT($this->tableOT,$idOT,'Finalizado');
+            $this->db->updateFechaFinOT($this->tableOT,$idOT,date("Y-m-d"));
+        }
+    }
+
+    public function verificarFinPedido($idPedido){
+        $estadoFinPedido = true;
+        $tareas = $this->db->selectTareasPorNPedido($this->table,$idPedido);
+        $todasTareas = json_decode(json_encode($tareas), True);
+        for ($i=0; $i < count($todasTareas); $i++) { 
+            if ($todasTareas[$i]['estado'] != "Finalizado") {
+                $estadoFinPedido = false;
+            }
+        }
+        if ($estadoFinPedido) {
+            $this->db->updateEstadoPedido($this->tablePedido,$idPedido,'Para Finalizar');
+        }
     }
 }

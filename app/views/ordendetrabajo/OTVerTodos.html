@@ -28,13 +28,17 @@
     <th onclick="sortTable(4,'miTabla')">Tareas</th>
     <th onclick="sortTable(5,'miTabla')">Accion</th>
     {% for OT in datos.todasOT %}
+    {% set estilo = "" %}
+    {% if OT.estado == "Finalizado" %}
+    {% set estilo = "style=background-color:lightcoral" %}
+    {% endif %}
     <tr>
-        <td>{{ OT.idOT }}</td>
-        <td>{{ OT.fechaInicio }}</td>
-        <td>{{ OT.fechaFin }}</td>
-        <td>{{ OT.estado }}</td>
-        <td>{{ OT.cantTareas }}</td>
-        <td>
+        <td {{ estilo }}>{{ OT.idOT }}</td>
+        <td {{ estilo }}>{{ OT.fechaInicio }}</td>
+        <td {{ estilo }}>{{ OT.fechaFin }}</td>
+        <td {{ estilo }}>{{ OT.estado }}</td>
+        <td {{ estilo }}>{{ OT.cantTareas }}</td>
+        <td {{ estilo }}>
             <a href='/fichaOT?idOT={{ OT.idOT }}'>
                 <input type="button" value="VER MAS">
             </a>

@@ -23,6 +23,7 @@
 <form action="/tarea/cambiarEstado/seleccionado" method="post">
     <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
     <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+    <input type="text" name="idOT" value="{{ datos.miTarea.miOT.idOT }}" hidden>
     <label for="estado" id="estadoLabel" style="display: none">Estado</label>
     <select name="estado" id="estadoSelect" style="display: none">
         {% for estado in estados %}
@@ -39,7 +40,7 @@
 {% endif %}
 <dl>
     <dt>Nº Pedido:</dt>
-    <dd>{{ datos.miTarea.idPedido }}</dd>
+    <dd><a href="fichaPedido?id={{ datos.miTarea.idPedido }}">Pedido {{ datos.miTarea.idPedido }}</a></dd>
     <dt>Nº Tarea:</dt>
     <dd>{{ datos.miTarea.idTarea }}</dd>
     <dt>Especializacion:</dt>

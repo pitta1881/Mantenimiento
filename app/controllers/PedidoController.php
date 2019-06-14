@@ -92,7 +92,7 @@ class PedidoController extends Controller{
      }
 
      public function finalizar(){
-         $this->model->updateFinalizarPedido($_POST['id']);
+         $this->model->updateEstadoPedido($_POST['id'],'Finalizado');
          redirect("fichaPedido?id=".$_POST['id']);
      }
 }

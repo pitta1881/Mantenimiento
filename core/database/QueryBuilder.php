@@ -307,14 +307,7 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function updateEstadoTarea($tableTarea, $nPedido, $nTarea){
-        $statement = $this->pdo->prepare(
-            "UPDATE $tableTarea SET estado='En Curso' WHERE idPedido=$nPedido AND idTarea=$nTarea"
-        );
-        $statement->execute();
-    }
-
-    
+   
     public function getCantTareasOT($tableItem,$idOT){ //table = itemOT
         $statement = $this->pdo->prepare(
            "SELECT COUNT(idTarea) FROM $tableItem
@@ -623,19 +616,41 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function updateFinalizarPedido($tablePedido, $nPedido){
+    public function updateEstadoPedido($tablePedido, $nPedido,$estado){
         $statement = $this->pdo->prepare(
-            "UPDATE $tablePedido SET estado='Finalizado' WHERE id=$nPedido"
+            "UPDATE $tablePedido SET estado='$estado' WHERE id=$nPedido"
         );
         $statement->execute();
         }
 
-    public function updateCambiarEstado($tableTarea, $nPedido, $nTarea, $estado){
+    public function updateEstadoTarea($tableTarea, $nPedido, $nTarea, $estado){
         $statement = $this->pdo->prepare(
             "UPDATE $tableTarea SET estado='$estado' WHERE idPedido=$nPedido AND idTarea=$nTarea"
         );
         $statement->execute();
-        }
+    }
+
+    public function updateEstadoOT($tableOT, $nOT,$estado){
+        $statement = $this->pdo->prepare(
+            "UPDATE $tableOT SET estado='$estado' WHERE idOT=$nOT"
+        );
+        $statement->execute();
+    }
+
+    public function updateFechaFinPedido($tablePedido, $nPedido,$fechaFin){
+        $statement = $this->pdo->prepare(
+            "UPDATE $tablePedido SET fechaFin='$fechaFin' WHERE id=$nPedido"
+        );
+        $statement->execute();
+    }
+
+    public function updateFechaFinOT($tableOT, $nOT,$fechaFin){
+        var_dump($fechaFin);
+        $statement = $this->pdo->prepare(
+            "UPDATE $tableOT SET fechaFin='$fechaFin' WHERE idOT=$nOT"
+        );
+        $statement->execute();
+    }
     
         
 }

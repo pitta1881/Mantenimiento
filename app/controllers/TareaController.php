@@ -103,8 +103,12 @@ class TareaController extends Controller{
         }
 
         public function cambiarEstado(){
-            $this->model->updateCambiarEstado($_POST['idPedido'],$_POST['idTarea'],$_POST['estado']);
-            //verificar fin de OT;
+            $this->model->updateEstadoTarea($_POST['idPedido'],$_POST['idTarea'],$_POST['estado']);
+            //verificar fin de OT y cambiar su estado--verificar fin pedido y cambiar su estado
+            if ($_POST['estado'] == "Finalizado") {
+                $this->model->verificarFinOT($_POST['idOT']);
+                $this->model->verificarFinPedido($_POST['idPedido']);
+            }            
             header("location: ".$_SERVER['HTTP_REFERER'] ." "); //esto me vuelve a la pagina de donde hice el cambio, maravilloso
         }
 

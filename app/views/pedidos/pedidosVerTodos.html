@@ -61,28 +61,40 @@
     <th onclick="sortTable(1,'miTabla')">Descripcion</th>
     <th onclick="sortTable(2,'miTabla')">Sector</th>
     <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
-    <th onclick="sortTable(4,'miTabla')">Tareas</th>
-    <th onclick="sortTable(5,'miTabla')">Estado</th>
-    <th onclick="sortTable(6,'miTabla')">Prioridad</th>
-    <th onclick="sortTable(7,'miTabla')">Usuario</th>
-    <th onclick="sortTable(8,'miTabla')">Accion</th>
+    <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
+    <th onclick="sortTable(5,'miTabla')">Tareas</th>
+    <th onclick="sortTable(6,'miTabla')">Estado</th>
+    <th onclick="sortTable(7,'miTabla')">Prioridad</th>
+    <th onclick="sortTable(8,'miTabla')">Usuario</th>
+    <th onclick="sortTable(9,'miTabla')">Accion</th>
     {% for pedido in datos.todosPedidos %}
+    {% set estilo = "" %}
+    {% if pedido.estado == "Finalizado" %}
+    {% set estilo = "style=background-color:lightcoral" %}
+    {% else %}
+    {% if pedido.estado == "Para Finalizar" %}
+    {% set estilo = "style=background-color:goldenrod" %}
+    {% endif %}
+    {% endif %}
     <tr>
-        <td>{{ pedido.id }}</td>
-        <td>{{ pedido.descripcion }}</td>
-        <td>{{ pedido.nombreSector }}</td>
-        <td>{{ pedido.fechaInicio }}</td>
-        <td>{{ pedido.tareasAsignadas }}</td>
-        <td>{{ pedido.estado }}</td>
-        <td>{{ pedido.prioridad }}</td>
-        <td>{{ pedido.nombreUsuario }}</td>
-        <td>
+        <td {{ estilo }}>{{ pedido.id }}</td>
+        <td {{ estilo }}>{{ pedido.descripcion }}</td>
+        <td {{ estilo }}>{{ pedido.nombreSector }}</td>
+        <td {{ estilo }}>{{ pedido.fechaInicio }}</td>
+        <td {{ estilo }}>{{ pedido.fechaFin }}</td>
+        <td {{ estilo }}>{{ pedido.tareasAsignadas }}</td>
+        <td {{ estilo }}>{{ pedido.estado }}</td>
+        <td {{ estilo }}>{{ pedido.prioridad }}</td>
+        <td {{ estilo }}>{{ pedido.nombreUsuario }}</td>
+        <td {{ estilo }}>
             <a href='/fichaPedido?id={{ pedido.id }}'>
                 <input type="button" value="VER MAS">
             </a>
+            {% if pedido.estado != "Finalizado" %}
             <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
                 <input type="button" value="MODIFICAR">
             </a>
+            {% endif %}
         </td>
     </tr>
     {% else %}
