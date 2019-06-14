@@ -31,16 +31,16 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     ";
         // line 5
         $this->displayBlock('head', $context, $blocks);
-        // line 13
+        // line 14
         echo "</head>
 
 <body>
     <header>";
-        // line 16
+        // line 17
         $this->displayBlock('header', $context, $blocks);
         echo "</header>
     <main>";
-        // line 17
+        // line 18
         $this->displayBlock('main', $context, $blocks);
         echo "</main>
 
@@ -62,6 +62,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     <link rel=\"stylesheet\" href=\"/public/css/nav.css\">
     <link rel=\"stylesheet\" href=\"/public/css/nav1.css\">
     <script src=\"/public/js/ordenarTablas.js\"></script>
+\t<script src=\"/public/js/menu.js\"></script>
     ";
     }
 
@@ -69,12 +70,12 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     {
     }
 
-    // line 16
+    // line 17
     public function block_header($context, array $blocks = array())
     {
     }
 
-    // line 17
+    // line 18
     public function block_main($context, array $blocks = array())
     {
     }
@@ -86,7 +87,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 
     public function getDebugInfo()
     {
-        return array (  78 => 17,  73 => 16,  59 => 7,  56 => 6,  53 => 5,  44 => 17,  40 => 16,  35 => 13,  33 => 5,  27 => 1,);
+        return array (  79 => 18,  74 => 17,  59 => 7,  56 => 6,  53 => 5,  44 => 18,  40 => 17,  35 => 14,  33 => 5,  27 => 1,);
     }
 
     public function getSourceContext()
@@ -102,6 +103,7 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
     <link rel=\"stylesheet\" href=\"/public/css/nav.css\">
     <link rel=\"stylesheet\" href=\"/public/css/nav1.css\">
     <script src=\"/public/js/ordenarTablas.js\"></script>
+\t<script src=\"/public/js/menu.js\"></script>
     {% endblock %}
 </head>
 
@@ -111,6 +113,6 @@ class __TwigTemplate_00dbe24a4e11b03d1d2d9dceef4a180f09f03b165eeb39fab4fac4f416c
 
 </body>
 
-</html>", "base.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\base.html");
+</html>", "base.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\base.html");
     }
 }

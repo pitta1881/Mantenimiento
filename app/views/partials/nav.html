@@ -1,24 +1,95 @@
 <nav class="main-nav">
-
     <ol>
-        <li><a little="imagenSommer" href="/home"><img class="imagen" src="/public/res/sommer4.jpg"></a></li>
+        <li>
+            <a little="imagenSommer" onclick="muestra_oculta('mainmenu')"> <img class="imagen" src="/public/res/sommer4.jpg"></a>
+
+            <ul class="mainmenu show">
+                <li><a href="/home">Home</a></li>
+
+                <li><a href="/pedido/verTodos">Pedidos</a>
+
+                </li>
+                <li><a href="/OT/verTodos">Ordenes de Trabajo</a>
+
+                </li>
+                <li><a href="/eventos/administracionEventos">Eventos</a>
+
+                </li>
+                <li><a href="">Tareas</a>
+
+                </li>
+                <li><a>Usuarios</a>
+                    <ul>
+                        <li><a href="">Usuarios</a>
+                            <ul class="submenu">
+                                <li><a href="/usuario/altaUsuario">Agregar</a></li>
+                                <li><a href="/usuario/modificarUsuario">Modificar</a></li>
+                                <li><a href="/usuario/eliminarUsuario">Eliminar</a></li>
+
+                            </ul>
+                        </li>
+                        <li><a href="">Personas</a>
+                            <ul class="submenu">
+                                <li><a href="/usuario/altaPersona">Agregar</a></li>
+                                <li><a href="/usuario/modificarPersona">Modificar</a></li>
+                                <li><a href="/usuario/eliminarPersona">Eliminar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">Roles</a>
+                            <ul class="submenu">
+                                <li><a href="/usuario/altaRol">Agregar</a></li>
+                                <li><a href="/usuario/modificarRol">Modificar</a></li>
+                                <li><a href="/usuario/eliminarRol">Eliminar</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">Permisos</a>
+                            <ul class="submenu">
+                                <li><a href="/usuario/asignarPermiso">Agregar</a></li>
+                                <li><a href="">Modificar</a></li>
+                                <li><a href="/usuario/eliminarPermiso">Eliminar</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="/agente/administracionAgentes">Agentes</a>
+
+                </li>
+                <li><a href="/especializacion/administracionEspecializacion">Especializaciones</a>
+
+                </li>
+                <li><a href="/sectores/administracionSectores">Sectores</a>
+
+                </li>
+                <li><a href="">Informes</a>
+
+                </li>
+                <li><a href="/insumos/administracionInsumos">Insumos</a>
+
+                </li>
+                <li><a href="">Ordenes de Compra</a>
+
+                </li>
+                <li><a href="/cerrarSesion">Cerrar Sesion</a>
+
+                </li>
+
+
+
+            </ul>
+
+        </li>
 
         <li>
             <h4 class="titulo">Sistema de Mantenimiento</h4>
         </li>
         <li>
-            <h3 class="titulo1">TITULO PESTAÑA</h3>
+            <h3 class="titulo1">{{ nombreP }}</h3>
         </li>
-        <!-- <li><a href="/home">Inicio</a></li>
-        <li><a href="/pedido/verTodos">Pedidos</a></li>
-        <li><a href="/OT/verTodos">Ordenes de Trabajo</a></li>
-        <li><a href="/OT/verTodos">Actividades</a></li>
-        <li><a href="/OT/verTodos">Tareas</a></li>-->
+
+
         <li>
             <p class="user">{{ nombreUsuario }} |<a href="/cerrarSesion">Cerrar Sesión</a></p>
         </li>
-        <!--   <li>
-            <p><a class="salir" href="/">Cerrar Sesión</a></p>
-        </li> -->
+
     </ol>
 </nav>
