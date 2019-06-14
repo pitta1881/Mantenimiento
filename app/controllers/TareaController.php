@@ -24,7 +24,6 @@ class TareaController extends Controller{
             'idEspecializacion' => $idEspecializacion
         ];
         $this->model->insert($tarea);
-        //redirect("pedido/verTareas?idPedido=".$tarea['idPedido']);
         redirect("fichaPedido?id=".$tarea['idPedido']);
     }
 
@@ -101,6 +100,12 @@ class TareaController extends Controller{
             $this->model->desasignarAgente($_POST['idPedido'],$_POST['idTarea'],$_POST['idAgente']);
             $this->model->cambiarEstadoAgente($_POST['idAgente'],1);
             redirect("fichaTarea?idPedido=".$_POST['idPedido']."&idTarea=".$_POST['idTarea']);
+        }
+
+        public function cambiarEstado(){
+            $this->model->updateCambiarEstado($_POST['idPedido'],$_POST['idTarea'],$_POST['estado']);
+            //verificar fin de OT;
+            header("location: ".$_SERVER['HTTP_REFERER'] ." "); //esto me vuelve a la pagina de donde hice el cambio, maravilloso
         }
 
 }

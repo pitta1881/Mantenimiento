@@ -629,4 +629,13 @@ public function updateEvento($table, $parameters, $idEvento){
         );
         $statement->execute();
         }
+
+    public function updateCambiarEstado($tableTarea, $nPedido, $nTarea, $estado){
+        $statement = $this->pdo->prepare(
+            "UPDATE $tableTarea SET estado='$estado' WHERE idPedido=$nPedido AND idTarea=$nTarea"
+        );
+        $statement->execute();
+        }
+    
+        
 }

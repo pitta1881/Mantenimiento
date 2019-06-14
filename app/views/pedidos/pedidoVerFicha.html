@@ -13,8 +13,8 @@
 {% endblock %}
 
 {% block main %}
-<input type="button" value="IMPRIMIR" onclick="print()">
 <h1>Su Pedido</h1>
+<input type="button" value="IMPRIMIR" onclick="print()">
 <form action="/pedido/finalizar" method="post" id="formFin" style="display: none">
     <input type="text" name="id" value={{ datos.miPedido.id }} hidden>
     <input type="submit" value="Finalizar Pedido">
@@ -77,17 +77,24 @@
 {% endif %}
 <table id="miTabla">
     <th onclick="sortTable(0,'miTabla')">Nº Tarea</th>
-    <th onclick="sortTable(1,'miTabla')">Descripcion</th>
-    <th onclick="sortTable(2,'miTabla')">Especializacion</th>
-    <th onclick="sortTable(3,'miTabla')">Prioridad</th>
-    <th onclick="sortTable(4,'miTabla')">Estado</th>
-    <th onclick="sortTable(5,'miTabla')">Agentes</th>
-    <th onclick="sortTable(6,'miTabla')">Accion</th>
+    <th onclick="sortTable(1,'miTabla')">OT Asignada</th>
+    <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+    <th onclick="sortTable(3,'miTabla')">Especializacion</th>
+    <th onclick="sortTable(4,'miTabla')">Prioridad</th>
+    <th onclick="sortTable(5,'miTabla')">Estado</th>
+    <th onclick="sortTable(6,'miTabla')">Agentes</th>
+    <th onclick="sortTable(7,'miTabla')">Accion</th>
     {% set pedidoFin = true %}
     {% for tarea in datos.miPedido.tareas %}
     <tr>
         <td><a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
                 {{ tarea.idTarea }}</a></td>
+        <td>{% if tarea.idOT is empty  %}
+            <a href="/ot/crear" title="Crear OT"> Tarea sin asignar</a>
+            {% else %}
+            <a href="/fichaOT?idOT={{ tarea.idOT }}" title="Ver Mas"> OT {{ tarea.idOT }}</a>
+            {% endif %}
+        </td>
         <td>{{ tarea.descripcion }}</td>
         <td>{{ tarea.especializacionNombre }}</td>
         <td>{{ tarea.prioridad }}</td>
@@ -99,7 +106,7 @@
                     type="button" value="VER MAS"></a>
             {% if tarea.estado != "Finalizado" %}
             <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
-                    type="button" value="Modificar"></a>
+                    type="button" value="Modificar Datos"></a>
             <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
                     type="button" value="Asignar Agentes"></a>
             {% endif %}

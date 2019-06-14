@@ -68,17 +68,6 @@ class PedidoController extends Controller{
     }
        
 
-    public function verTareas(){
-    $todasTareas = $this->model->getTareasByIdPedido($_GET['idPedido']);
-    $datos['todasTareas'] = $todasTareas;
-    $datos['idPedido'] = $_GET['idPedido'];
-    $datos["prioridades"] = $this->model->getPrioridades();
-    $datos["estados"] = $this->model->getEstados();
-    $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
-    $datos["userLogueado"] = $_SESSION['user'];
-    return view('/tareas/tareasVerTodas', compact('datos'));
-    }
-
     public function modificar(){
         $idPedido = $_POST['id'];
         $idSector = $this->model->getIdSectorPorNombre($_POST['sector']);
@@ -103,7 +92,6 @@ class PedidoController extends Controller{
      }
 
      public function finalizar(){
-         var_dump($_POST);
          $this->model->updateFinalizarPedido($_POST['id']);
          redirect("fichaPedido?id=".$_POST['id']);
      }

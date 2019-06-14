@@ -13,8 +13,30 @@
 {% endblock %}
 
 {% block main %}
-<input type="button" value="IMPRIMIR" onclick="print()">
 <h1>Su Tarea</h1>
+<input type="button" value="IMPRIMIR" onclick="print()">
+{% if datos.miTarea.estado != "Finalizado" %}
+<a href="/tarea/modificar/seleccionado?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}"><input
+        type="button" value="Modificar Datos"></a>
+{% if datos.miTarea.estado != 'Iniciado' %}
+{% set estados = ['En Curso','Pendiente','Finalizado'] %}
+<form action="/tarea/cambiarEstado/seleccionado" method="post">
+    <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
+    <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+    <label for="estado" id="estadoLabel" style="display: none">Estado</label>
+    <select name="estado" id="estadoSelect" style="display: none">
+        {% for estado in estados %}
+        <option value="{{ estado }}">{{ estado }}</option>
+        {% endfor %}
+    </select>
+    <input type="button" value="Cambiar Estado" id="formCambiarEstado"
+        onclick="document.getElementById('cambiarEstadoSi').style.display='inline-block';document.getElementById('cambiarEstadoNo').style.display='inline-block';document.getElementById('formCambiarEstado').style.display='none';document.getElementById('estadoLabel').style.display='inline-block';document.getElementById('estadoSelect').style.display='inline-block'">
+    <input type="submit" value="Cambiar" id="cambiarEstadoSi" style="display: none">
+    <input type="reset" value="Salir" id="cambiarEstadoNo" style="display: none"
+        onclick="document.getElementById('cambiarEstadoSi').style.display='none';document.getElementById('cambiarEstadoNo').style.display='none';document.getElementById('formCambiarEstado').style.display='inline-block';document.getElementById('estadoLabel').style.display='none';document.getElementById('estadoSelect').style.display='none'">
+</form>
+{% endif %}
+{% endif %}
 <dl>
     <dt>Nº Pedido:</dt>
     <dd>{{ datos.miTarea.idPedido }}</dd>
@@ -76,14 +98,14 @@
                 <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
                 <input type="button" value="Desasignar Agente"
                     id="btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
-                    onclick="document.getElementById('eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none'">
+                    onclick="document.getElementById('cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none'">
                 <input type="submit" value="Si"
-                    id="eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
+                    id="cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
                     style="display: none">
                 <input type="reset" value="No"
-                    id="eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
+                    id="cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
                     style="display: none"
-                    onclick="document.getElementById('eliminarSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('eliminarNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block'">
+                    onclick="document.getElementById('cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block'">
             </form>
             {% endif %}
         </td>

@@ -11,7 +11,6 @@
     $router->post('pedido/guardar', 'PedidoController@guardar');
     $router->post('pedido/buscar', 'PedidoController@buscarPor');
     $router->get('pedido/modificar/seleccionado', 'PedidoController@modificarPedidoSeleccionado');
-    $router->get('pedido/verTareas', 'PedidoController@verTareas');
     $router->post('pedido/modificar', 'PedidoController@modificar');
     $router->post('pedido/finalizar', 'PedidoController@finalizar');
     
@@ -25,6 +24,7 @@
     $router->post('tarea/asignarAgentes/seleccionados','TareaController@asignarAgentes');
     $router->get('fichaTarea', 'TareaController@ficha');
     $router->post('tarea/agentes/desasignar', 'TareaController@desasignarAgente');
+    $router->post('tarea/cambiarEstado/seleccionado', 'TareaController@cambiarEstado');
 
 //rutas OT
     $router->get('OT/verTodos', 'OTController@index');

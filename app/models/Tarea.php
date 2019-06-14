@@ -126,4 +126,8 @@ class Tarea extends Model
         }        
         return $miOT;
     }
+
+    public function updateCambiarEstado($idPedido,$idTarea,$estado){
+        $this->db->updateCambiarEstado($this->table,$idPedido,$idTarea,$estado);
+    }
 }

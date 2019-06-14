@@ -11,6 +11,8 @@ class Pedido extends Model{
     protected $tableEspecializacion='especializacion';
     protected $tableSectores='sectores';
     protected $tableItemAgentes='itemAgente';
+    protected $tableOT = 'OrdenDeTrabajo';
+    protected $tableItemOT='itemot';
 
     //ESTO ESTA HARDCODEADO PARA MUESTRAR ALGO NOMAS
     public function getSectores() {
@@ -81,6 +83,7 @@ class Pedido extends Model{
         for ($i=0; $i < count($todasTareas); $i++) { 
             $todasTareas[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todasTareas[$i]['idEspecializacion']);
             $todasTareas[$i]['agentesAsignados']=$this->getAgentesAsignadosPorIdId($idPedido,$todasTareas[$i]['idTarea']);
+            $todasTareas[$i]['idOT']=$this->getOTByIdId($idPedido,$todasTareas[$i]['idTarea']);
           }
           return $todasTareas;
     }
@@ -122,5 +125,14 @@ class Pedido extends Model{
 
       public function updateFinalizarPedido($idPedido){
         $this->db->updateFinalizarPedido($this->table,$idPedido);
+    }
+
+    public function getOTByIdId($idPedido, $idTarea){
+        $miOTid['idOT'] = "";
+        $OTid = $this->db->selectOTPorNPedidoNTarea($this->tableOT,$this->tableItemOT,$idPedido,$idTarea);
+        if (!empty($OTid)) {
+            $miOTid = json_decode(json_encode($OTid[0]), True);
+        }        
+        return $miOTid['idOT'];
     }
 }

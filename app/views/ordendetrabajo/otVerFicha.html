@@ -13,8 +13,8 @@
 {% endblock %}
 
 {% block main %}
-<input type="button" value="IMPRIMIR" onclick="print()">
 <h1>Su Orden de Trabajo</h1>
+<input type="button" value="IMPRIMIR" onclick="print()">
 <dl>
     <dt>Nº OT:</dt>
     <dd>{{ datos.miOT.idOT }}</dd>
@@ -33,7 +33,8 @@
     <th onclick="sortTable(3,'miTabla')">Descripcion</th>
     <th onclick="sortTable(4,'miTabla')">Especializacion</th>
     <th onclick="sortTable(5,'miTabla')">Prioridad</th>
-    <th onclick="sortTable(6,'miTabla')">Firma Conforme</th>
+    <th onclick="sortTable(6,'miTabla')">Estado</th>
+    <th onclick="sortTable(7,'miTabla')">Accion</th>
     {% for tarea in datos.miOT.tareas %}
     <tr>
         <td><a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido {{ tarea.idPedido }}</a></td>
@@ -43,7 +44,30 @@
         <td>{{ tarea.descripcion }}</td>
         <td>{{ tarea.especializacionNombre }}</td>
         <td>{{ tarea.prioridad }}</td>
-        <td>___________________</td>
+        <td>{{ tarea.estado }}</td>
+        <td>
+            {% if tarea.estado != 'Iniciado' %}
+            {% set estados = ['En Curso','Pendiente','Finalizado'] %}
+            <form action="/tarea/cambiarEstado/seleccionado" method="post">
+                <input type="text" name="idPedido" value="{{ tarea.idPedido }}" hidden>
+                <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
+                <label for="estado" id="estadoLabel{{ tarea.idPedido }}_{{ tarea.idTarea }}"
+                    style="display: none">Estado</label>
+                <select name="estado" id="estadoSelect{{ tarea.idPedido }}_{{ tarea.idTarea }}" style="display: none">
+                    {% for estado in estados %}
+                    <option value="{{ estado }}">{{ estado }}</option>
+                    {% endfor %}
+                </select>
+                <input type="button" value="Cambiar Estado"
+                    id="formCambiarEstado{{ tarea.idPedido }}_{{ tarea.idTarea }}"
+                    onclick="document.getElementById('cambiarEstadoSi{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('formCambiarEstado{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('estadoLabel{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('estadoSelect{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block'">
+                <input type="submit" value="Cambiar" id="cambiarEstadoSi{{ tarea.idPedido }}_{{ tarea.idTarea }}"
+                    style="display: none">
+                <input type="reset" value="Salir" id="{{ tarea.idPedido }}_{{ tarea.idTarea }}" style="display: none"
+                    onclick="document.getElementById('cambiarEstadoSi{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('formCambiarEstado{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('estadoLabel{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('estadoSelect{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none'">
+            </form>
+            {% endif %}
+        </td>
     </tr>
     {% else %}
     <h2 class='error'>No hay Tareas asignadas aún</h2>
