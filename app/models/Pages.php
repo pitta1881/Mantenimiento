@@ -23,6 +23,7 @@ class Pages extends Model
 
  public function get()
     {
+     $this->validarEventos();
         $eventos = $this->db->selectAllEventosOrdenados($this->table);
       
         $todosEventos = json_decode(json_encode($eventos), True);
@@ -52,6 +53,25 @@ class Pages extends Model
         $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
         return $nombre[0][0];
       } 
-    
+    public function validarEventos(){
+     $eventos = $this->db->selectAllEventosOrdenados($this->table);
+$todosEventos = json_decode(json_encode($eventos), True);
+  foreach ($todosEventos as $indice => $datos) {
+            foreach ($datos as $key => $value) {
+      
+                if ($key == 'fechaFin') {
+            
+                    $fechaActual=date("Y-m-d");
+                      $fecha=date("Y-m-d",strtotime($todosEventos[$indice]['fechaFin']));
+                    // $array=($todosEventos[$indice]);
+                    //var_dump($array);
+                    if ($fecha < $fechaActual){
+                        $this->db->deleteEventoValidar($this->table, $todosEventos[$indice]['idEvento']);
+                    }
+                }
+            }
+  }
+    }
+
     
 }

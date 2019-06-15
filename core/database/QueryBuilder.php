@@ -650,6 +650,12 @@ public function updateEvento($table, $parameters, $idEvento){
         );
         $statement->execute();
     }
-    
+     public function deleteEventoValidar($table,$idEvento){ 
+        $statement = $this->pdo->prepare(
+            "DELETE FROM $table  WHERE idEvento = $idEvento"
+        );
+        $statement->execute();
+    }
+
         
 }
