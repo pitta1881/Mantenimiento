@@ -170,4 +170,11 @@ class Tarea extends Model
             $this->cambiarEstadoAgente($todosAgentes[$i]['idAgente'],1);
         }
     }
+
+    public function updateEstadoPedido($idPedido,$estado){
+        $this->db->updateEstadoPedido($this->tablePedido,$idPedido,$estado);
+        if ($estado == "Finalizado") {
+            $this->db->updateFechaFinPedido($this->tablePedido,$idPedido,date("Y-m-d"));
+        }
+    }
 }

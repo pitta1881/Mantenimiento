@@ -23,7 +23,8 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         echo "<nav class=\"main-nav\">
     <ol>
         <li>
-            <a little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagen\" src=\"/public/res/sommer4.jpg\"></a>
+            <a little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagen\"
+                    src=\"/public/res/sommer4.jpg\"></a>
 
             <ul class=\"mainmenu show\">
                 <li><a href=\"/home\">Home</a></li>
@@ -40,64 +41,63 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                 <li><a href=\"\">Tareas</a>
 
                 </li>
-                <li><a>Usuarios</a>
-                    <ul>
-                        <li><a href=\"\">Usuarios</a>
-                            <ul class=\"submenu\">
-                                <li><a href=\"/usuario/altaUsuario\">Agregar</a></li>
-                                <li><a href=\"/usuario/modificarUsuario\">Modificar</a></li>
-                                <li><a href=\"/usuario/eliminarUsuario\">Eliminar</a></li>
+                <ul>
+                    <li><a href=\"\">Usuarios</a>
+                        <ul class=\"submenu\">
+                            <li><a href=\"/usuario/altaUsuario\">Agregar</a></li>
+                            <li><a href=\"/usuario/modificarUsuario\">Modificar</a></li>
+                            <li><a href=\"/usuario/eliminarUsuario\">Eliminar</a></li>
 
-                            </ul>
-                        </li>
-                        <li><a href=\"\">Personas</a>
-                            <ul class=\"submenu\">
-                                <li><a href=\"/usuario/altaPersona\">Agregar</a></li>
-                                <li><a href=\"/usuario/modificarPersona\">Modificar</a></li>
-                                <li><a href=\"/usuario/eliminarPersona\">Eliminar</a></li>
-                            </ul>
-                        </li>
-                        <li><a href=\"\">Roles</a>
-                            <ul class=\"submenu\">
-                                <li><a href=\"/usuario/altaRol\">Agregar</a></li>
-                                <li><a href=\"/usuario/modificarRol\">Modificar</a></li>
-                                <li><a href=\"/usuario/eliminarRol\">Eliminar</a></li>
-                            </ul>
-                        </li>
-                        <li><a href=\"\">Permisos</a>
-                            <ul class=\"submenu\">
-                                <li><a href=\"/usuario/asignarPermiso\">Agregar</a></li>
-                                <li><a href=\"\">Modificar</a></li>
-                                <li><a href=\"/usuario/eliminarPermiso\">Eliminar</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href=\"/agente/administracionAgentes\">Agentes</a>
+                        </ul>
+                    </li>
+                    <li><a href=\"\">Personas</a>
+                        <ul class=\"submenu\">
+                            <li><a href=\"/usuario/altaPersona\">Agregar</a></li>
+                            <li><a href=\"/usuario/modificarPersona\">Modificar</a></li>
+                            <li><a href=\"/usuario/eliminarPersona\">Eliminar</a></li>
+                        </ul>
+                    </li>
+                    <li><a href=\"\">Roles</a>
+                        <ul class=\"submenu\">
+                            <li><a href=\"/usuario/altaRol\">Agregar</a></li>
+                            <li><a href=\"/usuario/modificarRol\">Modificar</a></li>
+                            <li><a href=\"/usuario/eliminarRol\">Eliminar</a></li>
+                        </ul>
+                    </li>
+                    <li><a href=\"\">Permisos</a>
+                        <ul class=\"submenu\">
+                            <li><a href=\"/usuario/asignarPermiso\">Agregar</a></li>
+                            <li><a href=\"\">Modificar</a></li>
+                            <li><a href=\"/usuario/eliminarPermiso\">Eliminar</a></li>
+                        </ul>
+                    </li>
+                </ul>
+        </li>
+        <li><a href=\"/agente/administracionAgentes\">Agentes</a>
 
-                </li>
-                <li><a href=\"/especializacion/administracionEspecializacion\">Especializaciones</a>
+        </li>
+        <li><a href=\"/especializacion/administracionEspecializacion\">Especializaciones</a>
 
-                </li>
-                <li><a href=\"/sectores/administracionSectores\">Sectores</a>
+        </li>
+        <li><a href=\"/sectores/administracionSectores\">Sectores</a>
 
-                </li>
-                <li><a href=\"\">Informes</a>
+        </li>
+        <li><a href=\"\">Informes</a>
 
-                </li>
-                <li><a href=\"/insumos/administracionInsumos\">Insumos</a>
+        </li>
+        <li><a href=\"/insumos/administracionInsumos\">Insumos</a>
 
-                </li>
-                <li><a href=\"\">Ordenes de Compra</a>
+        </li>
+        <li><a href=\"\">Ordenes de Compra</a>
 
-                </li>
-                <li><a href=\"/cerrarSesion\">Cerrar Sesion</a>
+        </li>
+        <li><a href=\"/cerrarSesion\">Cerrar Sesion</a>
 
-                </li>
-
+        </li>
 
 
-            </ul>
+
+        </ul>
 
         </li>
 
@@ -120,8 +120,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         </li>
 
     </ol>
-</nav>
-";
+</nav>";
     }
 
     public function getTemplateName()
@@ -144,7 +143,8 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         return new Twig_Source("<nav class=\"main-nav\">
     <ol>
         <li>
-            <a little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagen\" src=\"/public/res/sommer4.jpg\"></a>
+            <a little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagen\"
+                    src=\"/public/res/sommer4.jpg\"></a>
 
             <ul class=\"mainmenu show\">
                 <li><a href=\"/home\">Home</a></li>
@@ -161,64 +161,63 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                 <li><a href=\"\">Tareas</a>
 
                 </li>
-                <li><a>Usuarios</a>
-                    <ul>
-                        <li><a href=\"\">Usuarios</a>
-                            <ul class=\"submenu\">
-                                <li><a href=\"/usuario/altaUsuario\">Agregar</a></li>
-                                <li><a href=\"/usuario/modificarUsuario\">Modificar</a></li>
-                                <li><a href=\"/usuario/eliminarUsuario\">Eliminar</a></li>
+                <ul>
+                    <li><a href=\"\">Usuarios</a>
+                        <ul class=\"submenu\">
+                            <li><a href=\"/usuario/altaUsuario\">Agregar</a></li>
+                            <li><a href=\"/usuario/modificarUsuario\">Modificar</a></li>
+                            <li><a href=\"/usuario/eliminarUsuario\">Eliminar</a></li>
 
-                            </ul>
-                        </li>
-                        <li><a href=\"\">Personas</a>
-                            <ul class=\"submenu\">
-                                <li><a href=\"/usuario/altaPersona\">Agregar</a></li>
-                                <li><a href=\"/usuario/modificarPersona\">Modificar</a></li>
-                                <li><a href=\"/usuario/eliminarPersona\">Eliminar</a></li>
-                            </ul>
-                        </li>
-                        <li><a href=\"\">Roles</a>
-                            <ul class=\"submenu\">
-                                <li><a href=\"/usuario/altaRol\">Agregar</a></li>
-                                <li><a href=\"/usuario/modificarRol\">Modificar</a></li>
-                                <li><a href=\"/usuario/eliminarRol\">Eliminar</a></li>
-                            </ul>
-                        </li>
-                        <li><a href=\"\">Permisos</a>
-                            <ul class=\"submenu\">
-                                <li><a href=\"/usuario/asignarPermiso\">Agregar</a></li>
-                                <li><a href=\"\">Modificar</a></li>
-                                <li><a href=\"/usuario/eliminarPermiso\">Eliminar</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href=\"/agente/administracionAgentes\">Agentes</a>
+                        </ul>
+                    </li>
+                    <li><a href=\"\">Personas</a>
+                        <ul class=\"submenu\">
+                            <li><a href=\"/usuario/altaPersona\">Agregar</a></li>
+                            <li><a href=\"/usuario/modificarPersona\">Modificar</a></li>
+                            <li><a href=\"/usuario/eliminarPersona\">Eliminar</a></li>
+                        </ul>
+                    </li>
+                    <li><a href=\"\">Roles</a>
+                        <ul class=\"submenu\">
+                            <li><a href=\"/usuario/altaRol\">Agregar</a></li>
+                            <li><a href=\"/usuario/modificarRol\">Modificar</a></li>
+                            <li><a href=\"/usuario/eliminarRol\">Eliminar</a></li>
+                        </ul>
+                    </li>
+                    <li><a href=\"\">Permisos</a>
+                        <ul class=\"submenu\">
+                            <li><a href=\"/usuario/asignarPermiso\">Agregar</a></li>
+                            <li><a href=\"\">Modificar</a></li>
+                            <li><a href=\"/usuario/eliminarPermiso\">Eliminar</a></li>
+                        </ul>
+                    </li>
+                </ul>
+        </li>
+        <li><a href=\"/agente/administracionAgentes\">Agentes</a>
 
-                </li>
-                <li><a href=\"/especializacion/administracionEspecializacion\">Especializaciones</a>
+        </li>
+        <li><a href=\"/especializacion/administracionEspecializacion\">Especializaciones</a>
 
-                </li>
-                <li><a href=\"/sectores/administracionSectores\">Sectores</a>
+        </li>
+        <li><a href=\"/sectores/administracionSectores\">Sectores</a>
 
-                </li>
-                <li><a href=\"\">Informes</a>
+        </li>
+        <li><a href=\"\">Informes</a>
 
-                </li>
-                <li><a href=\"/insumos/administracionInsumos\">Insumos</a>
+        </li>
+        <li><a href=\"/insumos/administracionInsumos\">Insumos</a>
 
-                </li>
-                <li><a href=\"\">Ordenes de Compra</a>
+        </li>
+        <li><a href=\"\">Ordenes de Compra</a>
 
-                </li>
-                <li><a href=\"/cerrarSesion\">Cerrar Sesion</a>
+        </li>
+        <li><a href=\"/cerrarSesion\">Cerrar Sesion</a>
 
-                </li>
-
+        </li>
 
 
-            </ul>
+
+        </ul>
 
         </li>
 
@@ -235,7 +234,6 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         </li>
 
     </ol>
-</nav>
-", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>", "partials/nav.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

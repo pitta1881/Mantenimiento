@@ -55,15 +55,16 @@
         <th onclick="sortTable(2,'miTabla2')">Descripcion</th>
         <th onclick="sortTable(3,'miTabla2')">Fecha Inicio</th>
         <th onclick="sortTable(4,'miTabla2')">Fecha Fin</th>
+        <th>Accion</th>
         {% for evento in datos.todosEventos %}
         {% if evento.fechaInicio == "now"|date("d/m/Y") %}
         <tr>
-            <td style="background-color:lightgreen">{{ evento.idEvento }} <a href="/pedido/verTodos"><input
-                        type="button" value="Crear Pedido"></a> </td>
+            <td style="background-color:lightgreen">{{ evento.idEvento }}</td>
             <td style="background-color:lightgreen">{{ evento.nombreEvento }}</td>
             <td style="background-color:lightgreen">{{ evento.descripcion }}</td>
             <td style="background-color:lightgreen">{{ evento.fechaInicio }}</td>
             <td style="background-color:lightgreen">{{ evento.fechaFin }}</td>
+            <td><a href="/pedido/verTodos"><input type="button" value="Crear Pedido"></a></td>
         </tr>
         {% else %}
         <tr>
@@ -72,6 +73,7 @@
             <td>{{ evento.descripcion }}</td>
             <td>{{ evento.fechaInicio }}</td>
             <td>{{ evento.fechaFin }}</td>
+            <td></td>
         </tr>
         {% endif %}
         {% else %}

@@ -24,6 +24,7 @@ class TareaController extends Controller{
             'idEspecializacion' => $idEspecializacion
         ];
         $this->model->insert($tarea);
+        $this->model->updateEstadoPedido($_POST['idPedido'],'En Curso');
         redirect("fichaPedido?id=".$tarea['idPedido']);
     }
 
