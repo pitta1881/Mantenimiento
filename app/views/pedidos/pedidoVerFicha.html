@@ -13,140 +13,143 @@
 {% endblock %}
 
 {% block main %}
-<h1>Su Pedido</h1>
-<input type="button" value="IMPRIMIR" onclick="print()">
-<form action="/pedido/finalizar" method="post" id="formFin" style="display: none">
-    <input type="text" name="id" value={{ datos.miPedido.id }} hidden>
-    <input type="submit" value="Finalizar Pedido">
-</form>
+<div class="contenido3">
+    <h1>Su Pedido</h1>
+    <input type="button" value="IMPRIMIR" onclick="print()">
+    <form action="/pedido/finalizar" method="post" id="formFin" style="display: none">
+        <input type="text" name="id" value={{ datos.miPedido.id }} hidden>
+        <input type="submit" value="Finalizar Pedido">
+    </form>
 
-<dl>
-    <dt>Nº Pedido:</dt>
-    <dd>{{ datos.miPedido.id }}</dd>
-    <dt>Usuario Creador:</dt>
-    <dd>{{ datos.miPedido.nombreUsuario }}</dd>
-    <dt>Descripcion:</dt>
-    <dd>{{ datos.miPedido.descripcion }}</dd>
-    <dt>Fecha Inicio:</dt>
-    <dd>{{ datos.miPedido.fechaInicio }}</dd>
-    <dt>Fecha Fin:</dt>
-    <dd>{{ datos.miPedido.fechaFin }}</dd>
-    <dt>Estado:</dt>
-    <dd>{{ datos.miPedido.estado }}</dd>
-    <dt>Sector:</dt>
-    <dd>{{ datos.miPedido.nombreSector }}</dd>
-    <dt>Prioridad:</dt>
-    <dd>{{ datos.miPedido.prioridad }}</dd>
-</dl>
-<h2>TAREAS</h2>
-<input type="button" value="CREAR NUEVA TAREA" id="btnCrearTarea" onclick="mostrarFormulario()">
-<script>
-    function mostrarFormulario() {
-        var formularioTarea = document.getElementById('formularioTarea');
-        if (formularioTarea.style.display == "block") {
-            formularioTarea.style.display = "none";
-        } else {
-            formularioTarea.style.display = "block"
-        }
-    }
-</script>
-<form action="tarea/guardar" method="post" id="formularioTarea" style="display: none">
-    {% if datos.especializaciones is empty %}
-    <h2>Primero debe añadir una Especializacion --> <a href="/especializacion/administracionEspecializacion">HAGA CLICK
-            AQUI</a></h2>
-    {% else %}
-    <label for="idPedido">Pedido</label>
-    <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" readonly class="inputDisabled">
-    <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-    <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
-    <label for="especializacion">Especializacion</label><span class="asterisco">*</span>
-    <select name="especializacion">
-        {% for especializacion in datos.especializaciones %}
-        <option value="{{ especializacion }}">{{ especializacion }}</option>
-        {% endfor %}
-    </select>
-    <label for="prioridad">Prioridad</label><span class="asterisco">*</span>
-    <select name="prioridad">
-        {% for prioridad in datos.prioridades %}
-        <option value="{{ prioridad }}">{{ prioridad }}</option>
-        {% endfor %}
-    </select>
-    <label for="estado">Estado</label>
-    <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
-    <input type="submit" value="Crear Tarea">
-    {% endif %}
-</form>
-{% if datos.miPedido.estado == "Finalizado" %}
-<script>
-    var btnCrearTarea = document.getElementById("btnCrearTarea");
-    btnCrearTarea.style.display = "none";
-</script>
-{% endif %}
-<table id="miTabla">
-    <th onclick="sortTable(0,'miTabla')">Nº Tarea</th>
-    <th onclick="sortTable(1,'miTabla')">OT Asignada</th>
-    <th onclick="sortTable(2,'miTabla')">Descripcion</th>
-    <th onclick="sortTable(3,'miTabla')">Especializacion</th>
-    <th onclick="sortTable(4,'miTabla')">Prioridad</th>
-    <th onclick="sortTable(5,'miTabla')">Estado</th>
-    <th onclick="sortTable(6,'miTabla')">Agentes</th>
-    <th onclick="sortTable(7,'miTabla')">Accion</th>
-    {% set pedidoFin = true %}
-    {% for tarea in datos.miPedido.tareas %}
-    {% set estilo = "" %}
-    {% if tarea.estado == "Finalizado" %}
-    {% set estilo = "style=background-color:lightcoral" %}
-    {% endif %}
-    <tr>
-        <td {{ estilo }}><a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"
-                title="Ver Mas"> Tarea
-                {{ tarea.idTarea }}</a></td>
-        <td {{ estilo }}>{% if tarea.idOT is empty  %}
-            <a href="/ot/crear" title="Crear OT"> Tarea sin asignar</a>
-            {% else %}
-            <a href="/fichaOT?idOT={{ tarea.idOT }}" title="Ver Mas"> OT {{ tarea.idOT }}</a>
-            {% endif %}
-        </td>
-        <td {{ estilo }}>{{ tarea.descripcion }}</td>
-        <td {{ estilo }}>{{ tarea.especializacionNombre }}</td>
-        <td {{ estilo }}>{{ tarea.prioridad }}</td>
-        <td {{ estilo }}>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %}
-        {% endif %}
-
-        <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
-        <td {{ estilo }}>
-            <a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> <input
-                    type="button" value="VER MAS"></a>
-            {% if tarea.estado != "Finalizado" %}
-            <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
-                    type="button" value="Modificar Datos"></a>
-            <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
-                    type="button" value="Asignar Agentes"></a>
-            {% endif %}
-            <a href="#"><input type="button" value="Ver Insumos"></a>
-            {% if tarea.estado == 'Iniciado' %}
-            <form action="/pedido/tarea/eliminar" method="post">
-                <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
-                <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
-                <input type="button" value="Eliminar" id="formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
-                    onclick="document.getElementById('eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none'">
-                <input type="submit" value="Si" id="eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
-                    style="display: none">
-                <input type="reset" value="No" id="eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
-                    style="display: none"
-                    onclick="document.getElementById('eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block'">
-            </form>
-            {% endif %}
-        </td>
-    </tr>
-    {% else %}
-    <h2 class='error'>No hay Tareas asignadas aún</h2>
-    {% endfor %}
-    {% if datos.miPedido.tareas|length > 0 and pedidoFin == true and datos.miPedido.estado != 'Finalizado' %}
+    <dl>
+        <dt>Nº Pedido:</dt>
+        <dd>{{ datos.miPedido.id }}</dd>
+        <dt>Usuario Creador:</dt>
+        <dd>{{ datos.miPedido.nombreUsuario }}</dd>
+        <dt>Descripcion:</dt>
+        <dd>{{ datos.miPedido.descripcion }}</dd>
+        <dt>Fecha Inicio:</dt>
+        <dd>{{ datos.miPedido.fechaInicio }}</dd>
+        <dt>Fecha Fin:</dt>
+        <dd>{{ datos.miPedido.fechaFin }}</dd>
+        <dt>Estado:</dt>
+        <dd>{{ datos.miPedido.estado }}</dd>
+        <dt>Sector:</dt>
+        <dd>{{ datos.miPedido.nombreSector }}</dd>
+        <dt>Prioridad:</dt>
+        <dd>{{ datos.miPedido.prioridad }}</dd>
+    </dl>
+    <h2>TAREAS</h2>
+    <input type="button" value="CREAR NUEVA TAREA" id="btnCrearTarea" onclick="mostrarFormulario()">
     <script>
-        var formFinPedido = document.getElementById("formFin");
-        formFinPedido.style.display = "block";
+        function mostrarFormulario() {
+            var formularioTarea = document.getElementById('formularioTarea');
+            if (formularioTarea.style.display == "block") {
+                formularioTarea.style.display = "none";
+            } else {
+                formularioTarea.style.display = "block"
+            }
+        }
+    </script>
+    <form action="tarea/guardar" method="post" id="formularioTarea" style="display: none">
+        {% if datos.especializaciones is empty %}
+        <h2>Primero debe añadir una Especializacion --> <a href="/especializacion/administracionEspecializacion">HAGA
+                CLICK
+                AQUI</a></h2>
+        {% else %}
+        <label for="idPedido">Pedido</label>
+        <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" readonly class="inputDisabled">
+        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+        <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+        <label for="especializacion">Especializacion</label><span class="asterisco">*</span>
+        <select name="especializacion">
+            {% for especializacion in datos.especializaciones %}
+            <option value="{{ especializacion }}">{{ especializacion }}</option>
+            {% endfor %}
+        </select>
+        <label for="prioridad">Prioridad</label><span class="asterisco">*</span>
+        <select name="prioridad">
+            {% for prioridad in datos.prioridades %}
+            <option value="{{ prioridad }}">{{ prioridad }}</option>
+            {% endfor %}
+        </select>
+        <label for="estado">Estado</label>
+        <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
+        <input type="submit" value="Crear Tarea">
+        {% endif %}
+    </form>
+    {% if datos.miPedido.estado == "Finalizado" %}
+    <script>
+        var btnCrearTarea = document.getElementById("btnCrearTarea");
+        btnCrearTarea.style.display = "none";
     </script>
     {% endif %}
-</table>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">Nº Tarea</th>
+        <th onclick="sortTable(1,'miTabla')">OT Asignada</th>
+        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+        <th onclick="sortTable(3,'miTabla')">Especializacion</th>
+        <th onclick="sortTable(4,'miTabla')">Prioridad</th>
+        <th onclick="sortTable(5,'miTabla')">Estado</th>
+        <th onclick="sortTable(6,'miTabla')">Agentes</th>
+        <th onclick="sortTable(7,'miTabla')">Accion</th>
+        {% set pedidoFin = true %}
+        {% for tarea in datos.miPedido.tareas %}
+        {% set estilo = "" %}
+        {% if tarea.estado == "Finalizado" %}
+        {% set estilo = "style=background-color:lightcoral" %}
+        {% endif %}
+        <tr>
+            <td {{ estilo }}><a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"
+                    title="Ver Mas"> Tarea
+                    {{ tarea.idTarea }}</a></td>
+            <td {{ estilo }}>{% if tarea.idOT is empty  %}
+                <a href="/ot/crear" title="Crear OT"> Tarea sin asignar</a>
+                {% else %}
+                <a href="/fichaOT?idOT={{ tarea.idOT }}" title="Ver Mas"> OT {{ tarea.idOT }}</a>
+                {% endif %}
+            </td>
+            <td {{ estilo }}>{{ tarea.descripcion }}</td>
+            <td {{ estilo }}>{{ tarea.especializacionNombre }}</td>
+            <td {{ estilo }}>{{ tarea.prioridad }}</td>
+            <td {{ estilo }}>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %}
+            {% endif %}
+
+            <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
+            <td {{ estilo }}>
+                <a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas">
+                    <input type="button" value="VER MAS"></a>
+                {% if tarea.estado != "Finalizado" %}
+                <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
+                        type="button" value="Modificar Datos"></a>
+                <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
+                        type="button" value="Asignar Agentes"></a>
+                {% endif %}
+                <a href="#"><input type="button" value="Ver Insumos"></a>
+                {% if tarea.estado == 'Iniciado' %}
+                <form action="/pedido/tarea/eliminar" method="post">
+                    <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
+                    <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
+                    <input type="button" value="Eliminar" id="formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
+                        onclick="document.getElementById('eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none'">
+                    <input type="submit" value="Si" id="eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
+                        style="display: none">
+                    <input type="reset" value="No" id="eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
+                        style="display: none"
+                        onclick="document.getElementById('eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block'">
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay Tareas asignadas aún</h2>
+        {% endfor %}
+        {% if datos.miPedido.tareas|length > 0 and pedidoFin == true and datos.miPedido.estado != 'Finalizado' %}
+        <script>
+            var formFinPedido = document.getElementById("formFin");
+            formFinPedido.style.display = "block";
+        </script>
+        {% endif %}
+    </table>
+</div>
 {% endblock %}

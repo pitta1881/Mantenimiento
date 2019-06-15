@@ -3,65 +3,68 @@
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 {% block main %}
-<input type="button" value="CREAR NUEVO EVENTO" onclick="mostrarFormulario()">
-<script>
-    function mostrarFormulario() {
-        var formularioEventos = document.getElementById('formularioEventos');
-        if (formularioEventos.style.display == "block") {
-            formularioEventos.style.display = "none";
-        } else {
-            formularioEventos.style.display = "block"
+<div class="contenido3">
+    <input type="button" value="CREAR NUEVO EVENTO" onclick="mostrarFormulario()">
+    <script>
+        function mostrarFormulario() {
+            var formularioEventos = document.getElementById('formularioEventos');
+            if (formularioEventos.style.display == "block") {
+                formularioEventos.style.display = "none";
+            } else {
+                formularioEventos.style.display = "block"
+            }
         }
-    }
-</script>
-<form action="/eventos/administracionEventos/guardarEvento" method="post" id="formularioEventos" style="display: none">
-    <fieldset class="basicosPedido">
-        <legend> Alta de Evento</legend>
+    </script>
+    <form action="/eventos/administracionEventos/guardarEvento" method="post" id="formularioEventos"
+        style="display: none">
+        <fieldset class="basicosPedido">
+            <legend> Alta de Evento</legend>
 
-        <label for="nombreEvento">Nombre del Evento</label><span class="asterisco">*</span>
-        <input type="text" name="nombreEvento" autofocus>
+            <label for="nombreEvento">Nombre del Evento</label><span class="asterisco">*</span>
+            <input type="text" name="nombreEvento" autofocus>
 
-        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-        <input type="textArea" name="descripcion" required placeholder="Ingrese la descripcion.."><br>
+            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+            <input type="textArea" name="descripcion" required placeholder="Ingrese la descripcion.."><br>
 
-        <label for="fechaInicio">Fecha Inicio</label><span class="asterisco">*</span>
-        <input type="date" name="fechaInicio" value="{{ datos.diaHoy }}" min="{{ datos.diaHoy }}" required><br>
+            <label for="fechaInicio">Fecha Inicio</label><span class="asterisco">*</span>
+            <input type="date" name="fechaInicio" value="{{ datos.diaHoy }}" min="{{ datos.diaHoy }}" required><br>
 
-        <label for="fechaFin">Fecha Fin</label><span class="asterisco">*</span>
-        <input type="date" name="fechaFin" min="{{ datos.diaHoy }}" required><br>
-    </fieldset>
-    <input type="submit">
-</form>
+            <label for="fechaFin">Fecha Fin</label><span class="asterisco">*</span>
+            <input type="date" name="fechaFin" min="{{ datos.diaHoy }}" required><br>
+        </fieldset>
+        <input type="submit">
+    </form>
 
-<table id="miTabla">
-    <th onclick="sortTable(0,'miTabla')">Nº Evento</th>
-    <th onclick="sortTable(1,'miTabla')">Nombre</th>
-    <th onclick="sortTable(2,'miTabla')">Descripcion</th>
-    <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
-    <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
-    <th onclick="sortTable(5,'miTabla')">Accion</th>
-    {% for evento in datos.todosEventos %}
-    <tr>
-        <td>{{ evento.idEvento }}</td>
-        <td>{{ evento.nombreEvento }}</td>
-        <td>{{ evento.descripcion }}</td>
-        <td>{{ evento.fechaInicio }}</td>
-        <td>{{ evento.fechaFin }}</td>
-        <td>
-            <a href='/eventos/modificar/seleccionado?idEvento={{ evento.idEvento }}'>
-                <input type="button" value="MODIFICAR">
-            </a>
-            <form action="/eventos/eliminar" method="post">
-                <input type="text" name="idEvento" value="{{ evento.idEvento }}" hidden>
-                <input type="button" value="Eliminar" id="btnEliminar{{ evento.idEvento }}"
-                    onclick="document.getElementById('eliminarSi{{ evento.idEvento }}').style.display='inline-block';document.getElementById('eliminarNo{{ evento.idEvento }}').style.display='inline-block';document.getElementById('btnEliminar{{ evento.idEvento }}').style.display='none'">
-                <input type="submit" value="Si" id="eliminarSi{{ evento.idEvento }}" style="display: none">
-                <input type="reset" value="No" id="eliminarNo{{ evento.idEvento }}" style="display: none"
-                    onclick="document.getElementById('eliminarSi{{ evento.idEvento }}').style.display='none';document.getElementById('eliminarNo{{ evento.idEvento }}').style.display='none';document.getElementById('btnEliminar{{ evento.idEvento }}').style.display='inline-block'">
-            </form>
-        </td>
-    </tr>
-    {% else %}
-    <h2 class='error'>No hay eventos</h2> {% endfor %}
-</table>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">Nº Evento</th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+        <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
+        <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
+        <th onclick="sortTable(5,'miTabla')">Accion</th>
+        {% for evento in datos.todosEventos %}
+        <tr>
+            <td>{{ evento.idEvento }}</td>
+            <td>{{ evento.nombreEvento }}</td>
+            <td>{{ evento.descripcion }}</td>
+            <td>{{ evento.fechaInicio }}</td>
+            <td>{{ evento.fechaFin }}</td>
+            <td>
+                <a href='/eventos/modificar/seleccionado?idEvento={{ evento.idEvento }}'>
+                    <input type="button" value="MODIFICAR">
+                </a>
+                <form action="/eventos/eliminar" method="post">
+                    <input type="text" name="idEvento" value="{{ evento.idEvento }}" hidden>
+                    <input type="button" value="Eliminar" id="btnEliminar{{ evento.idEvento }}"
+                        onclick="document.getElementById('eliminarSi{{ evento.idEvento }}').style.display='inline-block';document.getElementById('eliminarNo{{ evento.idEvento }}').style.display='inline-block';document.getElementById('btnEliminar{{ evento.idEvento }}').style.display='none'">
+                    <input type="submit" value="Si" id="eliminarSi{{ evento.idEvento }}" style="display: none">
+                    <input type="reset" value="No" id="eliminarNo{{ evento.idEvento }}" style="display: none"
+                        onclick="document.getElementById('eliminarSi{{ evento.idEvento }}').style.display='none';document.getElementById('eliminarNo{{ evento.idEvento }}').style.display='none';document.getElementById('btnEliminar{{ evento.idEvento }}').style.display='inline-block'">
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay eventos</h2> {% endfor %}
+    </table>
+</div>
 {% endblock %}

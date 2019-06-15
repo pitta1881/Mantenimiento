@@ -2,49 +2,51 @@
 {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-<h1>Listado de Ordenes de Trabajo</h1>
-<a href="/ot/crear">
-    <input type="button" value="Crear OT">
-</a>
+<div class="contenido3">
+    <h1>Listado de Ordenes de Trabajo</h1>
+    <a href="/ot/crear">
+        <input type="button" value="Crear OT">
+    </a>
 
-<form action="/pedido/buscar" method="POST">
-    <select name="filtro">
-        <option value="id">Nº OT</option>
-        <option value="sector">SECTOR</option>
-        <option value="fechaInicio">FECHA INICIO</option>
-        <option value="estado">ESTADO</option>
-        <option value="prioridad">PRIORIDAD</option>
-    </select>
+    <form action="/pedido/buscar" method="POST">
+        <select name="filtro">
+            <option value="id">Nº OT</option>
+            <option value="sector">SECTOR</option>
+            <option value="fechaInicio">FECHA INICIO</option>
+            <option value="estado">ESTADO</option>
+            <option value="prioridad">PRIORIDAD</option>
+        </select>
 
-    <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-    <input type="submit" value="Buscar">
-</form>
+        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+        <input type="submit" value="Buscar">
+    </form>
 
-<table id="miTabla">
-    <th onclick="sortTable(0,'miTabla')">Nº OT</th>
-    <th onclick="sortTable(1,'miTabla')">Fecha de Inicio</th>
-    <th onclick="sortTable(2,'miTabla')">Fecha de Fin</th>
-    <th onclick="sortTable(3,'miTabla')">Estado</th>
-    <th onclick="sortTable(4,'miTabla')">Tareas</th>
-    <th onclick="sortTable(5,'miTabla')">Accion</th>
-    {% for OT in datos.todasOT %}
-    {% set estilo = "" %}
-    {% if OT.estado == "Finalizado" %}
-    {% set estilo = "style=background-color:lightcoral" %}
-    {% endif %}
-    <tr>
-        <td {{ estilo }}>{{ OT.idOT }}</td>
-        <td {{ estilo }}>{{ OT.fechaInicio }}</td>
-        <td {{ estilo }}>{{ OT.fechaFin }}</td>
-        <td {{ estilo }}>{{ OT.estado }}</td>
-        <td {{ estilo }}>{{ OT.cantTareas }}</td>
-        <td {{ estilo }}>
-            <a href='/fichaOT?idOT={{ OT.idOT }}'>
-                <input type="button" value="VER MAS">
-            </a>
-        </td>
-    </tr>
-    {% else %}
-    <h2 class='error'>No hay OTs</h2> {% endfor %}
-</table>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">Nº OT</th>
+        <th onclick="sortTable(1,'miTabla')">Fecha de Inicio</th>
+        <th onclick="sortTable(2,'miTabla')">Fecha de Fin</th>
+        <th onclick="sortTable(3,'miTabla')">Estado</th>
+        <th onclick="sortTable(4,'miTabla')">Tareas</th>
+        <th onclick="sortTable(5,'miTabla')">Accion</th>
+        {% for OT in datos.todasOT %}
+        {% set estilo = "" %}
+        {% if OT.estado == "Finalizado" %}
+        {% set estilo = "style=background-color:lightcoral" %}
+        {% endif %}
+        <tr>
+            <td {{ estilo }}>{{ OT.idOT }}</td>
+            <td {{ estilo }}>{{ OT.fechaInicio }}</td>
+            <td {{ estilo }}>{{ OT.fechaFin }}</td>
+            <td {{ estilo }}>{{ OT.estado }}</td>
+            <td {{ estilo }}>{{ OT.cantTareas }}</td>
+            <td {{ estilo }}>
+                <a href='/fichaOT?idOT={{ OT.idOT }}'>
+                    <input type="button" value="VER MAS">
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay OTs</h2> {% endfor %}
+    </table>
+</div>
 {% endblock %}

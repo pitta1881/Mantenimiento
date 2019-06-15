@@ -12,53 +12,56 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
-<input type="button" value="CARGAR NUEVA ESPECIALIZACION" onclick="mostrarFormulario()">
-<script>
-    function mostrarFormulario() {
-        var formularioEspecializacion = document.getElementById('formularioEspecializacion');
-        if (formularioEspecializacion.style.display == "block") {
-            formularioEspecializacion.style.display = "none";
-        } else {
-            formularioEspecializacion.style.display = "block"
+<div class="contenido3">
+    <input type="button" value="CARGAR NUEVA ESPECIALIZACION" onclick="mostrarFormulario()">
+    <script>
+        function mostrarFormulario() {
+            var formularioEspecializacion = document.getElementById('formularioEspecializacion');
+            if (formularioEspecializacion.style.display == "block") {
+                formularioEspecializacion.style.display = "none";
+            } else {
+                formularioEspecializacion.style.display = "block"
+            }
         }
-    }
-</script>
-<form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion" method="post"
-    id="formularioEspecializacion" style="display: none">
-    <fieldset class="basicosEspecializacion">
-        <legend> Alta de Especializacion</legend>
-        <label for="nombre">Nombre del Especializacion</label>
-        <input type="text" name="nombre" autofocus>
-    </fieldset>
-    <input type="submit">
-</form>
-<table id="miTabla">
-    <th onclick="sortTable(0,'miTabla')">ID Especializacion</th>
-    <th onclick="sortTable(1,'miTabla')">Nombre</th>
-    <th onclick="sortTable(2,'miTabla')">Accion</th>
-    {% for especializacion in datos.todasEspecializaciones %}
-    <tr>
-        <td>{{ especializacion.idEspecializacion }}</td>
-        <td>{{ especializacion.nombre }}</td>
-        <td>
-            <a href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
-                <input type="button" value="MODIFICAR">
-            </a>
-            {% if especializacion.usado == false %}
-            <form action="/especializacion/eliminar" method="post">
-                <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
-                <input type="button" value="Eliminar" id="btnEliminar{{ especializacion.idEspecializacion }}"
-                    onclick="document.getElementById('eliminarSi{{ especializacion.idEspecializacion }}').style.display='inline-block';document.getElementById('eliminarNo{{ especializacion.idEspecializacion }}').style.display='inline-block';document.getElementById('btnEliminar{{ especializacion.idEspecializacion }}').style.display='none'">
-                <input type="submit" value="Si" id="eliminarSi{{ especializacion.idEspecializacion }}"
-                    style="display: none">
-                <input type="reset" value="No" id="eliminarNo{{ especializacion.idEspecializacion }}"
-                    style="display: none"
-                    onclick="document.getElementById('eliminarSi{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('eliminarNo{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('btnEliminar{{ especializacion.idEspecializacion }}').style.display='inline-block'">
-            </form>
-            {% endif %}
-        </td>
-    </tr>
-    {% else %}
-    <h2 class='error'>No hay ninguna Especializacion cargada</h2> {% endfor %}
-</table>
+    </script>
+    <form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion" method="post"
+        id="formularioEspecializacion" style="display: none">
+        <fieldset class="basicosEspecializacion">
+            <legend> Alta de Especializacion</legend>
+            <label for="nombre">Nombre del Especializacion</label>
+            <input type="text" name="nombre" autofocus>
+        </fieldset>
+        <input type="submit">
+    </form>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">ID Especializacion</th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th onclick="sortTable(2,'miTabla')">Accion</th>
+        {% for especializacion in datos.todasEspecializaciones %}
+        <tr>
+            <td>{{ especializacion.idEspecializacion }}</td>
+            <td>{{ especializacion.nombre }}</td>
+            <td>
+                <a
+                    href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
+                    <input type="button" value="MODIFICAR">
+                </a>
+                {% if especializacion.usado == false %}
+                <form action="/especializacion/eliminar" method="post">
+                    <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
+                    <input type="button" value="Eliminar" id="btnEliminar{{ especializacion.idEspecializacion }}"
+                        onclick="document.getElementById('eliminarSi{{ especializacion.idEspecializacion }}').style.display='inline-block';document.getElementById('eliminarNo{{ especializacion.idEspecializacion }}').style.display='inline-block';document.getElementById('btnEliminar{{ especializacion.idEspecializacion }}').style.display='none'">
+                    <input type="submit" value="Si" id="eliminarSi{{ especializacion.idEspecializacion }}"
+                        style="display: none">
+                    <input type="reset" value="No" id="eliminarNo{{ especializacion.idEspecializacion }}"
+                        style="display: none"
+                        onclick="document.getElementById('eliminarSi{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('eliminarNo{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('btnEliminar{{ especializacion.idEspecializacion }}').style.display='inline-block'">
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay ninguna Especializacion cargada</h2> {% endfor %}
+    </table>
+</div>
 {% endblock %}

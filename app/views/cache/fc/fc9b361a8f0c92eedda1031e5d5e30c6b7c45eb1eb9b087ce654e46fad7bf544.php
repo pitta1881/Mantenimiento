@@ -191,49 +191,54 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
                 // line 66
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaFin", array()), "html", null, true);
                 echo "</td>
-            <td><a href=\"/pedido/verTodos\"><input type=\"button\" value=\"Crear Pedido\"></a></td>
+            <td style=\"background-color:lightgreen\"><a href=\"/pedido/verTodos?idEvento=";
+                // line 67
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "idEvento", array()), "html", null, true);
+                echo "\"><input
+                        type=\"button\" value=\"Crear Pedido\"></a>
+            </td>
         </tr>
         ";
             } else {
-                // line 70
+                // line 72
                 echo "        <tr>
             <td>";
-                // line 71
+                // line 73
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "idEvento", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 72
+                // line 74
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "nombreEvento", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 73
+                // line 75
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "descripcion", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 74
+                // line 76
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaInicio", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 75
+                // line 77
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaFin", array()), "html", null, true);
                 echo "</td>
             <td></td>
         </tr>
         ";
             }
-            // line 79
+            // line 81
             echo "        ";
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 80
+            // line 82
             echo "        <h2 class='error'>No hay eventos</h2>
         ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['evento'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 82
+        // line 84
         echo "    </table>
 </div>
 ";
@@ -251,7 +256,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  237 => 82,  230 => 80,  225 => 79,  218 => 75,  214 => 74,  210 => 73,  206 => 72,  202 => 71,  199 => 70,  192 => 66,  188 => 65,  184 => 64,  180 => 63,  176 => 62,  173 => 61,  170 => 60,  165 => 59,  151 => 47,  144 => 45,  136 => 42,  132 => 41,  128 => 40,  124 => 39,  118 => 38,  112 => 37,  109 => 36,  103 => 35,  101 => 34,  86 => 22,  80 => 19,  74 => 16,  68 => 13,  62 => 9,  59 => 8,  50 => 5,  44 => 4,  41 => 3,  35 => 2,  15 => 1,);
+        return array (  242 => 84,  235 => 82,  230 => 81,  223 => 77,  219 => 76,  215 => 75,  211 => 74,  207 => 73,  204 => 72,  196 => 67,  192 => 66,  188 => 65,  184 => 64,  180 => 63,  176 => 62,  173 => 61,  170 => 60,  165 => 59,  151 => 47,  144 => 45,  136 => 42,  132 => 41,  128 => 40,  124 => 39,  118 => 38,  112 => 37,  109 => 36,  103 => 35,  101 => 34,  86 => 22,  80 => 19,  74 => 16,  68 => 13,  62 => 9,  59 => 8,  50 => 5,  44 => 4,  41 => 3,  35 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -322,7 +327,9 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
             <td style=\"background-color:lightgreen\">{{ evento.descripcion }}</td>
             <td style=\"background-color:lightgreen\">{{ evento.fechaInicio }}</td>
             <td style=\"background-color:lightgreen\">{{ evento.fechaFin }}</td>
-            <td><a href=\"/pedido/verTodos\"><input type=\"button\" value=\"Crear Pedido\"></a></td>
+            <td style=\"background-color:lightgreen\"><a href=\"/pedido/verTodos?idEvento={{ evento.idEvento }}\"><input
+                        type=\"button\" value=\"Crear Pedido\"></a>
+            </td>
         </tr>
         {% else %}
         <tr>

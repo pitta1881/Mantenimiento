@@ -64,7 +64,9 @@
             <td style="background-color:lightgreen">{{ evento.descripcion }}</td>
             <td style="background-color:lightgreen">{{ evento.fechaInicio }}</td>
             <td style="background-color:lightgreen">{{ evento.fechaFin }}</td>
-            <td><a href="/pedido/verTodos"><input type="button" value="Crear Pedido"></a></td>
+            <td style="background-color:lightgreen"><a href="/pedido/verTodos?idEvento={{ evento.idEvento }}"><input
+                        type="button" value="Crear Pedido"></a>
+            </td>
         </tr>
         {% else %}
         <tr>

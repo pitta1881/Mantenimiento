@@ -13,24 +13,26 @@
 {% endblock %}
 
 {% block main %}
-<h1>Modificar Sector</h1>
-<form action="/sectores/administracionSectores/modificarSector" method="POST">
-    <fieldset class="basicosPedido">
-        <legend> Modificar Sector</legend>
-        <label for="idSector">Numero de Sector</label>
-        <input type="text" name="idSector" value="{{ datos.sector.idSector }}" readonly class="inputDisabled">
-        <label for="nombreSector">Nombre del Sector</label>
-        <input type="text" name="nombreSector" value="{{ datos.sector.nombreSector }}">
-        <label for="tipo">Tipo</label><span class="asterisco">*</span>
-        <input type="textarea" name="tipo" autofocus required value="{{ datos.sector.tipo }}"><br>
-        <label for="responsable">Responsable</label>
-        <input type="text" name="responsable" value="{{ datos.sector.responsable }}">
-        <label for="telefono">Telefono</label>
-        <input type="tel" name="telefono" value="{{ datos.sector.telefono }}">
-        <label for="email">Email</label>
-        <input type="email" name="email" value="{{ datos.sector.telefono }}">
-    </fieldset>
-    <input type="reset" value="Volver" onclick="history.back()">
-    <input type="submit">
-</form>
+<div class="contenido3">
+    <h1>Modificar Sector</h1>
+    <form action="/sectores/administracionSectores/modificarSector" method="POST">
+        <fieldset class="basicosPedido">
+            <legend> Modificar Sector</legend>
+            <label for="idSector">Numero de Sector</label>
+            <input type="text" name="idSector" value="{{ datos.sector.idSector }}" readonly class="inputDisabled">
+            <label for="nombreSector">Nombre del Sector</label>
+            <input type="text" name="nombreSector" value="{{ datos.sector.nombreSector }}">
+            <label for="tipo">Tipo</label><span class="asterisco">*</span>
+            <input type="textarea" name="tipo" autofocus required value="{{ datos.sector.tipo }}"><br>
+            <label for="responsable">Responsable</label>
+            <input type="text" name="responsable" value="{{ datos.sector.responsable }}">
+            <label for="telefono">Telefono</label>
+            <input type="tel" name="telefono" value="{{ datos.sector.telefono }}">
+            <label for="email">Email</label>
+            <input type="email" name="email" value="{{ datos.sector.telefono }}">
+        </fieldset>
+        <input type="reset" value="Volver" onclick="history.back()">
+        <input type="submit">
+    </form>
+</div>
 {% endblock %}

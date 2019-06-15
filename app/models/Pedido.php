@@ -13,6 +13,7 @@ class Pedido extends Model{
     protected $tableItemAgentes='itemAgente';
     protected $tableOT = 'OrdenDeTrabajo';
     protected $tableItemOT='itemot';
+    protected $tableEvento='eventos';
 
     public function getSectores() {
         $array = [];
@@ -146,5 +147,9 @@ class Pedido extends Model{
             $miOTid = json_decode(json_encode($OTid[0]), True);
         }        
         return $miOTid['idOT'];
+    }
+
+    public function eliminarEvento($idEvento){
+        $this->db->deleteEventoValidar($this->tableEvento,$idEvento);
     }
 }

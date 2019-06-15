@@ -20,6 +20,9 @@ class PedidoController extends Controller{
         $datos["diaHoy"] = date("Y-m-d");
        $datos["sectores"] = $this->model->getSectores();
        $datos["prioridades"] = $this->model->getPrioridades();
+       if (!empty($_GET)) {
+        $datos['idEvento']=$_GET['idEvento'];
+       }       
        $datos["estados"] = $this->model->getEstados();
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/pedidos/pedidosVerTodos', compact('datos'));
@@ -48,7 +51,11 @@ class PedidoController extends Controller{
             'prioridad' => $_POST['prioridad'],
             'nombreUsuario' => $_POST['nombreUsuario']
         ];
-        $this->model->insert($pedido);
+      $this->model->insert($pedido);
+      if(!empty($_POST['idEvento'])){
+        var_dump($_POST['idEvento']);  
+        $this->model->eliminarEvento($_POST['idEvento']);
+      }
       $datos['arrayPedido'] = $pedido;
       $datos["userLogueado"] = $_SESSION['user'];
       $idNuevoPedido = $this->model->getIdUltimoPedido();

@@ -13,18 +13,20 @@
 {% endblock %}
 
 {% block main %}
-<h1>Modificar Insumo</h1>
-<form action="/insumos/administracionInsumos/modificarInsumo" method="POST">
-    <fieldset class="basicosPedido">
-        <legend> Modificar Insumo</legend>
-        <label for="idInsumo">Numero de Insumo</label>
-        <input type="text" name="idInsumo" value="{{ datos.insumo.idInsumo }}" readonly class="inputDisabled">
-        <label for="nombreInsumo">Nombre del Insumo</label>
-        <input type="text" name="nombreInsumo" value="{{ datos.insumo.nombreInsumo }}">
-        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-        <input type="textarea" name="descripcion" autofocus required value="{{ datos.insumo.descripcion }}"><br>
-    </fieldset>
-    <input type="reset" value="Volver" onclick="history.back()">
-    <input type="submit">
-</form>
+<div class="contenido3">
+    <h1>Modificar Insumo</h1>
+    <form action="/insumos/administracionInsumos/modificarInsumo" method="POST">
+        <fieldset class="basicosPedido">
+            <legend> Modificar Insumo</legend>
+            <label for="idInsumo">Numero de Insumo</label>
+            <input type="text" name="idInsumo" value="{{ datos.insumo.idInsumo }}" readonly class="inputDisabled">
+            <label for="nombreInsumo">Nombre del Insumo</label>
+            <input type="text" name="nombreInsumo" value="{{ datos.insumo.nombreInsumo }}">
+            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+            <input type="textarea" name="descripcion" autofocus required value="{{ datos.insumo.descripcion }}"><br>
+        </fieldset>
+        <input type="reset" value="Volver" onclick="history.back()">
+        <input type="submit">
+    </form>
+</div>
 {% endblock %}

@@ -13,36 +13,38 @@
 {% endblock %}
 
 {% block main %}
-<h2>Modificar Tarea Nº {{ datos.unaTarea.idTarea }} del Pedido Nº {{ datos.unaTarea.idPedido }}</h2>
-<form action="/tarea/modificar/guardar" method="post" id="formularioTarea">
-    <label for="idTarea">Tarea</label><span class="asterisco">*</span>
-    <input type="text" name="idTarea" value="{{ datos.unaTarea.idTarea }}" readonly class="inputDisabled">
-    <label for="idPedido">Pedido</label><span class="asterisco">*</span>
-    <input type="text" name="idPedido" value="{{ datos.unaTarea.idPedido }}" readonly class="inputDisabled">
-    <label for="descripcion">Descripcion</label>
-    <input type="textarea" name="descripcion" autofocus required value="{{ datos.unaTarea.descripcion }}">
-    <label for="especializacion">Especializacion</label>
-    <select name="especializacion">
-        {% for especializacion in datos.especializaciones %}
-        {% if especializacion == datos.unaTarea.especializacionNombre %}
-        <option value="{{ especializacion }}" selected>{{ especializacion }}</option>
-        {% else %}
-        <option value="{{ especializacion }}">{{ especializacion }}</option>
-        {% endif %}
+<div class="contenido3">
+    <h2>Modificar Tarea Nº {{ datos.unaTarea.idTarea }} del Pedido Nº {{ datos.unaTarea.idPedido }}</h2>
+    <form action="/tarea/modificar/guardar" method="post" id="formularioTarea">
+        <label for="idTarea">Tarea</label><span class="asterisco">*</span>
+        <input type="text" name="idTarea" value="{{ datos.unaTarea.idTarea }}" readonly class="inputDisabled">
+        <label for="idPedido">Pedido</label><span class="asterisco">*</span>
+        <input type="text" name="idPedido" value="{{ datos.unaTarea.idPedido }}" readonly class="inputDisabled">
+        <label for="descripcion">Descripcion</label>
+        <input type="textarea" name="descripcion" autofocus required value="{{ datos.unaTarea.descripcion }}">
+        <label for="especializacion">Especializacion</label>
+        <select name="especializacion">
+            {% for especializacion in datos.especializaciones %}
+            {% if especializacion == datos.unaTarea.especializacionNombre %}
+            <option value="{{ especializacion }}" selected>{{ especializacion }}</option>
+            {% else %}
+            <option value="{{ especializacion }}">{{ especializacion }}</option>
+            {% endif %}
 
-        {% endfor %}
-    </select>
-    <label for="prioridad">Prioridad</label>
-    <select name="prioridad">
-        {% for prioridad in datos.prioridades %}
-        {% if prioridad == datos.unaTarea.prioridad %}
-        <option value="{{ prioridad }}" selected>{{ prioridad }}</option>
-        {% else %}
-        <option value="{{ prioridad }}">{{ prioridad }}</option>
-        {% endif %}
-        {% endfor %}
-    </select>
-    <input type="reset" value="Volver" onclick="history.back()">
-    <input type="submit" value="Guardar Cambios">
-</form>
+            {% endfor %}
+        </select>
+        <label for="prioridad">Prioridad</label>
+        <select name="prioridad">
+            {% for prioridad in datos.prioridades %}
+            {% if prioridad == datos.unaTarea.prioridad %}
+            <option value="{{ prioridad }}" selected>{{ prioridad }}</option>
+            {% else %}
+            <option value="{{ prioridad }}">{{ prioridad }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <input type="reset" value="Volver" onclick="history.back()">
+        <input type="submit" value="Guardar Cambios">
+    </form>
+</div>
 {% endblock %}

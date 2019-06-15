@@ -13,106 +13,109 @@
 {% endblock %}
 
 {% block main %}
-<h1>Su Tarea</h1>
-<input type="button" value="IMPRIMIR" onclick="print()">
-{% if datos.miTarea.estado != "Finalizado" %}
-<a href="/tarea/modificar/seleccionado?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}"><input
-        type="button" value="Modificar Datos"></a>
-{% if datos.miTarea.estado != 'Iniciado' %}
-{% set estados = ['En Curso','Pendiente','Finalizado'] %}
-<form action="/tarea/cambiarEstado/seleccionado" method="post">
-    <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
-    <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
-    <input type="text" name="idOT" value="{{ datos.miTarea.miOT.idOT }}" hidden>
-    <label for="estado" id="estadoLabel" style="display: none">Estado</label>
-    <select name="estado" id="estadoSelect" style="display: none">
-        {% for estado in estados %}
-        <option value="{{ estado }}">{{ estado }}</option>
-        {% endfor %}
-    </select>
-    <input type="button" value="Cambiar Estado" id="formCambiarEstado"
-        onclick="document.getElementById('cambiarEstadoSi').style.display='inline-block';document.getElementById('cambiarEstadoNo').style.display='inline-block';document.getElementById('formCambiarEstado').style.display='none';document.getElementById('estadoLabel').style.display='inline-block';document.getElementById('estadoSelect').style.display='inline-block'">
-    <input type="submit" value="Cambiar" id="cambiarEstadoSi" style="display: none">
-    <input type="reset" value="Salir" id="cambiarEstadoNo" style="display: none"
-        onclick="document.getElementById('cambiarEstadoSi').style.display='none';document.getElementById('cambiarEstadoNo').style.display='none';document.getElementById('formCambiarEstado').style.display='inline-block';document.getElementById('estadoLabel').style.display='none';document.getElementById('estadoSelect').style.display='none'">
-</form>
-{% endif %}
-{% endif %}
-<dl>
-    <dt>Nº Pedido:</dt>
-    <dd><a href="fichaPedido?id={{ datos.miTarea.idPedido }}">Pedido {{ datos.miTarea.idPedido }}</a></dd>
-    <dt>Nº Tarea:</dt>
-    <dd>{{ datos.miTarea.idTarea }}</dd>
-    <dt>Especializacion:</dt>
-    <dd>{{ datos.miTarea.especializacionNombre }}</dd>
-    <dt>Descripcion:</dt>
-    <dd>{{ datos.miTarea.descripcion }}</dd>
-    <dt>Estado:</dt>
-    <dd>{{ datos.miTarea.estado }}</dd>
-    <dt>Prioridad:</dt>
-    <dd>{{ datos.miTarea.prioridad }}</dd>
-</dl>
-<h2>PERTENECE A LA ORDEN DE TRABAJO:</h2>
-<table>
-    <th>Nº OT</th>
-    <th>Fecha de Inicio</th>
-    <th>Fecha de Fin</th>
-    <th>Estado</th>
-    <th>Accion</th>
-    {% if datos.miTarea.estado == "Iniciado" %}
-    <a href="/ot/crear"><input type="button" value="Crear una OT"></a>
-    <h2 class='error'>No está asignado a ninguna OT</h2>
-    {% else %}
-    <tr>
-        <td> <a href="/fichaOT?idOT={{ datos.miTarea.miOT.idOT }}" title="Ver Mas">OT {{ datos.miTarea.miOT.idOT }}</a>
-        </td>
-        <td> {{ datos.miTarea.miOT.fechaInicio }} </td>
-        <td> {{ datos.miTarea.miOT.fechaFin }} </td>
-        <td> {{ datos.miTarea.miOT.estado }} </td>
-        <td> <a href="/fichaOT?idOT={{ datos.miTarea.miOT.idOT }}" title="Ver Mas"> <input type="button"
-                    value="VER MAS"></a></td>
-    </tr>
+<div class="contenido3">
+    <h1>Su Tarea</h1>
+    <input type="button" value="IMPRIMIR" onclick="print()">
+    {% if datos.miTarea.estado != "Finalizado" %}
+    <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}"><input
+            type="button" value="Modificar Datos"></a>
+    {% if datos.miTarea.estado != 'Iniciado' %}
+    {% set estados = ['En Curso','Pendiente','Finalizado'] %}
+    <form action="/tarea/cambiarEstado/seleccionado" method="post">
+        <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
+        <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+        <input type="text" name="idOT" value="{{ datos.miTarea.miOT.idOT }}" hidden>
+        <label for="estado" id="estadoLabel" style="display: none">Estado</label>
+        <select name="estado" id="estadoSelect" style="display: none">
+            {% for estado in estados %}
+            <option value="{{ estado }}">{{ estado }}</option>
+            {% endfor %}
+        </select>
+        <input type="button" value="Cambiar Estado" id="formCambiarEstado"
+            onclick="document.getElementById('cambiarEstadoSi').style.display='inline-block';document.getElementById('cambiarEstadoNo').style.display='inline-block';document.getElementById('formCambiarEstado').style.display='none';document.getElementById('estadoLabel').style.display='inline-block';document.getElementById('estadoSelect').style.display='inline-block'">
+        <input type="submit" value="Cambiar" id="cambiarEstadoSi" style="display: none">
+        <input type="reset" value="Salir" id="cambiarEstadoNo" style="display: none"
+            onclick="document.getElementById('cambiarEstadoSi').style.display='none';document.getElementById('cambiarEstadoNo').style.display='none';document.getElementById('formCambiarEstado').style.display='inline-block';document.getElementById('estadoLabel').style.display='none';document.getElementById('estadoSelect').style.display='none'">
+    </form>
     {% endif %}
-</table>
-<h2>AGENTES</h2>
-{% if  datos.miTarea.estado != "Finalizado" %}
-<a href="/tarea/agentes/asignar?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}"><input
-        type="button" value="Asignar Agentes"></a>
-{% endif %}
-<table id="miTabla">
-    <th onclick="sortTable(0,'miTabla')">Nº Agente</th>
-    <th onclick="sortTable(1,'miTabla')">Nombre</th>
-    <th onclick="sortTable(2,'miTabla')">Apellido</th>
-    <th onclick="sortTable(3,'miTabla')">Especializacion</th>
-    <th onclick="sortTable(4,'miTabla')">Accion</th>
-    {% for agente in datos.miTarea.agentes %}
-    <tr>
-        <td>{{ agente.idAgente }}</td>
-        <td>{{ agente.nombre }}</td>
-        <td>{{ agente.apellido }}</td>
-        <td>{{ agente.especializacionNombre }}</td>
-        <td>
-            {% if  datos.miTarea.estado != "Finalizado" %}
-            <form action="/tarea/agentes/desasignar" method="post">
-                <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
-                <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
-                <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
-                <input type="button" value="Desasignar Agente"
-                    id="btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
-                    onclick="document.getElementById('cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none'">
-                <input type="submit" value="Si"
-                    id="cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
-                    style="display: none">
-                <input type="reset" value="No"
-                    id="cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
-                    style="display: none"
-                    onclick="document.getElementById('cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block'">
-            </form>
-            {% endif %}
-        </td>
-    </tr>
-    {% else %}
-    <h2 class='error'>No hay Agentes asignados aún</h2>
-    {% endfor %}
-</table>
+    {% endif %}
+    <dl>
+        <dt>Nº Pedido:</dt>
+        <dd><a href="fichaPedido?id={{ datos.miTarea.idPedido }}">Pedido {{ datos.miTarea.idPedido }}</a></dd>
+        <dt>Nº Tarea:</dt>
+        <dd>{{ datos.miTarea.idTarea }}</dd>
+        <dt>Especializacion:</dt>
+        <dd>{{ datos.miTarea.especializacionNombre }}</dd>
+        <dt>Descripcion:</dt>
+        <dd>{{ datos.miTarea.descripcion }}</dd>
+        <dt>Estado:</dt>
+        <dd>{{ datos.miTarea.estado }}</dd>
+        <dt>Prioridad:</dt>
+        <dd>{{ datos.miTarea.prioridad }}</dd>
+    </dl>
+    <h2>PERTENECE A LA ORDEN DE TRABAJO:</h2>
+    <table>
+        <th>Nº OT</th>
+        <th>Fecha de Inicio</th>
+        <th>Fecha de Fin</th>
+        <th>Estado</th>
+        <th>Accion</th>
+        {% if datos.miTarea.estado == "Iniciado" %}
+        <a href="/ot/crear"><input type="button" value="Crear una OT"></a>
+        <h2 class='error'>No está asignado a ninguna OT</h2>
+        {% else %}
+        <tr>
+            <td> <a href="/fichaOT?idOT={{ datos.miTarea.miOT.idOT }}" title="Ver Mas">OT
+                    {{ datos.miTarea.miOT.idOT }}</a>
+            </td>
+            <td> {{ datos.miTarea.miOT.fechaInicio }} </td>
+            <td> {{ datos.miTarea.miOT.fechaFin }} </td>
+            <td> {{ datos.miTarea.miOT.estado }} </td>
+            <td> <a href="/fichaOT?idOT={{ datos.miTarea.miOT.idOT }}" title="Ver Mas"> <input type="button"
+                        value="VER MAS"></a></td>
+        </tr>
+        {% endif %}
+    </table>
+    <h2>AGENTES</h2>
+    {% if  datos.miTarea.estado != "Finalizado" %}
+    <a href="/tarea/agentes/asignar?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}"><input
+            type="button" value="Asignar Agentes"></a>
+    {% endif %}
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">Nº Agente</th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th onclick="sortTable(2,'miTabla')">Apellido</th>
+        <th onclick="sortTable(3,'miTabla')">Especializacion</th>
+        <th onclick="sortTable(4,'miTabla')">Accion</th>
+        {% for agente in datos.miTarea.agentes %}
+        <tr>
+            <td>{{ agente.idAgente }}</td>
+            <td>{{ agente.nombre }}</td>
+            <td>{{ agente.apellido }}</td>
+            <td>{{ agente.especializacionNombre }}</td>
+            <td>
+                {% if  datos.miTarea.estado != "Finalizado" %}
+                <form action="/tarea/agentes/desasignar" method="post">
+                    <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
+                    <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+                    <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
+                    <input type="button" value="Desasignar Agente"
+                        id="btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
+                        onclick="document.getElementById('cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none'">
+                    <input type="submit" value="Si"
+                        id="cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
+                        style="display: none">
+                    <input type="reset" value="No"
+                        id="cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
+                        style="display: none"
+                        onclick="document.getElementById('cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block'">
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay Agentes asignados aún</h2>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}
