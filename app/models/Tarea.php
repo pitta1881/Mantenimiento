@@ -15,7 +15,7 @@ class Tarea extends Model
     protected $tablePedido = 'pedido';
 
     public function getEspecializaciones() {
-        $array;
+        $array = [];
         $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);
         $misEspecializaciones = json_decode(json_encode($especializaciones), True);
         for ($i=0; $i < count($misEspecializaciones); $i++) { 

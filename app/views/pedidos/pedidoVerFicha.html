@@ -51,6 +51,10 @@
     }
 </script>
 <form action="tarea/guardar" method="post" id="formularioTarea" style="display: none">
+    {% if datos.especializaciones is empty %}
+    <h2>Primero debe añadir una Especializacion --> <a href="/especializacion/administracionEspecializacion">HAGA CLICK
+            AQUI</a></h2>
+    {% else %}
     <label for="idPedido">Pedido</label>
     <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" readonly class="inputDisabled">
     <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
@@ -70,6 +74,7 @@
     <label for="estado">Estado</label>
     <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
     <input type="submit" value="Crear Tarea">
+    {% endif %}
 </form>
 {% if datos.miPedido.estado == "Finalizado" %}
 <script>
