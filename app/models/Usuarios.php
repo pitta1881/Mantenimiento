@@ -8,12 +8,14 @@ class Usuarios extends Model
 {
     protected $table = 'usuarios';
     protected $tableRol='rol';
+    protected $tablePersona='persona';
 
     
     public function get()
     {
-        $usuarios = $this->db->selectAll($this->table);
-       
+        //$usuarios = $this->db->selectAll($this->table);
+        return $this->db->selectUsuarioPorPersonaPorRol($this->table,$this->tableRol,$this->tablePersona);
+     //   $persona=$this->db->selectAll($this->'personas');
        
     }
 

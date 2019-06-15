@@ -6,5 +6,6 @@ CREATE TABLE personas (
     nombre VARCHAR(20) NOT NULL,
     direccion TEXT NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    email TEXT NOT NULL
+    email TEXT NOT NULL,
+	idUsuario INTEGER(8)
 );

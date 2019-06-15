@@ -97,6 +97,16 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
     
+    public function selectUsuarioPorPersonaPorRol($tableUsuario, $tablePersona, $tableRol){
+        
+            
+        $statement = $this->pdo->prepare(
+            "SELECT T1.nombre,T2.nombre,T2.apellido,T2.DNI,T3.nombreRol FROM $tableUsuario T1 LEFT JOIN $tablePersona T2 ON T1.idPersona=T2.idUsuario  LEFT JOIN $tableRol T3 ON T1.idRol=T3.idRol"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+    
     public function comparaInsumos($table, $nombreInsumo) {
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table}

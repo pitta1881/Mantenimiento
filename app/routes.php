@@ -34,12 +34,12 @@
 
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');
-    $router->get('usuario/gestionUsuario','UsuariosControler@vistaGestionUsuario');
-    $router->get('usuario/AdministracionUsuario','UsuariosControler@vistaAdministracionUsuario');
-    $router->get('usuario/altaUsuario','UsuariosControler@vistaAltaUsuario');
-    $router->post('usuario/validarUsuario','UsuariosControler@validarUsuario');
-    $router->get('usuario/modificarUsuario','UsuariosControler@vistamodificarUsuario');
-    $router->get('usuario/eliminarUsuario','UsuariosControler@vistaeliminarUsuario');
+    $router->get('usuarios/gestionUsuario','UsuariosControler@vistaGestionUsuario');
+    $router->get('usuarios/AdministracionUsuario','UsuariosControler@vistaAdministracionUsuario');
+    $router->get('usuarios/altaUsuario','UsuariosControler@vistaAltaUsuario');
+    $router->post('usuarios/validarUsuario','UsuariosControler@validarUsuario');
+    $router->get('usuarios/modificarUsuario','UsuariosControler@vistamodificarUsuario');
+    $router->get('usuarios/eliminarUsuario','UsuariosControler@vistaeliminarUsuario');
 
 //rutas rol
     $router->get('usuario/AdministracionRol','UsuariosControler@vistaAdministracionRol');

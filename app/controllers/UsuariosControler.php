@@ -12,13 +12,26 @@ class UsuariosControler extends Controller
       $this->model = new Usuarios();
     
    }
+    
+       /*Show all pedidos*/
+    public function index(){
+        $todosUsuarios = $this->model->get();      
+        $datos['$todosUsuarios'] = $todosUsuarios;
+        $datos["userLogueado"] = $_SESSION['user'];
+        
+        return view('usuario/AdministracionUsuario', compact('datos'));
+    }
     public function vistaGestionUsuario(){
         
         return view('/usuarios/gestionUsuario');
     
     }
 public function vistaAdministracionUsuario(){
-    return view('/usuarios/administracionUsuario');
+    $todosUsuarios = $this->model->get();      
+        $datos['todosUsuarios'] = $todosUsuarios;
+        $datos["userLogueado"] = $_SESSION['user'];
+        
+        return view('/usuarios/AdministracionUsuario', compact('datos'));
     
 }
 public function vistaAltaUsuario(){
@@ -91,6 +104,3 @@ public function vistaAltaPersona(){
  }
     
 }
-       
-       
-   

@@ -1,12 +1,96 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Gestion de usuarios{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<h1>Listado de Pedidos</h1>
+<input type="button" value="CREAR NUEVO PEDIDO" onclick="mostrarFormulario()">
+<script>
+    function mostrarFormulario() {
+        var formularioPedido = document.getElementById('formularioPedido');
+        if (formularioPedido.style.display == "block") {
+            formularioPedido.style.display = "none";
+        } else {
+            formularioPedido.style.display = "block"
+        }
+    }
 
-{% block title %}Gestion de usuarios{% endblock %}
+</script>
+<form action="/pedido/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
+    {% if datos.sectores is empty %}
+    <h2>Primero debe añadir un Sector --> <a href="/sectores/administracionSectores">HAGA CLICK AQUI</a></h2> {% else %}
+    <fieldset class="basicosPedido">
+        <legend>Datos Basicos</legend>
+        <label for="nombreUsuario">Usuario Creador</label>
+        <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" readonly class="inputDisabled">
+        <label for="fechaInicio">Fecha</label>
+        <input type="DATE" name="fechaInicio" value="{{ datos.diaHoy }}" readonly class="inputDisabled">
+        <br>
+        <label for="estado">Estado</label>
+        <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
+        <br>
+        <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+        <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+        <br>
+        <label for="sector">Sector</label>
+        <select name="sector">
+            {% for sector in datos.sectores %}
+            <option value="{{ sector }}">{{ sector }}</option>
+            {% endfor %}
+        </select>
+        <label for="prioridad">Prioridad</label>
+        <select name="prioridad">
+            {% for prioridad in datos.prioridades %}
+            <option value="{{ prioridad }}">{{ prioridad }}</option>
+            {% endfor %}
+        </select>
+    </fieldset>
+    <input type="reset">
+    <input type="submit"> {% endif %}
+</form>
+<form action="/pedido/buscar" method="POST">
+    <select name="filtro">
+        <option value="id">Nº PEDIDO</option>
+        <option value="sector">SECTOR</option>
+        <option value="fechaInicio">FECHA INICIO</option>
+        <option value="estado">ESTADO</option>
+        <option value="prioridad">PRIORIDAD</option>
+    </select>
+    <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+    <input type="submit" value="Buscar">
+</form>
 
-{% block header %}
-{{ include('partials/nav.html') }}
-{% endblock %}
-
-{% block head %}
-{{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP">
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
+    <th onclick="sortTable(1,'miTabla')">Descripcion</th>
+    <th onclick="sortTable(2,'miTabla')">Sector</th>
+    <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
+    <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
+    <th onclick="sortTable(5,'miTabla')">Tareas</th>
+    <th onclick="sortTable(6,'miTabla')">Estado</th>
+    <th onclick="sortTable(7,'miTabla')">Prioridad</th>
+    <th onclick="sortTable(8,'miTabla')">Usuario</th>
+    <th onclick="sortTable(9,'miTabla')">Accion</th>
+    {% for pedido in datos.todosPedidos %} {% set estilo = "" %} {% if pedido.estado == "Finalizado" %} {% set estilo = "style=background-color:lightcoral" %} {% else %} {% if pedido.estado == "Para Finalizar" %} {% set estilo = "style=background-color:goldenrod" %} {% endif %} {% endif %}
+    <tr>
+        <td {{ estilo }}>{{ pedido.id }}</td>
+        <td {{ estilo }}>{{ pedido.descripcion }}</td>
+        <td {{ estilo }}>{{ pedido.nombreSector }}</td>
+        <td {{ estilo }}>{{ pedido.fechaInicio }}</td>
+        <td {{ estilo }}>{{ pedido.fechaFin }}</td>
+        <td {{ estilo }}>{{ pedido.tareasAsignadas }}</td>
+        <td {{ estilo }}>{{ pedido.estado }}</td>
+        <td {{ estilo }}>{{ pedido.prioridad }}</td>
+        <td {{ estilo }}>{{ pedido.nombreUsuario }}</td>
+        <td {{ estilo }}>
+            <a href='/fichaPedido?id={{ pedido.id }}'>
+                <input type="button" value="VER MAS">
+            </a>
+            {% if pedido.estado != "Finalizado" %}
+            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
+                <input type="button" value="MODIFICAR">
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Pedidos</h2> {% endfor %}
+</table>
 {% endblock %}

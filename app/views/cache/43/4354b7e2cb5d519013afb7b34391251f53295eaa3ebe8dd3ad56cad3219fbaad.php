@@ -41,6 +41,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                 <li><a href=\"\">Tareas</a>
 
                 </li>
+<<<<<<< Updated upstream
                 <ul>
                     <li><a href=\"\">Usuarios</a>
                         <ul class=\"submenu\">
@@ -74,6 +75,24 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                 </ul>
         </li>
         <li><a href=\"/agente/administracionAgentes\">Agentes</a>
+=======
+                <li><a>Usuarios</a>
+                    <ul class=\"submenu\">
+                        <li><a href=\"/usuario/AdministracionUsuario\">Usuarios</a>
+
+                        </li>
+                        <li><a href=\"\">Personas</a>
+                        </li>
+                        <li><a href=\"\">Roles</a>
+
+                        </li>
+                        <li><a href=\"\">Permisos</a>
+
+                        </li>
+                    </ul>
+                </li>
+                <li><a href=\"/agente/administracionAgentes\">Agentes</a>
+>>>>>>> Stashed changes
 
         </li>
         <li><a href=\"/especializacion/administracionEspecializacion\">Especializaciones</a>
@@ -106,7 +125,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         </li>
         <li>
             <h3 class=\"titulo1\">";
-        // line 86
+        // line 68
         echo twig_escape_filter($this->env, ($context["nombreP"] ?? null), "html", null, true);
         echo "</h3>
         </li>
@@ -114,7 +133,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
         <li>
             <p class=\"user\">";
-        // line 91
+        // line 73
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
         echo " |<a href=\"/cerrarSesion\">Cerrar Sesión</a></p>
         </li>
@@ -135,7 +154,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-        return array (  118 => 91,  110 => 86,  23 => 1,);
+        return array (  100 => 73,  92 => 68,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -161,6 +180,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                 <li><a href=\"\">Tareas</a>
 
                 </li>
+<<<<<<< Updated upstream
                 <ul>
                     <li><a href=\"\">Usuarios</a>
                         <ul class=\"submenu\">
@@ -194,6 +214,24 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                 </ul>
         </li>
         <li><a href=\"/agente/administracionAgentes\">Agentes</a>
+=======
+                <li><a>Usuarios</a>
+                    <ul class=\"submenu\">
+                        <li><a href=\"/usuario/AdministracionUsuario\">Usuarios</a>
+
+                        </li>
+                        <li><a href=\"\">Personas</a>
+                        </li>
+                        <li><a href=\"\">Roles</a>
+
+                        </li>
+                        <li><a href=\"\">Permisos</a>
+
+                        </li>
+                    </ul>
+                </li>
+                <li><a href=\"/agente/administracionAgentes\">Agentes</a>
+>>>>>>> Stashed changes
 
         </li>
         <li><a href=\"/especializacion/administracionEspecializacion\">Especializaciones</a>

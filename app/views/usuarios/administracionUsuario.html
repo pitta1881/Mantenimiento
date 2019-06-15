@@ -1,30 +1,74 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Gestion de usuarios{% endblock %} {% block header %} {{ include('partials/nav.html') }} {% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<h1>Listado de Usuarios</h1>
+<input type="button" value=" NUEVO USUARIO" onclick="mostrarFormulario()">
+<script>
+    function mostrarFormulario() {
+        var formularioPedido = document.getElementById('formularioUsuario');
+        if (formularioPedido.style.display == "block") {
+            formularioPedido.style.display = "none";
+        } else {
+            formularioPedido.style.display = "block"
+        }
+    }
 
-{% block title %}Gestion de usuarios{% endblock %}
+</script>
+<form action="/usuario/validarUsuario" method="POST" id="formularioUsuario" style="display: none; border: 1px solid black">
+    <label for="nombre">Nombre</label>
+    <input type="text" name="nombre" placeholder="Usuario">
+    <br>
+    <label for="nombre">Contraseña</label>
+    <input type="text" name="password" placeholder="contraseña">
+    <label for="roles">Rol del Usuario:</label>
+    <select name="roles" id="rol">
+        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
+        {% for nombre in nombresRoles %}
+        <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
+        {% endfor %}}
+    </select>
+    <label for="roles">Persona:</label>
+    <select name="persona" id="rol">
+        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
+        {% for nombre in nombresRoles %}
+        <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
+        {% endfor %}}
+    </select>
+    <input type="submit" value="Agregar">
+    <input type="reset">
 
-{% block header %}
-{{ include('partials/nav.html') }}
+</form>
+<form action="/pedido/buscar" method="POST">
+    <select name="filtro">
+        <option value="id">Nombre</option>
+        <option value="sector">Nombre y Apellido</option>
+        <option value="fechaInicio">DNI</option>
+        <option value="estado">Rol</option>
+    </select>
+    <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+    <input type="submit" value="Buscar">
+</form>
 
-{% endblock %}
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Nombre Usuario</th>
+    <th onclick="sortTable(1,'miTabla')">DNI </th>
+    <th onclick="sortTable(2,'miTabla')">Rol</th>
+    <th onclick="sortTable(3,'miTabla')">Nombre y Apellido</th>
 
-{% block head %}
-{{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP">
-{% endblock %}
-     {% block main %}
-     <nav class="Otros">
+    {% for usuario in datos.todosUsuarios %}
+    <tr>
+        <td {{ estilo }}>{{ usuario.nombre }}</td>
+        <td {{ estilo }}>{{ usuario.nombre .usuario.apellido }}</td>
+        <td {{ estilo }}>{{ usuario.dni }}</td>
+        <td {{ estilo }}>{{ usuario.rol }}</td>
+        <td {{ estilo }}>
 
-    <ul>
-    
-     
-       
-        <li><a href="/usuario/gestionUsuario">Gestion de Usuario</a></li>
-        <li><a href="/usuario/altaUsuario">Agregar Usuario</a></li>
-        <li><a href="/usuario/modificarUsuario">Modificar Usuario</a></li>
-        <li><a href="/usuario/eliminarUsuario">Eliminar Usuario</a></li>
+            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
+                <input type="button" value="MODIFICAR">
+            </a>
 
-       
-       
-    </ul>
-</nav>
+        </td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Usuarios para mostrar</h2> {% endfor %}
+</table>
 {% endblock %}
