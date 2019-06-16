@@ -1,74 +1,123 @@
-         /* define a fixed width for the entire menu */
-         
-         .mainmenu {
-             margin: 0;
-         }
-         /* reset our lists to remove bullet points and padding */
-         
-         .mainmenu,
-         .submenu .subsubmenu {
-             list-style: none;
-         }
-         /* make ALL links (main and submenu) have padding and background color */
-         
-         .mainmenu a {
-             display: block;
-             background-color: #CCC;
-             text-decoration: none;
-             padding: 10px;
-             color: #000;
-         }
-         /* add hover behaviour */
-         
-         .mainmenu a:hover {
-             background-color: #C5C5C5;
-         }
-         /* when hovering over a .mainmenu item,
+     /* define a fixed width for the entire menu */
+     
+     .mainmenu {
+         margin: 0;
+     }
+     /* reset our lists to remove bullet points and padding */
+     
+     .mainmenu,
+     .submenu .subsubmenu {
+         list-style: none;
+     }
+     /* make ALL links (main and submenu) have padding and background color */
+     
+     .mainmenu a {
+         text-align: left;
+         display: block;
+         background-color: #BBC7D6;
+         text-decoration: none;
+         padding: 0px;
+         width: 15vw;
+         padding: 2vh;
+         color: #000;
+         border-bottom: solid 0.1vw rgba(71, 193, 240, .3);
+     }
+     /* add hover behaviour */
+     
+     .mainmenu a:hover {
+         background-color: #C5C5C5;
+     }
+     /* when hovering over a .mainmenu item,
   display the submenu inside it.
   we're changing the submenu's max-height from 0 to 200px;
 */
-         
-         .mainmenu li:hover .submenu {
-             margin-left: 0;
-             display: block;
-             max-height: 200px;
-         }
-         x
-         /*
+     
+     .mainmenu ul {
+         position: absolute;
+         top: 12vh;
+         left: 2vw;
+         width: 10vw;
+         display: block;
+         background-color: #BBC7D6;
+         text-decoration: none;
+         color: #000;
+         padding: 0;
+     }
+     .mainmenu li:hover .submenu {
+         margin-left: 0;
+         display: block;
+         max-height: 200px;
+         margin: 0;
+         padding: 0vw;
+     }
+     x
+     /*
   we now overwrite the background-color for .submenu links only.
   CSS reads down the page, so code at the bottom will overwrite the code at the top.
 */
-         
-         .submenu a {
-             background-color: #999;
-         }
-         /* hover behaviour for links inside .submenu */
-         
-         .submenu a:hover {
-             background-color: #666;
-         }
-         .submenu {
-             overflow: hidden;
-             max-height: 0;
-             -webkit-transition: all 0.5s ease-out;
-         }
-         .hide {
-             display: none;
-         }
-         .show {
-             background-color: grey;
-             top: 6vh;
-             left: -0.2vw;
-             margin: 0;
-             margin-right: 0;
-             padding: 0;
-             display: block;
-             position: relative;
-             z-index: 100;
-             width: 11vw;
-         }
-         ul {
-             margin: 0;
-             padding: 0vw;
-             padding-left: 0.8vw;
-         }
+     
+     .submenu a {
+         position: absolute;
+         padding: 0vw;
+         background-color: #C5C5C5;
+         text-align: center;
+         width: 10vw;
+         left: 0;
+     }
+     /* hover behaviour for links inside .submenu */
+     
+     .submenu a:hover {
+         background-color: #666;
+     }
+     .submenu {
+         margin: 0;
+         padding: 0vw;
+         box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, .3);
+         overflow: hidden;
+         max-height: 0;
+         -webkit-transition: all 0.5s ease-out;
+     }
+     .hide {
+         display: none;
+     }
+     .show {
+         width: 25vw;
+         height: 150vh;
+         background-color: #BBC7D6;
+         top: -6vh;
+         left: -0.6vw;
+         margin: 0;
+         margin-right: 0;
+         padding: 0;
+         display: block;
+         position: relative;
+         z-index: 100;
+     }
+     ul {
+         margin: 0;
+         padding: 0vw;
+         padding-left: 0.0vw;
+     }
+     .imagenMenu {
+         position: absolute;
+         margin: 0 0 0 0;
+         left: -2vw;
+         top: -5vh;
+         z-index: 100;
+         height: 10.2vh;
+         width: 4.90vw;
+     }
+     .tituloMenu {
+         z-index: 100;
+         top: -6vh;
+         position: absolute;
+         left: 5vw;
+     }
+     .m {
+         position: absolute;
+         border-bottom: none;
+         top: -6vh;
+         left: 0;
+         height: 10.2vh;
+         width: 10vw;
+     }
