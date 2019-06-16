@@ -1,25 +1,19 @@
-{% extends "base.html" %}
-{% block title %}Home{% endblock %}
-{% block header %}
-{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
-{% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
-
-{% block main %}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %} {% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 
 
 <ul class="contenido">
     <li>
-        <h4>Pedidos Activos:{{ datos.cantidadPedidos }} </h4>
+        <h4>Pedidos Activos:<br>{{ datos.cantidadPedidos }} </h4>
     </li>
     <li>
-        <h4>Tareas sin Asignar:{{ datos.cantTareasSinAsignar }}</h4>
+        <h4>Tareas sin Asignar:<br>{{ datos.cantTareasSinAsignar }}</h4>
     </li>
     <li>
-        <h4>Agentes Disponibles: {{ datos.agentesDisponibles }}</h4>
+        <h4>Agentes Disponibles:<br> {{ datos.agentesDisponibles }}</h4>
     </li>
     <li>
-        <h4>Ordenes de Trabajo Activas:{{ datos.otActivas }} </h4>
+        <h4>Ordenes de Trabajo Activas:<br>{{ datos.otActivas }} </h4>
     </li>
 </ul>
 
@@ -31,8 +25,7 @@
         <th onclick="sortTable(2,'miTabla')">Descripcion</th>
         <th onclick="sortTable(3,'miTabla')">Especializacion</th>
         <th onclick="sortTable(4,'miTabla')">Prioridad</th>
-        {% set i = 1 %}
-        {% for tarea in datos.tareasSinAsignar %}
+        {% set i = 1 %} {% for tarea in datos.tareasSinAsignar %}
         <tr>
             <td> <a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido {{ tarea.idPedido }}</a></td>
             <td> <a href="/fichaTarea?idPedido={{ tarea.idPedido }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
@@ -42,8 +35,7 @@
             <td>{{ tarea.prioridad }}</td>
         </tr>
         {% else %}
-        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
-        {% endfor %}
+        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2> {% endfor %}
     </table>
 </div>
 
@@ -56,16 +48,17 @@
         <th onclick="sortTable(3,'miTabla2')">Fecha Inicio</th>
         <th onclick="sortTable(4,'miTabla2')">Fecha Fin</th>
         <th>Accion</th>
-        {% for evento in datos.todosEventos %}
-        {% if evento.fechaInicio == "now"|date("d/m/Y") %}
+        {% for evento in datos.todosEventos %} {% if evento.fechaInicio == "now"|date("d/m/Y") %}
         <tr>
             <td style="background-color:lightgreen">{{ evento.idEvento }}</td>
             <td style="background-color:lightgreen">{{ evento.nombreEvento }}</td>
             <td style="background-color:lightgreen">{{ evento.descripcion }}</td>
             <td style="background-color:lightgreen">{{ evento.fechaInicio }}</td>
             <td style="background-color:lightgreen">{{ evento.fechaFin }}</td>
-            <td style="background-color:lightgreen"><a href="/pedido/verTodos?idEvento={{ evento.idEvento }}"><input
-                        type="button" value="Crear Pedido"></a>
+            <td style="background-color:lightgreen">
+                <a href="/pedido/verTodos?idEvento={{ evento.idEvento }}">
+                    <input type="button" value="Crear Pedido">
+                </a>
             </td>
         </tr>
         {% else %}
@@ -77,10 +70,8 @@
             <td>{{ evento.fechaFin }}</td>
             <td></td>
         </tr>
-        {% endif %}
-        {% else %}
-        <h2 class='error'>No hay eventos</h2>
-        {% endfor %}
+        {% endif %} {% else %}
+        <h2 class='error'>No hay eventos</h2> {% endfor %}
     </table>
 </div>
 {% endblock %}

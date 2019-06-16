@@ -31,22 +31,20 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 2
     public function block_title($context, array $blocks = array())
     {
         echo "Home";
     }
 
-    // line 3
     public function block_header($context, array $blocks = array())
     {
-        // line 4
+        echo " ";
         $context["nombreUsuario"] = twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "userLogueado", array());
         echo " ";
-        $this->loadTemplate("partials/nav.html", "index.home.html", 4)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        $this->loadTemplate("partials/nav.html", "index.home.html", 1)->display(array("nombreUsuario" => ($context["nombreUsuario"] ?? null)));
+        echo " ";
     }
 
-    // line 5
     public function block_head($context, array $blocks = array())
     {
         echo " ";
@@ -55,34 +53,34 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 <meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> ";
     }
 
-    // line 8
+    // line 2
     public function block_main($context, array $blocks = array())
     {
-        // line 9
+        // line 3
         echo "
 
 <ul class=\"contenido\">
     <li>
-        <h4>Pedidos Activos:";
-        // line 13
+        <h4>Pedidos Activos:<br>";
+        // line 7
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantidadPedidos", array()), "html", null, true);
         echo " </h4>
     </li>
     <li>
-        <h4>Tareas sin Asignar:";
-        // line 16
+        <h4>Tareas sin Asignar:<br>";
+        // line 10
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "cantTareasSinAsignar", array()), "html", null, true);
         echo "</h4>
     </li>
     <li>
-        <h4>Agentes Disponibles: ";
-        // line 19
+        <h4>Agentes Disponibles:<br> ";
+        // line 13
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "agentesDisponibles", array()), "html", null, true);
         echo "</h4>
     </li>
     <li>
-        <h4>Ordenes de Trabajo Activas:";
-        // line 22
+        <h4>Ordenes de Trabajo Activas:<br>";
+        // line 16
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "otActivas", array()), "html", null, true);
         echo " </h4>
     </li>
@@ -97,42 +95,41 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <th onclick=\"sortTable(3,'miTabla')\">Especializacion</th>
         <th onclick=\"sortTable(4,'miTabla')\">Prioridad</th>
         ";
-        // line 34
+        // line 28
         $context["i"] = 1;
-        // line 35
-        echo "        ";
+        echo " ";
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "tareasSinAsignar", array()));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["tarea"]) {
-            // line 36
+            // line 29
             echo "        <tr>
             <td> <a href=\"/fichaPedido?id=";
-            // line 37
+            // line 30
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tarea"], "idPedido", array()), "html", null, true);
             echo "\" title=\"Ver Mas\">Pedido ";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tarea"], "idPedido", array()), "html", null, true);
             echo "</a></td>
             <td> <a href=\"/fichaTarea?idPedido=";
-            // line 38
+            // line 31
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tarea"], "idPedido", array()), "html", null, true);
             echo "&idTarea=";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tarea"], "idTarea", array()), "html", null, true);
             echo "\" title=\"Ver Mas\"> Tarea
                     ";
-            // line 39
+            // line 32
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tarea"], "idTarea", array()), "html", null, true);
             echo "</a></td>
             <td>";
-            // line 40
+            // line 33
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tarea"], "descripcion", array()), "html", null, true);
             echo "</td>
             <td>";
-            // line 41
+            // line 34
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tarea"], "especializacionNombre", array()), "html", null, true);
             echo "</td>
             <td>";
-            // line 42
+            // line 35
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tarea"], "prioridad", array()), "html", null, true);
             echo "</td>
         </tr>
@@ -140,14 +137,13 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 45
-            echo "        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
-        ";
+            // line 38
+            echo "        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2> ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tarea'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 47
+        // line 39
         echo "    </table>
 </div>
 
@@ -161,84 +157,84 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <th onclick=\"sortTable(4,'miTabla2')\">Fecha Fin</th>
         <th>Accion</th>
         ";
-        // line 59
+        // line 51
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, ($context["datos"] ?? null), "todosEventos", array()));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["evento"]) {
-            // line 60
-            echo "        ";
+            echo " ";
             if ((twig_get_attribute($this->env, $this->source, $context["evento"], "fechaInicio", array()) == twig_date_format_filter($this->env, "now", "d/m/Y"))) {
-                // line 61
+                // line 52
                 echo "        <tr>
             <td style=\"background-color:lightgreen\">";
-                // line 62
+                // line 53
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "idEvento", array()), "html", null, true);
                 echo "</td>
             <td style=\"background-color:lightgreen\">";
-                // line 63
+                // line 54
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "nombreEvento", array()), "html", null, true);
                 echo "</td>
             <td style=\"background-color:lightgreen\">";
-                // line 64
+                // line 55
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "descripcion", array()), "html", null, true);
                 echo "</td>
             <td style=\"background-color:lightgreen\">";
-                // line 65
+                // line 56
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaInicio", array()), "html", null, true);
                 echo "</td>
             <td style=\"background-color:lightgreen\">";
-                // line 66
+                // line 57
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaFin", array()), "html", null, true);
                 echo "</td>
-            <td style=\"background-color:lightgreen\"><a href=\"/pedido/verTodos?idEvento=";
-                // line 67
+            <td style=\"background-color:lightgreen\">
+                <a href=\"/pedido/verTodos?idEvento=";
+                // line 59
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "idEvento", array()), "html", null, true);
-                echo "\"><input
-                        type=\"button\" value=\"Crear Pedido\"></a>
+                echo "\">
+                    <input type=\"button\" value=\"Crear Pedido\">
+                </a>
             </td>
         </tr>
         ";
             } else {
-                // line 72
+                // line 65
                 echo "        <tr>
             <td>";
-                // line 73
+                // line 66
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "idEvento", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 74
+                // line 67
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "nombreEvento", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 75
+                // line 68
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "descripcion", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 76
+                // line 69
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaInicio", array()), "html", null, true);
                 echo "</td>
             <td>";
-                // line 77
+                // line 70
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["evento"], "fechaFin", array()), "html", null, true);
                 echo "</td>
             <td></td>
         </tr>
         ";
             }
-            // line 81
-            echo "        ";
+            // line 73
+            echo " ";
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 82
-            echo "        <h2 class='error'>No hay eventos</h2>
-        ";
+            // line 74
+            echo "        <h2 class='error'>No hay eventos</h2> ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['evento'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 84
+        // line 75
         echo "    </table>
 </div>
 ";
@@ -256,33 +252,27 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
 
     public function getDebugInfo()
     {
-        return array (  242 => 84,  235 => 82,  230 => 81,  223 => 77,  219 => 76,  215 => 75,  211 => 74,  207 => 73,  204 => 72,  196 => 67,  192 => 66,  188 => 65,  184 => 64,  180 => 63,  176 => 62,  173 => 61,  170 => 60,  165 => 59,  151 => 47,  144 => 45,  136 => 42,  132 => 41,  128 => 40,  124 => 39,  118 => 38,  112 => 37,  109 => 36,  103 => 35,  101 => 34,  86 => 22,  80 => 19,  74 => 16,  68 => 13,  62 => 9,  59 => 8,  50 => 5,  44 => 4,  41 => 3,  35 => 2,  15 => 1,);
+        return array (  238 => 75,  232 => 74,  227 => 73,  220 => 70,  216 => 69,  212 => 68,  208 => 67,  204 => 66,  201 => 65,  192 => 59,  187 => 57,  183 => 56,  179 => 55,  175 => 54,  171 => 53,  168 => 52,  161 => 51,  147 => 39,  141 => 38,  133 => 35,  129 => 34,  125 => 33,  121 => 32,  115 => 31,  109 => 30,  106 => 29,  99 => 28,  84 => 16,  78 => 13,  72 => 10,  66 => 7,  60 => 3,  57 => 2,  15 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% extends \"base.html\" %}
-{% block title %}Home{% endblock %}
-{% block header %}
-{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
-{% endblock %} {% block head %} {{ parent() }}
-<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %}
-
-{% block main %}
+        return new Twig_Source("{% extends \"base.html\" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %} {% endblock %} {% block head %} {{ parent() }}
+<meta name=\"keywords\" content=\"PAW,2018,Templates,PHP\"> {% endblock %} {% block main %}
 
 
 <ul class=\"contenido\">
     <li>
-        <h4>Pedidos Activos:{{ datos.cantidadPedidos }} </h4>
+        <h4>Pedidos Activos:<br>{{ datos.cantidadPedidos }} </h4>
     </li>
     <li>
-        <h4>Tareas sin Asignar:{{ datos.cantTareasSinAsignar }}</h4>
+        <h4>Tareas sin Asignar:<br>{{ datos.cantTareasSinAsignar }}</h4>
     </li>
     <li>
-        <h4>Agentes Disponibles: {{ datos.agentesDisponibles }}</h4>
+        <h4>Agentes Disponibles:<br> {{ datos.agentesDisponibles }}</h4>
     </li>
     <li>
-        <h4>Ordenes de Trabajo Activas:{{ datos.otActivas }} </h4>
+        <h4>Ordenes de Trabajo Activas:<br>{{ datos.otActivas }} </h4>
     </li>
 </ul>
 
@@ -294,8 +284,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <th onclick=\"sortTable(2,'miTabla')\">Descripcion</th>
         <th onclick=\"sortTable(3,'miTabla')\">Especializacion</th>
         <th onclick=\"sortTable(4,'miTabla')\">Prioridad</th>
-        {% set i = 1 %}
-        {% for tarea in datos.tareasSinAsignar %}
+        {% set i = 1 %} {% for tarea in datos.tareasSinAsignar %}
         <tr>
             <td> <a href=\"/fichaPedido?id={{ tarea.idPedido }}\" title=\"Ver Mas\">Pedido {{ tarea.idPedido }}</a></td>
             <td> <a href=\"/fichaTarea?idPedido={{ tarea.idPedido }}&idTarea={{ tarea.idTarea }}\" title=\"Ver Mas\"> Tarea
@@ -305,8 +294,7 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
             <td>{{ tarea.prioridad }}</td>
         </tr>
         {% else %}
-        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
-        {% endfor %}
+        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2> {% endfor %}
     </table>
 </div>
 
@@ -319,16 +307,17 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
         <th onclick=\"sortTable(3,'miTabla2')\">Fecha Inicio</th>
         <th onclick=\"sortTable(4,'miTabla2')\">Fecha Fin</th>
         <th>Accion</th>
-        {% for evento in datos.todosEventos %}
-        {% if evento.fechaInicio == \"now\"|date(\"d/m/Y\") %}
+        {% for evento in datos.todosEventos %} {% if evento.fechaInicio == \"now\"|date(\"d/m/Y\") %}
         <tr>
             <td style=\"background-color:lightgreen\">{{ evento.idEvento }}</td>
             <td style=\"background-color:lightgreen\">{{ evento.nombreEvento }}</td>
             <td style=\"background-color:lightgreen\">{{ evento.descripcion }}</td>
             <td style=\"background-color:lightgreen\">{{ evento.fechaInicio }}</td>
             <td style=\"background-color:lightgreen\">{{ evento.fechaFin }}</td>
-            <td style=\"background-color:lightgreen\"><a href=\"/pedido/verTodos?idEvento={{ evento.idEvento }}\"><input
-                        type=\"button\" value=\"Crear Pedido\"></a>
+            <td style=\"background-color:lightgreen\">
+                <a href=\"/pedido/verTodos?idEvento={{ evento.idEvento }}\">
+                    <input type=\"button\" value=\"Crear Pedido\">
+                </a>
             </td>
         </tr>
         {% else %}
@@ -340,12 +329,11 @@ class __TwigTemplate_a6fa914c302a557bd4774038499bc6652d6accc479e0031d6bd45d0c450
             <td>{{ evento.fechaFin }}</td>
             <td></td>
         </tr>
-        {% endif %}
-        {% else %}
-        <h2 class='error'>No hay eventos</h2>
-        {% endfor %}
+        {% endif %} {% else %}
+        <h2 class='error'>No hay eventos</h2> {% endfor %}
     </table>
 </div>
-{% endblock %}", "index.home.html", "D:\\Descargas\\mantenimiento\\2019_TP4_PAW\\Mantenimiento\\app\\views\\index.home.html");
+{% endblock %}
+", "index.home.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\index.home.html");
     }
 }
