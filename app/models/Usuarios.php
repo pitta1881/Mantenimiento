@@ -43,10 +43,10 @@ public function getRoles(){
     return $misRoles; 
 }
    
-    public function  getPermisos(){
-    $permisos = $this->db->selectAllPermisos($this->tablePermisos);
-    $misPermisos = json_decode(json_encode($permisos), True);
-    return $misPermisos; 
+    public function  getPersonas(){
+    $personas = $this->db->selectAllPersonas($this->tablePersona);
+    $misPersonas = json_decode(json_encode($personas), True);
+    return $misPersonas; 
 }
   
     
