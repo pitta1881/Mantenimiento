@@ -8,6 +8,10 @@ class Sectores extends Model
 {
     protected $table = 'sectores';
     protected $tablePedido = 'pedido';
+
+    public function getTipoSector(){
+        return array('Hospital','Casa Comunitaria','Casa Particular');
+    }
     
     public function get()
     {

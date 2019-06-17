@@ -37,7 +37,7 @@
     $router->get('usuarios/gestionUsuario','UsuariosControler@vistaGestionUsuario');
     
 
-$router->get('usuarios/AdministracionUsuario','UsuariosControler@vistaAdministracionUsuario');
+    $router->get('usuarios/AdministracionUsuario','UsuariosControler@vistaAdministracionUsuario');
     $router->get('usuarios/altaUsuario','UsuariosControler@vistaAltaUsuario');
     $router->post('usuarios/validarUsuario','UsuariosControler@validarUsuario');
     $router->get('usuarios/modificarUsuario','UsuariosControler@vistamodificarUsuario');

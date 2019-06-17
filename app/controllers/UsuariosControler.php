@@ -10,6 +10,7 @@ class UsuariosControler extends Controller
    public function __construct()
     {
       $this->model = new Usuarios();
+      session_start();
     
    }
     
@@ -17,27 +18,24 @@ class UsuariosControler extends Controller
     public function index(){
         $todosUsuarios = $this->model->get();      
         $datos['$todosUsuarios'] = $todosUsuarios;
-        $datos["userLogueado"] = $_SESSION['user'];
-        
+        $datos["userLogueado"] = $_SESSION['user'];        
         return view('usuario/AdministracionUsuario', compact('datos'));
     }
-    public function vistaGestionUsuario(){
-        
-        return view('/usuarios/gestionUsuario');
-    
+
+    public function vistaGestionUsuario(){    
+        return view('/usuarios/gestionUsuario');    
     }
-public function vistaAdministracionUsuario(){
-    $todosUsuarios = $this->model->get();      
-        
-    $datos['todosUsuarios'] = $todosUsuarios;
+
+    public function vistaAdministracionUsuario(){
+        $todosUsuarios = $this->model->get();     
+        $datos['todosUsuarios'] = $todosUsuarios;
         $datos["userLogueado"] = $_SESSION['user'];
-        
-         $nombresRoles=$this->model->getRoles();
- $nombresPermisos=$this->model->getPermisos();
-  var_dump($datos['todosUsuarios']);
-    return view('/usuarios/AdministracionUsuario', compact('datos','nombresRoles','nombresPermisos'));
-    
-}
+        $nombresRoles=$this->model->getRoles();
+        $nombresPermisos=$this->model->getPermisos();
+        $datos['nombresRoles'] = $nombresRoles;
+        $datos['nombresPermisos'] = $nombresPermisos;
+        return view('/usuarios/administracionUsuario', compact('datos'));
+    }
 /*public function vistaAltaUsuario(){
    
 }*/

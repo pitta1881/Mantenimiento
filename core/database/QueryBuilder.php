@@ -79,14 +79,6 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
     
-    public function comparaAgente($table, $nombre,$apellido ){  
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE nombre='{$nombre}' AND apellido='{$apellido}'"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
 
     public function comparaEspecializacion($table, $nombre){  
         $statement = $this->pdo->prepare(
@@ -369,7 +361,7 @@ class QueryBuilder
 
     public function updateAgente($table, $parameters, $nAgente){
         $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET nombre=:nombre, apellido=:apellido, idEspecializacion=:idEspecializacion WHERE idAgente=$nAgente";
+        $sql = "UPDATE $table SET idEspecializacion=:idEspecializacion WHERE idAgente=$nAgente";
             try {
                 $statement = $this->pdo->prepare($sql);
                 $statement->execute($parameters);
@@ -664,29 +656,40 @@ public function updateEvento($table, $parameters, $idEvento){
         );
         $statement->execute();
     }
+
      public function deleteEventoValidar($table,$idEvento){ 
         $statement = $this->pdo->prepare(
             "DELETE FROM $table  WHERE idEvento = $idEvento"
         );
         $statement->execute();
     }
-public function selectAllPermisos($tablePermisos){
+
+    public function selectAllPermisos($tablePermisos){
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$tablePermisos}"
        
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
-   }
-      
-    public function comparaUsuario($table, $usuario ){  
+    }
+
+    public function selectPersonasNoAgentes($tablePersona, $tableAgente){ 
         $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE idUsuario='{$usuario}'  "
+            "SELECT * FROM $tablePersona T1 LEFT JOIN $tableAgente T2 ON T1.dni=T2.idAgente WHERE T2.idAgente IS NULL AND T1.dni<>0"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function selectPersonaByDNI($tablePersona, $dni){ 
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tablePersona WHERE dni=$dni"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    
     
     
 }

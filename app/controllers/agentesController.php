@@ -17,6 +17,7 @@ class agentesController extends Controller
     public function vistaAdministracionAgentes(){
         $todosAgentes = $this->model->get();      
         $datos['todosAgentes'] = $todosAgentes;
+        $datos['personas'] = $this->model->getPersonasNoAgentes();
         $datos['especializaciones'] = $this->model->getEspecializaciones();
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/agentes/agentes.administracion', compact('datos'));
@@ -24,15 +25,11 @@ class agentesController extends Controller
        
     
     public function guardarAgente() {
-        $datos['nombre'] = $_POST['nombre'];
-        $datos['apellido'] = $_POST['apellido'];
-        $statement = $this->model->buscarAgente($datos['nombre'],$datos['apellido']);     
-        if (empty($statement)) {
             $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']);
+            $datos['idAgente']=$_POST['idAgente'];
             $datos['idEspecializacion']= $idEspecializacion; 
             $this->model->insert($datos); 
             return $this->vistaAdministracionAgentes();
-        }
     }
 
     public function vistaModificar(){
@@ -47,8 +44,6 @@ class agentesController extends Controller
         $idAgente = $_POST['idAgente'];
         $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']); 
         $datos = [
-            'nombre' => $_POST['nombre'],
-            'apellido' => $_POST['apellido'],
             'idEspecializacion' => $idEspecializacion
         ];
         $this->model->update($datos,$idAgente);
@@ -60,9 +55,4 @@ class agentesController extends Controller
         return $this->vistaAdministracionAgentes();
     }
     
-
-//public function saveAgentexEspecializacion($datos,$arraySelect){
-        //$this->model->insertEspecialidades($datos,$arraySelect);            
- 
-//}
 }

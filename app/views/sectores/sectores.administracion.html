@@ -30,18 +30,18 @@
             <legend> Alta de Sector</legend>
             <label for="nombreSector">Nombre del Sector</label>
             <input type="text" name="nombreSector" autofocus>
-            <label for="tipo">Tipo</label><span class="asterisco">*</span>
-            <input type="textarea" name="tipo" required placeholder="Ingrese el tipo de sector.."><br>
+            <label for="tipoSector">Tipo</label><span class="asterisco">*</span>
+            <select name="tipoSector">
+                {% for tipoSector in datos.tipoSectores %}
+                <option value="{{ tipoSector }}">{{ tipoSector }}</option>
+                {% endfor %}
+            </select>
             <label for="responsable">Nombre del Responsable</label>
             <input type="text" name="responsable" autofocus>
-
             <label for="telefono">Telefono</label>
             <input type="tel" name="telefono" autofocus>
-
             <label for="email">Email</label>
             <input type="email" name="email" autofocus>
-
-
         </fieldset>
         <input type="submit">
     </form>

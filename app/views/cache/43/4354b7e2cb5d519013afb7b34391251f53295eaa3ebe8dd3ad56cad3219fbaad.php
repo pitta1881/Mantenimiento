@@ -23,12 +23,15 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         echo "<nav class=\"main-nav\">
     <ol>
         <li>
-            <a little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagen\" src=\"/public/res/sommer4.jpg\"></a>
+            <a little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagen\"
+                    src=\"/public/res/sommer4.jpg\"></a>
             <nav class=\"mainmenu show\">
                 <ul>
                     <li class=\"m\">
-                        <p little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagenMenu\" src=\"/public/res/sommer4.jpg\">
-                            <h4 class=\"tituloMenu\">Sistema de Mantenimiento</h4></p>
+                        <p little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagenMenu\"
+                                src=\"/public/res/sommer4.jpg\">
+                            <h4 class=\"tituloMenu\">Sistema de Mantenimiento</h4>
+                        </p>
 
 
                     </li>
@@ -57,7 +60,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                             </li>
                             <li><a href=\"\">Personas</a>
                             </li>
-                            <li><a href=\"\">Roles</a>
+                            <li><a href=\"/usuario/AdministracionRol\">Roles</a>
 
                             </li>
                             <li><a href=\"\">Permisos</a>
@@ -95,7 +98,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         </li>
         <li>
             <h3 class=\"titulo1\">";
-        // line 75
+        // line 78
         echo twig_escape_filter($this->env, ($context["nombreP"] ?? null), "html", null, true);
         echo "</h3>
         </li>
@@ -103,14 +106,13 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
         <li>
             <p class=\"user\">";
-        // line 80
+        // line 83
         echo twig_escape_filter($this->env, ($context["nombreUsuario"] ?? null), "html", null, true);
         echo " |<a href=\"/cerrarSesion\">Cerrar Sesión</a></p>
         </li>
 
     </ol>
-</nav>
-";
+</nav>";
     }
 
     public function getTemplateName()
@@ -125,7 +127,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
 
     public function getDebugInfo()
     {
-        return array (  107 => 80,  99 => 75,  23 => 1,);
+        return array (  110 => 83,  102 => 78,  23 => 1,);
     }
 
     public function getSourceContext()
@@ -133,12 +135,15 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         return new Twig_Source("<nav class=\"main-nav\">
     <ol>
         <li>
-            <a little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagen\" src=\"/public/res/sommer4.jpg\"></a>
+            <a little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagen\"
+                    src=\"/public/res/sommer4.jpg\"></a>
             <nav class=\"mainmenu show\">
                 <ul>
                     <li class=\"m\">
-                        <p little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagenMenu\" src=\"/public/res/sommer4.jpg\">
-                            <h4 class=\"tituloMenu\">Sistema de Mantenimiento</h4></p>
+                        <p little=\"imagenSommer\" onclick=\"muestra_oculta('mainmenu')\"> <img class=\"imagenMenu\"
+                                src=\"/public/res/sommer4.jpg\">
+                            <h4 class=\"tituloMenu\">Sistema de Mantenimiento</h4>
+                        </p>
 
 
                     </li>
@@ -167,7 +172,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                             </li>
                             <li><a href=\"\">Personas</a>
                             </li>
-                            <li><a href=\"\">Roles</a>
+                            <li><a href=\"/usuario/AdministracionRol\">Roles</a>
 
                             </li>
                             <li><a href=\"\">Permisos</a>
@@ -213,7 +218,6 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
         </li>
 
     </ol>
-</nav>
-", "partials/nav.html", "C:\\Users\\user\\Documents\\Mantenimiento\\app\\views\\partials\\nav.html");
+</nav>", "partials/nav.html", "E:\\PATO\\UNIV\\2019\\SIP\\Mantenimiento\\app\\views\\partials\\nav.html");
     }
 }

@@ -16,13 +16,14 @@ class SectoresController extends Controller{
     public function vistaAdministracionSectores(){
         $todosSectores = $this->model->get();      
         $datos['todosSectores'] = $todosSectores;
+        $datos['tipoSectores'] = $this->model->getTipoSector();
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/sectores/sectores.administracion', compact('datos'));
     }
     
     public function guardarSector() {
         $datos['nombreSector'] = $_POST['nombreSector'];
-        $datos['tipo'] = $_POST['tipo']; 
+        $datos['tipo'] = $_POST['tipoSector']; 
         $datos['responsable'] = $_POST['responsable']; 
         $datos['telefono'] = $_POST['telefono'];
         $datos['email'] = $_POST['email']; 
@@ -35,7 +36,8 @@ class SectoresController extends Controller{
     }
 
     public function vistaModificar(){
-        $sector = $this->model->getByIdSector($_GET['idSector']);      
+        $sector = $this->model->getByIdSector($_GET['idSector']);     
+        $datos['tipoSectores'] = $this->model->getTipoSector(); 
         $datos['sector'] = $sector;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/sectores/sector.modificar', compact('datos'));

@@ -21,9 +21,10 @@
             <label for="idAgente">Numero de Agente</label>
             <input type="text" name="idAgente" value="{{ datos.agente.idAgente }}" readonly class="inputDisabled">
             <label for="nombre">Nombre del Agente</label>
-            <input type="text" name="nombre" value="{{ datos.agente.nombre }}">
+            <input type="text" name="nombre" value="{{ datos.agente.nombre }}" disabled readonly class="inputDisabled">
             <label for="apellido">Apellido del Agente</label>
-            <input type="text" name="apellido" value="{{ datos.agente.apellido }}">
+            <input type="text" name="apellido" value="{{ datos.agente.apellido }}" disabled readonly
+                class="inputDisabled">
             <select name="especializacion">
                 {% for especializacion in datos.especializaciones %}
                 {% if especializacion == datos.agente.especializacionNombre %}

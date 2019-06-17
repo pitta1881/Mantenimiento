@@ -28,15 +28,20 @@
         style="display: none">
         {% if datos.especializaciones is empty %}
         <h2>Primero debe añadir una Especializacion --> <a href="/especializacion/administracionEspecializacion">HAGA
-                CLICK
-                AQUI</a></h2>
+                CLICK AQUI</a></h2>
+        {% else %}
+        {% if datos.personas is empty %}
+        <h2>No hay Personas cargadas o ya están todas asignadas a un Agente</h2>
+        <h2>Para agregar mas Personas --> <a href="/usuario/AdministracionPersonas">HAGA CLICK AQUI</a></h2>
         {% else %}
         <fieldset class="basicosAgente">
-            <legend> Alta de Agente</legend>
-            <label for="nombre">Nombre del Agente</label>
-            <input type="text" name="nombre" autofocus>
-            <label for="apellido">Apellido del Agente</label>
-            <input type="text" name="apellido">
+            <legend>Alta de Agente</legend>
+            <label for="idAgente">Datos del Agente</label>
+            <select name="idAgente">
+                {% for persona in datos.personas %}
+                <option value="{{ persona.dni }}">{{ persona.nombre }} {{ persona.apellido }}</option>
+                {% endfor %}
+            </select>
             <label for="especializacion">Especializacion</label>
             <select name="especializacion">
                 {% for especializacion in datos.especializaciones %}
@@ -45,6 +50,7 @@
             </select>
         </fieldset>
         <input type="submit">
+        {% endif %}
         {% endif %}
     </form>
     <table id="miTabla">

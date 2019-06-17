@@ -1,6 +1,0 @@
-USE Mantenimiento;
-
-CREATE TABLE roles (
-    idRol INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombreRol VARCHAR(20) NOT NULL
-);
