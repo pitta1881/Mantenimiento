@@ -28,16 +28,19 @@ class UsuariosControler extends Controller
     }
 public function vistaAdministracionUsuario(){
     $todosUsuarios = $this->model->get();      
-        $datos['todosUsuarios'] = $todosUsuarios;
+        
+    $datos['todosUsuarios'] = $todosUsuarios;
         $datos["userLogueado"] = $_SESSION['user'];
         
-        return view('/usuarios/AdministracionUsuario', compact('datos'));
+         $nombresRoles=$this->model->getRoles();
+ $nombresPermisos=$this->model->getPermisos();
+  var_dump($datos['todosUsuarios']);
+    return view('/usuarios/AdministracionUsuario', compact('datos','nombresRoles','nombresPermisos'));
     
 }
-public function vistaAltaUsuario(){
-    $nombresRoles=$this->model->getRoles();
-    return view('/usuarios/administracionUsuario.alta',compact('nombresRoles'));
-}
+/*public function vistaAltaUsuario(){
+   
+}*/
     
   public function vistamodificarUsuario(){
     return view('/usuarios/administracionUsuario.modificar');
@@ -91,8 +94,20 @@ public function vistaAltaPersona(){
        
         $statement= $this->model->buscarUsuario($datos['nombre']);      
     if(empty($statement)){
+        //verifico si existe la persona o no 
+        /*
+        $persona=$this->model->buscarPersona($datos['nombre']); 
+       
+        
+        if(empty($persona)){
+        
+           $this->saveUsuario($datos); //guardo el usuario asi al dar de alta la persona no tengo q volver a dar de alta al usuario    
+           //llamar a la vista alta persona 
+       }*/
+        
         $this->saveUsuario($datos);
         return view('administracionUsuario.alta');
+    
     }else{
         echo 'ya hay uno';
         return view('administracionUsuario.alta');

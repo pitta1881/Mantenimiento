@@ -7,14 +7,14 @@ use App\Core\Model;
 class Usuarios extends Model
 {
     protected $table = 'usuarios';
-    protected $tableRol='rol';
-    protected $tablePersona='persona';
-
+    protected $tableRol='roles';
+    protected $tablePersona='personas';
+    protected $tablePermisos='permisos';
     
     public function get()
     {
         //$usuarios = $this->db->selectAll($this->table);
-        return $this->db->selectUsuarioPorPersonaPorRol($this->table,$this->tableRol,$this->tablePersona);
+        return  $this->db->selectUsuarioPorPersonaPorRol($this->table,$this->tableRol,$this->tablePersona);
      //   $persona=$this->db->selectAll($this->'personas');
        
     }
@@ -24,6 +24,8 @@ class Usuarios extends Model
        return $this->db->comparaUsuario($this->table,$user);
     }
 
+    
+    
     public function insert(array $usuarios)
     {
         $this->db->insert($this->table, $usuarios);
@@ -40,6 +42,17 @@ public function getRoles(){
     return $misRoles; 
 }
    
-    
+    public function  getPermisos(){
+    $permisos = $this->db->selectAllPermisos($this->tablePermisos);
+    $misPermisos = json_decode(json_encode($permisos), True);
+    return $misPermisos; 
+}
+  
+public function buscarPersona($user){
+       //comparo si existe el nombre de usuario 
+       return $this->db->comparaPersona($this->tablePersona,$user);
+    }
+
+   
     
 }

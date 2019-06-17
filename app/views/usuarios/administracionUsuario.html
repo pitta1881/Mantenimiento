@@ -4,40 +4,50 @@
 <input type="button" value=" NUEVO USUARIO" onclick="mostrarFormulario()">
 <script>
     function mostrarFormulario() {
-        var formularioPedido = document.getElementById('formularioUsuario');
-        if (formularioPedido.style.display == "block") {
-            formularioPedido.style.display = "none";
+        var formularioUsuario = document.getElementById('formularioUsuario');
+        if (formularioUsuario.style.display == "block") {
+            formularioUsuario.style.display = "none";
         } else {
-            formularioPedido.style.display = "block"
+            formularioUsuario.style.display = "block"
         }
     }
 
 </script>
-<form action="/usuario/validarUsuario" method="POST" id="formularioUsuario" style="display: none; border: 1px solid black">
+<form action="/usuarios/validarUsuario" method="POST" id="formularioUsuario" style="display: none; border: 1px solid black">
     <label for="nombre">Nombre</label>
     <input type="text" name="nombre" placeholder="Usuario">
     <br>
     <label for="nombre">Contraseña</label>
+     
+    
     <input type="text" name="password" placeholder="contraseña">
+    <label for="dni">DNI</label>
+    <input type="number" name="dni" placeholder="dni">
     <label for="roles">Rol del Usuario:</label>
-    <select name="roles" id="rol">
+    <select name="nombreRol" id="nombreRol">
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
         {% for nombre in nombresRoles %}
         <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
         {% endfor %}}
     </select>
-    <label for="roles">Persona:</label>
-    <select name="persona" id="rol">
+   <select multiple name="nombrePermiso" id="nombrePermiso">
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for nombre in nombresRoles %}
-        <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
-        {% endfor %}}
+        {% for nombres in nombresPermisos %}
+        <option value={{ nombres.nombrePermiso }}>{{ nombres.nombrePermiso }}</option>
+        {% endfor %}
     </select>
+    <br>
+        <br>
     <input type="submit" value="Agregar">
     <input type="reset">
 
 </form>
-<form action="/pedido/buscar" method="POST">
+
+ 
+ <!-- todavia no busca , agregar ruta al action-->
+  
+   
+     <form action="" method="POST">
     <select name="filtro">
         <option value="id">Nombre</option>
         <option value="sector">Nombre y Apellido</option>
@@ -53,16 +63,15 @@
     <th onclick="sortTable(1,'miTabla')">DNI </th>
     <th onclick="sortTable(2,'miTabla')">Rol</th>
     <th onclick="sortTable(3,'miTabla')">Nombre y Apellido</th>
-
-    {% for usuario in datos.todosUsuarios %}
+ <th onclick="sortTable(3,'miTabla')">ACCION</th>
+    {% for usuario in todosUsuarios %}
     <tr>
         <td {{ estilo }}>{{ usuario.nombre }}</td>
-        <td {{ estilo }}>{{ usuario.nombre .usuario.apellido }}</td>
         <td {{ estilo }}>{{ usuario.dni }}</td>
         <td {{ estilo }}>{{ usuario.rol }}</td>
-        <td {{ estilo }}>
-
-            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
+        <td {{ estilo }}>{{usuario.apellido}} </td>
+<td>
+            <a href='usuarios/modificarUsuario/seleccionado?id={{ usuario.id }}'>
                 <input type="button" value="MODIFICAR">
             </a>
 
@@ -70,5 +79,5 @@
     </tr>
     {% else %}
     <h2 class='error'>No hay Usuarios para mostrar</h2> {% endfor %}
-</table>
+</table>-->
 {% endblock %}

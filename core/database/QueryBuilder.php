@@ -101,9 +101,13 @@ class QueryBuilder
         
             
         $statement = $this->pdo->prepare(
-            "SELECT T1.nombre,T2.nombre,T2.apellido,T2.DNI,T3.nombreRol FROM $tableUsuario T1 LEFT JOIN $tablePersona T2 ON T1.idPersona=T2.idUsuario  LEFT JOIN $tableRol T3 ON T1.idRol=T3.idRol"
+            "SELECT $tableUsuario.nombre,$tablePersona.nombre,$tablePersona .apellido,$tablePersona .dni,$tableRol.nombreRol FROM $tableUsuario  inner JOIN $tablePersona  ON $tableUsuario.nombre=$tablePersona .idUsuario  inner JOIN $tableRol  ON $tableUsuario.idRol=$tableRol.idRol"
         );
+        
+      
+       try{
         $statement->execute();
+       }catch(Exception $e){$this->sendToLog($e);}
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
     
@@ -666,6 +670,23 @@ public function updateEvento($table, $parameters, $idEvento){
         );
         $statement->execute();
     }
-
-        
+public function selectAllPermisos($tablePermisos){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$tablePermisos}"
+       
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+   }
+      
+    public function comparaUsuario($table, $usuario ){  
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idUsuario='{$usuario}'  "
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+    
+    
 }

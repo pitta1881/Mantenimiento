@@ -31,7 +31,7 @@ USE Mantenimiento;
 
 CREATE TABLE especializacion (
     idEspecializacion INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre varchar
+    nombre varchar not null
 (20)
     );USE mantenimiento;
 CREATE TABLE tarea
