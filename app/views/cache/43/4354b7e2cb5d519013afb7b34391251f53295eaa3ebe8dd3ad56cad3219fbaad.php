@@ -63,7 +63,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                             <li><a href=\"/usuario/AdministracionRol\">Roles</a>
 
                             </li>
-                            <li><a href=\"\">Permisos</a>
+                            <li><a href=\"/usuario/AdministracionPermisos\">Permisos</a>
 
                             </li>
                         </ul>
@@ -175,7 +175,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                             <li><a href=\"/usuario/AdministracionRol\">Roles</a>
 
                             </li>
-                            <li><a href=\"\">Permisos</a>
+                            <li><a href=\"/usuario/AdministracionPermisos\">Permisos</a>
 
                             </li>
                         </ul>
