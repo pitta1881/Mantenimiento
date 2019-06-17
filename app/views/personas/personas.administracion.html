@@ -61,12 +61,13 @@
             <td>{{ persona.fecha_nacimiento }}</td>
             <td>
                 <a href='/persona/modificarPersona/seleccionado?dni={{ persona.dni }}'>
-                    <input type="button" value="MODIFICAR">
+                   
+                    <img class="iconos" src="/public/res/update.svg"> 
                 </a>
                 {% if persona.usado == false %}
                 <form action="/persona/eliminar" method="post">
                     <input type="text" name="dni" value="{{ persona.dni }}" hidden>
-                    <input type="button" value="Eliminar" id="btnEliminar{{ persona.dni }}"
+                    <img class="iconos" src="/public/res/del.svg" id="btnEliminar{{ persona.dni }}"
                         onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='inline-block';document.getElementById('eliminarNo{{ persona.dni }}').style.display='inline-block';document.getElementById('btnEliminar{{ persona.dni }}').style.display='none'">
                     <input type="submit" value="Si" id="eliminarSi{{ persona.dni }}" style="display: none">
                     <input type="reset" value="No" id="eliminarNo{{ persona.dni }}" style="display: none"
