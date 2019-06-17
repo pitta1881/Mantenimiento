@@ -339,8 +339,7 @@ td {
 }
 
 .iconos{
-    position: absolute;
-    top:0;
+    
     height: 4vh;
     width: 4vw;
     box-shadow: 0px 0px 0px 0 rgba(0, 0, 0, .3);

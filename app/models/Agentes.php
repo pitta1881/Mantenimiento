@@ -14,10 +14,13 @@ class Agentes extends Model
     public function getEspecializaciones() {
       $array = [];
       $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);
+    //  $totalFilas = mysql_num_rows($especializaciones);
+//      if ($totalFilas!=0){
       $misEspecializaciones = json_decode(json_encode($especializaciones), True);
       for ($i=0; $i < count($misEspecializaciones); $i++) { 
         $array[$i]=$misEspecializaciones[$i]['nombre'];
       }
+    //}
       return $array;
   }
 
