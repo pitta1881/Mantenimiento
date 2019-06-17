@@ -503,7 +503,7 @@ public function selectSectorById($table, $nSector){
 
     public function selectAgentesPorNPedidoNTarea($tableAgente, $tableItem, $nPedido, $nTarea){ 
         $statement = $this->pdo->prepare(
-            "SELECT T1.idAgente,nombre,apellido,idEspecializacion FROM $tableItem T1 INNER JOIN $tableAgente T2 ON T1.idAgente=T2.idAgente WHERE idPedido=$nPedido AND idTarea=$nTarea"
+            "SELECT T1.idAgente,idEspecializacion FROM $tableItem T1 INNER JOIN $tableAgente T2 ON T1.idAgente=T2.idAgente WHERE idPedido=$nPedido AND idTarea=$nTarea"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -689,7 +689,37 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function comparaPersona($tablePersona, $dni){  
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tablePersona WHERE dni=$dni"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
     
+    public function getFromAgenteConIdPersona($tableAgente,$nAgente){ 
+        $statement = $this->pdo->prepare(
+           "SELECT idAgente FROM $tableAgente WHERE idAgente=$nAgente"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
     
-    
+    public function updatePersona($tablePersona, $parameters, $dni){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $tablePersona SET nombre=:nombre, apellido=:apellido, direccion=:direccion, email=:email, fecha_nacimiento=:fecha_nacimiento WHERE dni=$dni"; //recontra HARDCODEADO
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+    public function deletePersona($table,$idPersona){ 
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE dni = $idPersona"
+        );
+        $statement->execute();
+    }
 }

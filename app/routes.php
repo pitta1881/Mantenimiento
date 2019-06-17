@@ -34,31 +34,32 @@
 
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');
-    $router->get('usuarios/gestionUsuario','UsuariosControler@vistaGestionUsuario');
+    $router->get('usuarios/gestionUsuario','UsuariosController@vistaGestionUsuario');
     
 
-    $router->get('usuarios/AdministracionUsuario','UsuariosControler@vistaAdministracionUsuario');
-    $router->get('usuarios/altaUsuario','UsuariosControler@vistaAltaUsuario');
-    $router->post('usuarios/validarUsuario','UsuariosControler@validarUsuario');
-    $router->get('usuarios/modificarUsuario','UsuariosControler@vistamodificarUsuario');
-    $router->get('usuarios/eliminarUsuario','UsuariosControler@vistaeliminarUsuario');
+    $router->get('usuarios/AdministracionUsuario','UsuariosController@vistaAdministracionUsuario');
+    $router->get('usuarios/altaUsuario','UsuariosController@vistaAltaUsuario');
+    $router->post('usuarios/validarUsuario','UsuariosController@validarUsuario');
+    $router->get('usuarios/modificarUsuario','UsuariosController@vistamodificarUsuario');
+    $router->get('usuarios/eliminarUsuario','UsuariosController@vistaeliminarUsuario');
 
 //rutas rol
-    $router->get('usuario/AdministracionRol','UsuariosControler@vistaAdministracionRol');
-    $router->get('usuario/altaRol','UsuariosControler@vistaAltaRol');
-    $router->get('usuario/modificarRol','UsuariosControler@vistaModificarRol');
-    $router->get('usuario/eliminarRol','UsuariosControler@vistaEliminarRol');
+    $router->get('usuario/AdministracionRol','UsuariosController@vistaAdministracionRol');
+    $router->get('usuario/altaRol','UsuariosController@vistaAltaRol');
+    $router->get('usuario/modificarRol','UsuariosController@vistaModificarRol');
+    $router->get('usuario/eliminarRol','UsuariosController@vistaEliminarRol');
 
 //rutas permisos
-    $router->get('usuario/AdministracionPermisos','UsuariosControler@vistaAdministracionPermisos');
-    $router->get('usuario/asignarPermiso','UsuariosControler@vistaAsignarPermiso');
-    $router->get('usuario/eliminarPermiso','UsuariosControler@vistaEliminarPermiso');
+    $router->get('usuario/AdministracionPermisos','UsuariosController@vistaAdministracionPermisos');
+    $router->get('usuario/asignarPermiso','UsuariosController@vistaAsignarPermiso');
+    $router->get('usuario/eliminarPermiso','UsuariosController@vistaEliminarPermiso');
 
 //rutas personas
-    $router->get('usuario/AdministracionPersonas','UsuariosControler@vistaAdministracionPersona');
-    $router->get('usuario/altaPersona','UsuariosControler@vistaAltaPersona');
-    $router->get('usuario/modificarPersona','UsuariosControler@vistamodificarPersona');
-    $router->get('usuario/eliminarPersona','UsuariosControler@vistaeliminarUsuario');
+    $router->get('persona/AdministracionPersonas','PersonaController@vistaAdministracionPersona');
+    $router->post('persona/altaPersona','PersonaController@altaPersona');
+    $router->get('persona/modificarPersona/seleccionado','PersonaController@modificarPersonaSeleccionada');
+    $router->post('persona/modificar/guardar','PersonaController@modificar');
+    $router->post('persona/eliminar','PersonaController@eliminar');
 
 //rutas agentes
 

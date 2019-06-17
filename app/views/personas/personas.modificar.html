@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Modificar Sector{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <h1>Modificar Persona</h1>
+    <form action="/persona/modificar/guardar" method="post">
+        <fieldset class="basicosPersona">
+            <legend> Alta de Persona</legend>
+            <label for="dni">DNI</label><span class="asterisco">*</span>
+            <input type="text" name="dni" autofocus required value="{{ datos.miPersona.dni }}" readonly
+                class="inputDisabled">
+            <label for="nombre">Nombre</label><span class="asterisco">*</span>
+            <input type="text" name="nombre" required value="{{ datos.miPersona.nombre }}">
+            <label for="apellido">Apellido</label><span class="asterisco">*</span>
+            <input type="text" name="apellido" required value="{{ datos.miPersona.apellido }}">
+            <label for="direccion">Direccion</label>
+            <input type="text" name="direccion" value="{{ datos.miPersona.direccion }}">
+            <label for="email">Email</label>
+            <input type="email" name="email" value="{{ datos.miPersona.email }}">
+            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+            <input type="date" name="fecha_nacimiento" value="{{ datos.miPersona.fecha_nacimiento }}">
+        </fieldset>
+        <input type="submit">
+    </form>
+</div>
+{% endblock %}

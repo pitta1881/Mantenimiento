@@ -18,14 +18,16 @@
     <h1>AGENTES DISPONIBLES </h1>
     <form action="/tarea/asignarAgentes/seleccionados" method="post">
         <table id="miTabla">
-            <th onclick="sortTable(0,'miTabla')">Nombre</th>
-            <th onclick="sortTable(1,'miTabla')">Apellido</th>
-            <th onclick="sortTable(2,'miTabla')">Especializacion</th>
-            <th onclick="sortTable(3,'miTabla')">Disponibilidad</th>
-            <th onclick="sortTable(4,'miTabla')">Seleccionar</th>
+            <th onclick="sortTable(0,'miTabla')">DNI</th>
+            <th onclick="sortTable(1,'miTabla')">Nombre</th>
+            <th onclick="sortTable(2,'miTabla')">Apellido</th>
+            <th onclick="sortTable(3,'miTabla')">Especializacion</th>
+            <th onclick="sortTable(4,'miTabla')">Disponibilidad</th>
+            <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
             {% set i = 1 %}
             {% for agente in datos.agentesDisponibles %}
             <tr>
+                <td>{{ agente.idAgente }}</td>
                 <td>{{ agente.nombre }}</td>
                 <td>{{ agente.apellido }}</td>
                 <td>{{ agente.especializacionNombre }}</td>

@@ -58,7 +58,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                             <li><a href=\"/usuarios/AdministracionUsuario\">Usuarios</a>
 
                             </li>
-                            <li><a href=\"\">Personas</a>
+                            <li><a href=\"/persona/AdministracionPersonas\">Personas</a>
                             </li>
                             <li><a href=\"/usuario/AdministracionRol\">Roles</a>
 
@@ -170,7 +170,7 @@ class __TwigTemplate_bbe4a72da1951c38efd61304b56a292c1648b28f164ba0c9e609b234455
                             <li><a href=\"/usuarios/AdministracionUsuario\">Usuarios</a>
 
                             </li>
-                            <li><a href=\"\">Personas</a>
+                            <li><a href=\"/persona/AdministracionPersonas\">Personas</a>
                             </li>
                             <li><a href=\"/usuario/AdministracionRol\">Roles</a>
 

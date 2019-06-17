@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %} Gestion de Personas {% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <input type="button" value="CREAR NUEVA PERSONA" onclick="mostrarFormulario()">
+    <script>
+        function mostrarFormulario() {
+            var formularioPersona = document.getElementById('formularioPersona');
+            if (formularioPersona.style.display == "block") {
+                formularioPersona.style.display = "none";
+            } else {
+                formularioPersona.style.display = "block"
+            }
+        }
+    </script>
+    <form action="/persona/altaPersona" method="post" id="formularioPersona" style="display: none">
+        <fieldset class="basicosPersona">
+            <legend> Alta de Persona</legend>
+            <label for="dni">DNI</label><span class="asterisco">*</span>
+            <input type="text" name="dni" autofocus required>
+            <label for="nombre">Nombre</label><span class="asterisco">*</span>
+            <input type="text" name="nombre" required>
+            <label for="apellido">Apellido</label><span class="asterisco">*</span>
+            <input type="text" name="apellido" required>
+            <label for="direccion">Direccion</label>
+            <input type="text" name="direccion">
+            <label for="email">Email</label>
+            <input type="email" name="email">
+            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+            <input type="date" name="fecha_nacimiento">
+        </fieldset>
+        <input type="submit">
+    </form>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">DNI Persona</th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th onclick="sortTable(2,'miTabla')">Apellido</th>
+        <th onclick="sortTable(3,'miTabla')">Direccion</th>
+        <th onclick="sortTable(4,'miTabla')">Email</th>
+        <th onclick="sortTable(5,'miTabla')">Fecha de Nacimiento</th>
+        <th onclick="sortTable(6,'miTabla')">Accion</th>
+        {% for persona in datos.todasPersonas %}
+        {% if persona.dni != '0' %}
+        <tr>
+            <td>{{ persona.dni }}</td>
+            <td>{{ persona.nombre }}</td>
+            <td>{{ persona.apellido }}</td>
+            <td>{{ persona.direccion }}</td>
+            <td>{{ persona.email }}</td>
+            <td>{{ persona.fecha_nacimiento }}</td>
+            <td>
+                <a href='/persona/modificarPersona/seleccionado?dni={{ persona.dni }}'>
+                    <input type="button" value="MODIFICAR">
+                </a>
+                {% if persona.usado == false %}
+                <form action="/persona/eliminar" method="post">
+                    <input type="text" name="dni" value="{{ persona.dni }}" hidden>
+                    <input type="button" value="Eliminar" id="btnEliminar{{ persona.dni }}"
+                        onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='inline-block';document.getElementById('eliminarNo{{ persona.dni }}').style.display='inline-block';document.getElementById('btnEliminar{{ persona.dni }}').style.display='none'">
+                    <input type="submit" value="Si" id="eliminarSi{{ persona.dni }}" style="display: none">
+                    <input type="reset" value="No" id="eliminarNo{{ persona.dni }}" style="display: none"
+                        onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='none';document.getElementById('eliminarNo{{ persona.dni }}').style.display='none';document.getElementById('btnEliminar{{ persona.dni }}').style.display='inline-block'">
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% else %}
+        <h2 class='error'>No hay Personas</h2> {% endfor %}
+    </table>
+</div>
+{% endblock %}

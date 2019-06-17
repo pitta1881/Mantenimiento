@@ -42,8 +42,8 @@ class Sectores extends Model
 
     public function getByIdSector($idSector){
         $sector = $this->db->selectSectorById($this->table,$idSector);
-        $miSector = json_decode(json_encode($sector), True);  
-        return $miSector[0];
+        $miSector = json_decode(json_encode($sector[0]), True);  
+        return $miSector;
     }
 
     public function update(array $datos,$idSector)

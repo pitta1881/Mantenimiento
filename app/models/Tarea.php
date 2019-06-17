@@ -13,6 +13,7 @@ class Tarea extends Model
     protected $tableItemOT='itemot';
     protected $tableOT = 'OrdenDeTrabajo';
     protected $tablePedido = 'pedido';
+    protected $tablePersona = 'personas';
 
     public function getEspecializaciones() {
         $array = [];
@@ -89,6 +90,9 @@ class Tarea extends Model
         $misAgentes = json_decode(json_encode($agentes), True);
         for ($i=0; $i < count($misAgentes); $i++) { 
             $misAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($misAgentes[$i]['idEspecializacion']);
+            $persona = $this->getPersonaPorId($misAgentes[$i]['idAgente']);
+            $misAgentes[$i]['nombre']=$persona['nombre'];
+            $misAgentes[$i]['apellido']=$persona['apellido'];
           }
         return $misAgentes;
     }
@@ -106,6 +110,9 @@ class Tarea extends Model
         $todosAgentes = json_decode(json_encode($agentes), True);
         for ($i=0; $i < count($todosAgentes); $i++) { 
             $todosAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todosAgentes[$i]['idEspecializacion']);
+            $persona = $this->getPersonaPorId($todosAgentes[$i]['idAgente']);
+            $todosAgentes[$i]['nombre']=$persona['nombre'];
+            $todosAgentes[$i]['apellido']=$persona['apellido'];
           }
           return $todosAgentes;
     }
@@ -177,4 +184,11 @@ class Tarea extends Model
             $this->db->updateFechaFinPedido($this->tablePedido,$idPedido,date("Y-m-d"));
         }
     }
+
+    
+    public function getPersonaPorId($idAgente){
+        $persona = $this->db->selectPersonaByDNI($this->tablePersona,$idAgente);
+        $miPersona = json_decode(json_encode($persona[0]), True);  
+        return $miPersona;
+      }
 }

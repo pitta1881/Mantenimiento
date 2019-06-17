@@ -78,16 +78,16 @@ class PedidoController extends Controller{
         $idPedido = $_POST['id'];
         $idSector = $this->model->getIdSectorPorNombre($_POST['sector']);
         $datos['idSector']= $idSector;
-         $arrayPedido = [
-             'fechaInicio' => $_POST['fechaInicio'],
-             'estado' => $_POST['estado'],
-             'descripcion' => $_POST['descripcion'],
-             'idSector' => $idSector,
-             'prioridad' => $_POST['prioridad'],
-         ];
-         $this->model->updatePedido($arrayPedido,$idPedido);
-         redirect("fichaPedido?id=".$idPedido);
-     }
+        $arrayPedido = [
+            'fechaInicio' => $_POST['fechaInicio'],
+            'estado' => $_POST['estado'],
+            'descripcion' => $_POST['descripcion'],
+            'idSector' => $idSector,
+            'prioridad' => $_POST['prioridad'],
+        ];
+        $this->model->updatePedido($arrayPedido,$idPedido);
+        redirect("fichaPedido?id=".$idPedido);
+    }
     
     public function buscarPor(){
         $filter = $_POST['filtro'];

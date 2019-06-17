@@ -28,11 +28,12 @@ class SectoresController extends Controller{
         $datos['telefono'] = $_POST['telefono'];
         $datos['email'] = $_POST['email']; 
         $statement = $this->model->buscarSector($datos['nombreSector']);          
-        if (empty($statement)) {
-            
+        if (empty($statement)) {            
             $this->model->insert($datos); 
             return $this->vistaAdministracionSectores();
-        }
+        }/*else{
+        mostrar mensaje de que ya existe
+        }*/
     }
 
     public function vistaModificar(){

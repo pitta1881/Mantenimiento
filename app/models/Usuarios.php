@@ -10,6 +10,7 @@ class Usuarios extends Model
     protected $tableRol='roles';
     protected $tablePersona='personas';
     protected $tablePermisos='permisos';
+    protected $tableAgentes='agentes';
     
     public function get()
     {
@@ -48,11 +49,5 @@ public function getRoles(){
     return $misPermisos; 
 }
   
-public function buscarPersona($user){
-       //comparo si existe el nombre de usuario 
-       return $this->db->comparaPersona($this->tablePersona,$user);
-    }
-
-   
     
 }

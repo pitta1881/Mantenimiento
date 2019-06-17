@@ -99,7 +99,6 @@ class TareaController extends Controller{
 
         public function desasignarAgente(){
             $this->model->desasignarAgente($_POST['idPedido'],$_POST['idTarea'],$_POST['idAgente']);
-            $this->model->cambiarEstadoAgente($_POST['idAgente'],1);
             redirect("fichaTarea?idPedido=".$_POST['idPedido']."&idTarea=".$_POST['idTarea']);
         }
 
