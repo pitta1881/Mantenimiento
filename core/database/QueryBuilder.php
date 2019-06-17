@@ -675,8 +675,7 @@ public function updateEvento($table, $parameters, $idEvento){
 
     public function selectAllPersonas($tablePersona){
         $statement = $this->pdo->prepare(
-            "SELECT * FROM {$tablePersona}"
-       
+            "SELECT * FROM {$tablePersona}"       
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);

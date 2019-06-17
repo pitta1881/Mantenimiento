@@ -27,18 +27,20 @@
     <input type="number" name="dni" placeholder="dni">
     <label for="roles">Rol del Usuario:</label>
     <select name="nombreRol" id="nombreRol">
-            <option value="SeleccionarRol">Seleccionar Rol</option>
+        <option value="SeleccionarRol">Seleccionar Rol</option>
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
         {% for nombre in datos.nombresRoles %}
         <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
         {% endfor %}}
     </select>
     <label for="roles">Persona asociada:</label>
-    <select  name="nombrePersona" id="nombrePersona">
-            <option value="SeleccionarPersona">Seleccionar Persona</option>
+    <select name="nombrePersona" id="nombrePersona">
+        <option value="SeleccionarPersona">Seleccionar Persona</option>
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for nombre in datos.nombresPersonas %}
-        <option value={{ nombre }}>{{ nombre  }}</option>
+        {% for persona in datos.todosPersonas %}
+        {% if persona.dni != '0' %}
+        <option value={{ persona.nombre }} {{ persona.apellido }}>{{ persona.nombre }} {{ persona.apellido }}</option>
+        {% endif %}
         {% endfor %}
     </select>
     <br>
