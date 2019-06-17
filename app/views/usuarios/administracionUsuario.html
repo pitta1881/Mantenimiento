@@ -20,7 +20,9 @@
     <input type="text" name="nombre" placeholder="Usuario">
     <br>
     <label for="nombre">Contraseña</label>
-    <input type="text" name="password" placeholder="contraseña">
+    <input type="password" name="password" placeholder="contraseña">
+    <label for="nombre">Confirmar Contraseña</label>
+    <input type="password" name="password" placeholder="contraseña">
     <label for="dni">DNI</label>
     <input type="number" name="dni" placeholder="dni">
     <label for="roles">Rol del Usuario:</label>
@@ -36,7 +38,7 @@
             <option value="SeleccionarPersona">Seleccionar Persona</option>
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
         {% for nombre in datos.nombresPersonas %}
-        <option value={{ nombres.apellido }}>{{ nombres.apellido  }}</option>
+        <option value={{ nombre }}>{{ nombre  }}</option>
         {% endfor %}
     </select>
     <br>
