@@ -59,8 +59,13 @@ class UsuariosController extends Controller
     public function vistaEliminarRol(){
           return view('/usuarios/administracionRol.eliminar');
     }
-    public function vistaAdministracionPermisos(){
-           return view('/usuarios/administracionPermisos');
+     public function vistaAdministracionPermisos(){
+          $nombresRoles=$this->model->getRoles();
+        $nombresPermisos=$this->model->getPermisos();
+        $datos['nombresRoles'] = $nombresRoles;
+        $datos['nombresPermisos'] = $nombresPermisos;
+     
+        return view('/usuarios/administracionPermisos',compact('datos'));
     }
      public function vistaAsignarPermiso(){
           return view('/usuarios/administracionPermisos.asignar');

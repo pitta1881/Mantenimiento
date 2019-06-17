@@ -48,6 +48,10 @@ public function getRoles(){
     $misPersonas = json_decode(json_encode($personas), True);
     return $misPersonas; 
 }
-  
+  public function  getPermisos(){
+    $permisos = $this->db->selectAllPermisos($this->tablePermisos);
+    $misPermisos = json_decode(json_encode($permisos), True);
+    return $misPermisos; 
+}
     
 }
