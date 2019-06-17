@@ -30,10 +30,10 @@ class UsuariosControler extends Controller
         $todosUsuarios = $this->model->get();     
         $datos['todosUsuarios'] = $todosUsuarios;
         $datos["userLogueado"] = $_SESSION['user'];
-        $nombresRoles=$this->model->getRoles();
-        $nombresPermisos=$this->model->getPermisos();
-        $datos['nombresRoles'] = $nombresRoles;
-        $datos['nombresPermisos'] = $nombresPermisos;
+        $todosRoles=$this->model->getRoles();
+        $todosPersonas=$this->model->getPersonas();
+        $datos['nombresRoles'] = $todosRoles;
+        $datos['nombresPersonas'] = $todosPersonas;
         return view('/usuarios/administracionUsuario', compact('datos'));
     }
 /*public function vistaAltaUsuario(){

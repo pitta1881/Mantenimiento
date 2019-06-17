@@ -673,6 +673,15 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function selectAllPersonas($tablePersona){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$tablePersona}"
+       
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
     public function selectPersonasNoAgentes($tablePersona, $tableAgente){ 
         $statement = $this->pdo->prepare(
             "SELECT * FROM $tablePersona T1 LEFT JOIN $tableAgente T2 ON T1.dni=T2.idAgente WHERE T2.idAgente IS NULL AND T1.dni<>0"
