@@ -57,7 +57,7 @@ class TareaController extends Controller{
             'idEspecializacion' => $idEspecializacion
         ];
         $this->model->update($tarea,$idTarea,$idPedido);
-        redirect("fichaPedido?id=".$idPedido);
+        redirect("fichaTarea?idPedido=".$idPedido."&idTarea=".$idTarea);
      }
 
      public function verAgentesDisponibles(){

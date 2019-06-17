@@ -14,6 +14,7 @@
 
 {% block main %}
 <div class="contenido3">
+    <input type="button" value="Volver" onclick="history.back()">
     <h1>Modificar Agente</h1>
     <form action="/agente/administracionAgente/modificarAgente" method="POST">
         <fieldset class="basicosAgente">
@@ -35,7 +36,6 @@
                 {% endfor %}
             </select>
         </fieldset>
-        <input type="reset" value="Volver" onclick="history.back()">
         <input type="submit">
     </form>
 </div>

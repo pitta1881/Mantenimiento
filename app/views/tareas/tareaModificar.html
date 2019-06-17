@@ -14,6 +14,7 @@
 
 {% block main %}
 <div class="contenido3">
+    <input type="button" value="Volver" onclick="history.back()">
     <h2>Modificar Tarea Nº {{ datos.unaTarea.idTarea }} del Pedido Nº {{ datos.unaTarea.idPedido }}</h2>
     <form action="/tarea/modificar/guardar" method="post" id="formularioTarea">
         <label for="idTarea">Tarea</label><span class="asterisco">*</span>
@@ -42,7 +43,6 @@
             {% endif %}
             {% endfor %}
         </select>
-        <input type="reset" value="Volver" onclick="history.back()">
         <input type="submit" value="Guardar Cambios">
     </form>
 </div>

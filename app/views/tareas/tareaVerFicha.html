@@ -14,6 +14,7 @@
 
 {% block main %}
 <div class="contenido3">
+    <input type="button" value="Volver" onclick="history.back()">
     <h1>Su Tarea</h1>
     <input type="button" value="IMPRIMIR" onclick="print()">
     {% if datos.miTarea.estado != "Finalizado" %}
@@ -89,11 +90,12 @@
         <th onclick="sortTable(4,'miTabla')">Accion</th>
         {% for agente in datos.miTarea.agentes %}
         <tr>
-            <td>{{ agente.idAgente }}</td>
+            <td><a href="/fichaPersona?idAgente={{ agente.idAgente }}">{{ agente.idAgente }}</a></td>
             <td>{{ agente.nombre }}</td>
             <td>{{ agente.apellido }}</td>
             <td>{{ agente.especializacionNombre }}</td>
             <td>
+                <a href="/fichaPersona?idAgente={{ agente.idAgente }}"><input type="button" value="Ver Mas"></a>
                 {% if  datos.miTarea.estado != "Finalizado" %}
                 <form action="/tarea/agentes/desasignar" method="post">
                     <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>

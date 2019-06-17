@@ -62,5 +62,12 @@ class PersonaController extends Controller
         $this->model->delete($_POST['dni']);
         return $this->vistaAdministracionPersona();
     }
+
+    public function ficha(){
+        $miPersona = $this->model->getByIdPersona($_GET['idAgente']);
+        $datos["miPersona"] = $miPersona;  
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/personas/personaVerFicha', compact('datos'));
+    }
     
 }

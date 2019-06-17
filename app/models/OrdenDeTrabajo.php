@@ -12,6 +12,9 @@ class OrdenDeTrabajo extends Model
     protected $tableEspecializacion='especializacion';
     protected $tablePedido='pedido';
     protected $tableSector='sectores';
+    protected $tableAgentes='agentes';
+    protected $tableItemAgentes='itemAgente';
+    protected $tablePersona = 'personas';
 
     public function get(){
         $ot = $this->db->selectAll($this->tableOT);
@@ -92,9 +95,27 @@ class OrdenDeTrabajo extends Model
         for ($i=0; $i < count($todasTareas); $i++) { 
             $todasTareas[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todasTareas[$i]['idEspecializacion']);
             $todasTareas[$i]['sector']=$this->getNombreSectorPorIdPedido($todasTareas[$i]['idPedido']);
+            $todasTareas[$i]['agentes']=$this->getAgentesByIdId($todasTareas[$i]['idPedido'],$todasTareas[$i]['idTarea']);
         }
         return $todasTareas;
     }
+
+    public function getAgentesByIdId($idPedido, $idTarea){
+        $agentes = $this->db->selectAgentesPorNPedidoNTarea($this->tableAgentes,$this->tableItemAgentes,$idPedido,$idTarea);
+        $todosAgentes = json_decode(json_encode($agentes), True);
+        for ($i=0; $i < count($todosAgentes); $i++) { 
+            $persona = $this->getPersonaPorId($todosAgentes[$i]['idAgente']);
+            $todosAgentes[$i]['nombre']=$persona['nombre'];
+            $todosAgentes[$i]['apellido']=$persona['apellido'];
+          }
+          return $todosAgentes;
+    }
+
+    public function getPersonaPorId($idAgente){
+        $persona = $this->db->selectPersonaByDNI($this->tablePersona,$idAgente);
+        $miPersona = json_decode(json_encode($persona[0]), True);  
+        return $miPersona;
+      }
 
 
 }

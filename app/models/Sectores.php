@@ -25,6 +25,11 @@ class Sectores extends Model
             } else{
                 $todosSectores[$indice]['usado'] = true;
             }
+            foreach ($datos as $key => $value) {
+                if (is_null($value) || $value == '') {
+                    $todosSectores[$indice][$key] = '-';
+                }
+            }
         }
         return $todosSectores;
     }
@@ -43,6 +48,11 @@ class Sectores extends Model
     public function getByIdSector($idSector){
         $sector = $this->db->selectSectorById($this->table,$idSector);
         $miSector = json_decode(json_encode($sector[0]), True);  
+        foreach ($miSector as $key => $value) {
+            if (is_null($value) || $value == '') {
+                $miSector[$key] = '-';
+            }
+        }
         return $miSector;
     }
 

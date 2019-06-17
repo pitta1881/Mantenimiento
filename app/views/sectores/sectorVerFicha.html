@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <input type="button" value="Volver" onclick="history.back()">
+    <a href='/sectores/modificar/seleccionado?idSector={{ datos.miSector.idSector }}'>
+        <input type="button" value="MODIFICAR">
+    </a>
+    <h1>Sector</h1>
+    <dl>
+        <dt>Nombre:</dt>
+        <dd>{{ datos.miSector.nombreSector }}</dd>
+        <dt>Nombre:</dt>
+        <dd>{{ datos.miSector.tipo }}</dd>
+        <dt>Responsable:</dt>
+        <dd>{{ datos.miSector.responsable }}</dd>
+        <dt>Telefono:</dt>
+        <dd>{{ datos.miSector.telefono }}</dd>
+        <dt>Email:</dt>
+        <dd>{{ datos.miSector.email }}</dd>
+    </dl>
+</div>
+{% endblock %}

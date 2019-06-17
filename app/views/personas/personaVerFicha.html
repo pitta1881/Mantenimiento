@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <input type="button" value="Volver" onclick="history.back()">
+    <a href='/persona/modificarPersona/seleccionado?dni={{ datos.miPersona.dni }}'>
+        <input type="button" value="MODIFICAR">
+    </a>
+    <h1>Su Persona</h1>
+    <dl>
+        <dt>DNI:</dt>
+        <dd>{{ datos.miPersona.dni }}</dd>
+        <dt>Nombre:</dt>
+        <dd>{{ datos.miPersona.nombre }}</dd>
+        <dt>Apellido:</dt>
+        <dd>{{ datos.miPersona.apellido }}</dd>
+        <dt>Direccion:</dt>
+        <dd>{{ datos.miPersona.direccion }}</dd>
+        <dt>Fecha de Nacimiento:</dt>
+        <dd>{{ datos.miPersona.fecha_nacimiento }}</dd>
+        <dt>Email:</dt>
+        <dd>{{ datos.miPersona.email }}</dd>
+    </dl>
+</div>
+{% endblock %}

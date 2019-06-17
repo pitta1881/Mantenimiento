@@ -87,7 +87,8 @@
         <tr>
             <td {{ estilo }}>{{ pedido.id }}</td>
             <td {{ estilo }}>{{ pedido.descripcion }}</td>
-            <td {{ estilo }}>{{ pedido.nombreSector }}</td>
+            <td {{ estilo }}><a href="/fichaSector?idSector={{ pedido.idSector }}"
+                    title="Ver Mas">{{ pedido.nombreSector }}</td>
             <td {{ estilo }}>{{ pedido.fechaInicio }}</td>
             <td {{ estilo }}>{{ pedido.fechaFin }}</td>
             <td {{ estilo }}>{{ pedido.tareasAsignadas }}</td>

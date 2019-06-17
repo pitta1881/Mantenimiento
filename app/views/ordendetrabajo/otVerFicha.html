@@ -14,6 +14,7 @@
 
 {% block main %}
 <div class="contenido3">
+    <input type="button" value="Volver" onclick="history.back()">
     <h1>Su Orden de Trabajo</h1>
     <input type="button" value="IMPRIMIR" onclick="print()">
     <dl>
@@ -35,7 +36,8 @@
         <th onclick="sortTable(4,'miTabla')">Especializacion</th>
         <th onclick="sortTable(5,'miTabla')">Prioridad</th>
         <th onclick="sortTable(6,'miTabla')">Estado</th>
-        <th onclick="sortTable(7,'miTabla')">Accion</th>
+        <th onclick="sortTable(7,'miTabla')">Agentes</th>
+        <th onclick="sortTable(8,'miTabla')">Accion</th>
         {% for tarea in datos.miOT.tareas %}
         {% set estilo = "" %}
         {% if tarea.estado == "Finalizado" %}
@@ -53,6 +55,11 @@
             <td {{ estilo }}>{{ tarea.especializacionNombre }}</td>
             <td {{ estilo }}>{{ tarea.prioridad }}</td>
             <td {{ estilo }}>{{ tarea.estado }}</td>
+            <td {{ estilo }}>
+                {% for agente in tarea.agentes %} <a
+                    href="/fichaPersona?idAgente={{ agente.idAgente }}">{{ agente.nombre }}
+                    {{ agente.apellido }}</a>{{ "\n"|nl2br }}{% endfor %}
+            </td>
             <td {{ estilo }}>
                 {% if tarea.estado != 'Finalizado' %}
                 {% set estados = ['En Curso','Pendiente','Finalizado'] %}

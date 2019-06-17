@@ -14,6 +14,7 @@
 
 {% block main %}
 <div class="contenido3">
+  <input type="button" value="Volver" onclick="history.back()">
   <h1>Modificar Evento</h1>
   <form action="/eventos/administracionEventos/modificarEvento" method="POST">
     <fieldset class="basicosPedidos">
@@ -26,13 +27,9 @@
       <input type="textarea" name="descripcion" autofocus required value="{{ datos.evento.descripcion }}"><br>
       <label for="fechaInicio">Fecha Inicio</label><span class="asterisco">*</span>
       <input type="date" name="fechaInicio" autofocus required value="{{ datos.evento.fechaInicio }}"><br>
-
       <label for="fechaFin">Fecha Fin</label><span class="asterisco">*</span>
       <input type="date" name="fechaFin" autofocus required value="{{ datos.evento.fechaFin }}"><br>
-
-
     </fieldset>
-    <input type="reset" value="Volver" onclick="history.back()">
     <input type="submit">
   </form>
 </div>

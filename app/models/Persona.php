@@ -57,6 +57,18 @@ class Persona extends Model
     public function getByIdPersona($dni){
         $persona = $this->db->selectPersonaByDNI($this->table,$dni);
         $miPersona = json_decode(json_encode($persona[0]), True);  
+        foreach ($miPersona as $key => $value) {
+            if (is_null($value) || $value == '') {
+                $miPersona[$key] = '-';
+            }
+            if ($key == 'fecha_nacimiento') {
+                if ($value == '0000-00-00') {
+                    $miPersona[$key] = '-';
+                } else{
+                    $miPersona[$key] = date("d/m/Y", strtotime($miPersona[$key]));
+                }
+            }
+        }
         return $miPersona;
     }
 

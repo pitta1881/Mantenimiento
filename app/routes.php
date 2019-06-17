@@ -60,6 +60,7 @@
     $router->get('persona/modificarPersona/seleccionado','PersonaController@modificarPersonaSeleccionada');
     $router->post('persona/modificar/guardar','PersonaController@modificar');
     $router->post('persona/eliminar','PersonaController@eliminar');
+    $router->get('fichaPersona', 'PersonaController@ficha');
 
 //rutas agentes
 
@@ -93,6 +94,7 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
     $router->get('sectores/modificar/seleccionado', 'SectoresController@vistaModificar');
     $router->post('sectores/administracionSectores/modificarSector', 'SectoresController@update');
     $router->post('sectores/eliminar', 'SectoresController@delete');
+    $router->get('fichaSector', 'SectoresController@ficha');
 
 //rutas Eventos
     $router->get('eventos/administracionEventos', 'EventosController@vistaAdministracionEventos');

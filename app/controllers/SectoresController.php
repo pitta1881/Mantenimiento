@@ -61,4 +61,11 @@ class SectoresController extends Controller{
         $this->model->delete($_POST['idSector']);
         return $this->vistaAdministracionSectores();
     }
+
+    public function ficha(){
+        $miSector = $this->model->getByIdSector($_GET['idSector']);
+        $datos["miSector"] = $miSector;  
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/sectores/sectorVerFicha', compact('datos'));
+    }
 }

@@ -62,7 +62,7 @@
         <th onclick="sortTable(5,'miTabla')">Accion</th>
         {% for agente in datos.todosAgentes %}
         <tr>
-            <td>{{ agente.idAgente }}</td>
+            <td><a href="/fichaPersona?idAgente={{ agente.idAgente }}">{{ agente.idAgente }}</a></td>
             <td>{{ agente.nombre }}</td>
             <td>{{ agente.apellido }}</td>
             <td>{{ agente.especializacionNombre }}</td>
@@ -72,6 +72,7 @@
             <td>OCUPADO</td>
             {% endif %}
             <td>
+                <a href="/fichaPersona?idAgente={{ agente.idAgente }}"><input type="button" value="Ver Mas"></a>
                 <a href='/agente/modificar/seleccionado?idAgente={{ agente.idAgente }}'>
                     <input type="button" value="MODIFICAR">
                 </a>
