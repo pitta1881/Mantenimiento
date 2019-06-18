@@ -2,8 +2,12 @@
 {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+	
+{{ dump(datos.userPermisos) }}
 <h1>Listado de Usuarios</h1>
+{% if "alta usuario" in datos.userPermisos|keys %}
 <input type="button" value=" NUEVO USUARIO" onclick="mostrarFormulario()">
+{% endif %}
 <script>
     function mostrarFormulario() {
         var formularioUsuario = document.getElementById('formularioUsuario');
@@ -30,6 +34,7 @@
         <option value="SeleccionarRol">Seleccionar Rol</option>
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
         {% for nombre in datos.nombresRoles %}
+        
         <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
         {% endfor %}}
     </select>

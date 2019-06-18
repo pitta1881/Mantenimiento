@@ -25,7 +25,10 @@ class Usuarios extends Model
        return $this->db->comparaUsuario($this->table,$user);
     }
 
-    
+    public function AllPermisos($nombreUser){
+        $cantidad = $this->db->selectPermisosNombre($nombreUser);
+        return $cantidad;
+    }
     
     public function insert(array $usuarios)
     {

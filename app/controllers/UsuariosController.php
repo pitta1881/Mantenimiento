@@ -16,9 +16,13 @@ class UsuariosController extends Controller
     
        /*Show all pedidos*/
     public function index(){
+
         $todosUsuarios = $this->model->get();      
         $datos['$todosUsuarios'] = $todosUsuarios;
-        $datos["userLogueado"] = $_SESSION['user'];        
+        $datos["userLogueado"] = $_SESSION['user'];  
+        $userPer= $this->model->AllPermisos($_SESSION['user']);
+        var_dump($userPer);
+        $datos["userPermisos"]= $userPer;
         return view('usuario/AdministracionUsuario', compact('datos'));
     }
 
@@ -30,6 +34,9 @@ class UsuariosController extends Controller
         $todosUsuarios = $this->model->get();     
         $datos['todosUsuarios'] = $todosUsuarios;
         $datos["userLogueado"] = $_SESSION['user'];
+        $userPer= $this->model->AllPermisos($_SESSION['user']);
+        
+        $datos["userPermisos"]= $userPer;
         $todosRoles=$this->model->getRoles(); 
         $todosPersonas=$this->model->getPersonas(); 
         $datos['nombresRoles'] = $todosRoles; 

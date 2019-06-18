@@ -32,4 +32,5 @@ $twig = new Twig_Environment($loader, array(
     'cache' => App::get('config')['twig']['templates_cache_dir'],
     'debug' => true,
 ));
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 App::bind('twig', $twig);
