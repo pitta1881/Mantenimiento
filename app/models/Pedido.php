@@ -14,7 +14,7 @@ class Pedido extends Model{
     protected $tableOT = 'OrdenDeTrabajo';
     protected $tableItemOT='itemot';
     protected $tableEvento='eventos';
-    protected $size_pagina=8;
+    protected $size_pagina=2;
 
     public function getSectores() {
         $array = [];
