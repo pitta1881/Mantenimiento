@@ -111,27 +111,31 @@ form output {
     font-size: 2em;
 }
 dl {
-    background-color: #4e514e;
+    background-color:#aabcfe;
     /*   width: 100%; */
 }
 dt {
     /* text-decoration: underline; */
     float: left;
-    width: 20%;
+    text-align: center;
+    width: 10%;
     margin-right: 10px;
-    background-color: darkgray;
-    padding: 10px;
+    background-color:#aabcfe;
+    padding: 5px;
+    background: #b9c9fe;
+    /*border: 4px solid #aabcfe;*/
+    color: #039;
 }
 dt:nth-child(4n+1),
 dd:nth-child(4n+2) {
-    color: #8D9E8D;
-    color: azure;
+    color:#039;
+    color:#039;
 }
 dd {
     width: 97%;
     margin: 1px;
-    padding: 10px;
-    background-color: gray;
+    padding: 5px;
+    background-color: white;
 }
 .div input {
     border-color: black;
@@ -396,4 +400,11 @@ td {
  
 .paginacion ul li a:hover {
 	background:#024959;
+}
+
+
+.menuFicha{
+    position: relative;
+    display: block;
+    list-style: none;
 }

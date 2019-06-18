@@ -13,18 +13,20 @@
 {% endblock %}
 
 {% block main %}
-<div class="contenido3">
-    <input type="button" value="Volver" onclick="history.back()">
-    <h1>Su Pedido</h1>
-    <input type="button" value="IMPRIMIR" onclick="print()">
-    <a href='/pedido/modificar/seleccionado?id={{ datos.miPedido.id }}'>
-        <input type="button" value="MODIFICAR">
-    </a>
+<div class="general">
+    <ul class="menuFicha">
+       <li> <img class="iconos" src="/public/res/back.svg"  onclick="history.back()"></li>
+       <li>  <h1>Su Pedido</h1></li>
+       <li> <img class="iconos" src="/public/res/print.svg" onclick="print()"></li>
+       <li> <a href='/pedido/modificar/seleccionado?id={{ datos.miPedido.id }}'>
+        <img class="iconos"  src="/public/res/update.svg" >
+    </a></li>
     <form action="/pedido/finalizar" method="post" id="formFin" style="display: none">
         <input type="text" name="id" value={{ datos.miPedido.id }} hidden>
         <input type="submit" value="Finalizar Pedido">
+    
     </form>
-
+</ul>
     <dl>
         <dt>Nº Pedido:</dt>
         <dd>{{ datos.miPedido.id }}</dd>
