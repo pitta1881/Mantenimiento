@@ -2,9 +2,9 @@
 {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-<div class="contenido3">
+<div class="general" >
     <h1>Listado de Pedidos</h1>
-    <input type="button" value="CREAR NUEVO PEDIDO" onclick="mostrarFormulario()">
+   
     <script>
         function mostrarFormulario() {
             var formularioPedido = document.getElementById('formularioPedido');
@@ -25,13 +25,9 @@
             <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" readonly class="inputDisabled">
             <label for="fechaInicio">Fecha</label>
             <input type="DATE" name="fechaInicio" value="{{ datos.diaHoy }}" readonly class="inputDisabled">
-            <br>
+            
             <label for="estado">Estado</label>
             <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
-            <br>
-            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-            <input type="textarea" rows="10" cols="50" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
-            <br>
             <label for="sector">Sector</label>
             <select name="sector">
                 {% for sector in datos.sectores %}
@@ -44,6 +40,12 @@
                 <option value="{{ prioridad }}">{{ prioridad }}</option>
                 {% endfor %}
             </select>
+            <br>
+            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+            <input type="textarea" rows="10" cols="50" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+            <br>
+           
+           
         </fieldset>
         {% if datos.idEvento is not empty %}
         <input type="text" name="idEvento" value="{{ datos.idEvento }}" hidden>
@@ -52,7 +54,9 @@
         <input type="submit">
         {% endif %}
     </form>
-    <form action="/pedido/buscar" method="POST">
+    
+    <form class="buscador" action="/pedido/buscar" method="POST">
+        <input type="button" value="CREAR NUEVO PEDIDO" onclick="mostrarFormulario()">
         <select name="filtro">
             <option value="id">Nº PEDIDO</option>
             <option value="sector">SECTOR</option>

@@ -163,14 +163,21 @@ dd {
     display: inline;
 }
 
-/*.general {
-    top: 50px;
-    left: 500px;
-    position: absolute;
-    height: 300px;
-    width: 120px;
-    display: flex;
-}*/
+.buscador {
+
+    align-self:center;
+    height: 10vh;
+    width: 82vw;
+    display: block;
+    padding-left:8vw;
+}
+
+.general{
+    position: relative;
+    left: 4vw;
+    height: 90vh;
+    width: 90vw;
+}
 
 .contenido1 {
     background-color: cornsilk;
@@ -290,7 +297,7 @@ th {
     height: 1vh;
     /*  padding: 20px 15px;*/
     text-align: center;
-    font-weight: 500;
+    font-weight: 450;
     /* font-size: 12px; */
     color: #000;
     text-transform: uppercase;
