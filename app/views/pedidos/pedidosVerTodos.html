@@ -56,7 +56,7 @@
     </form>
     
     <form class="buscador" action="/pedido/buscar" method="POST">
-        <input type="button" value="CREAR NUEVO PEDIDO" onclick="mostrarFormulario()">
+        <input  class="crear" type="button" value="CREAR NUEVO PEDIDO" onclick="mostrarFormulario()">
         <select name="filtro">
             <option value="id">Nº PEDIDO</option>
             <option value="sector">SECTOR</option>
@@ -113,5 +113,12 @@
         {% else %}
         <h2 class='error'>No hay Pedidos</h2> {% endfor %}
     </table>
+    <div class="paginacion"{
+        <p> 1 2 3 4 5 6</p>
+    
+    </div>
 </div>
+
+
+}
 {% endblock %}

@@ -1,7 +1,8 @@
 header {
-    width: 98.8vw;
+    width: 98vw;
     height: 10vh;
     top: 0;
+    left:0;
 }
 body {
     border: 1vh;
@@ -167,9 +168,14 @@ dd {
 
     align-self:center;
     height: 10vh;
-    width: 82vw;
+    width: 57vw;
     display: block;
-    padding-left:8vw;
+    padding-left:33vw;
+}
+
+.crear{
+    position: relative;
+    right:25vw;
 }
 
 .general{
@@ -329,8 +335,8 @@ td {
     color: black;
     border-bottom: solid 1px rgba(0, 0, 0, 0.1);
     border-right: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 8px;
-    background: #e8edff;
+    padding: 0px;
+    background: #ffffff;
     border-bottom: 1px solid #fff;
     color: #669;
     border-top: 1px solid transparent;
