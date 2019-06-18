@@ -30,7 +30,7 @@
             <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
             <br>
             <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-            <input type="textarea" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+            <input type="textarea" rows="10" cols="50" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
             <br>
             <label for="sector">Sector</label>
             <select name="sector">
@@ -97,11 +97,11 @@
             <td {{ estilo }}>{{ pedido.nombreUsuario }}</td>
             <td {{ estilo }}>
                 <a href='/fichaPedido?id={{ pedido.id }}'>
-                    <input type="button" value="VER MAS">
+                    <img class="iconos" src="/public/res/vermas.svg" >
                 </a>
                 {% if pedido.estado != "Finalizado" %}
                 <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
-                    <input type="button" value="MODIFICAR">
+                    <img class="iconos" src="/public/res/update.svg" >
                 </a>
                 {% endif %}
             </td>
