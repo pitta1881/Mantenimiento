@@ -40,7 +40,7 @@
         <dd>{{ datos.miPedido.estado }}</dd>
         <dt>Sector:</dt>
         <dd><a href="/fichaSector?idSector={{ datos.miPedido.idSector }}"
-                title="Ver Mas">{{ datos.miPedido.nombreSector }}</dd>
+                title="Ver Mas">{{ datos.miPedido.nombreSector }}</a></dd>
         <dt>Prioridad:</dt>
         <dd>{{ datos.miPedido.prioridad }}</dd>
     </dl>
@@ -132,17 +132,13 @@
                 {% endif %}
                 <a href="#"><input type="button" value="Ver Insumos"></a>
                 {% if tarea.estado == 'Iniciado' %}
-                <form action="/pedido/tarea/eliminar" method="post">
+                <form action="/pedido/tarea/eliminar" method="post"
+                    id="formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}">
                     <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
                     <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
-                    <input type="button" value="Eliminar" id="formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
-                        onclick="document.getElementById('eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none'">
-                    <input type="submit" value="Si" id="eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
-                        style="display: none">
-                    <input type="reset" value="No" id="eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}"
-                        style="display: none"
-                        onclick="document.getElementById('eliminarSi{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('eliminarNo{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('formEliminar{{ datos.miPedido.id }}_{{ tarea.idTarea }}').style.display='inline-block'">
                 </form>
+                <input type="button" value="Eliminar Tarea"
+                    onclick="alertify.confirm('Eliminar Tarea','¿Esta seguro?',function(){document.getElementById('formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}').submit()},function(){})">
                 {% endif %}
             </td>
         </tr>

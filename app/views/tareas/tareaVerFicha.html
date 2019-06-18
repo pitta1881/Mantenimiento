@@ -62,7 +62,12 @@
         <th>Estado</th>
         <th>Accion</th>
         {% if datos.miTarea.estado == "Iniciado" %}
+        {% if datos.miTarea.agentes is empty %}
+        <a href="#"><input type="button" value="Crear una OT"
+                onclick="alertify.alert('Error','Primero debe asignar agentes')" ;></a>
+        {% else %}
         <a href="/ot/crear"><input type="button" value="Crear una OT"></a>
+        {% endif %}
         <h2 class='error'>No está asignado a ninguna OT</h2>
         {% else %}
         <tr>
@@ -97,21 +102,14 @@
             <td>
                 <a href="/fichaPersona?idAgente={{ agente.idAgente }}"><input type="button" value="Ver Mas"></a>
                 {% if  datos.miTarea.estado != "Finalizado" %}
-                <form action="/tarea/agentes/desasignar" method="post">
+                <form action="/tarea/agentes/desasignar" method="post" hidden
+                    id="formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}">
                     <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
                     <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
                     <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
-                    <input type="button" value="Desasignar Agente"
-                        id="btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
-                        onclick="document.getElementById('cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none'">
-                    <input type="submit" value="Si"
-                        id="cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
-                        style="display: none">
-                    <input type="reset" value="No"
-                        id="cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}"
-                        style="display: none"
-                        onclick="document.getElementById('cambiarEstadoSi{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('cambiarEstadoNo{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ tareas.idPedido }}_{{ tareas.idTarea }}_{{ agente.idAgente }}').style.display='inline-block'">
                 </form>
+                <input type="button" value="Desasignar Agente"
+                    onclick="alertify.confirm('Desasignar Agente','¿Esta seguro?',function(){document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}').submit()},function(){})">
                 {% endif %}
             </td>
         </tr>
