@@ -741,6 +741,26 @@ public function updateEvento($table, $parameters, $idEvento){
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function getSize($tabla){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tabla"
+        );
+        $statement->execute();
+        $num_filas=$statement->rowCount();
+        return $num_filas;
+    }
+    
+    public function getAllLimit($tabla,$litinf,$litsup){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tabla LIMIT $litinf, $litsup"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+    
 }
+
+
 
 

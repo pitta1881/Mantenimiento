@@ -2,13 +2,14 @@
 {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-<div class="contenido3">
+<div class="general">
     <h1>Listado de Ordenes de Trabajo</h1>
-    <a href="/ot/crear">
-        <input type="button" value="Crear OT">
-    </a>
+    
 
-    <form action="/pedido/buscar" method="POST">
+    <form  class="buscador" action="/pedido/buscar" method="POST">
+        <a  class="crear" href="/ot/crear">
+            <input type="button" value="Crear OT">
+        </a>
         <select name="filtro">
             <option value="id">Nº OT</option>
             <option value="sector">SECTOR</option>

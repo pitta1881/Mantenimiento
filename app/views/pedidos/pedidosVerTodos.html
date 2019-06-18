@@ -113,10 +113,15 @@
         {% else %}
         <h2 class='error'>No hay Pedidos</h2> {% endfor %}
     </table>
-    <div class="paginacion"{
-        <p> 1 2 3 4 5 6</p>
-    
-    </div>
+    <section class="paginacion">
+			<ul>
+                    <li><a href='/pedido/verTodos?page={{ 1 }}'> &lt; </a></li>
+                    {% for i in 1..datos.totalPaginas %}
+                    <li><a href='/pedido/verTodos?page={{ i }}'> {{ i }} </a></li>
+                    {% endfor %}
+                    <li><a href='/pedido/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>
+			</ul>
+		</section>
 </div>
 
 

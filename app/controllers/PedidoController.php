@@ -15,14 +15,21 @@ class PedidoController extends Controller{
 
     /*Show all pedidos*/
     public function index(){
-        $todosPedidos = $this->model->get();      
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todosPedidos = $this->model->getPaginacion($pagina); 
         $datos['todosPedidos'] = $todosPedidos;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         $datos["diaHoy"] = date("Y-m-d");
-       $datos["sectores"] = $this->model->getSectores();
-       $datos["prioridades"] = $this->model->getPrioridades();
-       if (!empty($_GET)) {
+        $datos["sectores"] = $this->model->getSectores();
+        $datos["prioridades"] = $this->model->getPrioridades();
+       /*  if (!empty($_GET)) {
         $datos['idEvento']=$_GET['idEvento'];
-       }       
+       } */      
        $datos["estados"] = $this->model->getEstados();
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/pedidos/pedidosVerTodos', compact('datos'));
