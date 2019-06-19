@@ -370,6 +370,13 @@ td {
 .inputDisabled {
     background-color: lightgrey;
     pointer-events: none;
+    
+}
+
+.numInputDisabled {
+    background-color: lightgrey;
+    pointer-events: none;
+    width: 5vw;
 }
 
 .iconos{
