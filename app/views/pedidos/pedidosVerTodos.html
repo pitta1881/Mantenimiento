@@ -2,9 +2,9 @@
 {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-<div class="general" >
+<div class="general">
     <h1>Listado de Pedidos</h1>
-   
+
     <script>
         function mostrarFormulario() {
             var formularioPedido = document.getElementById('formularioPedido');
@@ -25,7 +25,7 @@
             <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" readonly class="inputDisabled">
             <label for="fechaInicio">Fecha</label>
             <input type="DATE" name="fechaInicio" value="{{ datos.diaHoy }}" readonly class="inputDisabled">
-            
+
             <label for="estado">Estado</label>
             <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
             <label for="sector">Sector</label>
@@ -42,10 +42,11 @@
             </select>
             <br>
             <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-            <input type="textarea" rows="10" cols="50" name="descripcion" autofocus required placeholder="Ingrese la descripcion..">
+            <input type="textarea" rows="10" cols="50" name="descripcion" autofocus required
+                placeholder="Ingrese la descripcion..">
             <br>
-           
-           
+
+
         </fieldset>
         {% if datos.idEvento is not empty %}
         <input type="text" name="idEvento" value="{{ datos.idEvento }}" hidden>
@@ -54,10 +55,10 @@
         <input type="submit">
         {% endif %}
     </form>
-    
+
     <form class="buscador" action="/pedido/buscar" method="POST">
-        <img class="crear" src="/public/res/nuevo.svg" onclick="mostrarFormulario()">
-   
+        <img class="crear" src="/public/res/nuevo.svg" title="Crear" onclick="mostrarFormulario()">
+
         <select name="filtro">
             <option value="id">Nº PEDIDO</option>
             <option value="sector">SECTOR</option>
@@ -71,7 +72,7 @@
 
     <table id="miTabla">
         <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
-        <th  class="descripcion" onclick="sortTable(1,'miTabla')">Descripcion</th>
+        <th class="descripcion" onclick="sortTable(1,'miTabla')">Descripcion</th>
         <th onclick="sortTable(2,'miTabla')">Sector</th>
         <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
         <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
@@ -102,11 +103,11 @@
             <td {{ estilo }}>{{ pedido.nombreUsuario }}</td>
             <td {{ estilo }}>
                 <a href='/fichaPedido?id={{ pedido.id }}'>
-                    <img class="iconos" src="/public/res/vermas.svg" >
+                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
                 {% if pedido.estado != "Finalizado" %}
                 <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
-                    <img class="iconos" src="/public/res/update.svg" >
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
                 {% endif %}
             </td>
@@ -115,21 +116,21 @@
         <h2 class='error'>No hay Pedidos</h2> {% endfor %}
     </table>
     <section class="paginacion">
-			<ul>
+        <ul>
 
-                    {% if datos.totalPaginas is empty  %}
-                    <li><a href='/pedido/verTodos?page={{ 1 }}'> 1 </a></li>   
-                    {% endif %}
-                {% if datos.totalPaginas|e  %}
-                    <li><a href='/pedido/verTodos?page={{ 1 }}'> &lt; </a></li>    
-                    {% for i in 1..datos.totalPaginas %}
-                    <li><a href='/pedido/verTodos?page={{ i }}'> {{ i }} </a></li>
-                    {% endfor %}
-                    <li><a href='/pedido/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>
-                {% endif %}
+            {% if datos.totalPaginas is empty  %}
+            <li><a href='/pedido/verTodos?page={{ 1 }}'> 1 </a></li>
+            {% endif %}
+            {% if datos.totalPaginas|e  %}
+            <li><a href='/pedido/verTodos?page={{ 1 }}'> &lt; </a></li>
+            {% for i in 1..datos.totalPaginas %}
+            <li><a href='/pedido/verTodos?page={{ i }}'> {{ i }} </a></li>
+            {% endfor %}
+            <li><a href='/pedido/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>
+            {% endif %}
 
-			</ul>
-		</section>
+        </ul>
+    </section>
 </div>
 
 

@@ -25,6 +25,7 @@
     $router->get('fichaTarea', 'TareaController@ficha');
     $router->post('tarea/agentes/desasignar', 'TareaController@desasignarAgente');
     $router->post('tarea/cambiarEstado/seleccionado', 'TareaController@cambiarEstado');
+    $router->get('tarea/verHistorial', 'TareaController@verHistorial');
 
 //rutas OT
     $router->get('OT/verTodos', 'OTController@index');

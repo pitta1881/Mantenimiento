@@ -78,10 +78,10 @@
 
             <td>
                 <a href="/fichaSector?idSector={{ sector.idSector }}">
-                    <img class="iconos" src="/public/res/vermas.svg" >
+                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas" >
                 </a>
                 <a href="/sectores/modificar/seleccionado?idSector={{ sector.idSector }}">
-                    <img class="iconos" src="/public/res/update.svg" >
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar" >
                 </a>
                 {% if sector.usado == false %}
                 <form action="/sectores/eliminar" method="post">

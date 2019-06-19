@@ -4,19 +4,19 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 {% block main %}
 <div class="general">
-        <h1>Listado de Eventos</h1>
-        <form class="buscador" action="/pedido/buscar" method="POST">
-            <img class="crear" src="/public/res/nuevo.svg" onclick="mostrarFormulario()">
-            <select name="filtro">
-                <option value="id">Nº PEDIDO</option>
-                <option value="sector">SECTOR</option>
-                <option value="fechaInicio">FECHA INICIO</option>
-                <option value="estado">ESTADO</option>
-                <option value="prioridad">PRIORIDAD</option>
-            </select>
-            <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-            <input type="submit" value="Buscar">
-        </form>
+    <h1>Listado de Eventos</h1>
+    <form class="buscador" action="/pedido/buscar" method="POST">
+        <img class="crear" src="/public/res/nuevo.svg" title="Crear" onclick="mostrarFormulario()">
+        <select name="filtro">
+            <option value="id">Nº PEDIDO</option>
+            <option value="sector">SECTOR</option>
+            <option value="fechaInicio">FECHA INICIO</option>
+            <option value="estado">ESTADO</option>
+            <option value="prioridad">PRIORIDAD</option>
+        </select>
+        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+        <input type="submit" value="Buscar">
+    </form>
 
 
     <script>

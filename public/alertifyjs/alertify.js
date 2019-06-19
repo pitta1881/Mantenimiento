@@ -3,9 +3,9 @@
  * AlertifyJS is a javascript framework for developing pretty browser dialogs and notifications.
  * Copyright 2019 Mohammad Younes <Mohammad@alertifyjs.com> (http://alertifyjs.com) 
  * Licensed under GPL 3 <https://opensource.org/licenses/gpl-3.0>*/
-( function ( window ) {
+(function (window) {
     'use strict';
-    
+
     /**
      * Keys enum
      * @type {Object}
@@ -23,31 +23,31 @@
      * @type {Object}
      */
     var defaults = {
-        autoReset:true,
-        basic:false,
-        closable:true,
-        closableByDimmer:true,
-        frameless:false,
-        maintainFocus:true, //global default not per instance, applies to all dialogs
-        maximizable:true,
-        modal:true,
-        movable:true,
-        moveBounded:false,
-        overflow:true,
+        autoReset: true,
+        basic: false,
+        closable: true,
+        closableByDimmer: true,
+        frameless: false,
+        maintainFocus: true, //global default not per instance, applies to all dialogs
+        maximizable: true,
+        modal: true,
+        movable: true,
+        moveBounded: false,
+        overflow: true,
         padding: true,
-        pinnable:true,
-        pinned:true,
-        preventBodyShift:false, //global default not per instance, applies to all dialogs
-        resizable:true,
-        startMaximized:false,
-        transition:'pulse',
-        notifier:{
-            delay:5,
-            position:'bottom-right',
-            closeButton:false
+        pinnable: true,
+        pinned: true,
+        preventBodyShift: false, //global default not per instance, applies to all dialogs
+        resizable: true,
+        startMaximized: false,
+        transition: 'pulse',
+        notifier: {
+            delay: 5,
+            position: 'bottom-right',
+            closeButton: false
         },
-        glossary:{
-            title:'AlertifyJS',
+        glossary: {
+            title: 'AlertifyJS',
             ok: 'OK',
             cancel: 'Cancel',
             acccpt: 'Accept',
@@ -58,13 +58,13 @@
             maximize: 'Maximize',
             restore: 'Restore',
         },
-        theme:{
-            input:'ajs-input',
-            ok:'ajs-ok',
-            cancel:'ajs-cancel',
+        theme: {
+            input: 'ajs-input',
+            ok: 'ajs-ok',
+            cancel: 'ajs-cancel',
         }
     };
-    
+
     //holds open dialogs instances
     var openDialogs = [];
 
@@ -76,10 +76,10 @@
      * 
      * @return {undefined}
      */
-    function addClass(element,classNames){
+    function addClass(element, classNames) {
         element.className += ' ' + classNames;
     }
-    
+
     /**
      * [Helper]  Removes the specified class(es) from the element.
      *
@@ -93,8 +93,8 @@
         var toBeRemoved = classNames.split(' ');
         for (var x = 0; x < toBeRemoved.length; x += 1) {
             var index = original.indexOf(toBeRemoved[x]);
-            if (index > -1){
-                original.splice(index,1);
+            if (index > -1) {
+                original.splice(index, 1);
             }
         }
         element.className = original.join(' ');
@@ -105,7 +105,7 @@
      *
      * @return {Boolean} True if the document is RTL, false otherwise.
      */
-    function isRightToLeft(){
+    function isRightToLeft() {
         return window.getComputedStyle(document.body).direction === 'rtl';
     }
     /**
@@ -113,7 +113,7 @@
      *
      * @return {Number} current document scrollTop value
      */
-    function getScrollTop(){
+    function getScrollTop() {
         return ((document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop);
     }
 
@@ -122,15 +122,15 @@
      *
      * @return {Number} current document scrollLeft value
      */
-    function getScrollLeft(){
+    function getScrollLeft() {
         return ((document.documentElement && document.documentElement.scrollLeft) || document.body.scrollLeft);
     }
 
     /**
-    * Helper: clear contents
-    *
-    */
-    function clearContents(element){
+     * Helper: clear contents
+     *
+     */
+    function clearContents(element) {
         while (element.lastChild) {
             element.removeChild(element.lastChild);
         }
@@ -144,23 +144,23 @@
      * @return {Object} The extended prototype.
      */
     function copy(src) {
-        if(null === src){
+        if (null === src) {
             return src;
         }
         var cpy;
-        if(Array.isArray(src)){
+        if (Array.isArray(src)) {
             cpy = [];
-            for(var x=0;x<src.length;x+=1){
+            for (var x = 0; x < src.length; x += 1) {
                 cpy.push(copy(src[x]));
             }
             return cpy;
         }
-      
-        if(src instanceof Date){
+
+        if (src instanceof Date) {
             return new Date(src.getTime());
         }
-      
-        if(src instanceof RegExp){
+
+        if (src instanceof RegExp) {
             cpy = new RegExp(src.source);
             cpy.global = src.global;
             cpy.ignoreCase = src.ignoreCase;
@@ -168,8 +168,8 @@
             cpy.lastIndex = src.lastIndex;
             return cpy;
         }
-        
-        if(typeof src === 'object'){
+
+        if (typeof src === 'object') {
             cpy = {};
             // copy dialog pototype over definition.
             for (var prop in src) {
@@ -182,11 +182,11 @@
         return src;
     }
     /**
-      * Helper: destruct the dialog
-      *
-      */
-    function destruct(instance, initialize){
-        if(instance.elements){
+     * Helper: destruct the dialog
+     *
+     */
+    function destruct(instance, initialize) {
+        if (instance.elements) {
             //delete the dom and it's references.
             var root = instance.elements.root;
             root.parentNode.removeChild(root);
@@ -266,11 +266,11 @@
         var t, type;
         var supported = false;
         var transitions = {
-            'animation'        : 'animationend',
-            'OAnimation'       : 'oAnimationEnd oanimationend',
-            'msAnimation'      : 'MSAnimationEnd',
-            'MozAnimation'     : 'animationend',
-            'WebkitAnimation'  : 'webkitAnimationEnd'
+            'animation': 'animationend',
+            'OAnimation': 'oAnimationEnd oanimationend',
+            'msAnimation': 'MSAnimationEnd',
+            'MozAnimation': 'animationend',
+            'WebkitAnimation': 'webkitAnimationEnd'
         };
 
         for (t in transitions) {
@@ -288,10 +288,10 @@
     }());
 
     /**
-    * Creates event handler delegate that sends the instance as last argument.
-    * 
-    * @return {Function}    a function wrapper which sends the instance as last argument.
-    */
+     * Creates event handler delegate that sends the instance as last argument.
+     * 
+     * @return {Function}    a function wrapper which sends the instance as last argument.
+     */
     function delegate(context, method) {
         return function () {
             if (arguments.length > 0) {
@@ -306,10 +306,10 @@
         };
     }
     /**
-    * Helper for creating a dialog close event.
-    * 
-    * @return {object}
-    */
+     * Helper for creating a dialog close event.
+     * 
+     * @return {object}
+     */
     function createCloseEvent(index, button) {
         return {
             index: index,
@@ -318,15 +318,15 @@
         };
     }
     /**
-    * Helper for dispatching events.
-    *
-    * @param  {string} evenType The type of the event to disptach.
-    * @param  {object} instance The dialog instance disptaching the event.
-    *
-    * @return   {any}   The result of the invoked function.
-    */
+     * Helper for dispatching events.
+     *
+     * @param  {string} evenType The type of the event to disptach.
+     * @param  {object} instance The dialog instance disptaching the event.
+     *
+     * @return   {any}   The result of the invoked function.
+     */
     function dispatchEvent(eventType, instance) {
-        if ( typeof instance.get(eventType) === 'function' ) {
+        if (typeof instance.get(eventType) === 'function') {
             return instance.get(eventType).call(instance);
         }
     }
@@ -348,7 +348,7 @@
             isSafari = window.navigator.userAgent.indexOf('Safari') > -1 && window.navigator.userAgent.indexOf('Chrome') < 0,
             //dialog building blocks
             templates = {
-                dimmer:'<div class="ajs-dimmer"></div>',
+                dimmer: '<div class="ajs-dimmer"></div>',
                 /*tab index required to fire click event before body focus*/
                 modal: '<div class="ajs-modal" tabindex="0"></div>',
                 dialog: '<div class="ajs-dialog" tabindex="0"></div>',
@@ -358,7 +358,10 @@
                 body: '<div class="ajs-body"></div>',
                 content: '<div class="ajs-content"></div>',
                 footer: '<div class="ajs-footer"></div>',
-                buttons: { primary: '<div class="ajs-primary ajs-buttons"></div>', auxiliary: '<div class="ajs-auxiliary ajs-buttons"></div>' },
+                buttons: {
+                    primary: '<div class="ajs-primary ajs-buttons"></div>',
+                    auxiliary: '<div class="ajs-auxiliary ajs-buttons"></div>'
+                },
                 button: '<button class="ajs-button"></button>',
                 resizeHandle: '<div class="ajs-handle"></div>',
             },
@@ -367,27 +370,27 @@
                 animationIn: 'ajs-in',
                 animationOut: 'ajs-out',
                 base: 'alertify',
-                basic:'ajs-basic',
+                basic: 'ajs-basic',
                 capture: 'ajs-capture',
-                closable:'ajs-closable',
+                closable: 'ajs-closable',
                 fixed: 'ajs-fixed',
-                frameless:'ajs-frameless',
+                frameless: 'ajs-frameless',
                 hidden: 'ajs-hidden',
                 maximize: 'ajs-maximize',
                 maximized: 'ajs-maximized',
-                maximizable:'ajs-maximizable',
+                maximizable: 'ajs-maximizable',
                 modeless: 'ajs-modeless',
                 movable: 'ajs-movable',
                 noSelection: 'ajs-no-selection',
                 noOverflow: 'ajs-no-overflow',
-                noPadding:'ajs-no-padding',
-                pin:'ajs-pin',
-                pinnable:'ajs-pinnable',
+                noPadding: 'ajs-no-padding',
+                pin: 'ajs-pin',
+                pinnable: 'ajs-pinnable',
                 prefix: 'ajs-',
                 resizable: 'ajs-resizable',
                 restore: 'ajs-restore',
-                shake:'ajs-shake',
-                unpinned:'ajs-unpinned',
+                shake: 'ajs-shake',
+                unpinned: 'ajs-unpinned',
             };
 
         /**
@@ -395,46 +398,45 @@
          * 
          * @return	{Number}	The total count of currently open modals.
          */
-        function initialize(instance){
-            
-            if(!instance.__internal){
+        function initialize(instance) {
+
+            if (!instance.__internal) {
 
                 //no need to expose init after this.
                 delete instance.__init;
-              
+
                 //keep a copy of initial dialog settings
-                if(!instance.__settings){
+                if (!instance.__settings) {
                     instance.__settings = copy(instance.settings);
                 }
-                
+
                 //get dialog buttons/focus setup
                 var setup;
-                if(typeof instance.setup === 'function'){
+                if (typeof instance.setup === 'function') {
                     setup = instance.setup();
-                    setup.options = setup.options  || {};
-                    setup.focus = setup.focus  || {};
-                }else{
+                    setup.options = setup.options || {};
+                    setup.focus = setup.focus || {};
+                } else {
                     setup = {
-                        buttons:[],
-                        focus:{
-                            element:null,
-                            select:false
+                        buttons: [],
+                        focus: {
+                            element: null,
+                            select: false
                         },
-                        options:{
-                        }
+                        options: {}
                     };
                 }
-                
+
                 //initialize hooks object.
-                if(typeof instance.hooks !== 'object'){
+                if (typeof instance.hooks !== 'object') {
                     instance.hooks = {};
                 }
 
                 //copy buttons defintion
                 var buttonsDefinition = [];
-                if(Array.isArray(setup.buttons)){
-                    for(var b=0;b<setup.buttons.length;b+=1){
-                        var ref  = setup.buttons[b],
+                if (Array.isArray(setup.buttons)) {
+                    for (var b = 0; b < setup.buttons.length; b += 1) {
+                        var ref = setup.buttons[b],
                             cpy = {};
                         for (var i in ref) {
                             if (ref.hasOwnProperty(i)) {
@@ -451,7 +453,7 @@
                      * 
                      * @type {Boolean}
                      */
-                    isOpen:false,
+                    isOpen: false,
                     /**
                      * Active element is the element that will receive focus after
                      * closing the dialog. It defaults as the body tag, but gets updated
@@ -459,19 +461,19 @@
                      *
                      * @type {Node}
                      */
-                    activeElement:document.body,
-                    timerIn:undefined,
-                    timerOut:undefined,
+                    activeElement: document.body,
+                    timerIn: undefined,
+                    timerOut: undefined,
                     buttons: buttonsDefinition,
                     focus: setup.focus,
                     options: {
                         title: undefined,
                         modal: undefined,
-                        basic:undefined,
-                        frameless:undefined,
+                        basic: undefined,
+                        frameless: undefined,
                         pinned: undefined,
                         movable: undefined,
-                        moveBounded:undefined,
+                        moveBounded: undefined,
                         resizable: undefined,
                         autoReset: undefined,
                         closable: undefined,
@@ -480,31 +482,31 @@
                         startMaximized: undefined,
                         pinnable: undefined,
                         transition: undefined,
-                        padding:undefined,
-                        overflow:undefined,
-                        onshow:undefined,
-                        onclosing:undefined,
-                        onclose:undefined,
-                        onfocus:undefined,
-                        onmove:undefined,
-                        onmoved:undefined,
-                        onresize:undefined,
-                        onresized:undefined,
-                        onmaximize:undefined,
-                        onmaximized:undefined,
-                        onrestore:undefined,
-                        onrestored:undefined
+                        padding: undefined,
+                        overflow: undefined,
+                        onshow: undefined,
+                        onclosing: undefined,
+                        onclose: undefined,
+                        onfocus: undefined,
+                        onmove: undefined,
+                        onmoved: undefined,
+                        onresize: undefined,
+                        onresized: undefined,
+                        onmaximize: undefined,
+                        onmaximized: undefined,
+                        onrestore: undefined,
+                        onrestored: undefined
                     },
-                    resetHandler:undefined,
-                    beginMoveHandler:undefined,
-                    beginResizeHandler:undefined,
-                    bringToFrontHandler:undefined,
-                    modalClickHandler:undefined,
-                    buttonsClickHandler:undefined,
-                    commandsClickHandler:undefined,
-                    transitionInHandler:undefined,
-                    transitionOutHandler:undefined,
-                    destroy:undefined
+                    resetHandler: undefined,
+                    beginMoveHandler: undefined,
+                    beginResizeHandler: undefined,
+                    bringToFrontHandler: undefined,
+                    modalClickHandler: undefined,
+                    buttonsClickHandler: undefined,
+                    commandsClickHandler: undefined,
+                    transitionInHandler: undefined,
+                    transitionOutHandler: undefined,
+                    destroy: undefined
                 };
 
                 var elements = {};
@@ -515,7 +517,7 @@
                 elements.root.className = classes.base + ' ' + classes.hidden + ' ';
 
                 elements.root.innerHTML = templates.dimmer + templates.modal;
-                
+
                 //dimmer
                 elements.dimmer = elements.root.firstChild;
 
@@ -529,14 +531,14 @@
                 elements.reset = [];
                 elements.reset.push(elements.dialog.firstChild);
                 elements.reset.push(elements.dialog.lastChild);
-                
+
                 //commands
                 elements.commands = {};
                 elements.commands.container = elements.reset[0].nextSibling;
                 elements.commands.pin = elements.commands.container.firstChild;
                 elements.commands.maximize = elements.commands.pin.nextSibling;
                 elements.commands.close = elements.commands.maximize.nextSibling;
-                
+
                 //header
                 elements.header = elements.commands.container.nextSibling;
 
@@ -548,7 +550,7 @@
                 //footer
                 elements.footer = elements.body.nextSibling;
                 elements.footer.innerHTML = templates.buttons.auxiliary + templates.buttons.primary;
-                
+
                 //resize handle
                 elements.resizeHandle = elements.footer.nextSibling;
 
@@ -560,34 +562,34 @@
                 elements.buttonTemplate = elements.buttons.primary.firstChild;
                 //remove button template
                 elements.buttons.primary.removeChild(elements.buttonTemplate);
-                               
-                for(var x=0; x < instance.__internal.buttons.length; x+=1) {
+
+                for (var x = 0; x < instance.__internal.buttons.length; x += 1) {
                     var button = instance.__internal.buttons[x];
-                    
+
                     // add to the list of used keys.
-                    if(usedKeys.indexOf(button.key) < 0){
+                    if (usedKeys.indexOf(button.key) < 0) {
                         usedKeys.push(button.key);
                     }
 
                     button.element = elements.buttonTemplate.cloneNode();
                     button.element.innerHTML = button.text;
-                    if(typeof button.className === 'string' &&  button.className !== ''){
+                    if (typeof button.className === 'string' && button.className !== '') {
                         addClass(button.element, button.className);
                     }
-                    for(var key in button.attrs){
-                        if(key !== 'className' && button.attrs.hasOwnProperty(key)){
+                    for (var key in button.attrs) {
+                        if (key !== 'className' && button.attrs.hasOwnProperty(key)) {
                             button.element.setAttribute(key, button.attrs[key]);
                         }
                     }
-                    if(button.scope === 'auxiliary'){
+                    if (button.scope === 'auxiliary') {
                         elements.buttons.auxiliary.appendChild(button.element);
-                    }else{
+                    } else {
                         elements.buttons.primary.appendChild(button.element);
                     }
                 }
                 //make elements pubic
                 instance.elements = elements;
-                
+
                 //save event handlers delegates
                 internal.resetHandler = delegate(instance, onReset);
                 internal.beginMoveHandler = delegate(instance, beginMove);
@@ -600,25 +602,25 @@
                 internal.transitionOutHandler = delegate(instance, handleTransitionOutEvent);
 
                 //settings
-                for(var opKey in internal.options){
-                    if(setup.options[opKey] !== undefined){
+                for (var opKey in internal.options) {
+                    if (setup.options[opKey] !== undefined) {
                         // if found in user options
                         instance.set(opKey, setup.options[opKey]);
-                    }else if(alertify.defaults.hasOwnProperty(opKey)) {
+                    } else if (alertify.defaults.hasOwnProperty(opKey)) {
                         // else if found in defaults options
                         instance.set(opKey, alertify.defaults[opKey]);
-                    }else if(opKey === 'title' ) {
+                    } else if (opKey === 'title') {
                         // else if title key, use alertify.defaults.glossary
                         instance.set(opKey, alertify.defaults.glossary[opKey]);
                     }
                 }
 
                 // allow dom customization
-                if(typeof instance.build === 'function'){
+                if (typeof instance.build === 'function') {
                     instance.build();
                 }
             }
-            
+
             //add to the end of the DOM tree.
             document.body.appendChild(instance.elements.root);
         }
@@ -628,11 +630,13 @@
          *
          */
         var scrollX, scrollY;
-        function saveScrollPosition(){
+
+        function saveScrollPosition() {
             scrollX = getScrollLeft();
             scrollY = getScrollTop();
         }
-        function restoreScrollPosition(){
+
+        function restoreScrollPosition() {
             window.scrollTo(scrollX, scrollY);
         }
 
@@ -640,37 +644,38 @@
          * Helper: adds/removes no-overflow class from body
          *
          */
-        function ensureNoOverflow(){
+        function ensureNoOverflow() {
             var requiresNoOverflow = 0;
-            for(var x=0;x<openDialogs.length;x+=1){
+            for (var x = 0; x < openDialogs.length; x += 1) {
                 var instance = openDialogs[x];
-                if(instance.isModal() || instance.isMaximized()){
-                    requiresNoOverflow+=1;
+                if (instance.isModal() || instance.isMaximized()) {
+                    requiresNoOverflow += 1;
                 }
             }
-            if(requiresNoOverflow === 0 && document.body.className.indexOf(classes.noOverflow) >= 0){
+            if (requiresNoOverflow === 0 && document.body.className.indexOf(classes.noOverflow) >= 0) {
                 //last open modal or last maximized one
                 removeClass(document.body, classes.noOverflow);
                 preventBodyShift(false);
-            }else if(requiresNoOverflow > 0 && document.body.className.indexOf(classes.noOverflow) < 0){
+            } else if (requiresNoOverflow > 0 && document.body.className.indexOf(classes.noOverflow) < 0) {
                 //first open modal or first maximized one
                 preventBodyShift(true);
                 addClass(document.body, classes.noOverflow);
             }
         }
-        var top = '', topScroll = 0;
+        var top = '',
+            topScroll = 0;
         /**
          * Helper: prevents body shift.
          *
          */
-        function preventBodyShift(add){
-            if(alertify.defaults.preventBodyShift){
-                if(add && document.documentElement.scrollHeight > document.documentElement.clientHeight ){//&& openDialogs[openDialogs.length-1].elements.dialog.clientHeight <= document.documentElement.clientHeight){
+        function preventBodyShift(add) {
+            if (alertify.defaults.preventBodyShift) {
+                if (add && document.documentElement.scrollHeight > document.documentElement.clientHeight) { //&& openDialogs[openDialogs.length-1].elements.dialog.clientHeight <= document.documentElement.clientHeight){
                     topScroll = scrollY;
                     top = window.getComputedStyle(document.body).top;
                     addClass(document.body, classes.fixed);
                     document.body.style.top = -scrollY + 'px';
-                } else if(!add) {
+                } else if (!add) {
                     scrollY = topScroll;
                     document.body.style.top = top;
                     removeClass(document.body, classes.fixed);
@@ -678,21 +683,21 @@
                 }
             }
         }
-		
+
         /**
          * Sets the name of the transition used to show/hide the dialog
          * 
          * @param {Object} instance The dilog instance.
          *
          */
-        function updateTransition(instance, value, oldValue){
-            if(typeof oldValue === 'string'){
-                removeClass(instance.elements.root,classes.prefix +  oldValue);
+        function updateTransition(instance, value, oldValue) {
+            if (typeof oldValue === 'string') {
+                removeClass(instance.elements.root, classes.prefix + oldValue);
             }
             addClass(instance.elements.root, classes.prefix + value);
             reflow = instance.elements.root.offsetWidth;
         }
-		
+
         /**
          * Toggles the dialog display mode
          *
@@ -700,14 +705,14 @@
          *
          * @return {undefined}
          */
-        function updateDisplayMode(instance){
-            if(instance.get('modal')){
+        function updateDisplayMode(instance) {
+            if (instance.get('modal')) {
 
                 //make modal
                 removeClass(instance.elements.root, classes.modeless);
 
                 //only if open
-                if(instance.isOpen()){
+                if (instance.isOpen()) {
                     unbindModelessEvents(instance);
 
                     //in case a pinned modless dialog was made modal while open.
@@ -715,12 +720,12 @@
 
                     ensureNoOverflow();
                 }
-            }else{
+            } else {
                 //make modelss
                 addClass(instance.elements.root, classes.modeless);
 
                 //only if open
-                if(instance.isOpen()){
+                if (instance.isOpen()) {
                     bindModelessEvents(instance);
 
                     //in case pin/unpin was called while a modal is open
@@ -738,7 +743,7 @@
          *
          * @return {undefined}
          */
-        function updateBasicMode(instance){
+        function updateBasicMode(instance) {
             if (instance.get('basic')) {
                 // add class
                 addClass(instance.elements.root, classes.basic);
@@ -755,7 +760,7 @@
          *
          * @return {undefined}
          */
-        function updateFramelessMode(instance){
+        function updateFramelessMode(instance) {
             if (instance.get('frameless')) {
                 // add class
                 addClass(instance.elements.root, classes.frameless);
@@ -764,7 +769,7 @@
                 removeClass(instance.elements.root, classes.frameless);
             }
         }
-		
+
         /**
          * Helper: Brings the modeless dialog to front, attached to modeless dialogs.
          *
@@ -773,28 +778,28 @@
          *
          * @return {undefined}
          */
-        function bringToFront(event, instance){
-            
+        function bringToFront(event, instance) {
+
             // Do not bring to front if preceeded by an open modal
             var index = openDialogs.indexOf(instance);
-            for(var x=index+1;x<openDialogs.length;x+=1){
-                if(openDialogs[x].isModal()){
+            for (var x = index + 1; x < openDialogs.length; x += 1) {
+                if (openDialogs[x].isModal()) {
                     return;
                 }
             }
-			
+
             // Bring to front by making it the last child.
-            if(document.body.lastChild !== instance.elements.root){
+            if (document.body.lastChild !== instance.elements.root) {
                 document.body.appendChild(instance.elements.root);
                 //also make sure its at the end of the list
-                openDialogs.splice(openDialogs.indexOf(instance),1);
+                openDialogs.splice(openDialogs.indexOf(instance), 1);
                 openDialogs.push(instance);
                 setFocus(instance);
             }
-			
+
             return false;
         }
-		
+
         /**
          * Helper: reflects dialogs options updates
          *
@@ -803,63 +808,63 @@
          *
          * @return	{undefined}	
          */
-        function optionUpdated(instance, option, oldValue, newValue){
-            switch(option){
-            case 'title':
-                instance.setHeader(newValue);
-                break;
-            case 'modal':
-                updateDisplayMode(instance);
-                break;
-            case 'basic':
-                updateBasicMode(instance);
-                break;
-            case 'frameless':
-                updateFramelessMode(instance);
-                break;
-            case 'pinned':
-                updatePinned(instance);
-                break;
-            case 'closable':
-                updateClosable(instance);
-                break;
-            case 'maximizable':
-                updateMaximizable(instance);
-                break;
-            case 'pinnable':
-                updatePinnable(instance);
-                break;
-            case 'movable':
-                updateMovable(instance);
-                break;
-            case 'resizable':
-                updateResizable(instance);
-                break;
-            case 'padding':
-                if(newValue){
-                    removeClass(instance.elements.root, classes.noPadding);
-                }else if(instance.elements.root.className.indexOf(classes.noPadding) < 0){
-                    addClass(instance.elements.root, classes.noPadding);
-                }
-                break;
-            case 'overflow':
-                if(newValue){
-                    removeClass(instance.elements.root, classes.noOverflow);
-                }else if(instance.elements.root.className.indexOf(classes.noOverflow) < 0){
-                    addClass(instance.elements.root, classes.noOverflow);
-                }
-                break;
-            case 'transition':
-                updateTransition(instance,newValue, oldValue);
-                break;
+        function optionUpdated(instance, option, oldValue, newValue) {
+            switch (option) {
+                case 'title':
+                    instance.setHeader(newValue);
+                    break;
+                case 'modal':
+                    updateDisplayMode(instance);
+                    break;
+                case 'basic':
+                    updateBasicMode(instance);
+                    break;
+                case 'frameless':
+                    updateFramelessMode(instance);
+                    break;
+                case 'pinned':
+                    updatePinned(instance);
+                    break;
+                case 'closable':
+                    updateClosable(instance);
+                    break;
+                case 'maximizable':
+                    updateMaximizable(instance);
+                    break;
+                case 'pinnable':
+                    updatePinnable(instance);
+                    break;
+                case 'movable':
+                    updateMovable(instance);
+                    break;
+                case 'resizable':
+                    updateResizable(instance);
+                    break;
+                case 'padding':
+                    if (newValue) {
+                        removeClass(instance.elements.root, classes.noPadding);
+                    } else if (instance.elements.root.className.indexOf(classes.noPadding) < 0) {
+                        addClass(instance.elements.root, classes.noPadding);
+                    }
+                    break;
+                case 'overflow':
+                    if (newValue) {
+                        removeClass(instance.elements.root, classes.noOverflow);
+                    } else if (instance.elements.root.className.indexOf(classes.noOverflow) < 0) {
+                        addClass(instance.elements.root, classes.noOverflow);
+                    }
+                    break;
+                case 'transition':
+                    updateTransition(instance, newValue, oldValue);
+                    break;
             }
 
             // internal on option updated event
-            if(typeof instance.hooks.onupdate === 'function'){
+            if (typeof instance.hooks.onupdate === 'function') {
                 instance.hooks.onupdate.call(instance, option, oldValue, newValue);
             }
         }
-		
+
         /**
          * Helper: reflects dialogs options updates
          *
@@ -882,51 +887,68 @@
          *					- key: the property key.
          *					- value: the property value.
          */
-        function update(instance, obj, callback, key, value){
-            var result = {op:undefined, items: [] };
-            if(typeof value === 'undefined' && typeof key === 'string') {
+        function update(instance, obj, callback, key, value) {
+            var result = {
+                op: undefined,
+                items: []
+            };
+            if (typeof value === 'undefined' && typeof key === 'string') {
                 //get
                 result.op = 'get';
-                if(obj.hasOwnProperty(key)){
+                if (obj.hasOwnProperty(key)) {
                     result.found = true;
                     result.value = obj[key];
-                }else{
+                } else {
                     result.found = false;
                     result.value = undefined;
                 }
-            }
-            else
-            {
+            } else {
                 var old;
                 //set
                 result.op = 'set';
-                if(typeof key === 'object'){
+                if (typeof key === 'object') {
                     //set multiple
                     var args = key;
                     for (var prop in args) {
                         if (obj.hasOwnProperty(prop)) {
-                            if(obj[prop] !== args[prop]){
+                            if (obj[prop] !== args[prop]) {
                                 old = obj[prop];
                                 obj[prop] = args[prop];
-                                callback.call(instance,prop, old, args[prop]);
+                                callback.call(instance, prop, old, args[prop]);
                             }
-                            result.items.push({ 'key': prop, 'value': args[prop], 'found':true});
-                        }else{
-                            result.items.push({ 'key': prop, 'value': args[prop], 'found':false});
+                            result.items.push({
+                                'key': prop,
+                                'value': args[prop],
+                                'found': true
+                            });
+                        } else {
+                            result.items.push({
+                                'key': prop,
+                                'value': args[prop],
+                                'found': false
+                            });
                         }
                     }
-                } else if (typeof key === 'string'){
+                } else if (typeof key === 'string') {
                     //set single
                     if (obj.hasOwnProperty(key)) {
-                        if(obj[key] !== value){
-                            old  = obj[key];
+                        if (obj[key] !== value) {
+                            old = obj[key];
                             obj[key] = value;
-                            callback.call(instance,key, old, value);
+                            callback.call(instance, key, old, value);
                         }
-                        result.items.push({'key': key, 'value': value , 'found':true});
+                        result.items.push({
+                            'key': key,
+                            'value': value,
+                            'found': true
+                        });
 
-                    }else{
-                        result.items.push({'key': key, 'value': value , 'found':false});
+                    } else {
+                        result.items.push({
+                            'key': key,
+                            'value': value,
+                            'found': false
+                        });
                     }
                 } else {
                     //invalid params
@@ -967,23 +989,23 @@
         function commandsClickHandler(event, instance) {
             var target = event.srcElement || event.target;
             switch (target) {
-            case instance.elements.commands.pin:
-                if (!instance.isPinned()) {
-                    pin(instance);
-                } else {
-                    unpin(instance);
-                }
-                break;
-            case instance.elements.commands.maximize:
-                if (!instance.isMaximized()) {
-                    maximize(instance);
-                } else {
-                    restore(instance);
-                }
-                break;
-            case instance.elements.commands.close:
-                triggerClose(instance);
-                break;
+                case instance.elements.commands.pin:
+                    if (!instance.isPinned()) {
+                        pin(instance);
+                    } else {
+                        unpin(instance);
+                    }
+                    break;
+                case instance.elements.commands.maximize:
+                    if (!instance.isMaximized()) {
+                        maximize(instance);
+                    } else {
+                        restore(instance);
+                    }
+                    break;
+                case instance.elements.commands.close:
+                    triggerClose(instance);
+                    break;
             }
             return false;
         }
@@ -1099,8 +1121,7 @@
 
             if (instance.isOpen()) {
                 var top = 0,
-                    left = 0
-                ;
+                    left = 0;
                 if (instance.elements.dialog.style.top !== '') {
                     top = parseInt(instance.elements.dialog.style.top, 10);
                 }
@@ -1187,10 +1208,10 @@
             }
         }
 
-        
-        var cancelClick = false,// flag to cancel click event if already handled by end resize event (the mousedown, mousemove, mouseup sequence fires a click event.).
-            modalClickHandlerTS=0 // stores last click timestamp to prevent executing the handler twice on double click.
-            ;
+
+        var cancelClick = false, // flag to cancel click event if already handled by end resize event (the mousedown, mousemove, mouseup sequence fires a click event.).
+            modalClickHandlerTS = 0 // stores last click timestamp to prevent executing the handler twice on double click.
+        ;
 
         /**
          * Helper: closes the modal dialog when clicking the modal
@@ -1201,7 +1222,7 @@
          * @return {undefined}
          */
         function modalClickHandler(event, instance) {
-            if(event.timeStamp - modalClickHandlerTS > 200 && (modalClickHandlerTS = event.timeStamp) && !cancelClick){
+            if (event.timeStamp - modalClickHandlerTS > 200 && (modalClickHandlerTS = event.timeStamp) && !cancelClick) {
                 var target = event.srcElement || event.target;
                 if (instance.get('closableByDimmer') === true && target === instance.elements.modal) {
                     triggerClose(instance);
@@ -1224,7 +1245,7 @@
          * @return {undefined}
          */
         function triggerCallback(instance, check) {
-            if(Date.now() - callbackTS > 200 && (callbackTS = Date.now())){
+            if (Date.now() - callbackTS > 200 && (callbackTS = Date.now())) {
                 for (var idx = 0; idx < instance.__internal.buttons.length; idx += 1) {
                     var button = instance.__internal.buttons[idx];
                     if (!button.element.disabled && check(button)) {
@@ -1278,7 +1299,7 @@
             if (instance.__internal.buttons.length === 0 && keyCode === keys.ESC && instance.get('closable') === true) {
                 triggerClose(instance);
                 return false;
-            }else if (usedKeys.indexOf(keyCode) > -1) {
+            } else if (usedKeys.indexOf(keyCode) > -1) {
                 triggerCallback(instance, function (button) {
                     return button.key === keyCode;
                 });
@@ -1286,13 +1307,13 @@
             }
         }
         /**
-        * Keydown event handler, attached to the document.body
-        *
-        * @param {Event}		DOM event object.
-        * @param {Object}		The dilog instance.
-        * 
-        * @return {undefined}
-        */
+         * Keydown event handler, attached to the document.body
+         *
+         * @param {Event}		DOM event object.
+         * @param {Object}		The dilog instance.
+         * 
+         * @return {undefined}
+         */
         function keydownHandler(event) {
             var instance = openDialogs[openDialogs.length - 1];
             var keyCode = event.keyCode;
@@ -1301,16 +1322,16 @@
                 for (var x = 0; x < buttons.length; x += 1) {
                     if (document.activeElement === buttons[x].element) {
                         switch (keyCode) {
-                        case keys.LEFT:
-                            buttons[(x || buttons.length) - 1].element.focus();
-                            return;
-                        case keys.RIGHT:
-                            buttons[(x + 1) % buttons.length].element.focus();
-                            return;
+                            case keys.LEFT:
+                                buttons[(x || buttons.length) - 1].element.focus();
+                                return;
+                            case keys.RIGHT:
+                                buttons[(x + 1) % buttons.length].element.focus();
+                                return;
                         }
                     }
                 }
-            }else if (keyCode < keys.F12 + 1 && keyCode > keys.F1 - 1 && usedKeys.indexOf(keyCode) > -1) {
+            } else if (keyCode < keys.F12 + 1 && keyCode > keys.F1 - 1 && usedKeys.indexOf(keyCode) > -1) {
                 event.preventDefault();
                 event.stopPropagation();
                 triggerCallback(instance, function (button) {
@@ -1340,27 +1361,27 @@
                 var element = focus.element;
 
                 switch (typeof focus.element) {
-                // a number means a button index
-                case 'number':
-                    if (instance.__internal.buttons.length > focus.element) {
-                        //in basic view, skip focusing the buttons.
-                        if (instance.get('basic') === true) {
-                            element = instance.elements.reset[0];
-                        } else {
-                            element = instance.__internal.buttons[focus.element].element;
+                    // a number means a button index
+                    case 'number':
+                        if (instance.__internal.buttons.length > focus.element) {
+                            //in basic view, skip focusing the buttons.
+                            if (instance.get('basic') === true) {
+                                element = instance.elements.reset[0];
+                            } else {
+                                element = instance.__internal.buttons[focus.element].element;
+                            }
                         }
-                    }
-                    break;
-                // a string means querySelector to select from dialog body contents.
-                case 'string':
-                    element = instance.elements.body.querySelector(focus.element);
-                    break;
-                // a function should return the focus element.
-                case 'function':
-                    element = focus.element.call(instance);
-                    break;
+                        break;
+                        // a string means querySelector to select from dialog body contents.
+                    case 'string':
+                        element = instance.elements.body.querySelector(focus.element);
+                        break;
+                        // a function should return the focus element.
+                    case 'function':
+                        element = focus.element.call(instance);
+                        break;
                 }
-                
+
                 // if no focus element, default to first reset element.
                 if ((typeof element === 'undefined' || element === null) && instance.__internal.buttons.length === 0) {
                     element = instance.elements.reset[0];
@@ -1491,7 +1512,7 @@
                 instance.__internal.activeElement.focus();
                 instance.__internal.activeElement = null;
             }
-            
+
             //destory the instance
             if (typeof instance.__internal.destroy === 'function') {
                 instance.__internal.destroy.apply(instance);
@@ -1508,8 +1529,7 @@
             yProp = 'pageY',
             bounds = null,
             refreshTop = false,
-            moveDelegate = null
-        ;
+            moveDelegate = null;
 
         /**
          * Helper: sets the element top/left coordinates
@@ -1521,15 +1541,15 @@
          */
         function moveElement(event, element) {
             var left = (event[xProp] - offsetX),
-                top  = (event[yProp] - offsetY);
+                top = (event[yProp] - offsetY);
 
-            if(refreshTop){
+            if (refreshTop) {
                 top -= document.body.scrollTop;
             }
-           
+
             element.style.left = left + 'px';
             element.style.top = top + 'px';
-           
+
         }
         /**
          * Helper: sets the element top/left coordinates within screen bounds
@@ -1541,20 +1561,20 @@
          */
         function moveElementBounded(event, element) {
             var left = (event[xProp] - offsetX),
-                top  = (event[yProp] - offsetY);
+                top = (event[yProp] - offsetY);
 
-            if(refreshTop){
+            if (refreshTop) {
                 top -= document.body.scrollTop;
             }
-            
+
             element.style.left = Math.min(bounds.maxLeft, Math.max(bounds.minLeft, left)) + 'px';
-            if(refreshTop){
+            if (refreshTop) {
                 element.style.top = Math.min(bounds.maxTop, Math.max(bounds.minTop, top)) + 'px';
-            }else{
+            } else {
                 element.style.top = Math.max(bounds.minTop, top) + 'px';
             }
         }
-            
+
 
         /**
          * Triggers the start of a move event, attached to the header element mouse down event.
@@ -1567,7 +1587,8 @@
          */
         function beginMove(event, instance) {
             if (resizable === null && !instance.isMaximized() && instance.get('movable')) {
-                var eventSrc, left=0, top=0;
+                var eventSrc, left = 0,
+                    top = 0;
                 if (event.type === 'touchstart') {
                     event.preventDefault();
                     eventSrc = event.targetTouches[0];
@@ -1589,39 +1610,39 @@
                     if (element.style.top) {
                         top = parseInt(element.style.top, 10);
                     }
-                    
+
                     offsetX = eventSrc[xProp] - left;
                     offsetY = eventSrc[yProp] - top;
 
-                    if(instance.isModal()){
+                    if (instance.isModal()) {
                         offsetY += instance.elements.modal.scrollTop;
-                    }else if(instance.isPinned()){
+                    } else if (instance.isPinned()) {
                         offsetY -= document.body.scrollTop;
                     }
-                    
-                    if(instance.get('moveBounded')){
+
+                    if (instance.get('moveBounded')) {
                         var current = element,
                             offsetLeft = -left,
                             offsetTop = -top;
-                        
+
                         //calc offset
                         do {
                             offsetLeft += current.offsetLeft;
                             offsetTop += current.offsetTop;
                         } while (current = current.offsetParent);
-                        
+
                         bounds = {
-                            maxLeft : offsetLeft,
-                            minLeft : -offsetLeft,
-                            maxTop  : document.documentElement.clientHeight - element.clientHeight - offsetTop,
-                            minTop  : -offsetTop
+                            maxLeft: offsetLeft,
+                            minLeft: -offsetLeft,
+                            maxTop: document.documentElement.clientHeight - element.clientHeight - offsetTop,
+                            minTop: -offsetTop
                         };
                         moveDelegate = moveElementBounded;
-                    }else{
+                    } else {
                         bounds = null;
                         moveDelegate = moveElement;
                     }
-                    
+
                     // allow custom `onmove` method
                     dispatchEvent('onmove', instance);
 
@@ -1723,8 +1744,7 @@
             //holds the initial width when resized for the first time.
             minWidth = 0,
             //holds the offset of the resize handle.
-            handleOffset = 0
-        ;
+            handleOffset = 0;
 
         /**
          * Helper: sets the element width/height and updates left coordinate if neccessary.
@@ -1811,7 +1831,7 @@
                 if (eventSrc) {
                     // allow custom `onresize` method
                     dispatchEvent('onresize', instance);
-                    
+
                     resizable = instance;
                     handleOffset = instance.elements.resizeHandle.offsetHeight / 2;
                     var element = instance.elements.dialog;
@@ -1924,7 +1944,7 @@
          *
          * @return {undefined}
          */
-        function windowResize(/*event*/) {
+        function windowResize( /*event*/ ) {
             for (var x = 0; x < openDialogs.length; x += 1) {
                 var instance = openDialogs[x];
                 if (instance.get('autoReset')) {
@@ -2134,7 +2154,7 @@
         }
         // dialog API
         return {
-            __init:initialize,
+            __init: initialize,
             /**
              * Check if dialog is currently open
              *
@@ -2143,40 +2163,40 @@
             isOpen: function () {
                 return this.__internal.isOpen;
             },
-            isModal: function (){
+            isModal: function () {
                 return this.elements.root.className.indexOf(classes.modeless) < 0;
             },
-            isMaximized:function(){
+            isMaximized: function () {
                 return this.elements.root.className.indexOf(classes.maximized) > -1;
             },
-            isPinned:function(){
+            isPinned: function () {
                 return this.elements.root.className.indexOf(classes.unpinned) < 0;
             },
-            maximize:function(){
-                if(!this.isMaximized()){
+            maximize: function () {
+                if (!this.isMaximized()) {
                     maximize(this);
                 }
                 return this;
             },
-            restore:function(){
-                if(this.isMaximized()){
+            restore: function () {
+                if (this.isMaximized()) {
                     restore(this);
                 }
                 return this;
             },
-            pin:function(){
-                if(!this.isPinned()){
+            pin: function () {
+                if (!this.isPinned()) {
                     pin(this);
                 }
                 return this;
             },
-            unpin:function(){
-                if(this.isPinned()){
+            unpin: function () {
+                if (this.isPinned()) {
                     unpin(this);
                 }
                 return this;
             },
-            bringToFront:function(){
+            bringToFront: function () {
                 bringToFront(null, this);
                 return this;
             },
@@ -2188,16 +2208,16 @@
              *
              * @return {Object} The dialog instance.
              */
-            moveTo:function(x,y){
-                if(!isNaN(x) && !isNaN(y)){
+            moveTo: function (x, y) {
+                if (!isNaN(x) && !isNaN(y)) {
                     // allow custom `onmove` method
                     dispatchEvent('onmove', this);
-                    
+
                     var element = this.elements.dialog,
                         current = element,
                         offsetLeft = 0,
                         offsetTop = 0;
-                    
+
                     //subtract existing left,top
                     if (element.style.left) {
                         offsetLeft -= parseInt(element.style.left, 10);
@@ -2213,7 +2233,7 @@
 
                     //calc left, top
                     var left = (x - offsetLeft);
-                    var top  = (y - offsetTop);
+                    var top = (y - offsetTop);
 
                     //// rtl handling
                     if (isRightToLeft()) {
@@ -2222,7 +2242,7 @@
 
                     element.style.left = left + 'px';
                     element.style.top = top + 'px';
-                    
+
                     // allow custom `onmoved` method
                     dispatchEvent('onmoved', this);
                 }
@@ -2240,22 +2260,21 @@
              *
              * @return {Object} The dialog instance.
              */
-            resizeTo:function(width,height){
+            resizeTo: function (width, height) {
                 var w = parseFloat(width),
                     h = parseFloat(height),
-                    regex = /(\d*\.\d+|\d+)%/
-                ;
+                    regex = /(\d*\.\d+|\d+)%/;
 
-                if(!isNaN(w) && !isNaN(h) && this.get('resizable') === true){
-                    
+                if (!isNaN(w) && !isNaN(h) && this.get('resizable') === true) {
+
                     // allow custom `onresize` method
                     dispatchEvent('onresize', this);
-                    
-                    if(('' + width).match(regex)){
-                        w = w / 100 * document.documentElement.clientWidth ;
+
+                    if (('' + width).match(regex)) {
+                        w = w / 100 * document.documentElement.clientWidth;
                     }
 
-                    if(('' + height).match(regex)){
+                    if (('' + height).match(regex)) {
                         h = h / 100 * document.documentElement.clientHeight;
                     }
 
@@ -2267,7 +2286,7 @@
                     element.style.minHeight = this.elements.header.offsetHeight + this.elements.footer.offsetHeight + 'px';
                     element.style.width = w + 'px';
                     element.style.height = h + 'px';
-                    
+
                     // allow custom `onresized` method
                     dispatchEvent('onresized', this);
                 }
@@ -2281,23 +2300,25 @@
              *
              * @return {undefined}
              */
-            setting : function (key, value) {
+            setting: function (key, value) {
                 var self = this;
-                var result = update(this, this.__internal.options, function(k,o,n){ optionUpdated(self,k,o,n); }, key, value);
-                if(result.op === 'get'){
-                    if(result.found){
+                var result = update(this, this.__internal.options, function (k, o, n) {
+                    optionUpdated(self, k, o, n);
+                }, key, value);
+                if (result.op === 'get') {
+                    if (result.found) {
                         return result.value;
-                    }else if(typeof this.settings !== 'undefined'){
-                        return update(this, this.settings, this.settingUpdated || function(){}, key, value).value;
-                    }else{
+                    } else if (typeof this.settings !== 'undefined') {
+                        return update(this, this.settings, this.settingUpdated || function () {}, key, value).value;
+                    } else {
                         return undefined;
                     }
-                }else if(result.op === 'set'){
-                    if(result.items.length > 0){
-                        var callback = this.settingUpdated || function(){};
-                        for(var x=0;x<result.items.length;x+=1){
+                } else if (result.op === 'set') {
+                    if (result.items.length > 0) {
+                        var callback = this.settingUpdated || function () {};
+                        for (var x = 0; x < result.items.length; x += 1) {
                             var item = result.items[x];
-                            if(!item.found && typeof this.settings !== 'undefined'){
+                            if (!item.found && typeof this.settings !== 'undefined') {
                                 update(this, this.settings, callback, item.key, item.value);
                             }
                         }
@@ -2308,43 +2329,43 @@
             /**
              * [Alias] Sets dialog settings/options 
              */
-            set:function(key, value){
-                this.setting(key,value);
+            set: function (key, value) {
+                this.setting(key, value);
                 return this;
             },
             /**
              * [Alias] Gets dialog settings/options 
              */
-            get:function(key){
+            get: function (key) {
                 return this.setting(key);
             },
             /**
-            * Sets dialog header
-            * @content {string or element}
-            *
-            * @return {undefined}
-            */
-            setHeader:function(content){
-                if(typeof content === 'string'){
+             * Sets dialog header
+             * @content {string or element}
+             *
+             * @return {undefined}
+             */
+            setHeader: function (content) {
+                if (typeof content === 'string') {
                     clearContents(this.elements.header);
                     this.elements.header.innerHTML = content;
-                }else if (content instanceof window.HTMLElement && this.elements.header.firstChild !== content){
+                } else if (content instanceof window.HTMLElement && this.elements.header.firstChild !== content) {
                     clearContents(this.elements.header);
                     this.elements.header.appendChild(content);
                 }
                 return this;
             },
             /**
-            * Sets dialog contents
-            * @content {string or element}
-            *
-            * @return {undefined}
-            */
-            setContent:function(content){
-                if(typeof content === 'string'){
+             * Sets dialog contents
+             * @content {string or element}
+             *
+             * @return {undefined}
+             */
+            setContent: function (content) {
+                if (typeof content === 'string') {
                     clearContents(this.elements.content);
                     this.elements.content.innerHTML = content;
-                }else if (content instanceof window.HTMLElement && this.elements.content.firstChild !== content){
+                } else if (content instanceof window.HTMLElement && this.elements.content.firstChild !== content) {
                     clearContents(this.elements.content);
                     this.elements.content.appendChild(content);
                 }
@@ -2355,7 +2376,7 @@
              *
              * @return {Object} the dialog instance.
              */
-            showModal: function(className){
+            showModal: function (className) {
                 return this.show(true, className);
             },
             /**
@@ -2364,34 +2385,34 @@
              * @return {Object} the dialog instance.
              */
             show: function (modal, className) {
-                
+
                 // ensure initialization
                 initialize(this);
 
-                if ( !this.__internal.isOpen ) {
+                if (!this.__internal.isOpen) {
 
                     // add to open dialogs
                     this.__internal.isOpen = true;
                     openDialogs.push(this);
 
                     // save last focused element
-                    if(alertify.defaults.maintainFocus){
+                    if (alertify.defaults.maintainFocus) {
                         this.__internal.activeElement = document.activeElement;
                     }
 
                     // set tabindex attribute on body element this allows script to give it focusable
-                    if(!document.body.hasAttribute('tabindex')) {
-                        document.body.setAttribute( 'tabindex', tabindex = '0');
+                    if (!document.body.hasAttribute('tabindex')) {
+                        document.body.setAttribute('tabindex', tabindex = '0');
                     }
 
                     //allow custom dom manipulation updates before showing the dialog.
-                    if(typeof this.prepare === 'function'){
+                    if (typeof this.prepare === 'function') {
                         this.prepare();
                     }
 
                     bindEvents(this);
 
-                    if(modal !== undefined){
+                    if (modal !== undefined) {
                         this.set('modal', modal);
                     }
 
@@ -2401,15 +2422,15 @@
                     ensureNoOverflow();
 
                     // allow custom dialog class on show
-                    if(typeof className === 'string' && className !== ''){
+                    if (typeof className === 'string' && className !== '') {
                         this.__internal.className = className;
                         addClass(this.elements.root, className);
                     }
 
                     // maximize if start maximized
-                    if ( this.get('startMaximized')) {
+                    if (this.get('startMaximized')) {
                         this.maximize();
-                    }else if(this.isMaximized()){
+                    } else if (this.isMaximized()) {
                         restore(this);
                     }
 
@@ -2419,31 +2440,33 @@
                     addClass(this.elements.root, classes.animationIn);
 
                     // set 1s fallback in case transition event doesn't fire
-                    clearTimeout( this.__internal.timerIn);
-                    this.__internal.timerIn = setTimeout( this.__internal.transitionInHandler, transition.supported ? 1000 : 100 );
+                    clearTimeout(this.__internal.timerIn);
+                    this.__internal.timerIn = setTimeout(this.__internal.transitionInHandler, transition.supported ? 1000 : 100);
 
-                    if(isSafari){
+                    if (isSafari) {
                         // force desktop safari reflow
                         var root = this.elements.root;
-                        root.style.display  = 'none';
-                        setTimeout(function(){root.style.display  = 'block';}, 0);
+                        root.style.display = 'none';
+                        setTimeout(function () {
+                            root.style.display = 'block';
+                        }, 0);
                     }
 
                     //reflow
                     reflow = this.elements.root.offsetWidth;
-                  
+
                     // show dialog
                     removeClass(this.elements.root, classes.hidden);
 
                     // internal on show event
-                    if(typeof this.hooks.onshow === 'function'){
+                    if (typeof this.hooks.onshow === 'function') {
                         this.hooks.onshow.call(this);
                     }
 
                     // allow custom `onshow` method
                     dispatchEvent('onshow', this);
 
-                }else{
+                } else {
                     // reset move updates
                     resetMove(this);
                     // reset resize updates
@@ -2451,9 +2474,9 @@
                     // shake the dialog to indicate its already open
                     addClass(this.elements.dialog, classes.shake);
                     var self = this;
-                    setTimeout(function(){
+                    setTimeout(function () {
                         removeClass(self.elements.dialog, classes.shake);
-                    },200);
+                    }, 200);
                 }
                 return this;
             },
@@ -2463,9 +2486,9 @@
              * @return {Object} The dialog instance
              */
             close: function () {
-                if (this.__internal.isOpen ) {
+                if (this.__internal.isOpen) {
                     // custom `onclosing` event
-                    if(dispatchEvent('onclosing', this) !== false){
+                    if (dispatchEvent('onclosing', this) !== false) {
 
                         unbindEvents(this);
 
@@ -2473,8 +2496,8 @@
                         addClass(this.elements.root, classes.animationOut);
 
                         // set 1s fallback in case transition event doesn't fire
-                        clearTimeout( this.__internal.timerOut );
-                        this.__internal.timerOut = setTimeout( this.__internal.transitionOutHandler, transition.supported ? 1000 : 100 );
+                        clearTimeout(this.__internal.timerOut);
+                        this.__internal.timerOut = setTimeout(this.__internal.transitionOutHandler, transition.supported ? 1000 : 100);
                         // hide dialog
                         addClass(this.elements.root, classes.hidden);
                         //reflow
@@ -2486,7 +2509,7 @@
                         }
 
                         // internal on close event
-                        if(typeof this.hooks.onclose === 'function'){
+                        if (typeof this.hooks.onclose === 'function') {
                             this.hooks.onclose.call(this);
                         }
 
@@ -2494,7 +2517,7 @@
                         dispatchEvent('onclose', this);
 
                         //remove from open dialogs
-                        openDialogs.splice(openDialogs.indexOf(this),1);
+                        openDialogs.splice(openDialogs.indexOf(this), 1);
                         this.__internal.isOpen = false;
 
                         ensureNoOverflow();
@@ -2502,7 +2525,7 @@
 
                 }
                 // last dialog and tab index was set by us, remove it.
-                if(!openDialogs.length && tabindex === '0'){
+                if (!openDialogs.length && tabindex === '0') {
                     document.body.removeAttribute('tabindex');
                 }
                 return this;
@@ -2512,7 +2535,7 @@
              *
              * @return {undefined}
              */
-            closeOthers:function(){
+            closeOthers: function () {
                 alertify.closeAll(this);
                 return this;
             },
@@ -2521,23 +2544,23 @@
              *
              * @return {undefined}
              */
-            destroy:function(){
-                if(this.__internal) {
-                    if (this.__internal.isOpen ) {
+            destroy: function () {
+                if (this.__internal) {
+                    if (this.__internal.isOpen) {
                         //mark dialog for destruction, this will be called on tranistionOut event.
-                        this.__internal.destroy = function(){
+                        this.__internal.destroy = function () {
                             destruct(this, initialize);
                         };
                         //close the dialog to unbind all events.
                         this.close();
-                    }else if(!this.__internal.destroy){
+                    } else if (!this.__internal.destroy) {
                         destruct(this, initialize);
                     }
                 }
                 return this;
             },
         };
-	} () );
+    }());
     var notifier = (function () {
         var reflow,
             element,
@@ -2581,6 +2604,7 @@
             instance.__internal.pushed = true;
             openInstances.push(instance);
         }
+
         function popInstance(instance) {
             openInstances.splice(openInstances.indexOf(instance), 1);
             instance.__internal.pushed = false;
@@ -2592,42 +2616,42 @@
         function updatePosition(instance) {
             element.className = classes.base;
             switch (instance.__internal.position) {
-            case 'top-right':
-                addClass(element, classes.top + ' ' + classes.right);
-                break;
-            case 'top-left':
-                addClass(element, classes.top + ' ' + classes.left);
-                break;
-            case 'top-center':
-                addClass(element, classes.top + ' ' + classes.center);
-                break;
-            case 'bottom-left':
-                addClass(element, classes.bottom + ' ' + classes.left);
-                break;
-            case 'bottom-center':
-                addClass(element, classes.bottom + ' ' + classes.center);
-                break;
+                case 'top-right':
+                    addClass(element, classes.top + ' ' + classes.right);
+                    break;
+                case 'top-left':
+                    addClass(element, classes.top + ' ' + classes.left);
+                    break;
+                case 'top-center':
+                    addClass(element, classes.top + ' ' + classes.center);
+                    break;
+                case 'bottom-left':
+                    addClass(element, classes.bottom + ' ' + classes.left);
+                    break;
+                case 'bottom-center':
+                    addClass(element, classes.bottom + ' ' + classes.center);
+                    break;
 
-            default:
-            case 'bottom-right':
-                addClass(element, classes.bottom + ' ' + classes.right);
-                break;
+                default:
+                case 'bottom-right':
+                    addClass(element, classes.bottom + ' ' + classes.right);
+                    break;
             }
         }
 
         /**
-        * creates a new notification message
-        *
-        * @param  {DOMElement} message	The notifier message element
-        * @param  {Number} wait   Time (in ms) to wait before the message is dismissed, a value of 0 means keep open till clicked.
-        * @param  {Function} callback A callback function to be invoked when the message is dismissed.
-        *
-        * @return {undefined}
-        */
+         * creates a new notification message
+         *
+         * @param  {DOMElement} message	The notifier message element
+         * @param  {Number} wait   Time (in ms) to wait before the message is dismissed, a value of 0 means keep open till clicked.
+         * @param  {Function} callback A callback function to be invoked when the message is dismissed.
+         *
+         * @return {undefined}
+         */
         function create(div, callback) {
 
             function clickDelegate(event, instance) {
-                if(!instance.__internal.closeButton || event.target.getAttribute('data-close') === 'true'){
+                if (!instance.__internal.closeButton || event.target.getAttribute('data-close') === 'true') {
                     instance.dismiss(true);
                 }
             }
@@ -2643,7 +2667,7 @@
                 if (!instance.__internal) {
                     instance.__internal = {
                         pushed: false,
-                        delay : undefined,
+                        delay: undefined,
                         timer: undefined,
                         clickHandler: undefined,
                         transitionEndHandler: undefined,
@@ -2654,6 +2678,7 @@
                 }
                 return instance;
             }
+
             function clearTimers(instance) {
                 clearTimeout(instance.__internal.timer);
                 clearTimeout(instance.__internal.transitionTimeout);
@@ -2675,21 +2700,21 @@
 
                         var content, wait;
                         switch (arguments.length) {
-                        case 0:
-                            wait = this.__internal.delay;
-                            break;
-                        case 1:
-                            if (typeof (_content) === 'number') {
-                                wait = _content;
-                            } else {
-                                content = _content;
+                            case 0:
                                 wait = this.__internal.delay;
-                            }
-                            break;
-                        case 2:
-                            content = _content;
-                            wait = _wait;
-                            break;
+                                break;
+                            case 1:
+                                if (typeof (_content) === 'number') {
+                                    wait = _content;
+                                } else {
+                                    content = _content;
+                                    wait = this.__internal.delay;
+                                }
+                                break;
+                            case 2:
+                                content = _content;
+                                wait = _wait;
+                                break;
                         }
                         this.__internal.closeButton = alertify.defaults.notifier.closeButton;
                         // set contents
@@ -2715,7 +2740,7 @@
                  * Remarks: A return value === 'false' will cancel the dismissal
                  *
                  */
-                ondismiss: function () { },
+                ondismiss: function () {},
                 /*
                  * {Function} callback function to be invoked when the message is dismissed.
                  *
@@ -2757,8 +2782,10 @@
                     clearTimers(this);
                     this.__internal.delay = typeof wait !== 'undefined' && !isNaN(+wait) ? +wait : notifier.__internal.delay;
                     if (this.__internal.delay > 0) {
-                        var  self = this;
-                        this.__internal.timer = setTimeout(function () { self.dismiss(); }, this.__internal.delay * 1000);
+                        var self = this;
+                        this.__internal.timer = setTimeout(function () {
+                            self.dismiss();
+                        }, this.__internal.delay * 1000);
                     }
                     return this;
                 },
@@ -2775,7 +2802,7 @@
                         clearContents(this.element);
                         this.element.appendChild(content);
                     }
-                    if(this.__internal.closeButton){
+                    if (this.__internal.closeButton) {
                         var close = document.createElement('span');
                         addClass(close, classes.close);
                         close.setAttribute('data-close', true);
@@ -2814,13 +2841,13 @@
                 } else {
                     //set
                     switch (key) {
-                    case 'position':
-                        this.__internal.position = value;
-                        updatePosition(this);
-                        break;
-                    case 'delay':
-                        this.__internal.delay = value;
-                        break;
+                        case 'position':
+                            this.__internal.position = value;
+                            updatePosition(this);
+                            break;
+                        case 'delay':
+                            this.__internal.delay = value;
+                            break;
                     }
                 }
                 return this;
@@ -2828,14 +2855,14 @@
             /**
              * [Alias] Sets dialog settings/options
              */
-            set:function(key,value){
-                this.setting(key,value);
+            set: function (key, value) {
+                this.setting(key, value);
                 return this;
             },
             /**
              * [Alias] Gets dialog settings/options
              */
-            get:function(key){
+            get: function (key) {
                 return this.setting(key);
             },
             /**
@@ -2863,7 +2890,7 @@
             dismissAll: function (except) {
                 var clone = openInstances.slice(0);
                 for (var x = 0; x < clone.length; x += 1) {
-                    var  instance = clone[x];
+                    var instance = clone[x];
                     if (except === undefined || except !== instance) {
                         instance.dismiss();
                     }
@@ -2903,13 +2930,13 @@
 
 
         /**
-        * Helper: returns a dialog instance from saved dialogs.
-        * and initializes the dialog if its not already initialized.
-        *
-        * @name {String} name The dialog name.
-        *
-        * @return {Object} The dialog instance.
-        */
+         * Helper: returns a dialog instance from saved dialogs.
+         * and initializes the dialog if its not already initialized.
+         *
+         * @name {String} name The dialog name.
+         *
+         * @return {Object} The dialog instance.
+         */
         function get_dialog(name) {
             var dialog = dialogs[name].dialog;
             //initialize the dialog if its not already initialized.
@@ -3053,13 +3080,13 @@
             /**
              * [Alias] Sets dialog settings/options 
              */
-            set: function(name,key,value){
-                return this.setting(name, key,value);
+            set: function (name, key, value) {
+                return this.setting(name, key, value);
             },
             /**
              * [Alias] Gets dialog settings/options 
              */
-            get: function(name, key){
+            get: function (name, key) {
                 return this.setting(name, key);
             },
             /**
@@ -3138,36 +3165,36 @@
     var alertify = new Alertify();
 
     /**
-    * Alert dialog definition
-    *
-    * invoked by:
-    *	alertify.alert(message);
-    *	alertify.alert(title, message);
-    *	alertify.alert(message, onok);
-    *	alertify.alert(title, message, onok);
+     * Alert dialog definition
+     *
+     * invoked by:
+     *	alertify.alert(message);
+     *	alertify.alert(title, message);
+     *	alertify.alert(message, onok);
+     *	alertify.alert(title, message, onok);
      */
     alertify.dialog('alert', function () {
         return {
             main: function (_title, _message, _onok) {
                 var title, message, onok;
                 switch (arguments.length) {
-                case 1:
-                    message = _title;
-                    break;
-                case 2:
-                    if (typeof _message === 'function') {
+                    case 1:
                         message = _title;
-                        onok = _message;
-                    } else {
+                        break;
+                    case 2:
+                        if (typeof _message === 'function') {
+                            message = _title;
+                            onok = _message;
+                        } else {
+                            title = _title;
+                            message = _message;
+                        }
+                        break;
+                    case 3:
                         title = _title;
                         message = _message;
-                    }
-                    break;
-                case 3:
-                    title = _title;
-                    message = _message;
-                    onok = _onok;
-                    break;
+                        onok = _onok;
+                        break;
                 }
                 this.set('title', title);
                 this.set('message', message);
@@ -3176,14 +3203,12 @@
             },
             setup: function () {
                 return {
-                    buttons: [
-                        {
-                            text: alertify.defaults.glossary.ok,
-                            key: keys.ESC,
-                            invokeOnClose: true,
-                            className: alertify.defaults.theme.ok,
-                        }
-                    ],
+                    buttons: [{
+                        text: alertify.defaults.glossary.ok,
+                        key: keys.ESC,
+                        invokeOnClose: true,
+                        className: alertify.defaults.theme.ok,
+                    }],
                     focus: {
                         element: 0,
                         select: false
@@ -3210,14 +3235,14 @@
             },
             settingUpdated: function (key, oldValue, newValue) {
                 switch (key) {
-                case 'message':
-                    this.setMessage(newValue);
-                    break;
-                case 'label':
-                    if (this.__internal.buttons[0].element) {
-                        this.__internal.buttons[0].element.innerHTML = newValue;
-                    }
-                    break;
+                    case 'message':
+                        this.setMessage(newValue);
+                        break;
+                    case 'label':
+                        if (this.__internal.buttons[0].element) {
+                            this.__internal.buttons[0].element.innerHTML = newValue;
+                        }
+                        break;
                 }
             },
             callback: function (closeEvent) {
@@ -3290,24 +3315,24 @@
             main: function (_title, _message, _onok, _oncancel) {
                 var title, message, onok, oncancel;
                 switch (arguments.length) {
-                case 1:
-                    message = _title;
-                    break;
-                case 2:
-                    message = _title;
-                    onok = _message;
-                    break;
-                case 3:
-                    message = _title;
-                    onok = _message;
-                    oncancel = _onok;
-                    break;
-                case 4:
-                    title = _title;
-                    message = _message;
-                    onok = _onok;
-                    oncancel = _oncancel;
-                    break;
+                    case 1:
+                        message = _title;
+                        break;
+                    case 2:
+                        message = _title;
+                        onok = _message;
+                        break;
+                    case 3:
+                        message = _title;
+                        onok = _message;
+                        oncancel = _onok;
+                        break;
+                    case 4:
+                        title = _title;
+                        message = _message;
+                        onok = _onok;
+                        oncancel = _oncancel;
+                        break;
                 }
                 this.set('title', title);
                 this.set('message', message);
@@ -3317,8 +3342,7 @@
             },
             setup: function () {
                 return {
-                    buttons: [
-                        {
+                    buttons: [{
                             text: alertify.defaults.glossary.ok,
                             key: keys.ENTER,
                             className: alertify.defaults.theme.ok,
@@ -3359,51 +3383,51 @@
             },
             settingUpdated: function (key, oldValue, newValue) {
                 switch (key) {
-                case 'message':
-                    this.setMessage(newValue);
-                    break;
-                case 'labels':
-                    if ('ok' in newValue && this.__internal.buttons[0].element) {
-                        this.__internal.buttons[0].text = newValue.ok;
-                        this.__internal.buttons[0].element.innerHTML = newValue.ok;
-                    }
-                    if ('cancel' in newValue && this.__internal.buttons[1].element) {
-                        this.__internal.buttons[1].text = newValue.cancel;
-                        this.__internal.buttons[1].element.innerHTML = newValue.cancel;
-                    }
-                    break;
-                case 'reverseButtons':
-                    if (newValue === true) {
-                        this.elements.buttons.primary.appendChild(this.__internal.buttons[0].element);
-                    } else {
-                        this.elements.buttons.primary.appendChild(this.__internal.buttons[1].element);
-                    }
-                    break;
-                case 'defaultFocus':
-                    this.__internal.focus.element = newValue === 'ok' ? 0 : 1;
-                    break;
+                    case 'message':
+                        this.setMessage(newValue);
+                        break;
+                    case 'labels':
+                        if ('ok' in newValue && this.__internal.buttons[0].element) {
+                            this.__internal.buttons[0].text = newValue.ok;
+                            this.__internal.buttons[0].element.innerHTML = newValue.ok;
+                        }
+                        if ('cancel' in newValue && this.__internal.buttons[1].element) {
+                            this.__internal.buttons[1].text = newValue.cancel;
+                            this.__internal.buttons[1].element.innerHTML = newValue.cancel;
+                        }
+                        break;
+                    case 'reverseButtons':
+                        if (newValue === true) {
+                            this.elements.buttons.primary.appendChild(this.__internal.buttons[0].element);
+                        } else {
+                            this.elements.buttons.primary.appendChild(this.__internal.buttons[1].element);
+                        }
+                        break;
+                    case 'defaultFocus':
+                        this.__internal.focus.element = newValue === 'ok' ? 0 : 1;
+                        break;
                 }
             },
             callback: function (closeEvent) {
                 clearAutoConfirm(this);
                 var returnValue;
                 switch (closeEvent.index) {
-                case 0:
-                    if (typeof this.get('onok') === 'function') {
-                        returnValue = this.get('onok').call(this, closeEvent);
-                        if (typeof returnValue !== 'undefined') {
-                            closeEvent.cancel = !returnValue;
+                    case 0:
+                        if (typeof this.get('onok') === 'function') {
+                            returnValue = this.get('onok').call(this, closeEvent);
+                            if (typeof returnValue !== 'undefined') {
+                                closeEvent.cancel = !returnValue;
+                            }
                         }
-                    }
-                    break;
-                case 1:
-                    if (typeof this.get('oncancel') === 'function') {
-                        returnValue = this.get('oncancel').call(this, closeEvent);
-                        if (typeof returnValue !== 'undefined') {
-                            closeEvent.cancel = !returnValue;
+                        break;
+                    case 1:
+                        if (typeof this.get('oncancel') === 'function') {
+                            returnValue = this.get('oncancel').call(this, closeEvent);
+                            if (typeof returnValue !== 'undefined') {
+                                closeEvent.cancel = !returnValue;
+                            }
                         }
-                    }
-                    break;
+                        break;
                 }
             },
             autoOk: function (duration) {
@@ -3433,31 +3457,31 @@
             main: function (_title, _message, _value, _onok, _oncancel) {
                 var title, message, value, onok, oncancel;
                 switch (arguments.length) {
-                case 1:
-                    message = _title;
-                    break;
-                case 2:
-                    message = _title;
-                    value = _message;
-                    break;
-                case 3:
-                    message = _title;
-                    value = _message;
-                    onok = _value;
-                    break;
-                case 4:
-                    message = _title;
-                    value = _message;
-                    onok = _value;
-                    oncancel = _onok;
-                    break;
-                case 5:
-                    title = _title;
-                    message = _message;
-                    value = _value;
-                    onok = _onok;
-                    oncancel = _oncancel;
-                    break;
+                    case 1:
+                        message = _title;
+                        break;
+                    case 2:
+                        message = _title;
+                        value = _message;
+                        break;
+                    case 3:
+                        message = _title;
+                        value = _message;
+                        onok = _value;
+                        break;
+                    case 4:
+                        message = _title;
+                        value = _message;
+                        onok = _value;
+                        oncancel = _onok;
+                        break;
+                    case 5:
+                        title = _title;
+                        message = _message;
+                        value = _value;
+                        onok = _onok;
+                        oncancel = _oncancel;
+                        break;
                 }
                 this.set('title', title);
                 this.set('message', message);
@@ -3468,8 +3492,7 @@
             },
             setup: function () {
                 return {
-                    buttons: [
-                        {
+                    buttons: [{
                             text: alertify.defaults.glossary.ok,
                             key: keys.ENTER,
                             className: alertify.defaults.theme.ok,
@@ -3516,94 +3539,94 @@
                 onok: undefined,
                 oncancel: undefined,
                 value: '',
-                type:'text',
+                type: 'text',
                 reverseButtons: undefined,
             },
             settingUpdated: function (key, oldValue, newValue) {
                 switch (key) {
-                case 'message':
-                    this.setMessage(newValue);
-                    break;
-                case 'value':
-                    input.value = newValue;
-                    break;
-                case 'type':
-                    switch (newValue) {
-                    case 'text':
-                    case 'color':
-                    case 'date':
-                    case 'datetime-local':
-                    case 'email':
-                    case 'month':
-                    case 'number':
-                    case 'password':
-                    case 'search':
-                    case 'tel':
-                    case 'time':
-                    case 'week':
-                        input.type = newValue;
+                    case 'message':
+                        this.setMessage(newValue);
                         break;
-                    default:
-                        input.type = 'text';
+                    case 'value':
+                        input.value = newValue;
                         break;
-                    }
-                    break;
-                case 'labels':
-                    if (newValue.ok && this.__internal.buttons[0].element) {
-                        this.__internal.buttons[0].element.innerHTML = newValue.ok;
-                    }
-                    if (newValue.cancel && this.__internal.buttons[1].element) {
-                        this.__internal.buttons[1].element.innerHTML = newValue.cancel;
-                    }
-                    break;
-                case 'reverseButtons':
-                    if (newValue === true) {
-                        this.elements.buttons.primary.appendChild(this.__internal.buttons[0].element);
-                    } else {
-                        this.elements.buttons.primary.appendChild(this.__internal.buttons[1].element);
-                    }
-                    break;
+                    case 'type':
+                        switch (newValue) {
+                            case 'text':
+                            case 'color':
+                            case 'date':
+                            case 'datetime-local':
+                            case 'email':
+                            case 'month':
+                            case 'number':
+                            case 'password':
+                            case 'search':
+                            case 'tel':
+                            case 'time':
+                            case 'week':
+                                input.type = newValue;
+                                break;
+                            default:
+                                input.type = 'text';
+                                break;
+                        }
+                        break;
+                    case 'labels':
+                        if (newValue.ok && this.__internal.buttons[0].element) {
+                            this.__internal.buttons[0].element.innerHTML = newValue.ok;
+                        }
+                        if (newValue.cancel && this.__internal.buttons[1].element) {
+                            this.__internal.buttons[1].element.innerHTML = newValue.cancel;
+                        }
+                        break;
+                    case 'reverseButtons':
+                        if (newValue === true) {
+                            this.elements.buttons.primary.appendChild(this.__internal.buttons[0].element);
+                        } else {
+                            this.elements.buttons.primary.appendChild(this.__internal.buttons[1].element);
+                        }
+                        break;
                 }
             },
             callback: function (closeEvent) {
                 var returnValue;
                 switch (closeEvent.index) {
-                case 0:
-                    this.settings.value = input.value;
-                    if (typeof this.get('onok') === 'function') {
-                        returnValue = this.get('onok').call(this, closeEvent, this.settings.value);
-                        if (typeof returnValue !== 'undefined') {
-                            closeEvent.cancel = !returnValue;
+                    case 0:
+                        this.settings.value = input.value;
+                        if (typeof this.get('onok') === 'function') {
+                            returnValue = this.get('onok').call(this, closeEvent, this.settings.value);
+                            if (typeof returnValue !== 'undefined') {
+                                closeEvent.cancel = !returnValue;
+                            }
                         }
-                    }
-                    break;
-                case 1:
-                    if (typeof this.get('oncancel') === 'function') {
-                        returnValue = this.get('oncancel').call(this, closeEvent);
-                        if (typeof returnValue !== 'undefined') {
-                            closeEvent.cancel = !returnValue;
+                        break;
+                    case 1:
+                        if (typeof this.get('oncancel') === 'function') {
+                            returnValue = this.get('oncancel').call(this, closeEvent);
+                            if (typeof returnValue !== 'undefined') {
+                                closeEvent.cancel = !returnValue;
+                            }
                         }
-                    }
-                    if(!closeEvent.cancel){
-                        input.value = this.settings.value;
-                    }
-                    break;
+                        if (!closeEvent.cancel) {
+                            input.value = this.settings.value;
+                        }
+                        break;
                 }
             }
         };
     });
 
     // CommonJS
-    if ( typeof module === 'object' && typeof module.exports === 'object' ) {
+    if (typeof module === 'object' && typeof module.exports === 'object') {
         module.exports = alertify;
-    // AMD
-    } else if ( typeof define === 'function' && define.amd) {
-        define( [], function () {
+        // AMD
+    } else if (typeof define === 'function' && define.amd) {
+        define([], function () {
             return alertify;
-        } );
-    // window
-    } else if ( !window.alertify ) {
+        });
+        // window
+    } else if (!window.alertify) {
         window.alertify = alertify;
     }
 
-} ( typeof window !== 'undefined' ? window : this ) );
+}(typeof window !== 'undefined' ? window : this));

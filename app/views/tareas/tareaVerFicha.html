@@ -15,47 +15,50 @@
 {% block main %}
 <script>
     function mostrarFormulario() {
-        var formularioPedido = document.getElementById('formularioPedido');
-        if (formularioPedido.style.display == "block") {
-            formularioPedido.style.display = "none";
+        var cambiarEstadoTarea = document.getElementById('cambiarEstadoTarea');
+        if (cambiarEstadoTarea.style.display == "block") {
+            cambiarEstadoTarea.style.display = "none";
         } else {
-            formularioPedido.style.display = "block"
+            cambiarEstadoTarea.style.display = "block"
         }
     }
 </script>
 <div class="general">
 
     <ul class="navTitulo">
-        <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()">
+        <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
         <h1>Su Tarea</h1>
-        <img class="iconosTitulo" src="/public/res/print.svg" onclick="print()">
+        <img class="iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
         {% if datos.miTarea.estado != "Finalizado" %}
         <a
             href="/tarea/modificar/seleccionado?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}">
-            <img class="iconosTitulo" src="/public/res/update.svg">
+            <img class="iconosTitulo" src="/public/res/update.svg" title="Modificar">
         </a>
         {% if datos.miTarea.estado != 'Iniciado' %}
         {% set estados = ['En Curso','Pendiente','Finalizado'] %}
-        <img class="iconosTitulo" src="/public/res/cambiarEstado.svg" onclick="mostrarFormulario()">
-       
+        <img class="iconosTitulo" src="/public/res/cambiarEstado.svg" onclick="mostrarFormulario()"
+            title="Cambiar Estado">
         {% endif %}
         {% endif %}
+        <a href="/tarea/verHistorial?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}"><img
+                class="iconosTitulo" src="/public/res/historyEstado.svg" title="Ver Historial"></a>
 
-        <form action="/tarea/cambiarEstado/seleccionado" method="post" id="formularioPedido">
-        <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
-        <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
-        <input type="text" name="idOT" value="{{ datos.miTarea.miOT.idOT }}" hidden>
-        <label for="estado" id="estadoLabel" style="display: none">Estado</label>
-        <select name="estado" id="estadoSelect" style="display: none">
-            {% for estado in estados %}
-            <option value="{{ estado }}">{{ estado }}</option>
-            {% endfor %}
-        </select>
-
-        <input type="submit" value="Cambiar" id="cambiarEstadoSi" style="display: none">
-        <input type="reset" value="Cancelar" id="cambiarEstadoNo" style="display: none"
-            onclick="document.getElementById('cambiarEstadoSi').style.display='none';document.getElementById('cambiarEstadoNo').style.display='none';document.getElementById('formCambiarEstado').style.display='inline-block';document.getElementById('estadoLabel').style.display='none';document.getElementById('estadoSelect').style.display='none'">
-    </form>        
+        <form action="/tarea/cambiarEstado/seleccionado" method="post" id="cambiarEstadoTarea" style="display: none">
+            <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
+            <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+            <input type="text" name="idOT" value="{{ datos.miTarea.miOT.idOT }}" hidden>
+            <label for="estado" id="estadoLabel">Estado</label>
+            <select name="estado" id="estadoSelect">
+                {% for estado in estados %}
+                {% if estado != datos.miTarea.estado %}
+                <option value="{{ estado }}">{{ estado }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+            <input type="button" value="Cambiar" id="cambiarEstadoSi" onclick="alertify.prompt( 'Cambiar Estado', 'Descripcion', ''
+                , function(evt, value) { var descripcion = document.createElement('input'); descripcion.required = 'required'; descripcion.type = 'text'; descripcion.name = 'descripcion'; descripcion.value = value; document.getElementById('cambiarEstadoTarea').appendChild(descripcion); document.getElementById('cambiarEstadoTarea').submit(); }
+                , function() {});">
+        </form>
 
     </ul>
 
@@ -96,19 +99,20 @@
             <td> {{ datos.miTarea.miOT.fechaInicio }} </td>
             <td> {{ datos.miTarea.miOT.fechaFin }} </td>
             <td> {{ datos.miTarea.miOT.estado }} </td>
-            <td> <a href="/fichaOT?idOT={{ datos.miTarea.miOT.idOT }}" title="Ver Mas">  <img class="iconos" src="/public/res/vermas.svg"></a></td>
+            <td> <a href="/fichaOT?idOT={{ datos.miTarea.miOT.idOT }}" title="Ver Mas"> <img class="iconos"
+                        src="/public/res/vermas.svg"></a></td>
         </tr>
         {% endif %}
     </table>
     <h2>AGENTES</h2>
-    
 
-        
+
+
     <form class="buscador" action="/pedido/buscar" method="POST">
-        
+
         {% if  datos.miTarea.estado != "Finalizado" %}
         <a href="/tarea/agentes/asignar?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}">
-            <img class="crear" src="/public/res/add.svg" onclick="mostrarFormulario()">
+            <img class="crear" src="/public/res/add.svg">
         </a>
         {% endif %}
         <select name="filtro">
@@ -120,7 +124,7 @@
         </select>
         <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
         <input type="submit" value="Buscar">
-    </form> 
+    </form>
 
 
     <table id="miTabla">
@@ -137,7 +141,7 @@
             <td>{{ agente.especializacionNombre }}</td>
             <td>
                 <a href="/fichaPersona?idAgente={{ agente.idAgente }}">
-                    <img class="crear" src="/public/res/vermas.svg" >
+                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas" title="Ver Mas">
                 </a>
                 {% if  datos.miTarea.estado != "Finalizado" %}
                 <form action="/tarea/agentes/desasignar" method="post" hidden
@@ -146,7 +150,8 @@
                     <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
                     <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
                 </form>
-                <img class="crear" src="/public/res/vermas.svg"  onclick="alertify.confirm('Desasignar Agente','¿Esta seguro?',function(){document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}').submit()},function(){})">
+                <img class="iconos" src="/public/res/remAgente.svg" title="Desasignar Agente"
+                    onclick="alertify.confirm('Desasignar Agente','¿Esta seguro?',function(){document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}').submit()},function(){})">
                 {% endif %}
             </td>
         </tr>

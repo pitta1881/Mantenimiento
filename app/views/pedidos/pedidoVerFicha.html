@@ -14,18 +14,18 @@
 
 {% block main %}
 <div class="general">
-<ul class="navTitulo">
-        <img class="iconosTitulo" src="/public/res/back.svg"  onclick="history.back()">
-         <h1>Su Pedido</h1>
-        <img class="iconosTitulo" src="/public/res/print.svg" onclick="print()">
+    <ul class="navTitulo">
+        <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver">
+        <h1>Su Pedido</h1>
+        <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
         <a href='/pedido/modificar/seleccionado?id={{ datos.miPedido.id }}'>
-        <img class="iconosTitulo"  src="/public/res/update.svg" >
-    </a>
-    <form action="/pedido/finalizar" method="post" id="formFin" style="display: none">
-        <input type="text" name="id" value={{ datos.miPedido.id }} hidden>
-        <input type="submit" value="Finalizar Pedido">
-    </form>
-</ul>
+            <img class="iconosTitulo" src="/public/res/update.svg" title="Modificar">
+        </a>
+        <form action="/pedido/finalizar" method="post" id="formFin" style="display: none">
+            <input type="text" name="id" value={{ datos.miPedido.id }} hidden>
+            <input type="submit" value="Finalizar Pedido">
+        </form>
+    </ul>
     <dl>
         <dt>Nº Pedido:</dt>
         <dd>{{ datos.miPedido.id }}</dd>
@@ -47,7 +47,7 @@
     </dl>
     <h2>TAREAS</h2>
     <form class="buscador" action="/pedido/buscar" method="POST">
-        <img class="crear" src="/public/res/nuevo.svg" id="btnCrearTarea" onclick="mostrarFormulario()">
+        <img class="crear" src="/public/res/nuevo.svg" title="Crear" id="btnCrearTarea" onclick="mostrarFormulario()">
         <select name="filtro">
             <option value="id">Nº PEDIDO</option>
             <option value="sector">SECTOR</option>
@@ -58,7 +58,7 @@
         <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
         <input type="submit" value="Buscar">
     </form>
- 
+
     <script>
         function mostrarFormulario() {
             var formularioTarea = document.getElementById('formularioTarea');
@@ -72,8 +72,7 @@
     <form action="tarea/guardar" method="post" id="formularioTarea" style="display: none">
         {% if datos.especializaciones is empty %}
         <h2>Primero debe añadir una Especializacion --> <a href="/especializacion/administracionEspecializacion">HAGA
-                CLICK
-                AQUI</a></h2>
+                CLICK AQUI</a></h2>
         {% else %}
         <label for="idPedido">Pedido</label>
         <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" readonly class="inputDisabled">
@@ -82,7 +81,7 @@
         <label for="especializacion">Especializacion</label><span class="asterisco">*</span>
         <select name="especializacion">
             {% for especializacion in datos.especializaciones %}
-            <option value="{{ especializacion }}">{{ especializacion }}</option>
+            <option value="{{ especializacion.nombre }}">{{ especializacion.nombre }}</option>
             {% endfor %}
         </select>
         <label for="prioridad">Prioridad</label><span class="asterisco">*</span>
@@ -127,7 +126,7 @@
                 <a href="/fichaOT?idOT={{ tarea.idOT }}" title="Ver Mas"> OT {{ tarea.idOT }}</a>
                 {% endif %}
             </td>
-            <td  class="descripcion" {{ estilo }}>{{ tarea.descripcion }}</td>
+            <td class="descripcion" {{ estilo }}>{{ tarea.descripcion }}</td>
             <td {{ estilo }}>{{ tarea.especializacionNombre }}</td>
             <td {{ estilo }}>{{ tarea.prioridad }}</td>
             <td {{ estilo }}>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %}
@@ -136,17 +135,17 @@
             <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
             <td {{ estilo }}>
                 <a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas">
-                    <img class="iconos" src="/public/res/vermas.svg" >
+                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
                 {% if tarea.estado != "Finalizado" %}
                 <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
-                    <img class="iconos" src="/public/res/update.svg" >
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
                 <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
-                    <img class="iconos" src="/public/res/addAgente.svg" >
-                    </a>
+                    <img class="iconos" src="/public/res/addAgente.svg">
+                </a>
                 {% endif %}
-                <a href="#">  <img class="iconos" src="/public/res/insumos.svg" ></a>
+                <a href="#"> <img class="iconos" src="/public/res/insumos.svg"></a>
                 {% if tarea.estado == 'Iniciado' %}
                 <form action="/pedido/tarea/eliminar" method="post"
                     id="formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}">

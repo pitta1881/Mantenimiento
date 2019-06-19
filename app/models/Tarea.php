@@ -14,6 +14,7 @@ class Tarea extends Model
     protected $tableOT = 'OrdenDeTrabajo';
     protected $tablePedido = 'pedido';
     protected $tablePersona = 'personas';
+    protected $tableHistoria = 'historialEstado';
 
     public function getEspecializaciones() {
         $array = [];
@@ -78,23 +79,23 @@ class Tarea extends Model
     public function getIdEspecializacionPorNombre($nombreEspecializacion) {
         $id = $this->db->getIdFromNombreEspecializacion($this->tableEspecializacion, $nombreEspecializacion);
         return $id[0][0];
-      } 
+    } 
 
-      public function getNombreEspecializacionPorId($idEspecializacion) {
+    public function getNombreEspecializacionPorId($idEspecializacion) {
         $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
         return $nombre[0][0];
-      } 
+    } 
 
-      public function verAgentesDisponibles(){
-        $agentes = $this->db->selectAgentesDisponibles($this->tableAgentes);
-        $misAgentes = json_decode(json_encode($agentes), True);
-        for ($i=0; $i < count($misAgentes); $i++) { 
-            $misAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($misAgentes[$i]['idEspecializacion']);
-            $persona = $this->getPersonaPorId($misAgentes[$i]['idAgente']);
-            $misAgentes[$i]['nombre']=$persona['nombre'];
-            $misAgentes[$i]['apellido']=$persona['apellido'];
-          }
-        return $misAgentes;
+    public function verAgentesDisponibles(){
+    $agentes = $this->db->selectAgentesDisponibles($this->tableAgentes);
+    $misAgentes = json_decode(json_encode($agentes), True);
+    for ($i=0; $i < count($misAgentes); $i++) { 
+        $misAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($misAgentes[$i]['idEspecializacion']);
+        $persona = $this->getPersonaPorId($misAgentes[$i]['idAgente']);
+        $misAgentes[$i]['nombre']=$persona['nombre'];
+        $misAgentes[$i]['apellido']=$persona['apellido'];
+        }
+    return $misAgentes;
     }
 
     public function insertItemAgente($datos){
@@ -190,5 +191,30 @@ class Tarea extends Model
         $persona = $this->db->selectPersonaByDNI($this->tablePersona,$idAgente);
         $miPersona = json_decode(json_encode($persona[0]), True);  
         return $miPersona;
-      }
+    }
+
+    public function buscarNHistoriaSiguiente($idPedido, $idTarea)
+    {
+        $nHistoriaSiguiente = 1;
+        $nHistoriaObj =  $this->db->idHistoriaSiguiente($this->tableHistoria,$idPedido,$idTarea);
+        $nHistoriaActual = $nHistoriaObj[0][0];
+        if (!is_null($nHistoriaObj)) {
+            $nHistoriaSiguiente = $nHistoriaActual + 1;
+        }       
+        return $nHistoriaSiguiente;
+    }
+
+    public function insertHistorialEstado(array $historia)
+    {
+        $this->db->insert($this->tableHistoria, $historia);
+    }
+
+    public function verHistorial($idPedido,$idTarea){
+        $historias = $this->db->selectHistorias($this->tableHistoria,$idPedido,$idTarea);
+        $misHistorias = json_decode(json_encode($historias), True);
+        for ($i=0; $i < count($misHistorias); $i++) { 
+            $misHistorias[$i]['fecha'] = date("d/m/Y H:i", strtotime($misHistorias[$i]['fecha']));
+            }
+        return $misHistorias;
+        }
 }

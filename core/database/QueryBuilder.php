@@ -774,6 +774,22 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function idHistoriaSiguiente($tableHistoria,$idPedido, $idTarea){
+        $statement = $this->pdo->prepare(
+           "SELECT MAX(idHistorial) FROM $tableHistoria
+        WHERE idPedido = $idPedido AND idTarea = $idTarea"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function selectHistorias($tableHistoria,$idPedido,$idTarea){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableHistoria WHERE idPedido=$idPedido AND idTarea=$idTarea"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+   }
 
 }
 

@@ -25,6 +25,17 @@ class TareaController extends Controller{
         ];
         $this->model->insert($tarea);
         $this->model->updateEstadoPedido($_POST['idPedido'],'En Curso');
+        //guardar estado historial
+        $fechaHoy = date("Y-m-d H:i:s");
+        $historia = [
+            'idPedido' => $_POST['idPedido'],
+            'idTarea' => $idTareaSiguiente,
+            'idHistorial' => 1,
+            'fecha' => $fechaHoy,
+            'estado' => $_POST['estado'],
+            'descripcion' => 'Tarea Iniciada'
+        ];
+        $this->model->insertHistorialEstado($historia);
         redirect("fichaPedido?id=".$tarea['idPedido']);
     }
 
@@ -104,13 +115,30 @@ class TareaController extends Controller{
 
         public function cambiarEstado(){
             $this->model->updateEstadoTarea($_POST['idPedido'],$_POST['idTarea'],$_POST['estado']);
-            //verificar fin de OT y cambiar su estado--verificar fin pedido y cambiar su estado
+            $fechaHoy = date("Y-m-d H:i:s");
+            $idHistoria = $this->model->buscarNHistoriaSiguiente($_POST['idPedido'],$_POST['idTarea']);
+            $historia = [
+                'idPedido' => $_POST['idPedido'],
+                'idTarea' => $_POST['idTarea'],
+                'idHistorial' => $idHistoria,
+                'fecha' => $fechaHoy,
+                'estado' => $_POST['estado'],
+                'descripcion' => $_POST['descripcion']
+            ];
+            $this->model->insertHistorialEstado($historia);
             if ($_POST['estado'] == "Finalizado") {
                 $this->model->verificarFinOT($_POST['idOT']);
                 $this->model->verificarFinPedido($_POST['idPedido']);
                 $this->model->desocuparAgentes($_POST['idPedido'],$_POST['idTarea']);
             }            
             header("location: ".$_SERVER['HTTP_REFERER'] ." "); //esto me vuelve a la pagina de donde hice el cambio, maravilloso
+        }
+
+        public function verHistorial(){
+            $historial = $this->model->verHistorial($_GET['idPedido'],$_GET['idTarea']);
+            $datos['historial'] = $historial;
+            $datos["userLogueado"] = $_SESSION['user'];
+            return view('/tareas/verHistorial',compact('datos'));
         }
 
 }

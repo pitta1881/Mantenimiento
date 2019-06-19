@@ -232,3 +232,15 @@ CREATE TABLE movimiento (
     PRIMARY KEY (idMovimiento,idInsumo),
     FOREIGN KEY (idInsumo) REFERENCES insumo(idInsumo)
 );
+
+USE mantenimiento;
+CREATE TABLE historialEstado (
+    idHistorial INTEGER,
+    idTarea INTEGER,
+    idPedido INTEGER,
+    fecha DATETIME NOT NULL,
+    estado TEXT NOT NULL,
+    descripcion TEXT,
+    PRIMARY KEY (idPedido,idTarea, idHistorial),
+    FOREIGN KEY (idPedido, idTarea) REFERENCES tarea(idPedido,idTarea)
+);

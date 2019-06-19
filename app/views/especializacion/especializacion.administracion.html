@@ -13,7 +13,7 @@
 
 {% block main %}
 <div class="general">
-        <h1>Listado de Especializaciones</h1>
+    <h1>Listado de Especializaciones</h1>
     <script>
         function mostrarFormulario() {
             var formularioEspecializacion = document.getElementById('formularioEspecializacion');
@@ -24,8 +24,8 @@
             }
         }
     </script>
-     <form class="buscador" action="/pedido/buscar" method="POST">
-        <input  class="crear" type="button" value="CARGAR NUEVA ESPECIALIZACION" onclick="mostrarFormulario()">
+    <form class="buscador" action="/pedido/buscar" method="POST">
+        <input class="crear" type="button" value="CARGAR NUEVA ESPECIALIZACION" onclick="mostrarFormulario()">
         <select name="filtro">
             <option value="id">Nº PEDIDO</option>
             <option value="sector">SECTOR</option>
@@ -40,7 +40,6 @@
         id="formularioEspecializacion" style="display: none">
         <fieldset class="basicosEspecializacion">
             <legend> Alta de Especializacion</legend>
-            {{dump(datos.todasEspecializaciones)}}
             <label for="nombre">Nombre del Especializacion</label>
             <input type="text" name="nombre" autofocus>
         </fieldset>
@@ -57,9 +56,9 @@
             <td>
                 <a
                     href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
-                    <img class="iconos" src="/public/res/update.svg" >
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
-               <!-- {% if especializacion.usado == false %}
+                <!-- {% if especializacion.usado == false %}
                 <form action="/especializacion/eliminar" method="post">
                     <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
                     <input type="button" value="Eliminar" id="btnEliminar{{ especializacion.idEspecializacion }}"
@@ -75,19 +74,19 @@
         </tr>
         {% else %}
         <h2 class='error'>No hay ninguna Especializacion cargada</h2>
-         {% endfor %}
+        {% endfor %}
     </table>
     <section class="paginacion">
         <ul>
-                {% if datos.totalPaginas is empty  %}
-                <li><a href='/especializacion/administracion?page={{ 1 }}'> 1 </a></li>   
-                {% endif %}
+            {% if datos.totalPaginas is empty  %}
+            <li><a href='/especializacion/administracion?page={{ 1 }}'> 1 </a></li>
+            {% endif %}
             {% if datos.totalPaginas|e  %}
-                <li><a href='/especializacion/administracion?page={{ 1 }}'> &lt; </a></li>    
-                {% for i in 1..datos.totalPaginas %}
-                <li><a href='/especializacion/administracion?page={{ i }}'> {{ i }} </a></li>
-                {% endfor %}
-                <li><a href='/especializacion/administracion?page={{ datos.totalPaginas }}'> &gt; </a></li>
+            <li><a href='/especializacion/administracion?page={{ 1 }}'> &lt; </a></li>
+            {% for i in 1..datos.totalPaginas %}
+            <li><a href='/especializacion/administracion?page={{ i }}'> {{ i }} </a></li>
+            {% endfor %}
+            <li><a href='/especializacion/administracion?page={{ datos.totalPaginas }}'> &gt; </a></li>
             {% endif %}
         </ul>
     </section>

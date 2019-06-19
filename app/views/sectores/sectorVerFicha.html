@@ -14,12 +14,12 @@
 
 {% block main %}
 <div class="contenido3">
-        <h1>Sector</h1>
-    <input type="button" value="Volver" onclick="history.back()">
+    <h1>Sector</h1>
+    <input type="button" value="Volver" onclick="history.back()" title="Volver">
     <a href='/sectores/modificar/seleccionado?idSector={{ datos.miSector.idSector }}'>
-        <img class="iconos" src="/public/res/update.svg" >
+        <img class=" iconos" src="/public/res/update.svg" title="Modificar">
     </a>
-    
+
     <dl>
         <dt>Nombre:</dt>
         <dd>{{ datos.miSector.nombreSector }}</dd>
