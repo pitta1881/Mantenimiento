@@ -179,7 +179,10 @@ dd {
 
 .crear{
     position: relative;
+    top:2vh;
     right:25vw;
+    height:6vh ;
+    width: 6vw;
 }
 
 .general{
@@ -376,6 +379,13 @@ td {
     box-shadow: 0px 0px 0px 0 rgba(0, 0, 0, .3);
 }
 
+.iconosTitulo{
+   
+    height: 4vh;
+    width: 4vw;
+    box-shadow: 0px 0px 0px 0 rgba(0, 0, 0, .3);
+}
+
 .paginacion {
 	margin:20px 0;
 }
@@ -403,8 +413,14 @@ td {
 }
 
 
-.menuFicha{
+.navTitulo{
+    background-color:#aabcfe;
     position: relative;
-    display: block;
+    display:flex;
     list-style: none;
+}
+
+.navTitulo .iconosTitulo {
+    position: relative;
+    top:5vh;
 }

@@ -19,10 +19,10 @@ class Tarea extends Model
         $array = [];
         $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);
         $misEspecializaciones = json_decode(json_encode($especializaciones), True);
-        for ($i=0; $i < count($misEspecializaciones); $i++) { 
+        /*for ($i=0; $i < count($misEspecializaciones); $i++) { 
           $array[$i]=$misEspecializaciones[$i]['nombre'];
-        }
-        return $array;
+        }*/
+        return $misEspecializaciones;
     }
 
     public function getPrioridades() {

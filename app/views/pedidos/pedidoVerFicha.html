@@ -14,17 +14,16 @@
 
 {% block main %}
 <div class="general">
-    <ul class="menuFicha">
-       <li> <img class="iconos" src="/public/res/back.svg"  onclick="history.back()"></li>
-       <li>  <h1>Su Pedido</h1></li>
-       <li> <img class="iconos" src="/public/res/print.svg" onclick="print()"></li>
-       <li> <a href='/pedido/modificar/seleccionado?id={{ datos.miPedido.id }}'>
-        <img class="iconos"  src="/public/res/update.svg" >
-    </a></li>
+<ul class="navTitulo">
+        <img class="iconosTitulo" src="/public/res/back.svg"  onclick="history.back()">
+         <h1>Su Pedido</h1>
+        <img class="iconosTitulo" src="/public/res/print.svg" onclick="print()">
+        <a href='/pedido/modificar/seleccionado?id={{ datos.miPedido.id }}'>
+        <img class="iconosTitulo"  src="/public/res/update.svg" >
+    </a>
     <form action="/pedido/finalizar" method="post" id="formFin" style="display: none">
         <input type="text" name="id" value={{ datos.miPedido.id }} hidden>
         <input type="submit" value="Finalizar Pedido">
-    
     </form>
 </ul>
     <dl>
@@ -47,7 +46,19 @@
         <dd>{{ datos.miPedido.prioridad }}</dd>
     </dl>
     <h2>TAREAS</h2>
-    <input type="button" value="CREAR NUEVA TAREA" id="btnCrearTarea" onclick="mostrarFormulario()">
+    <form class="buscador" action="/pedido/buscar" method="POST">
+        <img class="crear" src="/public/res/nuevo.svg" id="btnCrearTarea" onclick="mostrarFormulario()">
+        <select name="filtro">
+            <option value="id">Nº PEDIDO</option>
+            <option value="sector">SECTOR</option>
+            <option value="fechaInicio">FECHA INICIO</option>
+            <option value="estado">ESTADO</option>
+            <option value="prioridad">PRIORIDAD</option>
+        </select>
+        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+        <input type="submit" value="Buscar">
+    </form>
+ 
     <script>
         function mostrarFormulario() {
             var formularioTarea = document.getElementById('formularioTarea');
@@ -116,7 +127,7 @@
                 <a href="/fichaOT?idOT={{ tarea.idOT }}" title="Ver Mas"> OT {{ tarea.idOT }}</a>
                 {% endif %}
             </td>
-            <td {{ estilo }}>{{ tarea.descripcion }}</td>
+            <td  class="descripcion" {{ estilo }}>{{ tarea.descripcion }}</td>
             <td {{ estilo }}>{{ tarea.especializacionNombre }}</td>
             <td {{ estilo }}>{{ tarea.prioridad }}</td>
             <td {{ estilo }}>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %}
@@ -125,14 +136,17 @@
             <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
             <td {{ estilo }}>
                 <a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas">
-                    <input type="button" value="VER MAS"></a>
+                    <img class="iconos" src="/public/res/vermas.svg" >
+                </a>
                 {% if tarea.estado != "Finalizado" %}
-                <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
-                        type="button" value="Modificar Datos"></a>
-                <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"><input
-                        type="button" value="Asignar Agentes"></a>
+                <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
+                    <img class="iconos" src="/public/res/update.svg" >
+                </a>
+                <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
+                    <img class="iconos" src="/public/res/addAgente.svg" >
+                    </a>
                 {% endif %}
-                <a href="#"><input type="button" value="Ver Insumos"></a>
+                <a href="#">  <img class="iconos" src="/public/res/insumos.svg" ></a>
                 {% if tarea.estado == 'Iniciado' %}
                 <form action="/pedido/tarea/eliminar" method="post"
                     id="formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}">

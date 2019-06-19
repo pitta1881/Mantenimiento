@@ -8,13 +8,26 @@
 {% endblock %}
 
 {% block head %}
+
 {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
 <div class="general">
         <h1>Listado de Sectores</h1>
-    <input type="button" value="CREAR NUEVO SECTOR" onclick="mostrarFormulario()">
+        <form class="buscador" action="/pedido/buscar" method="POST">
+            <input  class="crear" type="button" value="CREAR NUEVO SECTOR" onclick="mostrarFormulario()">
+            <select name="filtro">
+                <option value="id">Nº PEDIDO</option>
+                <option value="sector">SECTOR</option>
+                <option value="fechaInicio">FECHA INICIO</option>
+                <option value="estado">ESTADO</option>
+                <option value="prioridad">PRIORIDAD</option>
+            </select>
+            <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+            <input type="submit" value="Buscar">
+        </form>
+   
     <script>
         function mostrarFormulario() {
             var formularioSector = document.getElementById('formularioSector');
@@ -64,9 +77,11 @@
             <td>{{ sector.email }}</td>
 
             <td>
-                <a href="/fichaSector?idSector={{ sector.idSector }}"><input type="button" value="Ver Mas"></a>
-                <a href='/sectores/modificar/seleccionado?idSector={{ sector.idSector }}'>
-                    <input type="button" value="MODIFICAR">
+                <a href="/fichaSector?idSector={{ sector.idSector }}">
+                    <img class="iconos" src="/public/res/vermas.svg" >
+                </a>
+                <a href="/sectores/modificar/seleccionado?idSector={{ sector.idSector }}">
+                    <img class="iconos" src="/public/res/update.svg" >
                 </a>
                 {% if sector.usado == false %}
                 <form action="/sectores/eliminar" method="post">
@@ -83,5 +98,22 @@
         {% else %}
         <h2 class='error'>No hay Sectores</h2> {% endfor %}
     </table>
+    <section class="paginacion">
+			<ul>
+
+                    {% if datos.totalPaginas is empty  %}
+                    <li><a href='/pedido/verTodos?page={{ 1 }}'> 1 </a></li>   
+                    {% endif %}
+                {% if datos.totalPaginas|e  %}
+                    <li><a href='/pedido/verTodos?page={{ 1 }}'> &lt; </a></li>    
+                    {% for i in 1..datos.totalPaginas %}
+                    <li><a href='/pedido/verTodos?page={{ i }}'> {{ i }} </a></li>
+                    {% endfor %}
+                    <li><a href='/pedido/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>
+                {% endif %}
+
+			</ul>
+		</section>
+</div>
 </div>
 {% endblock %}
