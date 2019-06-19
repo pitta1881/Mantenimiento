@@ -70,7 +70,7 @@
 
     <table id="miTabla">
         <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
-        <th onclick="sortTable(1,'miTabla')">Descripcion</th>
+        <th  class="descripcion" onclick="sortTable(1,'miTabla')">Descripcion</th>
         <th onclick="sortTable(2,'miTabla')">Sector</th>
         <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
         <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
@@ -90,7 +90,7 @@
         {% endif %}
         <tr>
             <td {{ estilo }}>{{ pedido.id }}</td>
-            <td {{ estilo }}>{{ pedido.descripcion }}</td>
+            <td class="descripcion" {{ estilo }}>{{ pedido.descripcion|slice(0, 55) }}</td>
             <td {{ estilo }}><a href="/fichaSector?idSector={{ pedido.idSector }}"
                     title="Ver Mas">{{ pedido.nombreSector }}</td>
             <td {{ estilo }}>{{ pedido.fechaInicio }}</td>
