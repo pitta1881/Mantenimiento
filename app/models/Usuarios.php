@@ -11,6 +11,7 @@ class Usuarios extends Model
     protected $tablePersona='personas';
     protected $tablePermisos='permisos';
     protected $tableAgentes='agentes';
+    protected $size_pagina=2;
     
     public function get()
     {
@@ -57,4 +58,21 @@ public function getRoles(){
     return $misPermisos; 
 }
     
+public function getSize(){
+    $num_filas= $this->db->getSize($this->table);
+    $total_paginas= ceil($num_filas/$this->size_pagina);
+    return $total_paginas;
+}    
+
+public function getPaginacion($page){
+    $pagina=$page;
+    $empezar_desde=($pagina-1)*$this->size_pagina;
+    $num_filas= $this->getSize();
+    $total_paginas= ceil($num_filas/$this->size_pagina);
+    $usuarios = $this->db->selectUsuarioPorPersonaPorRolLimit($this->table, $this->tablePersona, $this->tableRol,$empezar_desde,$this->size_pagina);
+    $todosUsuarios = json_decode(json_encode($usuarios), True);
+    return $todosUsuarios;
+}
+
+
 }

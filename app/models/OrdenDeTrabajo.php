@@ -15,6 +15,7 @@ class OrdenDeTrabajo extends Model
     protected $tableAgentes='agentes';
     protected $tableItemAgentes='itemAgente';
     protected $tablePersona = 'personas';
+    protected $size_pagina=2;
 
     public function get(){
         $ot = $this->db->selectAll($this->tableOT);
@@ -117,5 +118,32 @@ class OrdenDeTrabajo extends Model
         return $miPersona;
       }
 
+  public function getSize(){
+      $num_filas= $this->db->getSize($this->table);
+      $total_paginas= ceil($num_filas/$this->size_pagina);
+      return $total_paginas;
+  }    
 
+  public function getPaginacion($page){
+      $pagina=$page;
+      $empezar_desde=($pagina-1)*$this->size_pagina;
+      $num_filas= $this->getSize();
+      $total_paginas= ceil($num_filas/$this->size_pagina);
+      $ot = $this->db->getAllLimit($this->table,$empezar_desde,$this->size_pagina);
+      $todasOT = json_decode(json_encode($ot), True);
+      foreach ($todasOT as $indice => $datos) {
+          $todasOT[$indice]['cantTareas'] = $this->getCantTareasAsignadas($datos['idOT']);
+          foreach ($datos as $key => $value) {
+              if ($key == 'fechaInicio') {
+                  $todasOT[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todasOT[$indice]['fechaInicio']));
+              }
+              if (($key == 'fechaFin') && (is_null($value))) {
+                  $todasOT[$indice]['fechaFin'] = 'En Curso';
+              } elseif (($key == 'fechaFin') && (!is_null($value))) {
+                  $todasOT[$indice]['fechaFin'] = date("d/m/Y", strtotime($todasOT[$indice]['fechaFin']));
+              }
+          }        
+      }
+      return $todasOT;
+  }
 }

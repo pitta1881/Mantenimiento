@@ -12,8 +12,8 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
-<div class="contenido3">
-    <input type="button" value="CARGAR NUEVA ESPECIALIZACION" onclick="mostrarFormulario()">
+<div class="general">
+        <h1>Listado de Especializaciones</h1>
     <script>
         function mostrarFormulario() {
             var formularioEspecializacion = document.getElementById('formularioEspecializacion');
@@ -24,10 +24,23 @@
             }
         }
     </script>
+     <form class="buscador" action="/pedido/buscar" method="POST">
+        <input  class="crear" type="button" value="CARGAR NUEVA ESPECIALIZACION" onclick="mostrarFormulario()">
+        <select name="filtro">
+            <option value="id">Nº PEDIDO</option>
+            <option value="sector">SECTOR</option>
+            <option value="fechaInicio">FECHA INICIO</option>
+            <option value="estado">ESTADO</option>
+            <option value="prioridad">PRIORIDAD</option>
+        </select>
+        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+        <input type="submit" value="Buscar">
+    </form>
     <form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion" method="post"
         id="formularioEspecializacion" style="display: none">
         <fieldset class="basicosEspecializacion">
             <legend> Alta de Especializacion</legend>
+            {{dump(datos.todasEspecializaciones)}}
             <label for="nombre">Nombre del Especializacion</label>
             <input type="text" name="nombre" autofocus>
         </fieldset>
@@ -46,7 +59,7 @@
                     href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
                     <img class="iconos" src="/public/res/update.svg" >
                 </a>
-                {% if especializacion.usado == false %}
+               <!-- {% if especializacion.usado == false %}
                 <form action="/especializacion/eliminar" method="post">
                     <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
                     <input type="button" value="Eliminar" id="btnEliminar{{ especializacion.idEspecializacion }}"
@@ -57,11 +70,26 @@
                         style="display: none"
                         onclick="document.getElementById('eliminarSi{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('eliminarNo{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('btnEliminar{{ especializacion.idEspecializacion }}').style.display='inline-block'">
                 </form>
-                {% endif %}
+                {% endif %}-->
             </td>
         </tr>
         {% else %}
-        <h2 class='error'>No hay ninguna Especializacion cargada</h2> {% endfor %}
+        <h2 class='error'>No hay ninguna Especializacion cargada</h2>
+         {% endfor %}
     </table>
+    <section class="paginacion">
+        <ul>
+                {% if datos.totalPaginas is empty  %}
+                <li><a href='/especializacion/administracion?page={{ 1 }}'> 1 </a></li>   
+                {% endif %}
+            {% if datos.totalPaginas|e  %}
+                <li><a href='/especializacion/administracion?page={{ 1 }}'> &lt; </a></li>    
+                {% for i in 1..datos.totalPaginas %}
+                <li><a href='/especializacion/administracion?page={{ i }}'> {{ i }} </a></li>
+                {% endfor %}
+                <li><a href='/especializacion/administracion?page={{ datos.totalPaginas }}'> &gt; </a></li>
+            {% endif %}
+        </ul>
+    </section>
 </div>
 {% endblock %}

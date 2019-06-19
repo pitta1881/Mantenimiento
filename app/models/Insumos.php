@@ -7,9 +7,9 @@ use App\Core\Model;
 class Insumos extends Model
 {
     protected $table = 'insumos';
-    
-    public function get()
-    {
+    protected $size_pagina=2;
+
+    public function get(){
         $insumos = $this->db->selectAll($this->table);
         $todosInsumos = json_decode(json_encode($insumos), True);
         return $todosInsumos;
@@ -40,5 +40,24 @@ class Insumos extends Model
         //habria que verificar que el insumo no este asignado a una tarea
         $this->db->deleteInsumo($this->table,$nInsumo);
      }  
+
+   
+    public function getSize(){
+      $num_filas= $this->db->getSize($this->table);
+      $total_paginas= ceil($num_filas/$this->size_pagina);
+      return $total_paginas;
+  }    
+
+  public function getPaginacion($page){
+      $pagina=$page;
+      $empezar_desde=($pagina-1)*$this->size_pagina;
+      $num_filas= $this->getSize();
+      $total_paginas= ceil($num_filas/$this->size_pagina);
+      $insumos = $this->db->getAllLimit($this->table,$empezar_desde,$this->size_pagina);
+      $todosInsumos = json_decode(json_encode($insumos), True);
+     return $todosInsumos;
+  }
+
     
 }
+

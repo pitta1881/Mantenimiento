@@ -102,6 +102,9 @@ class QueryBuilder
        }catch(Exception $e){$this->sendToLog($e);}
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+
+
+
     
     public function comparaInsumos($table, $nombreInsumo) {
         $statement = $this->pdo->prepare(
@@ -759,6 +762,19 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
     
+    public function selectUsuarioPorPersonaPorRolLimit($tableUsuario, $tablePersona, $tableRol,$litinf,$litsup){        
+        $statement = $this->pdo->prepare(
+        "SELECT $tableUsuario.nombre,$tablePersona.nombre,$tablePersona .apellido,$tablePersona .dni,$tableRol.nombreRol 
+            FROM $tableUsuario  inner JOIN $tablePersona  ON $tableUsuario.nombre=$tablePersona .idUsuario 
+            inner JOIN $tableRol  ON $tableUsuario.idRol=$tableRol.idRol LIMIT $litinf, $litsup"
+        );
+       try{
+        $statement->execute();
+       }catch(Exception $e){$this->sendToLog($e);}
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+
 }
 
 

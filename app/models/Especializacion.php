@@ -9,13 +9,13 @@ class Especializacion extends Model
   protected $tableTarea = 'tarea';
   protected $table='especializacion';
   protected $tableAgentes='agentes';
+  protected $size_pagina=2;
 
 
-   public function get()
-    {
+   public function get(){
         $especializaciones = $this->db->selectAll($this->table);
         $todasEspecializaciones = json_decode(json_encode($especializaciones), True);
-        foreach ($todasEspecializaciones as $indice => $datos) {
+       /* foreach ($todasEspecializaciones as $indice => $datos) {
           $yaEstaUsado = [];
           $yaEstaUsado = $this->db->getFromTareaAgenteConIdEspecializacion($this->tableTarea,$this->tableAgentes,$todasEspecializaciones[$indice]['idEspecializacion']);
           if(empty($yaEstaUsado)){
@@ -23,9 +23,10 @@ class Especializacion extends Model
           } else{
               $todasEspecializaciones[$indice]['usado'] = true;
           }
-      }
+      }*/
         return $todasEspecializaciones;
     }
+    
 
    public function buscarEspecializacion($nombre){
     //   comparo si existe el nombre de usuario 
@@ -50,6 +51,33 @@ class Especializacion extends Model
     public function delete($nEspecializacion){
       $this->db->deleteEspecializacion($this->table,$nEspecializacion);
     }  
+
+
+    public function getSize(){
+      $num_filas= $this->db->getSize($this->table);
+      $total_paginas= ceil($num_filas/$this->size_pagina);
+      return $total_paginas;
+  }    
+
+  public function getPaginacion($page){
+      $pagina=$page;
+      $empezar_desde=($pagina-1)*$this->size_pagina;
+      $num_filas= $this->getSize();
+      $total_paginas= ceil($num_filas/$this->size_pagina);
+      $especializaciones = $this->db->getAllLimit($this->table,$empezar_desde,$this->size_pagina);
+      $todasEspecializaciones = json_decode(json_encode($especializaciones), True);
+      foreach ($todasEspecializaciones as $indice => $datos) {
+        $yaEstaUsado = [];
+        $yaEstaUsado = $this->db->getFromTareaAgenteConIdEspecializacion($this->tableTarea,$this->tableAgentes,$todasEspecializaciones[$indice]['idEspecializacion']);
+        if(empty($yaEstaUsado)){
+            $todasEspecializaciones[$indice]['usado'] = false;
+        } else{
+            $todasEspecializaciones[$indice]['usado'] = true;
+        }
+    }
+      return $todasEspecializaciones;
+  }
+
 
        
 }
