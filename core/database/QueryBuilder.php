@@ -667,9 +667,9 @@ public function updateEvento($table, $parameters, $idEvento){
         $statement->execute();
     }
 
-    public function selectAllPermisos($tablePermisos){
+     public function selectAllPermisos($tablePermisos){
         $statement = $this->pdo->prepare(
-            "SELECT * FROM {$tablePermisos}"
+            "SELECT * FROM {$tablePermisos} ORDER BY nombrePermiso ASC "
        
         );
         $statement->execute();

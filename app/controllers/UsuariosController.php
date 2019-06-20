@@ -80,7 +80,7 @@ class UsuariosController extends Controller
          $nombrePermiso=$_POST['nombrePermiso'];
          $datos=$_POST['nombreRol'];
          foreach($nombrePermiso as $valor){
-        echo "entro";    
+        
             
              $this->model->guardarPermisosXRol($datos,$valor);
         }

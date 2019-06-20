@@ -74,7 +74,7 @@ public function getPaginacion($page){
     return $todosUsuarios;
 }
 public function guardarPermisosXRol($datos,$nombrePermiso){
-    echo "entroaca";
+   
    var_dump($datos);
     var_dump($nombrePermiso);
     $idRol=$this->db->getIdRol($this->tableRol,$datos);
