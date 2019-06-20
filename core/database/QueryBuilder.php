@@ -790,7 +790,30 @@ public function updateEvento($table, $parameters, $idEvento){
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
    }
+ public function getIdRol($tableRol,$nombreRol){ 
+        $statement = $this->pdo->prepare(
+           "SELECT (idRol) FROM $tableRol   WHERE nombreRol='$nombreRol'"
+    );
+    $statement->execute();
+    
+       return $statement->fetchAll(PDO::FETCH_NUM);
+    }
 
+public function getIdPermiso($tablePermisos,$nombrePermiso){ 
+        $statement = $this->pdo->prepare(
+           "SELECT (idPermiso) FROM $tablePermisos  WHERE nombrePermiso='$nombrePermiso'"
+    );
+    $statement->execute();
+    
+       return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+public function insertRolxPermiso($tableRolXPermiso,$idRol,$idPermiso){
+        var_dump($idRol,$idPermiso);
+        $statement = $this->pdo->prepare(
+        "INSERT INTO $tableRolXPermiso(idRol,idPermiso) VALUES ('$idRol','$idPermiso')"
+    );
+        $statement->execute();
+    }
 }
 
 

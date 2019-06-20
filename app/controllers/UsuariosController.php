@@ -87,7 +87,7 @@ class UsuariosController extends Controller
          
          /*$datos['nombreRol']=$_POST['nombreRol'];
          var_dump($_POST['nombrePermiso']);*/
-         
+          
          $this->vistaAdministracionPermisos();
     }
     

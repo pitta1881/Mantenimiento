@@ -15649,3 +15649,6 @@
 [2019-06-20 03:07:44] mvc_logger.INFO: Status Code: 200 [] []
 [2019-06-20 03:08:05] mvc_logger.INFO: Status Code: 200 [] []
 [2019-06-20 01:38:29] mvc_logger.INFO: Status Code: 200 [] []
+[2019-06-20 01:41:30] mvc_logger.INFO: Status Code: 200 [] []
+[2019-06-20 02:09:40] mvc_logger.ERROR: Error {"Error":"[object] (PDOException(code: 42S22): SQLSTATE[42S22]: Column not found: 1054 Unknown column 'idRrol' in 'field list' at C:\\Users\\cacu\\Desktop\\unlu\\seminario profesional\\sistema\\mantenimiento 5\\Mantenimiento\\core\\database\\QueryBuilder.php:156)"} []
+[2019-06-20 02:09:40] mvc_logger.INFO: Status Code: 200 [] []
