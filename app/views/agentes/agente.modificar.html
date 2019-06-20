@@ -29,9 +29,9 @@
             <select name="especializacion">
                 {% for especializacion in datos.especializaciones %}
                 {% if especializacion == datos.agente.especializacionNombre %}
-                <option value="{{ especializacion }}" selected>{{ especializacion }}</option>
+                <option value="{{ especializacion.nombre  }}" selected>{{ especializacion.nombre  }}</option>
                 {% else %}
-                <option value="{{ especializacion }}">{{ especializacion }}</option>
+                <option value="{{ especializacion.nombre  }}">{{ especializacion.nombre  }}</option>
                 {% endif %}
                 {% endfor %}
             </select>

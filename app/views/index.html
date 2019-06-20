@@ -5,6 +5,11 @@
     <div class="divI"><img class="imagen" src="/public/res/sommer2.jpg"></div>
     <h2 class="login-header">Ingreso </h2>
 
+    {% if datos.error == true %}
+    <script>
+        alertify.alert('Error', 'Usuario o Contraseña invalidos', function () {});
+    </script>
+    {% endif %}
     <form action="/login/validar" method="POST" class="login-container">
         <p>
             <label class="name" for="nombre">Nombre de Usuario</label>

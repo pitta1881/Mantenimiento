@@ -13,19 +13,19 @@
 
 {% block main %}
 <div class="general">
-        <h1>Listado de Agentes</h1>
-        <form class="buscador" action="/pedido/buscar" method="POST">
-            <input  class="crear" type="button" value="CARGAR NUEVO AGENTE" onclick="mostrarFormulario()">
-            <select name="filtro">
-                <option value="id">Nº PEDIDO</option>
-                <option value="sector">SECTOR</option>
-                <option value="fechaInicio">FECHA INICIO</option>
-                <option value="estado">ESTADO</option>
-                <option value="prioridad">PRIORIDAD</option>
-            </select>
-            <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-            <input type="submit" value="Buscar">
-        </form>
+    <h1>Listado de Agentes</h1>
+    <form class="buscador" action="/pedido/buscar" method="POST">
+        <input class="crear" type="button" value="CARGAR NUEVO AGENTE" onclick="mostrarFormulario()">
+        <select name="filtro">
+            <option value="id">Nº PEDIDO</option>
+            <option value="sector">SECTOR</option>
+            <option value="fechaInicio">FECHA INICIO</option>
+            <option value="estado">ESTADO</option>
+            <option value="prioridad">PRIORIDAD</option>
+        </select>
+        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+        <input type="submit" value="Buscar">
+    </form>
 
     <script>
         function mostrarFormulario() {
@@ -58,7 +58,7 @@
             <label for="especializacion">Especializacion</label>
             <select name="especializacion">
                 {% for especializacion in datos.especializaciones %}
-                <option value="{{ especializacion }}">{{ especializacion }}</option>
+                <option value="{{ especializacion.nombre }}">{{ especializacion.nombre }}</option>
                 {% endfor %}
             </select>
         </fieldset>

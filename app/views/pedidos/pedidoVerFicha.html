@@ -142,18 +142,19 @@
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
                 <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
-                    <img class="iconos" src="/public/res/addAgente.svg">
+                    <img class="iconos" src="/public/res/addAgente.svg" title="Asignar Agentes">
                 </a>
                 {% endif %}
                 <a href="#"> <img class="iconos" src="/public/res/insumos.svg"></a>
                 {% if tarea.estado == 'Iniciado' %}
-                <form action="/pedido/tarea/eliminar" method="post"
+                <form action="/pedido/tarea/eliminar" method="post" style="display: inline-block"
                     id="formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}">
                     <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
                     <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
                 </form>
-                <input type="button" value="Eliminar Tarea"
-                    onclick="alertify.confirm('Eliminar Tarea','¿Esta seguro?',function(){document.getElementById('formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}').submit()},function(){})">
+                <a
+                    onclick="alertify.confirm('Eliminar Tarea','¿Esta seguro?',function(){document.getElementById('formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/delTarea.svg" title="Eliminar Tarea"></a>
                 {% endif %}
             </td>
         </tr>

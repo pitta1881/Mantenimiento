@@ -26,14 +26,23 @@
             <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
             {% set i = 1 %}
             {% for tareas in datos.tareasSinAsignar %}
+            {% set estilo = '' %}
+            {% if tareas.tieneAgentes == false %}
+            {% set estilo = "style=background-color:lightcoral" %}
+            {% endif %}
             <tr>
-                <td>{{ tareas.idPedido }}</td>
-                <td>{{ tareas.idTarea }}</td>
-                <td>{{ tareas.descripcion }}</td>
-                <td>{{ tareas.especializacionNombre }}</td>
-                <td>{{ tareas.prioridad }}</td>
-                <td><input type="checkbox" class="clsCasilla" name=" {{ i }}_{{ tareas.idPedido }}"
+                <td {{estilo}}><a href="/fichaPedido?id={{ tareas.idPedido }}">Pedido {{ tareas.idPedido }}</a></td>
+                <td {{estilo}}><a href="/fichaTarea?idPedido={{ tareas.idPedido }}&idTarea={{ tareas.idTarea }}">Tarea
+                        {{ tareas.idTarea }}</a></td>
+                <td {{estilo}}>{{ tareas.descripcion }}</td>
+                <td {{estilo}}>{{ tareas.especializacionNombre }}</td>
+                <td {{estilo}}>{{ tareas.prioridad }}</td>
+                {% if tareas.tieneAgentes %}
+                <td {{estilo}}><input type="checkbox" class="clsCasilla" name=" {{ i }}_{{ tareas.idPedido }}"
                         value="{{ tareas.idTarea }}" onclick="deRequireCb('clsCasilla')" required></td>
+                {% else %}
+                <td {{estilo}}>Primero debe asignar agentes a ésta Tarea</td>
+                {% endif %}
                 {% set i = i + 1 %}
             </tr>
             {% endfor %}

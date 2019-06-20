@@ -41,6 +41,7 @@ class OrdenDeTrabajo extends Model
         $misTareas = json_decode(json_encode($tareas), True);
         for ($i=0; $i < count($misTareas); $i++) { 
             $misTareas[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($misTareas[$i]['idEspecializacion']);
+            $misTareas[$i]['tieneAgentes']=$this->booleanTieneAgentes($misTareas[$i]['idPedido'],$misTareas[$i]['idTarea']);
           }
         return $misTareas;
     }
@@ -145,5 +146,14 @@ class OrdenDeTrabajo extends Model
           }        
       }
       return $todasOT;
+  }
+
+  public function booleanTieneAgentes($idPedido, $idTarea){
+      $bool = true;
+      $resultado = $this->getAgentesByIdId($idPedido,$idTarea);
+      if (empty($resultado)) {
+          $bool = false;
+      }      
+      return $bool;
   }
 }
