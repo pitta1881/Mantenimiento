@@ -66,7 +66,7 @@ class UsuariosController extends Controller
     public function vistaEliminarRol(){
           return view('/usuarios/administracionRol.eliminar');
     }
-     public function vistaAdministracionPermisos(){
+    public function vistaAdministracionPermisos(){
           $nombresRoles=$this->model->getRoles();
         $nombresPermisos=$this->model->getPermisos();
         $datos['nombresRoles'] = $nombresRoles;
@@ -74,8 +74,21 @@ class UsuariosController extends Controller
      
         return view('/usuarios/administracionPermisos',compact('datos'));
     }
-     public function vistaAsignarPermiso(){
-          return view('/usuarios/administracionPermisos.asignar');
+     public function guardarPermisos(){
+        
+        
+         $nombrePermiso=$_POST['nombrePermiso'];
+         $datos=$_POST['nombreRol'];
+         foreach($nombrePermiso as $valor){
+        echo "entro";    
+            
+             $this->model->guardarPermisosXRol($datos,$valor);
+        }
+         
+         /*$datos['nombreRol']=$_POST['nombreRol'];
+         var_dump($_POST['nombrePermiso']);*/
+         
+         $this->vistaAdministracionPermisos();
     }
     
      public function vistaEliminarPermiso(){

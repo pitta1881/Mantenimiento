@@ -51,10 +51,10 @@
     $router->get('usuario/eliminarRol','UsuariosController@vistaEliminarRol');
 
 //rutas permisos
+    //rutas permisos
     $router->get('usuario/AdministracionPermisos','UsuariosController@vistaAdministracionPermisos');
-    $router->get('usuario/asignarPermiso','UsuariosController@vistaAsignarPermiso');
+    $router->post('usuario/asignarPermiso','UsuariosController@guardarPermisos');
     $router->get('usuario/eliminarPermiso','UsuariosController@vistaEliminarPermiso');
-
 //rutas personas
     $router->get('persona/AdministracionPersonas','PersonaController@vistaAdministracionPersona');
     $router->post('persona/altaPersona','PersonaController@altaPersona');

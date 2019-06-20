@@ -23,10 +23,10 @@
         <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
         {% endfor %}}
     </select>
-    <select multiple size="5" name="nombrePermiso" id="nombrePermiso">
+    <select multiple size="5" name="nombrePermiso[]" id="nombrePermiso">
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
         {% for nombres in datos.nombresPermisos %}
-        <option value={{ nombres.nombrePermiso }}>{{ nombres.nombrePermiso }}</option>
+        <option value="{{ nombres.nombrePermiso }}">{{ nombres.nombrePermiso }}</option>
         {% endfor %}
     </select>
     <br>

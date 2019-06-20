@@ -12,7 +12,7 @@ class Usuarios extends Model
     protected $tablePermisos='permisos';
     protected $tableAgentes='agentes';
     protected $size_pagina=2;
-    
+     protected $tableRolXPermiso='rolesxpermisos';
     public function get()
     {
         //$usuarios = $this->db->selectAll($this->table);
@@ -73,6 +73,21 @@ public function getPaginacion($page){
     $todosUsuarios = json_decode(json_encode($usuarios), True);
     return $todosUsuarios;
 }
+public function guardarPermisosXRol($datos,$nombrePermiso){
+    echo "entroaca";
+   var_dump($datos);
+    var_dump($nombrePermiso);
+    $idRol=$this->db->getIdRol($this->tableRol,$datos);
+    $idPermiso=$this->db->getIdPermiso($this->tablePermisos,$nombrePermiso);
+$datos =[
+  'idRrol'=> $idRol,
+    'idPermiso'=> $idPermiso
+];
+    
+    var_dump($idRol);
+   $this->db->insert($this->tableRolXPermiso, $datos);
 
+    // $this->db->insertRolxPermiso($this->tableRolXPermiso, $idRol,$idPermiso);
+}
 
 }
