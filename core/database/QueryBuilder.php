@@ -790,6 +790,14 @@ public function updateEvento($table, $parameters, $idEvento){
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
    }
+ public function getIdRol($tableRol,$nombreRol){ 
+        $statement = $this->pdo->prepare(
+           "SELECT (idRol) FROM $tableRol   WHERE nombreRol='$nombreRol'"
+    );
+    $statement->execute();
+    
+       return $statement->fetchAll(PDO::FETCH_NUM);
+    }
 
    public function selectAllpermisosByIdRol($tableRolesxPermisos, $idRol){        
     $statement = $this->pdo->prepare(

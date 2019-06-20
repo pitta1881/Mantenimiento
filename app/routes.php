@@ -55,6 +55,8 @@
     $router->get('usuario/AdministracionPermisos','UsuariosController@vistaAdministracionPermisos');
     $router->post('usuario/asignarPermiso','UsuariosController@guardarPermisos');
     $router->get('usuario/eliminarPermiso','UsuariosController@vistaEliminarPermiso');
+
+
 //rutas personas
     $router->get('persona/AdministracionPersonas','PersonaController@vistaAdministracionPersona');
     $router->post('persona/altaPersona','PersonaController@altaPersona');
