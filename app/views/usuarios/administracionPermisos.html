@@ -17,16 +17,16 @@
 </script>
 <form action="/usuario/asignarPermiso" method="POST" id="formularioPermisos"
     style="display: none; border: 1px solid black">
-   <select name="nombreRol" id="nombreRol">
+    <select name="idRol" id="nombreRol">
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for nombre in datos.nombresRoles %}
-        <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
+        {% for rol in datos.roles %}
+        <option value={{ rol.idRol }}>{{ rol.nombreRol }}</option>
         {% endfor %}}
     </select>
-    <select multiple size="5" name="nombrePermiso[]" id="nombrePermiso">
+    <select multiple size="5" name="idPermiso[]" id="nombrePermiso">
         <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for nombres in datos.nombresPermisos %}
-        <option value="{{ nombres.nombrePermiso }}">{{ nombres.nombrePermiso }}</option>
+        {% for permiso in datos.permisos %}
+        <option value="{{ permiso.idPermiso }}">{{ permiso.nombrePermiso }}</option>
         {% endfor %}
     </select>
     <br>
@@ -37,17 +37,29 @@
 
 
 <!-- todavia no busca , agregar ruta al action-->
-
-<form action="" method="POST">
-    <h3>Permisos por Rol</h3>
-               <select name="filtro">
-                <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for nombre in datos.nombresRoles %}
-        <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
+<h3>Permisos por Rol</h3>
+<form action="/usuario/AdministracionPermisos" method="GET">
+    <select name="rol">
+        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
+        {% for rol in datos.roles %}
+        <option value={{ rol.idRol }}_{{ rol.nombreRol }}>{{ rol.nombreRol }}</option>
         {% endfor %}
     </select>
-    
     <input type="submit" value="Buscar">
 </form>
 
+<table id="miTabla">
+    <th onclick="sortTable(0,'miTabla')">Permisos del Rol {{ datos.permisosxrol.nombreRol }}</th>
+    {% set i = 0 %}
+    {% for permiso in datos.permisosxrol %}
+    <tr>
+        <td>{{ permiso.nombrePermiso }}</td>
+    </tr>
+    {% set i = i + 1 %}
+    {% endfor %}
+    {% if i == 1 %}
+    <h2 class="error">El Rol {{ datos.permisosxrol.nombreRol }} no tiene ningun Permiso Asignado</h2>
+    {% endif %}
+
+</table>
 {% endblock %}

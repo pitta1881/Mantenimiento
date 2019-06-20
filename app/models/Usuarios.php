@@ -12,7 +12,8 @@ class Usuarios extends Model
     protected $tablePermisos='permisos';
     protected $tableAgentes='agentes';
     protected $size_pagina=2;
-     protected $tableRolXPermiso='rolesxpermisos';
+    protected $tableRolXPermiso='rolesxpermisos';
+
     public function get()
     {
         //$usuarios = $this->db->selectAll($this->table);
@@ -73,21 +74,16 @@ public function getPaginacion($page){
     $todosUsuarios = json_decode(json_encode($usuarios), True);
     return $todosUsuarios;
 }
-public function guardarPermisosXRol($datos,$nombrePermiso){
-   
-   var_dump($datos);
-    var_dump($nombrePermiso);
-    $idRol=$this->db->getIdRol($this->tableRol,$datos);
-    $idPermiso=$this->db->getIdPermiso($this->tablePermisos,$nombrePermiso);
-$datos =[
-  'idRrol'=> $idRol,
-    'idPermiso'=> $idPermiso
-];
-    
-    var_dump($idRol);
-   $this->db->insert($this->tableRolXPermiso, $datos);
 
-    // $this->db->insertRolxPermiso($this->tableRolXPermiso, $idRol,$idPermiso);
-}
+    public function guardarPermisosXRol($datos){   
+        $this->db->insert($this->tableRolXPermiso, $datos);
+    }
+
+    public function permisosxrol($idRol,$nombreRol){
+        $permisos = $this->db->selectAllpermisosByIdRol($this->tableRolXPermiso,$idRol);
+        $todosPermisos = json_decode(json_encode($permisos), True);
+        $todosPermisos['nombreRol']=$nombreRol;
+        return $todosPermisos;
+    }
 
 }

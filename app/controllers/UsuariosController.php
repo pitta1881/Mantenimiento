@@ -67,31 +67,31 @@ class UsuariosController extends Controller
           return view('/usuarios/administracionRol.eliminar');
     }
     public function vistaAdministracionPermisos(){
-          $nombresRoles=$this->model->getRoles();
-        $nombresPermisos=$this->model->getPermisos();
-        $datos['nombresRoles'] = $nombresRoles;
-        $datos['nombresPermisos'] = $nombresPermisos;
-     
+        $roles=$this->model->getRoles();
+        $permisos=$this->model->getPermisos();
+        $datos['roles'] = $roles;
+        $datos['permisos'] = $permisos;
+        if (empty($_GET)) {
+           $datos['permisosxrol'] = $this->model->permisosxrol($roles[0]['idRol'],$roles[0]['nombreRol']);
+        } else {
+           $datos['permisosxrol'] = $this->model->permisosxrol(explode("_",$_GET['rol'])[0],explode("_",$_GET['rol'])[1]);
+        }   
         return view('/usuarios/administracionPermisos',compact('datos'));
     }
-     public function guardarPermisos(){
-        
-        
-         $nombrePermiso=$_POST['nombrePermiso'];
-         $datos=$_POST['nombreRol'];
-         foreach($nombrePermiso as $valor){
-        
-            
-             $this->model->guardarPermisosXRol($datos,$valor);
+
+    public function guardarPermisos(){      
+        $arrayPermisos=$_POST['idPermiso'];
+        foreach ($arrayPermisos as $key => $value) {
+            $datos = [
+                'idRol' => $_POST['idRol'],
+                'idPermiso' => $value,
+            ];
+            $this->model->guardarPermisosXRol($datos);
         }
-         
-         /*$datos['nombreRol']=$_POST['nombreRol'];
-         var_dump($_POST['nombrePermiso']);*/
-         
-         $this->vistaAdministracionPermisos();
+        redirect("usuario/AdministracionPermisos");
     }
     
-     public function vistaEliminarPermiso(){
+    public function vistaEliminarPermiso(){
           return view('/usuarios/administracionPermisos.eliminar');
     }
 

@@ -791,6 +791,15 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
    }
 
+   public function selectAllpermisosByIdRol($tableRolesxPermisos, $idRol){        
+    $statement = $this->pdo->prepare(
+        "SELECT P.nombrePermiso FROM $tableRolesxPermisos RP INNER JOIN permisos P ON RP.idPermiso=P.idPermiso WHERE RP.idRol=$idRol"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+}
+   
+
 }
 
 
