@@ -13,6 +13,16 @@
 {% endblock %}
 
 {% block main %}
+<script>
+    function mostrarFormulario() {
+        var cambiarEstadoTarea = document.getElementById('cambiarEstadoTarea');
+        if (cambiarEstadoTarea.style.display == "block") {
+            cambiarEstadoTarea.style.display = "none";
+        } else {
+            cambiarEstadoTarea.style.display = "block"
+        }
+    }
+</script>
 <div class="contenido3">
     <input type="button" value="Volver" onclick="history.back()" title="Volver">
     <h1>Su Orden de Trabajo</h1>
@@ -63,26 +73,24 @@
             <td {{ estilo }}>
                 {% if tarea.estado != 'Finalizado' %}
                 {% set estados = ['En Curso','Pendiente','Finalizado'] %}
-                <form {{ estilo }} action="/tarea/cambiarEstado/seleccionado" method="post">
+                <img class="iconosTitulo" src="/public/res/cambiarEstado.svg" onclick="mostrarFormulario()"
+                    title="Cambiar Estado">
+                <form action="/tarea/cambiarEstado/seleccionado" method="post" id="cambiarEstadoTarea"
+                    style="display: none">
                     <input type="text" name="idPedido" value="{{ tarea.idPedido }}" hidden>
                     <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
                     <input type="text" name="idOT" value="{{ datos.miOT.idOT }}" hidden>
-                    <label for="estado" id="estadoLabel{{ tarea.idPedido }}_{{ tarea.idTarea }}"
-                        style="display: none">Estado</label>
-                    <select name="estado" id="estadoSelect{{ tarea.idPedido }}_{{ tarea.idTarea }}"
-                        style="display: none">
+                    <label for="estado" id="estadoLabel">Estado</label>
+                    <select name="estado" id="estadoSelect">
                         {% for estado in estados %}
+                        {% if estado != tarea.estado %}
                         <option value="{{ estado }}">{{ estado }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
-                    <input type="button" value="Cambiar Estado"
-                        id="formCambiarEstado{{ tarea.idPedido }}_{{ tarea.idTarea }}"
-                        onclick="document.getElementById('cambiarEstadoSi{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('formCambiarEstado{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('estadoLabel{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('estadoSelect{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block'">
-                    <input type="submit" value="Cambiar" id="cambiarEstadoSi{{ tarea.idPedido }}_{{ tarea.idTarea }}"
-                        style="display: none">
-                    <input type="reset" value="Salir" id="{{ tarea.idPedido }}_{{ tarea.idTarea }}"
-                        style="display: none"
-                        onclick="document.getElementById('cambiarEstadoSi{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('formCambiarEstado{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='inline-block';document.getElementById('estadoLabel{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none';document.getElementById('estadoSelect{{ tarea.idPedido }}_{{ tarea.idTarea }}').style.display='none'">
+                    <input type="button" value="Cambiar" id="cambiarEstadoSi" onclick="alertify.prompt( 'Cambiar Estado', 'Descripcion', ''
+                        , function(evt, value) { var descripcion = document.createElement('input'); descripcion.required = 'required'; descripcion.type = 'text'; descripcion.name = 'descripcion'; descripcion.value = value; document.getElementById('cambiarEstadoTarea').appendChild(descripcion); document.getElementById('cambiarEstadoTarea').submit(); }
+                        , function() {});">
                 </form>
                 {% endif %}
             </td>

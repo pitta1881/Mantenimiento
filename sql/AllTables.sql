@@ -216,6 +216,7 @@ CREATE TABLE itemInsumo
     idTarea integer,
     idPedido integer,
     idInsumo integer,
+    cantidad integer not null default 0,
     PRIMARY KEY (idTarea,idPedido,idInsumo),
     FOREIGN KEY (idTarea,idPedido) REFERENCES tarea(idTarea,idPedido),
     FOREIGN KEY (idInsumo) REFERENCES insumo(idInsumo)
