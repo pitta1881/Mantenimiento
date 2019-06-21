@@ -1,0 +1,70 @@
+{% extends "base.html" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %}
+{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<div class="general">
+    <h1>Listado de Roles</h1>
+
+    <script>
+        function mostrarFormulario() {
+            var formularioPedido = document.getElementById('formularioPedido');
+            if (formularioPedido.style.display == "block") {
+                formularioPedido.style.display = "none";
+            } else {
+                formularioPedido.style.display = "block"
+            }
+        }
+    </script>
+    <form action="/rol/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
+        
+        <fieldset >
+            <legend>Datos Basicos</legend>
+            <label for="nombreRol">Nombre</label>
+            <input type="text" name="nombreRol" value="" placeholder="nombre del rol">
+            <br>
+            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
+            <input type="textarea" rows="10" cols="50" name="descripcion" autofocus required
+                placeholder="Ingrese la descripcion..">
+            <br>
+        </fieldset>
+        <input type="reset">
+        <input type="submit">
+      
+    </form>
+
+    <form class="buscador" action="/rol/buscar" method="POST">
+        <img class="crear" src="/public/res/nuevo.svg" title="Crear" onclick="mostrarFormulario()">
+
+        <select name="filtro">
+            <option value="id">Nº Rol</option>
+            <option value="sector">Nombre</option>
+            <option value="fechaInicio">Descripcion</option>
+        </select>
+        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+        <input type="submit" value="Buscar">
+    </form>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">Nº Rol</th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th class="descripcion" onclick="sortTable(2,'miTabla')">Descripcion</th>
+        <th >Accion</th>
+        {% for rol in datos.todosRoles %}
+        <tr>
+            <td >{{ rol.id }}</td>
+            <td >{{ rol.nombre }}</td>
+            <td class="descripcion" >{{ rol.descripcion|slice(0, 55) }}</td>
+            <td >
+                <a href='/fichaPedido?id={{ pedido.id }}'>
+                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
+                </a>
+                <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay Roles</h2> {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

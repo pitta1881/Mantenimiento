@@ -89,18 +89,14 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
     
-    public function selectUsuarioPorPersonaPorRol($tableUsuario, $tablePersona, $tableRol){
-        
-            
+    public function selectUsuarioPorPersonaPorRol($tableUsuario, $tablePersona, $tableRol){  
         $statement = $this->pdo->prepare(
-            "SELECT $tableUsuario.nombre,$tablePersona.nombre,$tablePersona .apellido,$tablePersona .dni,$tableRol.nombreRol FROM $tableUsuario  inner JOIN $tablePersona  ON $tableUsuario.nombre=$tablePersona .idUsuario  inner JOIN $tableRol  ON $tableUsuario.idRol=$tableRol.idRol"
+            "SELECT t1.nombre, t2.nombre,t2.apellido,t2.dni,t3.nombreRol FROM $tableUsuario t1 inner JOIN $tablePersona t2 ON t1.nombre=t2.dni inner JOIN $tableRol t3 ON t1.idRol=t3.idRol"
         );
-        
-      
        try{
         $statement->execute();
        }catch(Exception $e){$this->sendToLog($e);}
-        return $statement->fetchAll(PDO::FETCH_CLASS);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -707,6 +703,8 @@ public function updateEvento($table, $parameters, $idEvento){
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+
+
 
     public function comparaPersona($tablePersona, $dni){  
         $statement = $this->pdo->prepare(

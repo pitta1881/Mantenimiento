@@ -28,8 +28,6 @@
         <input type="password" name="password" placeholder="contraseña">
         <label for="nombre">Confirmar Contraseña</label>
         <input type="password" name="password" placeholder="contraseña">
-        <label for="dni">DNI</label>
-        <input type="number" name="dni" placeholder="dni">
         <label for="roles">Rol del Usuario:</label>
         <select name="nombreRol" id="nombreRol">
             <option value="SeleccionarRol">Seleccionar Rol</option>
@@ -64,15 +62,16 @@
         <th onclick="sortTable(2,'miTabla')">Rol</th>
         <th onclick="sortTable(3,'miTabla')">Nombre y Apellido</th>
         <th onclick="sortTable(4,'miTabla')">ACCION</th>
+
         {% for usuario in datos.todosUsuarios %}
         <tr>
             <td>{{ usuario.nombre }}</td>
             <td>{{ usuario.dni }}</td>
-            <td>{{ usuario.rol }}</td>
-            <td>{{ usuario.apellido }} </td>
+            <td>{{ usuario.nombreRol }}</td>
+            <td>{{ usuario.apellido }} {{ usuario.nombre }}  </td>
             <td>
                 <a href='usuarios/modificarUsuario/seleccionado?id={{ usuario.id }}'>
-                    <input type="button" value="MODIFICAR">
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
 
             </td>
@@ -84,11 +83,16 @@
         <ul>
 
             {% if datos.totalPaginas is empty  %}
+            	
+
             <li><a href='/pedido/verTodos?page={{ 1 }}'> 1 </a></li>
             {% endif %}
             {% if datos.totalPaginas|e  %}
+           	
+
             <li><a href='/pedido/verTodos?page={{ 1 }}'> &lt; </a></li>
             {% for i in 1..datos.totalPaginas %}
+            
             <li><a href='/pedido/verTodos?page={{ i }}'> {{ i }} </a></li>
             {% endfor %}
             <li><a href='/pedido/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>

@@ -14,12 +14,10 @@ class Usuarios extends Model
     protected $size_pagina=2;
     protected $tableRolXPermiso='rolesxpermisos';
 
-    public function get()
-    {
-        //$usuarios = $this->db->selectAll($this->table);
-        return  $this->db->selectUsuarioPorPersonaPorRol($this->table,$this->tableRol,$this->tablePersona);
-     //   $persona=$this->db->selectAll($this->'personas');
-       
+    public function get(){
+        $Usuario=$this->db->selectUsuarioPorPersonaPorRol($this->table,$this->tablePersona,$this->tableRol);
+        $misUsuarios = json_decode(json_encode($Usuario), True);
+        return  $misUsuarios;
     }
 
    public function buscarUsuario($user){
@@ -27,15 +25,20 @@ class Usuarios extends Model
        return $this->db->comparaUsuario($this->table,$user);
     }
 
+    public function buscarPersona($persona){
+        //comparo si existe el nombre de usuario 
+        return $this->db->comparaPersona($this->tablePersona,$persona);
+     }
+
     public function AllPermisos($nombreUser){
         $cantidad = $this->db->selectPermisosNombre($nombreUser);
         return $cantidad;
     }
-    
-    public function insert(array $usuarios)
-    {
+
+    public function insert(array $usuarios){
         $this->db->insert($this->table, $usuarios);
     }
+    
 
     public function update (array $usuarioModificado,$nombre)
     {

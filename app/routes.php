@@ -47,10 +47,14 @@
     $router->get('usuarios/eliminarUsuario','UsuariosController@vistaeliminarUsuario');
 
 //rutas rol
-    $router->get('usuario/AdministracionRol','UsuariosController@vistaAdministracionRol');
-    $router->get('usuario/altaRol','UsuariosController@vistaAltaRol');
-    $router->get('usuario/modificarRol','UsuariosController@vistaModificarRol');
-    $router->get('usuario/eliminarRol','UsuariosController@vistaEliminarRol');
+    $router->get('roles/AdministracionRol','RolesControler@index');
+    $router->get('roles/fichaRol','RolesControler@ficha');
+    $router->post('roles/guardar', 'RolesControler@guardar');
+    $router->post('roles/buscar', 'RolesControler@buscarPor');
+    $router->get('roles/modificar/seleccionado', 'RolesControler@modificarRolSeleccionado');
+    $router->post('roles/modificar', 'RolesControler@modificar');
+    $router->post('roles/eliminarRol', 'RolesControler@finalizar');
+    $router->get('roles/eliminarRol','RolesControler@vistaEliminarRol');
 
 //rutas permisos
     //rutas permisos
@@ -113,5 +117,5 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
 
 
 
-    $router->get('not_found', 'ProjectController@notFound');
+    $router->get('not_found', 'ProjectController@internalError');
     $router->get('internal_error', 'ProjectController@internalError');

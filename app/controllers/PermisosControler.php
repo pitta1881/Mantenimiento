@@ -3,13 +3,12 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\Pedido;
+use App\Models\Permisos;
 
-class PedidoController extends Controller
+class PermisoControler extends Controller
 {
-    public function __construct()
-    {
-        $this->model = new Pedido();
+    public function __construct(){
+        $this->model = new Permisos();
     }
 
     /*Show all pedidos*/

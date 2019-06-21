@@ -21,8 +21,8 @@ class UsuariosController extends Controller
         }else{
             $pagina=1;
         }
-        $todosUsuarios = $this->model->getPaginacion($pagina); 
-        $datos['todosUsuarios'] = $todosUsuarios;
+        $todosUsuarios = $this->model->get(); 
+        $datos["todosUsuarios"] = $todosUsuarios;
         $totalPaginas=$this->model->getsize();
         $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];  
@@ -101,33 +101,47 @@ class UsuariosController extends Controller
           return view('/usuarios/administracionPermisos.eliminar');
     }
 
-    
+    public function guardar(){
+        $idSector = $this->model->getIdSectorPorNombre($_POST['sector']);
+        $datos['idSector']= $idSector;
+        $pedido = [
+            'fechaInicio' => $_POST['fechaInicio'],
+            'estado' => $_POST['estado'],
+            'descripcion' => $_POST['descripcion'],
+            'idSector' => $idSector,
+            'prioridad' => $_POST['prioridad'],
+            'nombreUsuario' => $_POST['nombreUsuario']
+        ];
+      $this->model->insert($pedido);
+      if(!empty($_POST['idEvento'])){
+        var_dump($_POST['idEvento']);  
+        $this->model->eliminarEvento($_POST['idEvento']);
+      }
+      $datos['arrayPedido'] = $pedido;
+      $datos["userLogueado"] = $_SESSION['user'];
+      $idNuevoPedido = $this->model->getIdUltimoPedido();
+      redirect("fichaPedido?id=".$idNuevoPedido);
+    }
     
     public function validarUsuario(){
-       $datos['nombre']=$_POST['nombre'];
-       $datos['password']=$_POST['password'];
-       
-        $statement= $this->model->buscarUsuario($datos['nombre']);      
+        $idRol=$this->model->buscarRol($_POST['nombreRol']);
+        $idPersona=$this->model->buscarPersona($_POST['nombrePersona']);
+       $pedido = [
+        'nombre' => $_POST['nombre'],
+        'password' => $_POST['password'],
+        'prioridad' => $idRol,
+        'idSector' => $idPersona,
+        ];
+       //verifico si existe el usuario
+        $statement= $this->model->buscarUsuario($_POST['nombre']);      
     if(empty($statement)){
-        //verifico si existe la persona o no 
-        /*
-        $persona=$this->model->buscarPersona($datos['nombre']); 
-       
-        
-        if(empty($persona)){
-        
-           $this->saveUsuario($datos); //guardo el usuario asi al dar de alta la persona no tengo q volver a dar de alta al usuario    
-           //llamar a la vista alta persona 
-       }*/
-        
-        $this->saveUsuario($datos);
-        return view('administracionUsuario.alta');
-    
+        $this->model->insert($pedido);
+        return view('usuarios/AdministracionUsuario');
     }else{
-        echo 'ya hay uno';
-        return view('administracionUsuario.alta');
+        echo 'Usuario ya existente';
+        return view('usuarios/AdministracionUsuario');
     }       
-    }
+}
 
  public function saveUsuario($datos){
         $this->model->insert($datos);            
