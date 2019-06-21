@@ -56,7 +56,7 @@
                     <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
                     <input type="number" name="cantidad" hidden>
                 </form>
-                <img class="iconos" src="/public/res/sumInsumo.svg" title="Sumar Stock"
+                <img class="iconos" src="/public/res/add.svg" title="Sumar Stock"
                     onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar','',function(evt,value){document.getElementsByName('cantidad')[0].value = value ;document.getElementById('formSumar').submit()},function(){}).set('type', 'number');">
                 <!--MODIFICAR INSUMO-->
                 <a href='/insumo/modificar/seleccionado?idInsumo={{ insumo.idInsumo }}'>
@@ -73,7 +73,7 @@
                 </form>
                 <a
                     onclick="alertify.confirm('Eliminar Insumo','¿Esta seguro?',function(){document.getElementById('formEliminarInsumo{{ insumo.idInsumo }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/delTarea.svg" title="Eliminar Insumo"></a>
+                        class="iconos" src="/public/res/del.svg" title="Eliminar Insumo"></a>
                 {% endif %}
             </td>
         </tr>
