@@ -14,8 +14,15 @@ class SectoresController extends Controller{
    }
     
     public function vistaAdministracionSectores(){
-        $todosSectores = $this->model->get();      
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todosSectores = $this->model->getPaginacion($pagina); 
         $datos['todosSectores'] = $todosSectores;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         $datos['tipoSectores'] = $this->model->getTipoSector();
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/sectores/sectores.administracion', compact('datos'));

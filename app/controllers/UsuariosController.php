@@ -16,9 +16,15 @@ class UsuariosController extends Controller
     
        /*Show all pedidos*/
     public function index(){
-
-        $todosUsuarios = $this->model->get();      
-        $datos['$todosUsuarios'] = $todosUsuarios;
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todosUsuarios = $this->model->getPaginacion($pagina); 
+        $datos['todosUsuarios'] = $todosUsuarios;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];  
         $userPer= $this->model->AllPermisos($_SESSION['user']);
         var_dump($userPer);

@@ -87,14 +87,14 @@
         <ul>
 
             {% if datos.totalPaginas is empty  %}
-            <li><a href='/pedido/verTodos?page={{ 1 }}'> 1 </a></li>
+            <li><a href='/persona/AdministracionPersonas?page={{ 1 }}'> 1 </a></li>
             {% endif %}
             {% if datos.totalPaginas|e  %}
-            <li><a href='/pedido/verTodos?page={{ 1 }}'> &lt; </a></li>
+            <li><a href='/persona/AdministracionPersonas?page={{ 1 }}'> &lt; </a></li>
             {% for i in 1..datos.totalPaginas %}
-            <li><a href='/pedido/verTodos?page={{ i }}'> {{ i }} </a></li>
+            <li><a href='/persona/AdministracionPersonas?page={{ i }}'> {{ i }} </a></li>
             {% endfor %}
-            <li><a href='/pedido/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>
+            <li><a href='/persona/AdministracionPersonas?page={{ datos.totalPaginas }}'> &gt; </a></li>
             {% endif %}
 
         </ul>

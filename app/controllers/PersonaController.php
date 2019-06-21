@@ -14,8 +14,15 @@ class PersonaController extends Controller
    }
     
     public function vistaAdministracionPersona(){
-        $todasPersonas = $this->model->get();      
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todasPersonas = $this->model->getPaginacion($pagina); 
         $datos['todasPersonas'] = $todasPersonas;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/personas/personas.administracion', compact('datos'));
     }

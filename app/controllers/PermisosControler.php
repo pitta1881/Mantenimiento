@@ -13,9 +13,16 @@ class PedidoController extends Controller
     }
 
     /*Show all pedidos*/
-    public function index()
-    {
-        $todosPedidos = $this->model->get();
+    public function index(){
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todosPedidos = $this->model->getPaginacion($pagina); 
+        $datos['todosPedidos'] = $todosPedidos;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         return view('verTodosPedidos', compact('todosPedidos'));
     }
 

@@ -14,8 +14,15 @@ class InsumosController extends Controller{
    }
     
     public function vistaAdministracionInsumos(){
-        $todosInsumos = $this->model->get();      
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todosInsumos = $this->model->getPaginacion($pagina); 
         $datos['todosInsumos'] = $todosInsumos;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/insumos/insumos.administracion', compact('datos'));
     }

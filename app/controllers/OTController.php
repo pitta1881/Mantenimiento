@@ -12,10 +12,16 @@ class OTController extends Controller{
         session_start();
     }
 
-    /*Show all pedidos*/
     public function index(){
-        $todasOT = $this->model->get();
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todasOT = $this->model->getPaginacion($pagina); 
         $datos['todasOT'] = $todasOT;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/ordendetrabajo/OTVerTodos', compact('datos'));
     }

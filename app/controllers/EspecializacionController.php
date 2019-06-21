@@ -15,8 +15,15 @@ class EspecializacionController extends Controller
 
 
     public function vistaAdministracionEspecializacion(){
-        $todasEspecializaciones = $this->model->get();   
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todasEspecializaciones = $this->model->getPaginacion($pagina); 
         $datos['todasEspecializaciones'] = $todasEspecializaciones;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/especializacion/especializacion.administracion', compact('datos'));
     }

@@ -14,8 +14,15 @@ class EventosController extends Controller{
    }
     
     public function vistaAdministracionEventos(){
-        $todosEventos = $this->model->get();      
-        $datos['todosEventos'] = $todosEventos;
+        if(isset($_GET["page"])){
+            $pagina=$_GET["page"];
+        }else{
+            $pagina=1;
+        }
+        $todosEventos = $this->model->getPaginacion($pagina); 
+        $datos['todosPedidos'] = $todosEventos;
+        $totalPaginas=$this->model->getsize();
+        $datos["totalPaginas"] =   $totalPaginas;
         $datos["diaHoy"] = date("Y-m-d");
         $datos["userLogueado"] = $_SESSION['user'];
   
