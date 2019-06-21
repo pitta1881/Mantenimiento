@@ -21,10 +21,12 @@
         <a href='/pedido/modificar/seleccionado?id={{ datos.miPedido.id }}'>
             <img class="iconosTitulo" src="/public/res/update.svg" title="Modificar">
         </a>
-        <form action="/pedido/finalizar" method="post" id="formFin" style="display: none">
-            <input type="text" name="id" value={{ datos.miPedido.id }} hidden>
-            <input type="submit" value="Finalizar Pedido">
+        <form action="/pedido/finalizar" method="post" style="display: inline-block" id="formTerminarPedido">
+            <input type="text" name="id" value="{{ datos.miPedido.id }}" hidden>
         </form>
+        <a id="btnFinPedido" style="display: none; background-color:coral; margin:2% 0"
+            onclick="alertify.confirm('Finalizar Pedido','¿Esta seguro?',function(){document.getElementById('formTerminarPedido').submit()},function(){})"><img
+                class="iconos" src="/public/res/finish.svg" title="Terminar Pedido"></a>
     </ul>
     <dl>
         <dt>Nº Pedido:</dt>
@@ -46,19 +48,8 @@
         <dd>{{ datos.miPedido.prioridad }}</dd>
     </dl>
     <h2>TAREAS</h2>
-    <form class="buscador" action="/pedido/buscar" method="POST">
-        <img class="crear" src="/public/res/nuevo.svg" title="Crear" id="btnCrearTarea" onclick="mostrarFormulario()">
-        <select name="filtro">
-            <option value="id">Nº PEDIDO</option>
-            <option value="sector">SECTOR</option>
-            <option value="fechaInicio">FECHA INICIO</option>
-            <option value="estado">ESTADO</option>
-            <option value="prioridad">PRIORIDAD</option>
-        </select>
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
-
+    <a href="#" onclick="mostrarFormulario()" id="btnCrearTarea"><img class="iconos" src="/public/res/nuevo.svg"
+            title="Crear Tarea"></a>
     <script>
         function mostrarFormulario() {
             var formularioTarea = document.getElementById('formularioTarea');
@@ -134,19 +125,26 @@
 
             <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
             <td {{ estilo }}>
+                <!--ACCIONES DE LAS TAREAS-->
+                <!--VER MAS-->
                 <a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas">
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
                 {% if tarea.estado != "Finalizado" %}
+                <!--MODIFICAR SI NO ESTÁ FINALIZADO-->
                 <a href="/tarea/modificar/seleccionado?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
+                <!--ASIGNAR AGENTE SI NO ESTÁ FINALIZADO-->
                 <a href="/tarea/agentes/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
                     <img class="iconos" src="/public/res/addAgente.svg" title="Asignar Agentes">
                 </a>
+                <!--ASIGNAR INSUMOS SI NO ESTÁ FINALIZADO-->
+                <a href="/tarea/insumos/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
+                    <img class="iconos" src="/public/res/insumos.svg" title="Asignar Insumos"></a>
                 {% endif %}
-                <a href="#"> <img class="iconos" src="/public/res/insumos.svg"></a>
                 {% if tarea.estado == 'Iniciado' %}
+                <!--ELIMINAR TAREA SI SOLO ESTÁ EN ESTADO INICIADO-->
                 <form action="/pedido/tarea/eliminar" method="post" style="display: inline-block"
                     id="formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}">
                     <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
@@ -163,7 +161,7 @@
         {% endfor %}
         {% if datos.miPedido.tareas|length > 0 and pedidoFin == true and datos.miPedido.estado != 'Finalizado' %}
         <script>
-            var formFinPedido = document.getElementById("formFin");
+            var formFinPedido = document.getElementById("btnFinPedido");
             formFinPedido.style.display = "block";
         </script>
         {% endif %}

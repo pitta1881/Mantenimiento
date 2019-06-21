@@ -12,20 +12,22 @@ class Especializacion extends Model
   protected $size_pagina=2;
 
 
-   public function get(){
-        $especializaciones = $this->db->selectAll($this->table);
-        $todasEspecializaciones = json_decode(json_encode($especializaciones), True);
-       /* foreach ($todasEspecializaciones as $indice => $datos) {
-          $yaEstaUsado = [];
-          $yaEstaUsado = $this->db->getFromTareaAgenteConIdEspecializacion($this->tableTarea,$this->tableAgentes,$todasEspecializaciones[$indice]['idEspecializacion']);
-          if(empty($yaEstaUsado)){
-              $todasEspecializaciones[$indice]['usado'] = false;
-          } else{
-              $todasEspecializaciones[$indice]['usado'] = true;
-          }
-      }*/
-        return $todasEspecializaciones;
-    }
+  public function get()
+  {
+      $especializaciones = $this->db->selectAll($this->table);
+      $todasEspecializaciones = json_decode(json_encode($especializaciones), True);
+      for ($i=0; $i < count($todasEspecializaciones); $i++) { 
+        $yaEstaUsado = [];
+        $yaEstaUsado = $this->db->getFromAgenteConIdEspecializacion($this->tableAgentes,$todasEspecializaciones[$i]['idEspecializacion']);
+        $yaEstaUsado2 = $this->db->getFromTareaConIdEspecializacion($this->tableTarea,$todasEspecializaciones[$i]['idEspecializacion']);
+        if(empty($yaEstaUsado) && (empty($yaEstaUsado2))){
+            $todasEspecializaciones[$i]['usado'] = false;
+        } else{
+            $todasEspecializaciones[$i]['usado'] = true;
+        }
+      }
+      return $todasEspecializaciones;
+  }
     
 
    public function buscarEspecializacion($nombre){

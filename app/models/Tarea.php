@@ -15,14 +15,12 @@ class Tarea extends Model
     protected $tablePedido = 'pedido';
     protected $tablePersona = 'personas';
     protected $tableHistoria = 'historialEstado';
+    protected $tableItemInsumo = 'iteminsumo';
+    protected $tableInsumo = 'insumo';
 
     public function getEspecializaciones() {
-        $array = [];
         $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);
         $misEspecializaciones = json_decode(json_encode($especializaciones), True);
-        /*for ($i=0; $i < count($misEspecializaciones); $i++) { 
-          $array[$i]=$misEspecializaciones[$i]['nombre'];
-        }*/
         return $misEspecializaciones;
     }
 
@@ -73,6 +71,7 @@ class Tarea extends Model
         $miTarea['especializacionNombre']=$this->getNombreEspecializacionPorId($miTarea['idEspecializacion']);
         $miTarea['agentes']=$this->getAgentesByIdId($miTarea['idPedido'],$miTarea['idTarea']);
         $miTarea['miOT']=$this->getOTByIdId($miTarea['idPedido'],$miTarea['idTarea']);
+        $miTarea['insumos']=$this->getInsumosByIdId($miTarea['idPedido'],$miTarea['idTarea']);
         return $miTarea;
     }
 
@@ -216,5 +215,11 @@ class Tarea extends Model
             $misHistorias[$i]['fecha'] = date("d/m/Y H:i", strtotime($misHistorias[$i]['fecha']));
             }
         return $misHistorias;
-        }
+    }
+
+    public function getInsumosByIdId($idPedido, $idTarea){
+        $insumos = $this->db->selectInsumosPorNPedidoNTarea($this->tableInsumo,$this->tableItemInsumo,$idPedido,$idTarea);
+        $todosInsumos = json_decode(json_encode($insumos), True);
+        return $todosInsumos;
+    }
 }

@@ -106,10 +106,10 @@ class QueryBuilder
 
 
     
-    public function comparaInsumos($table, $nombreInsumo) {
+    public function comparaInsumos($table, $nombreInsumo, $descripcion) {
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table}
-            WHERE nombreInsumo='{$nombreInsumo}'"
+            WHERE nombreInsumo='{$nombreInsumo}' AND descripcion='{$descripcion}'"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -583,9 +583,17 @@ public function updateEvento($table, $parameters, $idEvento){
     return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function getFromTareaAgenteConIdEspecializacion($tableTarea,$tableAgente,$nEspecializacion){ 
+    public function getFromAgenteConIdEspecializacion($tableAgente,$nEspecializacion){ 
         $statement = $this->pdo->prepare(
-           "SELECT idAgente,idTarea FROM $tableTarea T1 JOIN $tableAgente T2 WHERE T1.idEspecializacion=$nEspecializacion OR T2.idEspecializacion=$nEspecializacion"
+           "SELECT idAgente FROM $tableAgente WHERE idEspecializacion=$nEspecializacion"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function getFromTareaConIdEspecializacion($tableTarea,$nEspecializacion){ 
+        $statement = $this->pdo->prepare(
+           "SELECT idTarea FROM $tableTarea WHERE idEspecializacion=$nEspecializacion"
     );
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -799,15 +807,74 @@ public function updateEvento($table, $parameters, $idEvento){
        return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
-   public function selectAllpermisosByIdRol($tableRolesxPermisos, $idRol){        
-    $statement = $this->pdo->prepare(
-        "SELECT P.nombrePermiso FROM $tableRolesxPermisos RP INNER JOIN permisos P ON RP.idPermiso=P.idPermiso WHERE RP.idRol=$idRol"
+    public function selectAllpermisosByIdRol($tableRolesxPermisos, $idRol){        
+        $statement = $this->pdo->prepare(
+            "SELECT P.nombrePermiso FROM $tableRolesxPermisos RP INNER JOIN permisos P ON RP.idPermiso=P.idPermiso WHERE RP.idRol=$idRol"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function selectCantidadInsumoItem($tableItemInsumo,$idInsumo){
+        $statement = $this->pdo->prepare(
+        "SELECT MAX(idInsumo) FROM $tableItemInsumo WHERE idInsumo=$idInsumo"
     );
     $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_CLASS);
-}
-   
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
 
+    public function selectInsumosDisponibles($tableInsumos){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableInsumos WHERE stock>0"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+   }
+
+   public function restarInsumo($tableInsumo, $nInsumo, $cantidad){
+    $statement = $this->pdo->prepare(
+        "UPDATE $tableInsumo SET stock=stock-$cantidad WHERE idInsumo=$nInsumo"
+    );
+    $statement->execute();
+    }
+    public function sumarInsumo($tableInsumo, $nInsumo, $cantidad){
+        $statement = $this->pdo->prepare(
+            "UPDATE $tableInsumo SET stock=stock+$cantidad WHERE idInsumo=$nInsumo"
+        );
+        $statement->execute();
+        }
+   
+    public function getStock($tableInsumo,$idInsumo){
+        $statement = $this->pdo->prepare(
+        "SELECT stock FROM $tableInsumo WHERE idInsumo=$idInsumo"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function selectInsumosPorNPedidoNTarea($tableInsumo, $tableItemInsumo, $nPedido, $nTarea){ 
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableItemInsumo T1 INNER JOIN $tableInsumo T2 ON T1.idInsumo=T2.idInsumo WHERE idPedido=$nPedido AND idTarea=$nTarea"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function selectHistoriasInsumo($tableMovimiento,$idInsumo){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableMovimiento WHERE idInsumo=$idInsumo"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+   }
+   
+   public function getNombreInsumoFromId($tableInsumo,$idInsumo){
+        $statement = $this->pdo->prepare(
+        "SELECT nombreInsumo,descripcion FROM $tableInsumo WHERE idInsumo=$idInsumo"
+    );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_NUM);
+    }
 }
 
 

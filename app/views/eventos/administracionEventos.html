@@ -5,20 +5,8 @@
 {% block main %}
 <div class="general">
     <h1>Listado de Eventos</h1>
-    <form class="buscador" action="/pedido/buscar" method="POST">
-        <img class="crear" src="/public/res/nuevo.svg" title="Crear" onclick="mostrarFormulario()">
-        <select name="filtro">
-            <option value="id">Nº PEDIDO</option>
-            <option value="sector">SECTOR</option>
-            <option value="fechaInicio">FECHA INICIO</option>
-            <option value="estado">ESTADO</option>
-            <option value="prioridad">PRIORIDAD</option>
-        </select>
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
-
-
+    <a href="#" onclick="mostrarFormulario()" id="btnCrearEvento"><img class="iconos" src="/public/res/add.svg"
+            title="Crear Evento"></a>
     <script>
         function mostrarFormulario() {
             var formularioEventos = document.getElementById('formularioEventos');
@@ -65,16 +53,15 @@
             <td>{{ evento.fechaFin }}</td>
             <td>
                 <a href='/eventos/modificar/seleccionado?idEvento={{ evento.idEvento }}'>
-                    <input type="button" value="MODIFICAR">
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
-                <form action="/eventos/eliminar" method="post">
+                <form action="/eventos/eliminar" method="post" style="display: inline-block"
+                    id="formEliminarEvento{{ evento.idEvento }}">
                     <input type="text" name="idEvento" value="{{ evento.idEvento }}" hidden>
-                    <input type="button" value="Eliminar" id="btnEliminar{{ evento.idEvento }}"
-                        onclick="document.getElementById('eliminarSi{{ evento.idEvento }}').style.display='inline-block';document.getElementById('eliminarNo{{ evento.idEvento }}').style.display='inline-block';document.getElementById('btnEliminar{{ evento.idEvento }}').style.display='none'">
-                    <input type="submit" value="Si" id="eliminarSi{{ evento.idEvento }}" style="display: none">
-                    <input type="reset" value="No" id="eliminarNo{{ evento.idEvento }}" style="display: none"
-                        onclick="document.getElementById('eliminarSi{{ evento.idEvento }}').style.display='none';document.getElementById('eliminarNo{{ evento.idEvento }}').style.display='none';document.getElementById('btnEliminar{{ evento.idEvento }}').style.display='inline-block'">
                 </form>
+                <a
+                    onclick="alertify.confirm('Eliminar Evento','¿Esta seguro?',function(){document.getElementById('formEliminarEvento{{ evento.idEvento }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/delTarea.svg" title="Eliminar Evento"></a>
             </td>
         </tr>
         {% else %}

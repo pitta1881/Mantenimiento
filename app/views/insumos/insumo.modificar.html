@@ -14,7 +14,7 @@
 
 {% block main %}
 <div class="contenido3">
-    <input type="button" value="Volver" onclick="history.back()" title="Volver">
+    <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
     <h1>Modificar Insumo</h1>
     <form action="/insumos/administracionInsumos/modificarInsumo" method="POST">
         <fieldset class="basicosPedido">
@@ -26,8 +26,7 @@
             <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
             <input type="textarea" name="descripcion" autofocus required value="{{ datos.insumo.descripcion }}"><br>
         </fieldset>
-        <input type="reset" value="Volver" onclick="history.back()" title="Volver">
-        <input type=" submit">
+        <input type="submit">
     </form>
 </div>
 {% endblock %}

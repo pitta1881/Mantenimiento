@@ -22,8 +22,9 @@ class InsumosController extends Controller{
     
     public function guardarInsumo() {
         $datos['nombreInsumo'] = $_POST['nombreInsumo'];
+        $datos['stock'] = $_POST['stock'];
         $datos['descripcion'] = $_POST['descripcion'];        
-        $statement = $this->model->buscarInsumo($datos['nombreInsumo']);        
+        $statement = $this->model->buscarInsumo($datos['nombreInsumo'],$datos['descripcion']);
         if (empty($statement)) {
             $this->model->insert($datos); 
             return $this->vistaAdministracionInsumos();
@@ -52,69 +53,51 @@ class InsumosController extends Controller{
         return $this->vistaAdministracionInsumos();
     }
 
-/*    
-  public function vistamodificarUsuario(){
-    return view('administracionUsuario.modificar');
-}
-    public function vistaeliminarUsuario(){
-    return view('administracionUsuario.eliminar');
-}
-    public function vistaAdministracionRol(){
-    return view('administracionRol');
-    
-}
-    public function vistaAltaRol(){
-          return view('administracionRol.alta');
-    }
-    public function vistaModificarRol(){
-          return view('administracionRol.modificar');
-    }
-    public function vistaEliminarRol(){
-          return view('administracionRol.eliminar');
-    }
-    public function vistaAdministracionPermisos(){
-           return view('administracionPermisos');
-    }
-     public function vistaAsignarPermiso(){
-          return view('administracionPermisos.asignar');
-    }
-    
-     public function vistaEliminarPermiso(){
-          return view('administracionPermisos.eliminar');
-    }
-    public function vistaAdministracionPersona(){
-    return view('administracionPersona');
-    
-}
-public function vistaAltaPersona(){
-    return view('administracionPersona.alta');
-}
-    
-  public function vistamodificarPersona(){
-    return view('administracionPersona.modificar');
-}
-    public function vistaeliminarPersona(){
-    return view('administracionPersona.eliminar');
-}
-    
-    
-    
-    public function validarUsuario(){
-       $datos['nombre']=$_POST['nombre'];
-       $datos['password']=$_POST['password'];
-       
-        $statement= $this->model->buscarUsuario($datos['nombre']);      
-    if(empty($statement)){
-        $this->saveUsuario($datos);
-        return view('administracionUsuario.alta');
-    }else{
-        echo 'ya hay uno';
-        return view('administracionUsuario.alta');
-    }       
+
+    public function verInsumosDisponibles(){
+        $insumosDisponibles = $this->model->verInsumosDisponibles();
+        $datos['idPedido'] = $_GET['idPedido'];
+        $datos['idTarea'] = $_GET['idTarea'];
+        $datos['insumosDisponibles'] = $insumosDisponibles;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/insumos/tareasInsumosDisponibles',compact('datos'));
     }
 
- public function saveUsuario($datos){
-        $this->model->insert($datos);            
- }
- */   
+    public function asignarInsumos(){
+        foreach ($_POST as $datos => $datos2) {
+            if (explode("_",$datos)[1]=='cantidad') {
+                $itemInsumo['cantidad']=$datos2;
+                $this->model->insertItem($itemInsumo);
+                $this->model->registrarMovimiento($idInsumoFinal,$datos2,1); //el 1 para restar
+                $this->model->updateStock($idInsumoFinal,$datos2,1);
+            } else {
+                $idPedidoFinal = explode('_',$datos)[1];
+                $idTareaFinal = explode('_',$datos2)[0];
+                $idInsumoFinal = explode('_',$datos2)[1];
+                $itemInsumo = [
+                    'idPedido' => $idPedidoFinal,
+                    'idTarea' => $idTareaFinal,
+                    'idInsumo' => $idInsumoFinal
+                ];
+            }
+        }
+        redirect("fichaTarea?idPedido=".$idPedidoFinal."&idTarea=".$idTareaFinal);
+    }
+
+    public function verHistorial(){
+        $historial = $this->model->verHistorial($_GET['idInsumo']);
+        $datos['historial'] = $historial;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/insumos/insumoVerHistorial',compact('datos'));
+    }
+
+    public function sumarStock(){
+        $this->model->registrarMovimiento($_POST['idInsumo'],$_POST['cantidad'],0); //el 1 para restar
+        $this->model->updateStock($_POST['idInsumo'],$_POST['cantidad'],0);
+        if (empty($_GET)) {
+            return $this->vistaAdministracionInsumos();
+        } else {
+            # code...
+        }
+    }
 }

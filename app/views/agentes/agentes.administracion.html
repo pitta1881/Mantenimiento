@@ -14,19 +14,8 @@
 {% block main %}
 <div class="general">
     <h1>Listado de Agentes</h1>
-    <form class="buscador" action="/pedido/buscar" method="POST">
-        <input class="crear" type="button" value="CARGAR NUEVO AGENTE" onclick="mostrarFormulario()">
-        <select name="filtro">
-            <option value="id">Nº PEDIDO</option>
-            <option value="sector">SECTOR</option>
-            <option value="fechaInicio">FECHA INICIO</option>
-            <option value="estado">ESTADO</option>
-            <option value="prioridad">PRIORIDAD</option>
-        </select>
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
-
+    <a href="#" onclick="mostrarFormulario()" id="btnCrearAgente"><img class="iconos" src="/public/res/add.svg"
+            title="Crear Agente"></a>
     <script>
         function mostrarFormulario() {
             var formularioAgente = document.getElementById('formularioAgente');
@@ -85,19 +74,20 @@
             <td>OCUPADO</td>
             {% endif %}
             <td>
-                <a href="/fichaPersona?idAgente={{ agente.idAgente }}"><input type="button" value="Ver Mas"></a>
+                <a href="/fichaPersona?idAgente={{ agente.idAgente }}" title="Ver Mas">
+                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
+                </a>
                 <a href='/agente/modificar/seleccionado?idAgente={{ agente.idAgente }}'>
-                    <input type="button" value="MODIFICAR">
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
                 {% if agente.usado == false %}
-                <form action="/agente/eliminar" method="post">
+                <form action="/agente/eliminar" method="post" style="display: inline-block"
+                    id="formEliminarAgente{{ agente.idAgente }}">
                     <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
-                    <input type="button" value="Eliminar" id="btnEliminar{{ agente.idAgente }}"
-                        onclick="document.getElementById('eliminarSi{{ agente.idAgente }}').style.display='inline-block';document.getElementById('eliminarNo{{ agente.idAgente }}').style.display='inline-block';document.getElementById('btnEliminar{{ agente.idAgente }}').style.display='none'">
-                    <input type="submit" value="Si" id="eliminarSi{{ agente.idAgente }}" style="display: none">
-                    <input type="reset" value="No" id="eliminarNo{{ agente.idAgente }}" style="display: none"
-                        onclick="document.getElementById('eliminarSi{{ agente.idAgente }}').style.display='none';document.getElementById('eliminarNo{{ agente.idAgente }}').style.display='none';document.getElementById('btnEliminar{{ agente.idAgente }}').style.display='inline-block'">
                 </form>
+                <a
+                    onclick="alertify.confirm('Eliminar Agente','¿Esta seguro?',function(){document.getElementById('formEliminarAgente{{ agente.idAgente }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/delTarea.svg" title="Eliminar Agente"></a>
                 {% endif %}
             </td>
         </tr>

@@ -24,18 +24,8 @@
             }
         }
     </script>
-    <form class="buscador" action="/pedido/buscar" method="POST">
-        <input class="crear" type="button" value="CARGAR NUEVA ESPECIALIZACION" onclick="mostrarFormulario()">
-        <select name="filtro">
-            <option value="id">Nº PEDIDO</option>
-            <option value="sector">SECTOR</option>
-            <option value="fechaInicio">FECHA INICIO</option>
-            <option value="estado">ESTADO</option>
-            <option value="prioridad">PRIORIDAD</option>
-        </select>
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
+    <a href="#" onclick="mostrarFormulario()" id="btnCrearEspecializacion"><img class="iconos" src="/public/res/add.svg"
+            title="Crear Especializacion"></a>
     <form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion" method="post"
         id="formularioEspecializacion" style="display: none">
         <fieldset class="basicosEspecializacion">
@@ -58,18 +48,15 @@
                     href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
-                <!-- {% if especializacion.usado == false %}
-                <form action="/especializacion/eliminar" method="post">
+                {% if especializacion.usado == false %}
+                <form action="/especializacion/eliminar" method="post" style="display: inline-block"
+                    id="formEliminarEspecializacion{{ especializacion.idEspecializacion }}">
                     <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
-                    <input type="button" value="Eliminar" id="btnEliminar{{ especializacion.idEspecializacion }}"
-                        onclick="document.getElementById('eliminarSi{{ especializacion.idEspecializacion }}').style.display='inline-block';document.getElementById('eliminarNo{{ especializacion.idEspecializacion }}').style.display='inline-block';document.getElementById('btnEliminar{{ especializacion.idEspecializacion }}').style.display='none'">
-                    <input type="submit" value="Si" id="eliminarSi{{ especializacion.idEspecializacion }}"
-                        style="display: none">
-                    <input type="reset" value="No" id="eliminarNo{{ especializacion.idEspecializacion }}"
-                        style="display: none"
-                        onclick="document.getElementById('eliminarSi{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('eliminarNo{{ especializacion.idEspecializacion }}').style.display='none';document.getElementById('btnEliminar{{ especializacion.idEspecializacion }}').style.display='inline-block'">
                 </form>
-                {% endif %}-->
+                <a
+                    onclick="alertify.confirm('Eliminar Especializacion','¿Esta seguro?',function(){document.getElementById('formEliminarEspecializacion{{ especializacion.idEspecializacion }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/delTarea.svg" title="Eliminar Especializacion"></a>
+                {% endif %}
             </td>
         </tr>
         {% else %}

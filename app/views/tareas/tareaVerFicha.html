@@ -57,7 +57,7 @@
             </select>
             <input type="button" value="Cambiar" id="cambiarEstadoSi" onclick="alertify.prompt( 'Cambiar Estado', 'Descripcion', ''
                 , function(evt, value) { var descripcion = document.createElement('input'); descripcion.required = 'required'; descripcion.type = 'text'; descripcion.name = 'descripcion'; descripcion.value = value; document.getElementById('cambiarEstadoTarea').appendChild(descripcion); document.getElementById('cambiarEstadoTarea').submit(); }
-                , function() {});">
+                , function() {}).set('type','text');">
         </form>
 
     </ul>
@@ -76,22 +76,23 @@
         <dt>Prioridad:</dt>
         <dd>{{ datos.miTarea.prioridad }}</dd>
     </dl>
-    <h2>PERTENECE A LA ORDEN DE TRABAJO:</h2>
+    <!--TABLA OT-->
+    <h2 style="display: inline-block">ORDEN DE TRABAJO:</h2>
     <table>
-        <th>Nº OT</th>
-        <th>Fecha de Inicio</th>
-        <th>Fecha de Fin</th>
-        <th>Estado</th>
-        <th>Accion</th>
         {% if datos.miTarea.estado == "Iniciado" %}
         {% if datos.miTarea.agentes is empty %}
-        <a href="#"><input type="button" value="Crear una OT"
-                onclick="alertify.alert('Error','Primero debe asignar agentes')" ;></a>
+        <a href="#" onclick="alertify.alert('Error','Primero debe asignar agentes')"><img class="iconos"
+                src="/public/res/add.svg" title="Crear OT"></a>
         {% else %}
         <a href="/ot/crear"><input type="button" value="Crear una OT"></a>
         {% endif %}
         <h2 class='error'>No está asignado a ninguna OT</h2>
         {% else %}
+        <th>Nº OT</th>
+        <th>Fecha de Inicio</th>
+        <th>Fecha de Fin</th>
+        <th>Estado</th>
+        <th>Accion</th>
         <tr>
             <td> <a href="/fichaOT?idOT={{ datos.miTarea.miOT.idOT }}" title="Ver Mas">OT
                     {{ datos.miTarea.miOT.idOT }}</a>
@@ -104,29 +105,14 @@
         </tr>
         {% endif %}
     </table>
-    <h2>AGENTES</h2>
-
-
-
-    <form class="buscador" action="/pedido/buscar" method="POST">
-
-        {% if  datos.miTarea.estado != "Finalizado" %}
-        <a href="/tarea/agentes/asignar?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}">
-            <img class="crear" src="/public/res/add.svg">
-        </a>
-        {% endif %}
-        <select name="filtro">
-            <option value="id">Nº PEDIDO</option>
-            <option value="sector">SECTOR</option>
-            <option value="fechaInicio">FECHA INICIO</option>
-            <option value="estado">ESTADO</option>
-            <option value="prioridad">PRIORIDAD</option>
-        </select>
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
-
-
+    <!--TABLA AGENTES-->
+    <h2 style="display: inline-block">AGENTES</h2>
+    {% if datos.miTarea.estado != "Finalizado" %}
+    <a href="/tarea/agentes/asignar?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}">
+        <img class="iconos" src="/public/res/addAgente.svg" title="Asignar Agentes">
+    </a>
+    {% endif %}
+    {% if datos.miTarea.agentes is not empty %}
     <table id="miTabla">
         <th onclick="sortTable(0,'miTabla')">Nº Agente</th>
         <th onclick="sortTable(1,'miTabla')">Nombre</th>
@@ -155,9 +141,56 @@
                 {% endif %}
             </td>
         </tr>
-        {% else %}
-        <h2 class='error'>No hay Agentes asignados aún</h2>
         {% endfor %}
     </table>
+    {% else %}
+    <h2 class='error'>No hay Agentes asignados</h2>
+    {% endif %}
+    <!--TABLA INSUMOS-->
+    <h2 style="display: inline-block">INSUMOS</h2>
+    {% if datos.miTarea.estado != "Finalizado" %}
+    <a href="/tarea/insumos/asignar?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}">
+        <img class="iconos" src="/public/res/insumos.svg" title="Asignar Insumos"></a>
+    {% endif %}
+    {% if datos.miTarea.insumos is not empty %}
+    <table id="miTabla2">
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+        <th onclick="sortTable(3,'miTabla')">Cantidad Utilizada</th>
+        <th onclick="sortTable(4,'miTabla')">Accion</th>
+        {% for insumo in datos.miTarea.insumos %}
+        <tr>
+            <td>{{ insumo.nombreInsumo }}</td>
+            <td>{{ insumo.descripcion }}</td>
+            <td>{{ insumo.cantidad }}</td>
+            <td>
+                <!--AUN NO FUNCIONA-->
+                {% if  datos.miTarea.estado != "Finalizado" %}
+                <form action="#" method="post" hidden
+                    id="formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}">
+                    <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
+                    <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+                    <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
+                    <input type="number" name="cantidad" hidden>
+                </form>
+                <img class="iconos" src="/public/res/sumInsumo.svg" title="Sumar Stock"
+                    onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar','',function(evt,value){document.getElementsByName('cantidad')[0].value = value ;document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}').submit()},function(){}).set('type', 'number');">
+                <form action="#" method="post" hidden
+                    id="formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}">
+                    <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
+                    <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+                    <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
+                    <input type="number" name="cantidad" hidden>
+                </form>
+                <img class="iconos" src="/public/res/minusInsumo.svg" title="Restar Stock"
+                    onclick="alertify.prompt('Restar Stock','Seleccione la cantidad a restar','',function(evt,value){document.getElementsByName('cantidad')[0].value = value ;document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}').submit()},function(){}).set('type', 'number');">
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <h2 class='error'>No hay Insumos asignados</h2>
+    {% endif %}
 </div>
 {% endblock %}

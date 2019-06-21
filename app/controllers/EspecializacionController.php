@@ -16,7 +16,6 @@ class EspecializacionController extends Controller
 
     public function vistaAdministracionEspecializacion(){
         $todasEspecializaciones = $this->model->get();   
-
         $datos['todasEspecializaciones'] = $todasEspecializaciones;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/especializacion/especializacion.administracion', compact('datos'));

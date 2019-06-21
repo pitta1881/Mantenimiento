@@ -26,6 +26,8 @@
     $router->post('tarea/agentes/desasignar', 'TareaController@desasignarAgente');
     $router->post('tarea/cambiarEstado/seleccionado', 'TareaController@cambiarEstado');
     $router->get('tarea/verHistorial', 'TareaController@verHistorial');
+    $router->get('tarea/insumos/asignar', 'InsumosController@verInsumosDisponibles');
+    $router->post('tarea/asignarInsumos/seleccionados','InsumosController@asignarInsumos');
 
 //rutas OT
     $router->get('OT/verTodos', 'OTController@index');
@@ -88,6 +90,8 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
     $router->get('insumo/modificar/seleccionado', 'InsumosController@vistaModificar');
     $router->post('insumos/administracionInsumos/modificarInsumo', 'InsumosController@update');
     $router->post('insumo/eliminar', 'InsumosController@delete');
+    $router->get('insumo/verHistorial', 'InsumosController@verHistorial');
+    $router->post('insumo/sumarStock', 'InsumosController@sumarStock');
 
 
 

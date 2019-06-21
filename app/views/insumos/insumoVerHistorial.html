@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tareas{% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="general">
+    <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+    {% if datos.historial is empty %}
+    <h2 class="error">ESTE INSUMO NO TIENE MOVIMIENTOS</h2>
+    {% else %}
+    <h1>HISTORIAL DE MOVIMIENTOS DE {{ datos.historial.0.nombreDescripcion }}</h1>
+    <table id=" miTabla">
+        <th onclick="sortTable(0,'miTabla')">Fecha</th>
+        <th onclick="sortTable(0,'miTabla')">Tipo Movimiento</th>
+        <th onclick="sortTable(0,'miTabla')">Cantidad</th>
+        <th onclick="sortTable(0,'miTabla')">Antes</th>
+        <th onclick="sortTable(0,'miTabla')">Despues</th>
+        {% for historia in datos.historial %}
+        {% set cantidad = historia.oldStock - historia.newStock %}
+        <tr>
+            <td>{{ historia.fechaMovimiento }}</td>
+            <td>{{ historia.tipoMovimiento }}</td>
+            <td>{{ cantidad }}</td>
+            <td>{{ historia.oldStock }}</td>
+            <td>{{ historia.newStock }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

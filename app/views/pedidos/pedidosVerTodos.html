@@ -4,7 +4,7 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
     <h1>Listado de Pedidos</h1>
-
+    <a href="#" onclick="mostrarFormulario()"><img class="iconos" src="/public/res/nuevo.svg" title="Crear"></a>
     <script>
         function mostrarFormulario() {
             var formularioPedido = document.getElementById('formularioPedido');
@@ -57,7 +57,6 @@
     </form>
 
     <form class="buscador" action="/pedido/buscar" method="POST">
-        <img class="crear" src="/public/res/nuevo.svg" title="Crear" onclick="mostrarFormulario()">
 
         <select name="filtro">
             <option value="id">Nº PEDIDO</option>
