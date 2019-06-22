@@ -1,65 +1,90 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %}
-{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
-{% endblock %} {% block head %} {{ parent() }}
+{% extends "base.html" %}
+
+{% block title %} Gestion de Permisos {% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
+
 {% block main %}
-<h1>Permisos</h1>
-<input type="button" value="Asignar Permisos" onclick="mostrarFormulario()">
-<script>
-    function mostrarFormulario() {
-        var formularioPermisos = document.getElementById('formularioPermisos');
-        if (formularioPermisos.style.display == "block") {
-            formularioPermisos.style.display = "none";
-        } else {
-            formularioPermisos.style.display = "block"
+<div class="general">
+    <h1>Listado de Permisos</h1>
+    <script>
+        function mostrarFormulario() {
+            var formularioEspecializacion = document.getElementById('formularioEspecializacion');
+            if (formularioEspecializacion.style.display == "block") {
+                formularioEspecializacion.style.display = "none";
+            } else {
+                formularioEspecializacion.style.display = "block"
+            }
         }
-    }
-</script>
-<form action="/usuario/asignarPermiso" method="POST" id="formularioPermisos"
-    style="display: none; border: 1px solid black">
-    <select name="idRol" id="nombreRol">
-        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for rol in datos.roles %}
-        <option value={{ rol.idRol }}>{{ rol.nombreRol }}</option>
-        {% endfor %}}
-    </select>
-    <select multiple size="5" name="idPermiso[]" id="nombrePermiso">
-        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for permiso in datos.permisos %}
-        <option value="{{ permiso.idPermiso }}">{{ permiso.nombrePermiso }}</option>
+    </script>
+    
+    <form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion" method="post"
+        id="formularioEspecializacion" style="display: none">
+        <fieldset class="basicosEspecializacion">
+            <legend> Alta de Permisos</legend>
+            <label for="nombre">Nombre del Permisos</label>
+            <input type="text" name="nombre" autofocus>
+        </fieldset>
+        <input type="submit">
+    </form>
+
+    <form class="buscador" action="/rol/buscar" method="POST">
+        <a href="#" onclick="mostrarFormulario()" id="btnCrearEspecializacion"><img class="crear" src="/public/res/nuevo.svg"
+            title="Crear Permiso"></a>
+        <select name="filtro">
+            <option value="sector">Nombre</option>
+        </select>
+        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+        <input type="submit" value="Buscar">
+    </form>
+
+    
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">ID Permisos</th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th onclick="sortTable(2,'miTabla')">Accion</th>
+        {% for permiso in datos.todosPermisos %}
+        <tr>
+            <td>{{ permiso.idPermiso }}</td>
+            <td>{{ permiso.nombrePermiso }}</td>
+            <td>
+                <a
+                    href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
+                </a>
+                <form action="/especializacion/eliminar" method="post" style="display: inline-block"
+                    id="formEliminarEspecializacion{{ especializacion.idEspecializacion }}">
+                    <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
+                </form>
+                <a
+                    onclick="alertify.confirm('Eliminar Especializacion','¿Esta seguro?',function(){document.getElementById('formEliminarEspecializacion{{ especializacion.idEspecializacion }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/del.svg" title="Eliminar Especializacion"></a>
+            </td>
+        </tr>
+        {% else %}
+        <h2 class="error">No hay ningun Permiso cargado</h2>
         {% endfor %}
-    </select>
-    <br>
-    <br>
-    <input type="submit" value="Agregar">
-    <input type="reset">
-</form>
-
-
-<!-- todavia no busca , agregar ruta al action-->
-<h3>Permisos por Rol</h3>
-<form action="/usuario/AdministracionPermisos" method="GET">
-    <select name="rol">
-        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for rol in datos.roles %}
-        <option value={{ rol.idRol }}_{{ rol.nombreRol }}>{{ rol.nombreRol }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit" value="Buscar">
-</form>
-
-<table id="miTabla">
-    <th onclick="sortTable(0,'miTabla')">Permisos del Rol {{ datos.permisosxrol.nombreRol }}</th>
-    {% set i = 0 %}
-    {% for permiso in datos.permisosxrol %}
-    <tr>
-        <td>{{ permiso.nombrePermiso }}</td>
-    </tr>
-    {% set i = i + 1 %}
-    {% endfor %}
-    {% if i == 1 %}
-    <h2 class="error">El Rol {{ datos.permisosxrol.nombreRol }} no tiene ningun Permiso Asignado</h2>
-    {% endif %}
-
-</table>
+    </table>
+    <section class="paginacion">
+        <ul>
+            {% if datos.totalPaginas is empty  %}
+            <li><a href="/permisos/AdministracionPermisos?page={{ 1 }}"> 1 </a></li>
+            {% endif %}
+            {% if datos.totalPaginas|e  %}
+            <li><a href="/permisos/AdministracionPermisos?page={{ 1 }}"> &lt; </a></li>
+            {% for i in 1..datos.totalPaginas %}
+            <li><a href="/permisos/AdministracionPermisos?page={{ i }}"> {{ i }} </a></li>
+            {% endfor %}
+            <li><a href="/permisos/AdministracionPermisos?page={{ datos.totalPaginas }}"> &gt; </a></li>
+            {% endif %}
+        </ul>
+    </section>
+</div>
 {% endblock %}

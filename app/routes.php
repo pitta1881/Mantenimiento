@@ -58,9 +58,9 @@
 
 //rutas permisos
     //rutas permisos
-    $router->get('usuario/AdministracionPermisos','UsuariosController@vistaAdministracionPermisos');
-    $router->post('usuario/asignarPermiso','UsuariosController@guardarPermisos');
-    $router->get('usuario/eliminarPermiso','UsuariosController@vistaEliminarPermiso');
+    $router->get('permisos/AdministracionPermisos','PermisosControler@index');
+    $router->post('permisos/asignarPermiso','PermisosControler@guardarPermisos');
+    $router->get('permisos/eliminarPermiso','PermisosControler@vistaEliminarPermiso');
 
 
 //rutas personas
@@ -114,6 +114,8 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
     $router->post('eventos/administracionEventos/modificarEvento', 'EventosController@update');
     $router->post('eventos/eliminar', 'EventosController@delete');
 
+// rutas informes
+    $router->get('informes/administracionInforme', 'informesController@vistaAdministracionInformes');
 
 
 
