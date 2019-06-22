@@ -70,7 +70,7 @@ class Especializacion extends Model
       $todasEspecializaciones = json_decode(json_encode($especializaciones), True);
       foreach ($todasEspecializaciones as $indice => $datos) {
         $yaEstaUsado = [];
-        $yaEstaUsado = $this->db->getFromTareaAgenteConIdEspecializacion($this->tableTarea,$this->tableAgentes,$todasEspecializaciones[$indice]['idEspecializacion']);
+        //$yaEstaUsado = $this->db->getFromTareaAgenteConIdEspecializacion($this->tableTarea,$this->tableAgentes,$todasEspecializaciones[$indice]['idEspecializacion']);
         if(empty($yaEstaUsado)){
             $todasEspecializaciones[$indice]['usado'] = false;
         } else{

@@ -120,7 +120,7 @@ class OrdenDeTrabajo extends Model
       }
 
   public function getSize(){
-      $num_filas= $this->db->getSize($this->table);
+      $num_filas= $this->db->getSize($this->tableOT);
       $total_paginas= ceil($num_filas/$this->size_pagina);
       return $total_paginas;
   }    
@@ -130,7 +130,7 @@ class OrdenDeTrabajo extends Model
       $empezar_desde=($pagina-1)*$this->size_pagina;
       $num_filas= $this->getSize();
       $total_paginas= ceil($num_filas/$this->size_pagina);
-      $ot = $this->db->getAllLimit($this->table,$empezar_desde,$this->size_pagina);
+      $ot = $this->db->getAllLimit($this->tableOT,$empezar_desde,$this->size_pagina);
       $todasOT = json_decode(json_encode($ot), True);
       foreach ($todasOT as $indice => $datos) {
           $todasOT[$indice]['cantTareas'] = $this->getCantTareasAsignadas($datos['idOT']);

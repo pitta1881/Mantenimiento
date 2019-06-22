@@ -19,10 +19,10 @@ class PersonaController extends Controller
         }else{
             $pagina=1;
         }
-        $todasPersonas = $this->model->getPaginacion($pagina); 
+        $todasPersonas = $this->model->get(); 
         $datos['todasPersonas'] = $todasPersonas;
-        $totalPaginas=$this->model->getsize();
-        $datos["totalPaginas"] =   $totalPaginas;
+        //$totalPaginas=$this->model->getsize();
+        //$datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/personas/personas.administracion', compact('datos'));
     }
