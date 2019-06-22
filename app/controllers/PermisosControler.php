@@ -5,8 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Permisos;
 
-class PermisoControler extends Controller
-{
+class PermisosControler extends Controller{
     public function __construct(){
         $this->model = new Permisos();
     }
@@ -18,11 +17,11 @@ class PermisoControler extends Controller
         }else{
             $pagina=1;
         }
-        $todosPedidos = $this->model->getPaginacion($pagina); 
-        $datos['todosPedidos'] = $todosPedidos;
+        $todosPermisos= $this->model->getPaginacion($pagina); 
+        $datos['todosPermisos'] = $todosPermisos;
         $totalPaginas=$this->model->getsize();
         $datos["totalPaginas"] =   $totalPaginas;
-        return view('verTodosPedidos', compact('todosPedidos'));
+        return view('verTodosPedidos', compact('datos'));
     }
 
     /*muestra un solo pedido especifico ingresado por GET*/

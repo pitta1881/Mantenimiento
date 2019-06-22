@@ -1,65 +1,79 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %}
-{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
-{% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
+{% extends "base.html" %}
+
+{% block title %} Gestion de Permisos {% endblock %}
+
+{% block header %}
+{% set nombreUsuario = datos.userLogueado %}
+{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% endblock %}
+
+
 {% block main %}
-<h1>Permisos</h1>
-<input type="button" value="Asignar Permisos" onclick="mostrarFormulario()">
-<script>
-    function mostrarFormulario() {
-        var formularioPermisos = document.getElementById('formularioPermisos');
-        if (formularioPermisos.style.display == "block") {
-            formularioPermisos.style.display = "none";
-        } else {
-            formularioPermisos.style.display = "block"
+<div class="general">
+    <h1>Listado de Permisos</h1>
+    <a href="#" onclick="mostrarFormulario()" id="btnCrearPersona"><img class="iconos" src="/public/res/add.svg"
+            title="Crear Persona"></a>
+    <script>
+        function mostrarFormulario() {
+            var formularioPersona = document.getElementById('formularioPersona');
+            if (formularioPersona.style.display == "block") {
+                formularioPersona.style.display = "none";
+            } else {
+                formularioPersona.style.display = "block"
+            }
         }
-    }
-</script>
-<form action="/usuario/asignarPermiso" method="POST" id="formularioPermisos"
-    style="display: none; border: 1px solid black">
-    <select name="idRol" id="nombreRol">
-        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for rol in datos.roles %}
-        <option value={{ rol.idRol }}>{{ rol.nombreRol }}</option>
-        {% endfor %}}
-    </select>
-    <select multiple size="5" name="idPermiso[]" id="nombrePermiso">
-        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for permiso in datos.permisos %}
-        <option value="{{ permiso.idPermiso }}">{{ permiso.nombrePermiso }}</option>
-        {% endfor %}
-    </select>
-    <br>
-    <br>
-    <input type="submit" value="Agregar">
-    <input type="reset">
-</form>
+    </script>
+    <form action="/persona/altaPersona" method="post" id="formularioPersona" style="display: none">
+        <fieldset class="basicosPersona">
+            <legend> Alta de Persona</legend>
+            <label for="dni">DNI</label><span class="asterisco">*</span>
+            <label for="nombre">Nombre</label><span class="asterisco">*</span>
+        </fieldset>
+        <input type="submit">
+    </form>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">DNI </th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        {% for persona in datos.todasPersonas %}
+        <tr>
+            <td>{{ persona.dni }}</td>
+            <td>{{ persona.nombre }}</td>
+            <td>
+                <a href='/persona/modificarPersona/seleccionado?dni={{ persona.dni }}'>
 
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
+                </a>
+                {% if persona.usado == false %}
+                <form action="/persona/eliminar" method="post">
+                    <input type="text" name="dni" value="{{ persona.dni }}" hidden>
+                    <img class="iconos" src="/public/res/del.svg" id="btnEliminar{{ persona.dni }}"
+                        onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='inline-block';document.getElementById('eliminarNo{{ persona.dni }}').style.display='inline-block';document.getElementById('btnEliminar{{ persona.dni }}').style.display='none'">
+                    <input type="submit" value="Si" id="eliminarSi{{ persona.dni }}" style="display: none">
+                    <input type="reset" value="No" id="eliminarNo{{ persona.dni }}" style="display: none"
+                        onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='none';document.getElementById('eliminarNo{{ persona.dni }}').style.display='none';document.getElementById('btnEliminar{{ persona.dni }}').style.display='inline-block'">
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay Personas</h2> {% endfor %}
+    </table>
 
-<!-- todavia no busca , agregar ruta al action-->
-<h3>Permisos por Rol</h3>
-<form action="/usuario/AdministracionPermisos" method="GET">
-    <select name="rol">
-        <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-        {% for rol in datos.roles %}
-        <option value={{ rol.idRol }}_{{ rol.nombreRol }}>{{ rol.nombreRol }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit" value="Buscar">
-</form>
+    <section class="paginacion">
+        <ul>
 
-<table id="miTabla">
-    <th onclick="sortTable(0,'miTabla')">Permisos del Rol {{ datos.permisosxrol.nombreRol }}</th>
-    {% set i = 0 %}
-    {% for permiso in datos.permisosxrol %}
-    <tr>
-        <td>{{ permiso.nombrePermiso }}</td>
-    </tr>
-    {% set i = i + 1 %}
-    {% endfor %}
-    {% if i == 1 %}
-    <h2 class="error">El Rol {{ datos.permisosxrol.nombreRol }} no tiene ningun Permiso Asignado</h2>
-    {% endif %}
+            {% if datos.totalPaginas is empty  %}
+            <li><a href='/persona/AdministracionPersonas?page={{ 1 }}'> 1 </a></li>
+            {% endif %}
+            {% if datos.totalPaginas|e  %}
+            <li><a href='/persona/AdministracionPersonas?page={{ 1 }}'> &lt; </a></li>
+            {% for i in 1..datos.totalPaginas %}
+            <li><a href='/persona/AdministracionPersonas?page={{ i }}'> {{ i }} </a></li>
+            {% endfor %}
+            <li><a href='/persona/AdministracionPersonas?page={{ datos.totalPaginas }}'> &gt; </a></li>
+            {% endif %}
 
-</table>
+        </ul>
+    </section>
+</div>
 {% endblock %}
