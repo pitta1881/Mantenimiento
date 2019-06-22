@@ -26,11 +26,10 @@
         <th onclick="sortTable(0,'miTabla')">Antes</th>
         <th onclick="sortTable(0,'miTabla')">Despues</th>
         {% for historia in datos.historial %}
-        {% set cantidad = historia.oldStock - historia.newStock %}
         <tr>
             <td>{{ historia.fechaMovimiento }}</td>
             <td>{{ historia.tipoMovimiento }}</td>
-            <td>{{ cantidad }}</td>
+            <td>{{ historia.cantidad }}</td>
             <td>{{ historia.oldStock }}</td>
             <td>{{ historia.newStock }}</td>
         </tr>

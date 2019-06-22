@@ -164,6 +164,9 @@
             <td>{{ insumo.descripcion }}</td>
             <td>{{ insumo.cantidad }}</td>
             <td>
+                <!--VER HISTORIAL-->
+                <a href="/insumo/verHistorial?idInsumo={{ insumo.idInsumo }}"><img class="iconosTitulo"
+                        src="/public/res/historyEstado.svg" title="Ver Historial"></a>
                 <!--AUN NO FUNCIONA-->
                 {% if  datos.miTarea.estado != "Finalizado" %}
                 <form action="#" method="post" hidden
@@ -173,8 +176,13 @@
                     <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
                     <input type="number" name="cantidad" hidden>
                 </form>
-                <img class="iconos" src="/public/res/sumInsumo.svg" title="Sumar Stock"
-                    onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar','',function(evt,value){document.getElementsByName('cantidad')[0].value = value ;document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}').submit()},function(){}).set('type', 'number');">
+                <img class="iconos" src="/public/res/sumInsumo.svg" title="Sumar Stock" onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar','',
+                    function(evt,value){ 
+                        document.getElementsByName('cantidad')[0].value = value ;
+                        document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}').submit()
+                    },
+                    function(){}
+                    ).setting({'min':0,'type':'number','value':0});">
                 <form action="#" method="post" hidden
                     id="formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}">
                     <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
@@ -183,7 +191,7 @@
                     <input type="number" name="cantidad" hidden>
                 </form>
                 <img class="iconos" src="/public/res/minusInsumo.svg" title="Restar Stock"
-                    onclick="alertify.prompt('Restar Stock','Seleccione la cantidad a restar','',function(evt,value){document.getElementsByName('cantidad')[0].value = value ;document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}').submit()},function(){}).set('type', 'number');">
+                    onclick="alertify.prompt('Restar Stock','Seleccione la cantidad a restar','',function(evt,value){document.getElementsByName('cantidad')[0].value = value ;document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}').submit()},function(){}).set({'type':'number','min':0});">
                 {% endif %}
             </td>
         </tr>

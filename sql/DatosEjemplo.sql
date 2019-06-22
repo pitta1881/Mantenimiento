@@ -19,8 +19,6 @@ INSERT INTO `insumo` (`nombreInsumo`, `descripcion`, `stock`) VALUES
 ('codo', '24cm',50),
 ('codo', 'en T 12cm',20),
 ('codo', 'en L 5cm',44),
-('serrucho', 'para madera',2),
-('sopapa', '',1),
 ('destornillador', 'cruz',5),
 ('destornillador', 'liso',5);
 

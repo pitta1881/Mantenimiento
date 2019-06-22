@@ -898,6 +898,7 @@
                 if (obj.hasOwnProperty(key)) {
                     result.found = true;
                     result.value = obj[key];
+
                 } else {
                     result.found = false;
                     result.value = undefined;
@@ -2295,6 +2296,8 @@
             /**
              * Gets or Sets dialog settings/options 
              *
+             * @param {String|Object} key A sts/options 
+             *
              * @param {String|Object} key A string specifying a propery name or a collection of key/value pairs.
              * @param {Object} value Optional, the value associated with the key (in case it was a string).
              *
@@ -3539,6 +3542,8 @@
                 onok: undefined,
                 oncancel: undefined,
                 value: '',
+                min: undefined,
+                max: undefined,
                 type: 'text',
                 reverseButtons: undefined,
             },
@@ -3549,6 +3554,12 @@
                         break;
                     case 'value':
                         input.value = newValue;
+                        break;
+                    case 'min':
+                        input.min = newValue;
+                        break;
+                    case 'max':
+                        input.max = newValue;
                         break;
                     case 'type':
                         switch (newValue) {

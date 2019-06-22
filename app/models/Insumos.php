@@ -126,9 +126,16 @@ class Insumos extends Model
             } else {
                 $misHistorias[$i]['tipoMovimiento'] = 'Resto Stock';
             }
+            $misHistorias[$i]['cantidad'] = abs($misHistorias[$i]['oldStock'] - $misHistorias[$i]['newStock']);
         }
         return $misHistorias;
     }
+
+    public function verInsumosUsados($idPedido,$idTarea){
+        $insumosUsados = $this->db->selectInsumosUsados($this->tableItemInsumo, $this->table,$idPedido,$idTarea);
+        $misInsumos = json_decode(json_encode($insumosUsados), True);
+        return $misInsumos;
+        }
 
     
 }

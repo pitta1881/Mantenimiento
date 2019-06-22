@@ -873,6 +873,14 @@ public function updateEvento($table, $parameters, $idEvento){
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_NUM);
     }
+
+    public function selectInsumosUsados($tableItemInsumos, $tableInsumo, $idPedido, $idTarea){
+        $statement = $this->pdo->prepare(
+            "SELECT T1.idInsumo FROM $tableItemInsumos T1 INNER JOIN $tableInsumo T2 ON T1.idInsumo = T2.idInsumo WHERE idPedido=$idPedido AND idTarea=$idTarea"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+   }
 }
 
 

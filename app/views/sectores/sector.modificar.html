@@ -23,8 +23,8 @@
             <input type="text" name="idSector" value="{{ datos.sector.idSector }}" readonly class="inputDisabled">
             <label for="nombreSector">Nombre del Sector</label>
             <input type="text" name="nombreSector" value="{{ datos.sector.nombreSector }}">
-            <label for="tipoSector">Tipo</label><span class="asterisco">*</span>
-            <select name="tipoSector">
+            <label for="tipo">Tipo</label><span class="asterisco">*</span>
+            <select name="tipo">
                 {% for tipoSector in datos.tipoSectores %}
                 {% if tipoSector == datos.sector.tipo %}
                 <option value="{{ tipoSector }}" selected>{{ tipoSector }}</option>

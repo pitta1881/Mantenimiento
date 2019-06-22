@@ -67,14 +67,13 @@
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
                 {% if persona.usado == false %}
-                <form action="/persona/eliminar" method="post">
+                <form action="/persona/eliminar" method="post" style="display: inline-block"
+                    id="formEliminarPersona{{ persona.dni }}">
                     <input type="text" name="dni" value="{{ persona.dni }}" hidden>
-                    <img class="iconos" src="/public/res/del.svg" id="btnEliminar{{ persona.dni }}"
-                        onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='inline-block';document.getElementById('eliminarNo{{ persona.dni }}').style.display='inline-block';document.getElementById('btnEliminar{{ persona.dni }}').style.display='none'">
-                    <input type="submit" value="Si" id="eliminarSi{{ persona.dni }}" style="display: none">
-                    <input type="reset" value="No" id="eliminarNo{{ persona.dni }}" style="display: none"
-                        onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='none';document.getElementById('eliminarNo{{ persona.dni }}').style.display='none';document.getElementById('btnEliminar{{ persona.dni }}').style.display='inline-block'">
                 </form>
+                <a
+                    onclick="alertify.confirm('Eliminar Especializacion','¿Esta seguro?',function(){document.getElementById('formEliminarPersona{{ persona.dni }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/del.svg" title="Eliminar Especializacion"></a>
                 {% endif %}
             </td>
         </tr>

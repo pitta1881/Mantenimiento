@@ -52,12 +52,12 @@
             <td>{{ insumo.stock }}</td>
             <td>
                 <!--SUMAR INSUMOS-->
-                <form action="/insumo/sumarStock" method="post" hidden id="formSumar">
+                <form action="/insumo/sumarStock" method="post" hidden id="formSumar{{ insumo.idInsumo }}">
                     <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
-                    <input type="number" name="cantidad" hidden>
+                    <input type="number" name="cantidad_{{ insumo.idInsumo }}" hidden>
                 </form>
                 <img class="iconos" src="/public/res/add.svg" title="Sumar Stock"
-                    onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar','',function(evt,value){document.getElementsByName('cantidad')[0].value = value ;document.getElementById('formSumar').submit()},function(){}).set('type', 'number');">
+                    onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar','',function(evt,value){document.getElementsByName('cantidad_{{ insumo.idInsumo }}')[0].value = value ;document.getElementById('formSumar{{ insumo.idInsumo }}').submit()},function(){}).set({'type':'number','min':0,'value':0});">
                 <!--MODIFICAR INSUMO-->
                 <a href='/insumo/modificar/seleccionado?idInsumo={{ insumo.idInsumo }}'>
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">

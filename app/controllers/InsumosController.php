@@ -63,9 +63,11 @@ class InsumosController extends Controller{
 
     public function verInsumosDisponibles(){
         $insumosDisponibles = $this->model->verInsumosDisponibles();
+        $insumosUsados = $this->model->verInsumosUsados($_GET['idPedido'],$_GET['idTarea']);
         $datos['idPedido'] = $_GET['idPedido'];
         $datos['idTarea'] = $_GET['idTarea'];
         $datos['insumosDisponibles'] = $insumosDisponibles;
+        $datos['insumosUsados'] = $insumosUsados;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/insumos/tareasInsumosDisponibles',compact('datos'));
     }
@@ -99,8 +101,14 @@ class InsumosController extends Controller{
     }
 
     public function sumarStock(){
-        $this->model->registrarMovimiento($_POST['idInsumo'],$_POST['cantidad'],0); //el 1 para restar
-        $this->model->updateStock($_POST['idInsumo'],$_POST['cantidad'],0);
+        foreach ($_POST as $key => $value) {
+            $nombreKey = explode('_',$key)[0];
+            if ($nombreKey == 'cantidad') {
+                $cantidad = $value;
+            }
+        }        
+        $this->model->registrarMovimiento($_POST['idInsumo'],$cantidad,0); //el 1 para restar
+        $this->model->updateStock($_POST['idInsumo'],$cantidad,0);
         if (empty($_GET)) {
             return $this->vistaAdministracionInsumos();
         } else {

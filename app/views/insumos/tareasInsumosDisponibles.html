@@ -24,6 +24,13 @@
             <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
             {% set i = 1 %}
             {% for insumo in datos.insumosDisponibles %}
+            {% set usado = false %}
+            {% for insumoUsado in datos.insumosUsados %}
+            {% if insumo.idInsumo == insumoUsado.idInsumo  %}
+            {% set usado = true %}
+            {% endif %}
+            {% endfor %}
+            {% if usado == false %}
             <tr>
                 <td>{{ insumo.nombreInsumo }}</td>
                 <td>{{ insumo.descripcion }}</td>
@@ -40,6 +47,7 @@
                 </td>
                 {% set i = i + 1 %}
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
         {% if datos.insumosDisponibles|length == 0 %}
