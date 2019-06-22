@@ -5,10 +5,8 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Persona;
 
-class PersonaController extends Controller
-{
-   public function __construct()
-    {
+class PersonaController extends Controller{
+   public function __construct(){
       $this->model = new Persona();
       session_start();    
    }
@@ -19,7 +17,7 @@ class PersonaController extends Controller
         }else{
             $pagina=1;
         }
-        $todasPersonas = $this->model->get(); 
+        $todasPersonas = $this->model->getPaginacion($pagina); 
         $datos['todasPersonas'] = $todasPersonas;
         //$totalPaginas=$this->model->getsize();
         //$datos["totalPaginas"] =   $totalPaginas;

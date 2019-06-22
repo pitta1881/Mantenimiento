@@ -7,8 +7,7 @@ use App\Models\Eventos;
 
 class EventosController extends Controller{
    
-    public function __construct()
-    {
+    public function __construct(){
       $this->model = new Eventos();
       session_start();    
    }
@@ -20,7 +19,7 @@ class EventosController extends Controller{
             $pagina=1;
         }
         $todosEventos = $this->model->getPaginacion($pagina); 
-        $datos['todosPedidos'] = $todosEventos;
+        $datos['todosEventos'] = $todosEventos;
         $totalPaginas=$this->model->getsize();
         $datos["totalPaginas"] =   $totalPaginas;
         $datos["diaHoy"] = date("Y-m-d");
