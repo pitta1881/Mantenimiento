@@ -114,6 +114,8 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
     $router->post('eventos/administracionEventos/modificarEvento', 'EventosController@update');
     $router->post('eventos/eliminar', 'EventosController@delete');
 
+// rutas informes
+    $router->get('informes/administracionInforme', 'informesController@vistaAdministracionInformes');
 
 
 
