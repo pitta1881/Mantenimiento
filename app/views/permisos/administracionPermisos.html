@@ -7,72 +7,83 @@
 {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
 {% endblock %}
 
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
 <div class="general">
     <h1>Listado de Permisos</h1>
-    <a href="#" onclick="mostrarFormulario()" id="btnCrearPersona"><img class="iconos" src="/public/res/add.svg"
-            title="Crear Persona"></a>
     <script>
         function mostrarFormulario() {
-            var formularioPersona = document.getElementById('formularioPersona');
-            if (formularioPersona.style.display == "block") {
-                formularioPersona.style.display = "none";
+            var formularioEspecializacion = document.getElementById('formularioEspecializacion');
+            if (formularioEspecializacion.style.display == "block") {
+                formularioEspecializacion.style.display = "none";
             } else {
-                formularioPersona.style.display = "block"
+                formularioEspecializacion.style.display = "block"
             }
         }
     </script>
-    <form action="/persona/altaPersona" method="post" id="formularioPersona" style="display: none">
-        <fieldset class="basicosPersona">
-            <legend> Alta de Persona</legend>
-            <label for="dni">DNI</label><span class="asterisco">*</span>
-            <label for="nombre">Nombre</label><span class="asterisco">*</span>
+    
+    <form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion" method="post"
+        id="formularioEspecializacion" style="display: none">
+        <fieldset class="basicosEspecializacion">
+            <legend> Alta de Permisos</legend>
+            <label for="nombre">Nombre del Permisos</label>
+            <input type="text" name="nombre" autofocus>
         </fieldset>
         <input type="submit">
     </form>
-    <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">DNI </th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        {% for persona in datos.todasPersonas %}
-        <tr>
-            <td>{{ persona.dni }}</td>
-            <td>{{ persona.nombre }}</td>
-            <td>
-                <a href='/persona/modificarPersona/seleccionado?dni={{ persona.dni }}'>
 
+    <form class="buscador" action="/rol/buscar" method="POST">
+        <a href="#" onclick="mostrarFormulario()" id="btnCrearEspecializacion"><img class="crear" src="/public/res/nuevo.svg"
+            title="Crear Permiso"></a>
+        <select name="filtro">
+            <option value="sector">Nombre</option>
+        </select>
+        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
+        <input type="submit" value="Buscar">
+    </form>
+
+    
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">ID Permisos</th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th onclick="sortTable(2,'miTabla')">Accion</th>
+        {% for permiso in datos.todosPermisos %}
+        <tr>
+            <td>{{ permiso.idPermiso }}</td>
+            <td>{{ permiso.nombrePermiso }}</td>
+            <td>
+                <a
+                    href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
-                {% if persona.usado == false %}
-                <form action="/persona/eliminar" method="post">
-                    <input type="text" name="dni" value="{{ persona.dni }}" hidden>
-                    <img class="iconos" src="/public/res/del.svg" id="btnEliminar{{ persona.dni }}"
-                        onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='inline-block';document.getElementById('eliminarNo{{ persona.dni }}').style.display='inline-block';document.getElementById('btnEliminar{{ persona.dni }}').style.display='none'">
-                    <input type="submit" value="Si" id="eliminarSi{{ persona.dni }}" style="display: none">
-                    <input type="reset" value="No" id="eliminarNo{{ persona.dni }}" style="display: none"
-                        onclick="document.getElementById('eliminarSi{{ persona.dni }}').style.display='none';document.getElementById('eliminarNo{{ persona.dni }}').style.display='none';document.getElementById('btnEliminar{{ persona.dni }}').style.display='inline-block'">
+                <form action="/especializacion/eliminar" method="post" style="display: inline-block"
+                    id="formEliminarEspecializacion{{ especializacion.idEspecializacion }}">
+                    <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
                 </form>
-                {% endif %}
+                <a
+                    onclick="alertify.confirm('Eliminar Especializacion','¿Esta seguro?',function(){document.getElementById('formEliminarEspecializacion{{ especializacion.idEspecializacion }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/del.svg" title="Eliminar Especializacion"></a>
             </td>
         </tr>
         {% else %}
-        <h2 class='error'>No hay Personas</h2> {% endfor %}
+        <h2 class="error">No hay ningun Permiso cargado</h2>
+        {% endfor %}
     </table>
-
     <section class="paginacion">
         <ul>
-
             {% if datos.totalPaginas is empty  %}
-            <li><a href='/persona/AdministracionPersonas?page={{ 1 }}'> 1 </a></li>
+            <li><a href="/permisos/AdministracionPermisos?page={{ 1 }}"> 1 </a></li>
             {% endif %}
             {% if datos.totalPaginas|e  %}
-            <li><a href='/persona/AdministracionPersonas?page={{ 1 }}'> &lt; </a></li>
+            <li><a href="/permisos/AdministracionPermisos?page={{ 1 }}"> &lt; </a></li>
             {% for i in 1..datos.totalPaginas %}
-            <li><a href='/persona/AdministracionPersonas?page={{ i }}'> {{ i }} </a></li>
+            <li><a href="/permisos/AdministracionPermisos?page={{ i }}"> {{ i }} </a></li>
             {% endfor %}
-            <li><a href='/persona/AdministracionPersonas?page={{ datos.totalPaginas }}'> &gt; </a></li>
+            <li><a href="/permisos/AdministracionPermisos?page={{ datos.totalPaginas }}"> &gt; </a></li>
             {% endif %}
-
         </ul>
     </section>
 </div>
