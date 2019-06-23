@@ -19,4 +19,13 @@ class PermisosControler extends Controller{
         return view('/permisos/administracionPermisos', compact('datos'));
     }
 
+    public function guardarPermisos() {
+        $datos['nombre'] = $_POST['nombre'];
+        $statement = $this->model->buscarPermiso($datos['nombre']);        
+        if (empty($statement)) {
+            $this->model->insert($datos); 
+            return $this->index();
+        }
+    }
+
 }

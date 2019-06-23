@@ -14,4 +14,14 @@ class Permisos extends Model{
         return $todosPermisos;
     }
 
+    public function insert(array $datos){
+        $this->db->insert($this->table, $datos);
+      }
+
+    public function buscarPermiso($nombre){
+        //   comparo si existe el nombre de usuario 
+          return $this->db->comparaEspecializacion($this->table,$nombre);
+        }
+    
+
 }
