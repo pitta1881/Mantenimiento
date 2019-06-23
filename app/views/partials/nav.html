@@ -28,6 +28,7 @@
                                 title="Eventos">Eventos</a>
 
                     </li>
+                    {% if datos.rol == 0 %}
                     <li><a><img class="iconosTitulo" src="/public/res/isers.svg" title="Usuarios">Usuarios</a>
                         <ul class="submenu">
                             <li><a href="/usuarios/AdministracionUsuario">Usuarios</a>
@@ -43,6 +44,7 @@
                             </li>
                         </ul>
                     </li>
+                    {% endif %}
                     <li><a href="/agente/administracionAgentes"><img class="iconosTitulo"
                                 src="/public/res/addagente.svg" title="Agentes">Agentes</a>
 
@@ -55,8 +57,8 @@
                                 src="/public/res/sector.svg" title="Sectores">Sectores</a>
 
                     </li>
-                    <li><a href="/informes/administracionInforme"><img class="iconosTitulo" src="/public/res/Informes.svg"
-                                title="Informes">Informes</a>
+                    <li><a href="/informes/administracionInforme"><img class="iconosTitulo"
+                                src="/public/res/Informes.svg" title="Informes">Informes</a>
 
                     </li>
                     <li><a href="/insumos/administracionInsumos"><img class="iconosTitulo" src="/public/res/Insumos.svg"
@@ -83,7 +85,7 @@
 
 
         <li>
-            <p class="user">{{ nombreUsuario }} |<a href="/cerrarSesion"><img class="iconos"
+            <p class="user">{{ datos.userLogueado }} |<a href="/cerrarSesion"><img class="iconos"
                         src="/public/res/logout.svg"></a></p>
         </li>
 

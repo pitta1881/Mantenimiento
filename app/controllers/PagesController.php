@@ -22,7 +22,8 @@ class PagesController extends Controller{
          $datos['cantTareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
          $datos['agentesDisponibles'] = $this->model->getAgentesDisponibles('agentes');
          $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
-         $datos['userLogueado'] = $_SESSION['user'];
+         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         
         //tabla de eventos en home
         $todosEventos = $this->model->get();

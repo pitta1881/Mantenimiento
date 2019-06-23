@@ -17,6 +17,7 @@ class InsumosController extends Controller{
         $todosInsumos = $this->model->get(); 
         $datos['todosInsumos'] = $todosInsumos;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
@@ -40,6 +41,7 @@ class InsumosController extends Controller{
         $insumo = $this->model->getByIdInsumo($_GET['idInsumo']);      
         $datos['insumo'] = $insumo;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/insumos/insumo.modificar', compact('datos'));
     }
 
@@ -67,6 +69,7 @@ class InsumosController extends Controller{
         $datos['insumosDisponibles'] = $insumosDisponibles;
         $datos['insumosUsados'] = $insumosUsados;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/insumos/tareasInsumosDisponibles',compact('datos'));
     }
 
@@ -104,6 +107,7 @@ class InsumosController extends Controller{
         $historial = $this->model->verHistorial($_GET['idInsumo']);
         $datos['historial'] = $historial;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/insumos/insumoVerHistorial',compact('datos'));
     }
 
@@ -111,6 +115,7 @@ class InsumosController extends Controller{
         $historial = $this->model->verHistorialParticular($_GET['idPedido'],$_GET['idTarea'],$_GET['idInsumo']);
         $datos['historial'] = $historial;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/insumos/insumoVerHistorial',compact('datos'));
     }
 

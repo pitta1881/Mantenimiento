@@ -18,6 +18,7 @@ class RolesControler extends Controller{
         $todosRoles = $this->model->get(); 
         $datos["todosRoles"] = $todosRoles;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/roles/administracionRol', compact('datos'));
     }
 
@@ -27,6 +28,7 @@ class RolesControler extends Controller{
         ];
       $this->model->insert($rol);   
       $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
       return $this->index();
     }
 }

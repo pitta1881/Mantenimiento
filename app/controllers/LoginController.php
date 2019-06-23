@@ -20,7 +20,8 @@ class LoginController extends Controller{
             return view ('index',compact('datos'));
         }else{
             session_start();
-            $_SESSION['user']=$_POST['nombre']; 
+            $_SESSION['user']=$_POST['nombre'];
+            $_SESSION['rol']=$statement['idRol'];
             redirect('home');         
         }       
     }

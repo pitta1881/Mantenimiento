@@ -3,8 +3,8 @@
 {% block title %}Lista de Tareas{% endblock %}
 
 {% block header %}
-{% set nombreUsuario = datos.userLogueado %}
-{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+
+{% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
 {% block head %}

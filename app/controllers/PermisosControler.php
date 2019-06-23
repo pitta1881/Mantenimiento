@@ -16,6 +16,7 @@ class PermisosControler extends Controller{
         $todosPermisos= $this->model->get(); 
         $datos['todosPermisos'] = $todosPermisos;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/permisos/administracionPermisos', compact('datos'));
     }
 

@@ -3,8 +3,8 @@
 {% block title %} Gestion de Permisos {% endblock %}
 
 {% block header %}
-{% set nombreUsuario = datos.userLogueado %}
-{% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+
+{% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
 {% block head %}
@@ -24,7 +24,7 @@
             }
         }
     </script>
-    
+
     <form action="/permisos/altaPermiso" method="post" id="formularioEspecializacion" style="display: none">
         <fieldset class="basicosEspecializacion">
             <legend> Alta de Permisos</legend>

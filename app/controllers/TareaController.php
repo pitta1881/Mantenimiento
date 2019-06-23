@@ -55,6 +55,7 @@ class TareaController extends Controller{
         $datos["especializaciones"] = $this->model->getEspecializaciones();
         $datos["unaTarea"] = $unaTarea;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/tareas/tareaModificar',compact('datos'));
     }
 
@@ -77,6 +78,7 @@ class TareaController extends Controller{
         $datos['idTarea'] = $_GET['idTarea'];
         $datos['agentesDisponibles'] = $agentesDisponibles;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/tareas/tareasAgentesDisponibles',compact('datos'));
     }
 
@@ -97,6 +99,7 @@ class TareaController extends Controller{
         }
         $datos['itemAgente'] = $datosItem;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         redirect("fichaTarea?idPedido=".$idPedidoFinal."&idTarea=".$idTareaFinal);
     }
 
@@ -105,6 +108,7 @@ class TareaController extends Controller{
             $miTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
             $datos["miTarea"] = $miTarea;  
             $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
             return view('/tareas/tareaVerFicha', compact('datos'));
         }
 
@@ -138,6 +142,7 @@ class TareaController extends Controller{
             $historial = $this->model->verHistorial($_GET['idPedido'],$_GET['idTarea']);
             $datos['historial'] = $historial;
             $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
             return view('/tareas/verHistorial',compact('datos'));
         }
 

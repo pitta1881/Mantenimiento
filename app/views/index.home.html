@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %} {% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %} {% endblock %} {% block head %} {{ parent() }}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %}
+{% include 'partials/nav.html' with {datos:datos} only %} {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 
 

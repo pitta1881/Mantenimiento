@@ -8,7 +8,8 @@ class login extends Model{
     protected $table = 'usuarios';
 
     public function buscarUsuario($user, $password){
-        return $this->db->validarLogin($this->table,$user, $password);
+        $datos = $this->db->validarLogin($this->table,$user, $password);
+        return json_decode(json_encode($datos[0]),true);
     }
 
 }

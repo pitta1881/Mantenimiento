@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %}
-{% set nombreUsuario = datos.userLogueado %} {% include 'partials/nav.html' with {nombreUsuario:nombreUsuario} only %}
+{% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
@@ -16,8 +16,8 @@
         }
     </script>
     <form action="/rol/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
-        
-        <fieldset >
+
+        <fieldset>
             <legend>Datos Basicos</legend>
             <label for="nombreUsuario">Nombre</label>
             <input type="text" name="nombreRol" value="" placeholder="nombre del rol">
@@ -44,27 +44,27 @@
         <input type="submit" value="Buscar">
     </form>
     <table id="miTabla"></table>
-        <th onclick="sortTable(0,'miTabla')">Nº Rol</th>
-        <th onclick="sortTable(2,'miTabla')">Nombre</th>
-        <th class="descripcion" onclick="sortTable(1,'miTabla')">Descripcion</th>
-        {% for rol in datos.todosRoles %}
-        <tr>
-            <td {{ estilo }}>{{ rol.id }}</td>
-            <td {{ estilo }}>{{ rol.nombre }}</td>
-            <td class="descripcion" {{ estilo }}>{{ rol.descripcion|slice(0, 55) }}</td>
-            <td {{ estilo }}>
-                <a href='/fichaPedido?id={{ pedido.id }}'>
-                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
-                </a>
-                {% if pedido.estado != "Finalizado" %}
-                <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
-                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
-                </a>
-                {% endif %}
-            </td>
-        </tr>
-        {% else %}
-        <h2 class='error'>No hay Roles</h2> {% endfor %}
+    <th onclick="sortTable(0,'miTabla')">Nº Rol</th>
+    <th onclick="sortTable(2,'miTabla')">Nombre</th>
+    <th class="descripcion" onclick="sortTable(1,'miTabla')">Descripcion</th>
+    {% for rol in datos.todosRoles %}
+    <tr>
+        <td {{ estilo }}>{{ rol.id }}</td>
+        <td {{ estilo }}>{{ rol.nombre }}</td>
+        <td class="descripcion" {{ estilo }}>{{ rol.descripcion|slice(0, 55) }}</td>
+        <td {{ estilo }}>
+            <a href='/fichaPedido?id={{ pedido.id }}'>
+                <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
+            </a>
+            {% if pedido.estado != "Finalizado" %}
+            <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
+                <img class="iconos" src="/public/res/update.svg" title="Modificar">
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% else %}
+    <h2 class='error'>No hay Roles</h2> {% endfor %}
     </table>
 </div>
 {% endblock %}

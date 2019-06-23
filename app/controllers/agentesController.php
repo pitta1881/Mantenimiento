@@ -20,6 +20,7 @@ class agentesController extends Controller
         $datos['personas'] = $this->model->getPersonasNoAgentes();
         $datos['especializaciones'] = $this->model->getEspecializaciones();
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         return view('/agentes/agentes.administracion', compact('datos'));
     }
        
@@ -36,6 +37,7 @@ class agentesController extends Controller
         $agente = $this->model->getByIdAgente($_GET['idAgente']);      
         $datos['agente'] = $agente;
         $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
         $datos['especializaciones'] = $this->model->getEspecializaciones(); 
         return view('/agentes/agente.modificar', compact('datos'));
     }
