@@ -13,45 +13,22 @@ class UsuariosController extends Controller
       session_start();
     
    }
-    
-       /*Show all pedidos*/
-    public function index(){
-        if(isset($_GET["page"])){
-            $pagina=$_GET["page"];
-        }else{
-            $pagina=1;
-        }
-        $todosUsuarios = $this->model->get(); 
-        $datos["todosUsuarios"] = $todosUsuarios;
-        $totalPaginas=$this->model->getsize();
-        $datos["totalPaginas"] =   $totalPaginas;
-        $datos["userLogueado"] = $_SESSION['user'];  
-        $userPer= $this->model->AllPermisos($_SESSION['user']);
-        var_dump($userPer);
-        $datos["userPermisos"]= $userPer;
-        return view('usuario/AdministracionUsuario', compact('datos'));
-    }
 
-    public function vistaGestionUsuario(){    
-        return view('/usuarios/gestionUsuario');    
-    }
-
-    public function vistaAdministracionUsuario(){
+    public function vistaAdministracionUsuario($boolError = false){
         $todosUsuarios = $this->model->get();     
         $datos['todosUsuarios'] = $todosUsuarios;
         $datos["userLogueado"] = $_SESSION['user'];
         $userPer= $this->model->AllPermisos($_SESSION['user']);
-        
         $datos["userPermisos"]= $userPer;
         $todosRoles=$this->model->getRoles(); 
         $todosPersonas=$this->model->getPersonas(); 
-        $datos['nombresRoles'] = $todosRoles; 
+        $datos['roles'] = $todosRoles; 
         $datos['todosPersonas'] = $todosPersonas; 
+        if ($boolError) {
+            $datos['errorInsert'] = true;
+        }
         return view('/usuarios/administracionUsuario', compact('datos'));
     }
-/*public function vistaAltaUsuario(){
-   
-}*/
     
   public function vistamodificarUsuario(){
     return view('/usuarios/administracionUsuario.modificar');
@@ -101,50 +78,22 @@ class UsuariosController extends Controller
           return view('/usuarios/administracionPermisos.eliminar');
     }
 
-    public function guardar(){
-        $idSector = $this->model->getIdSectorPorNombre($_POST['sector']);
-        $datos['idSector']= $idSector;
-        $pedido = [
-            'fechaInicio' => $_POST['fechaInicio'],
-            'estado' => $_POST['estado'],
-            'descripcion' => $_POST['descripcion'],
-            'idSector' => $idSector,
-            'prioridad' => $_POST['prioridad'],
-            'nombreUsuario' => $_POST['nombreUsuario']
-        ];
-      $this->model->insert($pedido);
-      if(!empty($_POST['idEvento'])){
-        var_dump($_POST['idEvento']);  
-        $this->model->eliminarEvento($_POST['idEvento']);
-      }
-      $datos['arrayPedido'] = $pedido;
-      $datos["userLogueado"] = $_SESSION['user'];
-      $idNuevoPedido = $this->model->getIdUltimoPedido();
-      redirect("fichaPedido?id=".$idNuevoPedido);
-    }
-    
+   
     public function validarUsuario(){
-        $idRol=$this->model->buscarRol($_POST['nombreRol']);
-        $idPersona=$this->model->buscarPersona($_POST['nombrePersona']);
-       $pedido = [
-        'nombre' => $_POST['nombre'],
-        'password' => $_POST['password'],
-        'prioridad' => $idRol,
-        'idSector' => $idPersona,
-        ];
        //verifico si existe el usuario
         $statement= $this->model->buscarUsuario($_POST['nombre']);      
     if(empty($statement)){
-        $this->model->insert($pedido);
-        return view('usuarios/AdministracionUsuario');
+        $usuario = [
+            'nombre' => $_POST['nombre'],
+            'password' => $_POST['password'],
+            'idRol' => $_POST['idRol'],
+            'idPersona' => $_POST['dni'],
+            ];
+        $this->model->insert($usuario);
+        return $this->vistaAdministracionUsuario();
     }else{
-        echo 'Usuario ya existente';
-        return view('usuarios/AdministracionUsuario');
+        return $this->vistaAdministracionUsuario(true);
     }       
 }
-
- public function saveUsuario($datos){
-        $this->model->insert($datos);            
- }
     
 }

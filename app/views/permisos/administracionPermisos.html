@@ -24,7 +24,8 @@
             }
         }
     </script>
-    
+    <a href="#" onclick="mostrarFormulario()" id="btnCrearEspecializacion"><img class="iconos" src="/public/res/add.svg"
+            title="Crear Permiso"></a>
     <form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion" method="post"
         id="formularioEspecializacion" style="display: none">
         <fieldset class="basicosEspecializacion">
@@ -35,21 +36,19 @@
         <input type="submit">
     </form>
 
-    <form class="buscador" action="/rol/buscar" method="POST">
-        <a href="#" onclick="mostrarFormulario()" id="btnCrearEspecializacion"><img class="crear" src="/public/res/nuevo.svg"
-            title="Crear Permiso"></a>
-        <select name="filtro">
-            <option value="sector">Nombre</option>
-        </select>
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
-
-    
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">ID Permisos</th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        <th onclick="sortTable(2,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">ID Permisos</th>
+                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th onclick="sortTable(2,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for permiso in datos.todosPermisos %}
         <tr>
             <td>{{ permiso.idPermiso }}</td>
@@ -72,19 +71,5 @@
         <h2 class="error">No hay ningun Permiso cargado</h2>
         {% endfor %}
     </table>
-    <section class="paginacion">
-        <ul>
-            {% if datos.totalPaginas is empty  %}
-            <li><a href="/permisos/AdministracionPermisos?page={{ 1 }}"> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-            <li><a href="/permisos/AdministracionPermisos?page={{ 1 }}"> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            <li><a href="/permisos/AdministracionPermisos?page={{ i }}"> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href="/permisos/AdministracionPermisos?page={{ datos.totalPaginas }}"> &gt; </a></li>
-            {% endif %}
-        </ul>
-    </section>
 </div>
 {% endblock %}

@@ -38,9 +38,6 @@
 
 //rutas Usuarios
     $router->post('login/validar', 'LoginController@validarLogin');
-    $router->get('usuarios/gestionUsuario','UsuariosController@vistaGestionUsuario');
-    
-
     $router->get('usuarios/AdministracionUsuario','UsuariosController@vistaAdministracionUsuario');
     $router->get('usuarios/altaUsuario','UsuariosController@vistaAltaUsuario');
     $router->post('usuarios/validarUsuario','UsuariosController@validarUsuario');

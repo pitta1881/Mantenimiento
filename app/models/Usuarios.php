@@ -11,13 +11,31 @@ class Usuarios extends Model
     protected $tablePersona='personas';
     protected $tablePermisos='permisos';
     protected $tableAgentes='agentes';
-    protected $size_pagina=2;
+    
     protected $tableRolXPermiso='rolesxpermisos';
 
     public function get(){
-        $Usuario=$this->db->selectUsuarioPorPersonaPorRol($this->table,$this->tablePersona,$this->tableRol);
-        $misUsuarios = json_decode(json_encode($Usuario), True);
-        return  $misUsuarios;
+        $usuario=$this->db->selectAll($this->table);
+        $misUsuarios = json_decode(json_encode($usuario), True);
+        for ($i=0; $i < count($misUsuarios); $i++) { 
+            $persona = $this->getPersonaPorId($misUsuarios[$i]['idPersona']);
+            $misUsuarios[$i]['nombreApe'] = $persona['nombre'].' '.$persona['apellido'];
+            $rol = $this->getRolPorId($misUsuarios[$i]['idRol']);
+            $misUsuarios[$i]['nombreRol'] = $rol['nombreRol'];
+          }
+        return $misUsuarios;
+    }
+
+    public function getPersonaPorId($idPersona){
+        $persona = $this->db->selectPersonaByDNI($this->tablePersona,$idPersona);
+        $miPersona = json_decode(json_encode($persona[0]), True);  
+        return $miPersona;
+    }
+
+    public function getRolPorId($idRol){
+        $rol = $this->db->selectRolById($this->tableRol,$idRol);
+        $miRol = json_decode(json_encode($rol[0]), True);  
+        return $miRol;
     }
 
    public function buscarUsuario($user){
@@ -25,10 +43,7 @@ class Usuarios extends Model
        return $this->db->comparaUsuario($this->table,$user);
     }
 
-    public function buscarPersona($persona){
-        //comparo si existe el nombre de usuario 
-        return $this->db->comparaPersona($this->tablePersona,$persona);
-     }
+
 
     public function AllPermisos($nombreUser){
         $cantidad = $this->db->selectPermisosNombre($nombreUser);
@@ -46,7 +61,7 @@ class Usuarios extends Model
     }
 
 public function getRoles(){
-    $roles = $this->db->selectAllRoles($this->tableRol);
+    $roles = $this->db->selectAll($this->tableRol);
     $misRoles = json_decode(json_encode($roles), True);
     return $misRoles; 
 }
@@ -60,22 +75,6 @@ public function getRoles(){
     $permisos = $this->db->selectAllPermisos($this->tablePermisos);
     $misPermisos = json_decode(json_encode($permisos), True);
     return $misPermisos; 
-}
-    
-public function getSize(){
-    $num_filas= $this->db->getSize($this->table);
-    $total_paginas= ceil($num_filas/$this->size_pagina);
-    return $total_paginas;
-}    
-
-public function getPaginacion($page){
-    $pagina=$page;
-    $empezar_desde=($pagina-1)*$this->size_pagina;
-    $num_filas= $this->getSize();
-    $total_paginas= ceil($num_filas/$this->size_pagina);
-    $usuarios = $this->db->selectUsuarioPorPersonaPorRolLimit($this->table, $this->tablePersona, $this->tableRol,$empezar_desde,$this->size_pagina);
-    $todosUsuarios = json_decode(json_encode($usuarios), True);
-    return $todosUsuarios;
 }
 
     public function guardarPermisosXRol($datos){   

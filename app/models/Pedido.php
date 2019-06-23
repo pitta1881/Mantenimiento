@@ -14,7 +14,6 @@ class Pedido extends Model{
     protected $tableOT = 'OrdenDeTrabajo';
     protected $tableItemOT='itemot';
     protected $tableEvento='eventos';
-    protected $size_pagina=4;
 
     public function getSectores() {
         $array = [];
@@ -152,38 +151,6 @@ class Pedido extends Model{
 
     public function eliminarEvento($idEvento){
         $this->db->deleteEventoValidar($this->tableEvento,$idEvento);
-    }
-
-    public function getSize(){
-        $num_filas= $this->db->getSize($this->table);
-        $total_paginas= ceil($num_filas/$this->size_pagina);
-        return $total_paginas;
-    }    
-
-    public function getPaginacion($page){
-        $pagina=$page;
-        $empezar_desde=($pagina-1)*$this->size_pagina;
-        $num_filas= $this->getSize();
-        $total_paginas= ceil($num_filas/$this->size_pagina);
-        $pedido = $this->db->getAllLimit($this->table,$empezar_desde,$this->size_pagina);
-        $todosPedidos = json_decode(json_encode($pedido), True);      
-        foreach ($todosPedidos as $indice => $datos) {
-            $todosPedidos[$indice]['nombreSector'] = $this->getNombreSectorPorId($todosPedidos[$indice]['idSector']);
-            foreach ($datos as $key => $value) {
-                if ($key == 'id') {
-                    $todosPedidos[$indice]['tareasAsignadas'] = $this->getTareasAsignadasAPedido($value);
-                }
-                if ($key == 'fechaInicio') {
-                    $todosPedidos[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todosPedidos[$indice]['fechaInicio']));
-                }
-                if (($key == 'fechaFin') && (is_null($value))) {
-                    $todosPedidos[$indice]['fechaFin'] = 'En Curso';
-                } elseif (($key == 'fechaFin') && (!is_null($value))) {
-                    $todosPedidos[$indice]['fechaFin'] = date("d/m/Y", strtotime($todosPedidos[$indice]['fechaFin']));
-                }
-            }
-        }  
-        return $todosPedidos;
     }
 
 }

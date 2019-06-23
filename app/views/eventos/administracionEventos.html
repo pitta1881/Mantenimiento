@@ -36,14 +36,22 @@
         </fieldset>
         <input type="submit">
     </form>
-
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nº Evento</th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
-        <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
-        <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
-        <th onclick="sortTable(5,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº Evento</th>
+                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+                <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
+                <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
+                <th onclick="sortTable(5,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for evento in datos.todosEventos %}
         <tr>
             <td>{{ evento.idEvento }}</td>
@@ -67,22 +75,5 @@
         {% else %}
         <h2 class='error'>No hay eventos</h2> {% endfor %}
     </table>
-
-    <section class="paginacion">
-        <ul>
-
-            {% if datos.totalPaginas is empty  %}
-            <li><a href='/eventos/administracionEventos?page={{ 1 }}'> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-            <li><a href='/eventos/administracionEventos?page={{ 1 }}'> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            <li><a href='/eventos/administracionEventos?page={{ i }}'> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href='/eventos/administracionEventos?page={{ datos.totalPaginas }}'> &gt; </a></li>
-            {% endif %}
-
-        </ul>
-    </section>
 </div>
 {% endblock %}

@@ -15,15 +15,8 @@ class PedidoController extends Controller{
 
     /*Show all pedidos*/
     public function index(){
-        if(isset($_GET["page"])){
-            $pagina=$_GET["page"];
-        }else{
-            $pagina=1;
-        }
-        $todosPedidos = $this->model->getPaginacion($pagina); 
+        $todosPedidos = $this->model->get(); 
         $datos['todosPedidos'] = $todosPedidos;
-        $totalPaginas=$this->model->getsize();
-        $datos["totalPaginas"] =   $totalPaginas;
         $datos["diaHoy"] = date("Y-m-d");
         $datos["sectores"] = $this->model->getSectores();
         $datos["prioridades"] = $this->model->getPrioridades();
@@ -60,7 +53,6 @@ class PedidoController extends Controller{
         ];
       $this->model->insert($pedido);
       if(!empty($_POST['idEvento'])){
-        var_dump($_POST['idEvento']);  
         $this->model->eliminarEvento($_POST['idEvento']);
       }
       $datos['arrayPedido'] = $pedido;

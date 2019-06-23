@@ -15,44 +15,36 @@
             }
         }
     </script>
-    <form action="/rol/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
-        <fieldset >
+    <img class="iconos" src="/public/res/add.svg" title="Crear" onclick="mostrarFormulario()">
+    <form action="/roles/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
+        <fieldset>
             <legend>Datos Basicos</legend>
             <label for="nombreRol">Nombre</label>
             <input type="text" name="nombreRol" value="" placeholder="nombre del rol">
             <br>
-            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-            <input type="textarea" rows="10" cols="50" name="descripcion" autofocus required
-                placeholder="Ingrese la descripcion..">
-            <br>
         </fieldset>
         <input type="reset">
         <input type="submit">
-      
     </form>
-
-    <form class="buscador" action="/rol/buscar" method="POST">
-        <img class="crear" src="/public/res/nuevo.svg" title="Crear" onclick="mostrarFormulario()">
-
-        <select name="filtro">
-            <option value="id">Nº Rol</option>
-            <option value="sector">Nombre</option>
-            <option value="fechaInicio">Descripcion</option>
-        </select>
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nº Rol</th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        <th class="descripcion" onclick="sortTable(2,'miTabla')">Descripcion</th>
-        <th >Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº Rol</th>
+                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+
         {% for rol in datos.todosRoles %}
         <tr>
-            <td >{{ rol.id }}</td>
-            <td >{{ rol.nombre }}</td>
-            <td class="descripcion" >{{ rol.descripcion|slice(0, 55) }}</td>
-            <td >
+            <td>{{ rol.idRol }}</td>
+            <td>{{ rol.nombreRol }}</td>
+            <td>
                 <a href='/fichaPedido?id={{ pedido.id }}'>
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>

@@ -4,6 +4,11 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 
 <div class="general">
+    {% if datos.errorInsert %}
+    <script>
+        alertify.alert('Error', 'El Usuario ya existe..')
+    </script>
+    {% endif %}
     <h1>Listado de Usuarios</h1>
     <a href="#" onclick="mostrarFormulario()" id="btnCrearUsuario"><img class="iconos" src="/public/res/add.svg"
             title="Crear Usuario"></a>
@@ -29,21 +34,20 @@
         <label for="nombre">Confirmar Contraseña</label>
         <input type="password" name="password" placeholder="contraseña">
         <label for="roles">Rol del Usuario:</label>
-        <select name="nombreRol" id="nombreRol">
+        <select name="idRol" id="nombreRol">
             <option value="SeleccionarRol">Seleccionar Rol</option>
             <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
-            {% for nombre in datos.nombresRoles %}
-
-            <option value={{ nombre.nombreRol }}>{{ nombre.nombreRol }}</option>
+            {% for rol in datos.roles %}
+            <option value={{ rol.idRol }}>{{ rol.nombreRol }}</option>
             {% endfor %}}
         </select>
-        <label for="roles">Persona asociada:</label>
-        <select name="nombrePersona" id="nombrePersona">
+        <label for="dni">Persona asociada:</label>
+        <select name="dni" id="nombrePersona">
             <option value="SeleccionarPersona">Seleccionar Persona</option>
             <!--aca van roles  q se toman de la bd para que aparezcan en el select-->
             {% for persona in datos.todosPersonas %}
             {% if persona.dni != '0' %}
-            <option value={{ persona.nombre }} {{ persona.apellido }}>{{ persona.nombre }} {{ persona.apellido }}
+            <option value={{ persona.dni }}>{{ persona.nombre }} {{ persona.apellido }}
             </option>
             {% endif %}
             {% endfor %}
@@ -53,22 +57,27 @@
         <input type="submit" value="Agregar">
         <input type="reset">
     </form>
-
-
-    <!-- todavia no busca , agregar ruta al action-->
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nombre Usuario</th>
-        <th onclick="sortTable(1,'miTabla')">DNI </th>
-        <th onclick="sortTable(2,'miTabla')">Rol</th>
-        <th onclick="sortTable(3,'miTabla')">Nombre y Apellido</th>
-        <th onclick="sortTable(4,'miTabla')">ACCION</th>
-
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nombre Usuario</th>
+                <th onclick="sortTable(1,'miTabla')">DNI </th>
+                <th onclick="sortTable(3,'miTabla')">Nombre y Apellido</th>
+                <th onclick="sortTable(2,'miTabla')">Rol</th>
+                <th onclick="sortTable(4,'miTabla')">ACCION</th>
+            </tr>
+        </thead>
         {% for usuario in datos.todosUsuarios %}
         <tr>
             <td>{{ usuario.nombre }}</td>
-            <td>{{ usuario.dni }}</td>
+            <td><a href="/fichaPersona?idAgente={{ usuario.idPersona }}">{{ usuario.idPersona }}</a></td>
+            <td>{{ usuario.nombreApe }}</td>
             <td>{{ usuario.nombreRol }}</td>
-            <td>{{ usuario.apellido }} {{ usuario.nombre }}  </td>
             <td>
                 <a href='usuarios/modificarUsuario/seleccionado?id={{ usuario.id }}'>
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
@@ -79,26 +88,5 @@
         {% else %}
         <h2 class='error'>No hay Usuarios para mostrar</h2> {% endfor %}
     </table>
-    <section class="paginacion">
-        <ul>
-
-            {% if datos.totalPaginas is empty  %}
-            	
-
-            <li><a href='/pedido/verTodos?page={{ 1 }}'> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-           	
-
-            <li><a href='/pedido/verTodos?page={{ 1 }}'> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            
-            <li><a href='/pedido/verTodos?page={{ i }}'> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href='/pedido/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>
-            {% endif %}
-
-        </ul>
-    </section>
 </div>
 {% endblock %}

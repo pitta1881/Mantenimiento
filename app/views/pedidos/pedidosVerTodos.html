@@ -55,30 +55,26 @@
         {% endif %}
     </form>
 
-    <form class="buscador" action="/pedido/buscar" method="POST">
-
-        <select name="filtro">
-            <option value="id">Nº PEDIDO</option>
-            <option value="sector">SECTOR</option>
-            <option value="fechaInicio">FECHA INICIO</option>
-            <option value="estado">ESTADO</option>
-            <option value="prioridad">PRIORIDAD</option>
-        </select>
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
-
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
-        <th class="descripcion" onclick="sortTable(1,'miTabla')">Descripcion</th>
-        <th onclick="sortTable(2,'miTabla')">Sector</th>
-        <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
-        <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
-        <th onclick="sortTable(5,'miTabla')">Tareas</th>
-        <th onclick="sortTable(6,'miTabla')">Estado</th>
-        <th onclick="sortTable(7,'miTabla')">Prioridad</th>
-        <th onclick="sortTable(8,'miTabla')">Usuario</th>
-        <th onclick="sortTable(9,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
+                <th class="descripcion" onclick="sortTable(1,'miTabla')">Descripcion</th>
+                <th onclick="sortTable(2,'miTabla')">Sector</th>
+                <th onclick="sortTable(3,'miTabla')">Fecha Inicio</th>
+                <th onclick="sortTable(4,'miTabla')">Fecha Fin</th>
+                <th onclick="sortTable(5,'miTabla')">Tareas</th>
+                <th onclick="sortTable(6,'miTabla')">Estado</th>
+                <th onclick="sortTable(7,'miTabla')">Prioridad</th>
+                <th onclick="sortTable(8,'miTabla')">Usuario</th>
+                <th onclick="sortTable(9,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for pedido in datos.todosPedidos %}
         {% set estilo = "" %}
         {% if pedido.estado == "Finalizado" %}
@@ -113,22 +109,6 @@
         {% else %}
         <h2 class='error'>No hay Pedidos</h2> {% endfor %}
     </table>
-    <section class="paginacion">
-        <ul>
-
-            {% if datos.totalPaginas is empty  %}
-            <li><a href='/pedido/verTodos?page={{ 1 }}'> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-            <li><a href='/pedido/verTodos?page={{ 1 }}'> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            <li><a href='/pedido/verTodos?page={{ i }}'> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href='/pedido/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>
-            {% endif %}
-
-        </ul>
-    </section>
 </div>
 
 

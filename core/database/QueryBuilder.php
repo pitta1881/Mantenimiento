@@ -250,15 +250,6 @@ class QueryBuilder
         $statement->execute();
     }
 
-    public function selectAllRoles($tableRol){
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableRol"
-       
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-   }
-
     public function selectTareaByIdId($table, $nPedido, $nTarea){ //table = tarea
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
@@ -704,6 +695,14 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function selectRolById($tableRol, $idRol){ 
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableRol WHERE idRol=$idRol"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
 
 
     public function comparaPersona($tablePersona, $dni){  
@@ -760,14 +759,7 @@ public function updateEvento($table, $parameters, $idEvento){
         return $num_filas;
     }
     
-    public function getAllLimit($tabla,$litinf,$litsup){
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tabla LIMIT $litinf, $litsup"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-    
+ 
     public function selectUsuarioPorPersonaPorRolLimit($tableUsuario, $tablePersona, $tableRol,$litinf,$litsup){        
         $statement = $this->pdo->prepare(
         "SELECT $tableUsuario.nombre,$tablePersona.nombre,$tablePersona .apellido,$tablePersona .dni,$tableRol.nombreRol 

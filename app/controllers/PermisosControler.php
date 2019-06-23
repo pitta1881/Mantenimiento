@@ -13,15 +13,8 @@ class PermisosControler extends Controller{
 
     /*Show all pedidos*/
     public function index(){
-        if(isset($_GET["page"])){
-            $pagina=$_GET["page"];
-        }else{
-            $pagina=1;
-        }
-        $todosPermisos= $this->model->getPaginacion($pagina); 
+        $todosPermisos= $this->model->get(); 
         $datos['todosPermisos'] = $todosPermisos;
-        $totalPaginas=$this->model->getsize();
-        $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/permisos/administracionPermisos', compact('datos'));
     }

@@ -15,15 +15,8 @@ class agentesController extends Controller
 
 
     public function vistaAdministracionAgentes(){
-        if(isset($_GET["page"])){
-            $pagina=$_GET["page"];
-        }else{
-            $pagina=1;
-        }
-        $todosAgentes = $this->model->getPaginacion($pagina); 
+        $todosAgentes = $this->model->get(); 
         $datos['todosAgentes'] = $todosAgentes;
-        $totalPaginas=$this->model->getsize();
-        $datos["totalPaginas"] =   $totalPaginas;
         $datos['personas'] = $this->model->getPersonasNoAgentes();
         $datos['especializaciones'] = $this->model->getEspecializaciones();
         $datos["userLogueado"] = $_SESSION['user'];

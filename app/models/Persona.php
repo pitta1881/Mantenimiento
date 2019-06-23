@@ -9,7 +9,6 @@ class Persona extends Model{
     protected $tableRol='roles';
     protected $tablePermisos='permisos';
     protected $tableAgentes='agentes';
-    protected $size_pagina=8;
 
     public function get()
     {
@@ -63,7 +62,6 @@ class Persona extends Model{
                     $miPersona[$key] = '-';
                 } else{
                     $miPersona[$key] = date("d/m/Y", strtotime($miPersona[$key]));
-                    var_dump($miPersona[$key]);
                 }
             }
         }
@@ -73,43 +71,4 @@ class Persona extends Model{
     public function delete($nPersona){        
         $this->db->deletePersona($this->table,$nPersona);
     } 
-
-    public function getSize(){
-        $num_filas= $this->db->getSize($this->table);
-        $total_paginas= ceil($num_filas/$this->size_pagina);
-        return $total_paginas;
-    }    
-
-    public function getPaginacion($page){
-        $pagina=$page;
-        $empezar_desde=($pagina-1)*$this->size_pagina;
-        $num_filas= $this->getSize();
-        $total_paginas= ceil($num_filas/$this->size_pagina);
-        $personas = $this->db->getAllLimit($this->table,$empezar_desde,$this->size_pagina);
-        $misPersonas = json_decode(json_encode($personas), True);
-        foreach ($misPersonas as $indice => $datos) {
-            $yaEstaUsado = [];
-            $yaEstaUsado = $this->db->getFromAgenteConIdPersona($this->tableAgentes,$misPersonas[$indice]['dni']);
-            if(empty($yaEstaUsado)){
-                $misPersonas[$indice]['usado'] = false;
-            } else{
-                $misPersonas[$indice]['usado'] = true;
-            }
-            foreach ($datos as $key => $value) {
-                if (is_null($value) || $value == '') {
-                    $misPersonas[$indice][$key] = '-';
-                }
-                if ($key == 'fecha_nacimiento') {
-                    if ($value == '0000-00-00') {
-                        $misPersonas[$indice]['fecha_nacimiento'] = '-';
-                    } else{
-                        $misPersonas[$indice]['fecha_nacimiento'] = date("d/m/Y", strtotime($misPersonas[$indice]['fecha_nacimiento']));
-                    }
-                }
-            }
-        }
-        return $misPersonas;
-    }
-
-
 }

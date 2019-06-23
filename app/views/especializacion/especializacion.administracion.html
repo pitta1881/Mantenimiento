@@ -40,10 +40,19 @@
         </fieldset>
         <input type="submit">
     </form>
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">ID Especializacion</th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        <th onclick="sortTable(2,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">ID Especializacion</th>
+                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th onclick="sortTable(2,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for especializacion in datos.todasEspecializaciones %}
         <tr>
             <td>{{ especializacion.idEspecializacion }}</td>
@@ -68,19 +77,5 @@
         <h2 class='error'>No hay ninguna Especializacion cargada</h2>
         {% endfor %}
     </table>
-    <section class="paginacion">
-        <ul>
-            {% if datos.totalPaginas is empty  %}
-            <li><a href='/especializacion/administracionEspecializacion?page={{ 1 }}'> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-            <li><a href='/especializacion/administracionEspecializacion?page={{ 1 }}'> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            <li><a href='/especializacion/administracionEspecializacion?page={{ i }}'> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href='/especializacion/administracionEspecializacion?page={{ datos.totalPaginas }}'> &gt; </a></li>
-            {% endif %}
-        </ul>
-    </section>
 </div>
 {% endblock %}

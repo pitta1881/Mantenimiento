@@ -14,15 +14,8 @@ class SectoresController extends Controller{
    }
     
     public function vistaAdministracionSectores($boolError = false){
-        if(isset($_GET["page"])){
-            $pagina=$_GET["page"];
-        }else{
-            $pagina=1;
-        }
-        $todosSectores = $this->model->getPaginacion($pagina); 
+        $todosSectores = $this->model->get(); 
         $datos['todosSectores'] = $todosSectores;
-        $totalPaginas=$this->model->getsize();
-        $datos["totalPaginas"] =   $totalPaginas;
         $datos['tipoSectores'] = $this->model->getTipoSector();
         $datos["userLogueado"] = $_SESSION['user'];
         if ($boolError) {

@@ -55,13 +55,22 @@
         {% endif %}
         {% endif %}
     </form>
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nº Agente</th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        <th onclick="sortTable(2,'miTabla')">Apellido</th>
-        <th onclick="sortTable(3,'miTabla')">Especializacion</th>
-        <th onclick="sortTable(4,'miTabla')">Disponibilidad</th>
-        <th onclick="sortTable(5,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº Agente</th>
+                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th onclick="sortTable(2,'miTabla')">Apellido</th>
+                <th onclick="sortTable(3,'miTabla')">Especializacion</th>
+                <th onclick="sortTable(4,'miTabla')">Disponibilidad</th>
+                <th onclick="sortTable(5,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for agente in datos.todosAgentes %}
         <tr>
             <td><a href="/fichaPersona?idAgente={{ agente.idAgente }}">{{ agente.idAgente }}</a></td>
@@ -94,22 +103,5 @@
         {% else %}
         <h2 class='error'>No hay ningun agente cargado</h2> {% endfor %}
     </table>
-
-    <section class="paginacion">
-        <ul>
-
-            {% if datos.totalPaginas is empty  %}
-            <li><a href='/agente/administracionAgentes?page={{ 1 }}'> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-            <li><a href='/agente/administracionAgentes?page={{ 1 }}'> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            <li><a href='/agente/administracionAgentes?page={{ i }}'> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href='/agente/administracionAgentes?page={{ datos.totalPaginas }}'> &gt; </a></li>
-            {% endif %}
-
-        </ul>
-    </section>
 </div>
 {% endblock %}

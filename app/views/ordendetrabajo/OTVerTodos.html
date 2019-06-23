@@ -4,31 +4,22 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
     <h1>Listado de Ordenes de Trabajo</h1>
-    
-
-    <form  class="buscador" action="/pedido/buscar" method="POST">
-        <a  class="crear" href="/ot/crear">
-            <input type="button" value="Crear OT">
-        </a>
-        <select name="filtro">
-            <option value="id">Nº OT</option>
-            <option value="sector">SECTOR</option>
-            <option value="fechaInicio">FECHA INICIO</option>
-            <option value="estado">ESTADO</option>
-            <option value="prioridad">PRIORIDAD</option>
-        </select>
-
-        <input name="textBusqueda" type="Search" placeholder="Escribe parametro">
-        <input type="submit" value="Buscar">
-    </form>
-
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nº OT</th>
-        <th onclick="sortTable(1,'miTabla')">Fecha de Inicio</th>
-        <th onclick="sortTable(2,'miTabla')">Fecha de Fin</th>
-        <th onclick="sortTable(3,'miTabla')">Estado</th>
-        <th onclick="sortTable(4,'miTabla')">Tareas</th>
-        <th onclick="sortTable(5,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº OT</th>
+                <th onclick="sortTable(1,'miTabla')">Fecha de Inicio</th>
+                <th onclick="sortTable(2,'miTabla')">Fecha de Fin</th>
+                <th onclick="sortTable(3,'miTabla')">Estado</th>
+                <th onclick="sortTable(4,'miTabla')">Tareas</th>
+                <th onclick="sortTable(5,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for OT in datos.todasOT %}
         {% set estilo = "" %}
         {% if OT.estado == "Finalizado" %}
@@ -41,30 +32,14 @@
             <td {{ estilo }}>{{ OT.estado }}</td>
             <td {{ estilo }}>{{ OT.cantTareas }}</td>
             <td {{ estilo }}>
-                    
+
                 <a href='/fichaOT?idOT={{ OT.idOT }}'>
-                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas" >
+                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
             </td>
         </tr>
         {% else %}
         <h2 class='error'>No hay OTs</h2> {% endfor %}
     </table>
-    <section class="paginacion">
-        <ul>
-
-            {% if datos.totalPaginas is empty  %}
-            <li><a href='/OT/verTodos?page={{ 1 }}'> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-            <li><a href='/OT/verTodos?page={{ 1 }}'> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            <li><a href='/OT/verTodos?page={{ i }}'> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href='/OT/verTodos?page={{ datos.totalPaginas }}'> &gt; </a></li>
-            {% endif %}
-
-        </ul>
-    </section>
 </div>
 {% endblock %}

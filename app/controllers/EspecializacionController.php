@@ -15,15 +15,8 @@ class EspecializacionController extends Controller
 
 
     public function vistaAdministracionEspecializacion($boolError = false){
-        if(isset($_GET["page"])){
-            $pagina=$_GET["page"];
-        }else{
-            $pagina=1;
-        }
-        $todasEspecializaciones = $this->model->getPaginacion($pagina); 
+        $todasEspecializaciones = $this->model->get(); 
         $datos['todasEspecializaciones'] = $todasEspecializaciones;
-        $totalPaginas=$this->model->getsize();
-        $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
         if ($boolError) {
             $datos['errorInsert'] = true;

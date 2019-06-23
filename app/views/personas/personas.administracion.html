@@ -50,14 +50,23 @@
         </fieldset>
         <input type="submit">
     </form>
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">DNI </th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        <th onclick="sortTable(2,'miTabla')">Apellido</th>
-        <th onclick="sortTable(3,'miTabla')">Direccion</th>
-        <th onclick="sortTable(4,'miTabla')">Email</th>
-        <th onclick="sortTable(5,'miTabla')">Fecha de Nacimiento</th>
-        <th onclick="sortTable(6,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">DNI </th>
+                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th onclick="sortTable(2,'miTabla')">Apellido</th>
+                <th onclick="sortTable(3,'miTabla')">Direccion</th>
+                <th onclick="sortTable(4,'miTabla')">Email</th>
+                <th onclick="sortTable(5,'miTabla')">Fecha de Nacimiento</th>
+                <th onclick="sortTable(6,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for persona in datos.todasPersonas %}
         {% if persona.dni != '0' %}
         <tr>
@@ -87,22 +96,5 @@
         {% else %}
         <h2 class='error'>No hay Personas</h2> {% endfor %}
     </table>
-
-    <section class="paginacion">
-        <ul>
-
-            {% if datos.totalPaginas is empty  %}
-            <li><a href='/persona/AdministracionPersonas?page={{ 1 }}'> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-            <li><a href='/persona/AdministracionPersonas?page={{ 1 }}'> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            <li><a href='/persona/AdministracionPersonas?page={{ i }}'> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href='/persona/AdministracionPersonas?page={{ datos.totalPaginas }}'> &gt; </a></li>
-            {% endif %}
-
-        </ul>
-    </section>
 </div>
 {% endblock %}

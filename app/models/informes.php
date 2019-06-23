@@ -10,7 +10,7 @@ class informes extends Model
     protected $tableEspecializacion='especializacion';
     protected $tableItemAgentes='itemAgente';
     protected $tablePersona = 'personas';
-    protected $size_pagina=2;
+    
 
    
 

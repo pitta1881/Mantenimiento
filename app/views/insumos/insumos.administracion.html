@@ -43,12 +43,21 @@
         </fieldset>
         <input type="submit">
     </form>
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nº Insumo</th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
-        <th onclick="sortTable(3,'miTabla')">Stock Actual</th>
-        <th onclick="sortTable(4,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº Insumo</th>
+                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+                <th onclick="sortTable(3,'miTabla')">Stock Actual</th>
+                <th onclick="sortTable(4,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for insumo in datos.todosInsumos %}
         <tr>
             <td>{{ insumo.idInsumo }}</td>
@@ -56,7 +65,7 @@
             <td>{{ insumo.descripcion }}</td>
             <td>{{ insumo.stock }}</td>
             <td>
-                <!--SUMAR INSUMOS-->
+                <!--SUMAR/RESTAR INSUMOS-->
                 <form action="/insumo/updateStockSinItem" method="post" hidden id="formSumar{{ insumo.idInsumo }}">
                     <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
                     <input type="number" name="cantidad_{{ insumo.idInsumo }}" hidden>
@@ -108,21 +117,5 @@
         {% else %}
         <h2 class='error'>No hay insumo</h2> {% endfor %}
     </table>
-    <section class="paginacion">
-        <ul>
-
-            {% if datos.totalPaginas is empty  %}
-            <li><a href='/insumos/administracionInsumos?page={{ 1 }}'> 1 </a></li>
-            {% endif %}
-            {% if datos.totalPaginas|e  %}
-            <li><a href='/insumos/administracionInsumos?page={{ 1 }}'> &lt; </a></li>
-            {% for i in 1..datos.totalPaginas %}
-            <li><a href='/insumos/administracionInsumos?page={{ i }}'> {{ i }} </a></li>
-            {% endfor %}
-            <li><a href='/insumos/administracionInsumos?page={{ datos.totalPaginas }}'> &gt; </a></li>
-            {% endif %}
-
-        </ul>
-    </section>
 </div>
 {% endblock %}

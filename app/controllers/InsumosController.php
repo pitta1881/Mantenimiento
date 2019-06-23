@@ -14,15 +14,8 @@ class InsumosController extends Controller{
    }
     
     public function vistaAdministracionInsumos($boolError = false){
-        if(isset($_GET["page"])){
-            $pagina=$_GET["page"];
-        }else{
-            $pagina=1;
-        }
-        $todosInsumos = $this->model->getPaginacion($pagina); 
+        $todosInsumos = $this->model->get(); 
         $datos['todosInsumos'] = $todosInsumos;
-        $totalPaginas=$this->model->getsize();
-        $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
         if ($boolError) {
             $datos['errorInsert'] = true;

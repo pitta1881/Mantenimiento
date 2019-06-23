@@ -10,7 +10,7 @@ class Agentes extends Model
     protected $tableEspecializacion='especializacion';
     protected $tableItemAgentes='itemAgente';
     protected $tablePersona = 'personas';
-    protected $size_pagina=2;
+    
 
     public function getEspecializaciones() {
       $array = [];
@@ -87,37 +87,5 @@ class Agentes extends Model
       $miPersona = json_decode(json_encode($persona[0]), True);  
       return $miPersona;
     }
-
-    public function getSize(){
-      $num_filas= $this->db->getSize($this->table);
-      $total_paginas= ceil($num_filas/$this->size_pagina);
-      return $total_paginas;
-  }    
-
-  public function getPaginacion($page){
-      $pagina=$page;
-      $empezar_desde=($pagina-1)*$this->size_pagina;
-      $num_filas= $this->getSize();
-      $total_paginas= ceil($num_filas/$this->size_pagina);
-      $agentes = $this->db->getAllLimit($this->table,$empezar_desde,$this->size_pagina);
-      $todosAgentes = json_decode(json_encode($agentes), True);
-      for ($i=0; $i < count($todosAgentes); $i++) { 
-        $todosAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todosAgentes[$i]['idEspecializacion']);
-        $persona = $this->getPersonaPorId($todosAgentes[$i]['idAgente']);
-        $todosAgentes[$i]['nombre']=$persona['nombre'];
-        $todosAgentes[$i]['apellido']=$persona['apellido'];
-        $yaEstaUsado = [];
-        $yaEstaUsado = $this->db->getFromItemAgenteConIdAgente($this->tableItemAgentes,$todosAgentes[$i]['idAgente']);
-        if(empty($yaEstaUsado)){
-          $todosAgentes[$i]['usado'] = false;
-      } else{
-          $todosAgentes[$i]['usado'] = true;
-      }
-      }
-      return $todosAgentes;
-  }
-
-
-
 }
 
