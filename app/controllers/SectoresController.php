@@ -13,7 +13,7 @@ class SectoresController extends Controller{
       session_start();    
    }
     
-    public function vistaAdministracionSectores(){
+    public function vistaAdministracionSectores($boolError = false){
         if(isset($_GET["page"])){
             $pagina=$_GET["page"];
         }else{
@@ -25,6 +25,9 @@ class SectoresController extends Controller{
         $datos["totalPaginas"] =   $totalPaginas;
         $datos['tipoSectores'] = $this->model->getTipoSector();
         $datos["userLogueado"] = $_SESSION['user'];
+        if ($boolError) {
+            $datos['errorInsert'] = true;
+        }
         return view('/sectores/sectores.administracion', compact('datos'));
     }
     
@@ -38,9 +41,9 @@ class SectoresController extends Controller{
         if (empty($statement)) {            
             $this->model->insert($datos); 
             return $this->vistaAdministracionSectores();
-        }/*else{
-        mostrar mensaje de que ya existe
-        }*/
+        } else{
+            return $this->vistaAdministracionSectores(true);
+        }
     }
 
     public function vistaModificar(){

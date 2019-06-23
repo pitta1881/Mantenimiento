@@ -178,9 +178,12 @@
                     <input type="number" name="cantidad_{{ i }}" hidden>
                     <input type="number" name="tipoMovimiento_{{ i }}" value="0" hidden>
                 </form>
-                <img class="iconos" src="/public/res/minusInsumo.svg" title="Restar Stock" onclick="alertify.prompt('Restar Stock','Seleccione la cantidad a restar (0-{{ insumo.cantidad }})','',
+                <img class="iconos" src="/public/res/minusInsumo.svg" title="Restar Stock" onclick="alertify.prompt('Restar Stock','Seleccione la cantidad a restar (1-{{ insumo.cantidad }})','',
                     function(evt,value){
                         document.getElementsByName('cantidad_{{ i }}')[0].value = value ;
+                        if(!(value > 0 || value < 0)){
+                            alertify.alert('Error','Debe ingresar un valor válido');
+                        } else {
                         alertify.prompt2('Restar Stock','Ingrese una Descripcion','',
                         function(evt,value2){
                             document.getElementsByName('descripcion_{{ i }}')[0].value = value2 ;
@@ -188,6 +191,7 @@
                         },
                         function(){}
                         ).set({'type':'text'});
+                    }
                     },
                     function(){}
                     ).set({'type':'number','value':0,'min':0,'max':'{{ insumo.cantidad }}'});">
@@ -202,9 +206,12 @@
                     <input type="number" name="cantidad_{{ i }}" hidden>
                     <input type="number" name="tipoMovimiento_{{ i }}" value="1" hidden>
                 </form>
-                <img class="iconos" src="/public/res/sumInsumo.svg" title="Sumar Stock" onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar (0-{{ insumo.stock }})','',
+                <img class="iconos" src="/public/res/sumInsumo.svg" title="Sumar Stock" onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar (1-{{ insumo.stock }})','',
                     function(evt,value){
                         document.getElementsByName('cantidad_{{ i }}')[0].value = value ;
+                        if(!(value > 0 || value < 0)){
+                            alertify.alert('Error','Debe ingresar un valor válido');
+                        } else {
                         alertify.prompt2('Sumar Stock','Ingrese una Descripcion','',
                         function(evt,value2){
                             document.getElementsByName('descripcion_{{ i }}')[0].value = value2 ;
@@ -212,6 +219,7 @@
                         },
                         function(){}
                         ).set({'type':'text'});
+                    }
                     },
                     function(){}
                     ).set({'type':'number','value':0,'min':0,'max':'{{ insumo.stock }}'});">

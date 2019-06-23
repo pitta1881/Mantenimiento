@@ -12,6 +12,11 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
+{% if datos.errorInsert %}
+<script>
+    alertify.alert('Error', 'La Especializacion ya existe..')
+</script>
+{% endif %}
 <div class="general">
     <h1>Listado de Especializaciones</h1>
     <script>

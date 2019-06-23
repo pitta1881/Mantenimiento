@@ -63,6 +63,7 @@ class Persona extends Model{
                     $miPersona[$key] = '-';
                 } else{
                     $miPersona[$key] = date("d/m/Y", strtotime($miPersona[$key]));
+                    var_dump($miPersona[$key]);
                 }
             }
         }

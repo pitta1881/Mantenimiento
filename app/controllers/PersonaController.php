@@ -11,7 +11,7 @@ class PersonaController extends Controller{
       session_start();    
    }
     
-    public function vistaAdministracionPersona(){
+    public function vistaAdministracionPersona($boolError = false){
         if(isset($_GET["page"])){
             $pagina=$_GET["page"];
         }else{
@@ -21,7 +21,12 @@ class PersonaController extends Controller{
         $datos['todasPersonas'] = $todasPersonas;
         //$totalPaginas=$this->model->getsize();
         //$datos["totalPaginas"] =   $totalPaginas;
+        $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
+        $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
         $datos["userLogueado"] = $_SESSION['user'];
+        if ($boolError) {
+            $datos['errorInsert'] = true;
+        }
         return view('/personas/personas.administracion', compact('datos'));
     }
 
@@ -38,14 +43,17 @@ class PersonaController extends Controller{
         if (empty($statement)) {            
             $this->model->insert($datos); 
             return $this->vistaAdministracionPersona();
-        }/*else{
-            mostrar mensaje de que ya existe
-        }*/
+        }else{
+            return $this->vistaAdministracionPersona(true);
+        }
     }
 
     public function modificarPersonaSeleccionada(){
         $miPersona = $this->model->getByIdPersona($_GET['dni']);
+        $miPersona['fecha_nacimiento'] = date("Y-m-d", strtotime($miPersona['fecha_nacimiento']));
         $datos["miPersona"] = $miPersona;
+        $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
+        $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
         $datos["userLogueado"] = $_SESSION['user'];
         return view('/personas/personas.modificar',compact('datos'));
     }

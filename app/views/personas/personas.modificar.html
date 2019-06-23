@@ -31,7 +31,8 @@
             <label for="email">Email</label>
             <input type="email" name="email" value="{{ datos.miPersona.email }}">
             <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-            <input type="date" name="fecha_nacimiento" value="{{ datos.miPersona.fecha_nacimiento }}">
+            <input type="date" name="fecha_nacimiento" value="{{ datos.miPersona.fecha_nacimiento }}"
+                max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
         </fieldset>
         <input type="submit">
     </form>
