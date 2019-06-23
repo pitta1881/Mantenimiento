@@ -12,6 +12,11 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
+{% if datos.errorInsert %}
+<script>
+    alertify.alert('Error', 'La Persona ya existe..')
+</script>
+{% endif %}
 <div class="general">
     <h1>Listado de Personas</h1>
     <a href="#" onclick="mostrarFormulario()" id="btnCrearPersona"><img class="iconos" src="/public/res/add.svg"
@@ -41,7 +46,7 @@
             <label for="email">Email</label>
             <input type="email" name="email">
             <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-            <input type="date" name="fecha_nacimiento">
+            <input type="date" name="fecha_nacimiento" max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
         </fieldset>
         <input type="submit">
     </form>

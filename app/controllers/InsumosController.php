@@ -13,7 +13,7 @@ class InsumosController extends Controller{
       session_start();    
    }
     
-    public function vistaAdministracionInsumos(){
+    public function vistaAdministracionInsumos($boolError = false){
         if(isset($_GET["page"])){
             $pagina=$_GET["page"];
         }else{
@@ -24,6 +24,9 @@ class InsumosController extends Controller{
         $totalPaginas=$this->model->getsize();
         $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
+        if ($boolError) {
+            $datos['errorInsert'] = true;
+        }
         return view('/insumos/insumos.administracion', compact('datos'));
     }
     
@@ -35,6 +38,8 @@ class InsumosController extends Controller{
         if (empty($statement)) {
             $this->model->insert($datos); 
             return $this->vistaAdministracionInsumos();
+        } else {
+            return $this->vistaAdministracionInsumos(true);
         }
     }
 

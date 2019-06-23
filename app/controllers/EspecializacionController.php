@@ -14,7 +14,7 @@ class EspecializacionController extends Controller
    }
 
 
-    public function vistaAdministracionEspecializacion(){
+    public function vistaAdministracionEspecializacion($boolError = false){
         if(isset($_GET["page"])){
             $pagina=$_GET["page"];
         }else{
@@ -25,6 +25,9 @@ class EspecializacionController extends Controller
         $totalPaginas=$this->model->getsize();
         $datos["totalPaginas"] =   $totalPaginas;
         $datos["userLogueado"] = $_SESSION['user'];
+        if ($boolError) {
+            $datos['errorInsert'] = true;
+        }
         return view('/especializacion/especializacion.administracion', compact('datos'));
     }
        
@@ -35,6 +38,8 @@ class EspecializacionController extends Controller
         if (empty($statement)) {
             $this->model->insert($datos); 
             return $this->vistaAdministracionEspecializacion();
+        } else {
+            return $this->vistaAdministracionEspecializacion(true);
         }
     }
 

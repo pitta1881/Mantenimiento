@@ -12,6 +12,11 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
+{% if datos.errorInsert %}
+<script>
+    alertify.alert('Error', 'El Insumo ya existe..')
+</script>
+{% endif %}
 <div class="contenido3">
     <a href="#" onclick="mostrarFormulario()" id="btnCrearAgente"><img class="iconos" src="/public/res/add.svg"
             title="Crear Insumo"></a>
@@ -67,7 +72,7 @@
                         } else if(value < 0){
                             document.getElementsByName('tipoMovimiento_{{ insumo.idInsumo }}')[0].value = 1;
                         } else {
-                            alertify.alert('Error','El valor no puede ser 0');
+                            alertify.alert('Error','Debe ingresar un valor válido');
                         }
                         if (value != 0){
                             alertify.prompt2('Modificar Stock','Ingrese una Descripcion','',

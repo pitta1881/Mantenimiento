@@ -13,6 +13,11 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 
 {% block main %}
+{% if datos.errorInsert %}
+<script>
+    alertify.alert('Error', 'El Sector ya existe..')
+</script>
+{% endif %}
 <div class="general">
     <h1>Listado de Sectores</h1>
     <a href="#" onclick="mostrarFormulario()" id="btnCrearSector"><img class="iconos" src="/public/res/add.svg"

@@ -18,15 +18,7 @@
     <ul class="navTitulo">
         <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver">
         <h2>Modificar Pedido Nº {{ datos.miPedido.id }}</h2>
-
-
-
     </ul>
-
-
-
-
-
     <form action="/pedido/modificar" method="POST">
         <fieldset>
             <legend>Datos Basicos</legend>
@@ -40,8 +32,8 @@
                 <option value="{{ datos.miPedido.estado }}" selected>{{ datos.miPedido.estado }} </option>
             </select>
             <label for="fechaInicio">Fecha</label>
-            <input type="date" name="fechaInicio" value="{{ datos.miPedido.fechaInicio }}"
-                min="{{ datos.miPedido.fechaInicio }}">
+            <input type="date" name="fechaInicio" value="{{ datos.miPedido.fechaInicio }}" readonly
+                class="inputDisabled">
             <label for="sector">Sector</label>
             <select name="sector">
                 {% for sector in datos.sectores %}
