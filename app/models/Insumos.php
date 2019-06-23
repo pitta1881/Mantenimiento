@@ -89,20 +89,16 @@ class Insumos extends Model
         $this->db->insert($this->tableItemInsumo, $datos);
     }
 
-    public function registrarMovimiento($idInsumo,$cantidad,$tipo){
+    public function registrarMovimiento($idInsumo,$datos,$cantidad){
         $oldStock = $this->db->getStock($this->table,$idInsumo);
-        if ($tipo == 0) {
+        if ($datos['tipoMovimiento'] == 0) {
             $newStock = $oldStock[0][0] + $cantidad;
         } else {
             $newStock = $oldStock[0][0] - $cantidad;
         }
-        $datos = [
-            'idInsumo' => $idInsumo,
-            'fechaMovimiento' => date("Y-m-d"),
-            'tipoMovimiento' => $tipo,
-            'oldStock' => $oldStock[0][0],
-            'newStock' => $newStock            
-        ];
+        $datos['fechaMovimiento'] = date("Y-m-d");
+        $datos['oldStock'] = $oldStock[0][0];
+        $datos['newStock'] = $newStock;
         $this->db->insert($this->tableMovimiento,$datos);
     }
 
@@ -131,12 +127,57 @@ class Insumos extends Model
         return $misHistorias;
     }
 
+    public function verHistorialParticular($idPedido,$idTarea,$idInsumo){
+        $historias = $this->db->selectHistoriasInsumoPorIdIdId($this->tableMovimiento,$idPedido,$idTarea,$idInsumo);
+        $misHistorias = json_decode(json_encode($historias), True);
+        for ($i=0; $i < count($misHistorias); $i++) { 
+            $nombre = $this->db->getNombreInsumoFromId($this->table,$misHistorias[$i]['idInsumo'])[0];
+            $misHistorias[$i]['nombreDescripcion'] = $nombre[0].' '.$nombre[1];
+            $misHistorias[$i]['fechaMovimiento'] = date("d/m/Y", strtotime($misHistorias[$i]['fechaMovimiento']));
+            if ($misHistorias[$i]['tipoMovimiento'] == 0) {
+                $misHistorias[$i]['tipoMovimiento'] = 'Resto Stock';
+            } else {
+                $misHistorias[$i]['tipoMovimiento'] = 'Sumo Stock';
+            }
+            $misHistorias[$i]['cantidad'] = abs($misHistorias[$i]['oldStock'] - $misHistorias[$i]['newStock']);
+            if ($i == 0) {
+                $misHistorias[$i]['oldStock'] = '-';
+                $misHistorias[$i]['newStock'] = $misHistorias[$i]['cantidad'];
+            } else {
+                $misHistorias[$i]['oldStock'] = $misHistorias[$i-1]['newStock'];
+                if ($misHistorias[$i]['tipoMovimiento'] == 'Resto Stock') {
+                    $misHistorias[$i]['newStock'] = abs($misHistorias[$i]['oldStock']-$misHistorias[$i]['cantidad']);
+                } else {                    
+                    $misHistorias[$i]['newStock'] = abs($misHistorias[$i]['oldStock']+$misHistorias[$i]['cantidad']);
+                }
+            }
+            
+            
+        }
+        return $misHistorias;
+    }
+
     public function verInsumosUsados($idPedido,$idTarea){
         $insumosUsados = $this->db->selectInsumosUsados($this->tableItemInsumo, $this->table,$idPedido,$idTarea);
         $misInsumos = json_decode(json_encode($insumosUsados), True);
         return $misInsumos;
         }
 
+        public function updateItem(array $datos,$tipo)
+        {
+            $cantidadActual = $this->db->selectCantidadByIdIdId($this->tableItemInsumo, $datos['idPedido'],$datos['idTarea'],$datos['idInsumo']);
+            $cantidadActual2 = json_decode(json_encode($cantidadActual[0][0]),true);
+            if ($tipo == 1) {
+                $cantidad = $cantidadActual2 + $datos['cantidad'];
+            } else {
+                $cantidad = $cantidadActual2 - $datos['cantidad'];
+            }
+            if ($cantidad == 0) {
+                $this->db->deleteItemInsumo($this->tableItemInsumo, $datos['idPedido'],$datos['idTarea'],$datos['idInsumo']);
+            } else {
+                $this->db->updateItemInsumo($this->tableItemInsumo, $datos,$tipo);
+            }           
+        }
     
 }
 

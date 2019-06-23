@@ -21,10 +21,12 @@
     <h1>HISTORIAL DE MOVIMIENTOS DE {{ datos.historial.0.nombreDescripcion }}</h1>
     <table id=" miTabla">
         <th onclick="sortTable(0,'miTabla')">Fecha</th>
-        <th onclick="sortTable(0,'miTabla')">Tipo Movimiento</th>
-        <th onclick="sortTable(0,'miTabla')">Cantidad</th>
-        <th onclick="sortTable(0,'miTabla')">Antes</th>
-        <th onclick="sortTable(0,'miTabla')">Despues</th>
+        <th onclick="sortTable(1,'miTabla')">Tipo Movimiento</th>
+        <th onclick="sortTable(2,'miTabla')">Cantidad</th>
+        <th onclick="sortTable(3,'miTabla')">Antes</th>
+        <th onclick="sortTable(4,'miTabla')">Despues</th>
+        <th onclick="sortTable(5,'miTabla')">Usuario</th>
+        <th onclick="sortTable(6,'miTabla')">Descripcion</th>
         {% for historia in datos.historial %}
         <tr>
             <td>{{ historia.fechaMovimiento }}</td>
@@ -32,6 +34,8 @@
             <td>{{ historia.cantidad }}</td>
             <td>{{ historia.oldStock }}</td>
             <td>{{ historia.newStock }}</td>
+            <td>{{ historia.nombreUsuario }}</td>
+            <td>{{ historia.descripcion }}</td>
         </tr>
         {% endfor %}
     </table>

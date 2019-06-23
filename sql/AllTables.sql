@@ -226,12 +226,17 @@ USE mantenimiento;
 CREATE TABLE movimiento (
     idMovimiento INTEGER AUTO_INCREMENT,
     idInsumo INTEGER,
+    idPedido Integer,
+    idTarea Integer,
     fechaMovimiento date NOT NULL,
     tipoMovimiento BOOLEAN NOT NULL,
     oldStock integer NOT NULL,
     newStock integer NOT NULL,
+    nombreUsuario varchar (11) NOT NULL,
+    descripcion TEXT,
     PRIMARY KEY (idMovimiento,idInsumo),
-    FOREIGN KEY (idInsumo) REFERENCES insumo(idInsumo)
+    FOREIGN KEY (idInsumo) REFERENCES insumo(idInsumo),
+    FOREIGN KEY (nombreUsuario) REFERENCES usuarios (nombre)
 );
 
 USE mantenimiento;

@@ -41,7 +41,7 @@
                         if (inputNumer.style.display == 'inline-block') {inputNumer.style.display = 'none'; inputNumer.disabled = true} else {inputNumer.style.display = 'inline-block';inputNumer.disabled = false}"
                         required>
                     <label for="{{ i }}_{{ datos.idPedido }}_cantidad"></label>
-                    <input type="number" name="{{ i }}_cantidad" value="0" min="0" max="{{ insumo.stock }}"
+                    <input type="number" name="{{ i }}_cantidad" value="0" min="1" max="{{ insumo.stock }}"
                         id="{{ i }}_{{ datos.idPedido }}" required style="background-color: khaki; display: none"
                         disabled>
                 </td>

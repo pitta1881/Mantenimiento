@@ -52,12 +52,35 @@
             <td>{{ insumo.stock }}</td>
             <td>
                 <!--SUMAR INSUMOS-->
-                <form action="/insumo/sumarStock" method="post" hidden id="formSumar{{ insumo.idInsumo }}">
+                <form action="/insumo/updateStockSinItem" method="post" hidden id="formSumar{{ insumo.idInsumo }}">
                     <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
                     <input type="number" name="cantidad_{{ insumo.idInsumo }}" hidden>
+                    <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" hidden>
+                    <input type="text" name="descripcion_{{ insumo.idInsumo }}" hidden>
+                    <input type="number" name="tipoMovimiento_{{ insumo.idInsumo }}" value="1" hidden>
                 </form>
-                <img class="iconos" src="/public/res/add.svg" title="Sumar Stock"
-                    onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar','',function(evt,value){document.getElementsByName('cantidad_{{ insumo.idInsumo }}')[0].value = value ;document.getElementById('formSumar{{ insumo.idInsumo }}').submit()},function(){}).set({'type':'number','min':0,'value':0});">
+                <img class="iconos" src="/public/res/masmenos.svg" title="Modificar Stock" onclick="alertify.prompt('Modificar Stock','Seleccione la cantidad a modificar(Mas o Menos)','',
+                    function(evt,value){
+                        document.getElementsByName('cantidad_{{ insumo.idInsumo }}')[0].value = value;
+                        if(value > 0){
+                            document.getElementsByName('tipoMovimiento_{{ insumo.idInsumo }}')[0].value = 0;
+                        } else if(value < 0){
+                            document.getElementsByName('tipoMovimiento_{{ insumo.idInsumo }}')[0].value = 1;
+                        } else {
+                            alertify.alert('Error','El valor no puede ser 0');
+                        }
+                        if (value != 0){
+                            alertify.prompt2('Modificar Stock','Ingrese una Descripcion','',
+                            function(evt,value2){
+                                document.getElementsByName('descripcion_{{ insumo.idInsumo }}')[0].value = value2 ;
+                                document.getElementById('formSumar{{ insumo.idInsumo }}').submit()
+                            },
+                            function(){}
+                            ).set({'type':'text'});    
+                        }                        
+                    },
+                        function(){}
+                        ).set({'type':'number','value':0});">
                 <!--MODIFICAR INSUMO-->
                 <a href='/insumo/modificar/seleccionado?idInsumo={{ insumo.idInsumo }}'>
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">

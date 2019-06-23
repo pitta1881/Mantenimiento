@@ -881,6 +881,45 @@ public function updateEvento($table, $parameters, $idEvento){
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
    }
+
+   public function updateItemInsumo($table, $parameters, $tipoMovimiento){
+    $parameters = $this->cleanParameterName($parameters);
+    if ($tipoMovimiento == 1) {
+        $sql = "UPDATE $table SET cantidad=cantidad+:cantidad WHERE idPedido=:idPedido AND idTarea=:idTarea AND idInsumo=:idInsumo";
+    } else {
+        $sql = "UPDATE $table SET cantidad=cantidad-:cantidad WHERE idPedido=:idPedido AND idTarea=:idTarea AND idInsumo=:idInsumo";
+    }
+        try {
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute($parameters);
+        } catch (Exception $e) {
+            $this->sendToLog($e);
+        }   
+    }
+
+    public function deleteItemInsumo($tableItem,$idPedido,$idTarea,$idInsumo){ 
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $tableItem  WHERE idPedido=$idPedido AND idTarea=$idTarea AND idInsumo = $idInsumo"
+        );
+        $statement->execute();
+    }
+    
+    public function selectCantidadByIdIdId($tableItemInsumos, $idPedido, $idTarea,$idInsumo){
+        $statement = $this->pdo->prepare(
+            "SELECT cantidad FROM $tableItemInsumos WHERE idPedido=$idPedido AND idTarea=$idTarea AND idInsumo=$idInsumo"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_NUM);
+   }
+
+   public function selectHistoriasInsumoPorIdIdId($tableMovimiento,$idPedido,$idTarea,$idInsumo){
+    $statement = $this->pdo->prepare(
+        "SELECT * FROM $tableMovimiento WHERE idPedido=$idPedido AND idTarea=$idTarea AND idInsumo=$idInsumo"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+}
+    
 }
 
 

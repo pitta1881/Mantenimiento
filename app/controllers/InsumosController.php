@@ -73,12 +73,21 @@ class InsumosController extends Controller{
     }
 
     public function asignarInsumos(){
+        $tipoMovimiento = 1;
         foreach ($_POST as $datos => $datos2) {
             if (explode("_",$datos)[1]=='cantidad') {
                 $itemInsumo['cantidad']=$datos2;
+                $itemMovimiento = [
+                    'idInsumo' => $idInsumoFinal,
+                    'idPedido' => $idPedidoFinal,
+                    'idTarea' => $idTareaFinal,
+                    'nombreUsuario' => $_SESSION['user'],
+                    'descripcion' => 'Insumo asignado a la Tarea '.$idTareaFinal.' del Pedido '.$idPedidoFinal,
+                    'tipoMovimiento' => $tipoMovimiento
+                ];
                 $this->model->insertItem($itemInsumo);
-                $this->model->registrarMovimiento($idInsumoFinal,$datos2,1); //el 1 para restar
-                $this->model->updateStock($idInsumoFinal,$datos2,1);
+                $this->model->registrarMovimiento($idInsumoFinal,$itemMovimiento,$datos2);
+                $this->model->updateStock($idInsumoFinal,$datos2,$tipoMovimiento);
             } else {
                 $idPedidoFinal = explode('_',$datos)[1];
                 $idTareaFinal = explode('_',$datos2)[0];
@@ -100,19 +109,68 @@ class InsumosController extends Controller{
         return view('/insumos/insumoVerHistorial',compact('datos'));
     }
 
-    public function sumarStock(){
+    public function verHistorialParticular(){
+        $historial = $this->model->verHistorialParticular($_GET['idPedido'],$_GET['idTarea'],$_GET['idInsumo']);
+        $datos['historial'] = $historial;
+        $datos["userLogueado"] = $_SESSION['user'];
+        return view('/insumos/insumoVerHistorial',compact('datos'));
+    }
+
+    public function updateStockSinItem(){
+        foreach ($_POST as $key => $value) {
+            $nombreKey = explode('_',$key)[0];
+            if ($nombreKey == 'cantidad') {
+                $cantidad = $value;
+                $cantidad = abs($cantidad);
+            }
+            if ($nombreKey == 'descripcion') {
+                $descripcion = $value;
+            }
+            if ($nombreKey == 'tipoMovimiento') {
+                $tipoMovimiento = $value;
+            }
+        }
+        $itemMovimiento = [
+            'idInsumo' => $_POST['idInsumo'],
+            'nombreUsuario' => $_POST['nombreUsuario'],
+            'descripcion' => $descripcion,
+            'tipoMovimiento' => $tipoMovimiento
+        ];        
+        $this->model->registrarMovimiento($_POST['idInsumo'],$itemMovimiento,$cantidad);
+        $this->model->updateStock($_POST['idInsumo'],$cantidad,$tipoMovimiento);
+        return $this->vistaAdministracionInsumos();
+    }
+
+    public function reasignarInsumo(){
         foreach ($_POST as $key => $value) {
             $nombreKey = explode('_',$key)[0];
             if ($nombreKey == 'cantidad') {
                 $cantidad = $value;
             }
-        }        
-        $this->model->registrarMovimiento($_POST['idInsumo'],$cantidad,0); //el 1 para restar
-        $this->model->updateStock($_POST['idInsumo'],$cantidad,0);
-        if (empty($_GET)) {
-            return $this->vistaAdministracionInsumos();
-        } else {
-            # code...
+            if ($nombreKey == 'descripcion') {
+                $descripcion = $value;
+            }
+            if ($nombreKey == 'tipoMovimiento') {
+                $tipoMovimiento = $value;
+            }
         }
+        $itemInsumo = [
+            'idPedido' => $_POST['idPedido'],
+            'idTarea' => $_POST['idTarea'],
+            'idInsumo' => $_POST['idInsumo'],
+            'cantidad' => $cantidad
+        ];
+        $itemMovimiento = [
+            'idInsumo' => $_POST['idInsumo'],
+            'idPedido' => $_POST['idPedido'],
+            'idTarea' => $_POST['idTarea'],
+            'nombreUsuario' => $_POST['nombreUsuario'],
+            'descripcion' => $descripcion,
+            'tipoMovimiento' => $tipoMovimiento
+        ];
+        $this->model->updateItem($itemInsumo,$tipoMovimiento);
+        $this->model->registrarMovimiento($_POST['idInsumo'],$itemMovimiento,$cantidad);
+        $this->model->updateStock($_POST['idInsumo'],$cantidad,$tipoMovimiento);
+        redirect("fichaTarea?idPedido=".$_POST['idPedido']."&idTarea=".$_POST['idTarea']);
     }
 }

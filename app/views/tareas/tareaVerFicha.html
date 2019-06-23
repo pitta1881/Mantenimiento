@@ -131,13 +131,13 @@
                 </a>
                 {% if  datos.miTarea.estado != "Finalizado" %}
                 <form action="/tarea/agentes/desasignar" method="post" hidden
-                    id="formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}">
+                    id="formReasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}">
                     <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
                     <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
                     <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
                 </form>
                 <img class="iconos" src="/public/res/remAgente.svg" title="Desasignar Agente"
-                    onclick="alertify.confirm('Desasignar Agente','¿Esta seguro?',function(){document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}').submit()},function(){})">
+                    onclick="alertify.confirm('Desasignar Agente','¿Esta seguro?',function(){document.getElementById('formReasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}').submit()},function(){})">
                 {% endif %}
             </td>
         </tr>
@@ -158,41 +158,68 @@
         <th onclick="sortTable(2,'miTabla')">Descripcion</th>
         <th onclick="sortTable(3,'miTabla')">Cantidad Utilizada</th>
         <th onclick="sortTable(4,'miTabla')">Accion</th>
+        {% set i = 0 %}
         {% for insumo in datos.miTarea.insumos %}
         <tr>
             <td>{{ insumo.nombreInsumo }}</td>
             <td>{{ insumo.descripcion }}</td>
             <td>{{ insumo.cantidad }}</td>
             <td>
-                <!--VER HISTORIAL-->
-                <a href="/insumo/verHistorial?idInsumo={{ insumo.idInsumo }}"><img class="iconosTitulo"
-                        src="/public/res/historyEstado.svg" title="Ver Historial"></a>
                 <!--AUN NO FUNCIONA-->
                 {% if  datos.miTarea.estado != "Finalizado" %}
-                <form action="#" method="post" hidden
-                    id="formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}">
+                {% set i = i + 1 %}
+                <form action="/tarea/insumos/reasignar" method="post" hidden
+                    id="formReasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}_{{ i }}">
                     <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
                     <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
                     <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
-                    <input type="number" name="cantidad" hidden>
+                    <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" hidden>
+                    <input type="text" name="descripcion_{{ i }}" hidden>
+                    <input type="number" name="cantidad_{{ i }}" hidden>
+                    <input type="number" name="tipoMovimiento_{{ i }}" value="0" hidden>
                 </form>
-                <img class="iconos" src="/public/res/sumInsumo.svg" title="Sumar Stock" onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar','',
-                    function(evt,value){ 
-                        document.getElementsByName('cantidad')[0].value = value ;
-                        document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}').submit()
+                <img class="iconos" src="/public/res/minusInsumo.svg" title="Restar Stock" onclick="alertify.prompt('Restar Stock','Seleccione la cantidad a restar (0-{{ insumo.cantidad }})','',
+                    function(evt,value){
+                        document.getElementsByName('cantidad_{{ i }}')[0].value = value ;
+                        alertify.prompt2('Restar Stock','Ingrese una Descripcion','',
+                        function(evt,value2){
+                            document.getElementsByName('descripcion_{{ i }}')[0].value = value2 ;
+                            document.getElementById('formReasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}_{{ i }}').submit()
+                        },
+                        function(){}
+                        ).set({'type':'text'});
                     },
                     function(){}
-                    ).setting({'min':0,'type':'number','value':0});">
-                <form action="#" method="post" hidden
-                    id="formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}">
+                    ).set({'type':'number','value':0,'min':0,'max':'{{ insumo.cantidad }}'});">
+                {% set i = i + 1 %}
+                <form action="/tarea/insumos/reasignar" method="post" hidden
+                    id="formReasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}_{{ i }}">
                     <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
                     <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
                     <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
-                    <input type="number" name="cantidad" hidden>
+                    <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" hidden>
+                    <input type="text" name="descripcion_{{ i }}" hidden>
+                    <input type="number" name="cantidad_{{ i }}" hidden>
+                    <input type="number" name="tipoMovimiento_{{ i }}" value="1" hidden>
                 </form>
-                <img class="iconos" src="/public/res/minusInsumo.svg" title="Restar Stock"
-                    onclick="alertify.prompt('Restar Stock','Seleccione la cantidad a restar','',function(evt,value){document.getElementsByName('cantidad')[0].value = value ;document.getElementById('formDesasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}').submit()},function(){}).set({'type':'number','min':0});">
+                <img class="iconos" src="/public/res/sumInsumo.svg" title="Sumar Stock" onclick="alertify.prompt('Sumar Stock','Seleccione la cantidad a sumar (0-{{ insumo.stock }})','',
+                    function(evt,value){
+                        document.getElementsByName('cantidad_{{ i }}')[0].value = value ;
+                        alertify.prompt2('Sumar Stock','Ingrese una Descripcion','',
+                        function(evt,value2){
+                            document.getElementsByName('descripcion_{{ i }}')[0].value = value2 ;
+                            document.getElementById('formReasignar{{ datos.miTarea.idPedido }}_{{ datos.miTarea.idTarea }}_{{ insumo.idInsumo }}_{{ i }}').submit()
+                        },
+                        function(){}
+                        ).set({'type':'text'});
+                    },
+                    function(){}
+                    ).set({'type':'number','value':0,'min':0,'max':'{{ insumo.stock }}'});">
                 {% endif %}
+                <!--VER HISTORIAL-->
+                <a
+                    href="/insumo/verHistorialParticular?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}&idInsumo={{ insumo.idInsumo }}"><img
+                        class="iconosTitulo" src="/public/res/historyEstado.svg" title="Ver Historial"></a>
             </td>
         </tr>
         {% endfor %}
