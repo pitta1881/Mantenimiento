@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Lista de Tareas{% endblock %}
+{% block title %}Historial de Insumo{% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+    "titulo": "Historial de Movimientos"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 

@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Lista de Tareas{% endblock %}
+{% block title %}Ficha de Pedido{% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+    "titulo": "Ficha de Pedido"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
@@ -16,7 +18,6 @@
 <div class="general">
     <ul class="navTitulo">
         <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver">
-        <h1>Su Pedido</h1>
         <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
         <a href='/pedido/modificar/seleccionado?id={{ datos.miPedido.id }}'>
             <img class="iconosTitulo" src="/public/res/update.svg" title="Modificar">

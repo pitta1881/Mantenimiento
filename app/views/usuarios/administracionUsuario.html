@@ -1,4 +1,7 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %}
+{% extends "base.html" %} {% block title %}Gestion de Usuarios{% endblock %} {% block header %}
+{% set datos = datos|merge({
+    "titulo": "Gestión de Usuarios"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
@@ -9,7 +12,6 @@
         alertify.alert('Error', 'El Usuario ya existe..')
     </script>
     {% endif %}
-    <h1>Listado de Usuarios</h1>
     <a href="#" onclick="mostrarFormulario()" id="btnCrearUsuario"><img class="iconos" src="/public/res/add.svg"
             title="Crear Usuario"></a>
     {% if "alta usuario" in datos.userPermisos|keys %}

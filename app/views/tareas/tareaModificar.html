@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Crear Tarea Nueva{% endblock %}
+{% block title %}Modificar Tarea{% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+    "titulo": "Modificar Tarea"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 

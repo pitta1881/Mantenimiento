@@ -1,9 +1,11 @@
-{% extends "base.html" %} {% block title %}Lista de OTs{% endblock %} {% block header %}
+{% extends "base.html" %} {% block title %}Gestión de OTs{% endblock %} {% block header %}
+{% set datos = datos|merge({
+    "titulo": "Gestión de Ordenes de Trabajo"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
-    <h1>Listado de Ordenes de Trabajo</h1>
     <script>
         $(document).ready(function () {
             $('#miTabla').DataTable();

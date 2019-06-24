@@ -1,10 +1,12 @@
 {% extends "base.html" %} {% block title %}Gestion de Eventos{% endblock %} {% block header %}
+{% set datos = datos|merge({
+    "titulo": "Gestión de Eventos"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 {% block main %}
 <div class="general">
-    <h1>Listado de Eventos</h1>
     <a href="#" onclick="mostrarFormulario()" id="btnCrearEvento"><img class="iconos" src="/public/res/add.svg"
             title="Crear Evento"></a>
     <script>

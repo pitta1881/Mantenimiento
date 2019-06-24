@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Crear Tarea Nueva{% endblock %}
+{% block title %}Modificar Pedido{% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+    "titulo": "Modificar Pedido"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
@@ -14,7 +16,6 @@
 
 {% block main %}
 <div class="general">
-
     <ul class="navTitulo">
         <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver">
         <h2>Modificar Pedido Nº {{ datos.miPedido.id }}</h2>

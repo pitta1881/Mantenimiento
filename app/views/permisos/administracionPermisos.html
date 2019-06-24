@@ -3,7 +3,9 @@
 {% block title %} Gestion de Permisos {% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+    "titulo": "Gestión de Permisos"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
@@ -13,7 +15,6 @@
 
 {% block main %}
 <div class="general">
-    <h1>Listado de Permisos</h1>
     <script>
         function mostrarFormulario() {
             var formularioEspecializacion = document.getElementById('formularioEspecializacion');

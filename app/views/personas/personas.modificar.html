@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Modificar Sector{% endblock %}
+{% block title %}Modificar Persona{% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+    "titulo": "Modificar Persona"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
@@ -15,10 +17,9 @@
 {% block main %}
 <div class="contenido3">
     <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
-    <h1>Modificar Persona</h1>
     <form action="/persona/modificar/guardar" method="post">
         <fieldset class="basicosPersona">
-            <legend> Alta de Persona</legend>
+            <legend>Modificar Persona</legend>
             <label for="dni">DNI</label><span class="asterisco">*</span>
             <input type="text" name="dni" autofocus required value="{{ datos.miPersona.dni }}" readonly
                 class="inputDisabled">

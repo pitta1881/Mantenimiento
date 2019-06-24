@@ -42,6 +42,8 @@ h1 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+h3 {}
+
 form {
     /*   background-color: rgb(135, 151, 179); */
     background-color: rgba(255, 255, 255, 0.3);
@@ -458,9 +460,4 @@ td {
     position: relative;
     display: flex;
     list-style: none;
-}
-
-.navTitulo .iconosTitulo {
-    position: relative;
-    top: 5vh;
 }

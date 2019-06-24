@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Alta de Insumo{% endblock %}
+{% block title %}Modificar Evento{% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+  "titulo": "Modificar Eventos"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
@@ -15,7 +17,6 @@
 {% block main %}
 <div class="contenido3">
   <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
-  <h1>Modificar Evento</h1>
   <form action="/eventos/administracionEventos/modificarEvento" method="POST">
     <fieldset class="basicosPedidos">
       <legend> Modificar Eventos</legend>

@@ -3,7 +3,9 @@
 {% block title %} Gestion de Insumos {% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+    "titulo": "Gestión de Insumos"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 

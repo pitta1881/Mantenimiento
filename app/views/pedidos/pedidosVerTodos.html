@@ -1,9 +1,11 @@
 {% extends "base.html" %} {% block title %}Lista de Pedidos{% endblock %} {% block header %}
+{% set datos = datos|merge({
+    "titulo": "Gestión de Pedidos"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
-    <h1>Listado de Pedidos</h1>
     <a href="#" onclick="mostrarFormulario()"><img class="iconos" src="/public/res/nuevo.svg" title="Crear"></a>
     <script>
         function mostrarFormulario() {

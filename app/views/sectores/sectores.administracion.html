@@ -3,7 +3,9 @@
 {% block title %} Gestion de Sectores {% endblock %}
 
 {% block header %}
-
+{% set datos = datos|merge({
+    "titulo": "Gestión de Sectores"
+}) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
@@ -11,7 +13,6 @@
 
 {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
-
 {% block main %}
 {% if datos.errorInsert %}
 <script>
@@ -19,7 +20,6 @@
 </script>
 {% endif %}
 <div class="general">
-    <h1>Listado de Sectores</h1>
     <a href="#" onclick="mostrarFormulario()" id="btnCrearSector"><img class="iconos" src="/public/res/add.svg"
             title="Crear Sector"></a>
     <script>
