@@ -47,7 +47,7 @@ h3 {}
 form {
     /*   background-color: rgb(135, 151, 179); */
     background-color: rgba(255, 255, 255, 0.3);
-    background-color: #BBC7D6;
+    /* background-color: #BBC7D6; */
 }
 
 form label {

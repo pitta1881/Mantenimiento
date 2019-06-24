@@ -6,57 +6,71 @@
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
-    <a href="#" onclick="mostrarFormulario()"><img class="iconos" src="/public/res/nuevo.svg" title="Crear"></a>
-    <script>
-        function mostrarFormulario() {
-            var formularioPedido = document.getElementById('formularioPedido');
-            if (formularioPedido.style.display == "block") {
-                formularioPedido.style.display = "none";
-            } else {
-                formularioPedido.style.display = "block"
-            }
-        }
-    </script>
-    <form action="/pedido/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
-        {% if datos.sectores is empty %}
-        <h2>Primero debe añadir un Sector --> <a href="/sectores/administracionSectores">HAGA CLICK AQUI</a></h2>
-        {% else %}
-        <fieldset class="basicosPedido">
-            <legend>Datos Basicos</legend>
-            <label for="nombreUsuario">Usuario Creador</label>
-            <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" readonly class="inputDisabled">
-            <label for="fechaInicio">Fecha</label>
-            <input type="DATE" name="fechaInicio" value="{{ datos.diaHoy }}" readonly class="inputDisabled">
-            <label for="estado">Estado</label>
-            <input type="text" name="estado" value="{{ datos.estados.0 }}" readonly class="inputDisabled">
-            <label for="sector">Sector</label>
-            <select name="sector">
-                {% for sector in datos.sectores %}
-                <option value="{{ sector }}">{{ sector }}</option>
-                {% endfor %}
-            </select>
-            <label for="prioridad">Prioridad</label>
-            <select name="prioridad">
-                {% for prioridad in datos.prioridades %}
-                <option value="{{ prioridad }}">{{ prioridad }}</option>
-                {% endfor %}
-            </select>
-            <br>
-            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-            <input type="textarea" rows="10" cols="50" name="descripcion" autofocus required
-                placeholder="Ingrese la descripcion..">
-            <br>
-
-
-        </fieldset>
-        {% if datos.idEvento is not empty %}
-        <input type="text" name="idEvento" value="{{ datos.idEvento }}" hidden>
-        {% endif %}
-        <input type="reset">
-        <input type="submit">
-        {% endif %}
-    </form>
-
+    <!-- Button to Open the Modal -->
+    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
+            src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Alta de Pedido</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/pedido/guardar" method="post" class="was-validated">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="nombreUsuario">Usuario Creador:</label><span class="asterisco">*</span>
+                                <input type="text" name="nombreUsuario" class="form-control"
+                                    value="{{ datos.userLogueado }}" required readonly>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="fechaInicio">Fecha:</label><span class="asterisco">*</span>
+                                <input type="date" name="fechaInicio" class="form-control" value="{{ datos.diaHoy }}"
+                                    required readonly>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="estado">Estado:</label><span class="asterisco">*</span>
+                                <input type="text" name="estado" class="form-control" value="{{ datos.estados.0 }}"
+                                    required readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="sector">Sector:</label><span class="asterisco">*</span>
+                                <select name="sector" class="form-control custom-select">
+                                    {% for sector in datos.sectores %}
+                                    <option value="{{ sector }}">{{ sector }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="prioridad">Prioridad:</label><span class="asterisco">*</span>
+                                <select name="prioridad" class="form-control custom-select">
+                                    {% for prioridad in datos.prioridades %}
+                                    <option value="{{ prioridad }}">{{ prioridad }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
+                            <textarea class="form-control" rows="4" id="descripcion" name="descripcion"
+                                required></textarea>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function () {
             $('#miTabla').DataTable();

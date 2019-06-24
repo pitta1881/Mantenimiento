@@ -6,6 +6,11 @@
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
+    <a class="crear" href="/ot/crear">
+        <input type="button" value="Crear OT">
+    </a>
+    <a href="/ot/crear" class="btn btn-info" role="button"><img class="iconos" src="/public/res/add.svg"
+            title="Crear OT">Crear OT</a>
     <script>
         $(document).ready(function () {
             $('#miTabla').DataTable();

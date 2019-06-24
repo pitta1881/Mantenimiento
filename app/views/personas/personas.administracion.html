@@ -20,37 +20,63 @@
 </script>
 {% endif %}
 <div class="general">
-    <a href="#" onclick="mostrarFormulario()" id="btnCrearPersona"><img class="iconos" src="/public/res/add.svg"
-            title="Crear Persona"></a>
-    <script>
-        function mostrarFormulario() {
-            var formularioPersona = document.getElementById('formularioPersona');
-            if (formularioPersona.style.display == "block") {
-                formularioPersona.style.display = "none";
-            } else {
-                formularioPersona.style.display = "block"
-            }
-        }
-    </script>
-    <form action="/persona/altaPersona" method="post" id="formularioPersona" style="display: none">
-        <fieldset class="basicosPersona">
-            <legend> Alta de Persona</legend>
-            <label for="dni">DNI</label><span class="asterisco">*</span>
-            <input type="number" name="dni" autofocus required>
-            <label for="nombre">Nombre</label><span class="asterisco">*</span>
-            <input type="text" name="nombre" required>
-            <label for="apellido">Apellido</label><span class="asterisco">*</span>
-            <input type="text" name="apellido" required>
-            <label for="direccion">Direccion</label>
-            <input type="text" name="direccion">
-            <br>
-            <label for="email">Email</label>
-            <input type="email" name="email">
-            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-            <input type="date" name="fecha_nacimiento" max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
-        </fieldset>
-        <input type="submit">
-    </form>
+    <!-- Button to Open the Modal -->
+    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
+            src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Alta de Persona</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/persona/altaPersona" method="post" class="was-validated">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="dni">DNI:</label><span class="asterisco">*</span>
+                                <input type="number" name="dni" class="form-control" autofocus required>
+                                <div class="invalid-feedback">Complete este campo</div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="nombre">Nombre:</label><span class="asterisco">*</span>
+                                <input type="text" name="nombre" class="form-control" required>
+                                <div class="invalid-feedback">Complete este campo</div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="apellido">Apellido:</label><span class="asterisco">*</span>
+                                <input type="text" name="apellido" class="form-control" required>
+                                <div class="invalid-feedback">Complete este campo</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Direccion:</label>
+                            <input type="text" name="direccion" class="form-control">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" class="form-control">
+                                <div class="invalid-feedback">El formato es incorrecto</div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="fecha_nacimiento">Fecha De Nacimiento:</label>
+                                <input type="date" name="fecha_nacimiento" class="form-control"
+                                    max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function () {
             $('#miTabla').DataTable();
