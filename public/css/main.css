@@ -125,36 +125,6 @@ form output {
     font-size: 2em;
 }
 
-dl {
-    background-color: #aabcfe;
-    /*   width: 100%; */
-}
-
-dt {
-    /* text-decoration: underline; */
-    float: left;
-    text-align: center;
-    width: 10%;
-    margin-right: 10px;
-    background-color: #aabcfe;
-    padding: 5px;
-    background: #b9c9fe;
-    /*border: 4px solid #aabcfe;*/
-    color: #039;
-}
-
-dt:nth-child(4n+1),
-dd:nth-child(4n+2) {
-    color: #039;
-    color: #039;
-}
-
-dd {
-    width: 97%;
-    margin: 1px;
-    padding: 5px;
-    background-color: white;
-}
 
 .div input {
     border-color: black;
@@ -380,9 +350,42 @@ td {
     border-top: 1px solid transparent;
 }
 
+dl {
+    background-color: #aabcfe;
+    /*   width: 100%; */
+}
+
+dt {
+    /* text-decoration: underline; */
+    display: inline-block;
+    text-align: center;
+    width: 10%;
+    margin-right: 10px;
+    background-color: #aabcfe;
+    padding: 5px;
+    background: #b9c9fe;
+    /*border: 4px solid #aabcfe;*/
+    color: #039;
+}
+
+dt:nth-child(4n+1),
+dd:nth-child(4n+2) {
+    color: #039;
+    color: #039;
+}
+
+dd {
+    display: inline-block;
+    width: 10%;
+    margin: 1px;
+    padding: 5px;
+    background-color: white;
+}
+
 .descripcion {
     text-align: left;
-    width: 25vw;
+    width: 71.5vw;
+    height: 15vh;
 }
 
 .basicosPedidos {
