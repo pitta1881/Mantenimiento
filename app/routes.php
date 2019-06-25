@@ -69,6 +69,7 @@
     $router->post('persona/modificar/guardar','PersonaController@modificar');
     $router->post('persona/eliminar','PersonaController@eliminar');
     $router->get('fichaPersona', 'PersonaController@ficha');
+    $router->post('persona/modificarEstado','PersonaController@modificarEstado');
 
 //rutas agentes
 

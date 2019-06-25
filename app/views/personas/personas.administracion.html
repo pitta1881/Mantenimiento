@@ -38,7 +38,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-3">
                                 <label for="dni">DNI:</label><span class="asterisco">*</span>
-                                <input type="number" name="dni" class="form-control" autofocus required>
+                                <input type="number" name="dni" class="form-control" autofocus required min="10000000">
                                 <div class="invalid-feedback">Complete este campo</div>
                             </div>
                             <div class="form-group col-md-4">
@@ -68,6 +68,7 @@
                                     max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
                             </div>
                         </div>
+                        <input type="text" name="estado" value="Activo" hidden>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
                             <button type="submit" class="btn btn-success">Enviar</button>
@@ -91,7 +92,8 @@
                 <th onclick="sortTable(3,'miTabla')">Direccion</th>
                 <th onclick="sortTable(4,'miTabla')">Email</th>
                 <th onclick="sortTable(5,'miTabla')">Fecha de Nacimiento</th>
-                <th onclick="sortTable(6,'miTabla')">Accion</th>
+                <th onclick="sortTable(6,'miTabla')">Estado</th>
+                <th onclick="sortTable(7,'miTabla')">Accion</th>
             </tr>
         </thead>
         {% for persona in datos.todasPersonas %}
@@ -103,19 +105,56 @@
             <td>{{ persona.direccion }}</td>
             <td>{{ persona.email }}</td>
             <td>{{ persona.fecha_nacimiento }}</td>
+            <td>{{ persona.estado }}</td>
             <td>
-                <a href='/persona/modificarPersona/seleccionado?dni={{ persona.dni }}'>
-
+                <a href='/persona/modificarPersona/seleccionado?dni={{ persona.dni }}'
+                    class="btn btn-outline-info btn-xs">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
+                <a href="#" class="btn btn-info" role="button" data-toggle="modal"
+                    data-target="#myModalEstado{{ persona.dni }}"><img class="iconos"
+                        src="/public/res/estadoPersona.svg" title="Modificar Estado"></a>
+                <!-- The Modal -->
+                <div class="modal fade" id="myModalEstado{{ persona.dni }}">
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Cambiar Estado</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/persona/modificarEstado" method="post">
+                                    <input type="text" name="dni" value="{{ persona.dni }}" hidden>
+                                    <div class="form-group">
+                                        <label for="estado">Nuevo Estado:</label>
+                                        <select name="estado" class="form-control custom-select">
+                                            {% for estado in datos.estados %}
+                                            {% if estado != persona.estado %}
+                                            <option value="{{ estado }}">{{ estado }}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% if persona.usado == false %}
                 <form action="/persona/eliminar" method="post" style="display: inline-block"
                     id="formEliminarPersona{{ persona.dni }}">
                     <input type="text" name="dni" value="{{ persona.dni }}" hidden>
                 </form>
-                <a
-                    onclick="alertify.confirm('Eliminar Especializacion','¿Esta seguro?',function(){document.getElementById('formEliminarPersona{{ persona.dni }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/del.svg" title="Eliminar Especializacion"></a>
+                <a class="btn btn-outline-info btn-xs"
+                    onclick="alertify.confirm('Eliminar Persona','¿Esta seguro?',function(){document.getElementById('formEliminarPersona{{ persona.dni }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/del.svg" title="Eliminar Persona"></a>
                 {% endif %}
             </td>
         </tr>

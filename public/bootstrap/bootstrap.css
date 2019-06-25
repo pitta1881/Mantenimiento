@@ -2846,10 +2846,10 @@ fieldset:disabled a.btn {
 
 .btn-info {
 	font-weight: 450;
- color: #039 ;
-    background-color: #17a2b8;
-		  background-color: #b9c9fe;
-    border-color: #17a2b8
+	color: #039;
+	background-color: #17a2b8;
+	background-color: #b9c9fe;
+	border-color: #17a2b8;
 }
 
 .btn-info:hover {

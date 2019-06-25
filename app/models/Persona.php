@@ -37,6 +37,11 @@ class Persona extends Model{
         }
         return $misPersonas;
     }   
+
+    
+    public function getEstadosPersona() {
+        return array("Activo","Inactivo","Vacaciones");
+    }
    
     public function insert(array $persona){
         $this->db->insert($this->table, $persona);

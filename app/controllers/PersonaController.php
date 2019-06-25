@@ -14,6 +14,7 @@ class PersonaController extends Controller{
     public function vistaAdministracionPersona($boolError = false){
         $todasPersonas = $this->model->get(); 
         $datos['todasPersonas'] = $todasPersonas;
+        $datos['estados'] = $this->model->getEstadosPersona();
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
         $datos["userLogueado"] = $_SESSION['user'];
@@ -31,7 +32,8 @@ class PersonaController extends Controller{
             'apellido' => $_POST['apellido'],
             'direccion' => $_POST['direccion'],
             'email' => $_POST['email'],
-            'fecha_nacimiento' => $_POST['fecha_nacimiento']
+            'fecha_nacimiento' => $_POST['fecha_nacimiento'],
+            'estado' => $_POST['estado']
         ]; 
         $statement = $this->model->buscarPersona($datos['dni']);
         if (empty($statement)) {            
@@ -49,7 +51,7 @@ class PersonaController extends Controller{
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $datos['rol']=$_SESSION['rol'];
         return view('/personas/personas.modificar',compact('datos'));
     }
 
@@ -75,8 +77,12 @@ class PersonaController extends Controller{
         $miPersona = $this->model->getByIdPersona($_GET['idAgente']);
         $datos["miPersona"] = $miPersona;  
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $datos['rol']=$_SESSION['rol'];
         return view('/personas/personaVerFicha', compact('datos'));
+    }
+
+    public function modificarEstado(){
+        var_dump($_POST);
     }
     
 }

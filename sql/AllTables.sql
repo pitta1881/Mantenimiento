@@ -21,10 +21,11 @@ CREATE TABLE personas (
     nombre VARCHAR(20) NOT NULL,
     direccion TEXT,
     fecha_nacimiento DATE,
-    email TEXT
+    email TEXT,
+    estado TEXT
 );
 
-INSERT INTO `personas` VALUES (00000000,'superAdmin','superAdmin',NULL,NULL,NULL);
+INSERT INTO `personas` VALUES (00000000,'superAdmin','superAdmin',NULL,NULL,NULL,'Activo');
 
 USE Mantenimiento;
 CREATE TABLE usuarios(
