@@ -88,6 +88,15 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function comparaPermiso($table, $nombre){  
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE nombrePermiso='{$nombre}'"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
     
     public function selectUsuarioPorPersonaPorRol($tableUsuario, $tablePersona, $tableRol){  
         $statement = $this->pdo->prepare(

@@ -58,7 +58,7 @@
 //rutas permisos
     //rutas permisos
     $router->get('permisos/AdministracionPermisos','PermisosControler@index');
-    $router->post('permisos/asignarPermiso','PermisosControler@guardarPermisos');
+    $router->post('permisos/altaPermiso','PermisosControler@guardarPermisos');
     $router->get('permisos/eliminarPermiso','PermisosControler@vistaEliminarPermiso');
 
 
