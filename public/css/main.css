@@ -382,10 +382,15 @@ dd {
     background-color: white;
 }
 
-.descripcion {
+dd.descripcion {
     text-align: left;
     width: 71.5vw;
-    height: 15vh;
+    height: 5vh;
+}
+
+td.descripcion {
+    text-align: left;
+    width: 20.5vw;
 }
 
 .basicosPedidos {

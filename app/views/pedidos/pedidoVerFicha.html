@@ -123,12 +123,17 @@
         <th onclick="sortTable(4,'miTabla')">Prioridad</th>
         <th onclick="sortTable(5,'miTabla')">Estado</th>
         <th onclick="sortTable(6,'miTabla')">Agentes</th>
-        <th onclick="sortTable(7,'miTabla')">Accion</th>
+        <th onclick="sortTable(7,'miTabla')">Insumos</th>
+        <th onclick="sortTable(8,'miTabla')">Accion</th>
         {% set pedidoFin = true %}
         {% for tarea in datos.miPedido.tareas %}
         {% set estilo = "" %}
         {% if tarea.estado == "Finalizado" %}
         {% set estilo = "style=background-color:lightcoral" %}
+        {% else %}
+        {% if tarea.estado == "Cancelado" %}
+        {% set estilo = "style=background-color:lightgrey" %}
+        {% endif %}
         {% endif %}
         <tr>
             <td {{ estilo }}><a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"
@@ -146,8 +151,10 @@
             <td {{ estilo }}>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %}
             {% endif %}
             <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
+            <td {{ estilo }}>{{ tarea.insumosAsignados }}</td>
             <td {{ estilo }}>
                 <!--ACCIONES DE LAS TAREAS-->
+                {% if tarea.estado != "Cancelado" %}
                 <!--VER MAS-->
                 <a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}" title="Ver Mas">
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
@@ -165,18 +172,58 @@
                 <a href="/tarea/insumos/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
                     <img class="iconos" src="/public/res/insumos.svg" title="Asignar Insumos"></a>
                 {% endif %}
-                <!--ELIMINAR TAREA SI SOLO ESTÁ EN ESTADO INICIADO-->
+                <!--ELIMINAR TAREA SI SOLO ESTÁ EN ESTADO INICIADO Y NO TIENE AGENTES NI INSUMOS ASIGNADOS-->
                 {% if tarea.estado == 'Iniciado' %}
-                <form action="/pedido/tarea/eliminar" method="post" style="display: inline-block"
-                    id="formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}">
-                    <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
-                    <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
-                </form>
+                {% if tarea.agentesAsignados != 0 %}
                 <a
-                    onclick="alertify.confirm('Eliminar Tarea','¿Esta seguro?',function(){document.getElementById('formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}').submit()},function(){})"><img
+                    onclick="alertify.alert('Error', 'Hay AGENTES asignados a esta Tarea.. Primero debe desasignarlos');"><img
                         class="iconos" src="/public/res/delTarea.svg" title="Eliminar Tarea"></a>
+                {% else %}
+                {% if tarea.insumosAsignados != 0 %}
+                <a
+                    onclick="alertify.alert('Error', 'Hay INSUMOS asignados a esta Tarea.. Primero debe desasignarlos');"><img
+                        class="iconos" src="/public/res/delTarea.svg" title="Eliminar Tarea"></a>
+                {% else %}
+                <a href="" role="button" data-toggle="modal" data-target="#modalCancelarTarea{{ tarea.idTarea }}"><img
+                        class="iconosTitulo" src="/public/res/delTarea.svg" onclick="mostrarFormulario()"
+                        title="Cambiar Estado"></a>
+                <!-- The Modal -->
+                <div class="modal fade" id="modalCancelarTarea{{ tarea.idTarea }}">
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Cancelar Tarea</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <h3>Usted esta a punto de cancelar esta tarea.</h3>
+                            <div class="modal-body">
+                                <form action="/tarea/cambiarEstado/seleccionado" method="post" class="was-validated">
+                                    <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
+                                    <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
+                                    <input type="text" name="estado" value="Cancelado" hidden>
+                                    <div class="form-group col-md-10">
+                                        <label for="descripcion">Motivo:</label><span class="asterisco">*</span>
+                                        <textarea class="form-control" rows="3" id="descripcion" name="descripcion"
+                                            required></textarea>
+                                        <div class="invalid-feedback">Complete este campo</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
                 {% endif %}
             </td>
+            {% endif %}
         </tr>
         {% else %}
         {% if datos.miPedido.estado != "Cancelado" %}

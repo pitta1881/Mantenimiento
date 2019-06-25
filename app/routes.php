@@ -19,7 +19,6 @@
 //rutas tareas
     $router->post('tarea/guardar', 'TareaController@guardar');
     $router->get('tarea/modificar/seleccionado', 'TareaController@modificarTareaSeleccionada');
-    $router->post('pedido/tarea/eliminar', 'TareaController@eliminar');
     $router->post('tarea/modificar/guardar', 'TareaController@modificar');
     $router->get('tarea/agentes/asignar', 'TareaController@verAgentesDisponibles');
     $router->post('tarea/asignarAgentes/seleccionados','TareaController@asignarAgentes');

@@ -247,6 +247,7 @@ class QueryBuilder
         $statement = $this->pdo->prepare(
            "DELETE FROM $table  WHERE idPedido = $idPedido AND idTarea = $idTarea"
         );
+        var_dump($statement);
         $statement->execute();
     }
 
@@ -468,10 +469,16 @@ public function selectSectorById($table, $nSector){
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function selectAgentesDisponibles($tableAgente){
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableAgente WHERE disponible=1"
-        );
+    public function selectAgentesDisponibles($tableAgente, $urgencia){
+        if ($urgencia) {
+            $statement = $this->pdo->prepare(
+                "SELECT * FROM $tableAgente T1 INNER JOIN personas T2 ON T1.idAgente=T2.dni WHERE T2.estado='Activo'"
+            );
+        } else {
+            $statement = $this->pdo->prepare(
+                "SELECT * FROM $tableAgente WHERE disponible=1"
+            );
+        }        
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
    }
@@ -486,6 +493,14 @@ public function selectSectorById($table, $nSector){
     public function getAgentesAsignadosPorIdId($tableItemAgente,$idPedido,$idTarea){
         $statement = $this->pdo->prepare(
         "SELECT COUNT(idAgente) FROM $tableItemAgente WHERE idTarea=$idTarea AND idPedido=$idPedido"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function getInsumosAsignadosPorIdId($tableItemInsumos,$idPedido,$idTarea){
+        $statement = $this->pdo->prepare(
+        "SELECT COUNT(idInsumo) FROM $tableItemInsumos WHERE idTarea=$idTarea AND idPedido=$idPedido"
     );
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_NUM);
@@ -911,6 +926,23 @@ public function updateEvento($table, $parameters, $idEvento){
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_CLASS);
 }
+
+public function selectUltimoItemAgente($tableItemAgente,$idAgente){
+    $statement = $this->pdo->prepare(
+        "SELECT * FROM $tableItemAgente WHERE idAgente=$idAgente ORDER BY idPedido DESC ,idTarea DESC LIMIT 1"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+}
+
+public function selectAnteUltimoItemAgente($tableItemAgente,$idAgente){
+    $statement = $this->pdo->prepare(
+        "SELECT * FROM $tableItemAgente WHERE idAgente=$idAgente ORDER BY idPedido DESC ,idTarea DESC LIMIT 1,1"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+}
+
     
 }
 

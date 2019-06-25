@@ -85,8 +85,8 @@ class Tarea extends Model
         return $nombre[0][0];
     } 
 
-    public function verAgentesDisponibles(){
-    $agentes = $this->db->selectAgentesDisponibles($this->tableAgentes);
+    public function verAgentesDisponibles($urgencia){
+    $agentes = $this->db->selectAgentesDisponibles($this->tableAgentes,$urgencia);
     $misAgentes = json_decode(json_encode($agentes), True);
     for ($i=0; $i < count($misAgentes); $i++) { 
         $misAgentes[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($misAgentes[$i]['idEspecializacion']);
@@ -118,8 +118,32 @@ class Tarea extends Model
     }
 
     public function desasignarAgente($nPedido, $nTarea, $nAgente){
+        $tareaDespues = $this->db->selectUltimoItemAgente($this->tableItemAgentes,$nAgente);
+        $miTareaDespues = json_decode(json_encode($tareaDespues[0]), True);
+        $tarea = $this->db->selectTareaByIdId($this->table,$nPedido,$nTarea);
+        $miTarea = json_decode(json_encode($tarea[0]), True);
+     if ($miTareaDespues['idPedido']==$nPedido && $miTareaDespues['idTarea']==$nTarea) { //si el ultimo item soy yo
+        if ($miTarea['prioridad'] != 'Urgente') {   //ultimo y no urgente
+            $this->cambiarEstadoAgente($nAgente,1);
+        } else {
+            $tareaAntes = $this->db->selectAnteUltimoItemAgente($this->tableItemAgentes,$nAgente);
+            if (empty($tareaAntes)) {
+                $this->cambiarEstadoAgente($nAgente,1);
+            } else {
+                $miTareaAntes = json_decode(json_encode($tareaAntes[0]), True);
+                $tarea2 = $this->db->selectTareaByIdId($this->table,$miTareaAntes['idPedido'],$miTareaAntes['idTarea']);
+                $miTarea2 = json_decode(json_encode($tarea2[0]), True);
+                if ($miTarea2['estado'] == 'Finalizado') {
+                    $this->cambiarEstadoAgente($nAgente,1);
+                }
+            }
+        }
+     }  else {          // no soy el ultimo item
+        if ($miTarea['estado'] == 'Finalizado') {  //si la tarea urgente finalizo
+            $this->cambiarEstadoAgente($nAgente,1);
+        }
+     }          
         $this->db->desasignarAgente($this->tableItemAgentes,$nPedido,$nTarea,$nAgente);
-        $this->cambiarEstadoAgente($nAgente,1);
     }
     
     public function getOTByIdId($idPedido, $idTarea){

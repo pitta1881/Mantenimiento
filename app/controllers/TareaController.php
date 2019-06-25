@@ -39,15 +39,6 @@ class TareaController extends Controller{
         redirect("fichaPedido?id=".$tarea['idPedido']);
     }
 
-    public function eliminar(){
-        $arrayAgentes = $this->model->getAgentesByIdId($_POST['idPedido'],$_POST['idTarea']);
-        foreach ($arrayAgentes as $key => $value) {
-            $this->model->desasignarAgente($_POST['idPedido'],$_POST['idTarea'],$arrayAgentes[$key]['idAgente']);
-        }
-        $this->model->delete($_POST['idPedido'],$_POST['idTarea']);
-        redirect("fichaPedido?id=".$_POST['idPedido']);
-    }
-
     public function modificarTareaSeleccionada(){
         $unaTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
         $datos["prioridades"] = $this->model->getPrioridades();
@@ -73,9 +64,13 @@ class TareaController extends Controller{
      }
 
      public function verAgentesDisponibles(){
-        $agentesDisponibles = $this->model->verAgentesDisponibles();
-        $datos['idPedido'] = $_GET['idPedido'];
-        $datos['idTarea'] = $_GET['idTarea'];
+         $urgente = false;
+         $miTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
+         if ($miTarea['prioridad'] == 'Urgente') {
+             $urgente = true;
+         }
+        $agentesDisponibles = $this->model->verAgentesDisponibles($urgente);
+        $datos["miTarea"] = $miTarea;
         $datos['agentesDisponibles'] = $agentesDisponibles;
         $datos["userLogueado"] = $_SESSION['user'];
          $datos['rol']=$_SESSION['rol'];
@@ -99,7 +94,7 @@ class TareaController extends Controller{
         }
         $datos['itemAgente'] = $datosItem;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $datos['rol']=$_SESSION['rol'];
         redirect("fichaTarea?idPedido=".$idPedidoFinal."&idTarea=".$idTareaFinal);
     }
 

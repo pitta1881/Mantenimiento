@@ -27,17 +27,35 @@
             <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
             {% set i = 1 %}
             {% for agente in datos.agentesDisponibles %}
+            {% set marca = '' %}
+            {% if agente.disponible == 0 %}
+            {% set marca = 'style=background-color:#f4e242' %}
+            {% endif %}
+            {% set asignado = false %}
+            {% for agenteAsignado in datos.miTarea.agentes %}
+            {% if (agente.idAgente in agenteAsignado.idAgente) %}
+            {% set asignado = true %}
+            {% endif %}
+            {% endfor %}
+            {% if (asignado == false) %}
             <tr>
-                <td>{{ agente.idAgente }}</td>
-                <td>{{ agente.nombre }}</td>
-                <td>{{ agente.apellido }}</td>
-                <td>{{ agente.especializacionNombre }}</td>
-                <td>Disponible</td>
-                <td><input type="checkbox" class="clsCasilla" name="{{ i }}_{{ datos.idPedido }}"
-                        value="{{ datos.idTarea }}_{{ agente.idAgente }}" onclick="deRequireCb('clsCasilla')" required>
+                <td {{ marca }}>{{ agente.idAgente }}</td>
+                <td {{ marca }}>{{ agente.nombre }}</td>
+                <td {{ marca }}>{{ agente.apellido }}</td>
+                <td {{ marca }}>{{ agente.especializacionNombre }}</td>
+                {% if agente.disponible == 1 %}
+                <td {{ marca }}>Disponible</td>
+                {% else %}
+                <td {{ marca }}>Ocupado</td>
+                {% endif %}
+                <td {{ marca }}><input type="checkbox" class="clsCasilla" name="{{ i }}_{{ datos.miTarea.idPedido }}"
+                        value="{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}"
+                        onclick="deRequireCb('clsCasilla','{{ marca }}','{{ i }}_{{ datos.miTarea.idPedido }}')"
+                        required>
                 </td>
                 {% set i = i + 1 %}
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
         {% if datos.agentesDisponibles|length == 0 %}
@@ -47,7 +65,7 @@
         {% endif %}
     </form>
     <script>
-        function deRequireCb(elClass) {
+        function deRequireCb(elClass, reasignar, idName) {
             el = document.getElementsByClassName(elClass);
 
             var atLeastOneChecked = false; //at least one cb is checked
@@ -56,7 +74,6 @@
                     atLeastOneChecked = true;
                 }
             }
-
             if (atLeastOneChecked === true) {
                 for (i = 0; i < el.length; i++) {
                     el[i].required = false;
@@ -64,6 +81,18 @@
             } else {
                 for (i = 0; i < el.length; i++) {
                     el[i].required = true;
+                }
+            }
+            if (reasignar != '') {
+                var inputCheckbox = document.getElementsByName(idName)[0];
+                if (inputCheckbox.checked) {
+                    alertify.confirm('Alerta',
+                        'El Agente esta asignado a otra tarea. ¿Esta seguro que quiere reasignarlo?',
+                        function () {},
+                        function () {
+                            inputCheckbox.checked = false
+                        }
+                    )
                 }
             }
         }

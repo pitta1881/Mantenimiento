@@ -14,6 +14,7 @@ class Pedido extends Model{
     protected $tableOT = 'OrdenDeTrabajo';
     protected $tableItemOT='itemot';
     protected $tableEvento='eventos';
+    protected $tableItemInsumo = 'iteminsumo';
 
     public function getSectores() {
         $array = [];
@@ -93,6 +94,7 @@ class Pedido extends Model{
         for ($i=0; $i < count($todasTareas); $i++) { 
             $todasTareas[$i]['especializacionNombre']=$this->getNombreEspecializacionPorId($todasTareas[$i]['idEspecializacion']);
             $todasTareas[$i]['agentesAsignados']=$this->getAgentesAsignadosPorIdId($idPedido,$todasTareas[$i]['idTarea']);
+            $todasTareas[$i]['insumosAsignados']=$this->getInsumosAsignadosPorIdId($idPedido,$todasTareas[$i]['idTarea']);
             $todasTareas[$i]['idOT']=$this->getOTByIdId($idPedido,$todasTareas[$i]['idTarea']);
           }
           return $todasTareas;
@@ -130,6 +132,11 @@ class Pedido extends Model{
 
       public function getAgentesAsignadosPorIdId($idPedido, $idTarea) {
         $cantidad = $this->db->getAgentesAsignadosPorIdId($this->tableItemAgentes, $idPedido, $idTarea);
+        return $cantidad[0][0];
+      }
+
+      public function getInsumosAsignadosPorIdId($idPedido, $idTarea) {
+        $cantidad = $this->db->getInsumosAsignadosPorIdId($this->tableItemInsumo, $idPedido, $idTarea);
         return $cantidad[0][0];
       }
 
