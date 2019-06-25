@@ -117,8 +117,9 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
     $router->post('eventos/eliminar', 'EventosController@delete');
 
 // rutas informes
-    $router->get('informes/administracionInforme', 'informesController@vistaAdministracionInformes');
 
+  $router->get('informe/administracion','informesController@vistaAdministracionInformes');
+$router->post('informes/datos','informesController@getDatos');
 
 
     $router->get('not_found', 'ProjectController@internalError');

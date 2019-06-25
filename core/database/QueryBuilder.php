@@ -911,7 +911,19 @@ public function updateEvento($table, $parameters, $idEvento){
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_CLASS);
 }
+   
     
+    public function dameSectores($tablaPedidos,$tablaSectores,$fechaDesde,$fechaHasta){
+ echo "entro";
+    $statement = $this->pdo->prepare( "
+SELECT $tablaSectores.nombreSector, COUNT(*) FROM $tablaPedidos INNER JOIN $tablaSectores  GROUP BY $tablaSectores.nombreSector where fechaInicio>=$fechaDesde AND fechaInicio<=$fechaHasta " );  
+  $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+var_dump($statement);
+}
+    
+    
+
 }
 
 
