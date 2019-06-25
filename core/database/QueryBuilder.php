@@ -358,6 +358,15 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function selectUsuarioByNombre($table, $nAgente){
+        $statement = $this->pdo->prepare(
+            "SELECT nombre,idRol,idPersona FROM {$table} 
+            WHERE nombre='{$nAgente}'"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
     public function updateAgente($table, $parameters, $nAgente){
         $parameters = $this->cleanParameterName($parameters);
         $sql = "UPDATE $table SET idEspecializacion=:idEspecializacion WHERE idAgente=$nAgente";
@@ -750,6 +759,17 @@ public function updateEvento($table, $parameters, $idEvento){
     public function updatePersona($tablePersona, $parameters, $dni){
         $parameters = $this->cleanParameterName($parameters);
         $sql = "UPDATE $tablePersona SET nombre=:nombre, apellido=:apellido, direccion=:direccion, email=:email, fecha_nacimiento=:fecha_nacimiento WHERE dni=$dni"; //recontra HARDCODEADO
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+    public function updateUsuario($tablePersona, $parameters, $nombre){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $tablePersona SET password=:password,  WHERE nombre='$nombre'"; //recontra HARDCODEADO
             try {
                 $statement = $this->pdo->prepare($sql);
                 $statement->execute($parameters);

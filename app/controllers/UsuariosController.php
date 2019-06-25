@@ -32,52 +32,25 @@ class UsuariosController extends Controller
     }
     
   public function vistamodificarUsuario(){
-    return view('/usuarios/administracionUsuario.modificar');
-}
-    public function vistaeliminarUsuario(){
-    return view('/usuarios/administracionUsuario.eliminar');
-}
-    public function vistaAdministracionRol(){
-    return view('/usuarios/administracionRol');
-    
-}
-    public function vistaAltaRol(){
-          return view('/usuarios/administracionRol.alta');
-    }
-    public function vistaModificarRol(){
-          return view('/usuarios/administracionRol.modificar');
-    }
-    public function vistaEliminarRol(){
-          return view('/usuarios/administracionRol.eliminar');
-    }
-    public function vistaAdministracionPermisos(){
-        $roles=$this->model->getRoles();
-        $permisos=$this->model->getPermisos();
-        $datos['roles'] = $roles;
-        $datos['permisos'] = $permisos;
-        if (empty($_GET)) {
-           $datos['permisosxrol'] = $this->model->permisosxrol($roles[0]['idRol'],$roles[0]['nombreRol']);
-        } else {
-           $datos['permisosxrol'] = $this->model->permisosxrol(explode("_",$_GET['rol'])[0],explode("_",$_GET['rol'])[1]);
-        }   
-        return view('/usuarios/administracionPermisos',compact('datos'));
-    }
+    $Usuario= $this->model-> getDatosUsuario($_GET['nombre']);
 
-    public function guardarPermisos(){      
-        $arrayPermisos=$_POST['idPermiso'];
-        foreach ($arrayPermisos as $key => $value) {
-            $datos = [
-                'idRol' => $_POST['idRol'],
-                'idPermiso' => $value,
-            ];
-            $this->model->guardarPermisosXRol($datos);
-        }
-        redirect("usuario/AdministracionPermisos");
-    }
-    
-    public function vistaEliminarPermiso(){
-          return view('/usuarios/administracionPermisos.eliminar');
-    }
+ //  $Permiso = $this->model->getByIdPermiso($_GET['idPermiso']);      
+    $datos["Usuario"] = $Usuario;
+    $datos["userLogueado"] = $_SESSION['user'];
+  
+    return view('/usuarios/administracionUsuario.modificar', compact('datos'));
+}
+
+
+    public function update(){
+        $idPermiso = $_POST['nombre'];
+        $datos = [
+            'password' => $_POST['password']
+        ];
+        $this->model->update($datos,$idPermiso);
+        return $this->vistaAdministracionUsuario();
+     }
+
 
    
     public function validarUsuario(){
