@@ -29,26 +29,26 @@ class PermisosControler extends Controller{
         return $this->index();
     }
 
-  /*  public function vistaModificar(){
-        $especializacion = $this->model->getByIdEspecializacion($_GET['idEspecializacion']);      
-        $datos['especializacion'] = $especializacion;
+   public function vistaModificar(){
+        $Permiso = $this->model->getByIdPermiso($_GET['idPermiso']);      
+        $datos["Permiso"] = $Permiso;
         $datos["userLogueado"] = $_SESSION['user'];
          $datos['rol']=$_SESSION['rol'];
-        return view('/especializacion/especializacion.modificar', compact('datos'));
+        return view('/permisos/permisos.modificar', compact('datos'));
     }
 
     public function update(){
-        $idEspecializacion = $_POST['idEspecializacion'];
+        $idPermiso = $_POST['idPermiso'];
         $datos = [
-            'nombre' => $_POST['nombre']
+            'nombrePermiso' => $_POST['nombrePermiso']
         ];
-        $this->model->update($datos,$idEspecializacion);
-        return $this->vistaAdministracionEspecializacion();
+        $this->model->update($datos,$idPermiso);
+        return $this->index();
      }
 
      public function delete(){
-        $this->model->delete($_POST['idEspecializacion']);
-        return $this->vistaAdministracionEspecializacion();
-    }*/
+        $this->model->delete($_POST['idPermiso']);
+        return $this->index();
+    }
 
 }

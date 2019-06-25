@@ -403,6 +403,14 @@ class QueryBuilder
         $statement->execute();
     }
 
+    public function deletePermiso($table,$idEspecializacion){ //table = agentes
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idPermiso = $idEspecializacion"
+        );
+        $statement->execute();
+    }
+
+
     public function getEspecializaciones($table){ //table = especializacion
         $statement = $this->pdo->prepare(
            "SELECT nombre FROM $table"
@@ -426,6 +434,15 @@ class QueryBuilder
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
+
+    public function getNombreFromIdPermiso($tableEsp,$idEsp){
+        $statement = $this->pdo->prepare(
+           "SELECT idPermiso, nombrePermiso FROM $tableEsp WHERE idPermiso=$idEsp"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
 
 public function updateSector($table, $parameters, $nSector){
         $parameters = $this->cleanParameterName($parameters);
@@ -733,6 +750,18 @@ public function updateEvento($table, $parameters, $idEvento){
     public function updatePersona($tablePersona, $parameters, $dni){
         $parameters = $this->cleanParameterName($parameters);
         $sql = "UPDATE $tablePersona SET nombre=:nombre, apellido=:apellido, direccion=:direccion, email=:email, fecha_nacimiento=:fecha_nacimiento WHERE dni=$dni"; //recontra HARDCODEADO
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+
+    public function updatePermiso($table, $parameters, $nEspecializacion){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET nombrePermiso=:nombrePermiso WHERE idPermiso=$nEspecializacion";
             try {
                 $statement = $this->pdo->prepare($sql);
                 $statement->execute($parameters);
