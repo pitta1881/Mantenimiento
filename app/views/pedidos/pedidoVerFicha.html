@@ -34,8 +34,6 @@
         <dd>{{ datos.miPedido.id }}</dd>
         <dt>Usuario Creador:</dt>
         <dd>{{ datos.miPedido.nombreUsuario }}</dd>
-        <dt>Descripcion:</dt>
-        <dd>{{ datos.miPedido.descripcion }}</dd>
         <dt>Fecha Inicio:</dt>
         <dd>{{ datos.miPedido.fechaInicio }}</dd>
         <dt>Fecha Fin:</dt>
@@ -47,10 +45,12 @@
                 title="Ver Mas">{{ datos.miPedido.nombreSector }}</a></dd>
         <dt>Prioridad:</dt>
         <dd>{{ datos.miPedido.prioridad }}</dd>
+        <dt>Descripcion:</dt>
+        <dd>{{ datos.miPedido.descripcion }}</dd>
     </dl>
     <h2>TAREAS</h2>
-    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-            src="/public/res/add.svg" title="Crear Tarea">Crear Nuevo</a>
+    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal" id="btnCrearTarea"><img
+            class="iconos" src="/public/res/add.svg" title="Crear Tarea">Crear Nuevo</a>
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-lg">
@@ -108,7 +108,7 @@
             </div>
         </div>
     </div>
-    {% if datos.miPedido.estado == "Finalizado" %}
+    {% if (datos.miPedido.estado == "Finalizado") or (datos.miPedido.estado == "Cancelado") %}
     <script>
         var btnCrearTarea = document.getElementById("btnCrearTarea");
         btnCrearTarea.style.display = "none";
@@ -144,7 +144,6 @@
             <td {{ estilo }}>{{ tarea.prioridad }}</td>
             <td {{ estilo }}>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %}
             {% endif %}
-
             <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
             <td {{ estilo }}>
                 <!--ACCIONES DE LAS TAREAS-->
@@ -165,8 +164,8 @@
                 <a href="/tarea/insumos/asignar?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}">
                     <img class="iconos" src="/public/res/insumos.svg" title="Asignar Insumos"></a>
                 {% endif %}
-                {% if tarea.estado == 'Iniciado' %}
                 <!--ELIMINAR TAREA SI SOLO ESTÁ EN ESTADO INICIADO-->
+                {% if tarea.estado == 'Iniciado' %}
                 <form action="/pedido/tarea/eliminar" method="post" style="display: inline-block"
                     id="formEliminarTarea{{ datos.miPedido.id }}_{{ tarea.idTarea }}">
                     <input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
@@ -179,7 +178,9 @@
             </td>
         </tr>
         {% else %}
+        {% if datos.miPedido.estado != "Cancelado" %}
         <h2 class='error'>No hay Tareas asignadas aún</h2>
+        {% endif %}
         {% endfor %}
         {% if datos.miPedido.tareas|length > 0 and pedidoFin == true and datos.miPedido.estado != 'Finalizado' %}
         <script>

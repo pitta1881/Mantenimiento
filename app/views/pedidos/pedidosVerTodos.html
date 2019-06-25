@@ -98,6 +98,10 @@
         {% else %}
         {% if pedido.estado == "Para Finalizar" %}
         {% set estilo = "style=background-color:goldenrod" %}
+        {% else %}
+        {% if pedido.estado == "Cancelado" %}
+        {% set estilo = "style=background-color:lightgrey" %}
+        {% endif %}
         {% endif %}
         {% endif %}
         <tr>
@@ -106,12 +110,17 @@
             <td {{ estilo }}><a href="/fichaSector?idSector={{ pedido.idSector }}"
                     title="Ver Mas">{{ pedido.nombreSector }}</td>
             <td {{ estilo }}>{{ pedido.fechaInicio }}</td>
-            <td {{ estilo }}>{{ pedido.fechaFin }}</td>
+            {% set fechaFin = pedido.fechaFin %}
+            {% if pedido.estado != 'Finalizado' %}
+            {% set fechaFin = pedido.estado %}
+            {% endif %}
+            <td {{ estilo }}>{{ fechaFin }}</td>
             <td {{ estilo }}>{{ pedido.tareasAsignadas }}</td>
             <td {{ estilo }}>{{ pedido.estado }}</td>
             <td {{ estilo }}>{{ pedido.prioridad }}</td>
             <td {{ estilo }}>{{ pedido.nombreUsuario }}</td>
             <td {{ estilo }}>
+                {% if pedido.estado != "Cancelado" %}
                 <a href='/fichaPedido?id={{ pedido.id }}'>
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
@@ -119,6 +128,17 @@
                 <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
+                <!--ELIMINAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO-->
+                {% if (pedido.estado == 'Iniciado') and  (pedido.tareasAsignadas == 0) %}
+                <form action="/pedido/cancelar" method="post" style="display: inline-block"
+                    id="formEliminarPedido{{ datos.miPedido.id }}">
+                    <input type="text" name="id" value="{{ pedido.id }}" hidden>
+                </form>
+                <a
+                    onclick="alertify.confirm('Cancelar Pedido','¿Esta seguro?',function(){document.getElementById('formEliminarPedido{{ datos.miPedido.id }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/delTarea.svg" title="Cancelar Pedido"></a>
+                {% endif %}
+                {% endif %}
                 {% endif %}
             </td>
         </tr>

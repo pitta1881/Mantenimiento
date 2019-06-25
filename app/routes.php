@@ -13,6 +13,7 @@
     $router->get('pedido/modificar/seleccionado', 'PedidoController@modificarPedidoSeleccionado');
     $router->post('pedido/modificar', 'PedidoController@modificar');
     $router->post('pedido/finalizar', 'PedidoController@finalizar');
+    $router->post('pedido/cancelar', 'PedidoController@cancelar');
     
 
 //rutas tareas

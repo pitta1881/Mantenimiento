@@ -104,4 +104,9 @@ class PedidoController extends Controller{
          $this->model->updateEstadoPedido($_POST['id'],'Finalizado');
          redirect("fichaPedido?id=".$_POST['id']);
      }
+
+     public function cancelar(){
+        $this->model->updateEstadoPedido($_POST['id'],'Cancelado');
+        redirect("fichaPedido?id=".$_POST['id']);
+    }
 }

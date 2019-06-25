@@ -135,7 +135,7 @@ class Pedido extends Model{
 
       public function updateEstadoPedido($idPedido,$estado){
         $this->db->updateEstadoPedido($this->table,$idPedido,$estado);
-        if ($estado == "Finalizado") {
+        if ($estado == "Finalizado" || $estado == "Cancelado") {
             $this->db->updateFechaFinPedido($this->table,$idPedido,date("Y-m-d"));
         }
     }
