@@ -57,7 +57,7 @@ class Usuarios extends Model
 
     public function update (array $usuarioModificado,$nombre)
     {
-        $this->db->update($this->table, $usuarioModificado,$nombre);
+        $this->db->updateUsuario($this->table, $usuarioModificado,$nombre);
     }
 
 public function getRoles(){
@@ -88,4 +88,15 @@ public function getRoles(){
         return $todosPermisos;
     }
 
+    public function getDatosUsuario($nombreUsuario){
+        $usuario=$this->db->selectUsuarioByNombre($this->table,$nombreUsuario);
+        $misUsuarios = json_decode(json_encode($usuario), True);
+        for ($i=0; $i < count($misUsuarios); $i++) { 
+            $persona = $this->getPersonaPorId($misUsuarios[$i]['idPersona']);
+            $misUsuarios[$i]['nombreApe'] = $persona['nombre'].' '.$persona['apellido'];
+            $rol = $this->getRolPorId($misUsuarios[$i]['idRol']);
+            $misUsuarios[$i]['nombreRol'] = $rol['nombreRol'];
+          }
+        return $misUsuarios;
+    }
 }

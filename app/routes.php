@@ -41,7 +41,9 @@
     $router->get('usuarios/AdministracionUsuario','UsuariosController@vistaAdministracionUsuario');
     $router->get('usuarios/altaUsuario','UsuariosController@vistaAltaUsuario');
     $router->post('usuarios/validarUsuario','UsuariosController@validarUsuario');
-    $router->get('usuarios/modificarUsuario','UsuariosController@vistamodificarUsuario');
+
+    $router->get('usuarios/modificar/seleccionado','UsuariosController@vistamodificarUsuario');
+    $router->post('usuarios/modificarUsuario', 'UsuariosController@update');
     $router->get('usuarios/eliminarUsuario','UsuariosController@vistaeliminarUsuario');
 
 //rutas rol
@@ -57,8 +59,12 @@
 //rutas permisos
     //rutas permisos
     $router->get('permisos/AdministracionPermisos','PermisosControler@index');
-    $router->post('permisos/asignarPermiso','PermisosControler@guardarPermisos');
+    $router->post('permisos/altaPermiso','PermisosControler@guardarPermisos');
     $router->get('permisos/eliminarPermiso','PermisosControler@vistaEliminarPermiso');
+
+    $router->get('permisos/modificar/seleccionado', 'PermisosControler@vistaModificar');
+    $router->post('permisos/modificarpermiso', 'PermisosControler@update');
+    $router->post('permisos/eliminar', 'PermisosControler@delete');
 
 
 //rutas personas
@@ -116,8 +122,9 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
     $router->post('eventos/eliminar', 'EventosController@delete');
 
 // rutas informes
-    $router->get('informes/administracionInforme', 'informesController@vistaAdministracionInformes');
 
+  $router->get('informe/administracion','informesController@vistaAdministracionInformes');
+$router->post('informes/datos','informesController@getDatos');
 
 
     $router->get('not_found', 'ProjectController@internalError');

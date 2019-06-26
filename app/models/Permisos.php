@@ -20,8 +20,22 @@ class Permisos extends Model{
 
     public function buscarPermiso($nombre){
         //   comparo si existe el nombre de usuario 
-          return $this->db->comparaEspecializacion($this->table,$nombre);
+          return $this->db->comparaPermiso($this->table,$nombre);
+        }
+
+        
+        public function getByIdPermiso($idEspecializacion){
+          $especializacion = $this->db->getNombreFromIdPermiso($this->table,$idEspecializacion);
+          $miEspecializacion = json_decode(json_encode($especializacion), True);  
+          return $miEspecializacion[0];
         }
     
+        public function update(array $datos,$idEspecializacion){
+            $this->db->updatePermiso($this->table, $datos,$idEspecializacion);
+        }
+    
+        public function delete($nEspecializacion){
+          $this->db->deletePermiso($this->table,$nEspecializacion);
+        }  
 
 }

@@ -10,12 +10,14 @@ class informes extends Model
     protected $tableEspecializacion='especializacion';
     protected $tableItemAgentes='itemAgente';
     protected $tablePersona = 'personas';
-    
+     protected $tableSectores = 'sectores';
+ protected $tablePedidos = 'pedido';
+      
+ 
 
-   
-
-
-    public function insert(array $datos){
-      $this->db->insert($this->table, $datos);
+ public function getSectores($fechaDesde,$fechaHasta){
+     echo "entrooooooooo";
+        $datos=$this->db->dameSectores($this->tablePedidos,$this->$tableSectores,$fechaDesde,$fechaHasta);
+    return $datos;
     }
 }

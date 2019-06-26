@@ -1,19 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}Gestion de usuarios{% endblock %}
+{% block title %}Modificar Usuario{% endblock %}
 
 {% block header %}
-{{ include('partials/nav.html') }}
+{% set datos = datos|merge({
+    "titulo": "Modificar Usuario"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 
 {% block head %}
 {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP">
 {% endblock %}
+
 {% block main %}
+<div class="contenido3">
+    <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+    <form action="/usuarios/modificarUsuario" method="POST">
 
+    <label for="nombre">Nombre</label>
+    <input type="text" name="nombre" value="{{ datos.Usuario[0].nombre }}" readonly
+    class="inputDisabled">
+    <label for="roles">Rol del Usuario:</label>
+    <input type="text" name="SeleccionarRol"  readonly
+    class="inputDisabled"  value="{{ datos.Usuario[0].nombreRol }}">
+    <label for="dni">Persona asociada:</label>   
+    <input type="text" name="nombre" readonly class="inputDisabled" value="{{ datos.Usuario[0].nombreApe }}">
+<br>
+    <label for="nombre">Contraseña</label>
+    <input type="password" name="password" placeholder=" nueva contraseña" >
+    <label for="nombre">Confirmar Contraseña</label>
+    <input type="password" name="password" placeholder="confirme nueva contraseña" >
+    <br>    
+    <input type="submit" value="Modificar">
+</form>
 
-
-
-
+</div>
 {% endblock %}

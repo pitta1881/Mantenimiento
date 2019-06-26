@@ -88,6 +88,15 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function comparaPermiso($table, $nombre){  
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE nombrePermiso='{$nombre}'"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
     
     public function selectUsuarioPorPersonaPorRol($tableUsuario, $tablePersona, $tableRol){  
         $statement = $this->pdo->prepare(
@@ -350,6 +359,15 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function selectUsuarioByNombre($table, $nAgente){
+        $statement = $this->pdo->prepare(
+            "SELECT nombre,idRol,idPersona FROM {$table} 
+            WHERE nombre='{$nAgente}'"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
     public function updateAgente($table, $parameters, $nAgente){
         $parameters = $this->cleanParameterName($parameters);
         $sql = "UPDATE $table SET idEspecializacion=:idEspecializacion WHERE idAgente=$nAgente";
@@ -395,6 +413,14 @@ class QueryBuilder
         $statement->execute();
     }
 
+    public function deletePermiso($table,$idEspecializacion){ //table = agentes
+        $statement = $this->pdo->prepare(
+           "DELETE FROM $table  WHERE idPermiso = $idEspecializacion"
+        );
+        $statement->execute();
+    }
+
+
     public function getEspecializaciones($table){ //table = especializacion
         $statement = $this->pdo->prepare(
            "SELECT nombre FROM $table"
@@ -418,6 +444,15 @@ class QueryBuilder
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
+
+    public function getNombreFromIdPermiso($tableEsp,$idEsp){
+        $statement = $this->pdo->prepare(
+           "SELECT idPermiso, nombrePermiso FROM $tableEsp WHERE idPermiso=$idEsp"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
 
 public function updateSector($table, $parameters, $nSector){
         $parameters = $this->cleanParameterName($parameters);
@@ -747,6 +782,29 @@ public function updateEvento($table, $parameters, $idEvento){
             }   
     }
 
+    public function updateUsuario($tablePersona, $parameters, $nombre){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $tablePersona SET password=:password,  WHERE nombre='$nombre'"; //recontra HARDCODEADO
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
+
+    public function updatePermiso($table, $parameters, $nEspecializacion){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET nombrePermiso=:nombrePermiso WHERE idPermiso=$nEspecializacion";
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
     public function deletePersona($table,$idPersona){ 
         $statement = $this->pdo->prepare(
            "DELETE FROM $table  WHERE dni = $idPersona"
@@ -944,6 +1002,17 @@ public function selectAnteUltimoItemAgente($tableItemAgente,$idAgente){
 }
 
     
+    public function dameSectores($tablaPedidos,$tablaSectores,$fechaDesde,$fechaHasta){
+ echo "entro";
+    $statement = $this->pdo->prepare( "
+SELECT $tablaSectores.nombreSector, COUNT(*) FROM $tablaPedidos INNER JOIN $tablaSectores  GROUP BY $tablaSectores.nombreSector where fechaInicio>=$fechaDesde AND fechaInicio<=$fechaHasta " );  
+  $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+var_dump($statement);
+}
+    
+    
+
 }
 
 

@@ -16,17 +16,39 @@ class PermisosControler extends Controller{
         $todosPermisos= $this->model->get(); 
         $datos['todosPermisos'] = $todosPermisos;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
         return view('/permisos/administracionPermisos', compact('datos'));
     }
 
     public function guardarPermisos() {
-        $datos['nombre'] = $_POST['nombre'];
-        $statement = $this->model->buscarPermiso($datos['nombre']);        
+        $datos['nombrePermiso'] = $_POST['nombre'];
+        $statement = $this->model->buscarPermiso($datos['nombrePermiso']);        
         if (empty($statement)) {
             $this->model->insert($datos); 
             return $this->index();
         }
+        return $this->index();
+    }
+
+   public function vistaModificar(){
+        $Permiso = $this->model->getByIdPermiso($_GET['idPermiso']);      
+        $datos["Permiso"] = $Permiso;
+        $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
+        return view('/permisos/permisos.modificar', compact('datos'));
+    }
+
+    public function update(){
+        $idPermiso = $_POST['idPermiso'];
+        $datos = [
+            'nombrePermiso' => $_POST['nombrePermiso']
+        ];
+        $this->model->update($datos,$idPermiso);
+        return $this->index();
+     }
+
+     public function delete(){
+        $this->model->delete($_POST['idPermiso']);
+        return $this->index();
     }
 
 }

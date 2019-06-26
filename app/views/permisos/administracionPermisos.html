@@ -56,16 +56,16 @@
             <td>{{ permiso.nombrePermiso }}</td>
             <td>
                 <a
-                    href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
+                    href='/permisos/modificar/seleccionado?idPermiso={{ permiso.idPermiso }}'>
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
-                <form action="/especializacion/eliminar" method="post" style="display: inline-block"
-                    id="formEliminarEspecializacion{{ especializacion.idEspecializacion }}">
-                    <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
+                <form action="/permisos/eliminar" method="POST" style="display: inline-block"
+                    id="formEliminarPermiso{{ permiso.idPermiso }}">
+                    <input type="text" name="idPermiso" value="{{ permiso.idPermiso }}" hidden>
                 </form>
                 <a
-                    onclick="alertify.confirm('Eliminar Especializacion','¿Esta seguro?',function(){document.getElementById('formEliminarEspecializacion{{ especializacion.idEspecializacion }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/del.svg" title="Eliminar Especializacion"></a>
+                    onclick="alertify.confirm('Eliminar Permiso','¿Esta seguro?',function(){document.getElementById('formEliminarPermiso{{ permiso.idPermiso }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/del.svg" title="Eliminar Permiso"></a>
             </td>
         </tr>
         {% else %}
