@@ -42,11 +42,17 @@
   var titulo={{datos|json_encode()|raw}};
     console.log(titulo['filtro']);
     var sectores={{sectores|json_encode()|raw}};
-   console.log(sectores);
    
-    var datos=[
+    console.log(sectores);
+ 
+   var dato1 =sectores[0]['nombreSector'];
+    var dato11=parseInt(sectores[0]['suma'],10);
+    console.log(dato1);
+    var dato=[
         
-       {"name:" sectores[0]['nombreSector'],"y:"parseInt(sectores[0]['suma'], 10)},
+     
+        
+          "{name:'"+dato1+"', y:"+dato11+"},"
        //{"name": sectores[0]['nombreSector'],"data":sectores[0]['suma']}
      // sectores[0]['nombreSector'],parseInt(sectores[1]['suma'], 10)
     ] 
@@ -57,60 +63,77 @@
 
     //}
     
+   
+    for (var i=0 ;i< sectores.length; i++) {
+   //datos.push( "{name:"sectores[i]['nombreSector']", y:"parseInt(sectores[i]['suma'], 10)"},");
+//datos[i]['name:']=sectores[i]['nombreSector'];
+  //      datos[i]['y:']=parseInt(sectores[i]['suma'], 10);
+   var dato1 =sectores[i]['nombreSector'];
+    var dato11=parseInt(sectores[i]['suma'],10);
+dato.push("{name:'"+dato1+"', y:"+dato11+"},");
+   
+    }
+
+
+
+//for (var i = 0; i < sectores.length; i++) {
+var json=[{name:"hola"},{y:6}];
+//var obj =JSON.stringify(json);
+ //console.log(sectores[i]['nombreSector']);
+console.log(json);
+     //obj['data'].push({"name":sectores[i]['nombreSector'],"y":sectores[i]['suma']});
+//}
+
+//json= JSON.stringify(obj);
+
     
-    for (var i=1 ;i< sectores.length; i++) {
-    datos.push({"name :" sectores[i]['nombreSector'], "y:" parseInt(sectores[i]['suma'], 10)})
-}
+   
     
-    
-   console.log(sectores);
-    console.log(datos);
-   Highcharts.chart('container', {
-    
-       chart: {
-       tBackgroundColor: null,
-      plotBorderWidth: null,
-      plotShadow: false,
-      type: 'pie'
-    },
-    title: {
-      text:"Reporte"
-    },
-    tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: false
-        },
-        showInLegend: true
+
+  
+  Highcharts.chart('container', {
+  chart: {
+    plotBackgroundColor: null,
+    plotBorderWidth: null,
+    plotShadow: false,
+    type: 'pie'
+  },
+  title: {
+    text: 'Browser market shares in January, 2018'
+  },
+  tooltip: {
+    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  },
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+        style: {
+          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+        }
       }
+    }
+  },
+  series: [{
+    name: 'Brands',
+    colorByPoint: true,
+    data: [{
+      name: 'quirofano',
+      y: 30,
+      }, 
+           {
+      name: 'pabellon',
+      y: 20
     },
-     
-    
-        series:
-      
- datos
-      
-        
-        });
-    /*chart = new Highcharts.Chart({
-    chart: {
-       renderTo: 'container'
-    },
-     series: [{
-       type: 'pie',
-       name: 'Expenses',
-       data: datos
-    }]
- });*/
- 
-console.log(Highcharts.chart('container'));
-
-
+           {
+      name: 'cocina',
+      y: 10
+    }, ]
+  }]
+});
     
     
 

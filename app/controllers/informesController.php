@@ -36,7 +36,7 @@ class informesController extends Controller
         var_dump($fechaDesde);
              var_dump($fechaHasta);
              $sectores=$this->model->getSectores($fechaDesde,$fechaHasta);
-echo "andaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
              //$todosSectores=json_encode($sectores);
         $datos["filtro"]=$_POST['filtro'];
    var_dump($sectores);
