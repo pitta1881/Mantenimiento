@@ -46,16 +46,16 @@
             <td>{{ rol.idRol }}</td>
             <td>{{ rol.nombreRol }}</td>
             <td>
-                <a href='/fichaPedido?id={{ pedido.id }}'>
+                <a href="/roles/fichaRol?id={{ rol.idRol }}">
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
-                <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
+                <a href="/roles/modificar/seleccionado?id={{  rol.idRol  }}">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
             </td>
         </tr>
         {% else %}
-        <h2 class='error'>No hay Roles</h2> {% endfor %}
+        <h2 class="error">No hay Roles</h2> {% endfor %}
     </table>
 </div>
 

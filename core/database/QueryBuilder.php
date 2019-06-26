@@ -38,6 +38,28 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+    public function borrarPermisosAsociados($idRol){
+        $statement = $this->pdo->prepare(
+            "DELETE FROM rolesxPermisos WHERE idRol=$idRol"
+         );
+         $statement->execute();
+ 
+    }
+    
+
+
+
+    public function updateRol($table, $parameters, $id){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET  nombreRol=:nombreRol WHERE idRol=$id"; //recontra HARDCODEADO
+            try {
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($parameters);
+            } catch (Exception $e) {
+                $this->sendToLog($e);
+            }   
+    }
+
         /*
     Selecciono un registro especifico cuyo PK viene por parametro 
     PARA PEDIDO
@@ -744,6 +766,7 @@ public function updateEvento($table, $parameters, $idEvento){
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
+    
 
     public function selectRolById($tableRol, $idRol){ 
         $statement = $this->pdo->prepare(
@@ -753,6 +776,14 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
+
+    public function selectPermisosByRol($tableRP, $idRol){ 
+        $statement = $this->pdo->prepare(
+            "SELECT idPermiso FROM $tableRP WHERE idRol=$idRol"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
     public function comparaPersona($tablePersona, $dni){  
@@ -1000,6 +1031,7 @@ public function selectAnteUltimoItemAgente($tableItemAgente,$idAgente){
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_CLASS);
 }
+
 
     
     public function dameSectores($tablaPedidos,$tablaSectores,$fechaDesde,$fechaHasta){
