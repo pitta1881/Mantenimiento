@@ -1004,11 +1004,15 @@ public function selectAnteUltimoItemAgente($tableItemAgente,$idAgente){
     
     public function dameSectores($tablaPedidos,$tablaSectores,$fechaDesde,$fechaHasta){
  echo "entro";
-    $statement = $this->pdo->prepare( "
-SELECT $tablaSectores.nombreSector, COUNT(*) FROM $tablaPedidos INNER JOIN $tablaSectores  GROUP BY $tablaSectores.nombreSector where fechaInicio>=$fechaDesde AND fechaInicio<=$fechaHasta " );  
+    var_dump($fechaDesde);
+         var_dump($fechaHasta);
+        $statement = $this->pdo->prepare( "
+SELECT $tablaSectores.nombreSector, COUNT(*) as suma FROM $tablaPedidos INNER JOIN $tablaSectores where $tablaPedidos.idSector=$tablaSectores.idSector   GROUP BY $tablaSectores.nombreSector " );  
   $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_CLASS);
-var_dump($statement);
+    //var_dump($statement);
+       //where fechaInicio>=$fechaDesde AND fechaInicio<=$fechaHasta 
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+
 }
     
     

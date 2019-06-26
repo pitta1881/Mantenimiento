@@ -33,18 +33,48 @@
 <br>
 <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
-
+ <!--for (j=0 ; j< datos.length; j++){
+        
+        if (lenguajes[i]['lenguaje']==datos[j]['nombreLenguaje']){
+            c++;-->
 <script>
   // Build the chart
-  Highcharts.chart('container', {
-    chart: {
-      plotBackgroundColor: null,
+  var titulo={{datos|json_encode()|raw}};
+    console.log(titulo['filtro']);
+    var sectores={{sectores|json_encode()|raw}};
+   console.log(sectores);
+   
+    var datos=[
+        
+       {"name:" sectores[0]['nombreSector'],"y:"parseInt(sectores[0]['suma'], 10)},
+       //{"name": sectores[0]['nombreSector'],"data":sectores[0]['suma']}
+     // sectores[0]['nombreSector'],parseInt(sectores[1]['suma'], 10)
+    ] 
+    //for (j=0 ; j< sectores.length; j++){
+       // datos.push([sectores[1]['nombreSector'],parseInt(sectores[1]['suma'], 10)]);
+    //datos.push(  "name": sectores[1]['nombreSector'],"data":sectores[1]['suma']});
+    //sectores[j]['suma']=parseInt(sectores[j]['suma'], 10)
+
+    //}
+    
+    
+    for (var i=1 ;i< sectores.length; i++) {
+    datos.push({"name :" sectores[i]['nombreSector'], "y:" parseInt(sectores[i]['suma'], 10)})
+}
+    
+    
+   console.log(sectores);
+    console.log(datos);
+   Highcharts.chart('container', {
+    
+       chart: {
+       tBackgroundColor: null,
       plotBorderWidth: null,
       plotShadow: false,
       type: 'pie'
     },
     title: {
-      text: 'Browser market shares in January, 2018'
+      text:"Reporte"
     },
     tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -59,32 +89,32 @@
         showInLegend: true
       }
     },
-    series: [{
-      name: 'Brands',
-      colorByPoint: true,
-      data: [{
-        name: 'Chrome',
-        y: 61.41,
-        sliced: true,
-        selected: true
-      }, {
-        name: 'Internet Explorer',
-        y: 11.84
-      }, {
-        name: 'Firefox',
-        y: 10.85
-      }, {
-        name: 'Edge',
-        y: 4.67
-      }, {
-        name: 'Safari',
-        y: 4.18
-      }, {
-        name: 'Other',
-        y: 7.05
-      }]
+     
+    
+        series:
+      
+ datos
+      
+        
+        });
+    /*chart = new Highcharts.Chart({
+    chart: {
+       renderTo: 'container'
+    },
+     series: [{
+       type: 'pie',
+       name: 'Expenses',
+       data: datos
     }]
-  });
+ });*/
+ 
+console.log(Highcharts.chart('container'));
+
+
+    
+    
+
+
 </script>
 
 {% endblock %}

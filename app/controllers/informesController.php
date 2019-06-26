@@ -25,7 +25,10 @@ class informesController extends Controller
     }
      public function getDatos(){
    echo "acaaaaa";
-   var_dump($_POST['filtro']);
+  $datos["userLogueado"] = $_SESSION['user'];
+         $datos['rol']=$_SESSION['rol'];
+  
+         var_dump($_POST['filtro']);
          if($_POST['filtro']== "Reparaciones_por_sector"){
        echo "entro";
         $fechaDesde=$_POST['fechaInicio'];
@@ -33,10 +36,14 @@ class informesController extends Controller
         var_dump($fechaDesde);
              var_dump($fechaHasta);
              $sectores=$this->model->getSectores($fechaDesde,$fechaHasta);
-var_dump($sectores);
-    }
-        return view('informes/vistaInforme',compact('datos','sectores'));
-}  
+echo "andaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+             //$todosSectores=json_encode($sectores);
+        $datos["filtro"]=$_POST['filtro'];
+   var_dump($sectores);
+        var_dump($datos["filtro"]);
+             return view('/informes/vistaInforme',compact('datos','sectores'));
 
+         }  
+     }
 
 }
