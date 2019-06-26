@@ -30,24 +30,14 @@ class UsuariosController extends Controller
         }
         return view('/usuarios/administracionUsuario', compact('datos'));
     }
-    
-  public function vistamodificarUsuario(){
-    $Usuario= $this->model-> getDatosUsuario($_GET['nombre']);
-
- //  $Permiso = $this->model->getByIdPermiso($_GET['idPermiso']);      
-    $datos["Usuario"] = $Usuario;
-    $datos["userLogueado"] = $_SESSION['user'];
-  
-    return view('/usuarios/administracionUsuario.modificar', compact('datos'));
-}
 
 
     public function update(){
-        $idPermiso = $_POST['nombre'];
+        $nombreUsuario = $_POST['nombre'];
         $datos = [
             'password' => $_POST['password']
         ];
-        $this->model->update($datos,$idPermiso);
+        $this->model->update($datos,$nombreUsuario);
         return $this->vistaAdministracionUsuario();
      }
 

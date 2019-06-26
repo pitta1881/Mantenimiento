@@ -25,6 +25,7 @@
             <th onclick="sortTable(3,'miTabla')">Especializacion</th>
             <th onclick="sortTable(4,'miTabla')">Prioridad</th>
             <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
+            {% set ningunAgente = true %}
             {% set i = 1 %}
             {% for tareas in datos.tareasSinAsignar %}
             {% set estilo = '' %}
@@ -35,14 +36,19 @@
                 <td {{estilo}}><a href="/fichaPedido?id={{ tareas.idPedido }}">Pedido {{ tareas.idPedido }}</a></td>
                 <td {{estilo}}><a href="/fichaTarea?idPedido={{ tareas.idPedido }}&idTarea={{ tareas.idTarea }}">Tarea
                         {{ tareas.idTarea }}</a></td>
-                <td {{estilo}}>{{ tareas.descripcion }}</td>
+                <td class="descripcion" {{estilo}}>{{ tareas.descripcion }}</td>
                 <td {{estilo}}>{{ tareas.especializacionNombre }}</td>
                 <td {{estilo}}>{{ tareas.prioridad }}</td>
                 {% if tareas.tieneAgentes %}
+                {% set ningunAgente = false %}
                 <td {{estilo}}><input type="checkbox" class="clsCasilla" name=" {{ i }}_{{ tareas.idPedido }}"
                         value="{{ tareas.idTarea }}" onclick="deRequireCb('clsCasilla')" required></td>
                 {% else %}
-                <td {{estilo}}>Primero debe asignar agentes a ésta Tarea</td>
+                <td {{estilo}}>
+                    <input type="checkbox" class="clsCasilla" name=" {{ i }}_{{ tareas.idPedido }}"
+                        value="{{ tareas.idTarea }}" onclick="deRequireCb('clsCasilla')" required disabled>Primero debe
+                    asignar agentes a ésta Tarea
+                </td>
                 {% endif %}
                 {% set i = i + 1 %}
             </tr>
@@ -51,7 +57,11 @@
         {% if datos.tareasSinAsignar|length == 0 %}
         <h2 class='error'>No hay Tareas o ya están todas asignadas</h2>
         {% else %}
+        {% if not ningunAgente %}
         <input type="submit" value="Crear OT">
+        {% else %}
+        <input type="reset" value="Crear OT" disabled>
+        {% endif %}
         {% endif %}
     </form>
     <script>

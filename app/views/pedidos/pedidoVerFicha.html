@@ -25,7 +25,7 @@
         <form action="/pedido/finalizar" method="post" style="display: inline-block" id="formTerminarPedido">
             <input type="text" name="id" value="{{ datos.miPedido.id }}" hidden>
         </form>
-        <a id="btnFinPedido" style="display: none; background-color:coral; margin:2% 0"
+        <a id="btnFinPedido" style="display: none; background-color:lightgreen"
             onclick="alertify.confirm('Finalizar Pedido','¿Esta seguro?',function(){document.getElementById('formTerminarPedido').submit()},function(){})"><img
                 class="iconos" src="/public/res/finish.svg" title="Terminar Pedido"></a>
     </ul>
@@ -139,16 +139,28 @@
             <td {{ estilo }}><a href="/fichaTarea?idPedido={{ datos.miPedido.id }}&idTarea={{ tarea.idTarea }}"
                     title="Ver Mas"> Tarea
                     {{ tarea.idTarea }}</a></td>
-            <td {{ estilo }}>{% if tarea.idOT is empty  %}
+            <td {{ estilo }}>
+                {% if tarea.estado == 'Cancelado' %}
+                <p>-</p>
+                {% else %}
+                {% if tarea.idOT is empty  %}
+                {% if tarea.agentesAsignados == 0 %}
+                <a href="#" title="Crear OT"
+                    onclick="alertify.alert('Alerta', 'Primero debe asignar AGENTES a esta Tarea..');">Tarea sin
+                    asignar</a>
+                {% else %}
                 <a href="/ot/crear" title="Crear OT"> Tarea sin asignar</a>
+                {% endif %}
                 {% else %}
                 <a href="/fichaOT?idOT={{ tarea.idOT }}" title="Ver Mas"> OT {{ tarea.idOT }}</a>
+                {% endif %}
                 {% endif %}
             </td>
             <td class="descripcion" {{ estilo }}>{{ tarea.descripcion }}</td>
             <td {{ estilo }}>{{ tarea.especializacionNombre }}</td>
             <td {{ estilo }}>{{ tarea.prioridad }}</td>
-            <td {{ estilo }}>{{ tarea.estado }}</td> {% if tarea.estado != "Finalizado" %}{% set pedidoFin = false %}
+            <td {{ estilo }}>{{ tarea.estado }}</td>
+            {% if tarea.estado != "Finalizado" and tarea.estado != "Cancelado" %}{% set pedidoFin = false %}
             {% endif %}
             <td {{ estilo }}>{{ tarea.agentesAsignados }}</td>
             <td {{ estilo }}>{{ tarea.insumosAsignados }}</td>

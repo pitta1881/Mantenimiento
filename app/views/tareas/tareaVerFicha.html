@@ -90,21 +90,12 @@
         <dt>Prioridad:</dt>
         <dd>{{ datos.miTarea.prioridad }}</dd>
         <dt>Descripcion:</dt>
-        <dd>{{ datos.miTarea.descripcion }}</dd>
+        <dd class="descripcion">{{ datos.miTarea.descripcion }}</dd>
     </dl>
     <!--TABLA OT-->
     <h2 style="display: inline-block">ORDEN DE TRABAJO:</h2>
     {% if datos.miTarea.miOT is not empty %}
     <table>
-        {% if datos.miTarea.estado == "Iniciado" %}
-        {% if datos.miTarea.agentes is empty %}
-        <a href="#" onclick="alertify.alert('Error','Primero debe asignar agentes')"><img class="iconos"
-                src="/public/res/add.svg" title="Crear OT"></a>
-        {% else %}
-        <a href="/ot/crear"><input type="button" value="Crear una OT"></a>
-        {% endif %}
-        <h2 class='error'>No está asignado a ninguna OT</h2>
-        {% else %}
         <th>Nº OT</th>
         <th>Fecha de Inicio</th>
         <th>Fecha de Fin</th>
@@ -120,10 +111,17 @@
             <td> <a href="/fichaOT?idOT={{ datos.miTarea.miOT.idOT }}" title="Ver Mas"> <img class="iconos"
                         src="/public/res/vermas.svg"></a></td>
         </tr>
-        {% endif %}
     </table>
     {% else %}
-    <h2 class='error'>No se creó una OT</h2>
+    {% if datos.miTarea.estado == "Iniciado" %}
+    {% if datos.miTarea.agentes is empty %}
+    <a href="#" onclick="alertify.alert('Error','Primero debe asignar agentes')"><img class="iconos"
+            src="/public/res/add.svg" title="Crear OT"></a>
+    {% else %}
+    <a href="/ot/crear"><input type="button" value="Crear una OT"></a>
+    {% endif %}
+    {% endif %}
+    <h2 class='error'>No está asignado a ninguna OT</h2>
     {% endif %}
     <!--TABLA AGENTES-->
     <h2 style="display: inline-block">AGENTES</h2>

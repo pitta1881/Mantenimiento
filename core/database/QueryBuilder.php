@@ -784,7 +784,7 @@ public function updateEvento($table, $parameters, $idEvento){
 
     public function updateUsuario($tablePersona, $parameters, $nombre){
         $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $tablePersona SET password=:password,  WHERE nombre='$nombre'"; //recontra HARDCODEADO
+        $sql = "UPDATE $tablePersona SET password=:password WHERE nombre='$nombre'";
             try {
                 $statement = $this->pdo->prepare($sql);
                 $statement->execute($parameters);
