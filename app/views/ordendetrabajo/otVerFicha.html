@@ -27,7 +27,7 @@
 </script>
 <div class="contenido3">
     <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
-    <input type="button" value="IMPRIMIR" onclick="print()">
+    <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
     <dl>
         <dt>Nº OT:</dt>
         <dd>{{ datos.miOT.idOT }}</dd>
@@ -74,25 +74,51 @@
             <td {{ estilo }}>
                 {% if tarea.estado != 'Finalizado' %}
                 {% set estados = ['En Curso','Pendiente','Finalizado'] %}
-                <img class="iconosTitulo" src="/public/res/cambiarEstado.svg" onclick="mostrarFormulario()"
-                    title="Cambiar Estado">
-                <form action="/tarea/cambiarEstado/seleccionado" method="post" id="cambiarEstadoTarea"
-                    style="display: none">
-                    <input type="text" name="idPedido" value="{{ tarea.idPedido }}" hidden>
-                    <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
-                    <input type="text" name="idOT" value="{{ datos.miOT.idOT }}" hidden>
-                    <label for="estado" id="estadoLabel">Estado</label>
-                    <select name="estado" id="estadoSelect">
-                        {% for estado in estados %}
-                        {% if estado != tarea.estado %}
-                        <option value="{{ estado }}">{{ estado }}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                    <input type="button" value="Cambiar" id="cambiarEstadoSi" onclick="alertify.prompt( 'Cambiar Estado', 'Descripcion', ''
-                        , function(evt, value) { var descripcion = document.createElement('input'); descripcion.required = 'required'; descripcion.type = 'text'; descripcion.name = 'descripcion'; descripcion.value = value; document.getElementById('cambiarEstadoTarea').appendChild(descripcion); document.getElementById('cambiarEstadoTarea').submit(); }
-                        , function() {});">
-                </form>
+                <a href="#" role="button" data-toggle="modal"
+                    data-target="#myModal{{ tarea.idPedido }}_{{ tarea.idTarea }}"><img class="iconosTitulo"
+                        src="/public/res/cambiarEstado.svg" title="Cambiar Estado"></a>
+                <!-- The Modal -->
+                <div class="modal fade" id="myModal{{ tarea.idPedido }}_{{ tarea.idTarea }}">
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Cambiar Estado</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/tarea/cambiarEstado/seleccionado" method="post" class="was-validated">
+                                    <input type="text" name="idPedido" value="{{ tarea.idPedido }}" hidden>
+                                    <input type="text" name="idTarea" value="{{ tarea.idTarea }}" hidden>
+                                    <input type="text" name="idOT" value="{{ datos.miOT.idOT }}" hidden>
+                                    <div class="form-group">
+                                        <label for="estado">Estado</label>
+                                        <select name="estado" class="form-control custom-select">
+                                            {% for estado in estados %}
+                                            {% if estado != tarea.estado %}
+                                            <option value="{{ estado }}">{{ estado }}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                        <div class="invalid-feedback">Complete este campo</div>
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
+                                        <textarea class="form-control" rows="3" id="descripcion" name="descripcion"
+                                            required></textarea>
+                                        <div class="invalid-feedback">Complete este campo</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% endif %}
             </td>
         </tr>

@@ -93,7 +93,16 @@ class Tarea extends Model
         $persona = $this->getPersonaPorId($misAgentes[$i]['idAgente']);
         $misAgentes[$i]['nombre']=$persona['nombre'];
         $misAgentes[$i]['apellido']=$persona['apellido'];
+        $ultimoItemAgente = $this->db->selectUltimoItemAgente($this->tableItemAgentes,$misAgentes[$i]['idAgente']);
+        $miUltimoItemAgente = json_decode(json_encode($ultimoItemAgente[0]), True);
+        $tareaUltimoItemAgente = $this->db->selectTareaByIdId($this->table,$miUltimoItemAgente['idPedido'],$miUltimoItemAgente['idTarea']);
+        $miTareaUltimoItemAgente = json_decode(json_encode($tareaUltimoItemAgente[0]), True);
+        if (($miTareaUltimoItemAgente['prioridad'] == 'Urgente') && ($miTareaUltimoItemAgente['estado'] != 'Finalizado')) {
+            $misAgentes[$i]['ocupadoUrgente']=true;
+        } else {
+            $misAgentes[$i]['ocupadoUrgente']=false;
         }
+    }
     return $misAgentes;
     }
 
