@@ -161,7 +161,7 @@
                         class="iconos" src="/public/res/update.svg"></a>
                 <!-- The Modal -->
                 <div class="modal fade" id="modalFormModificar{{ usuario.idPersona }}">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog modal-xs">
                         <div class="modal-content">
                             <!-- Modal Header -->
                             <div class="modal-header">
@@ -173,17 +173,15 @@
                                 <form action="/usuarios/modificarUsuario" method="post"
                                     id="formModificar{{ usuario.idPersona }}">
                                     <input type="text" name="nombre" value="{{ usuario.nombre }}" hidden>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="password" class="control-label">Contraseña:</label><span
-                                                class="asterisco">*</span>
-                                            <input type="password" name="password" class="form-control" required>
-                                        </div>
-                                        <div class="form-group col-md-5">
-                                            <label for="password" class="control-label">Confirme
-                                                Contraseña:</label><span class="asterisco">*</span>
-                                            <input type="password" name="confirmPassword" class="form-control" required>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="password" class="control-label">Contraseña:</label><span
+                                            class="asterisco">*</span>
+                                        <input type="password" name="password" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="control-label">Confirme
+                                            Contraseña:</label><span class="asterisco">*</span>
+                                        <input type="password" name="confirmPassword" class="form-control" required>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
