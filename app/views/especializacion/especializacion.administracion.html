@@ -21,8 +21,17 @@
 {% endif %}
 <div class="general">
     <!-- Button to Open the Modal -->
-    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-            src="/public/res/add.svg" title="Crear Especializacion">Crear Nueva</a>
+    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "33" %}
+                    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
+                        src="/public/res/add.svg" title="Crear Especializacion">Crear Nueva</a>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+
+
+    
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog">
@@ -68,10 +77,19 @@
             <td>{{ especializacion.idEspecializacion }}</td>
             <td>{{ especializacion.nombre }}</td>
             <td>
-                <a class="btn btn-outline-info btn-xs"
+
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "35" %}
+                    <a class="btn btn-outline-info btn-xs"
                     href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
                     <img class=" iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+
+               
                 {% set desabilitado = "disabled" %}
                 {% if especializacion.usado == false %}
                 {% set desabilitado = "" %}
@@ -80,9 +98,19 @@
                     id="formEliminarEspecializacion{{ especializacion.idEspecializacion }}">
                     <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}" hidden>
                 </form>
+
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "35" %}
                 <a href="#" class="btn btn-outline-info btn-xs {{ desabilitado }}" role="button"
-                    onclick="alertify.confirm('Eliminar Especializacion','¿Esta seguro?',function(){document.getElementById('formEliminarEspecializacion{{ especializacion.idEspecializacion }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/del.svg" title="Eliminar Especializacion"></a>
+                onclick="alertify.confirm('Eliminar Especializacion','¿Esta seguro?',function(){document.getElementById('formEliminarEspecializacion{{ especializacion.idEspecializacion }}').submit()},function(){})"><img
+                    class="iconos" src="/public/res/del.svg" title="Eliminar Especializacion"></a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+
+                
+                
             </td>
         </tr>
         {% else %}
