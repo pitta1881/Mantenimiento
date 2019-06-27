@@ -6,11 +6,15 @@
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
-    <a class="crear" href="/oc/crear">
-        <input type="button" value="Crear OC">
-    </a>
-    <a href="/oc/crear" class="btn btn-info" role="button"><img class="iconos" src="/public/res/add.svg"
+        {% for value in datos.permisos %}
+        {% if value.idPermiso == "49" %}
+        <a href="/oc/crear" class="btn btn-info" role="button"><img class="iconos" src="/public/res/add.svg"
             title="Crear OC">Crear OC</a>
+        {% endif %}
+        {% else %}
+    
+        {% endfor %}
+    
     <script>
         $(document).ready(function () {
             $('#miTabla').DataTable();
@@ -39,9 +43,18 @@
             <td {{ estilo }}>{{ OC.costoEstimado }}</td>
             <td {{ estilo }}>{{ OC.cantInsumos }}</td>
             <td {{ estilo }}>
-                <a href='/fichaOC?idOC={{ OC.idOC }}'>
-                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
-                </a>
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "52" %}
+                    <a href='/fichaOC?idOC={{ OC.idOC }}'>
+                        <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
+                    </a>
+                    {% endif %}
+                    {% else %}
+
+                    {% endfor %}
+
+
+               
             </td>
         </tr>
         {% else %}

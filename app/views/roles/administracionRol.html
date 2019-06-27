@@ -16,7 +16,17 @@
             }
         }
     </script>
-    <img class="iconos" src="/public/res/add.svg" title="Crear" onclick="mostrarFormulario()">
+
+{% for value in datos.permisos %}
+{% if value.idPermiso == "9" %}
+<img class="iconos" src="/public/res/add.svg" title="Crear" onclick="mostrarFormulario()">
+{% endif %}
+{% else %}
+
+{% endfor %}
+
+
+  
     <form action="/roles/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
         <fieldset>
             <legend>Datos Basicos</legend>
@@ -46,12 +56,28 @@
             <td>{{ rol.idRol }}</td>
             <td>{{ rol.nombreRol }}</td>
             <td>
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "12" %}
+                   
                 <a href="/roles/fichaRol?id={{ rol.idRol }}">
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
-                <a href="/roles/modificar/seleccionado?id={{  rol.idRol  }}">
-                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
-                </a>
+                    {% endif %}
+                    {% else %}
+                    
+                    {% endfor %}
+
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "11" %}
+                    <a href="/roles/modificar/seleccionado?id={{  rol.idRol  }}">
+                        <img class="iconos" src="/public/res/update.svg" title="Modificar">
+                    </a>
+                    {% endif %}
+                    {% else %}
+
+                    {% endfor %}
+
+             
             </td>
         </tr>
         {% else %}

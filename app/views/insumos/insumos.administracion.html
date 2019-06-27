@@ -20,8 +20,16 @@
 </script>
 {% endif %}
 <div class="contenido3">
-    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal" id="btnCrearTarea"><img
+        {% for value in datos.permisos %}
+        {% if value.idPermiso == "41" %}
+        <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal" id="btnCrearTarea"><img
             class="iconos" src="/public/res/add.svg" title="Crear Tarea">Crear Nuevo</a>
+        {% endif %}
+        {% else %}
+    
+        {% endfor %}
+
+  
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-xs">
             <div class="modal-content">
@@ -122,9 +130,18 @@
                         function(){}
                         ).set({'type':'number','value':0,'min':-'{{insumo.stock}}'});">
                 <!--MODIFICAR INSUMO-->
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "43" %}
                 <a href="#" id="btnCrearUsuario" data-toggle="modal"
                     data-target="#modalFormModificar{{ insumo.idInsumo }}" title="Modificar Insumo"><img class="iconos"
                         src="/public/res/update.svg"></a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+             
+                {% endif %}
+               
                 <!-- The Modal -->
                 <div class="modal fade" id="modalFormModificar{{ insumo.idInsumo }}">
                     <div class="modal-dialog modal-xs">
@@ -169,17 +186,32 @@
                     </div>
                 </div>
                 <!--VER HISTORIAL-->
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "44" %}
                 <a href="/insumo/verHistorial?idInsumo={{ insumo.idInsumo }}"><img class="iconosTitulo"
-                        src="/public/res/historyEstado.svg" title="Ver Historial"></a>
+                    src="/public/res/historyEstado.svg" title="Ver Historial"></a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+             
                 <!--ELIMINAR INSUMO-->
                 {% if insumo.eliminarBool == true %}
+                
                 <form action="/insumo/eliminar" method="post" style="display: inline-block"
                     id="formEliminarInsumo{{ insumo.idInsumo }}">
                     <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
                 </form>
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "42" %}
                 <a
-                    onclick="alertify.confirm('Eliminar Insumo','¿Esta seguro?',function(){document.getElementById('formEliminarInsumo{{ insumo.idInsumo }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/del.svg" title="Eliminar Insumo"></a>
+                onclick="alertify.confirm('Eliminar Insumo','¿Esta seguro?',function(){document.getElementById('formEliminarInsumo{{ insumo.idInsumo }}').submit()},function(){})"><img
+                    class="iconos" src="/public/res/del.svg" title="Eliminar Insumo"></a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+             
                 {% endif %}
             </td>
         </tr>

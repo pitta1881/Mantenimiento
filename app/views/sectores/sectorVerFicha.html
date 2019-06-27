@@ -17,9 +17,18 @@
 {% block main %}
 <div class="contenido3">
     <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+
+    {% for value in datos.permisos %}
+    {% if value.idPermiso == "27" %}
     <a href='/sectores/modificar/seleccionado?idSector={{ datos.miSector.idSector }}'>
         <img class=" iconos" src="/public/res/update.svg" title="Modificar">
     </a>
+    {% endif %}
+    {% else %}
+
+    {% endfor %}
+
+   
 
     <dl>
         <dt>Nombre:</dt>
