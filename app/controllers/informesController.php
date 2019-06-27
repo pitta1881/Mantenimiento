@@ -18,15 +18,17 @@ class informesController extends Controller
     public function vistaAdministracionInformes(){
       
          $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+         $permisos=$this->model->getPermisos($_SESSION['rol']);
+         $datos['permisos']= $permisos;
   
         
         return view('/informes/vistaInforme',compact('datos'));
     }
      public function getDatos(){
-   echo "acaaaaa";
+
   $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+  $permisos=$this->model->getPermisos($_SESSION['rol']);
+  $datos['permisos']= $permisos;
   
          var_dump($_POST['filtro']);
          if($_POST['filtro']== "Reparaciones_por_sector"){

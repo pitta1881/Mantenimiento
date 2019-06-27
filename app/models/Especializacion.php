@@ -10,6 +10,12 @@ class Especializacion extends Model
   protected $table='especializacion';
   protected $tableAgentes='agentes';
 
+  public function getPermisos($idRol){
+    $roles = $this->db->selectPermisosByRol($idRol);
+    $misRoles = json_decode(json_encode($roles), True);
+    return $misRoles; 
+}
+
   public function get()
   {
       $especializaciones = $this->db->selectAll($this->table);

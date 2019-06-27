@@ -25,7 +25,8 @@ class PedidoController extends Controller{
        } */      
        $datos["estados"] = $this->model->getEstados();
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/pedidos/pedidosVerTodos', compact('datos'));
     }
 
@@ -37,7 +38,8 @@ class PedidoController extends Controller{
         $datos["estados"] = $this->model->getEstados();
         $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/pedidos/pedidoVerFicha', compact('datos'));
     }
 
@@ -58,7 +60,8 @@ class PedidoController extends Controller{
       }
       $datos['arrayPedido'] = $pedido;
       $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+      $permisos=$this->model->getPermisos($_SESSION['rol']);
+      $datos['permisos']= $permisos;
       $idNuevoPedido = $this->model->getIdUltimoPedido();
       redirect("fichaPedido?id=".$idNuevoPedido);
     }
@@ -71,7 +74,8 @@ class PedidoController extends Controller{
         $datos["estados"] = $this->model->getEstados();
         $datos["miPedido"] = $unPedido;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/pedidos/pedidoModificar',compact('datos'));
     }
        

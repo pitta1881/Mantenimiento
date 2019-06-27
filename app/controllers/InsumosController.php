@@ -17,7 +17,8 @@ class InsumosController extends Controller{
         $todosInsumos = $this->model->get(); 
         $datos['todosInsumos'] = $todosInsumos;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
@@ -41,7 +42,8 @@ class InsumosController extends Controller{
         $insumo = $this->model->getByIdInsumo($_GET['idInsumo']);      
         $datos['insumo'] = $insumo;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/insumos/insumo.modificar', compact('datos'));
     }
 
@@ -69,7 +71,8 @@ class InsumosController extends Controller{
         $datos['insumosDisponibles'] = $insumosDisponibles;
         $datos['insumosUsados'] = $insumosUsados;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/insumos/tareasInsumosDisponibles',compact('datos'));
     }
 

@@ -18,7 +18,8 @@ class SectoresController extends Controller{
         $datos['todosSectores'] = $todosSectores;
         $datos['tipoSectores'] = $this->model->getTipoSector();
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
@@ -45,7 +46,8 @@ class SectoresController extends Controller{
         $datos['tipoSectores'] = $this->model->getTipoSector(); 
         $datos['sector'] = $sector;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/sectores/sector.modificar', compact('datos'));
     }
 
@@ -71,7 +73,8 @@ class SectoresController extends Controller{
         $miSector = $this->model->getByIdSector($_GET['idSector']);
         $datos["miSector"] = $miSector;  
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/sectores/sectorVerFicha', compact('datos'));
     }
 }

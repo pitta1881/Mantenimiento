@@ -56,7 +56,7 @@ class Pages extends Model
       } 
 
       public function getPermisos($idRol){
-        $roles = $this->db->selectPermisosByRol($this->tableRP,$idRol);
+        $roles = $this->db->selectPermisosByRol($idRol);
         $misRoles = json_decode(json_encode($roles), True);
         return $misRoles; 
     }

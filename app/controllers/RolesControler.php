@@ -18,7 +18,8 @@ class RolesControler extends Controller{
         $todosRoles = $this->model->get(); 
         $datos["todosRoles"] = $todosRoles;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/roles/administracionRol', compact('datos'));
     }
 
@@ -29,7 +30,9 @@ class RolesControler extends Controller{
         $misPermisos=$this->model->getPermisos($idRol);
         $datos["misPermisos"]= $misPermisos;
         $datos["userLogueado"] = $_SESSION['user'];
-         //$datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
+      
         return view('/roles/fichaRol', compact('datos'));
     }
 
@@ -39,7 +42,8 @@ class RolesControler extends Controller{
         ];
       $this->model->insert($rol);   
       $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+      $permisos=$this->model->getPermisos($_SESSION['rol']);
+      $datos['permisos']= $permisos;
       return $this->index();
     }
 
@@ -48,7 +52,8 @@ class RolesControler extends Controller{
         $miRol = $this->model->getRol($idRol); 
         $datos['miRol'] = $miRol;
         $datos["userLogueado"] = $_SESSION['user'];
-
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/roles/administracionRol.modificar', compact('datos'));
     }
 

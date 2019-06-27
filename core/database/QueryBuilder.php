@@ -38,7 +38,7 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function borrarPermisosAsociados($idRol){
+    public function borrarPermisosAsociados(per$idRol){
         $statement = $this->pdo->prepare(
             "DELETE FROM rolesxPermisos WHERE idRol=$idRol"
          );
@@ -777,9 +777,9 @@ public function updateEvento($table, $parameters, $idEvento){
     }
 
 
-    public function selectPermisosByRol($tableRP, $idRol){ 
+    public function selectPermisosByRol( $idRol){ 
         $statement = $this->pdo->prepare(
-            "SELECT idPermiso FROM $tableRP WHERE idRol=$idRol"
+            "SELECT idPermiso FROM rolesxpermisos WHERE idRol=$idRol"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);

@@ -10,7 +10,12 @@ class Insumos extends Model
     protected $tableItemInsumo = 'iteminsumo';
     protected $tableMovimiento = 'movimiento';
     
-
+    public function getPermisos($idRol){
+        $roles = $this->db->selectPermisosByRol($idRol);
+        $misRoles = json_decode(json_encode($roles), True);
+        return $misRoles; 
+    }
+    
     public function get(){
         $insumos = $this->db->selectAll($this->table);
         $todosInsumos = json_decode(json_encode($insumos), True);
