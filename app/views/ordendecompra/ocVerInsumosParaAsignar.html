@@ -15,15 +15,24 @@
 {% endblock %}
 
 {% block main %}
-<div class="general">
+<div class="contenido3">
     <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
     <form action="/oc/asignarInsumos/seleccionados" method="post" id="formInsumos">
+        <script>
+            $(document).ready(function () {
+                $('#miTabla').DataTable();
+            });
+        </script>
         <table id="miTabla">
-            <th onclick="sortTable(1,'miTabla')">Nombre</th>
-            <th onclick="sortTable(2,'miTabla')">Descripcion</th>
-            <th onclick="sortTable(3,'miTabla')">Stock</th>
-            <th onclick="sortTable(4,'miTabla')">Stock Minimo</th>
-            <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
+            <thead>
+                <tr>
+                    <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                    <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+                    <th onclick="sortTable(3,'miTabla')">Stock</th>
+                    <th onclick="sortTable(4,'miTabla')">Stock Minimo</th>
+                    <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
+                </tr>
+            </thead>
             {% for insumo in datos.insumos %}
             {% set estilo = "" %}
             {% if insumo.stock < insumo.stockMinimo %}
@@ -49,9 +58,15 @@
         <h2 class='error'>No hay Insumos o están todos Ocupados</h2>
         {% else %}
         <input type="number" name="costoEstimado" hidden id="costoEstimado">
-        <input type="submit" id="btnSubmit" onclick="alertify.prompt('Costo Estimado','Ingrese el costo estimado para la compra: $','',
+        <input type="button" value="Enviar" onclick="alertify.prompt('Costo Estimado','Ingrese el costo estimado para la compra: $','',
         function(evt,value){
             document.getElementById('costoEstimado').value = value;
+            var selectTodos = document.getElementsByName('miTabla_length')[0];
+            var ultimaOption = selectTodos.lastElementChild;
+            ultimaOption.value = 10000;
+            selectTodos.selectedIndex = 4;
+            selectTodos.dispatchEvent(new Event('change'));
+            document.getElementById('formInsumos').submit();
         },function(){}).set({'type':'number','value':0,'min':'0'});">
         {% endif %}
     </form>

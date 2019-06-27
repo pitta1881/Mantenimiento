@@ -11,6 +11,7 @@ nav.main-nav {
     padding: 1.4vw 0vw;
     text-align: center;
 }
+
 nav.main-nav ol {
     position: inherit;
     margin: 0 0 0 0;
@@ -26,45 +27,49 @@ nav.main-nav ol {
     color: black;
     display: inline;
 }
+
 nav.main-nav ol li {
     height: 2vh;
     width: 2vw;
     display: inline;
 }
 
-/**nav.main-nav ol li a {
-    /* display: block; 
-
-color: #000;
-padding: 2vh 2vw;
-text-decoration: none;
-height: 2vh;
-width: 2vw;
-
-}
-nav.main-nav ol li a:hover {
-    padding-top: 6vh;
-    padding-bottom: 3vh;
-    background-color: #F27329;
-    color: white;
-}
+/**nav.main-nav ol li a { 
+    /* display: block;  
+ 
+color: #000; 
+padding: 2vh 2vw; 
+text-decoration: none; 
+height: 2vh; 
+width: 2vw; 
+ 
+} 
+nav.main-nav ol li a:hover { 
+    padding-top: 6vh; 
+    padding-bottom: 3vh; 
+    background-color: #F27329; 
+    color: white; 
+} 
 **/
 
 .active {
     background-color: rgb(156, 236, 82);
     color: white;
 }
+
 .titulo1 {
     height: 10vh;
     top: 1vh;
     position: absolute;
     right: 50vw;
 }
+
 .titulo {
     top: 1vh;
     position: absolute;
     right: 80vw;
 }
+
 .user {
     color: black;
     position: absolute;
@@ -74,6 +79,7 @@ nav.main-nav ol li a:hover {
     height: 5vh;
     width: 20vw;
 }
+
 .imagen {
     position: absolute;
     margin: 0 0 0 0;

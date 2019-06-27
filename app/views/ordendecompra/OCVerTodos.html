@@ -5,7 +5,7 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-<div class="general">
+<div class="contenido3">
     {% for value in datos.permisos %}
     {% if value.idPermiso == "49" %}
     <a href="/oc/crear" class="btn btn-info" role="button"><img class="iconos" src="/public/res/add.svg"

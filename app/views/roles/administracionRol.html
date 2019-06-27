@@ -5,38 +5,39 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-<div class="general">
-    <script>
-        function mostrarFormulario() {
-            var formularioPedido = document.getElementById('formularioPedido');
-            if (formularioPedido.style.display == "block") {
-                formularioPedido.style.display = "none";
-            } else {
-                formularioPedido.style.display = "block"
-            }
-        }
-    </script>
-
-{% for value in datos.permisos %}
-{% if value.idPermiso == "9" %}
-<img class="iconos" src="/public/res/add.svg" title="Crear" onclick="mostrarFormulario()">
-{% endif %}
-{% else %}
-
-{% endfor %}
-
-
-  
-    <form action="/roles/guardar" method="post" id="formularioPedido" style="display: none; border: 1px solid black">
-        <fieldset>
-            <legend>Datos Basicos</legend>
-            <label for="nombreRol">Nombre</label>
-            <input type="text" name="nombreRol" value="" placeholder="nombre del rol">
-            <br>
-        </fieldset>
-        <input type="reset">
-        <input type="submit">
-    </form>
+<div class="contenido3">
+    {% for value in datos.permisos %}
+    {% if value.idPermiso == "9" %}
+    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
+            src="/public/res/add.svg" title="Crear Especializacion">Crear Nuevo</a>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Crear Rol</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/roles/guardar" method="post" class="was-validated">
+                        <div class="form-group">
+                            <label for="nombreRol">Nombre del Rol:</label>
+                            <input type="text" name="nombreRol" class="form-control" autofocus required>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
     <script>
         $(document).ready(function () {
             $('#miTabla').DataTable();
@@ -56,28 +57,28 @@
             <td>{{ rol.idRol }}</td>
             <td>{{ rol.nombreRol }}</td>
             <td>
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "12" %}
-                   
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "12" %}
+
                 <a href="/roles/fichaRol?id={{ rol.idRol }}">
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
-                    {% endif %}
-                    {% else %}
-                    
-                    {% endfor %}
+                {% endif %}
+                {% else %}
 
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "11" %}
-                    <a href="/roles/modificar/seleccionado?id={{  rol.idRol  }}">
-                        <img class="iconos" src="/public/res/update.svg" title="Modificar">
-                    </a>
-                    {% endif %}
-                    {% else %}
+                {% endfor %}
 
-                    {% endfor %}
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "11" %}
+                <a href="/roles/modificar/seleccionado?id={{  rol.idRol  }}">
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
+                </a>
+                {% endif %}
+                {% else %}
 
-             
+                {% endfor %}
+
+
             </td>
         </tr>
         {% else %}

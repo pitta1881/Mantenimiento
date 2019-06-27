@@ -29,15 +29,24 @@
         <dd>{{ datos.miOC.estado }}</dd>
     </dl>
     <h2>INSUMOS</h2>
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
     <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nº Insumo</th>
-        <th onclick="sortTable(1,'miTabla')">Nombre</th>
-        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
-        <th onclick="sortTable(3,'miTabla')">Stock Minimo</th>
-        <th onclick="sortTable(4,'miTabla')">Stock Actual</th>
-        <th onclick="sortTable(5,'miTabla')">Stock Solicitado</th>
-        <th onclick="sortTable(5,'miTabla')">Cantidad Ingresada</th>
-        <th onclick="sortTable(6,'miTabla')">Accion</th>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº Insumo</th>
+                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+                <th onclick="sortTable(3,'miTabla')">Stock Minimo</th>
+                <th onclick="sortTable(4,'miTabla')">Stock Actual</th>
+                <th onclick="sortTable(5,'miTabla')">Stock Solicitado</th>
+                <th onclick="sortTable(5,'miTabla')">Cantidad Ingresada</th>
+                <th onclick="sortTable(6,'miTabla')">Accion</th>
+            </tr>
+        </thead>
         {% for insumo in datos.miOC.insumos %}
         {% set estilo = "" %}
         {% if insumo.cantidad == insumo.cantidadIngresada %}
