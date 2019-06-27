@@ -58,7 +58,7 @@
                     <input type="text" name="idOC" value="{{ datos.miOC.idOC }}" hidden>
                     <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" hidden>
                     <input type="text" name="descripcion" value="Ingreso según OC {{datos.miOC.idOC}}" hidden>
-                    <input type="number" name="cantidadIngresada" hidden>
+                    <input type="number" name="cantidadIngresada" hidden id="cantidadIngresada{{ insumo.idInsumo }}">
                     <input type="number" name="tipoMovimiento" value="0" hidden>
                 </form>
                 <img class="iconos" src="/public/res/sumInsumo.svg" title="Ingreso Stock"
@@ -67,7 +67,7 @@
                         if(value < 1){
                             alertify.alert('Error','Debe ingresar un valor válido');
                         } else{
-                        document.getElementsByName('cantidadIngresada')[0].value = value ;
+                        document.getElementById('cantidadIngresada{{ insumo.idInsumo }}').value = value ;
                         document.getElementById('formReasignar{{ insumo.idInsumo }}').submit()
                     }
                     },

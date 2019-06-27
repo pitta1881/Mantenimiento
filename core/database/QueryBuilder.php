@@ -38,7 +38,7 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function borrarPermisosAsociados(per$idRol){
+    public function borrarPermisosAsociados($idRol){
         $statement = $this->pdo->prepare(
             "DELETE FROM rolesxPermisos WHERE idRol=$idRol"
          );
@@ -274,14 +274,6 @@ class QueryBuilder
     
 
     
-    public function deleteTarea($table,$idPedido,$idTarea){ //table = tarea
-        $statement = $this->pdo->prepare(
-           "DELETE FROM $table  WHERE idPedido = $idPedido AND idTarea = $idTarea"
-        );
-        var_dump($statement);
-        $statement->execute();
-    }
-
     public function selectTareaByIdId($table, $nPedido, $nTarea){ //table = tarea
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 

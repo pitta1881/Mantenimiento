@@ -31,7 +31,7 @@ class OCController extends Controller{
     public function crearOC(){
         $idOCCreada = $this->model->newOC($_POST['costoEstimado'],'Creado');
         $itemOC['idOC'] = $idOCCreada;
-        for ($i=0; $i < count($_POST)-1; $i++) { 
+        for ($i=0; $i < count($_POST['idInsumo']); $i++) { 
             $itemOC['idInsumo'] = $_POST['idInsumo'][$i];
             $itemOC['cantidad'] = $_POST['cantidad'][$i];
             $this->model->insertItemOC($itemOC);

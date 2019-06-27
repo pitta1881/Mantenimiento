@@ -20,6 +20,11 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
+                    {% if datos.sectores is empty %}
+                    <div class="alert alert-danger text-center" role="alert">Primero debe añadir un Sector <a
+                            href="/sectores/administracionSectores" class="alert-link">HAGA CLICK AQUI</a>
+                    </div>
+                    {% else %}
                     <form action="/pedido/guardar" method="post" class="was-validated">
                         <div class="form-row">
                             <div class="form-group col-md-4">
@@ -67,6 +72,7 @@
                             <button type="submit" class="btn btn-success">Enviar</button>
                         </div>
                     </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -97,7 +103,7 @@
         {% set estilo = "style=background-color:#ffcccc" %}
         {% else %}
         {% if pedido.estado == "Para Finalizar" %}
-        {% set estilo = "style=background-color:goldenrod" %}
+        {% set estilo = "style=background-color:#ffbf00" %}
         {% else %}
         {% if pedido.estado == "Cancelado" %}
         {% set estilo = "style=background-color:lightgrey" %}

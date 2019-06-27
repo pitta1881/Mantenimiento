@@ -25,6 +25,7 @@
             <th onclick="sortTable(4,'miTabla')">Stock Minimo</th>
             <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
             {% for insumo in datos.insumos %}
+            {% set estilo = "" %}
             {% if insumo.stock < insumo.stockMinimo %}
             {% set estilo = "style=background-color:#ffc6c6" %}
             {% endif %}

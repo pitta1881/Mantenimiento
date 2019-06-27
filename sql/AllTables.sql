@@ -280,3 +280,25 @@ INSERT INTO `rolesxpermisos` (`idRol`, `idPermiso`) VALUES
 (0, 1),(0, 2),(0, 3),(0, 4),(0, 5),(0, 6),(0, 7),(0, 8),(0, 9),(0, 10),(0, 11),(0, 12),(0, 13),(0, 14),(0, 15),(0, 16),(0, 17),(0, 18),
 (0, 19),(0, 20),(0, 21),(0, 22),(0, 23),(0, 24),(0, 25),(0, 26),(0, 27),(0, 28),(0, 29),(0, 30),(0, 31),(0, 32),(0, 33),(0, 34),(0, 35),(0, 36),
 (0, 37),(0, 38),(0, 39),(0, 40),(0, 41),(0, 42),(0, 43),(0, 44);
+
+INSERT INTO `especializacion` (`idEspecializacion`, `nombre`) VALUES
+(1, 'plomeria'),
+(2, 'albanileria'),
+(3, 'pintureria'),
+(4, 'electricidad'),
+(5, 'mecanico'),
+(6, 'herreria'),
+(7, 'restauracion');
+
+INSERT INTO `insumo` (`nombreInsumo`, `descripcion`, `stock`, `stockMinimo`) VALUES
+('tornillo', '10 pulgadas',100, 60),
+('tornillo', '5 pulgadas',200, 60),
+('tuerca', 'chica',150, 50),
+('tuerca', 'mediana',250,50),
+('tuerca', 'grande',0,50),
+('fisher', 'chico',0,100),
+('fisher', 'mediano',12,100),
+('fisher', 'grande',321,100),
+('codo', '24cm',50,25),
+('codo', 'en T 12cm',20,25),
+('codo', 'en L 5cm',44,25);

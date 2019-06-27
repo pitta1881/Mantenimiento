@@ -7,7 +7,7 @@ INSERT INTO `especializacion` (`idEspecializacion`, `nombre`) VALUES
 (6, 'herreria'),
 (7, 'restauracion');
 
-INSERT INTO `insumo` (`nombreInsumo`, `descripcion`, `stock`) VALUES
+INSERT INTO `insumo` (`nombreInsumo`, `descripcion`, `stock`, `stockMinimo`) VALUES
 ('tornillo', '10 pulgadas',100, 60),
 ('tornillo', '5 pulgadas',200, 60),
 ('tuerca', 'chica',150, 50),
