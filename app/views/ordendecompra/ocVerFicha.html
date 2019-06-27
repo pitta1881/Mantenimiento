@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Ficha de OC{% endblock %}
+
+{% block header %}
+{% set datos = datos|merge({
+    "titulo": "Ficha Orden de Compra"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+    <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
+    <dl>
+        <dt>Nº OC:</dt>
+        <dd>{{ datos.miOC.idOC }}</dd>
+        <dt>Fecha:</dt>
+        <dd>{{ datos.miOC.fecha }}</dd>
+        <dt>Costo Estimado:</dt>
+        <dd>${{ datos.miOC.costoEstimado }}</dd>
+        <dt>Estado:</dt>
+        <dd>{{ datos.miOC.estado }}</dd>
+    </dl>
+    <h2>INSUMOS</h2>
+    <table id="miTabla">
+        <th onclick="sortTable(0,'miTabla')">Nº Insumo</th>
+        <th onclick="sortTable(1,'miTabla')">Nombre</th>
+        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+        <th onclick="sortTable(3,'miTabla')">Stock Minimo</th>
+        <th onclick="sortTable(4,'miTabla')">Stock Actual</th>
+        <th onclick="sortTable(5,'miTabla')">Stock Solicitado</th>
+        <th onclick="sortTable(5,'miTabla')">Cantidad Ingresada</th>
+        <th onclick="sortTable(6,'miTabla')">Accion</th>
+        {% for insumo in datos.miOC.insumos %}
+        {% set estilo = "" %}
+        {% if insumo.cantidad == insumo.cantidadIngresada %}
+        {% set estilo = "style=background-color:lightgrey" %}
+        {% endif %}
+        <tr>
+            <td {{ estilo }}>{{ insumo.idInsumo }}</td>
+            <td {{ estilo }}>{{ insumo.nombreInsumo }}</a></td>
+            <td {{ estilo }}>{{ insumo.descripcion }}</td>
+            <td {{ estilo }}>{{ insumo.stockMinimo }}</td>
+            <td {{ estilo }}>{{ insumo.stock }}</td>
+            <td {{ estilo }}>{{ insumo.cantidad }}</td>
+            <td {{ estilo }}>{{ insumo.cantidadIngresada }}</td>
+            <td {{ estilo }}>
+                {% if insumo.cantidad != insumo.cantidadIngresada %}
+                <form action="/oc/insumos/ingreso" method="post" hidden id="formReasignar{{ insumo.idInsumo }}">
+                    <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
+                    <input type="text" name="idOC" value="{{ datos.miOC.idOC }}" hidden>
+                    <input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" hidden>
+                    <input type="text" name="descripcion" value="Ingreso según OC {{datos.miOC.idOC}}" hidden>
+                    <input type="number" name="cantidadIngresada" hidden>
+                    <input type="number" name="tipoMovimiento" value="0" hidden>
+                </form>
+                <img class="iconos" src="/public/res/sumInsumo.svg" title="Ingreso Stock"
+                    onclick="alertify.prompt('Ingreso Stock','Seleccione la cantidad que ingresó (1-{{ insumo.cantidad - insumo.cantidadIngresada }})','',
+                    function(evt,value){
+                        if(value < 1){
+                            alertify.alert('Error','Debe ingresar un valor válido');
+                        } else{
+                        document.getElementsByName('cantidadIngresada')[0].value = value ;
+                        document.getElementById('formReasignar{{ insumo.idInsumo }}').submit()
+                    }
+                    },
+                    function(){}
+                    ).set({'type':'number','value':1,'min':1,'max':'{{insumo.cantidad - insumo.cantidadIngresada }}'});">
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

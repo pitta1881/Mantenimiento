@@ -94,7 +94,7 @@
         {% for pedido in datos.todosPedidos %}
         {% set estilo = "" %}
         {% if pedido.estado == "Finalizado" %}
-        {% set estilo = "style=background-color:lightcoral" %}
+        {% set estilo = "style=background-color:#ffcccc" %}
         {% else %}
         {% if pedido.estado == "Para Finalizar" %}
         {% set estilo = "style=background-color:goldenrod" %}

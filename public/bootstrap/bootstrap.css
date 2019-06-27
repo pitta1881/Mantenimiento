@@ -258,12 +258,12 @@ textarea {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
-    line-height: inherit
+    line-height: inherit;
 }
 
 button,
 input {
-    overflow: visible
+    overflow: visible;
 }
 
 button,
@@ -345,7 +345,7 @@ progress {
 
 [type=search] {
     outline-offset: -2px;
-    -webkit-appearance: none
+    -webkit-appearance: none;
 }
 
 [type=search]::-webkit-search-decoration {

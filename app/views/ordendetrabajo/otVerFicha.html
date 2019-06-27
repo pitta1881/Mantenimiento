@@ -15,16 +15,6 @@
 {% endblock %}
 
 {% block main %}
-<script>
-    function mostrarFormulario() {
-        var cambiarEstadoTarea = document.getElementById('cambiarEstadoTarea');
-        if (cambiarEstadoTarea.style.display == "block") {
-            cambiarEstadoTarea.style.display = "none";
-        } else {
-            cambiarEstadoTarea.style.display = "block"
-        }
-    }
-</script>
 <div class="contenido3">
     <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
     <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
@@ -52,7 +42,7 @@
         {% for tarea in datos.miOT.tareas %}
         {% set estilo = "" %}
         {% if tarea.estado == "Finalizado" %}
-        {% set estilo = "style=background-color:lightcoral" %}
+        {% set estilo = "style=background-color:#ffcccc" %}
         {% endif %}
         <tr>
             <td {{ estilo }}><a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido

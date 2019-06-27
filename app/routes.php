@@ -1,9 +1,8 @@
 <?php
 
     $router->get('', 'PagesController@login');
-   $router->get('home', 'PagesController@home');
-   $router->get('cerrarSesion', 'PagesController@cerrarSesion');
-
+    $router->get('home', 'PagesController@home');
+    $router->get('cerrarSesion', 'PagesController@cerrarSesion');
 
 //rutas pedidos
     $router->get('pedido/verTodos', 'PedidoController@index');
@@ -15,7 +14,6 @@
     $router->post('pedido/finalizar', 'PedidoController@finalizar');
     $router->post('pedido/cancelar', 'PedidoController@cancelar');
     
-
 //rutas tareas
     $router->post('tarea/guardar', 'TareaController@guardar');
     $router->get('tarea/modificar/seleccionado', 'TareaController@modificarTareaSeleccionada');
@@ -55,7 +53,6 @@
     $router->get('roles/eliminarRol','RolesControler@vistaEliminarRol');
 
 //rutas permisos
-    //rutas permisos
     $router->get('permisos/AdministracionPermisos','PermisosControler@index');
     $router->post('permisos/altaPermiso','PermisosControler@guardarPermisos');
     $router->get('permisos/eliminarPermiso','PermisosControler@vistaEliminarPermiso');
@@ -75,33 +72,28 @@
     $router->post('persona/modificarEstado','PersonaController@modificarEstado');
 
 //rutas agentes
-
-$router->get('agente/administracionAgentes','agentesController@vistaAdministracionAgentes');
-$router->post('agente/administracionAgente/cargarNuevoAgente', 'agentesController@guardarAgente');
-$router->get('agente/modificar/seleccionado', 'agentesController@vistaModificar');
-$router->post('agente/administracionAgente/modificarAgente', 'agentesController@update');
-$router->post('agente/eliminar', 'agentesController@delete');
+    $router->get('agente/administracionAgentes','agentesController@vistaAdministracionAgentes');
+    $router->post('agente/administracionAgente/cargarNuevoAgente', 'agentesController@guardarAgente');
+    $router->get('agente/modificar/seleccionado', 'agentesController@vistaModificar');
+    $router->post('agente/administracionAgente/modificarAgente', 'agentesController@update');
+    $router->post('agente/eliminar', 'agentesController@delete');
 
 //rutas especializaciones
-
-$router->get('especializacion/administracionEspecializacion','EspecializacionController@vistaAdministracionEspecializacion');
-$router->post('especializacion/administracionEspecializacion/cargarNuevaEspecializacion', 'EspecializacionController@guardarEspecializacion');
-$router->get('especializacion/modificar/seleccionado', 'EspecializacionController@vistaModificar');
-$router->post('especializacion/administracionEspecializacion/modificarEspecializacion', 'EspecializacionController@update');
-$router->post('especializacion/eliminar', 'EspecializacionController@delete');
+    $router->get('especializacion/administracionEspecializacion','EspecializacionController@vistaAdministracionEspecializacion');
+    $router->post('especializacion/administracionEspecializacion/cargarNuevaEspecializacion', 'EspecializacionController@guardarEspecializacion');
+    $router->get('especializacion/modificar/seleccionado', 'EspecializacionController@vistaModificar');
+    $router->post('especializacion/administracionEspecializacion/modificarEspecializacion', 'EspecializacionController@update');
+    $router->post('especializacion/eliminar', 'EspecializacionController@delete');
 
 
 //rutas insumos
     $router->get('insumos/administracionInsumos', 'InsumosController@vistaAdministracionInsumos');
     $router->post('insumos/administracionInsumos/guardarInsumo', 'InsumosController@guardarInsumo');
-    $router->get('insumo/modificar/seleccionado', 'InsumosController@vistaModificar');
     $router->post('insumos/administracionInsumos/modificarInsumo', 'InsumosController@update');
     $router->post('insumo/eliminar', 'InsumosController@delete');
     $router->get('insumo/verHistorial', 'InsumosController@verHistorial');
     $router->post('insumo/updateStockSinItem', 'InsumosController@updateStockSinItem');
     $router->get('insumo/verHistorialParticular', 'InsumosController@verHistorialParticular');
-    
-
 
 
 //rutas sectores
@@ -120,10 +112,14 @@ $router->post('especializacion/eliminar', 'EspecializacionController@delete');
     $router->post('eventos/eliminar', 'EventosController@delete');
 
 // rutas informes
-
-  $router->get('informe/administracion','informesController@vistaAdministracionInformes');
-$router->post('informes/datos','informesController@getDatos');
-
-
+    $router->get('informe/administracion','informesController@vistaAdministracionInformes');
+    $router->post('informes/datos','informesController@getDatos');
     $router->get('not_found', 'ProjectController@internalError');
     $router->get('internal_error', 'ProjectController@internalError');
+
+//rutas Orden de Compra
+    $router->get('ordendecompra/administracionOC','OCController@index');
+    $router->get('oc/crear', 'OCController@verInsumos');
+    $router->post('oc/asignarInsumos/seleccionados','OCController@crearOC');
+    $router->get('fichaOC', 'OCController@ficha');
+    $router->post('oc/insumos/ingreso', 'OCController@ingreso');

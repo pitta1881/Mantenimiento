@@ -177,6 +177,7 @@ CREATE TABLE insumo (
     nombreInsumo VARCHAR(11) NOT NULL,
     descripcion TEXT NOT NULL,
     stock INTEGER NOT NULL default 0,
+    stockMinimo Integer NOT NULL default 0,
     PRIMARY KEY (idInsumo)
 );
 
@@ -250,4 +251,26 @@ CREATE TABLE historialEstado (
     descripcion TEXT,
     PRIMARY KEY (idPedido,idTarea, idHistorial),
     FOREIGN KEY (idPedido, idTarea) REFERENCES tarea(idPedido,idTarea)
+);
+
+USE Mantenimiento;
+CREATE TABLE OrdenDeCompra
+(
+    idOC INTEGER AUTO_INCREMENT,
+    fecha DATE NOT NULL,
+    costoEstimado Integer NOT NULL default 0, 
+    estado TEXT NOT NULL,
+    PRIMARY KEY (idOC)
+);
+
+USE mantenimiento;
+CREATE TABLE itemOC
+(
+    idInsumo integer,
+    idOC integer,
+    cantidad integer not null default 0,
+    cantidadIngresada integer not null default 0,
+    PRIMARY KEY (idInsumo,idOC),
+    FOREIGN KEY (idInsumo) REFERENCES insumo(idInsumo),
+    FOREIGN KEY (idOC) REFERENCES OrdenDeCompra(idOC)
 );

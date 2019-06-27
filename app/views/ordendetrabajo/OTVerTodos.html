@@ -30,7 +30,7 @@
         {% for OT in datos.todasOT %}
         {% set estilo = "" %}
         {% if OT.estado == "Finalizado" %}
-        {% set estilo = "style=background-color:lightcoral" %}
+        {% set estilo = "style=background-color:#ffcccc" %}
         {% endif %}
         <tr>
             <td {{ estilo }}>{{ OT.idOT }}</td>

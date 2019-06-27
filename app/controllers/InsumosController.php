@@ -28,6 +28,7 @@ class InsumosController extends Controller{
         $datos['nombreInsumo'] = $_POST['nombreInsumo'];
         $datos['stock'] = $_POST['stock'];
         $datos['descripcion'] = $_POST['descripcion'];        
+        $datos['stockMinimo'] = $_POST['stockMinimo'];   
         $statement = $this->model->buscarInsumo($datos['nombreInsumo'],$datos['descripcion']);
         if (empty($statement)) {
             $this->model->insert($datos); 
@@ -37,19 +38,12 @@ class InsumosController extends Controller{
         }
     }
 
-    public function vistaModificar(){
-        $insumo = $this->model->getByIdInsumo($_GET['idInsumo']);      
-        $datos['insumo'] = $insumo;
-        $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
-        return view('/insumos/insumo.modificar', compact('datos'));
-    }
-
     public function update(){
         $idInsumo = $_POST['idInsumo'];
         $datos = [
             'nombreInsumo' => $_POST['nombreInsumo'],
-            'descripcion' => $_POST['descripcion']
+            'descripcion' => $_POST['descripcion'],
+            'stockMinimo' => $_POST['stockMinimo']
         ];
         $this->model->update($datos,$idInsumo);
         return $this->vistaAdministracionInsumos();

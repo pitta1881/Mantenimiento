@@ -81,4 +81,5 @@ nav.main-nav ol li a:hover {
     top: 0vh;
     height: 10.2vh;
     width: 4.90vw;
+    cursor: pointer;
 }

@@ -30,7 +30,7 @@
             {% for tareas in datos.tareasSinAsignar %}
             {% set estilo = '' %}
             {% if tareas.tieneAgentes == false %}
-            {% set estilo = "style=background-color:lightcoral" %}
+            {% set estilo = "style=background-color:#ffcccc" %}
             {% endif %}
             <tr>
                 <td {{estilo}}><a href="/fichaPedido?id={{ tareas.idPedido }}">Pedido {{ tareas.idPedido }}</a></td>

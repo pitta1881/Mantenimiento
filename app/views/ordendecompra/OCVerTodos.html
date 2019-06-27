@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block title %}Gestión de OCs{% endblock %} {% block header %}
+{% set datos = datos|merge({
+    "titulo": "Gestión de Ordenes de Compra"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<div class="general">
+    <a class="crear" href="/oc/crear">
+        <input type="button" value="Crear OC">
+    </a>
+    <a href="/oc/crear" class="btn btn-info" role="button"><img class="iconos" src="/public/res/add.svg"
+            title="Crear OC">Crear OC</a>
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
+    <table id="miTabla">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº OC</th>
+                <th onclick="sortTable(1,'miTabla')">Fecha</th>
+                <th onclick="sortTable(2,'miTabla')">Estado</th>
+                <th onclick="sortTable(3,'miTabla')">Costo Estimado</th>
+                <th onclick="sortTable(4,'miTabla')">Insumos</th>
+                <th onclick="sortTable(5,'miTabla')">Accion</th>
+            </tr>
+        </thead>
+        {% for OC in datos.todasOC %}
+        {% set estilo = "" %}
+        {% if OC.estado == "Finalizado" %}
+        {% set estilo = "style=background-color:#ffcccc" %}
+        {% endif %}
+        <tr>
+            <td {{ estilo }}>{{ OC.idOC }}</td>
+            <td {{ estilo }}>{{ OC.fecha }}</td>
+            <td {{ estilo }}>{{ OC.estado }}</td>
+            <td {{ estilo }}>{{ OC.costoEstimado }}</td>
+            <td {{ estilo }}>{{ OC.cantInsumos }}</td>
+            <td {{ estilo }}>
+                <a href='/fichaOC?idOC={{ OC.idOC }}'>
+                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay OCs</h2> {% endfor %}
+    </table>
+</div>
+{% endblock %}

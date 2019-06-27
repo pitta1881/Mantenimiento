@@ -20,31 +20,49 @@
 </script>
 {% endif %}
 <div class="contenido3">
-    <a href="#" onclick="mostrarFormulario()" id="btnCrearAgente"><img class="iconos" src="/public/res/add.svg"
-            title="Crear Insumo"></a>
-    <script>
-        function mostrarFormulario() {
-            var formularioInsumo = document.getElementById('formularioInsumo');
-            if (formularioInsumo.style.display == "block") {
-                formularioInsumo.style.display = "none";
-            } else {
-                formularioInsumo.style.display = "block"
-            }
-        }
-    </script>
-    <form action="/insumos/administracionInsumos/guardarInsumo" method="post" id="formularioInsumo"
-        style="display: none">
-        <fieldset class="basicosInsumo">
-            <legend> Alta de Insumo</legend>
-            <label for="nombreInsumo">Nombre del Insumo</label><span class="asterisco">*</span>
-            <input type="text" name="nombreInsumo" autofocus required>
-            <label for="stock">Stock</label><span class="asterisco">*</span>
-            <input type="number" name="stock" required value="0" min="0">
-            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-            <input type="textarea" name="descripcion" required placeholder="Ingrese la descripcion.."><br>
-        </fieldset>
-        <input type="submit">
-    </form>
+    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal" id="btnCrearTarea"><img
+            class="iconos" src="/public/res/add.svg" title="Crear Tarea">Crear Nuevo</a>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-xs">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Alta de Insumo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/insumos/administracionInsumos/guardarInsumo" method="post" class="was-validated">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="nombreInsumo">Nombre:</label><span class="asterisco">*</span>
+                                <input type="text" name="nombreInsumo" class="form-control" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
+                                <textarea class="form-control" rows="2" id="descripcion" name="descripcion"
+                                    required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label for="stock">Stock:</label><span class="asterisco">*</span>
+                                <input type="number" name="stock" class="form-control" required min="0">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="stockMinimo">Stock Minimo(Aviso):</label><span class="asterisco">*</span>
+                                <input type="number" name="stockMinimo" class="form-control" required min="0">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function () {
             $('#miTabla').DataTable();
@@ -57,6 +75,7 @@
                 <th onclick="sortTable(1,'miTabla')">Nombre</th>
                 <th onclick="sortTable(2,'miTabla')">Descripcion</th>
                 <th onclick="sortTable(3,'miTabla')">Stock Actual</th>
+                <th onclick="sortTable(3,'miTabla')">Aviso Minimo</th>
                 <th onclick="sortTable(4,'miTabla')">Accion</th>
             </tr>
         </thead>
@@ -66,6 +85,7 @@
             <td>{{ insumo.nombreInsumo }}</td>
             <td>{{ insumo.descripcion }}</td>
             <td>{{ insumo.stock }}</td>
+            <td>{{ insumo.stockMinimo }}</td>
             <td>
                 <!--SUMAR/RESTAR INSUMOS-->
                 <form action="/insumo/updateStockSinItem" method="post" hidden id="formSumar{{ insumo.idInsumo }}">
@@ -75,17 +95,21 @@
                     <input type="text" name="descripcion_{{ insumo.idInsumo }}" hidden>
                     <input type="number" name="tipoMovimiento_{{ insumo.idInsumo }}" value="1" hidden>
                 </form>
-                <img class="iconos" src="/public/res/masmenos.svg" title="Modificar Stock" onclick="alertify.prompt('Modificar Stock','Seleccione la cantidad a modificar(Mas o Menos)','',
+                <img class="iconos" src="/public/res/masmenos.svg" title="Modificar Stock" onclick="alertify.prompt('Modificar Stock','Seleccione la cantidad a modificar(min=-{{insumo.stock}})','',
                     function(evt,value){
                         document.getElementsByName('cantidad_{{ insumo.idInsumo }}')[0].value = value;
-                        if(value > 0){
+                        var boolerror = false;
+                        if((value < -'{{insumo.stock}}')){
+                            alertify.alert('Error','Debe ingresar un valor válido');
+                            boolerror = true;
+                        } else if(value > 0){
                             document.getElementsByName('tipoMovimiento_{{ insumo.idInsumo }}')[0].value = 0;
                         } else if(value < 0){
                             document.getElementsByName('tipoMovimiento_{{ insumo.idInsumo }}')[0].value = 1;
                         } else {
                             alertify.alert('Error','Debe ingresar un valor válido');
                         }
-                        if (value != 0){
+                        if ((value != 0) && (!boolerror)){
                             alertify.prompt2('Modificar Stock','Ingrese una Descripcion','',
                             function(evt,value2){
                                 document.getElementsByName('descripcion_{{ insumo.idInsumo }}')[0].value = value2 ;
@@ -96,11 +120,54 @@
                         }                        
                     },
                         function(){}
-                        ).set({'type':'number','value':0});">
+                        ).set({'type':'number','value':0,'min':-'{{insumo.stock}}'});">
                 <!--MODIFICAR INSUMO-->
-                <a href='/insumo/modificar/seleccionado?idInsumo={{ insumo.idInsumo }}'>
-                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
-                </a>
+                <a href="#" id="btnCrearUsuario" data-toggle="modal"
+                    data-target="#modalFormModificar{{ insumo.idInsumo }}" title="Modificar Insumo"><img class="iconos"
+                        src="/public/res/update.svg"></a>
+                <!-- The Modal -->
+                <div class="modal fade" id="modalFormModificar{{ insumo.idInsumo }}">
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modificar Insumo(No Stock)</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/insumos/administracionInsumos/modificarInsumo" method="post"
+                                    id="formModificar{{ insumo.idInsumo }}">
+                                    <input type="text" name="idInsumo" value="{{ insumo.idInsumo }}" hidden>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="nombreInsumo">Nombre:</label><span class="asterisco">*</span>
+                                            <input type="text" name="nombreInsumo" value="{{ insumo.nombreInsumo}}"
+                                                class="form-control" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="descripcion">Descripcion:</label><span
+                                                class="asterisco">*</span>
+                                            <textarea class="form-control" rows="2" id="descripcion" name="descripcion"
+                                                required>{{ insumo.descripcion }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stockMinimo">Stock Minimo(Aviso):</label><span
+                                            class="asterisco">*</span>
+                                        <input type="number" name="stockMinimo" value="{{ insumo.stockMinimo}}"
+                                            class="form-control" required min="0">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--VER HISTORIAL-->
                 <a href="/insumo/verHistorial?idInsumo={{ insumo.idInsumo }}"><img class="iconosTitulo"
                         src="/public/res/historyEstado.svg" title="Ver Historial"></a>

@@ -334,7 +334,7 @@ class QueryBuilder
 
     public function updateInsumo($table, $parameters, $nInsumo){
         $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET nombreInsumo=:nombreInsumo, descripcion=:descripcion WHERE idInsumo=$nInsumo";
+        $sql = "UPDATE $table SET nombreInsumo=:nombreInsumo, descripcion=:descripcion, stockMinimo=:stockMinimo WHERE idInsumo=$nInsumo";
             try {
                 $statement = $this->pdo->prepare($sql);
                 $statement->execute($parameters);
@@ -1012,10 +1012,75 @@ SELECT $tablaSectores.nombreSector, COUNT(*) as suma FROM $tablaPedidos INNER JO
     //var_dump($statement);
        //where fechaInicio>=$fechaDesde AND fechaInicio<=$fechaHasta 
         return $statement->fetchAll(PDO::FETCH_CLASS);
-
 }
+
+    public function getCantInsumosOC($tableItem,$idOC){
+        $statement = $this->pdo->prepare(
+        "SELECT COUNT(idInsumo) FROM $tableItem
+        WHERE idOC = $idOC"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function newOC($tableOC,$costo,$estado){
+        $hoy = date("Y-m-d");
+        $statement = $this->pdo->prepare(
+        "INSERT INTO $tableOC(fecha,costoEstimado,estado) VALUES ('$hoy','$costo','$estado')"
+    );
+        $statement->execute();
+    }
+
+    public function getIdUltimoOC($tableOC){
+        $statement = $this->pdo->prepare(
+            "SELECT MAX(idOC) FROM $tableOC"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_NUM);
+    }
     
+    public function selectOCById($table, $nOC){ //table = oc
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE idOC={$nOC}"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function selectInsumosPorNOC($tableInsumo, $tableItemOC, $nOC){ 
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableInsumo T1 INNER JOIN $tableItemOC T2 ON T1.idInsumo=T2.idInsumo WHERE idOC=$nOC"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
     
+    public function updateItemOC($table, $parameters){
+        $parameters = $this->cleanParameterName($parameters);
+        $sql = "UPDATE $table SET cantidadIngresada=cantidadIngresada+:cantidadIngresada WHERE idInsumo=:idInsumo AND idOC=:idOC";
+        try {
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute($parameters);
+        } catch (Exception $e) {
+            $this->sendToLog($e);
+        }   
+    }
+
+    public function selectItemOCPorNOC($tableItemOC, $nOC){ 
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableItemOC WHERE idOC=$nOC"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function updateEstadoOC($tableOC, $nOC,$estado){
+        $statement = $this->pdo->prepare(
+            "UPDATE $tableOC SET estado='$estado' WHERE idOC=$nOC"
+        );
+        $statement->execute();
+    }
 
 }
 
