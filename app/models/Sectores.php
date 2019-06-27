@@ -10,6 +10,13 @@ class Sectores extends Model
     protected $tablePedido = 'pedido';
     
 
+    public function getPermisos($idRol){
+        $roles = $this->db->selectPermisosByRol($idRol);
+        $misRoles = json_decode(json_encode($roles), True);
+        return $misRoles; 
+    }
+
+
     public function getTipoSector(){
         return array('Hospital','Casa Comunitaria','Casa Particular');
     }

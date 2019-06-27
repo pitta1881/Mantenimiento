@@ -9,6 +9,10 @@ class Roles extends Model{
     protected $tableRP = 'rolesxpermisos';
     
 
+
+
+
+
     public function get(){
         $roles = $this->db->selectAll($this->table);
         $misRoles = json_decode(json_encode($roles), True);

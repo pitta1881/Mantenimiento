@@ -10,6 +10,14 @@ class Persona extends Model{
     protected $tablePermisos='permisos';
     protected $tableAgentes='agentes';
 
+
+    
+    public function getPermisos($idRol){
+        $roles = $this->db->selectPermisosByRol($idRol);
+        $misRoles = json_decode(json_encode($roles), True);
+        return $misRoles; 
+    }
+
     public function get()
     {
         $personas = $this->db->selectAll($this->table);
