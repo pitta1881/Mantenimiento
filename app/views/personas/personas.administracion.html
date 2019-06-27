@@ -22,15 +22,11 @@
 <div class="general">
     <!-- Button to Open the Modal -->
     {% for value in datos.permisos %}
-                    {% if value.idPermiso == "45" %}
-                    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-                        src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
-                    {% endif %}
-                    {% else %}
-
-                    {% endfor %}
-
-    
+    {% if value.idPermiso == "45" %}
+    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
+            src="/public/res/add.svg" title="Crear Persona">Crear Persona</a>
+    {% endif %}
+    {% endfor %}
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-lg">
@@ -116,8 +112,8 @@
             <td>{{ persona.estado }}</td>
             <td>
                 <!--MODIFICAR PERSONA-->
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "47" %}
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "47" %}
                 <a href='#' role="button" data-toggle="modal" data-target="#myModalModif{{ persona.dni }}"
                     class="btn btn-outline-info btn-xs">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
@@ -183,24 +179,24 @@
                         </div>
                     </div>
                 </div>
-                    {% endif %}
-                    {% else %}
+                {% endif %}
+                {% else %}
 
-                    {% endfor %}
+                {% endfor %}
 
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "47" %}
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "47" %}
                 <!--MODIFICAR ESTADO-->
                 <a href="#" class="btn btn-info" role="button" data-toggle="modal"
                     data-target="#myModalEstado{{ persona.dni }}"><img class="iconos"
                         src="/public/res/estadoPersona.svg" title="Modificar Estado"></a>
-                    {% endif %}
-                    {% else %}
+                {% endif %}
+                {% else %}
 
-                    {% endfor %}
+                {% endfor %}
 
-              
-            
+
+
                 <!-- The Modal -->
                 <div class="modal fade" id="myModalEstado{{ persona.dni }}">
                     <div class="modal-dialog modal-xs">
@@ -243,13 +239,13 @@
                 {% for value in datos.permisos %}
                 {% if value.idPermiso == "46" %}
                 <a class="btn btn-outline-info btn-xs"
-                onclick="alertify.confirm('Eliminar Persona','¿Esta seguro?',function(){document.getElementById('formEliminarPersona{{ persona.dni }}').submit()},function(){})"><img
-                    class="iconos" src="/public/res/del.svg" title="Eliminar Persona"></a>
+                    onclick="alertify.confirm('Eliminar Persona','¿Esta seguro?',function(){document.getElementById('formEliminarPersona{{ persona.dni }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/del.svg" title="Eliminar Persona"></a>
                 {% endif %}
                 {% else %}
 
                 {% endfor %}
-             
+
                 {% endif %}
             </td>
         </tr>

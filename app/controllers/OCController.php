@@ -16,7 +16,9 @@ class OCController extends Controller{
         $todasOC = $this->model->get(); 
         $datos['todasOC'] = $todasOC;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/ordendecompra/OCVerTodos', compact('datos'));
     }
 
