@@ -23,8 +23,9 @@ class PagesController extends Controller{
          $datos['agentesDisponibles'] = $this->model->getAgentesDisponibles('agentes');
          $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
          $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
-        
+         $permisos=$this->model->getPermisos($_SESSION['rol']);
+         $datos['permisos']= $permisos;
+         
         //tabla de eventos en home
         $todosEventos = $this->model->get();
         $datos['todosEventos']=$todosEventos;

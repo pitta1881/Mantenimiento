@@ -782,7 +782,7 @@ public function updateEvento($table, $parameters, $idEvento){
             "SELECT idPermiso FROM $tableRP WHERE idRol=$idRol"
         );
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
 

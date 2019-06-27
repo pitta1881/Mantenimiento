@@ -7,6 +7,7 @@ use App\Core\Model;
 class Pages extends Model
 {
     protected $table = 'eventos';
+    protected $tableRP = 'rolesxpermisos';
     protected $tableTarea = 'tarea';
     protected $tableEspecializacion='especializacion';
 
@@ -53,6 +54,14 @@ class Pages extends Model
         $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
         return $nombre[0][0];
       } 
+
+      public function getPermisos($idRol){
+        $roles = $this->db->selectPermisosByRol($this->tableRP,$idRol);
+        $misRoles = json_decode(json_encode($roles), True);
+        return $misRoles; 
+    }
+
+
     public function validarEventos(){
      $eventos = $this->db->selectAllEventosOrdenados($this->table);
 $todosEventos = json_decode(json_encode($eventos), True);
