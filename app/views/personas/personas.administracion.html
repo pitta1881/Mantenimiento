@@ -39,7 +39,7 @@
                             <div class="form-group col-md-3">
                                 <label for="dni">DNI:</label><span class="asterisco">*</span>
                                 <input type="number" name="dni" class="form-control" autofocus required min="10000000">
-                                <div class="invalid-feedback">Complete este campo</div>
+                                <div class="invalid-feedback">Min:10.000.000</div>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="nombre">Nombre:</label><span class="asterisco">*</span>
@@ -107,10 +107,73 @@
             <td>{{ persona.fecha_nacimiento }}</td>
             <td>{{ persona.estado }}</td>
             <td>
-                <a href='/persona/modificarPersona/seleccionado?dni={{ persona.dni }}'
+                <!--MODIFICAR PERSONA-->
+                <a href='#' role="button" data-toggle="modal" data-target="#myModalModif{{ persona.dni }}"
                     class="btn btn-outline-info btn-xs">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
+                <!-- The Modal -->
+                <div class="modal fade" id="myModalModif{{ persona.dni }}">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modificar Persona</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/persona/modificar/guardar" method="post" class="was-validated">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="dni">DNI:</label><span class="asterisco">*</span>
+                                            <input type="number" name="dni" value="{{ persona.dni }}"
+                                                class="form-control" readonly>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="nombre">Nombre:</label><span class="asterisco">*</span>
+                                            <input type="text" name="nombre" value="{{ persona.nombre }}"
+                                                class="form-control" required>
+                                            <div class="invalid-feedback">Complete este campo</div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="apellido">Apellido:</label><span class="asterisco">*</span>
+                                            <input type="text" name="apellido" value="{{ persona.apellido }}"
+                                                class="form-control" required>
+                                            <div class="invalid-feedback">Complete este campo</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Direccion:</label>
+                                        <input type="text" name="direccion" value="{{ persona.direccion }}"
+                                            class="form-control">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-5">
+                                            <label for="email">Email:</label>
+                                            <input type="email" name="email" value="{{ persona.email }}"
+                                                class="form-control">
+                                            <div class="invalid-feedback">El formato es incorrecto</div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="fecha_nacimiento">Fecha De Nacimiento:</label>
+                                            <input type="date" name="fecha_nacimiento"
+                                                value="{{ persona.fecha_nacimiento }}" class="form-control"
+                                                max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
+                                        </div>
+                                    </div>
+                                    <input type="text" name="estado" value="Activo" hidden>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--MODIFICAR ESTADO-->
                 <a href="#" class="btn btn-info" role="button" data-toggle="modal"
                     data-target="#myModalEstado{{ persona.dni }}"><img class="iconos"
                         src="/public/res/estadoPersona.svg" title="Modificar Estado"></a>
@@ -147,6 +210,7 @@
                         </div>
                     </div>
                 </div>
+                <!--ELIMINAR PERSONA SI NO ESTA USADO-->
                 {% if persona.usado == false %}
                 <form action="/persona/eliminar" method="post" style="display: inline-block"
                     id="formEliminarPersona{{ persona.dni }}">

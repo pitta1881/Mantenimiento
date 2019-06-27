@@ -57,8 +57,8 @@
             <td {{ estilo }}>{{ tarea.prioridad }}</td>
             <td {{ estilo }}>{{ tarea.estado }}</td>
             <td {{ estilo }}>
-                {% for agente in tarea.agentes %} <a
-                    href="/fichaPersona?idAgente={{ agente.idAgente }}">{{ agente.nombre }}
+                {% for agente in tarea.agentes %} <a href="#"
+                    onclick="fichaPersona('{{ agente.idAgente }}');return false;">{{ agente.nombre }}
                     {{ agente.apellido }}</a>{{ "\n"|nl2br }}{% endfor %}
             </td>
             <td {{ estilo }}>

@@ -139,12 +139,13 @@
         <th onclick="sortTable(4,'miTabla')">Accion</th>
         {% for agente in datos.miTarea.agentes %}
         <tr>
-            <td><a href="/fichaPersona?idAgente={{ agente.idAgente }}">{{ agente.idAgente }}</a></td>
+            <td><a href="#" onclick="fichaPersona('{{ agente.idAgente }}');return false;">{{ agente.idAgente }} </a>
+            </td>
             <td>{{ agente.nombre }}</td>
             <td>{{ agente.apellido }}</td>
             <td>{{ agente.especializacionNombre }}</td>
             <td>
-                <a href="/fichaPersona?idAgente={{ agente.idAgente }}">
+                <a href="#" onclick="fichaPersona('{{ agente.idAgente }}');return false;">
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas" title="Ver Mas">
                 </a>
                 {% if  datos.miTarea.estado != "Finalizado" and datos.miTarea.estado != "Cancelado" %}

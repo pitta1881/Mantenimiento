@@ -47,21 +47,21 @@
                                 <div class="invalid-feedback">Complete este campo</div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="tipoSector">Tipo</label><span class="asterisco">*</span>
-                            <select name="tipoSector" class="form-control custom-select">
-                                {% for tipoSector in datos.tipoSectores %}
-                                <option value="{{ tipoSector }}">{{ tipoSector }}</option>
-                                {% endfor %}
-                            </select>
-                            <div class="invalid-feedback">Complete este campo</div>
-                        </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-3">
+                                <label for="tipo">Tipo</label><span class="asterisco">*</span>
+                                <select name="tipo" class="form-control custom-select">
+                                    {% for tipoSector in datos.tipoSectores %}
+                                    <option value="{{ tipoSector }}">{{ tipoSector }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="invalid-feedback">Complete este campo</div>
+                            </div>
+                            <div class="form-group col-md-4">
                                 <label for="telefono">Telefono:</label>
                                 <input type="tel" name="telefono" class="form-control" id="telVerification">
                             </div>
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-4">
                                 <label for="email">Email:</label>
                                 <input type="email" name="email" class="form-control">
                                 <div class="invalid-feedback">El formato es incorrecto</div>
@@ -123,15 +123,79 @@
             <td>{{ sector.responsable }}</td>
             <td>{{ sector.telefono }}</td>
             <td>{{ sector.email }}</td>
-
             <td>
-                <a href="/fichaSector?idSector={{ sector.idSector }}" class="btn btn-outline-info btn-xs">
-                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
-                </a>
-                <a href="/sectores/modificar/seleccionado?idSector={{ sector.idSector }}"
+                <!--MODIFICAR SECTOR-->
+                <a href="#" role="button" data-toggle="modal" data-target="#myModalModif{{ sector.idSector }}"
                     class="btn btn-outline-info btn-xs">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
+                <!-- The Modal -->
+                <div class="modal fade" id="myModalModif{{ sector.idSector }}">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modificar Sector</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/sectores/administracionSectores/modificarSector" method="post"
+                                    class="was-validated">
+                                    <input type="text" name="idSector" value="{{ sector.idSector }}" hidden>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="nombreSector">Nombre del Sector:</label><span
+                                                class="asterisco">*</span>
+                                            <input type="text" name="nombreSector" class="form-control" autofocus
+                                                required value="{{ sector.nombreSector }}">
+                                            <div class="invalid-feedback">Complete este campo</div>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label for="responsable">Nombre del Responsable:</label><span
+                                                class="asterisco">*</span>
+                                            <input type="text" name="responsable" class="form-control" required
+                                                value="{{ sector.responsable }}">
+                                            <div class="invalid-feedback">Complete este campo</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="tipo">Tipo</label><span class="asterisco">*</span>
+                                            <select name="tipo" class="form-control custom-select">
+                                                {% for tipoSector in datos.tipoSectores %}
+                                                {% if tipoSector == sector.tipo %}
+                                                <option value="{{ tipoSector }}" selected>{{ tipoSector }}</option>
+                                                {% else %}
+                                                <option value="{{ tipoSector }}">{{ tipoSector }}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                            <div class="invalid-feedback">Complete este campo</div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="telefono">Telefono:</label>
+                                            <input type="tel" name="telefono" class="form-control" id="telVerification"
+                                                value="{{ sector.telefono }}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="email">Email:</label>
+                                            <input type="email" name="email" class="form-control"
+                                                value="{{ sector.email }}">
+                                            <div class="invalid-feedback">El formato es incorrecto</div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--ELIMINAR SECTOR SI NO FUE USADO TODAVIA-->
                 {% set desabilitado = "disabled" %}
                 {% if sector.usado == false %}
                 {% set desabilitado = "" %}

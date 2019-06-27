@@ -17,6 +17,7 @@
 {% block main %}
 <div class="general">
     <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+    <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
     {% if datos.historial is empty %}
     <h2 class="error">ESTE INSUMO NO TIENE MOVIMIENTOS</h2>
     {% else %}

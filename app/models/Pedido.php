@@ -55,6 +55,7 @@ class Pedido extends Model{
                     $todosPedidos[$indice]['tareasAsignadas'] = $this->getTareasAsignadasAPedido($value);
                 }
                 if ($key == 'fechaInicio') {
+                    $todosPedidos[$indice]['fechaInicioSinFormato'] = $todosPedidos[$indice]['fechaInicio'];
                     $todosPedidos[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todosPedidos[$indice]['fechaInicio']));
                 }
                 if (($key == 'fechaFin') && (is_null($value))) {
@@ -78,6 +79,7 @@ class Pedido extends Model{
         $pedido = $this->db->selectNumeroPedido($this->table,$id);
         $miPedido = json_decode(json_encode($pedido[0]), True);
         $tareas = $this->getTareasByIdPedido($id);
+        $miPedido['fechaInicioSinFormato'] = $miPedido['fechaInicio'];
         $miPedido['fechaInicio'] = date("d/m/Y",strtotime($miPedido['fechaInicio']));
         if (is_null($miPedido['fechaFin'])) {
             $miPedido['fechaFin'] = 'En Curso';

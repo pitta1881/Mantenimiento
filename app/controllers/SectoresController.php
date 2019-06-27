@@ -28,7 +28,7 @@ class SectoresController extends Controller{
     
     public function guardarSector() {
         $datos['nombreSector'] = $_POST['nombreSector'];
-        $datos['tipo'] = $_POST['tipoSector']; 
+        $datos['tipo'] = $_POST['tipo']; 
         $datos['responsable'] = $_POST['responsable']; 
         $datos['telefono'] = $_POST['telefono'];
         $datos['email'] = $_POST['email']; 
@@ -39,16 +39,6 @@ class SectoresController extends Controller{
         } else{
             return $this->vistaAdministracionSectores(true);
         }
-    }
-
-    public function vistaModificar(){
-        $sector = $this->model->getByIdSector($_GET['idSector']);     
-        $datos['tipoSectores'] = $this->model->getTipoSector(); 
-        $datos['sector'] = $sector;
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/sectores/sector.modificar', compact('datos'));
     }
 
     public function update(){
@@ -70,11 +60,7 @@ class SectoresController extends Controller{
     }
 
     public function ficha(){
-        $miSector = $this->model->getByIdSector($_GET['idSector']);
-        $datos["miSector"] = $miSector;  
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/sectores/sectorVerFicha', compact('datos'));
+        $miSector = $this->model->getByIdSector($_POST['idSector']);
+        echo json_encode($miSector);
     }
 }

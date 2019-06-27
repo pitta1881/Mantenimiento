@@ -152,7 +152,8 @@
         {% for usuario in datos.todosUsuarios %}
         <tr>
             <td>{{ usuario.nombre }}</td>
-            <td><a href="/fichaPersona?idAgente={{ usuario.idPersona }}">{{ usuario.idPersona }}</a></td>
+            <td><a href="#" onclick="fichaPersona('{{ usuario.idPersona }}');return false;">{{ usuario.idPersona }}</a>
+            </td>
             <td>{{ usuario.nombreApe }}</td>
             <td>{{ usuario.nombreRol }}</td>
             <td>

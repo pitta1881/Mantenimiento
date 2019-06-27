@@ -36,6 +36,7 @@ class PedidoController extends Controller{
         $datos["miPedido"] = $miPedido;  
         $datos["prioridades"] = $this->model->getPrioridades();
         $datos["estados"] = $this->model->getEstados();
+        $datos["sectores"] = $this->model->getSectores();
         $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
         $datos["userLogueado"] = $_SESSION['user'];
         $permisos=$this->model->getPermisos($_SESSION['rol']);
@@ -65,20 +66,6 @@ class PedidoController extends Controller{
       $idNuevoPedido = $this->model->getIdUltimoPedido();
       redirect("fichaPedido?id=".$idNuevoPedido);
     }
-
-    public function modificarPedidoSeleccionado(){
-        $unPedido = $this->model->getByIdPedido($_GET['id']);
-        $unPedido['fechaInicio'] = date("Y-m-d",strtotime(str_replace('/', '-', $unPedido['fechaInicio'])));
-        $datos["sectores"] = $this->model->getSectores();
-        $datos["prioridades"] = $this->model->getPrioridades();
-        $datos["estados"] = $this->model->getEstados();
-        $datos["miPedido"] = $unPedido;
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/pedidos/pedidoModificar',compact('datos'));
-    }
-       
 
     public function modificar(){
         $idPedido = $_POST['id'];

@@ -49,10 +49,9 @@
         <h2 class='error'>No hay Insumos o están todos Ocupados</h2>
         {% else %}
         <input type="number" name="costoEstimado" hidden id="costoEstimado">
-        <input type="button" value="Asignar Insumos" onclick="alertify.prompt('Costo Estimado','Ingrese el costo estimado para la compra: $','',
+        <input type="submit" id="btnSubmit" onclick="alertify.prompt('Costo Estimado','Ingrese el costo estimado para la compra: $','',
         function(evt,value){
             document.getElementById('costoEstimado').value = value;
-            document.getElementById('formInsumos').submit();
         },function(){}).set({'type':'number','value':0,'min':'0'});">
         {% endif %}
     </form>

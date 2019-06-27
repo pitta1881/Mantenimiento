@@ -45,18 +45,6 @@ class PersonaController extends Controller{
         }
     }
 
-    public function modificarPersonaSeleccionada(){
-        $miPersona = $this->model->getByIdPersona($_GET['dni']);
-        $miPersona['fecha_nacimiento'] = date("Y-m-d", strtotime($miPersona['fecha_nacimiento']));
-        $datos["miPersona"] = $miPersona;
-        $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
-        $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/personas/personas.modificar',compact('datos'));
-    }
-
     public function modificar(){
         $idPersona = $_POST['dni'];
         $persona = [
@@ -76,12 +64,8 @@ class PersonaController extends Controller{
     }
 
     public function ficha(){
-        $miPersona = $this->model->getByIdPersona($_GET['idAgente']);
-        $datos["miPersona"] = $miPersona;  
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/personas/personaVerFicha', compact('datos'));
+        $miPersona = $this->model->getByIdPersona($_POST['idAgente']);
+        echo json_encode($miPersona);
     }
 
     public function modificarEstado(){

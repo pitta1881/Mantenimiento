@@ -37,16 +37,6 @@ class EspecializacionController extends Controller
             return $this->vistaAdministracionEspecializacion(true);
         }
     }
-
-    public function vistaModificar(){
-        $especializacion = $this->model->getByIdEspecializacion($_GET['idEspecializacion']);      
-        $datos['especializacion'] = $especializacion;
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/especializacion/especializacion.modificar', compact('datos'));
-    }
-
     public function update(){
         $idEspecializacion = $_POST['idEspecializacion'];
         $datos = [

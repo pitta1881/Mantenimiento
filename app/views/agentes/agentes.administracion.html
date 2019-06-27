@@ -89,7 +89,7 @@
         </thead>
         {% for agente in datos.todosAgentes %}
         <tr>
-            <td><a href="/fichaPersona?idAgente={{ agente.idAgente }}">{{ agente.idAgente }}</a></td>
+            <td><a href="#" onclick="fichaPersona('{{ agente.idAgente }}');return false;">{{ agente.idAgente }}</a></td>
             <td>{{ agente.nombre }}</td>
             <td>{{ agente.apellido }}</td>
             <td>{{ agente.especializacionNombre }}</td>
@@ -99,14 +99,61 @@
             <td>OCUPADO</td>
             {% endif %}
             <td>
-                <a href="/fichaPersona?idAgente={{ agente.idAgente }}" title="Ver Mas"
+                <!--FICHA PERSONA-->
+                <a href="#" onclick="fichaPersona('{{ agente.idAgente }}');return false;" title="Ver Mas"
                     class="btn btn-outline-info btn-xs">
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
-                <a href='/agente/modificar/seleccionado?idAgente={{ agente.idAgente }}'
+                <!--MODIFICAR AGENTE(ESPECIALIZACION)-->
+                <a href='#' role="button" data-toggle="modal" data-target="#myModalModif{{ agente.idAgente }}"
                     class="btn btn-outline-info btn-xs">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
+                <!-- The Modal -->
+                <div class="modal fade" id="myModalModif{{ agente.idAgente }}">
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modificar Agente</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/agente/administracionAgente/modificarAgente" method="post"
+                                    class="was-validated">
+                                    <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
+                                    <div class="form-group">
+                                        <label for="nombreyape">Nombre y Apellido</label>
+                                        <input type="text" name="nombreyape" class="form-control"
+                                            value="{{ agente.nombre }} {{ agente.apellido }}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="especializacion">Especializacion</label><span
+                                            class="asterisco">*</span>
+                                        <select name="especializacion" class="form-control custom-select">
+                                            {% for especializacion in datos.especializaciones %}
+                                            {% if especializacion.nombre == agente.especializacionNombre %}
+                                            <option value="{{ especializacion.nombre }}" selected>
+                                                {{ especializacion.nombre }}</option>
+                                            {% else %}
+                                            <option value="{{ especializacion.nombre }}">{{ especializacion.nombre }}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--ELIMINAR AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
                 {% set desabilitado = "disabled" %}
                 {% if agente.usado == false %}
                 {% set desabilitado = "" %}

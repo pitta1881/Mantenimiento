@@ -113,8 +113,9 @@
         <tr>
             <td {{ estilo }}>{{ pedido.id }}</td>
             <td class="descripcion" {{ estilo }}>{{ pedido.descripcion|slice(0, 55) }}</td>
-            <td {{ estilo }}><a href="/fichaSector?idSector={{ pedido.idSector }}"
-                    title="Ver Mas">{{ pedido.nombreSector }}</td>
+            <td {{ estilo }}><a href="#" onclick="fichaSector('{{ pedido.idSector }}');return false;"
+                    title="Ver Mas">{{ pedido.nombreSector }}</a>
+            </td>
             <td {{ estilo }}>{{ pedido.fechaInicio }}</td>
             {% set fechaFin = pedido.fechaFin %}
             {% if pedido.estado != 'Finalizado' %}
@@ -126,15 +127,91 @@
             <td {{ estilo }}>{{ pedido.prioridad }}</td>
             <td {{ estilo }}>{{ pedido.nombreUsuario }}</td>
             <td {{ estilo }}>
+                <!--VER MAS-->
                 {% if pedido.estado != "Cancelado" %}
                 <a href='/fichaPedido?id={{ pedido.id }}'>
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
+                <!--MODIFICAR PEDIDO-->
                 {% if pedido.estado != "Finalizado" %}
-                <a href='/pedido/modificar/seleccionado?id={{ pedido.id }}'>
-                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
+                <a href='/pedido/modificar' role="button" data-toggle="modal"
+                    data-target="#myModalModif{{ pedido.id }}">
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar Pedido">
                 </a>
-                <!--ELIMINAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO-->
+                <!-- The Modal -->
+                <div class="modal fade" id="myModalModif{{ pedido.id }}">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modificar Pedido</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/pedido/modificar" method="post" class="was-validated">
+                                    <input type="text" name="id" value="{{pedido.id}}" hidden>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="nombreUsuario">Usuario Creador:</label><span
+                                                class="asterisco">*</span>
+                                            <input type="text" name="nombreUsuario" class="form-control"
+                                                value="{{ pedido.nombreUsuario }}" required readonly>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="fechaInicio">Fecha:</label><span class="asterisco">*</span>
+                                            <input type="date" name="fechaInicio" class="form-control"
+                                                value="{{ pedido.fechaInicioSinFormato }}" required readonly>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="estado">Estado:</label><span class="asterisco">*</span>
+                                            <input type="text" name="estado" class="form-control"
+                                                value="{{ pedido.estado }}" required readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="sector">Sector:</label><span class="asterisco">*</span>
+                                            <select name="sector" class="form-control custom-select">
+                                                {% for sector in datos.sectores %}
+                                                {% if sector == pedido.nombreSector %}
+                                                <option value="{{ sector }}" selected>{{ sector }}</option>
+                                                {% else %}
+                                                <option value="{{ sector }}">{{ sector }}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label for="prioridad">Prioridad:</label><span class="asterisco">*</span>
+                                            <select name="prioridad" class="form-control custom-select">
+                                                {% for prioridad in datos.prioridades %}
+                                                {% if prioridad == pedido.prioridad %}
+                                                <option value="{{ prioridad }}" selected>{{ prioridad }}</option>
+                                                {% else %}
+                                                <option value="{{ prioridad }}">{{ prioridad }}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
+                                        <textarea class="form-control" rows="4" id="descripcion" name="descripcion"
+                                            required>{{pedido.descripcion}}</textarea>
+                                        <div class="invalid-feedback">Complete este campo</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--CANCELAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO-->
                 {% if (pedido.estado == 'Iniciado') and  (pedido.tareasAsignadas == 0) %}
                 <form action="/pedido/cancelar" method="post" style="display: inline-block"
                     id="formEliminarPedido{{ datos.miPedido.id }}">
@@ -152,7 +229,4 @@
         <h2 class='error'>No hay Pedidos</h2> {% endfor %}
     </table>
 </div>
-
-
-}
 {% endblock %}

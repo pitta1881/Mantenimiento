@@ -68,10 +68,47 @@
             <td>{{ especializacion.idEspecializacion }}</td>
             <td>{{ especializacion.nombre }}</td>
             <td>
-                <a class="btn btn-outline-info btn-xs"
-                    href='/especializacion/modificar/seleccionado?idEspecializacion={{ especializacion.idEspecializacion }}'>
+                <!--MODIFICAR ESPECIALIZACION-->
+                <a class="btn btn-outline-info btn-xs" href='#' role="button" data-toggle="modal"
+                    data-target="#myModalModif{{ especializacion.idEspecializacion }}">
                     <img class=" iconos" src="/public/res/update.svg" title="Modificar">
                 </a>
+                <!-- The Modal -->
+                <div class="modal fade" id="myModalModif{{ especializacion.idEspecializacion }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modificar Especializacion</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/especializacion/administracionEspecializacion/modificarEspecializacion"
+                                    method="post" class="was-validated">
+                                    <input type="text" name="idEspecializacion"
+                                        value="{{ especializacion.idEspecializacion }}" hidden>
+                                    <div class="form-group">
+                                        <label for="nombreAnterior">Nombre Anterior:</label>
+                                        <input type="text" name="nombreAnterior" class="form-control"
+                                            value="{{ especializacion.nombre }}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nombre">Nuevo Nombre:</label>
+                                        <input type="text" name="nombre" class="form-control" autofocus required>
+                                        <div class="invalid-feedback">Complete este campo</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--ELIMINAR ESPECIALIZACION SI NO UTILIZADO-->
                 {% set desabilitado = "disabled" %}
                 {% if especializacion.usado == false %}
                 {% set desabilitado = "" %}

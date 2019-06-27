@@ -34,16 +34,6 @@ class agentesController extends Controller
             return $this->vistaAdministracionAgentes();
     }
 
-    public function vistaModificar(){
-        $agente = $this->model->getByIdAgente($_GET['idAgente']);      
-        $datos['agente'] = $agente;
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        $datos['especializaciones'] = $this->model->getEspecializaciones(); 
-        return view('/agentes/agente.modificar', compact('datos'));
-    }
-
     public function update(){
         $idAgente = $_POST['idAgente'];
         $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']); 

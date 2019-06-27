@@ -9,7 +9,6 @@
     $router->get('fichaPedido', 'PedidoController@ficha');
     $router->post('pedido/guardar', 'PedidoController@guardar');
     $router->post('pedido/buscar', 'PedidoController@buscarPor');
-    $router->get('pedido/modificar/seleccionado', 'PedidoController@modificarPedidoSeleccionado');
     $router->post('pedido/modificar', 'PedidoController@modificar');
     $router->post('pedido/finalizar', 'PedidoController@finalizar');
     $router->post('pedido/cancelar', 'PedidoController@cancelar');
@@ -65,23 +64,20 @@
 //rutas personas
     $router->get('persona/AdministracionPersonas','PersonaController@vistaAdministracionPersona');
     $router->post('persona/altaPersona','PersonaController@altaPersona');
-    $router->get('persona/modificarPersona/seleccionado','PersonaController@modificarPersonaSeleccionada');
     $router->post('persona/modificar/guardar','PersonaController@modificar');
     $router->post('persona/eliminar','PersonaController@eliminar');
-    $router->get('fichaPersona', 'PersonaController@ficha');
+    $router->post('fichaPersona', 'PersonaController@ficha');
     $router->post('persona/modificarEstado','PersonaController@modificarEstado');
 
 //rutas agentes
     $router->get('agente/administracionAgentes','agentesController@vistaAdministracionAgentes');
     $router->post('agente/administracionAgente/cargarNuevoAgente', 'agentesController@guardarAgente');
-    $router->get('agente/modificar/seleccionado', 'agentesController@vistaModificar');
     $router->post('agente/administracionAgente/modificarAgente', 'agentesController@update');
     $router->post('agente/eliminar', 'agentesController@delete');
 
 //rutas especializaciones
     $router->get('especializacion/administracionEspecializacion','EspecializacionController@vistaAdministracionEspecializacion');
     $router->post('especializacion/administracionEspecializacion/cargarNuevaEspecializacion', 'EspecializacionController@guardarEspecializacion');
-    $router->get('especializacion/modificar/seleccionado', 'EspecializacionController@vistaModificar');
     $router->post('especializacion/administracionEspecializacion/modificarEspecializacion', 'EspecializacionController@update');
     $router->post('especializacion/eliminar', 'EspecializacionController@delete');
 
@@ -99,10 +95,9 @@
 //rutas sectores
     $router->get('sectores/administracionSectores', 'SectoresController@vistaAdministracionSectores');
     $router->post('sectores/administracionSectores/guardarSector', 'SectoresController@guardarSector');
-    $router->get('sectores/modificar/seleccionado', 'SectoresController@vistaModificar');
     $router->post('sectores/administracionSectores/modificarSector', 'SectoresController@update');
     $router->post('sectores/eliminar', 'SectoresController@delete');
-    $router->get('fichaSector', 'SectoresController@ficha');
+    $router->post('fichaSector', 'SectoresController@ficha');
 
 //rutas Eventos
     $router->get('eventos/administracionEventos', 'EventosController@vistaAdministracionEventos');
