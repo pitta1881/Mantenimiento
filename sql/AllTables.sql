@@ -102,6 +102,14 @@ INSERT INTO `permisos` (`idPermiso`, `nombrePermiso`) VALUES
 (42, 'baja insumos'),
 (43, 'modificar insumos'),
 (44, 'visualizar insumos');
+(45, 'alta persona'),
+(46, 'baja persona'),
+(47, 'modificar persona'),
+(48, 'visualizar persona');
+(49, 'alta oc'),
+(50, 'baja oc'),
+(51, 'modificar oc'),
+(52, 'visualizar oc');
 
 USE mantenimiento;
 CREATE TABLE sectores (

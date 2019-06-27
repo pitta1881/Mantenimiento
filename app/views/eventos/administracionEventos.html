@@ -7,8 +7,17 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 {% block main %}
 <div class="general">
-    <a href="#" onclick="mostrarFormulario()" id="btnCrearEvento"><img class="iconos" src="/public/res/add.svg"
+        {% for value in datos.permisos %}
+        {% if value.idPermiso == "37" %}
+        <a href="#" onclick="mostrarFormulario()" id="btnCrearEvento"><img class="iconos" src="/public/res/add.svg"
             title="Crear Evento"></a>
+        {% endif %}
+        {% else %}
+    
+        {% endfor %}
+
+
+ 
     <script>
         function mostrarFormulario() {
             var formularioEventos = document.getElementById('formularioEventos');
@@ -62,16 +71,30 @@
             <td>{{ evento.fechaInicio }}</td>
             <td>{{ evento.fechaFin }}</td>
             <td>
-                <a href='/eventos/modificar/seleccionado?idEvento={{ evento.idEvento }}'>
-                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
-                </a>
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "39" %}
+                    <a href='/eventos/modificar/seleccionado?idEvento={{ evento.idEvento }}'>
+                        <img class="iconos" src="/public/res/update.svg" title="Modificar">
+                    </a>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+
+               
                 <form action="/eventos/eliminar" method="post" style="display: inline-block"
                     id="formEliminarEvento{{ evento.idEvento }}">
                     <input type="text" name="idEvento" value="{{ evento.idEvento }}" hidden>
                 </form>
-                <a
-                    onclick="alertify.confirm('Eliminar Evento','¿Esta seguro?',function(){document.getElementById('formEliminarEvento{{ evento.idEvento }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/del.svg" title="Eliminar Evento"></a>
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "38" %}
+                <a onclick="alertify.confirm('Eliminar Evento','¿Esta seguro?',function(){document.getElementById('formEliminarEvento{{ evento.idEvento }}').submit()},function(){})"><img
+                    class="iconos" src="/public/res/del.svg" title="Eliminar Evento"></a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+              
             </td>
         </tr>
         {% else %}

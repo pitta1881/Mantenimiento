@@ -39,18 +39,6 @@ class TareaController extends Controller{
         redirect("fichaPedido?id=".$tarea['idPedido']);
     }
 
-    public function modificarTareaSeleccionada(){
-        $unaTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
-        $datos["prioridades"] = $this->model->getPrioridades();
-        $datos["estados"] = $this->model->getEstados();
-        $datos["especializaciones"] = $this->model->getEspecializaciones();
-        $datos["unaTarea"] = $unaTarea;
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/tareas/tareaModificar',compact('datos'));
-    }
-
     public function modificar(){
         $idTarea = $_POST['idTarea'];
         $idPedido = $_POST['idPedido'];
@@ -105,6 +93,8 @@ class TareaController extends Controller{
         public function ficha(){
             $miTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
             $datos["miTarea"] = $miTarea;  
+            $datos["prioridades"] = $this->model->getPrioridades();
+            $datos['especializaciones'] = $this->model->getEspecializaciones();
             $datos["userLogueado"] = $_SESSION['user'];
             $permisos=$this->model->getPermisos($_SESSION['rol']);
             $datos['permisos']= $permisos;

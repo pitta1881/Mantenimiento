@@ -12,8 +12,17 @@
         alertify.alert('Error', 'El Usuario ya existe..')
     </script>
     {% endif %}
-    <a href="#" id="btnCrearUsuario" data-toggle="modal" data-target="#modalFormAlta" title="Alta Usuario"><img
-            class="iconos" src="/public/res/add.svg" title="Crear Usuario"></a>
+
+    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "1" %}
+                    <a href="#" id="btnCrearUsuario" data-toggle="modal" data-target="#modalFormAlta" title="Alta Usuario"><img
+                        class="iconos" src="/public/res/add.svg" title="Crear Usuario"></a>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+
+    
     <!-- The Modal -->
     <div class="modal fade" id="modalFormAlta">
         <div class="modal-dialog modal-lg">
@@ -157,9 +166,17 @@
             <td>{{ usuario.nombreApe }}</td>
             <td>{{ usuario.nombreRol }}</td>
             <td>
-                <a href="#" id="btnCrearUsuario" data-toggle="modal"
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "3" %}
+                    <a href="#" id="btnCrearUsuario" data-toggle="modal"
                     data-target="#modalFormModificar{{ usuario.idPersona }}" title="Modificar Usuario"><img
                         class="iconos" src="/public/res/update.svg"></a>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+
+                
                 <!-- The Modal -->
                 <div class="modal fade" id="modalFormModificar{{ usuario.idPersona }}">
                     <div class="modal-dialog modal-xs">

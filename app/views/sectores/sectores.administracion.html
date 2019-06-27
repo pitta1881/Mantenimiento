@@ -21,8 +21,17 @@
 {% endif %}
 <div class="general">
     <!-- Button to Open the Modal -->
+    {% for value in datos.permisos %}
+    {% if value.idPermiso == "25" %}
     <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-            src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+        src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+    {% endif %}
+    {% else %}
+
+    {% endfor %}
+
+
+  
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-lg">
@@ -125,6 +134,8 @@
             <td>{{ sector.email }}</td>
             <td>
                 <!--MODIFICAR SECTOR-->
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "27" %}
                 <a href="#" role="button" data-toggle="modal" data-target="#myModalModif{{ sector.idSector }}"
                     class="btn btn-outline-info btn-xs">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar">
@@ -195,6 +206,12 @@
                         </div>
                     </div>
                 </div>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+            
+         
                 <!--ELIMINAR SECTOR SI NO FUE USADO TODAVIA-->
                 {% set desabilitado = "disabled" %}
                 {% if sector.usado == false %}
@@ -204,9 +221,16 @@
                     id="formEliminarSector{{ sector.idSector }}">
                     <input type="text" name="idSector" value="{{ sector.idSector }}" hidden>
                 </form>
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "26" %}
                 <a href="#" class="btn btn-outline-info btn-xs {{ desabilitado }}" role="button"
-                    onclick="alertify.confirm('Eliminar Sector','¿Esta seguro?',function(){document.getElementById('formEliminarSector{{ sector.idSector }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/delTarea.svg" title="Eliminar Sector"></a>
+                onclick="alertify.confirm('Eliminar Sector','¿Esta seguro?',function(){document.getElementById('formEliminarSector{{ sector.idSector }}').submit()},function(){})"><img
+                    class="iconos" src="/public/res/delTarea.svg" title="Eliminar Sector"></a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+               
             </td>
         </tr>
         {% else %}

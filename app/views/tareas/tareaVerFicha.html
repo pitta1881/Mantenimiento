@@ -20,10 +20,71 @@
         <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
         <img class="iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
         {% if datos.miTarea.estado != "Finalizado" and datos.miTarea.estado != "Cancelado" %}
-        <a
-            href="/tarea/modificar/seleccionado?idPedido={{ datos.miTarea.idPedido }}&idTarea={{ datos.miTarea.idTarea }}">
-            <img class="iconosTitulo" src="/public/res/update.svg" title="Modificar">
+        <a href="#" role="button" data-toggle="modal" data-target="#myModalModif{{ tarea.idTarea }}">
+            <img class="iconos" src="/public/res/update.svg" title="Modificar">
         </a>
+        <!-- The Modal -->
+        <div class="modal fade" id="myModalModif{{ tarea.idTarea }}">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modificar Tarea</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="/tarea/modificar/guardar" method="post" class="was-validated">
+                            <input type="text" name="idPedido" value="{{ datos.miTarea.idPedido }}" hidden>
+                            <input type="text" name="idTarea" value="{{ datos.miTarea.idTarea }}" hidden>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="especializacion">Especializacion:</label><span
+                                        class="asterisco">*</span>
+                                    <select name="especializacion" class="form-control custom-select">
+                                        {% for especializacion in datos.especializaciones %}
+                                        {% if especializacion.nombre == datos.miTarea.especializacionNombre %}
+                                        <option value="{{ especializacion.nombre }}" selected>
+                                            {{ especializacion.nombre }}</option>
+                                        {% else %}
+                                        <option value="{{ especializacion.nombre }}">
+                                            {{ especializacion.nombre }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="prioridad">Prioridad:</label><span class="asterisco">*</span>
+                                    {% if datos.miPedido.prioridad == 'Urgente' %}
+                                    <input type="text" name="prioridad" value="Urgente" class="form-control" readonly>
+                                    {% else %}
+                                    <select name="prioridad" class="form-control custom-select">
+                                        {% for prioridad in datos.prioridades %}
+                                        {% if prioridad == datos.miTarea.prioridad %}
+                                        <option value="{{ prioridad }}" selected>{{ prioridad }}</option>
+                                        {% else %}
+                                        <option value="{{ prioridad }}">{{ prioridad }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
+                                <textarea class="form-control" rows="4" id="descripcion" name="descripcion"
+                                    required>{{ datos.miTarea.descripcion }}</textarea>
+                                <div class="invalid-feedback">Complete este campo</div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                                <button type="submit" class="btn btn-success">Enviar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Button to Open the Modal -->
         {% if datos.miTarea.estado != 'Iniciado' %}
         {% set estados = ['En Curso','Pendiente','Finalizado'] %}

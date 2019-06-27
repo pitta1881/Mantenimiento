@@ -34,9 +34,9 @@ class PedidoController extends Controller{
     public function ficha(){
         $miPedido = $this->model->getByIdPedido($_GET['id']);
         $datos["miPedido"] = $miPedido;  
-        $datos["prioridades"] = $this->model->getPrioridades();
         $datos["estados"] = $this->model->getEstados();
         $datos["sectores"] = $this->model->getSectores();
+        $datos["prioridades"] = $this->model->getPrioridades();
         $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
         $datos["userLogueado"] = $_SESSION['user'];
         $permisos=$this->model->getPermisos($_SESSION['rol']);

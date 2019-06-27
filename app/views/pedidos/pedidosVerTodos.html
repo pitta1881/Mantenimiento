@@ -7,8 +7,18 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
 <div class="general">
     <!-- Button to Open the Modal -->
+
+    {% for value in datos.permisos %}
+    {% if value.idPermiso == "13" %}
     <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-            src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+        src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+    {% endif %}
+    {% else %}
+
+    {% endfor %}
+
+
+    
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-lg">
@@ -113,9 +123,14 @@
         <tr>
             <td {{ estilo }}>{{ pedido.id }}</td>
             <td class="descripcion" {{ estilo }}>{{ pedido.descripcion|slice(0, 55) }}</td>
+            {% for value in datos.permisos %}
+            {% if value.idPermiso == "28" %}
             <td {{ estilo }}><a href="#" onclick="fichaSector('{{ pedido.idSector }}');return false;"
                     title="Ver Mas">{{ pedido.nombreSector }}</a>
             </td>
+            {% endif %}
+            {% else %}
+            {% endfor %}
             <td {{ estilo }}>{{ pedido.fechaInicio }}</td>
             {% set fechaFin = pedido.fechaFin %}
             {% if pedido.estado != 'Finalizado' %}
@@ -129,11 +144,22 @@
             <td {{ estilo }}>
                 <!--VER MAS-->
                 {% if pedido.estado != "Cancelado" %}
+
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "16" %}
+              
                 <a href='/fichaPedido?id={{ pedido.id }}'>
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+
                 <!--MODIFICAR PEDIDO-->
                 {% if pedido.estado != "Finalizado" %}
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "15" %}
                 <a href='/pedido/modificar' role="button" data-toggle="modal"
                     data-target="#myModalModif{{ pedido.id }}">
                     <img class="iconos" src="/public/res/update.svg" title="Modificar Pedido">
@@ -211,15 +237,30 @@
                         </div>
                     </div>
                 </div>
-                <!--CANCELAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO-->
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+
+               
+                <!--ELIMINAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO-->
                 {% if (pedido.estado == 'Iniciado') and  (pedido.tareasAsignadas == 0) %}
                 <form action="/pedido/cancelar" method="post" style="display: inline-block"
                     id="formEliminarPedido{{ datos.miPedido.id }}">
                     <input type="text" name="id" value="{{ pedido.id }}" hidden>
                 </form>
+
+                 
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "14" %}
                 <a
-                    onclick="alertify.confirm('Cancelar Pedido','¿Esta seguro?',function(){document.getElementById('formEliminarPedido{{ datos.miPedido.id }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/del.svg" title="Cancelar Pedido"></a>
+                onclick="alertify.confirm('Cancelar Pedido','¿Esta seguro?',function(){document.getElementById('formEliminarPedido{{ datos.miPedido.id }}').submit()},function(){})"><img
+                    class="iconos" src="/public/res/del.svg" title="Cancelar Pedido"></a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+              
                 {% endif %}
                 {% endif %}
                 {% endif %}

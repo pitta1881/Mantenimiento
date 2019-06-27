@@ -16,8 +16,17 @@
 {% block main %}
 <div class="general">
     <!-- Button to Open the Modal -->
+    {% for value in datos.permisos %}
+    {% if value.idPermiso == "29" %}
     <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-            src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+        src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+    {% endif %}
+    {% else %}
+
+    {% endfor %}
+
+
+   
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-xs">
@@ -100,10 +109,19 @@
             {% endif %}
             <td>
                 <!--FICHA PERSONA-->
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "32" %}
                 <a href="#" onclick="fichaPersona('{{ agente.idAgente }}');return false;" title="Ver Mas"
                     class="btn btn-outline-info btn-xs">
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "31" %}
                 <!--MODIFICAR AGENTE(ESPECIALIZACION)-->
                 <a href='#' role="button" data-toggle="modal" data-target="#myModalModif{{ agente.idAgente }}"
                     class="btn btn-outline-info btn-xs">
@@ -153,6 +171,14 @@
                         </div>
                     </div>
                 </div>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+                
+
+                    
+              
                 <!--ELIMINAR AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
                 {% set desabilitado = "disabled" %}
                 {% if agente.usado == false %}
@@ -162,9 +188,17 @@
                     id="formEliminarAgente{{ agente.idAgente }}">
                     <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
                 </form>
-                <a <a href="#" class="btn btn-outline-info btn-xs {{ desabilitado }}" role="button"
-                    onclick="alertify.confirm('Eliminar Agente','¿Esta seguro?',function(){document.getElementById('formEliminarAgente{{ agente.idAgente }}').submit()},function(){})"><img
-                        class="iconos" src="/public/res/del.svg" title="Eliminar Agente"></a>
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "30" %}
+                 <a href="#" class="btn btn-outline-info btn-xs {{ desabilitado }}" role="button"
+                onclick="alertify.confirm('Eliminar Agente','¿Esta seguro?',function(){document.getElementById('formEliminarAgente{{ agente.idAgente }}').submit()},function(){})"><img
+                    class="iconos" src="/public/res/del.svg" title="Eliminar Agente"></a>
+                {% endif %}
+                {% else %}
+            
+                {% endfor %}
+            
+                
             </td>
         </tr>
         {% else %}
