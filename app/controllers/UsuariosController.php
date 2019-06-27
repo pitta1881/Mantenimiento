@@ -18,9 +18,8 @@ class UsuariosController extends Controller
         $todosUsuarios = $this->model->get();     
         $datos['todosUsuarios'] = $todosUsuarios;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
-        $userPer= $this->model->AllPermisos($_SESSION['user']);
-        $datos["userPermisos"]= $userPer;
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         $todosRoles=$this->model->getRoles(); 
         $todosPersonas=$this->model->getPersonas(); 
         $datos['roles'] = $todosRoles; 

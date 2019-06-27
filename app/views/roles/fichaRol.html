@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+{% block title %}Ficha de Roles{% endblock %}
+
+{% block header %}
+{% set datos = datos|merge({
+    "titulo": "Ficha de Roles"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="general">
+    <ul class="navTitulo">
+        <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver">
+      
+        <a href="/roles/modificar/seleccionado?id={{ datos.miRol[0].idRol }}">
+            <img class="iconos" src="/public/res/update.svg" title="Modificar">
+        </a>
+    </ul>
+    <dl>
+        <dt>Nombre Rol:</dt>
+        <dd >{{ datos.miRol[0].nombreRol }}</dd>
+       
+    </dl>
+    <h2>PERMISOS</h2>
+
+    <!-- The Modal -->
+    
+   
+    <table id="miTabla">
+        <th  >Modulo</th>
+        <th >Alta</th>
+        <th >Baja</th>
+        <th >Modif</th>
+        <th >Visuali</th>
+        {{dump(datos.misPermisos)}}
+       
+        valor
+        {{dump(value.idPermiso)}}
+        <tr>
+            <td>Modulo de Pedidos</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "13" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "14" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "15" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "16" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td>Modulo de OT</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "21" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "22" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "23" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "24" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td>Modulo de Usuarios</td> 
+            <td>  </td>
+            <td ></td>
+            <td > </td>
+            <td ></td>
+        </tr>
+        <tr>
+            <td>Roles</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "9" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "10" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "11" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "12" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td>Permisos</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "5" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "6" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "7" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "8" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td> Personas</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "13" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "14" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "15" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "16" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+
+        <tr>
+            <td> Usuarios</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "1" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "2" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "3" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "4" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td> Modulo Especializacion</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "33" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "34" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "35" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "36" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td> Modulo Agentes</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "29" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "30" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "31" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "32" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td> Modulo Sectores</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "25" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "26" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "27" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "28" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td> Modulo Insumos</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "41" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "42" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "43" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "44" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+        <tr>
+            <td> Modulo Orden de Compra</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "13" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "14" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "15" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "16" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        <tr>
+            <td> Modulo Eventos</td> 
+            {% for value in datos.misPermisos %}
+            {% if value.idPermiso == "37" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif  value.idPermiso == "38" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "39" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% elseif value.idPermiso == "40" %}
+            <td> <input type="checkbox" name="permisos[]" readonly
+                class="inputDisabled"  checked={{'true'}}> </td>
+                {% else %}
+                <td> <input type="checkbox" name="permisos[]" readonly
+                    class="inputDisabled"  > </td>
+                {% endif %}
+            {% endfor %}
+        
+        </tr>
+    
+    </table>
+</div>
+{% endblock %}

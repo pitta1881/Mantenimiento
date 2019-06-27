@@ -16,6 +16,16 @@ class Pedido extends Model{
     protected $tableEvento='eventos';
     protected $tableItemInsumo = 'iteminsumo';
 
+
+    public function getPermisos($idRol){
+        $roles = $this->db->selectPermisosByRol($idRol);
+        $misRoles = json_decode(json_encode($roles), True);
+        return $misRoles; 
+    }
+
+
+
+
     public function getSectores() {
         $array = [];
         $sectores = $this->db->getSectores($this->tableSectores);

@@ -16,6 +16,8 @@ class PermisosControler extends Controller{
         $todosPermisos= $this->model->get(); 
         $datos['todosPermisos'] = $todosPermisos;
         $datos["userLogueado"] = $_SESSION['user'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/permisos/administracionPermisos', compact('datos'));
     }
 
@@ -33,7 +35,8 @@ class PermisosControler extends Controller{
         $Permiso = $this->model->getByIdPermiso($_GET['idPermiso']);      
         $datos["Permiso"] = $Permiso;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/permisos/permisos.modificar', compact('datos'));
     }
 

@@ -18,7 +18,8 @@ class PersonaController extends Controller{
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
@@ -51,7 +52,8 @@ class PersonaController extends Controller{
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
         $datos["userLogueado"] = $_SESSION['user'];
-        $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/personas/personas.modificar',compact('datos'));
     }
 
@@ -77,7 +79,8 @@ class PersonaController extends Controller{
         $miPersona = $this->model->getByIdPersona($_GET['idAgente']);
         $datos["miPersona"] = $miPersona;  
         $datos["userLogueado"] = $_SESSION['user'];
-        $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/personas/personaVerFicha', compact('datos'));
     }
 

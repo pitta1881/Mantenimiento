@@ -8,6 +8,12 @@ class Permisos extends Model{
     protected $table = 'permisos';
 
   
+    public function getPermisos($idRol){
+      $roles = $this->db->selectPermisosByRol($idRol);
+      $misRoles = json_decode(json_encode($roles), True);
+      return $misRoles; 
+  }
+  
     public function get(){
         $permisos = $this->db->selectAll($this->table);
         $todosPermisos = json_decode(json_encode($permisos), True);       

@@ -14,6 +14,13 @@ class Usuarios extends Model
     
     protected $tableRolXPermiso='rolesxpermisos';
 
+    
+    public function getPermisos($idRol){
+        $roles = $this->db->selectPermisosByRol($idRol);
+        $misRoles = json_decode(json_encode($roles), True);
+        return $misRoles; 
+    }
+
     public function get(){
         $usuario=$this->db->selectAll($this->table);
         $misUsuarios = json_decode(json_encode($usuario), True);
@@ -70,11 +77,6 @@ public function getRoles(){
     $personas = $this->db->selectAllPersonas($this->tablePersona);
     $misPersonas = json_decode(json_encode($personas), True);
     return $misPersonas; 
-}
-  public function  getPermisos(){
-    $permisos = $this->db->selectAllPermisos($this->tablePermisos);
-    $misPermisos = json_decode(json_encode($permisos), True);
-    return $misPermisos; 
 }
 
     public function guardarPermisosXRol($datos){   

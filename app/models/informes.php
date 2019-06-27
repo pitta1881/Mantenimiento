@@ -15,6 +15,12 @@ class informes extends Model
       
  
 
+ public function getPermisos($idRol){
+    $roles = $this->db->selectPermisosByRol($idRol);
+    $misRoles = json_decode(json_encode($roles), True);
+    return $misRoles; 
+}
+
  public function getSectores($fechaDesde,$fechaHasta){
      echo "entrooooooooo";
         $datos=$this->db->dameSectores($this->tablePedidos,$this->tableSectores,$fechaDesde,$fechaHasta);

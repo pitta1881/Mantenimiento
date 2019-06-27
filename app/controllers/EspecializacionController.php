@@ -18,7 +18,8 @@ class EspecializacionController extends Controller
         $todasEspecializaciones = $this->model->get(); 
         $datos['todasEspecializaciones'] = $todasEspecializaciones;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
@@ -41,7 +42,8 @@ class EspecializacionController extends Controller
         $especializacion = $this->model->getByIdEspecializacion($_GET['idEspecializacion']);      
         $datos['especializacion'] = $especializacion;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/especializacion/especializacion.modificar', compact('datos'));
     }
 

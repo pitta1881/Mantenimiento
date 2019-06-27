@@ -46,7 +46,8 @@ class TareaController extends Controller{
         $datos["especializaciones"] = $this->model->getEspecializaciones();
         $datos["unaTarea"] = $unaTarea;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/tareas/tareaModificar',compact('datos'));
     }
 
@@ -73,7 +74,8 @@ class TareaController extends Controller{
         $datos["miTarea"] = $miTarea;
         $datos['agentesDisponibles'] = $agentesDisponibles;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/tareas/tareasAgentesDisponibles',compact('datos'));
     }
 
@@ -94,7 +96,8 @@ class TareaController extends Controller{
         }
         $datos['itemAgente'] = $datosItem;
         $datos["userLogueado"] = $_SESSION['user'];
-        $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         redirect("fichaTarea?idPedido=".$idPedidoFinal."&idTarea=".$idTareaFinal);
     }
 
@@ -103,7 +106,8 @@ class TareaController extends Controller{
             $miTarea = $this->model->getByIdPedidoIdTarea($_GET['idPedido'],$_GET['idTarea']);
             $datos["miTarea"] = $miTarea;  
             $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+            $permisos=$this->model->getPermisos($_SESSION['rol']);
+            $datos['permisos']= $permisos;
             return view('/tareas/tareaVerFicha', compact('datos'));
         }
 
@@ -137,7 +141,8 @@ class TareaController extends Controller{
             $historial = $this->model->verHistorial($_GET['idPedido'],$_GET['idTarea']);
             $datos['historial'] = $historial;
             $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+            $permisos=$this->model->getPermisos($_SESSION['rol']);
+            $datos['permisos']= $permisos;
             return view('/tareas/verHistorial',compact('datos'));
         }
 

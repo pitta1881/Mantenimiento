@@ -17,7 +17,8 @@ class EventosController extends Controller{
         $datos['todosEventos'] = $todosEventos;
         $datos["diaHoy"] = date("Y-m-d");
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
   
         return view('/eventos/administracionEventos', compact('datos'));
     }
@@ -49,7 +50,8 @@ $newDate2 = date("d/m/Y", strtotime($originalDate2));*/
         $evento = $this->model->getByIdEvento($_GET['idEvento']);      
         $datos['evento'] = $evento;
         $datos["userLogueado"] = $_SESSION['user'];
-         $datos['rol']=$_SESSION['rol'];
+        $permisos=$this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos']= $permisos;
         return view('/eventos/eventos.modificar', compact('datos'));
     }
 
