@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Gestion de informes{% endblock %} 
+{% extends "base.html" %} {% block title %}Gestion de informes{% endblock %}
 {% block header %}
 {% set datos = datos|merge({
     "titulo": "Gestión de informes"
@@ -6,138 +6,99 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %} {% block head %} {{ parent() }}
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
-{% block main %} 
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-
-<form action="/informes/datos" method="post"  >
-    <select name="filtro" id="filtro">
-   
-            <option value="Estados_de_los_Pedidos">Estados de los Pedidos </option>
-            <option value="Reparaciones_por_sector">Reparaciones por sector </option>
-              <option value="Estados_de_ot ">Estados de ordenes de trabajo </option>
-               </select>
-<label for="fechadesde"> Fecha desde:</label>
-
-<input type="date" name="fechaInicio">
-<label for="fechahasta"> Fecha hasta:</label>
-<input type="date" name="fechaFin">
-<input type="submit" value="Generar Informe">
-</form>
-<br>
-<br>
-<br>
-<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-
- <!--for (j=0 ; j< datos.length; j++){
-        
-        if (lenguajes[i]['lenguaje']==datos[j]['nombreLenguaje']){
-            c++;-->
+{% block main %}
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<a href="#" onclick="verPedidos();return false;" title="Ver Mas">Ver Pedidos</a>
 <script>
-  // Build the chart
-  var titulo={{datos|json_encode()|raw}};
-    console.log(titulo['filtro']);
-    var sectores={{sectores|json_encode()|raw}};
-   
-    console.log(sectores);
- 
-   var dato1 =sectores[0]['nombreSector'];
-    var dato11=parseInt(sectores[0]['suma'],10);
-    console.log(dato1);
-    var dato=[
-        
-     
-        
-          "{name:'"+dato1+"', y:"+dato11+"},"
-       //{"name": sectores[0]['nombreSector'],"data":sectores[0]['suma']}
-     // sectores[0]['nombreSector'],parseInt(sectores[1]['suma'], 10)
-    ] 
-    //for (j=0 ; j< sectores.length; j++){
-       // datos.push([sectores[1]['nombreSector'],parseInt(sectores[1]['suma'], 10)]);
-    //datos.push(  "name": sectores[1]['nombreSector'],"data":sectores[1]['suma']});
-    //sectores[j]['suma']=parseInt(sectores[j]['suma'], 10)
-
-    //}
-    
-   
-    for (var i=0 ;i< sectores.length; i++) {
-   //datos.push( "{name:"sectores[i]['nombreSector']", y:"parseInt(sectores[i]['suma'], 10)"},");
-//datos[i]['name:']=sectores[i]['nombreSector'];
-  //      datos[i]['y:']=parseInt(sectores[i]['suma'], 10);
-   var dato1 =sectores[i]['nombreSector'];
-    var dato11=parseInt(sectores[i]['suma'],10);
-dato.push("{name:'"+dato1+"', y:"+dato11+"},");
-   
-    }
-
-
-
-//for (var i = 0; i < sectores.length; i++) {
-var json=[{name:"hola"},{y:6}];
-//var obj =JSON.stringify(json);
- //console.log(sectores[i]['nombreSector']);
-console.log(json);
-     //obj['data'].push({"name":sectores[i]['nombreSector'],"y":sectores[i]['suma']});
-//}
-
-//json= JSON.stringify(obj);
-
-    
-   
-    
-
-  
-  Highcharts.chart('container', {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie'
-  },
-  title: {
-    text: 'Browser market shares in January, 2018'
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: true,
-        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-        style: {
-          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-        }
+  function verPedidos() {
+    $.ajax({
+      data: '',
+      url: '/informePedidos', //archivo que recibe la peticion
+      type: 'post', //método de envio
+      success: function (
+        response
+      ) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+        var datos = response;
+        graficar(datos);
       }
+    });
+  }
+
+  function graficar(datos) {
+    datos = JSON.parse(datos);
+    var arrayMonth = [];
+    for (let index = 0; index < 11; index++) {
+      arrayMonth[index] = 0;
     }
-  },
-  series: [{
-    name: 'Brands',
-    colorByPoint: true,
-    data: [{
-      name: 'quirofano',
-      y: 30,
-      }, 
-           {
-      name: 'pabellon',
-      y: 20
-    },
-           {
-      name: 'cocina',
-      y: 10
-    }, ]
-  }]
-});
-    
-    
+    datos.forEach(element => {
+      var parts = element['fechaInicio'].split(/[/]/);
+      var month = parts[1];
+      arrayMonth[month - 1] = arrayMonth[month - 1] + 1;
+    });
+    console.log(arrayMonth);
+    //Better to construct options first and then pass it as a parameter
+    var options = {
+      title: {
+        text: "Column Chart in jQuery CanvasJS"
+      },
+      data: [{
+        // Change type to "doughnut", "line", "splineArea", etc.
+        type: "column",
+        dataPoints: [{
+            label: "Enero",
+            y: arrayMonth[0]
+          },
+          {
+            label: "Febrero",
+            y: arrayMonth[1]
+          },
+          {
+            label: "Marzo",
+            y: arrayMonth[2]
+          },
+          {
+            label: "Abril",
+            y: arrayMonth[3]
+          },
+          {
+            label: "Mayo",
+            y: arrayMonth[4]
+          },
+          {
+            label: "Junio",
+            y: arrayMonth[5]
+          },
+          {
+            label: "Julio",
+            y: arrayMonth[6]
+          },
+          {
+            label: "Agosto",
+            y: arrayMonth[7]
+          },
+          {
+            label: "Septiembre",
+            y: arrayMonth[8]
+          },
+          {
+            label: "Octubre",
+            y: arrayMonth[9]
+          },
+          {
+            label: "Noviembre",
+            y: arrayMonth[10]
+          },
+          {
+            label: "Diciembre",
+            y: arrayMonth[11]
+          }
+        ]
+      }]
+    };
 
-
+    $("#chartContainer").CanvasJSChart(options);
+  }
 </script>
 
 {% endblock %}
