@@ -1026,15 +1026,12 @@ public function selectAnteUltimoItemAgente($tableItemAgente,$idAgente){
 
 
     
-    public function dameSectores($tablaPedidos,$tablaSectores,$fechaDesde,$fechaHasta){
- echo "entro";
-    var_dump($fechaDesde);
-         var_dump($fechaHasta);
-        $statement = $this->pdo->prepare( "
-SELECT $tablaSectores.nombreSector, COUNT(*) as suma FROM $tablaPedidos INNER JOIN $tablaSectores where $tablaPedidos.idSector=$tablaSectores.idSector   GROUP BY $tablaSectores.nombreSector " );  
+     public function dameSectores($tablaPedidos,$tablaSectores,$fechaDesde,$fechafin){
+ 
+        $statement = $this->pdo->prepare( "SELECT $tablaSectores.idSector,$tablaSectores.nombreSector, COUNT(*) as suma FROM $tablaPedidos INNER JOIN $tablaSectores where $tablaPedidos.idSector=$tablaSectores.idSector  AND $tablaPedidos.fechaInicio>=$fechaDesde GROUP BY $tablaSectores.nombreSector  " );  
   $statement->execute();
     //var_dump($statement);
-       //where fechaInicio>=$fechaDesde AND fechaInicio<=$fechaHasta 
+       
         return $statement->fetchAll(PDO::FETCH_CLASS);
 }
 
@@ -1113,7 +1110,28 @@ SELECT $tablaSectores.nombreSector, COUNT(*) as suma FROM $tablaPedidos INNER JO
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_CLASS);
     }
-
+public function  dameinformeEspe($tablaTarea,$tablaEspecializacion,$tablaPedido,$fechaDesde,$fechaHasta){
+     
+       $statement = $this->pdo->prepare( "
+SELECT $tablaEspecializacion.idEspecializacion,$tablaEspecializacion.nombre, COUNT(*) as suma FROM $tablaTarea INNER JOIN $tablaEspecializacion where $tablaEspecializacion.idEspecializacion=$tablaTarea.idEspecializacion GROUP BY $tablaEspecializacion.nombre" );  
+  $statement->execute();
+   
+       
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+}
+     
+    public function dameinformeEstado($tablaPedido,$fechaDesde,$fechaHasta){
+    
+        $statement = $this->pdo->prepare( "
+SELECT estado ,COUNT(*) as suma FROM $tablaPedido WHERE fechaInicio>=$fechaDesde  GROUP BY estado " );  
+  $statement->execute();
+    
+       
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+    
+    
+    
 }
 
 

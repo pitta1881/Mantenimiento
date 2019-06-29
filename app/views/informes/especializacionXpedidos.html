@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %}Gestion de informes{% endblock %}
+{% block header %}
+{% set datos = datos|merge({
+    "titulo": "Gestión de informes"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
+{% block main %}
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+<form action="/informe/datos" method="POST"> 
+     <br>
+
+     <br><select name="filtro" class="form-control custom-select" required>
+                                    <option name="" value="" selected>Seleccione un informe</option>
+
+<option name="" value="Reparaciones_por_sector">Reparciones por sector</option>
+<option name="" value="Especializacion_por_tarea">Especializaciones requeridas</option>
+<option name="" value="Estados">Estados de los Pedidos</option>
+     </select>
+<label for="fechaInicio">Fecha Desde:</label>
+<input type="date" name="fechaInicio" value="fechaInicio">
+<label for="fechaFin">Fecha Hasta:</label>
+<input type="date" name="fechaFin" value="fechaFin">
+
+<input type="submit" value="Generar listado" >
+</form>
+        <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
+ 
+     
+         <table id="miTabla">
+        <thead>
+            <tr>
+             
+                <th onclick="sortTable(1,'miTabla')">N°</th>
+                <th onclick="sortTable(2,'miTabla')">Nombre</th>
+                <th onclick="sortTable(3,'miTabla')">Cantidad requerida</th>
+                
+            </tr>
+        </thead>
+        {% for dato in especializaciones %}
+        <tr>
+            <td>{{ dato.idEspecializacion }}</td>
+            <td>{{ dato.nombre }}</td>
+            <td>{{ dato.suma }}</td>
+           
+           {% endfor %}
+ 
+ 
+ 
+ </table>
+ 
+ 
+ 
+ 
+ {% endblock %}

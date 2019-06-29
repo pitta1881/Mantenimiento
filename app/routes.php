@@ -106,7 +106,7 @@
 
 // rutas informes
     $router->get('informe/administracion','informesController@vistaAdministracionInformes');
-    $router->post('informes/datos','informesController@getDatos');
+    $router->post('informe/datos','informesController@getDatos');
     $router->get('not_found', 'ProjectController@internalError');
     $router->get('internal_error', 'ProjectController@internalError');
     $router->post('informePedidos','PedidoController@getDatos');
