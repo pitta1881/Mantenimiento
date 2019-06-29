@@ -7,6 +7,7 @@ CREATE TABLE roles (
 );
 
 INSERT INTO `roles` VALUES (0,'superAdmin');
+INSERT INTO `roles` VALUES (1,'Operador');
 
 USE Mantenimiento;
 CREATE TABLE permisos (
@@ -46,15 +47,6 @@ CREATE TABLE rolesxpermisos (
     PRIMARY KEY (idRol,idPermiso),
     FOREIGN KEY (idRol) REFERENCES roles(idRol),
     FOREIGN KEY (idPermiso) REFERENCES permisos(idPermiso)
-);
-
-USE Mantenimiento;
-CREATE TABLE rolesxusuarios (
-   nombre VARCHAR(11),
-    idRol INTEGER,
-    PRIMARY KEY (idRol,nombre),
-    FOREIGN KEY (idRol) REFERENCES roles(idRol),
-    FOREIGN KEY (nombre) REFERENCES usuarios(nombre)
 );
 
 INSERT INTO `permisos` (`idPermiso`, `nombrePermiso`) VALUES
@@ -182,7 +174,7 @@ CREATE TABLE itemOT
 USE mantenimiento;
 CREATE TABLE insumo (
     idInsumo INTEGER AUTO_INCREMENT,
-    nombreInsumo VARCHAR(11) NOT NULL,
+    nombreInsumo TEXT NOT NULL,
     descripcion TEXT NOT NULL,
     stock INTEGER NOT NULL default 0,
     stockMinimo Integer NOT NULL default 0,
@@ -289,18 +281,34 @@ INSERT INTO `rolesxpermisos` (`idRol`, `idPermiso`) VALUES
 (0, 19),(0, 20),(0, 21),(0, 22),(0, 23),(0, 24),(0, 25),(0, 26),(0, 27),(0, 28),(0, 29),(0, 30),(0, 31),(0, 32),(0, 33),(0, 34),(0, 35),(0, 36),
 (0, 37),(0, 38),(0, 39),(0, 40),(0, 41),(0, 42),(0, 43),(0, 44),(0, 45),(0, 46),(0, 47),(0, 48),(0, 49),(0, 50),(0, 51),(0, 52);
 
+INSERT INTO `rolesxpermisos` (`idRol`, `idPermiso`) VALUES
+(1, 13),(1, 14),(1, 15),(1, 16),(1, 17),(1, 18),(1, 19),(1, 20),(1, 21),(1, 22),(1, 23),(1, 24),(1, 25),(1, 26),(1, 27),(1, 28),(1, 29),(1, 30),
+(1, 31),(1, 32),(1, 33),(1, 34),(1, 35),(1, 36),(1, 37),(1, 38),(1, 39),(1, 40),(1, 41),(1, 42),(1, 43),(1, 44),(1, 49),(1, 50),(1, 51),(1, 52);
+
 INSERT INTO `especializacion` (`idEspecializacion`, `nombre`) VALUES
-(1, 'plomeria'),
-(2, 'albanileria'),
-(3, 'pintureria'),
-(4, 'electricidad'),
-(5, 'mecanico'),
-(6, 'herreria'),
-(7, 'restauracion');
+(1, 'Plomeria'),
+(2, 'Albanileria'),
+(3, 'Pintureria'),
+(4, 'Electricidad'),
+(5, 'Mecanico'),
+(6, 'Herreria'),
+(7, 'Restauracion'),
+(8, 'Carpinteria'),
+(9, 'General');
 
 INSERT INTO `insumo` (`nombreInsumo`, `descripcion`, `stock`, `stockMinimo`) VALUES
-('tornillo', '10 pulgadas',100, 60),
-('tornillo', '5 pulgadas',200, 60),
+('tornillo', 'cruz chico',100, 100),
+('tornillo', 'cruz mediano',200, 100),
+('tornillo', 'cruz largo',150, 100),
+('tornillo', 'liso chico',200, 100),
+('tornillo', 'liso mediano',340, 100),
+('tornillo', 'liso largo',450, 100),
+('clavo', 'madero corto',450, 100),
+('clavo', 'madero mediano',550, 100),
+('clavo', 'madero largo',50, 100),
+('clavo', 'chapa corto',150, 100),
+('clavo', 'chapa mediano',250, 100),
+('clavo', 'chapa largo',25, 100),
 ('tuerca', 'chica',150, 50),
 ('tuerca', 'mediana',250,50),
 ('tuerca', 'grande',0,50),
@@ -309,4 +317,43 @@ INSERT INTO `insumo` (`nombreInsumo`, `descripcion`, `stock`, `stockMinimo`) VAL
 ('fisher', 'grande',321,100),
 ('codo', '24cm',50,25),
 ('codo', 'en T 12cm',20,25),
-('codo', 'en L 5cm',44,25);
+('codo', 'en L 5cm',44,25),
+('Lampara Led', '40w caliente',5,5),
+('Lampara Led', '40w fria',10,5),
+('Lampara Led', '5w caliente',2,5),
+('Lampara Led', '5w fria',8,5);
+
+INSERT INTO `personas` (`dni`,`apellido`,`nombre`,`direccion`,`fecha_nacimiento`,`email`,`estado`) VALUES 
+(22456368,'Lombardo','Marcelo','Cerrito 236 Piso 2','1975-05-02','epopasu-1210@yopmail.com','Activo'),
+(16131891,'Hernandez','Omar Lozano','','1954-07-09','pontipak@me.com','Activo'),
+(32454949,'Pascual','Jose Manuel','','1975-01-03','heine@outlook.com','Activo'),
+(11188169,'Diaz','Adrian','','','','Activo'),
+(39447859,'Guerrero','Irene','Av Lib San Martin 569','1986-03-14','','Activo'),
+(26009360,'Bosch','Naia','','1990-07-12','pkilab@verizon.net','Activo'),
+(24205172,'Moya','Diana','','1999-11-30','wonderkid@gmail.com','Activo'),
+(17145072,'Garcia','Blanca','Dr R Balbin 966','','','Activo'),
+(19917833,'Guerrero','Francisco','','1984-02-22','','Activo'),
+(26585543,'Ramirez','Omar','Bv N Orono 3094','1975-05-02','crowemojo@hotmail.com','Activo');
+
+INSERT INTO `agentes` (`idAgente`,`idEspecializacion`,`disponible`) VALUES 
+(26585543,1,1),
+(39447859,3,1),
+(17145072,4,1),
+(16131891,6,1),
+(22456368,8,1);
+
+INSERT INTO `sectores` (`idSector`,`nombreSector`,`tipo`,`responsable`,`telefono`,`email`) VALUES 
+(1,'Contabilidad','Hospital','Marcela',206,'contabilidad@mail.com'),
+(2,'Direccion','Hospital','Gustavo',220,'direccion@mail.com'),
+(3,'Rehabilitacion','Hospital','Andrea',NULL,'rehab@mail.com'),
+(4,'Guardia Medica','Hospital','Fernando',256,NULL),
+(5,'Porteria','Hospital','Pedro',333,NULL),
+(6,'Vacunatorio','Hospital','Roberto',456,'vacunatorio@mail.com'),
+(7,'Infraestructura','Hospital','Pablo',196,'infraestructura@mail.com'),
+(8,'Pabellon 1','Hospital','Leadnro',111,'pab1@mail.com'),
+(9,'Pabellon 2','Hospital','Ezequiel',222,'pab2@mail.com'),
+(10,'Pabellon 3','Hospital','Mauro',543,'pab3@mail.com'),
+(11,'Equipamiento Medico','Hospital','Marcela',200,NULL),
+(12,'Casa N.3','Casa Comunitaria',NULL,963,'zonab@mail.com'),
+(13,'Casa N.10','Casa Comunitaria',NULL,963,'zonab@mail.com');
+

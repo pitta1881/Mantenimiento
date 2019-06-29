@@ -38,6 +38,7 @@ class Persona extends Model{
                     if ($value == '0000-00-00') {
                         $misPersonas[$indice]['fecha_nacimiento'] = '-';
                     } else{
+                        $misPersonas[$indice]['fecha_nacimientoSinFormato'] = $misPersonas[$indice]['fecha_nacimiento'];
                         $misPersonas[$indice]['fecha_nacimiento'] = date("d/m/Y", strtotime($misPersonas[$indice]['fecha_nacimiento']));
                     }
                 }

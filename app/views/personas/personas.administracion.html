@@ -164,7 +164,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="fecha_nacimiento">Fecha De Nacimiento:</label>
                                             <input type="date" name="fecha_nacimiento"
-                                                value="{{ persona.fecha_nacimiento }}" class="form-control"
+                                                value="{{ persona.fecha_nacimientoSinFormato }}" class="form-control"
                                                 max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
                                         </div>
                                     </div>
@@ -187,16 +187,13 @@
                 {% for value in datos.permisos %}
                 {% if value.idPermiso == "47" %}
                 <!--MODIFICAR ESTADO-->
-                <a href="#" class="btn btn-info" role="button" data-toggle="modal"
+                <a href="#" class="btn btn-outline-info btn-xs" role="button" data-toggle="modal"
                     data-target="#myModalEstado{{ persona.dni }}"><img class="iconos"
                         src="/public/res/estadoPersona.svg" title="Modificar Estado"></a>
                 {% endif %}
                 {% else %}
 
                 {% endfor %}
-
-
-
                 <!-- The Modal -->
                 <div class="modal fade" id="myModalEstado{{ persona.dni }}">
                     <div class="modal-dialog modal-xs">

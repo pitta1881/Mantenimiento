@@ -1,25 +1,3 @@
-INSERT INTO `especializacion` (`idEspecializacion`, `nombre`) VALUES
-(1, 'plomeria'),
-(2, 'albanileria'),
-(3, 'pintureria'),
-(4, 'electricidad'),
-(5, 'mecanico'),
-(6, 'herreria'),
-(7, 'restauracion');
-
-INSERT INTO `insumo` (`nombreInsumo`, `descripcion`, `stock`, `stockMinimo`) VALUES
-('tornillo', '10 pulgadas',100, 60),
-('tornillo', '5 pulgadas',200, 60),
-('tuerca', 'chica',150, 50),
-('tuerca', 'mediana',250,50),
-('tuerca', 'grande',0,50),
-('fisher', 'chico',0,100),
-('fisher', 'mediano',12,100),
-('fisher', 'grande',321,100),
-('codo', '24cm',50,25),
-('codo', 'en T 12cm',20,25),
-('codo', 'en L 5cm',44,25);
-
 INSERT INTO `permisos` (`idPermiso`, `nombrePermiso`) VALUES
 (1, 'alta usuario'),(2, 'baja usuario'),(3, 'modificar usuario'),(4, 'visualizar usuario'),(5, 'alta permisos'),(6, 'baja permisos'),
 (7, 'modificar permisos'),(8, 'visualizar permisos'),(9, 'alta roles'),(10, 'baja roles'),(11, 'modificar roles'),(12, 'visualizar roles'),

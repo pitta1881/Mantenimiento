@@ -44,7 +44,8 @@
 
                     {% endfor %}
 
-
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "4" %}
                     <li><a><img class="iconosTitulo" src="/public/res/isers.svg" title="Usuarios">Usuarios</a>
                         <ul class="submenu">
 
@@ -55,12 +56,10 @@
 
                             </li>
                             {% endif %}
-                            {% else %}
-
                             {% endfor %}
 
                             {% for value in datos.permisos %}
-                            {% if value.idPermiso == "16" %}
+                            {% if value.idPermiso == "48" %}
                             <li><a href="/persona/AdministracionPersonas">Personas</a>
                             </li>
                             {% endif %}
@@ -91,6 +90,8 @@
                             {% endfor %}
                         </ul>
                     </li>
+                    {% endif %}
+                    {% endfor %}
                     {% for value in datos.permisos %}
                     {% if value.idPermiso == "32" %}
 
@@ -154,15 +155,13 @@
                     {% for value in datos.permisos %}
                     {% if value.idPermiso == "16" %}
                     <li><a href="/ordendecompra/administracionOC"><img class="iconosTitulo" src="/public/res/oc.svg"
-                                title="Ordenes de Compra">Ordenes de Compra</li>
-
+                                title="Ordenes de Compra">Ordenes de Compra</a></li>
                     {% endif %}
-                    {% else %}
-
                     {% endfor %}
-
+                    <li><a href="/public/res/ManualDeUsuario_Mantenimiento_Sommer.pdf" target="_blank"><img
+                                class="iconos" src="/public/res/informacion.svg">Ayuda</a>
+                    </li>
                     <li><a href="/cerrarSesion"><img class="iconos" src="/public/res/logout.svg">Salir</a>
-
                     </li>
                 </ul>
             </nav>
