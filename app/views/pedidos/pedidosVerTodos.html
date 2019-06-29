@@ -10,8 +10,8 @@
 
     {% for value in datos.permisos %}
     {% if value.idPermiso == "13" %}
-    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-            src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+    <a href="#" class="btn btn-info" id="btnAbrirModalAltaPedido" role="button" data-toggle="modal"
+        data-target="#myModal"><img class="iconos" src="/public/res/add.svg" title="Crear Pedido">Crear Nuevo</a>
     {% endif %}
     {% endfor %}
     <!-- The Modal -->
@@ -31,6 +31,9 @@
                     </div>
                     {% else %}
                     <form action="/pedido/guardar" method="post" class="was-validated">
+                        {% if datos.evento is not empty %}
+                        <input type="text" name="idEvento" value="{{ datos.evento.idEvento }}" hidden>
+                        {% endif %}
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="nombreUsuario">Usuario Creador:</label><span class="asterisco">*</span>
@@ -69,7 +72,7 @@
                         <div class="form-group col-md-10">
                             <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
                             <textarea class="form-control" rows="4" id="descripcion" name="descripcion"
-                                required></textarea>
+                                required>{% if datos.evento is not empty %}{{ datos.evento.descripcion }}{% endif %}</textarea>
                             <div class="invalid-feedback">Complete este campo</div>
                         </div>
                         <div class="modal-footer">
@@ -265,4 +268,9 @@
         <h2 class='error'>No hay Pedidos</h2> {% endfor %}
     </table>
 </div>
+{% if datos.evento is not empty %}
+<script>
+    document.getElementById("btnAbrirModalAltaPedido").click();
+</script>
+{% endif %}
 {% endblock %}

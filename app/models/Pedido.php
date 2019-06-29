@@ -172,4 +172,10 @@ class Pedido extends Model{
         $this->db->deleteEventoValidar($this->tableEvento,$idEvento);
     }
 
+    public function getEventoById($idEvento) {
+        $evento = $this->db->getEventoById($this->tableEvento, $idEvento);
+        $miEvento = json_decode(json_encode($evento[0]), True);
+        return $miEvento;
+      }
+
 }

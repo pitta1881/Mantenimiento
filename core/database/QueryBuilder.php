@@ -1106,6 +1106,14 @@ SELECT $tablaSectores.nombreSector, COUNT(*) as suma FROM $tablaPedidos INNER JO
         $statement->execute();
     }
 
+    public function getEventoById($tableEvento,$idEvento){
+        $statement = $this->pdo->prepare(
+           "SELECT * FROM $tableEvento WHERE idEvento=$idEvento"
+    );
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
 }
 
 

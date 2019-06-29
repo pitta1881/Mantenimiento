@@ -17,12 +17,29 @@
 {% block main %}
 <div class="contenido3">
     <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
-    <form action="/tarea/asignarInsumos/seleccionados" method="post">
+    <form action="/tarea/asignarInsumos/seleccionados" method="post" id="myform">
+        <script>
+            $(document).ready(function () {
+                $('#miTabla').DataTable();
+            });
+            $('#myform').submit(function () {
+                var selectTodos = document.getElementsByName('miTabla_length')[0];
+                var ultimaOption = selectTodos.lastElementChild;
+                ultimaOption.value = 10000;
+                selectTodos.selectedIndex = 4;
+                selectTodos.dispatchEvent(new Event('change'));
+                return true; // return false to cancel form action
+            });
+        </script>
         <table id="miTabla">
-            <th onclick="sortTable(1,'miTabla')">Nombre</th>
-            <th onclick="sortTable(2,'miTabla')">Descripcion</th>
-            <th onclick="sortTable(3,'miTabla')">Stock</th>
-            <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
+            <thead>
+                <tr>
+                    <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                    <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+                    <th onclick="sortTable(3,'miTabla')">Stock</th>
+                    <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
+                </tr>
+            </thead>
             {% set i = 1 %}
             {% for insumo in datos.insumosDisponibles %}
             {% set usado = false %}

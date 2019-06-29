@@ -20,10 +20,10 @@ class PedidoController extends Controller{
         $datos["diaHoy"] = date("Y-m-d");
         $datos["sectores"] = $this->model->getSectores();
         $datos["prioridades"] = $this->model->getPrioridades();
-       /*  if (!empty($_GET)) {
-        $datos['idEvento']=$_GET['idEvento'];
-       } */      
-       $datos["estados"] = $this->model->getEstados();
+        if (!empty($_GET)) {
+            $datos['evento']=$this->model->getEventoById($_GET['idEvento']);
+        }
+        $datos["estados"] = $this->model->getEstados();
         $datos["userLogueado"] = $_SESSION['user'];
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
