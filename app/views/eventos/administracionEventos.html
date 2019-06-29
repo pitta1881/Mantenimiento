@@ -7,46 +7,55 @@
 <meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
 {% block main %}
 <div class="contenido3">
-        {% for value in datos.permisos %}
-        {% if value.idPermiso == "37" %}
-        <a href="#" onclick="mostrarFormulario()" id="btnCrearEvento"><img class="iconos" src="/public/res/add.svg"
-            title="Crear Evento"></a>
-        {% endif %}
-        {% else %}
-    
-        {% endfor %}
-
-
- 
-    <script>
-        function mostrarFormulario() {
-            var formularioEventos = document.getElementById('formularioEventos');
-            if (formularioEventos.style.display == "block") {
-                formularioEventos.style.display = "none";
-            } else {
-                formularioEventos.style.display = "block"
-            }
-        }
-    </script>
-    <form action="/eventos/administracionEventos/guardarEvento" method="post" id="formularioEventos"
-        style="display: none">
-        <fieldset class="basicosPedido">
-            <legend> Alta de Evento</legend>
-
-            <label for="nombreEvento">Nombre del Evento</label><span class="asterisco">*</span>
-            <input type="text" name="nombreEvento" autofocus>
-
-            <label for="descripcion">Descripcion</label><span class="asterisco">*</span>
-            <input type="textArea" name="descripcion" required placeholder="Ingrese la descripcion.."><br>
-
-            <label for="fechaInicio">Fecha Inicio</label><span class="asterisco">*</span>
-            <input type="date" name="fechaInicio" value="{{ datos.diaHoy }}" min="{{ datos.diaHoy }}" required><br>
-
-            <label for="fechaFin">Fecha Fin</label><span class="asterisco">*</span>
-            <input type="date" name="fechaFin" min="{{ datos.diaHoy }}" required><br>
-        </fieldset>
-        <input type="submit">
-    </form>
+    {% for value in datos.permisos %}
+    {% if value.idPermiso == "37" %}
+    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
+            src="/public/res/add.svg" title="Crear Sector">Crear Evento</a>
+    {% endif %}
+    {% endfor %}
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Alta de Evento</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/eventos/administracionEventos/guardarEvento" method="post" class="was-validated">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="nombreEvento">Nombre del Evento:</label><span class="asterisco">*</span>
+                                <input type="text" name="nombreEvento" class="form-control" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="fechaInicio">Fecha Inicio:</label><span class="asterisco">*</span>
+                                <input type="date" name="fechaInicio" class="form-control" value="{{ datos.diaHoy }}"
+                                    min="{{ datos.diaHoy }}" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="fechaFin">Fecha Fin:</label><span class="asterisco">*</span>
+                                <input type="date" name="fechaFin" class="form-control" min="{{ datos.diaHoy }}"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
+                            <textarea class="form-control" rows="4" id="descripcion" name="descripcion"
+                                required></textarea>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function () {
             $('#miTabla').DataTable();
@@ -71,30 +80,76 @@
             <td>{{ evento.fechaInicio }}</td>
             <td>{{ evento.fechaFin }}</td>
             <td>
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "39" %}
-                    <a href='/eventos/modificar/seleccionado?idEvento={{ evento.idEvento }}'>
-                        <img class="iconos" src="/public/res/update.svg" title="Modificar">
-                    </a>
-                    {% endif %}
-                    {% else %}
-                
-                    {% endfor %}
-
-               
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "39" %}
+                <a href='/eventos/administracionEventos/modificarEvento' role="button" data-toggle="modal"
+                    data-target="#myModalModif{{ evento.idEvento }}">
+                    <img class="iconos" src="/public/res/update.svg" title="Modificar Pedido">
+                </a>
+                <div class="modal fade" id="myModalModif{{ evento.idEvento }}">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modificar Evento</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/eventos/administracionEventos/modificarEvento" method="post"
+                                    class="was-validated">
+                                    <input type="text" name="idEvento" value="{{ evento.idEvento }}" hidden>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="nombreEvento">Nombre del Evento:</label><span
+                                                class="asterisco">*</span>
+                                            <input type="text" name="nombreEvento" class="form-control"
+                                                value="{{ evento.nombreEvento }}" required>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="fechaInicio">Fecha Inicio:</label><span
+                                                class="asterisco">*</span>
+                                            <input type="date" name="fechaInicio" class="form-control"
+                                                value="{{ evento.fechaInicioSinFormato }}" min="{{ datos.diaHoy }}"
+                                                required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="fechaFin">Fecha Fin:</label><span class="asterisco">*</span>
+                                            <input type="date" name="fechaFin" class="form-control"
+                                                value="{{ evento.fechaFinSinFormato }}" min="{{ datos.diaHoy }}"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-10">
+                                        <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
+                                        <textarea class="form-control" rows="4" id="descripcion" name="descripcion"
+                                            required>{{ evento.descripcion }}</textarea>
+                                        <div class="invalid-feedback">Complete este campo</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
                 <form action="/eventos/eliminar" method="post" style="display: inline-block"
                     id="formEliminarEvento{{ evento.idEvento }}">
                     <input type="text" name="idEvento" value="{{ evento.idEvento }}" hidden>
                 </form>
                 {% for value in datos.permisos %}
                 {% if value.idPermiso == "38" %}
-                <a onclick="alertify.confirm('Eliminar Evento','¿Esta seguro?',function(){document.getElementById('formEliminarEvento{{ evento.idEvento }}').submit()},function(){})"><img
-                    class="iconos" src="/public/res/del.svg" title="Eliminar Evento"></a>
+                <a
+                    onclick="alertify.confirm('Eliminar Evento','¿Esta seguro?',function(){document.getElementById('formEliminarEvento{{ evento.idEvento }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/del.svg" title="Eliminar Evento"></a>
                 {% endif %}
-                {% else %}
-            
                 {% endfor %}
-              
+
             </td>
         </tr>
         {% else %}

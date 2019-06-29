@@ -11,7 +11,7 @@ body {
     /* background-color: steelblue; */
     /*    background-color: rgb(50, 50, 50);*/
     background-color: #F2F2F2;
-    
+
 }
 
 main {
@@ -471,16 +471,16 @@ td.descripcion {
 }
 
 [type=search] {
-    background-color:#f1f1f1;
-    border: 1px black dashed ;
-    border-radius:10vw;
+    background-color: #f1f1f1;
+    border: 1px black dashed;
+    border-radius: 10vw;
     Outline: none;
 }
 
-select[name=miTabla_length] { 
-    background-color:#f1f1f1;
-    border: 01px black dashed ;
-    border-radius:10vw;
-    margin-top:1vw;
+select[name=miTabla_length] {
+    background-color: #f1f1f1;
+    border: 01px black dashed;
+    border-radius: 10vw;
+    margin-top: 1vw;
     Outline: none;
 }

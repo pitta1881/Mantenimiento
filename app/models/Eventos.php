@@ -20,9 +20,11 @@ class Eventos extends Model{
         foreach ($todosEventos as $indice => $datos) {
             foreach ($datos as $key => $value) {
                 if ($key == 'fechaInicio') {
+                    $todosEventos[$indice]['fechaInicioSinFormato'] = $todosEventos[$indice]['fechaInicio'];
                     $todosEventos[$indice]['fechaInicio'] = date("d/m/Y", strtotime($todosEventos[$indice]['fechaInicio']));
                 }
                 if ($key == 'fechaFin') {
+                    $todosEventos[$indice]['fechaFinSinFormato'] = $todosEventos[$indice]['fechaFin'];
                     $todosEventos[$indice]['fechaFin'] = date("d/m/Y", strtotime($todosEventos[$indice]['fechaFin']));
                 }
             }

@@ -11,14 +11,9 @@
     {% for value in datos.permisos %}
     {% if value.idPermiso == "13" %}
     <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-        src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
+            src="/public/res/add.svg" title="Crear Sector">Crear Nuevo</a>
     {% endif %}
-    {% else %}
-
     {% endfor %}
-
-
-    
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-lg">
@@ -147,13 +142,13 @@
 
                 {% for value in datos.permisos %}
                 {% if value.idPermiso == "16" %}
-              
+
                 <a href='/fichaPedido?id={{ pedido.id }}'>
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
                 </a>
                 {% endif %}
                 {% else %}
-            
+
                 {% endfor %}
 
                 <!--MODIFICAR PEDIDO-->
@@ -239,10 +234,10 @@
                 </div>
                 {% endif %}
                 {% else %}
-            
+
                 {% endfor %}
 
-               
+
                 <!--ELIMINAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO-->
                 {% if (pedido.estado == 'Iniciado') and  (pedido.tareasAsignadas == 0) %}
                 <form action="/pedido/cancelar" method="post" style="display: inline-block"
@@ -250,17 +245,17 @@
                     <input type="text" name="id" value="{{ pedido.id }}" hidden>
                 </form>
 
-                 
+
                 {% for value in datos.permisos %}
                 {% if value.idPermiso == "14" %}
                 <a
-                onclick="alertify.confirm('Cancelar Pedido','¿Esta seguro?',function(){document.getElementById('formEliminarPedido{{ datos.miPedido.id }}').submit()},function(){})"><img
-                    class="iconos" src="/public/res/del.svg" title="Cancelar Pedido"></a>
+                    onclick="alertify.confirm('Cancelar Pedido','¿Esta seguro?',function(){document.getElementById('formEliminarPedido{{ datos.miPedido.id }}').submit()},function(){})"><img
+                        class="iconos" src="/public/res/del.svg" title="Cancelar Pedido"></a>
                 {% endif %}
                 {% else %}
-            
+
                 {% endfor %}
-              
+
                 {% endif %}
                 {% endif %}
                 {% endif %}
