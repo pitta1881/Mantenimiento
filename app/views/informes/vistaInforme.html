@@ -9,23 +9,23 @@
 {% block main %}
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
-<form action="/informe/datos" method="POST"> 
-    <br>
-     <br>
+<form action="/informe/datos" method="POST">
+  <br>
+  <br>
 
-     <select name="filtro" class="form-control custom-select" required>
-                                    <option name="" value="" selected>Seleccione un informe</option>
+  <select name="filtro" class="form-control custom-select" required>
+    <option name="" value="" selected>Seleccione un informe</option>
 
-<option name="" value="Reparaciones_por_sector">Reparciones por sector</option>
-<option name="" value="Especializacion_por_tarea">Especializaciones requeridas</option>
-<option name="" value="Estados">Estados de los Pedidos</option>
-     </select>
-<label for="fechaInicio">Fecha Desde:</label>
-<input type="date" name="fechaInicio" value="fechaInicio" required>
-<label for="fechaFin">Fecha Hasta:</label>
-<input type="date" name="fechaFin" value="fechaFin" required>
+    <option name="" value="Reparaciones_por_sector">Reparciones por sector</option>
+    <option name="" value="Especializacion_por_tarea">Especializaciones requeridas</option>
+    <option name="" value="Estados">Estados de los Pedidos</option>
+  </select>
+  <label for="fechaInicio">Fecha Desde:</label>
+  <input type="date" name="fechaInicio" value="fechaInicio" required>
+  <label for="fechaFin">Fecha Hasta:</label>
+  <input type="date" name="fechaFin" value="fechaFin" required>
 
-<input type="submit" value="Generar listado" >
+  <input type="submit" value="Generar listado">
 </form>
 
 
@@ -38,10 +38,9 @@
 
 
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<a href="#" onclick="verPedidos();return false;" title="Ver Mas">Ver Pedidos</a>
+<a href="#" onclick="verPedidos();return false;" id="btnAbrirPedido" title="Ver Mas">Ver Pedidos</a>
 <script>
-
-      function verPedidos() {
+  function verPedidos() {
     $.ajax({
       data: '',
       url: '/informePedidos', //archivo que recibe la peticion
@@ -129,7 +128,6 @@
 
     $("#chartContainer").CanvasJSChart(options);
   }
-  
 </script>
 
 
@@ -141,6 +139,9 @@
 
 
 
-
+<script>
+  document.getElementById("btnAbrirPedido").click();
+  document.getElementById("btnAbrirPedido").style.display = "none";
+</script>
 
 {% endblock %}
