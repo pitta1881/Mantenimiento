@@ -17,10 +17,9 @@ class LoginController extends Controller{
         $statement= $this->model->buscarUsuario($user,$password); 
         if(empty($statement)){
             $datos['error'] = true;
-            return view ('index',compact('datos'));
+            return view ('login',compact('datos'));
         }else{
             session_start();
-            var_dump($_SESSION['rol']);
             $_SESSION['user']=$_POST['nombre'];
             $_SESSION['rol']=$statement['idRol'];
             redirect('home');         

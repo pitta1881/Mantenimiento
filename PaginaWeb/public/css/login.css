@@ -54,17 +54,12 @@ input[type="submit"]:active{
 }*/
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-header {
-    margin: 0px;
-    background: #28d;
-    padding: 0px;
-    padding-bottom: 0px;
-    padding-top: 0px;
-}
+
 body main {
     background: #456;
     font-family: 'Open Sans', sans-serif;
 }
+
 .divI {
     position: absolute;
     background-color: white;
@@ -72,6 +67,7 @@ body main {
     height: 1000px;
     width: 1000px;
 }
+
 .imagen {
     position: absolute;
     margin: 0 0 0 0;
@@ -80,6 +76,7 @@ body main {
     height: 500px;
     width: 500px;
 }
+
 .login {
     top: 0;
     position: fixed;
@@ -88,6 +85,7 @@ body main {
     font-size: 16px;
     left: 860px;
 }
+
 .login form {
     height: 1000px;
 }
@@ -105,6 +103,7 @@ body main {
 laber {
     text-decoration-color: black;
 }
+
 .login-triangle {
     display: none;
     width: 0;
@@ -113,6 +112,7 @@ laber {
     border: 12px solid transparent;
     border-bottom-color: #28d;
 }
+
 .login-header {
     height: 50px;
     background: #28d;
@@ -124,6 +124,7 @@ laber {
     text-transform: uppercase;
     color: #fff;
 }
+
 .login-container {
     padding: 30px 12px 0px 12px;
     background: #ebebeb;
@@ -134,6 +135,7 @@ laber {
 .login p {
     padding: 12px;
 }
+
 .login input {
     box-sizing: border-box;
     display: block;
@@ -145,6 +147,7 @@ laber {
     font-family: inherit;
     font-size: 0.95em;
 }
+
 .login input[type="usuario"],
 .login input[type="password"] {
     background: #fff;
@@ -157,10 +160,12 @@ laber {
 .name {
     color: #000000;
 }
+
 .login input[type="usuario"]:focus,
 .login input[type="password"]:focus {
     border-color: #888;
 }
+
 .login input[type="submit"] {
     right: 8px;
     height: 5%;
@@ -171,6 +176,7 @@ laber {
     color: #fff;
     cursor: pointer;
 }
+
 .login input[type="submit"]:hover {
     background: #17c;
 }

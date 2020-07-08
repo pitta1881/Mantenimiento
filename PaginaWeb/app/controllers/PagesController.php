@@ -41,7 +41,7 @@ class PagesController extends Controller{
 
     public function login()
     {
-        return view('index');
+        return view('login');
     }
 
     public function cerrarSesion(){

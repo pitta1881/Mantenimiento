@@ -9,7 +9,11 @@ class login extends Model{
 
     public function buscarUsuario($user, $password){
         $datos = $this->db->validarLogin($this->table,$user, $password);
-        return json_decode(json_encode($datos[0]),true);
+        if(empty($datos)){
+            return $datos;
+        } else {
+            return json_decode(json_encode($datos[0]),true);
+        }
     }
 
 }
