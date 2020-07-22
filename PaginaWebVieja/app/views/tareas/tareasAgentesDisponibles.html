@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Agentes Disponibles{% endblock %}
+
+{% block header %}
+{% set datos = datos|merge({
+    "titulo": "Agentes Disponibles"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+    <form action="/tarea/asignarAgentes/seleccionados" method="post">
+        <table id="miTabla">
+            <th onclick="sortTable(0,'miTabla')">DNI</th>
+            <th onclick="sortTable(1,'miTabla')">Nombre</th>
+            <th onclick="sortTable(2,'miTabla')">Apellido</th>
+            <th onclick="sortTable(3,'miTabla')">Especializacion</th>
+            <th onclick="sortTable(4,'miTabla')">Disponibilidad</th>
+            <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
+            {% set i = 1 %}
+            {% for agente in datos.agentesDisponibles %}
+            {% set marca = '' %}
+            {% if agente.disponible == 0 %}
+            {% set marca = 'style=background-color:#f4e242' %}
+            {% endif %}
+            {% set asignado = false %}
+            {% for agenteAsignado in datos.miTarea.agentes %}
+            {% if (agente.idAgente in agenteAsignado.idAgente) %}
+            {% set asignado = true %}
+            {% endif %}
+            {% endfor %}
+            {% if (asignado == false) %}
+            {% if not agente.ocupadoUrgente %}
+            <tr>
+                <td {{ marca }}>{{ agente.idAgente }}</td>
+                <td {{ marca }}>{{ agente.nombre }}</td>
+                <td {{ marca }}>{{ agente.apellido }}</td>
+                <td {{ marca }}>{{ agente.especializacionNombre }}</td>
+                {% if agente.disponible == 1 %}
+                <td {{ marca }}>Disponible</td>
+                {% else %}
+                <td {{ marca }}>Ocupado</td>
+                {% endif %}
+                <td {{ marca }}><input type="checkbox" class="clsCasilla" name="{{ i }}_{{ datos.miTarea.idPedido }}"
+                        value="{{ datos.miTarea.idTarea }}_{{ agente.idAgente }}"
+                        onclick="deRequireCb('clsCasilla','{{ marca }}','{{ i }}_{{ datos.miTarea.idPedido }}')"
+                        required>
+                </td>
+                {% set i = i + 1 %}
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </table>
+        {% if datos.agentesDisponibles|length == 0 %}
+        <h2 class='error'>No hay Agentes o están todos Ocupados</h2>
+        {% else %}
+        <input type="submit" value="Asignar Agentes">
+        {% endif %}
+    </form>
+    <script>
+        function deRequireCb(elClass, reasignar, idName) {
+            el = document.getElementsByClassName(elClass);
+
+            var atLeastOneChecked = false; //at least one cb is checked
+            for (i = 0; i < el.length; i++) {
+                if (el[i].checked === true) {
+                    atLeastOneChecked = true;
+                }
+            }
+            if (atLeastOneChecked === true) {
+                for (i = 0; i < el.length; i++) {
+                    el[i].required = false;
+                }
+            } else {
+                for (i = 0; i < el.length; i++) {
+                    el[i].required = true;
+                }
+            }
+            if (reasignar != '') {
+                var inputCheckbox = document.getElementsByName(idName)[0];
+                if (inputCheckbox.checked) {
+                    alertify.confirm('Alerta',
+                        'El Agente esta asignado a otra tarea. ¿Esta seguro que quiere reasignarlo?',
+                        function () {},
+                        function () {
+                            inputCheckbox.checked = false
+                        }
+                    )
+                }
+            }
+        }
+    </script>
+</div>
+{% endblock %}

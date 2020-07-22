@@ -1,81 +1,10 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block header %}
-{% set datos = datos|merge({
-    "titulo": "Gestión de Mantenimiento"
-}) %}
-{% include 'partials/nav.html' with {datos:datos} only %} {% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-
-
-<ul class="contenido">
-    <li>
-        <h4>Pedidos Activos:<br>{{ datos.cantidadPedidos }} </h4>
-    </li>
-    <li>
-        <h4>Tareas sin Asignar:<br>{{ datos.cantTareasSinAsignar }}</h4>
-    </li>
-    <li>
-        <h4>Agentes Disponibles:<br> {{ datos.agentesDisponibles }}</h4>
-    </li>
-    <li>
-        <h4>Ordenes de Trabajo Activas:<br>{{ datos.otActivas }} </h4>
-    </li>
-</ul>
-
-<div class="contenido1">
-    <h4>Tareas sin Asignar</h4>
-    <table id="miTabla">
-        <th onclick="sortTable(0,'miTabla')">Nº Pedido</th>
-        <th onclick="sortTable(1,'miTabla')">Nº Tarea</th>
-        <th onclick="sortTable(2,'miTabla')">Descripcion</th>
-        <th onclick="sortTable(3,'miTabla')">Especializacion</th>
-        <th onclick="sortTable(4,'miTabla')">Prioridad</th>
-        {% set i = 1 %} {% for tarea in datos.tareasSinAsignar %}
-        <tr>
-            <td> <a href="/fichaPedido?id={{ tarea.idPedido }}" title="Ver Mas">Pedido {{ tarea.idPedido }}</a></td>
-            <td> <a href="/fichaTarea?idPedido={{ tarea.idPedido }}&idTarea={{ tarea.idTarea }}" title="Ver Mas"> Tarea
-                    {{ tarea.idTarea }}</a></td>
-            <td>{{ tarea.descripcion }}</td>
-            <td>{{ tarea.especializacionNombre }}</td>
-            <td>{{ tarea.prioridad }}</td>
-        </tr>
-        {% else %}
-        <h2 class='error'>No hay Tareas o ya están todas asignadas</h2> {% endfor %}
-    </table>
-</div>
-
-<div class="contenido2">
-    <h4>Proximos Eventos</h4>
-    <table id="miTabla2">
-        <th onclick="sortTable(0,'miTabla2')">Nº Evento</th>
-        <th onclick="sortTable(1,'miTabla2')">Nombre</th>
-        <th onclick="sortTable(2,'miTabla2')">Descripcion</th>
-        <th onclick="sortTable(3,'miTabla2')">Fecha Inicio</th>
-        <th onclick="sortTable(4,'miTabla2')">Fecha Fin</th>
-        <th>Accion</th>
-        {% for evento in datos.todosEventos %} {% if evento.fechaInicio == "now"|date("d/m/Y") %}
-        <tr>
-            <td style="background-color:lightgreen">{{ evento.idEvento }}</td>
-            <td style="background-color:lightgreen">{{ evento.nombreEvento }}</td>
-            <td style="background-color:lightgreen">{{ evento.descripcion }}</td>
-            <td style="background-color:lightgreen">{{ evento.fechaInicio }}</td>
-            <td style="background-color:lightgreen">{{ evento.fechaFin }}</td>
-            <td style="background-color:lightgreen">
-                <a href="/pedido/verTodos?idEvento={{ evento.idEvento }}">
-                    <input type="button" value="Crear Pedido">
-                </a>
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td>{{ evento.idEvento }}</td>
-            <td>{{ evento.nombreEvento }}</td>
-            <td>{{ evento.descripcion }}</td>
-            <td>{{ evento.fechaInicio }}</td>
-            <td>{{ evento.fechaFin }}</td>
-            <td></td>
-        </tr>
-        {% endif %} {% else %}
-        <h2 class='error'>No hay eventos</h2> {% endfor %}
-    </table>
-</div>
+{% extends "base0.html" %}
+{% block title %}Home{% endblock %}
+{% block nav %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %}
+{% block main %}
+{% block header %}
+{% include 'partials/header.html' with {datos:datos} only %}
+{% endblock %}
 {% endblock %}

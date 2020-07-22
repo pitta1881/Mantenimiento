@@ -774,13 +774,21 @@ public function updateEvento($table, $parameters, $idEvento){
             "SELECT idPermiso FROM rolesxpermisos WHERE idRol=$idRol"
         );
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
+        return $statement->fetchAll(PDO::FETCH_COLUMN,0);
     }
 
 
     public function comparaPersona($tablePersona, $dni){  
         $statement = $this->pdo->prepare(
             "SELECT * FROM $tablePersona WHERE dni=$dni"
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    public function comparaRol($tableRol, $nombreRol){  
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM $tableRol WHERE nombreRol='$nombreRol'"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);

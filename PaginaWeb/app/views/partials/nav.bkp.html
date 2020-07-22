@@ -1,0 +1,131 @@
+<nav class="main-nav">
+    <ol>
+        <li>
+            <a little="imagenSommer" onclick="muestra_oculta('mainmenu')"> <img class="imagen"
+                    src="/public/res/sommer4.jpg"></a>
+            <nav class="mainmenu mostrar">
+                <ul>
+                    <li class="m">
+                        <p little="imagenSommer" onclick="muestra_oculta('mainmenu')"> <img class="imagenMenu"
+                                src="/public/res/sommer5.jpg">
+                            <h4 class="tituloMenu">Sistema de Mantenimiento</h4>
+                        </p>
+
+
+                    </li>
+                    <li><a href="/home"> <img class="iconosTitulo" src="/public/res/home.svg" title="Inicio">Home</a>
+                    </li>
+                    {% if "16" in datos.permisos %}
+                    <li><a href="/pedido/verTodos"><img class="iconosTitulo" src="/public/res/pedidos.svg"
+                                title="Pedidos">Pedidos</a></li>
+                    {% endif %}
+
+                    {% if "24" in datos.permisos %}
+                    <li><a href="/OT/verTodos"><img class="iconosTitulo" src="/public/res/ot.svg"
+                                title="Ordenes de Trabajo">Ordenes de Trabajo</a> </li>
+                    {% endif %}
+
+
+                    {% if "40" in datos.permisos %}
+
+                    <li><a href="/eventos/administracionEventos"><img class="iconosTitulo" src="/public/res/eventos.svg"
+                                title="Eventos">Eventos</a>
+
+                    </li>
+                    {% endif %}
+
+                    {% if "4" in datos.permisos %}
+                    <li><a><img class="iconosTitulo" src="/public/res/isers.svg" title="Usuarios">Usuarios</a>
+                        <ul class="submenu">
+
+                            {% if "4" in datos.permisos %}
+                            <li><a href="/usuarios/AdministracionUsuario">Usuarios</a> </li>
+                            {% endif %}
+
+                            {% if "48" in datos.permisos %}
+                            <li><a href="/persona/AdministracionPersonas">Personas</a>
+                            </li>
+                            {% endif %}
+
+                            {% if "12" in datos.permisos %}
+                            <li><a href="/roles/AdministracionRol">Roles</a>
+
+                            </li>
+                            {% endif %}
+
+                            {% if "8" in datos.permisos %}
+
+                            <li><a href="/permisos/AdministracionPermisos">Permisos</a>
+
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% if "32" in datos.permisos %}
+
+                    <li><a href="/agente/administracionAgentes"><img class="iconosTitulo"
+                                src="/public/res/addagente.svg" title="Agentes">Agentes</a>
+
+                    </li>
+                    {% endif %}
+
+                    {% if "36" in datos.permisos %}
+
+                    <li><a href="/especializacion/administracionEspecializacion"><img class="iconosTitulo"
+                                src="/public/res/esp.svg" title="Especializaciones">Especializaciones</a>
+
+                    </li>
+                    {% endif %}
+
+                    {% if "28" in datos.permisos %}
+
+                    <li><a href="/sectores/administracionSectores"><img class="iconosTitulo"
+                                src="/public/res/sector.svg" title="Sectores">Sectores</a>
+
+                    </li>
+                    {% endif %}
+
+                    {% if "16" in datos.permisos %}
+
+                    <li><a href="/informe/administracion"><img class="iconosTitulo" src="/public/res/Informes.svg"
+                                title="Informes">Informes</a>
+
+                    </li>
+                    {% endif %}
+                    {% if "44" in datos.permisos %}
+
+                    <li><a href="/insumos/administracionInsumos"><img class="iconosTitulo" src="/public/res/Insumos.svg"
+                                title="Insumos">Insumos</a>
+
+                    </li>
+                    {% endif %}
+
+                    {% if "16" in datos.permisos %}
+                    <li><a href="/ordendecompra/administracionOC"><img class="iconosTitulo" src="/public/res/oc.svg"
+                                title="Ordenes de Compra">Ordenes de Compra</a></li>
+                    {% endif %}
+                    <li><a href="/public/res/ManualDeUsuario_Mantenimiento_Sommer.pdf" target="_blank"><img
+                                class="iconos" src="/public/res/informacion.svg">Ayuda</a>
+                    </li>
+                    <li><a href="/cerrarSesion"><img class="iconos" src="/public/res/logout.svg">Salir</a>
+                    </li>
+                </ul>
+            </nav>
+        </li>
+
+        <li>
+            <h4 class="titulo">Sistema de Mantenimiento</h4>
+        </li>
+        <li>
+            <h3 class="titulo1">{{ datos.titulo }}</h3>
+        </li>
+
+
+        <li>
+            <p class="user">{{ datos.userLogueado }} |<a href="/cerrarSesion"><img class="iconos"
+                        src="/public/res/logout.svg"></a></p>
+        </li>
+
+    </ol>
+</nav>

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Asignar Insumos{% endblock %}
+
+{% block header %}
+{% set datos = datos|merge({
+    "titulo": "Asignacion de Insumos"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+    <form action="/oc/asignarInsumos/seleccionados" method="post" id="formInsumos">
+        <script>
+            $(document).ready(function () {
+                $('#miTabla').DataTable();
+            });
+        </script>
+        <table id="miTabla">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                    <th onclick="sortTable(2,'miTabla')">Descripcion</th>
+                    <th onclick="sortTable(3,'miTabla')">Stock</th>
+                    <th onclick="sortTable(4,'miTabla')">Stock Minimo</th>
+                    <th onclick="sortTable(5,'miTabla')">Seleccionar</th>
+                </tr>
+            </thead>
+            {% for insumo in datos.insumos %}
+            {% set estilo = "" %}
+            {% if insumo.stock < insumo.stockMinimo %}
+            {% set estilo = "style=background-color:#ffc6c6" %}
+            {% endif %}
+            <tr>
+                <td {{ estilo }}>{{ insumo.nombreInsumo }}</td>
+                <td {{ estilo }}>{{ insumo.descripcion }}</td>
+                <td {{ estilo }}>{{ insumo.stock }}</td>
+                <td {{ estilo }}>{{ insumo.stockMinimo }}</td>
+                <td {{ estilo }}><input type="checkbox" class="clsCasilla" name="idInsumo[]"
+                        value="{{ insumo.idInsumo }}"
+                        onclick="deRequireCb('clsCasilla'); var inputNumer = document.getElementById('{{ insumo.idInsumo }}');
+                        if (inputNumer.style.display == 'inline-block') {inputNumer.style.display = 'none'; inputNumer.disabled = true} else {inputNumer.style.display = 'inline-block';inputNumer.disabled = false}"
+                        required>
+                    <input type="number" name="cantidad[]" value="0" min="0" id="{{ insumo.idInsumo }}" required
+                        style="background-color: khaki; display: none" disabled>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if datos.insumos|length == 0 %}
+        <h2 class='error'>No hay Insumos o están todos Ocupados</h2>
+        {% else %}
+        <input type="number" name="costoEstimado" hidden id="costoEstimado">
+        <input type="button" value="Enviar" onclick="alertify.prompt('Costo Estimado','Ingrese el costo estimado para la compra: $','',
+        function(evt,value){
+            document.getElementById('costoEstimado').value = value;
+            var selectTodos = document.getElementsByName('miTabla_length')[0];
+            var ultimaOption = selectTodos.lastElementChild;
+            ultimaOption.value = 10000;
+            selectTodos.selectedIndex = 4;
+            selectTodos.dispatchEvent(new Event('change'));
+            document.getElementById('formInsumos').submit();
+        },function(){}).set({'type':'number','value':0,'min':'0'});">
+        {% endif %}
+    </form>
+    <script>
+        function deRequireCb(elClass) {
+            el = document.getElementsByClassName(elClass);
+
+            var atLeastOneChecked = false; //at least one cb is checked
+            for (i = 0; i < el.length; i++) {
+                if (el[i].checked === true) {
+                    atLeastOneChecked = true;
+                }
+            }
+
+            if (atLeastOneChecked === true) {
+                for (i = 0; i < el.length; i++) {
+                    el[i].required = false;
+                }
+            } else {
+                for (i = 0; i < el.length; i++) {
+                    el[i].required = true;
+                }
+            }
+        }
+    </script>
+</div>
+{% endblock %}

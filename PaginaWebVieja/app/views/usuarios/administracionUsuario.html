@@ -1,0 +1,248 @@
+{% extends "base.html" %} {% block title %}Gestion de Usuarios{% endblock %} {% block header %}
+{% set datos = datos|merge({
+    "titulo": "Gestión de Usuarios"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+
+<div class="contenido3">
+    {% if datos.errorInsert %}
+    <script>
+        alertify.alert('Error', 'El Usuario ya existe..')
+    </script>
+    {% endif %}
+
+    {% for value in datos.permisos %}
+    {% if value.idPermiso == "1" %}
+    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#modalFormAlta"><img class="iconos"
+            src="/public/res/add.svg" title="Crear Usuario">Crear Nuevo</a>
+    {% endif %}
+    {% endfor %}
+    <!-- The Modal -->
+    <div class="modal fade" id="modalFormAlta">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Alta de Usuario</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/usuarios/validarUsuario" method="post" id="formAlta">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nombre" class="control-label">Nombre(nick):</label><span
+                                    class="asterisco">*</span>
+                                <input type="text" name="nombre" class="form-control" autofocus required>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="dni" class="control-label">Persona Asociada:</label><span
+                                    class="asterisco">*</span>
+                                <select name="dni" class="form-control custom-select" required>
+                                    <option value="" selected>Seleccione una Persona</option>
+                                    {% for persona in datos.todosPersonas %}
+                                    {% if persona.dni != '0' %}
+                                    <option value={{ persona.dni }}>{{ persona.nombre }} {{ persona.apellido }}
+                                    </option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-11">
+                            <label for="idRol" class="control-label">Seleccionar Rol:</label><span
+                                class="asterisco">*</span>
+                            <select name="idRol" class="form-control custom-select" required>
+                                <option value="" selected>Seleccione un Rol</option>
+                                {% for rol in datos.roles %}
+                                <option value={{ rol.idRol }}>{{ rol.nombreRol }}</option>
+                                {% endfor %}}
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="password" class="control-label">Contraseña:</label><span
+                                    class="asterisco">*</span>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="password" class="control-label">Confirme Contraseña:</label><span
+                                    class="asterisco">*</span>
+                                <input type="password" name="confirmPassword" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#formAlta').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    nombre: {
+                        validators: {
+                            stringLength: {
+                                min: 5,
+                                max: 11,
+                                message: 'Minimo 5 caracteres y Maximo 11'
+                            },
+                            notEmpty: {
+                                message: 'Ingrese un Nick'
+                            }
+                        }
+                    },
+                    dni: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Seleccione una Persona'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Ingrese una Contraseña'
+                            }
+                        }
+                    },
+                    confirmPassword: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Repita la Contraseña'
+                            },
+                            identical: {
+                                field: 'password',
+                                message: 'Las Contraseñas no coinciden'
+                            }
+                        }
+                    },
+                    idRol: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Seleccione un Rol'
+                            }
+                        }
+                    },
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
+    <table id="miTabla">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nombre Usuario</th>
+                <th onclick="sortTable(1,'miTabla')">DNI </th>
+                <th onclick="sortTable(3,'miTabla')">Nombre y Apellido</th>
+                <th onclick="sortTable(2,'miTabla')">Rol</th>
+                <th onclick="sortTable(4,'miTabla')">ACCION</th>
+            </tr>
+        </thead>
+        {% for usuario in datos.todosUsuarios %}
+        <tr>
+            <td>{{ usuario.nombre }}</td>
+            <td><a href="#" onclick="fichaPersona('{{ usuario.idPersona }}');return false;">{{ usuario.idPersona }}</a>
+            </td>
+            <td>{{ usuario.nombreApe }}</td>
+            <td>{{ usuario.nombreRol }}</td>
+            <td>
+                {% for value in datos.permisos %}
+                {% if value.idPermiso == "3" %}
+                <a href="#" id="btnCrearUsuario" data-toggle="modal"
+                    data-target="#modalFormModificar{{ usuario.idPersona }}" title="Modificar Usuario"><img
+                        class="iconos" src="/public/res/update.svg"></a>
+                {% endif %}
+                {% else %}
+
+                {% endfor %}
+
+
+                <!-- The Modal -->
+                <div class="modal fade" id="modalFormModificar{{ usuario.idPersona }}">
+                    <div class="modal-dialog modal-xs">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Modificar Contraseña</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/usuarios/modificarUsuario" method="post"
+                                    id="formModificar{{ usuario.idPersona }}">
+                                    <input type="text" name="nombre" value="{{ usuario.nombre }}" hidden>
+                                    <div class="form-group">
+                                        <label for="password" class="control-label">Contraseña:</label><span
+                                            class="asterisco">*</span>
+                                        <input type="password" name="password" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="control-label">Confirme
+                                            Contraseña:</label><span class="asterisco">*</span>
+                                        <input type="password" name="confirmPassword" class="form-control" required>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Salir</button>
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <script>
+            $(document).ready(function () {
+                $('#formModificar{{ usuario.idPersona }}').bootstrapValidator({
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        password: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Ingrese una Contraseña'
+                                }
+                            }
+                        },
+                        confirmPassword: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Repita la Contraseña'
+                                },
+                                identical: {
+                                    field: 'password',
+                                    message: 'Las Contraseñas no coinciden'
+                                }
+                            }
+                        },
+                    }
+                });
+            });
+        </script>
+        {% else %}
+        <h2 class='error'>No hay Usuarios para mostrar</h2> {% endfor %}
+    </table>
+
+</div>
+{% endblock %}

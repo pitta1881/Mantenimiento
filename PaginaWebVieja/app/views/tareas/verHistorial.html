@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Historial de Estados{% endblock %}
+
+{% block header %}
+{% set datos = datos|merge({
+    "titulo": "Historial de Estados"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+    <table id=" miTabla">
+        <th onclick="sortTable(0,'miTabla')">Fecha</th>
+        <th style="cursor: default">Estado</th>
+        <th style="cursor: default">Descripcion</th>
+        {% for historia in datos.historial %}
+        <tr>
+            <td>{{ historia.fecha }}</td>
+            <td>{{ historia.estado }}</td>
+            <td>{{ historia.descripcion }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
