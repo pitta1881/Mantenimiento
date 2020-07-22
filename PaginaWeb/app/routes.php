@@ -41,7 +41,7 @@
     $router->get('usuarios/eliminarUsuario','UsuariosController@vistaeliminarUsuario');
 
 //rutas rol
-    $router->get('roles/AdministracionRol','RolesControler@index');
+    $router->get('roles/AdministracionRol','RolesControler@vistaAdministracionRoles');
     $router->get('roles/fichaRol','RolesControler@ficha');
     $router->post('roles/guardar', 'RolesControler@guardar');
     $router->post('roles/buscar', 'RolesControler@buscarPor');

@@ -9,7 +9,7 @@ INSERT INTO `roles`
 VALUES (1, 'Operador');
 USE Mantenimiento;
 CREATE TABLE permisos (
-    idPermiso INTEGER PRIMARY KEY AUTO_INCREMENT,
+    idPermiso INTEGER PRIMARY KEY,
     nombrePermiso VARCHAR(20) NOT NULL
 );
 USE Mantenimiento;

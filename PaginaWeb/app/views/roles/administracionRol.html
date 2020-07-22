@@ -1,17 +1,27 @@
-{% extends "base.html" %} {% block title %}Gestion de Roles{% endblock %} {% block header %}
-{% set datos = datos|merge({
-    "titulo": "Gestión de Roles"
-}) %}
+{% extends "base0.html" %}
+{% block title %} Gestion de Usuarios {% endblock %}
+{% block nav %}
 {% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
-<div class="contenido3">
-    {% for value in datos.permisos %}
-    {% if value.idPermiso == "9" %}
-    <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
-            src="/public/res/add.svg" title="Crear Especializacion">Crear Nuevo</a>
+{% endblock %}
+{% block main %}
+{% if datos.errorInsert %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Rol</span>",
+        "El Rol ya existe..");
+</script>
+{% endif %}
+<div>
+    {% block header %}
+    {% include 'partials/header.html' with {datos:datos} only %}
+    {% endblock %}
+    <h2 class="titulo-tabla">Roles Registrados </h2>
+    <!-- Button to Open the Modal -->
+    {% if "9" in datos.permisos %}
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevoModal"><i
+            class="fa fa-plus"></i> Crear Nuevo</button>
     <!-- The Modal -->
-    <div class="modal fade" id="myModal">
+    <div class="modal fade" id="nuevoModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
@@ -37,53 +47,47 @@
         </div>
     </div>
     {% endif %}
-    {% endfor %}
-    <script>
-        $(document).ready(function () {
-            $('#miTabla').DataTable();
-        });
-    </script>
-    <table id="miTabla">
-        <thead>
+    <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover text-nowrap">
+        <thead class="headtable">
             <tr>
-                <th onclick="sortTable(0,'miTabla')">Nº Rol</th>
-                <th onclick="sortTable(1,'miTabla')">Nombre</th>
+                <th>Nº Rol</th>
+                <th>Nombre</th>
                 <th>Accion</th>
             </tr>
         </thead>
+        <tbody>
+            {% for rol in datos.todosRoles %}
+            <tr>
+                <td>{{ rol.idRol }}</td>
+                <td>{{ rol.nombreRol }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic example" style="float: none;">
+                        {% if "12" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="fichaRoles('{{ rol.idRol }}');return false;" title="Ver Mas"><i
+                                class="fa fa-eye fa-2x fa-fw"></i>
+                        </button>
+                        {% endif %}
 
-        {% for rol in datos.todosRoles %}
-        <tr>
-            <td>{{ rol.idRol }}</td>
-            <td>{{ rol.nombreRol }}</td>
-            <td>
-                {% for value in datos.permisos %}
-                {% if value.idPermiso == "12" %}
-
-                <a href="/roles/fichaRol?id={{ rol.idRol }}">
-                    <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
-                </a>
-                {% endif %}
-                {% else %}
-
-                {% endfor %}
-
-                {% for value in datos.permisos %}
-                {% if value.idPermiso == "11" %}
-                <a href="/roles/modificar/seleccionado?id={{  rol.idRol  }}">
-                    <img class="iconos" src="/public/res/update.svg" title="Modificar">
-                </a>
-                {% endif %}
-                {% else %}
-
-                {% endfor %}
-
-
-            </td>
-        </tr>
-        {% else %}
-        <h2 class="error">No hay Roles</h2> {% endfor %}
+                        {% if "11" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="fichaRolesModif('{{ rol.idRol }}');return false;" title="Modificar"><i
+                                class="fa fa-pencil fa-2x fa-fw"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <h2 class="error">No hay Roles</h2>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
-
+<script>
+    var columnas = '0,1';
+    var columNoOrdenar = 2;
+    var titulo = 'Roles Registrados';
+</script>
+<script src="/public/js/ordypagtablas.js"></script>
 {% endblock %}

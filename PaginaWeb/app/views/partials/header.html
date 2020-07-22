@@ -1,0 +1,29 @@
+    <nav class="navbar navbar-expand navbar-dark mx-background-top-linear" style="
+    margin: -3rem -3rem 0; padding: .2rem;">
+        <div class="container headerurl col-lg-5">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <div class="divheaderurl">
+                    <span> {{ datos.urlheader}} </span>
+                </div>
+            </div>
+        </div>
+        <div class="container headerfechahora col-lg-2">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <div id="date" style="font-size: 13px; position: relative; margin:auto">
+                    <span id="ctl00_CtrlTimeNow_scriptFechaHora">
+                    </span>
+                    <span id="divReloj"><b class="texto11Azul"></b></span>
+                </div>
+            </div>
+        </div>
+        <div class="container headerurl col-lg-5">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <div class="divheaderprofile">
+                    <span style="color: darkgrey;"> {{ datos.userLogueado }} |</span>
+                    <a href="/cerrarSesion"><span class="fa fa-sign-out mr-3" aria-hidden="true"
+                            style="margin: 0 !important;"></span>Salir</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="/public/js/horafecha.js"></script>

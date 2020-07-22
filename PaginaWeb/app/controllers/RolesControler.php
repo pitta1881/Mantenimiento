@@ -14,12 +14,15 @@ class RolesControler extends Controller{
     }
 
     /*Show all pedidos*/
-    public function index(){
+    public function vistaAdministracionRoles($boolError = false){
         $todosRoles = $this->model->get(); 
         $datos["todosRoles"] = $todosRoles;
         $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
+        $datos['permisos'] = $this->model->getPermisos($_SESSION['rol']);
+        if ($boolError) {
+            $datos['errorInsert'] = true;
+        }
+        $datos['urlheader']="> HOME > ADMINISTRACIÓN > ROLES";
         return view('/roles/administracionRol', compact('datos'));
     }
 
@@ -38,13 +41,15 @@ class RolesControler extends Controller{
 
     public function guardar(){
         $rol = [
-            'nombreRol' => $_POST['nombreRol'],
+            'nombreRol' => $_POST['nombreRol']
         ];
-      $this->model->insert($rol);   
-      $datos["userLogueado"] = $_SESSION['user'];
-      $permisos=$this->model->getPermisos($_SESSION['rol']);
-      $datos['permisos']= $permisos;
-      return $this->index();
+        $statement = $this->model->buscarRol($rol['nombreRol']);
+        if (empty($statement)) {   
+            $this->model->insert($rol);    
+            return $this->vistaAdministracionRoles();
+        }else{
+            return $this->vistaAdministracionRoles(true);
+        }
     }
 
     public function modificarRolSeleccionado(){
@@ -76,7 +81,7 @@ class RolesControler extends Controller{
             ];
             $this->model->agregarPermisosAsoc($idRol,$rol);
         }
-        return $this->index();
+        return $this->vistaAdministracionRoles();
     }
 
 

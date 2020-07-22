@@ -33,7 +33,7 @@ class PagesController extends Controller{
         //tabla tareas sin asignar en home
         $tareasSinAsignar = $this->model->getTareasSinAsignar();
         $datos['tareasSinAsignar'] = $tareasSinAsignar;
-        
+        $datos['urlheader']="> HOME";
         
         return view ('index.home',compact('datos'));
         }

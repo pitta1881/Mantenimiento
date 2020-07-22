@@ -7,10 +7,6 @@ use App\Core\Model;
 class Roles extends Model{
     protected $table = 'roles';
     protected $tableRP = 'rolesxpermisos';
-    
-
-
-
 
 
     public function get(){
@@ -48,4 +44,7 @@ class Roles extends Model{
         $this->db->insert($this->tableRP,$datos);
     }
 
+    public function buscarRol($nombreRol){
+        return $this->db->comparaRol($this->table,$nombreRol);
+     }
 }

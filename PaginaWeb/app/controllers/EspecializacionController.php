@@ -23,6 +23,7 @@ class EspecializacionController extends Controller
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
+        $datos['urlheader']="> HOME > ESPECIALIZACION";
         return view('/especializacion/especializacion.administracion', compact('datos'));
     }
        

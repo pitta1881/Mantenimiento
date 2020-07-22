@@ -20,8 +20,8 @@ class agentesController extends Controller
         $datos['personas'] = $this->model->getPersonasNoAgentes();
         $datos['especializaciones'] = $this->model->getEspecializaciones();
         $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
+        $datos['permisos'] = $this->model->getPermisos($_SESSION['rol']);
+        $datos['urlheader']="> HOME > AGENTES";
         return view('/agentes/agentes.administracion', compact('datos'));
     }
        

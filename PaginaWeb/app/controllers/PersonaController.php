@@ -18,11 +18,11 @@ class PersonaController extends Controller{
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
         $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
+        $datos['permisos'] = $this->model->getPermisos($_SESSION['rol']);
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
+        $datos['urlheader']="> HOME > ADMINISTRACIÓN > PERSONAS";
         return view('/personas/personas.administracion', compact('datos'));
     }
 

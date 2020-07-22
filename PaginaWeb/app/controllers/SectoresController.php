@@ -18,11 +18,11 @@ class SectoresController extends Controller{
         $datos['todosSectores'] = $todosSectores;
         $datos['tipoSectores'] = $this->model->getTipoSector();
         $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
+        $datos['permisos'] = $this->model->getPermisos($_SESSION['rol']);
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
+        $datos['urlheader']="> HOME > SECTORES";
         return view('/sectores/sectores.administracion', compact('datos'));
     }
     

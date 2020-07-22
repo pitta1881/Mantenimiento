@@ -1,11 +1,10 @@
-{% extends "base.html" %} {% block title %}Gestion de informes{% endblock %}
+{% extends "base0.html" %} {% block title %}Gestion de informes{% endblock %}
 {% block header %}
 {% set datos = datos|merge({
     "titulo": "Gestión de informes"
 }) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %} {% block head %} {{ parent() }}
-<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %}
+{% endblock %} 
 {% block main %}
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 

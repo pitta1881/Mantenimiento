@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Historial de Insumo{% endblock %}
+
+{% block header %}
+{% set datos = datos|merge({
+    "titulo": "Historial de Movimientos"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
+    <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
+    {% if datos.historial is empty %}
+    <h2 class="error">ESTE INSUMO NO TIENE MOVIMIENTOS</h2>
+    {% else %}
+    <h1>HISTORIAL DE MOVIMIENTOS DE {{ datos.historial.0.nombreDescripcion }}</h1>
+    <table id=" miTabla">
+        <th onclick="sortTable(0,'miTabla')">Fecha</th>
+        <th onclick="sortTable(1,'miTabla')">Tipo Movimiento</th>
+        <th onclick="sortTable(2,'miTabla')">Cantidad</th>
+        <th onclick="sortTable(3,'miTabla')">Antes</th>
+        <th onclick="sortTable(4,'miTabla')">Despues</th>
+        <th onclick="sortTable(5,'miTabla')">Usuario</th>
+        <th onclick="sortTable(6,'miTabla')">Descripcion</th>
+        {% for historia in datos.historial %}
+        <tr>
+            <td>{{ historia.fechaMovimiento }}</td>
+            <td>{{ historia.tipoMovimiento }}</td>
+            <td>{{ historia.cantidad }}</td>
+            <td>{{ historia.oldStock }}</td>
+            <td>{{ historia.newStock }}</td>
+            <td>{{ historia.nombreUsuario }}</td>
+            <td>{{ historia.descripcion }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Modificar Rol{% endblock %}
+
+{% block header %}
+{% set datos = datos|merge({
+    "titulo": "Modificar Rol"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP">
+{% endblock %}
+
+{% block main %}
+<div class="contenido3">
+    <ul class="navTitulo">
+        <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver">
+    </ul>
+    <form action="/roles/modificar" method="post"  style=" border: 1px solid black">
+        <fieldset>
+            
+            <legend>Datos Basicos  </legend>
+            <input type="text" name="idRol" value="{{datos.miRol[0].idRol}}" style="display: none;">
+            <label for="nombreRol">Nombre</label>
+            <input type="text" name="nombreRol" value="{{datos.miRol[0].nombreRol}}" >
+            <br>
+        </fieldset>
+     
+    <h2>PERMISOS</h2>
+
+    <!-- The Modal -->
+    
+   
+    <table id="miTabla">
+        <th  onclick="sortTable(0,'miTabla')">Modulo</th>
+        <th onclick="sortTable(1,'miTabla')">Alta</th>
+        <th onclick="sortTable(2,'miTabla')">Baja</th>
+        <th onclick="sortTable(3,'miTabla')">Modif</th>
+        <th onclick="sortTable(4,'miTabla')">Visuali</th>
+       
+        <tr>
+            <td>Modulo de Pedidos</td> 
+            <td> <input type="checkbox" name="permisos[]" value="13"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="14"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="15"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="16"> </td>
+        </tr>
+        <tr>
+            <td>Modulo de OT</td> 
+            <td> <input type="checkbox" name="permisos[]" value="21"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="22"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="23"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="24"> </td>
+        </tr>
+        <tr>
+            <td>Modulo de Usuarios</td> 
+            <td>  </td>
+            <td ></td>
+            <td > </td>
+            <td > </td>
+        </tr>
+        <tr>
+            <td>Roles</td> 
+            <td> <input type="checkbox" name="permisos[]" value="9"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="10"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="11"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="12"> </td>
+        </tr>
+        <tr>
+            <td>Permisos</td> 
+            <td> <input type="checkbox" name="permisos[]" value="5"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="6"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="7"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="8"> </td>
+        </tr>
+        <tr>
+            <td> Personas FALTA</td> 
+            <td> <input type="checkbox" name="permisos[]" value="1"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="2"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="3"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="4"> </td>
+        </tr>
+
+        <tr>
+            <td> Usuarios</td> 
+            <td> <input type="checkbox" name="permisos[]" value="1"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="2"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="3"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="4"> </td>
+        </tr>
+        <tr>
+            <td> Modulo Especializacion</td> 
+            <td> <input type="checkbox" name="permisos[]" value="33"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="34"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="35"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="36"> </td>
+        </tr>
+        <tr>
+            <td> Modulo Agentes</td> 
+            <td> <input type="checkbox" name="permisos[]" value="29"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="30"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="31"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="32"> </td>
+        </tr>
+        <tr>
+            <td> Modulo Sectores</td> 
+            <td> <input type="checkbox" name="permisos[]" value="25"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="26"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="27"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="28"> </td>
+        </tr>
+        <tr>
+            <td> Modulo Insumos</td> 
+            <td> <input type="checkbox" name="permisos[]" value="41"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="42"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="43"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="44"> </td>
+        </tr>
+        <tr>
+            <td> Modulo Orden de Compra FALTA</td> 
+            <td> <input type="checkbox" name="permisos[]" value="1"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="2"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="3"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="4"> </td>
+        </tr>
+        <tr>
+            <td> Modulo Eventos</td> 
+            <td> <input type="checkbox" name="permisos[]" value="37"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="38"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="39"> </td>
+            <td ><input type="checkbox" name="permisos[]" value="40"> </td>
+        </tr>
+    </table>
+    <input type="submit">
+</form>
+</div>
+{% endblock %}

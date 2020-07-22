@@ -18,15 +18,13 @@ class UsuariosController extends Controller
         $todosUsuarios = $this->model->get();     
         $datos['todosUsuarios'] = $todosUsuarios;
         $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        $todosRoles=$this->model->getRoles(); 
-        $todosPersonas=$this->model->getPersonas(); 
-        $datos['roles'] = $todosRoles; 
-        $datos['todosPersonas'] = $todosPersonas; 
+        $datos['permisos']= $this->model->getPermisos($_SESSION['rol']);
+        $datos['roles'] = $this->model->getRoles();  
+        $datos['todosPersonas'] = $this->model->getPersonas(); 
         if ($boolError) {
             $datos['errorInsert'] = true;
         }
+        $datos['urlheader']="> HOME > ADMINISTRACIÓN > USUARIOS";
         return view('/usuarios/administracionUsuario', compact('datos'));
     }
 

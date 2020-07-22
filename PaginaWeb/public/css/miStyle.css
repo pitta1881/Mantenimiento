@@ -1,0 +1,20 @@
+a {
+    text-decoration: none !important;
+}
+
+html {
+    font-size: 1.1rem !important;
+}
+
+body {
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+.btn-modal {
+    padding: 10px;
+}
+
+.notAllowed {
+    cursor: not-allowed !important;
+    opacity: 0.3 !important;
+}

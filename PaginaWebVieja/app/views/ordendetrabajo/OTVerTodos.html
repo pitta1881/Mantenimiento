@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block title %}Gestión de OTs{% endblock %} {% block header %}
+{% set datos = datos|merge({
+    "titulo": "Gestión de Ordenes de Trabajo"
+}) %}
+{% include 'partials/nav.html' with {datos:datos} only %}
+{% endblock %} {% block head %} {{ parent() }}
+<meta name="keywords" content="PAW,2018,Templates,PHP"> {% endblock %} {% block main %}
+<div class="contenido3">
+        {% for value in datos.permisos %}
+        {% if value.idPermiso == "21" %}
+        <a href="/ot/crear" class="btn btn-info" role="button"><img class="iconos" src="/public/res/add.svg"
+            title="Crear OT">Crear OT</a>
+        {% endif %}
+        {% else %}
+    
+        {% endfor %}
+    
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+    </script>
+    <table id="miTabla">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0,'miTabla')">Nº OT</th>
+                <th onclick="sortTable(1,'miTabla')">Fecha de Inicio</th>
+                <th onclick="sortTable(2,'miTabla')">Fecha de Fin</th>
+                <th onclick="sortTable(3,'miTabla')">Estado</th>
+                <th onclick="sortTable(4,'miTabla')">Tareas</th>
+                <th onclick="sortTable(5,'miTabla')">Accion</th>
+            </tr>
+        </thead>
+        {% for OT in datos.todasOT %}
+        {% set estilo = "" %}
+        {% if OT.estado == "Finalizado" %}
+        {% set estilo = "style=background-color:#ffcccc" %}
+        {% endif %}
+        <tr>
+            <td {{ estilo }}>{{ OT.idOT }}</td>
+            <td {{ estilo }}>{{ OT.fechaInicio }}</td>
+            <td {{ estilo }}>{{ OT.fechaFin }}</td>
+            <td {{ estilo }}>{{ OT.estado }}</td>
+            <td {{ estilo }}>{{ OT.cantTareas }}</td>
+            <td {{ estilo }}>
+                    {% for value in datos.permisos %}
+                    {% if value.idPermiso == "24" %}
+                    <a href='/fichaOT?idOT={{ OT.idOT }}'>
+                        <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">
+                    </a>
+                    {% endif %}
+                    {% else %}
+                
+                    {% endfor %}
+                
+
+
+             
+            </td>
+        </tr>
+        {% else %}
+        <h2 class='error'>No hay OTs</h2> {% endfor %}
+    </table>
+</div>
+{% endblock %}

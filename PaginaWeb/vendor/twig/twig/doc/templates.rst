@@ -364,7 +364,7 @@ A child template might look like this:
 
 .. code-block:: jinja
 
-    {% extends "base.html" %}
+    {% extends "base0.html" %}
 
     {% block title %}Index{% endblock %}
     {% block head %}

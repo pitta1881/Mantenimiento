@@ -1,184 +1,118 @@
-<nav class="main-nav">
-    <ol>
-        <li>
-            <a little="imagenSommer" onclick="muestra_oculta('mainmenu')"> <img class="imagen"
-                    src="/public/res/sommer4.jpg"></a>
-            <nav class="mainmenu mostrar">
-                <ul>
-                    <li class="m">
-                        <p little="imagenSommer" onclick="muestra_oculta('mainmenu')"> <img class="imagenMenu"
-                                src="/public/res/sommer5.jpg">
-                            <h4 class="tituloMenu">Sistema de Mantenimiento</h4>
-                        </p>
+    <nav>
+        <div class="custom-menu">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                <i class="fa fa-bars"></i>
+                <span class="sr-only">Toggle Menu</span>
+            </button>
+        </div>
+        <div class="p-4 pt-5">
+            <h1><a href="/home" class="logo">Hospital Sommer</a></h1>
+            <ul class="list-unstyled components" style="margin-bottom: 0;">
+                <li class="active">
+                    <a href="/home"><span class="fa fa-home mr-3"></span>Home</a>
+                </li>
+                {% if "4" in datos.permisos %}
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span
+                            class="fa fa-address-card-o mr-3" aria-hidden="true"></span>Administración</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
 
+                        {% if "4" in datos.permisos %}
+                        <li>
+                            <a href="/usuarios/AdministracionUsuario">Usuarios</a>
+                        </li>
+                        {% endif %}
 
-                    </li>
-                    <li><a href="/home"> <img class="iconosTitulo" src="/public/res/home.svg" title="Inicio">Home</a>
-                    </li>
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "16" %}
-                    <li><a href="/pedido/verTodos"><img class="iconosTitulo" src="/public/res/pedidos.svg"
-                                title="Pedidos">Pedidos</a></li>
-                    {% endif %}
-                    {% else %}
+                        {% if "48" in datos.permisos %}
+                        <li>
+                            <a href="/persona/AdministracionPersonas">Personas</a>
+                        </li>
+                        {% endif %}
 
-                    {% endfor %}
+                        {% if "12" in datos.permisos %}
+                        <li>
+                            <a href="/roles/AdministracionRol">Roles</a>
+                        </li>
+                        {% endif %}
 
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "24" %}
-                    <li><a href="/OT/verTodos"><img class="iconosTitulo" src="/public/res/ot.svg"
-                                title="Ordenes de Trabajo">Ordenes de Trabajo</a> </li>
-                    {% endif %}
-                    {% else %}
-                    {% endfor %}
+                        {% if "8" in datos.permisos %}
+                        <li>
+                            <a href="/permisos/AdministracionPermisos">Permisos</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+                {% if "16" in datos.permisos %}
+                <li>
+                    <a href="/pedido/verTodos"><span class="fa fa-files-o mr-3"></span>Pedidos</a>
+                </li>
+                {% endif %}
 
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "40" %}
+                {% if "24" in datos.permisos %}
+                <li>
+                    <a href="/OT/verTodos"><span class="fa fa-cogs mr-3"></span>Ord. de Trabajo</a>
+                </li>
+                {% endif %}
 
-                    <li><a href="/eventos/administracionEventos"><img class="iconosTitulo" src="/public/res/eventos.svg"
-                                title="Eventos">Eventos</a>
+                {% if "40" in datos.permisos %}
+                <li>
+                    <a href="/eventos/administracionEventos"><span class="fa fa-calendar mr-3"></span>Eventos</a>
+                </li>
+                {% endif %}
+                {% if "32" in datos.permisos %}
+                <li>
+                    <a href="/agente/administracionAgentes"><span class="fa fa-users mr-3"
+                            aria-hidden="true"></span>Agentes</a>
+                </li>
+                {% endif %}
 
-                    </li>
-                    {% endif %}
-                    {% else %}
+                {% if "36" in datos.permisos %}
+                <li>
+                    <a href="/especializacion/administracionEspecializacion"><span class="fa fa-paint-brush mr-3"
+                            aria-hidden="true"></span>Especializaciones</a>
+                </li>
+                {% endif %}
 
-                    {% endfor %}
+                {% if "28" in datos.permisos %}
+                <li>
+                    <a href="/sectores/administracionSectores"><span class="fa fa-hospital-o mr-3"
+                            aria-hidden="true"></span>Sectores</a>
+                </li>
+                {% endif %}
 
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "4" %}
-                    <li><a><img class="iconosTitulo" src="/public/res/isers.svg" title="Usuarios">Usuarios</a>
-                        <ul class="submenu">
+                {% if "16" in datos.permisos %}
+                <li>
+                    <a href="/informe/administracion"><span class="fa fa-line-chart mr-3"
+                            aria-hidden="true"></span>Informes</a>
+                </li>
+                {% endif %}
 
-                            {% for value in datos.permisos %}
-                            {% if value.idPermiso == "4" %}
+                {% if "44" in datos.permisos %}
+                <li>
+                    <a href="/insumos/administracionInsumos"><span class="fa fa-wrench mr-3"
+                            aria-hidden="true"></span>Insumos</a>
+                </li>
+                {% endif %}
 
-                            <li><a href="/usuarios/AdministracionUsuario">Usuarios</a>
+                {% if "16" in datos.permisos %}
+                <li>
+                    <a href="/ordendecompra/administracionOC"><span class="fa fa-shopping-basket mr-3"
+                            aria-hidden="true"></span>Ord.
+                        de Compra</a>
+                </li>
+                {% endif %}
 
-                            </li>
-                            {% endif %}
-                            {% endfor %}
+                <li>
+                    <a href="/public/res/ManualDeUsuario_Mantenimiento_Sommer.pdf" target="_blank"><span
+                            class="fa fa-info-circle mr-3" aria-hidden="true"></span>Ayuda</a>
+                </li>
 
-                            {% for value in datos.permisos %}
-                            {% if value.idPermiso == "48" %}
-                            <li><a href="/persona/AdministracionPersonas">Personas</a>
-                            </li>
-                            {% endif %}
-                            {% else %}
+                <li>
+                    <a href="/cerrarSesion"><span class="fa fa-sign-out mr-3" aria-hidden="true"></span>Salir</a>
+                </li>
+            </ul>
+    </nav>
+    </li>
 
-                            {% endfor %}
-
-                            {% for value in datos.permisos %}
-                            {% if value.idPermiso == "12" %}
-
-                            <li><a href="/roles/AdministracionRol">Roles</a>
-
-                            </li>
-                            {% endif %}
-                            {% else %}
-
-                            {% endfor %}
-
-                            {% for value in datos.permisos %}
-                            {% if value.idPermiso == "8" %}
-
-                            <li><a href="/permisos/AdministracionPermisos">Permisos</a>
-
-                            </li>
-                            {% endif %}
-                            {% else %}
-
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "32" %}
-
-                    <li><a href="/agente/administracionAgentes"><img class="iconosTitulo"
-                                src="/public/res/addagente.svg" title="Agentes">Agentes</a>
-
-                    </li>
-                    {% endif %}
-                    {% else %}
-
-                    {% endfor %}
-
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "36" %}
-
-                    <li><a href="/especializacion/administracionEspecializacion"><img class="iconosTitulo"
-                                src="/public/res/esp.svg" title="Especializaciones">Especializaciones</a>
-
-                    </li>
-                    {% endif %}
-                    {% else %}
-
-                    {% endfor %}
-
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "28" %}
-
-                    <li><a href="/sectores/administracionSectores"><img class="iconosTitulo"
-                                src="/public/res/sector.svg" title="Sectores">Sectores</a>
-
-                    </li>
-                    {% endif %}
-                    {% else %}
-
-                    {% endfor %}
-
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "16" %}
-
-                    <li><a href="/informe/administracion"><img class="iconosTitulo" src="/public/res/Informes.svg"
-                                title="Informes">Informes</a>
-
-                    </li>
-                    {% endif %}
-                    {% else %}
-
-                    {% endfor %}
-
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "44" %}
-
-                    <li><a href="/insumos/administracionInsumos"><img class="iconosTitulo" src="/public/res/Insumos.svg"
-                                title="Insumos">Insumos</a>
-
-                    </li>
-                    {% endif %}
-                    {% else %}
-
-                    {% endfor %}
-
-                    {% for value in datos.permisos %}
-                    {% if value.idPermiso == "16" %}
-                    <li><a href="/ordendecompra/administracionOC"><img class="iconosTitulo" src="/public/res/oc.svg"
-                                title="Ordenes de Compra">Ordenes de Compra</a></li>
-                    {% endif %}
-                    {% endfor %}
-                    <li><a href="/public/res/ManualDeUsuario_Mantenimiento_Sommer.pdf" target="_blank"><img
-                                class="iconos" src="/public/res/informacion.svg">Ayuda</a>
-                    </li>
-                    <li><a href="/cerrarSesion"><img class="iconos" src="/public/res/logout.svg">Salir</a>
-                    </li>
-                </ul>
-            </nav>
-        </li>
-
-        <li>
-            <h4 class="titulo">Sistema de Mantenimiento</h4>
-        </li>
-        <li>
-            <h3 class="titulo1">{{ datos.titulo }}</h3>
-        </li>
-
-
-        <li>
-            <p class="user">{{ datos.userLogueado }} |<a href="/cerrarSesion"><img class="iconos"
-                        src="/public/res/logout.svg"></a></p>
-        </li>
-
-    </ol>
-</nav>
+    <script src="/public/js/mainNav.js"></script>
