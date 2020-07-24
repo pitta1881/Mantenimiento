@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Gestion de Especializaciones {% endblock %}
+{% block title %} Gestion de Permisos {% endblock %}
 {% block nav %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
@@ -7,17 +7,24 @@
 {% if datos.errorInsert %}
 <script>
     alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nueva Especialización</span>",
-        "La Especialización ya existe..");
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Permiso</span>",
+        "El Permiso ya existe..");
+</script>
+{% endif %}
+{% if datos.okUpdate %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificaciones realizadas</span>",
+        "Permisos actualizado correctamente");
 </script>
 {% endif %}
 <div>
     {% block header %}
     {% include 'partials/header.html' with {datos:datos} only %}
     {% endblock %}
-    <h2 class="titulo-tabla">Especializaciones Registradas </h2>
+    <h2 class="titulo-tabla">Permisos Registrados </h2>
     <!-- Button to Open the Modal -->
-    {% if "33" in datos.permisos %}
+    {% if "5" in datos.permisos %}
     <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevoModal"><i
             class="fa fa-plus"></i> Crear Nuevo</button>
     <!-- The Modal -->
@@ -26,23 +33,21 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Crear Especializacion</h4>
+                    <h4 class="modal-title">Crear Permiso</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion"
-                        method="post" class="was-validated">
+                    <form action="newPermiso" method="post" class="was-validated">
                         <div class="form-group">
-                            <label for="nombre">Nombre de Especializacion:</label>
-                            <input type="text" name="nombre" class="form-control" autofocus required>
+                            <label for="nombrePermiso">Nombre del Permiso:</label>
+                            <input type="text" name="nombrePermiso" class="form-control" autofocus required>
                             <div class="invalid-feedback">Complete este campo</div>
                         </div>
-                        <!-- Modal Footer -->
+                        <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-modal"
-                                data-dismiss="modal">Salir</button>
-                            <button type="submit" class="btn btn-success btn-modal">Enviar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -53,45 +58,43 @@
     <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover text-nowrap">
         <thead class="headtable">
             <tr>
-                <th>ID Especializacion</th>
+                <th>ID Permiso</th>
                 <th>Nombre</th>
                 <th>Accion</th>
             </tr>
         </thead>
         <tbody>
-            {% for especializacion in datos.todasEspecializaciones %}
+            {% for permiso in datos.todosPermisos %}
             <tr>
-                <td>{{ especializacion.idEspecializacion }}</td>
-                <td>{{ especializacion.nombre }}</td>
+                <td>{{ permiso.idPermiso }}</td>
+                <td>{{ permiso.nombrePermiso }}</td>
                 <td>
-                    {% if "35" in datos.permisos %}
-                    <!--MODIFICAR ESPECIALIZACION-->
+
+                    {% if "31" in datos.permisos %}
+                    <!--MODIFICAR PERMISO-->
                     <!-- The Modal -->
-                    <div class="modal fade" id="myModalModif{{ especializacion.idEspecializacion }}">
-                        <div class="modal-dialog">
+                    <div class="modal fade" id="myModalModif{{ permiso.idPermiso }}">
+                        <div class="modal-dialog modal-xs">
                             <div class="modal-content">
                                 <!-- Modal Header -->
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Modificar Especializacion</h4>
+                                    <h4 class="modal-title">Modificar Permiso</h4>
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <form
-                                        action="/especializacion/administracionEspecializacion/modificarEspecializacion"
-                                        method="post" class="was-validated">
-                                        <input type="text" name="idEspecializacion"
-                                            value="{{ especializacion.idEspecializacion }}" hidden>
+                                    <form action="updatePermiso" method="post" class="was-validated">
+                                        <input type="text" name="idPermiso" value="{{ permiso.idPermiso }}" hidden>
                                         <div class="form-group">
-                                            <label for="nombreAnterior">Nombre Anterior:</label>
+                                            <label for="nombreAnterior">Nombre Anterior</label>
                                             <input type="text" name="nombreAnterior" class="form-control"
-                                                value="{{ especializacion.nombre }}" readonly>
+                                                value="{{ permiso.nombrePermiso }}" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="nombre">Nuevo Nombre:</label>
-                                            <input type="text" name="nombre" class="form-control" autofocus required>
-                                            <div class="invalid-feedback">Complete este campo</div>
+                                            <label for="nombreyape">Nombre Nuevo</label><span class="asterisco">*</span>
+                                            <input type="text" name="nombrePermiso" class="form-control" required>
                                         </div>
+                                        <!-- Modal footer -->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Salir</button>
@@ -103,19 +106,18 @@
                         </div>
                     </div>
                     {% endif %}
-                    {% if "34" in datos.permisos %}
-                    <!--ELIMINAR ESPECIALIZACION SI NO UTILIZADO-->
-                    <form action="/especializacion/eliminar" method="post" style="display: inline-block"
-                        id="formEliminarEspecializacion{{ especializacion.idEspecializacion }}">
-                        <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}"
-                            hidden>
-                        <div class="modal fade" id="eliminarModal{{ especializacion.idEspecializacion }}" tabindex="-1"
-                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                    <!--ELIMINAR PERMISO-->
+                    {% if "6" in datos.permisos %}
+                    <form action="deletePermiso" method="post" style="display: inline-block"
+                        id="formEliminarPermiso{{ permiso.idPermiso }}">
+                        <input type="text" name="idPermiso" value="{{ permiso.idPermiso }}" hidden>
+                        <div class="modal fade" id="eliminarModal{{ permiso.idPermiso }}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Eliminar Especializacion Nº
-                                            {{ especializacion.idEspecializacion }}</h4>
+                                        <h4 class="modal-title">Eliminar Permiso &nbsp;{{ permiso.nombrePermiso }}</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -133,30 +135,26 @@
                         </div>
                     </form>
                     {% endif %}
-                    {% set deshabilitado = "disabled" %}
-                    {% set notAllowed = " notAllowed" %}
-                    {% if especializacion.usado == false %}
-                    {% set deshabilitado = "" %}
-                    {% set notAllowed = "" %}
-                    {% endif %}
+
                     <div class="btn-group" role="group" aria-label="Basic example" style="float: none;">
-                        {% if "35" in datos.permisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" data-target="#myModalModif{{ especializacion.idEspecializacion }}"
-                            title="Editar Especializacion"><i class="fa fa-pencil fa-2x fa-fw"></i>
+                        {% if "7" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#myModalModif{{ permiso.idPermiso }}" title="Editar Permiso"><i
+                                class="fa fa-pencil fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
-                        {% if "34" in datos.permisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" data-target="#eliminarModal{{ especializacion.idEspecializacion }}"
-                            title="Eliminar Especializacion"><i class="fa fa-trash-o fa-2x fa-fw"></i>
+
+                        {% if "6" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#eliminarModal{{ permiso.idPermiso }}" title="Eliminar Permiso"><i
+                                class="fa fa-trash-o fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
                 </td>
             </tr>
             {% else %}
-            <h2 class='error'>No hay ninguna Especializacion cargada</h2>
+            <h2 class="error">No hay ningun Permiso cargado</h2>
             {% endfor %}
         </tbody>
     </table>
@@ -164,7 +162,7 @@
 <script>
     var columnas = '0,1';
     var columNoOrdenar = 2;
-    var titulo = 'Especializaciones Registradas';
+    var titulo = 'Permisos Registrados';
 </script>
 <script src="/public/js/ordypagtablas.js"></script>
 {% endblock %}

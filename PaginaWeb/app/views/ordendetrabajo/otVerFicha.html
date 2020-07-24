@@ -1,4 +1,4 @@
-{% extends "base0.html" %}
+{% extends "base.html" %}
 
 {% block title %}Ficha de OT{% endblock %}
 
@@ -17,7 +17,7 @@
 {% block main %}
 <div class="contenido3">
     <img class="iconosTitulo" src="/public/res/back.svg" onclick="history.back()" title="Volver" title=" Volver">
-    
+
     <img class=" iconosTitulo" src="/public/res/print.svg" onclick="print()" title="Imprimir">
     <dl>
         <dt>Nº OT:</dt>
@@ -118,4 +118,5 @@
         {% endfor %}
     </table>
 </div>
+<script src="/public/js/ajaxFichaPersona.js"></script>
 {% endblock %}

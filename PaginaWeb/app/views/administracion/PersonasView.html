@@ -1,10 +1,10 @@
-{% extends "base0.html" %}
+{% extends "base.html" %}
 {% block title %} Gestion de Usuarios {% endblock %}
 {% block nav %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.errorInsert %}
+{% if datos.newError %}
 <script>
     alertify.alert(
         "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nueva Persona</span>",
@@ -31,7 +31,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/persona/altaPersona" method="post" class="was-validated">
+                    <form action="newPersona" method="post" class="was-validated">
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="dni">DNI:</label><span class="asterisco">*</span>
@@ -60,9 +60,10 @@
                                 <div class="invalid-feedback">El formato es incorrecto</div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="fecha_nacimiento">Fecha De Nacimiento:</label>
+                                <label for="fecha_nacimiento">Fecha De Nacimiento:</label><span
+                                    class="asterisco">*</span>
                                 <input type="date" name="fecha_nacimiento" class="form-control"
-                                    max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
+                                    max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}" required>
                             </div>
                         </div>
                         <input type="text" name="estado" value="Activo" hidden>
@@ -115,7 +116,7 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <form action="/persona/modificar/guardar" method="post" class="was-validated">
+                                    <form action="updatePersona" method="post" class="was-validated">
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <label for="dni">DNI:</label><span class="asterisco">*</span>
@@ -148,11 +149,12 @@
                                                 <div class="invalid-feedback">El formato es incorrecto</div>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="fecha_nacimiento">Fecha De Nacimiento:</label>
+                                                <label for="fecha_nacimiento">Fecha De Nacimiento:</label><span
+                                                    class="asterisco">*</span>
                                                 <input type="date" name="fecha_nacimiento"
                                                     value="{{ persona.fecha_nacimientoSinFormato }}"
                                                     class="form-control" max="{{ datos.minimo18 }}"
-                                                    min="{{ datos.maximo70 }}">
+                                                    min="{{ datos.maximo70 }}" required>
                                             </div>
                                         </div>
                                         <input type="text" name="estado" value="Activo" hidden>
@@ -182,7 +184,7 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <form action="/persona/modificarEstado" method="post">
+                                    <form action="updateEstadoPersona" method="post">
                                         <input type="text" name="dni" value="{{ persona.dni }}" hidden>
                                         <div class="form-group">
                                             <label for="estado" style="display: block;">Nuevo Estado:</label>
@@ -208,7 +210,7 @@
                     {% endif %}
                     <!--ELIMINAR PERSONA SI NO ESTA USADO-->
                     {% if "46" in datos.permisos %}
-                    <form action="/persona/eliminar" method="post" style="display: inline-block"
+                    <form action="deletePersona" method="post" style="display: inline-block"
                         id="formEliminarPersona{{ persona.dni }}">
                         <input type="text" name="dni" value="{{ persona.dni }}" hidden>
                         <div class="modal fade" id="eliminarModal{{ persona.dni }}" tabindex="-1" role="dialog"

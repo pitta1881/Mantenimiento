@@ -25,7 +25,7 @@ class Permisos extends Model{
       }
 
     public function buscarPermiso($nombre){
-        //   comparo si existe el nombre de usuario 
+        //   comparo si existe el permiso 
           return $this->db->comparaPermiso($this->table,$nombre);
         }
 

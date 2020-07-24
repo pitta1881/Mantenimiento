@@ -1,4 +1,4 @@
-{% extends "base0.html" %}
+{% extends "base.html" %}
 {% block title %} Gestion de Agentes {% endblock %}
 {% block nav %}
 {% include 'partials/nav.html' with {datos:datos} only %}
@@ -131,6 +131,7 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
+                                        <!-- Modal footer -->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Salir</button>
@@ -208,6 +209,7 @@
         </tbody>
     </table>
 </div>
+<script src="/public/js/ajaxFichaPersona.js"></script>
 <script>
     var columnas = '0,1,2,3,4';
     var columNoOrdenar = 5;

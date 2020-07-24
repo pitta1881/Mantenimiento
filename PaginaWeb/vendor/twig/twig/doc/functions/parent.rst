@@ -6,7 +6,7 @@ parent block when overriding a block by using the ``parent`` function:
 
 .. code-block:: jinja
 
-    {% extends "base0.html" %}
+    {% extends "base.html" %}
 
     {% block sidebar %}
         <h3>Table Of Contents</h3>

@@ -13,7 +13,7 @@
  * Imports blocks defined in another template into the current template.
  *
  * <pre>
- * {% extends "base0.html" %}
+ * {% extends "base.html" %}
  *
  * {% use "blocks.html" %}
  *

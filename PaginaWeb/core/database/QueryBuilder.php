@@ -42,11 +42,8 @@ class QueryBuilder
         $statement = $this->pdo->prepare(
             "DELETE FROM rolesxPermisos WHERE idRol=$idRol"
          );
-         $statement->execute();
- 
-    }
-    
-
+         $statement->execute(); 
+    }  
 
 
     public function updateRol($table, $parameters, $id){

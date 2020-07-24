@@ -1,4 +1,4 @@
-{% extends "base0.html" %}
+{% extends "base.html" %}
 {% block title %} Gestion de Sectores {% endblock %}
 {% block nav %}
 {% include 'partials/nav.html' with {datos:datos} only %}
@@ -228,7 +228,6 @@
         </tbody>
     </table>
 </div>
-
 <script src="/public/js/validartelefono.js"></script>
 <script>
     var columnas = '0,1,2,3,4,5';

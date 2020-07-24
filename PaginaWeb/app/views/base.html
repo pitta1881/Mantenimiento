@@ -4,34 +4,58 @@
 <head>
     {% block head %}
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/main.css">
-    <link rel="stylesheet" href="/public/css/nav.css">
-    <link rel="stylesheet" href="/public/css/nav1.css">
-    <!-- include the style -->
-    <link rel="stylesheet" href="/public/alertifyjs/css/alertify.min.css" />
-    <!-- include a theme -->
-    <link rel="stylesheet" href="/public/alertifyjs/css/themes/default.min.css" />
+    <title>{% block title %}{% endblock %} - Mantenimiento</title>
+    <link rel="shortcut icon" href="/public/res/favicon.ico" />
+    <!--BOOTSTRAP-->
     <link rel="stylesheet" href="/public/bootstrap/bootstrap.css">
-    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <!--BOOTSTRAP END-->
+    <!--BOOTSTRAP VALIDATOR-->
     <link href="/public/bootstrapvalidator/bootstrapValidator.css" rel="stylesheet" type="text/css">
-    <script src="/public/js/ordenarTablas.js"></script>
-    <script src="/public/js/menu.js"></script>
+    <!--BOOTSTRAP VALIDATOR END-->
+    <!--NAV y HEADER MENU-->
+    <link href="/public/fonts/font-awesome-4.7.0/fonts/fontsgoogleapis.css" rel="stylesheet">
+    <link href="/public/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/styleHeader.css">
+    <link href="/public/css/styleNav.css" rel="stylesheet">
+    <!--NAV y HEADER MENU END-->
+    <!--ALERTIFY-->
+    <link rel="stylesheet" href="/public/alertifyjs/css/alertify.min.css">
+    <link rel="stylesheet" href="/public/alertifyjs/css/themes/default.min.css" />
+    <!--ALERTIFY END-->
+    <!--DATATABLES-->
+    <link rel="stylesheet" href="/public/css/styleDatatables.css">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <!--DATATABLES END-->
+    <!--MIS ESTILOS-->
+    <link href="/public/css/miStyle.css" rel="stylesheet" type="text/css">
+    <!--MIS ESTILOS END-->
+
     <script src="/public/alertifyjs/alertify.js"></script>
-    <script src="/public/js/ajax.js"></script>
-    <script src="/public/jqueryTables/jquery.min.js"></script>
-    <script src="/public/jqueryTables/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="/public/bootstrapvalidator/bootstrapValidator.js"></script>
-    <!--
-    <script type="text/javascript" src="/public/bootstrapvalidator/identical.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
     {% endblock %}
 </head>
 
-<body>
-    <header>{% block header %}{% endblock %}</header>
-    <main>{% block main %}{% endblock %}</main>
-
+<body class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">{% block nav %}{% endblock %}</nav>
+    <main id="content" class="p-4 p-md-5 pt-5">
+        {% block main %}
+        {% block header %}{% endblock %}
+        {% endblock %}
+    </main>
 </body>
 
 </html>

@@ -1,14 +1,21 @@
-{% extends "base0.html" %}
-{% block title %} Gestion de Usuarios {% endblock %}
+{% extends "base.html" %}
+{% block title %} Gestion de Roles {% endblock %}
 {% block nav %}
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.errorInsert %}
+{% if datos.newError %}
 <script>
     alertify.alert(
         "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Rol</span>",
         "El Rol ya existe..");
+</script>
+{% endif %}
+{% if datos.okUpdate %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificaciones realizadas</span>",
+        "Permisos actualizados correctamente");
 </script>
 {% endif %}
 <div>
@@ -31,12 +38,13 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/roles/guardar" method="post" class="was-validated">
+                    <form action="newRol" method="post" class="was-validated">
                         <div class="form-group">
                             <label for="nombreRol">Nombre del Rol:</label>
                             <input type="text" name="nombreRol" class="form-control" autofocus required>
                             <div class="invalid-feedback">Complete este campo</div>
                         </div>
+                        <!-- Modal footer -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
                             <button type="submit" class="btn btn-success">Enviar</button>
@@ -64,14 +72,14 @@
                     <div class="btn-group" role="group" aria-label="Basic example" style="float: none;">
                         {% if "12" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaRoles('{{ rol.idRol }}');return false;" title="Ver Mas"><i
+                            onclick="fichaRoles('{{ rol.idRol }}',false);return false;" title="Ver Mas"><i
                                 class="fa fa-eye fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
 
                         {% if "11" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaRolesModif('{{ rol.idRol }}');return false;" title="Modificar"><i
+                            onclick="fichaRoles('{{ rol.idRol }}',true);return false;" title="Modificar"><i
                                 class="fa fa-pencil fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
@@ -84,6 +92,7 @@
         </tbody>
     </table>
 </div>
+<script src="/public/js/ajaxFichaRoles.js"></script>
 <script>
     var columnas = '0,1';
     var columNoOrdenar = 2;

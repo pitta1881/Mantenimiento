@@ -14,7 +14,7 @@ debug:
 
 .. code-block:: jinja
 
-    {% extends "base0.html" %}
+    {% extends "base.html" %}
 
     {% block title %}{% endblock %}
     {% block content %}{% endblock %}
@@ -24,7 +24,7 @@ but without the associated complexity:
 
 .. code-block:: jinja
 
-    {% extends "base0.html" %}
+    {% extends "base.html" %}
 
     {% use "blocks.html" %}
 
@@ -46,7 +46,7 @@ imported blocks are not outputted automatically):
 
 .. code-block:: jinja
 
-    {% extends "base0.html" %}
+    {% extends "base.html" %}
 
     {% block sidebar %}{% endblock %}
     {% block title %}{% endblock %}
@@ -69,7 +69,7 @@ is ignored. To avoid name conflicts, you can rename imported blocks:
 
 .. code-block:: jinja
 
-    {% extends "base0.html" %}
+    {% extends "base.html" %}
 
     {% use "blocks.html" with sidebar as base_sidebar, title as base_title %}
 
@@ -83,7 +83,7 @@ template:
 
 .. code-block:: jinja
 
-    {% extends "base0.html" %}
+    {% extends "base.html" %}
 
     {% use "blocks.html" %}
 
@@ -103,7 +103,7 @@ the ``blocks.html`` template.
 
     .. code-block:: jinja
 
-        {% extends "base0.html" %}
+        {% extends "base.html" %}
 
         {% use "blocks.html" with sidebar as parent_sidebar %}
 

@@ -4,6 +4,35 @@
     $router->get('home', 'PagesController@home');
     $router->get('cerrarSesion', 'PagesController@cerrarSesion');
 
+//rutas Login
+    $router->post('login/validar', 'LoginController@validarLogin');
+
+//rutas Usuarios
+    $router->get('administracion/usuarios','UsuariosController@administracionUsuarios');
+    $router->post('administracion/usuarios/newUsuario','UsuariosController@new');
+    $router->post('administracion/usuarios/updateUsuario', 'UsuariosController@update');
+
+//rutas personas
+    $router->get('administracion/personas','PersonaController@administracionPersonas');
+    $router->post('administracion/personas/newPersona','PersonaController@new');
+    $router->post('administracion/personas/updatePersona','PersonaController@update');
+    $router->post('administracion/personas/deletePersona','PersonaController@delete');
+    //$router->post('administracion/personas/updateEstadoPersona','PersonaController@updateEstado');
+    $router->post('administracion/personas/fichaPersona', 'PersonaController@ficha');
+
+//rutas rol
+    $router->get('administracion/roles','RolesController@administracionRoles');
+    $router->post('administracion/roles/newRol', 'RolesController@new');
+    $router->post('administracion/roles/updateRol', 'RolesController@update');
+    //$router->post('administracion/roles/deleteRol', 'RolesController@delete');
+    $router->post('administracion/roles/fichaRol', 'RolesController@ficha');
+
+//rutas permisos
+    $router->get('administracion/permisos','PermisosController@administracionPermisos');
+    $router->post('administracion/permisos/newPermiso','PermisosController@new');
+    $router->post('administracion/permisos/updatePermiso', 'PermisosController@update');
+    $router->post('administracion/permisos/deletePermiso', 'PermisosController@delete');
+
 //rutas pedidos
     $router->get('pedido/verTodos', 'PedidoController@index');
     $router->get('fichaPedido', 'PedidoController@ficha');
@@ -31,42 +60,6 @@
     $router->get('ot/crear', 'OTController@verTareasSinAsignar');
     $router->post('ot/crear/seleccionados','OTController@crearOT');
     $router->get('fichaOT', 'OTController@ficha');
-
-//rutas Usuarios
-    $router->post('login/validar', 'LoginController@validarLogin');
-    $router->get('usuarios/AdministracionUsuario','UsuariosController@vistaAdministracionUsuario');
-    $router->get('usuarios/altaUsuario','UsuariosController@vistaAltaUsuario');
-    $router->post('usuarios/validarUsuario','UsuariosController@validarUsuario');
-    $router->post('usuarios/modificarUsuario', 'UsuariosController@update');
-    $router->get('usuarios/eliminarUsuario','UsuariosController@vistaeliminarUsuario');
-
-//rutas rol
-    $router->get('roles/AdministracionRol','RolesControler@vistaAdministracionRoles');
-    $router->get('roles/fichaRol','RolesControler@ficha');
-    $router->post('roles/guardar', 'RolesControler@guardar');
-    $router->post('roles/buscar', 'RolesControler@buscarPor');
-    $router->get('roles/modificar/seleccionado', 'RolesControler@modificarRolSeleccionado');
-    $router->post('roles/modificar', 'RolesControler@modificar');
-    $router->post('roles/eliminarRol', 'RolesControler@finalizar');
-    $router->get('roles/eliminarRol','RolesControler@vistaEliminarRol');
-
-//rutas permisos
-    $router->get('permisos/AdministracionPermisos','PermisosControler@index');
-    $router->post('permisos/altaPermiso','PermisosControler@guardarPermisos');
-    $router->get('permisos/eliminarPermiso','PermisosControler@vistaEliminarPermiso');
-
-    $router->get('permisos/modificar/seleccionado', 'PermisosControler@vistaModificar');
-    $router->post('permisos/modificarpermiso', 'PermisosControler@update');
-    $router->post('permisos/eliminar', 'PermisosControler@delete');
-
-
-//rutas personas
-    $router->get('persona/AdministracionPersonas','PersonaController@vistaAdministracionPersona');
-    $router->post('persona/altaPersona','PersonaController@altaPersona');
-    $router->post('persona/modificar/guardar','PersonaController@modificar');
-    $router->post('persona/eliminar','PersonaController@eliminar');
-    $router->post('fichaPersona', 'PersonaController@ficha');
-    $router->post('persona/modificarEstado','PersonaController@modificarEstado');
 
 //rutas agentes
     $router->get('agente/administracionAgentes','agentesController@vistaAdministracionAgentes');

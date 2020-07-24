@@ -3814,4 +3814,32 @@
         window.alertify = alertify;
     }
 
+    if (!alertify.myAlert) {
+        //define a new dialog
+        alertify.dialog('myAlert', function factory() {
+            return {
+                main: function (header, message) {
+                    this.header = header;
+                    this.message = message
+                },
+                setup: function () {
+                    return {
+                        buttons: [],
+                        focus: {
+                            element: 0
+                        },
+                        options: {
+                            maximizable: false,
+                            resizable: false
+                        }
+                    };
+                },
+                prepare: function () {
+                    this.setHeader(this.header);
+                    this.setContent(this.message);
+                }
+            }
+        });
+    }
+
 }(typeof window !== 'undefined' ? window : this));
