@@ -4,6 +4,27 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
+{% if datos.newOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta realizada</span>",
+        "Agente creado correctamente");
+</script>
+{% endif %}
+{% if datos.updateOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación realizada</span>",
+        "Agente modificado correctamente");
+</script>
+{% endif %}
+{% if datos.deleteOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja realizada</span>",
+        "Agente eliminado correctamente");
+</script>
+{% endif %}
 <div>
     {% block header %}
     {% include 'partials/header.html' with {datos:datos} only %}
@@ -36,7 +57,7 @@
                             class="alert-link">HAGA CLICK AQUI</a>
                     </div>
                     {% else %}
-                    <form action="/agente/administracionAgente/cargarNuevoAgente" method="post" class="was-validated">
+                    <form action="newAgente" method="post" class="was-validated">
                         <div class="form-group">
                             <label for="idAgente">Persona</label><span class="asterisco">*</span>
                             <select name="idAgente" class="form-control custom-select">
@@ -107,8 +128,7 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <form action="/agente/administracionAgente/modificarAgente" method="post"
-                                        class="was-validated">
+                                    <form action="updateAgente" method="post" class="was-validated">
                                         <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
                                         <div class="form-group">
                                             <label for="nombreyape">Nombre y Apellido</label>
@@ -146,7 +166,7 @@
 
                     <!--ELIMINAR AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
                     {% if "30" in datos.permisos %}
-                    <form action="/agente/eliminar" method="post" style="display: inline-block"
+                    <form action="deleteAgente" method="post" style="display: inline-block"
                         id="formEliminarAgente{{ agente.idAgente }}">
                         <input type="text" name="idAgente" value="{{ agente.idAgente }}" hidden>
                         <div class="modal fade" id="eliminarModal{{ agente.idAgente }}" tabindex="-1" role="dialog"

@@ -40,7 +40,7 @@ class Eventos extends Model{
     public function insert(array $datos)
     {
         
-        $this->db->insert($this->table, $datos);
+        return $this->db->insert($this->table, $datos);
     }
 
     public function getByIdEvento($idEvento){

@@ -92,7 +92,7 @@ class Pedido extends Model{
     }
 
     public function insert(array $pedido){
-        $this->db->insert($this->table, $pedido);
+        return $this->db->insert($this->table, $pedido);
     }
 
     public function updatePedido (array $pedidoModificado,$idPedido){

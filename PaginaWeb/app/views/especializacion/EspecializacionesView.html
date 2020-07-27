@@ -4,7 +4,13 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.errorInsert %}
+{% if datos.newOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta Realizada</span>",
+        "Especialización Creada Correctamente");
+</script>
+{% elseif datos.newOK is not null and datos.newOK == false %}
 <script>
     alertify.alert(
         "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nueva Especialización</span>",
@@ -31,8 +37,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/especializacion/administracionEspecializacion/cargarNuevaEspecializacion"
-                        method="post" class="was-validated">
+                    <form action="newEspecializacion" method="post" class="was-validated">
                         <div class="form-group">
                             <label for="nombre">Nombre de Especializacion:</label>
                             <input type="text" name="nombre" class="form-control" autofocus required>
@@ -77,9 +82,7 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <form
-                                        action="/especializacion/administracionEspecializacion/modificarEspecializacion"
-                                        method="post" class="was-validated">
+                                    <form action="updateEspecializacion" method="post" class="was-validated">
                                         <input type="text" name="idEspecializacion"
                                             value="{{ especializacion.idEspecializacion }}" hidden>
                                         <div class="form-group">
@@ -105,7 +108,7 @@
                     {% endif %}
                     {% if "34" in datos.permisos %}
                     <!--ELIMINAR ESPECIALIZACION SI NO UTILIZADO-->
-                    <form action="/especializacion/eliminar" method="post" style="display: inline-block"
+                    <form action="deleteEspecializacion" method="post" style="display: inline-block"
                         id="formEliminarEspecializacion{{ especializacion.idEspecializacion }}">
                         <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}"
                             hidden>

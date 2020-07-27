@@ -41,7 +41,7 @@ class Tarea extends Model
 
     public function insert(array $tarea)
     {
-        $this->db->insert($this->table, $tarea);
+        return $this->db->insert($this->table, $tarea);
     }
 
        
@@ -116,7 +116,7 @@ class Tarea extends Model
     }
 
     public function insertItemAgente($datos){
-        $this->db->insert($this->tableItemAgentes,$datos);
+        return $this->db->insert($this->tableItemAgentes,$datos);
     }
 
     public function cambiarEstadoAgente($idAgente,$estado){
@@ -247,7 +247,7 @@ class Tarea extends Model
 
     public function insertHistorialEstado(array $historia)
     {
-        $this->db->insert($this->tableHistoria, $historia);
+        return $this->db->insert($this->tableHistoria, $historia);
     }
 
     public function verHistorial($idPedido,$idTarea){

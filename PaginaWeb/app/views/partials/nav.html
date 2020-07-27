@@ -43,6 +43,26 @@
                     </ul>
                 </li>
                 {% endif %}
+
+                {% if "32" in datos.permisos %}
+                <li>
+                    <a href="/agentes/"><span class="fa fa-users mr-3" aria-hidden="true"></span>Agentes</a>
+                </li>
+                {% endif %}
+
+                {% if "36" in datos.permisos %}
+                <li>
+                    <a href="/especializaciones/"><span class="fa fa-paint-brush mr-3"
+                            aria-hidden="true"></span>Especializaciones</a>
+                </li>
+                {% endif %}
+
+                {% if "28" in datos.permisos %}
+                <li>
+                    <a href="/sectores/"><span class="fa fa-hospital-o mr-3" aria-hidden="true"></span>Sectores</a>
+                </li>
+                {% endif %}
+
                 {% if "16" in datos.permisos %}
                 <li>
                     <a href="/pedido/verTodos"><span class="fa fa-files-o mr-3"></span>Pedidos</a>
@@ -58,26 +78,6 @@
                 {% if "40" in datos.permisos %}
                 <li>
                     <a href="/eventos/administracionEventos"><span class="fa fa-calendar mr-3"></span>Eventos</a>
-                </li>
-                {% endif %}
-                {% if "32" in datos.permisos %}
-                <li>
-                    <a href="/agente/administracionAgentes"><span class="fa fa-users mr-3"
-                            aria-hidden="true"></span>Agentes</a>
-                </li>
-                {% endif %}
-
-                {% if "36" in datos.permisos %}
-                <li>
-                    <a href="/especializacion/administracionEspecializacion"><span class="fa fa-paint-brush mr-3"
-                            aria-hidden="true"></span>Especializaciones</a>
-                </li>
-                {% endif %}
-
-                {% if "28" in datos.permisos %}
-                <li>
-                    <a href="/sectores/administracionSectores"><span class="fa fa-hospital-o mr-3"
-                            aria-hidden="true"></span>Sectores</a>
                 </li>
                 {% endif %}
 

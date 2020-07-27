@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class Persona extends Model{
+class PersonaModel extends Model{
     protected $table = 'personas';
     protected $tableRol='roles';
     protected $tablePermisos='permisos';
@@ -52,16 +52,16 @@ class Persona extends Model{
         return array("Activo","Inactivo","Vacaciones");
     }
    
-    public function insert(array $persona){
-        $this->db->insert($this->table, $persona);
+    public function insert(array $datos){
+        if(!($this->db->buscarIfExists($this->table,$datos))){
+            return $this->db->insert($this->table, $datos);
+            } else {
+            return false;
+          }
     }
 
     public function update (array $personaModificado,$dni){
         $this->db->updatePersona($this->table, $personaModificado,$dni);
-    }
-
-    public function buscarPersona($dni){
-       return $this->db->comparaPersona($this->table,$dni);
     }
 
     public function getByIdPersona($dni){

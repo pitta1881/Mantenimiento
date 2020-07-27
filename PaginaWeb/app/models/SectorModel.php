@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class Sectores extends Model
+class SectorModel extends Model
 {
     protected $table = 'sectores';
     protected $tablePedido = 'pedido';
@@ -42,15 +42,12 @@ class Sectores extends Model
         return $todosSectores;
     }
 
-   public function buscarSector($nombreSector){
-       //comparo si existe el sector
-     
-       return $this->db->comparaSectores($this->table,$nombreSector);
-    }
-
-    public function insert(array $datos)
-    {
-        $this->db->insert($this->table, $datos);
+    public function insert(array $datos){
+        if(!($this->db->buscarIfExists($this->table,$datos))){
+            return $this->db->insert($this->table, $datos);
+            } else {
+            return false;
+          }
     }
 
     public function getByIdSector($idSector){
@@ -64,11 +61,13 @@ class Sectores extends Model
         return $miSector;
     }
 
-    public function update(array $datos,$idSector)
-    {
-        $this->db->updateSector($this->table, $datos,$idSector);
+    public function update (array $datos){
+        if($this->db->update($this->table, $datos)){
+            return true;
+        } else {
+            return false;
+        }
     }
-
     public function delete($nSector){
         
         $this->db->deleteSector($this->table,$nSector);

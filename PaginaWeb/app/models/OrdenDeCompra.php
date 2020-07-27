@@ -48,7 +48,7 @@ class OrdenDeCompra extends Model
     }
 
     public function insertItemOC($datos){
-        $this->db->insert($this->tableItemOC,$datos);
+        return $this->db->insert($this->tableItemOC,$datos);
     }
 
     public function getCantInsumosAsignadas($idOC){
@@ -84,7 +84,7 @@ class OrdenDeCompra extends Model
         $datos['fechaMovimiento'] = date("Y-m-d");
         $datos['oldStock'] = $oldStock[0][0];
         $datos['newStock'] = $newStock;
-        $this->db->insert($this->tableMovimiento,$datos);
+        return $this->db->insert($this->tableMovimiento,$datos);
     }
 
     public function updateStock($idInsumo,$cantidad,$tipo){

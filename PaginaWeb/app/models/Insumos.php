@@ -47,7 +47,7 @@ class Insumos extends Model
 
     public function insert(array $datos)
     {
-        $this->db->insert($this->table, $datos);
+        return $this->db->insert($this->table, $datos);
     }
 
     public function getByIdInsumo($idInsumo){
@@ -75,7 +75,7 @@ class Insumos extends Model
 
     public function insertItem(array $datos)
     {
-        $this->db->insert($this->tableItemInsumo, $datos);
+        return $this->db->insert($this->tableItemInsumo, $datos);
     }
 
     public function registrarMovimiento($idInsumo,$datos,$cantidad){
@@ -88,7 +88,7 @@ class Insumos extends Model
         $datos['fechaMovimiento'] = date("Y-m-d");
         $datos['oldStock'] = $oldStock[0][0];
         $datos['newStock'] = $newStock;
-        $this->db->insert($this->tableMovimiento,$datos);
+        return $this->db->insert($this->tableMovimiento,$datos);
     }
 
     public function updateStock($idInsumo,$cantidad,$tipo){

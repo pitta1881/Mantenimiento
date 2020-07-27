@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class Especializacion extends Model
+class EspecializacionModel extends Model
 {
   protected $tableTarea = 'tarea';
   protected $table='especializacion';
@@ -34,14 +34,13 @@ class Especializacion extends Model
   }
     
 
-   public function buscarEspecializacion($nombre){
-    //   comparo si existe el nombre de usuario 
-      return $this->db->comparaEspecializacion($this->table,$nombre);
-    }
-
-    public function insert(array $datos){
-      $this->db->insert($this->table, $datos);
-    }
+  public function insert(array $datos){
+    if(!($this->db->buscarIfExists($this->table,$datos))){
+      return $this->db->insert($this->table, $datos);
+      } else {
+      return false;
+    } 
+  }
 
     public function getByIdEspecializacion($idEspecializacion){
       $especializacion = $this->db->selectEspecializacionById($this->table,$idEspecializacion);

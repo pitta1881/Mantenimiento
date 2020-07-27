@@ -3,28 +3,30 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\Roles;
-use App\Models\Permisos;
+use App\Models\RolModel;
+use App\Models\PermisoModel;
 
-class RolesController extends Controller{
+class RolController extends Controller{
 
     public function __construct(){
-        $newError = false;
-        $this->model = new Roles();
+        $this->model = new RolModel();
         session_start();
     }
 
     /*Show all pedidos*/
-    public function administracionRoles($newError = false, $boolOk = false){
+    public function administracionRoles($new = null,$update = null,$delete = null){
         $todosRoles = $this->model->get(); 
         $datos["todosRoles"] = $todosRoles;
         $datos["userLogueado"] = $_SESSION['user'];
         $datos['permisos'] = $this->model->getPermisos($_SESSION['rol']);
-        if ($newError) {
-            $datos['newError'] = $newError;
+        if(!is_null($new)){
+            $datos['newOK'] = $new;
         }
-        if ($boolOk) {
-            $datos['okUpdate'] = true;
+        if(!is_null($update)){
+            $datos['updateOK'] = $update;
+        }
+        if(!is_null($delete)){
+            $datos['deleteOK'] = $delete;
         }
         $datos['urlheader']="> HOME > ADMINISTRACIÓN > ROLES";
         return view('/administracion/RolesView', compact('datos'));
@@ -34,13 +36,8 @@ class RolesController extends Controller{
         $rol = [
             'nombreRol' => $_POST['nombreRol']
         ];
-        $statement = $this->model->buscarRol($rol['nombreRol']);
-        if (empty($statement)) {   
-            $this->model->insert($rol);    
-            return $this->administracionRoles();
-        }else{
-            return $this->administracionRoles(true);
-        }
+        $insertOk = $this->model->insert($rol);
+        return $this->administracionRoles($insertOk);
     }
 
     public function update(){      

@@ -4,11 +4,30 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.errorInsert %}
+{% if datos.newOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta Realizada</span>",
+        "Sector Creado Correctamente");
+</script>
+{% elseif datos.newOK is not null and datos.newOK == false %}
 <script>
     alertify.alert(
         "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Sector</span>",
         "El Sector ya existe..");
+</script>
+{% endif %}
+{% if datos.updateOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
+        "Sector Modificado Correctamente");
+</script>
+{% elseif datos.updateOK is not null and datos.updateOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Sector</span>",
+        "El Sector no se pudo modificar..");
 </script>
 {% endif %}
 <div>
@@ -31,7 +50,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/sectores/administracionSectores/guardarSector" method="post" class="was-validated">
+                    <form action="newSector" method="post" class="was-validated">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="nombreSector">Nombre del Sector:</label><span class="asterisco">*</span>
@@ -113,8 +132,7 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                    <form action="/sectores/administracionSectores/modificarSector" method="post"
-                                        class="was-validated">
+                                    <form action="updateSector" method="post" class="was-validated">
                                         <input type="text" name="idSector" value="{{ sector.idSector }}" hidden>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -174,7 +192,7 @@
                     {% endif %}
                     {% if "26" in datos.permisos %}
                     <!--ELIMINAR SECTOR SI NO FUE USADO TODAVIA-->
-                    <form action="/sectores/eliminar" method="post" style="display: inline-block"
+                    <form action="deleteSector" method="post" style="display: inline-block"
                         id="formEliminarSector{{ sector.idSector }}">
                         <input type="text" name="idSector" value="{{ sector.idSector }}" hidden>
                         <div class="modal fade" id="eliminarModal{{ sector.idSector }}" tabindex="-1" role="dialog"

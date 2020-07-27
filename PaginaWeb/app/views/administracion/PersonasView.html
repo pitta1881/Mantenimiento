@@ -4,7 +4,13 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.newError %}
+{% if datos.newOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta Realizada</span>",
+        "Persona Creada Correctamente");
+</script>
+{% elseif datos.newOK is not null and datos.newOK == false %}
 <script>
     alertify.alert(
         "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nueva Persona</span>",

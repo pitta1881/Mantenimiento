@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class Roles extends Model{
+class RolModel extends Model{
     protected $table = 'roles';
     protected $tableRP = 'rolesxpermisos';
 
@@ -29,7 +29,11 @@ class Roles extends Model{
     
 
     public function insert(array $datos){
-        $this->db->insert($this->table, $datos);
+        if(!($this->db->buscarIfExists($this->table,$datos))){
+            return $this->db->insert($this->table, $datos);
+            } else {
+            return false;
+          }           
     }
 
     public function updateRol (array $rolModificado,$idRol){
@@ -41,10 +45,7 @@ class Roles extends Model{
     }
 
     public function agregarPermisosAsoc ($idRol,array $datos){
-        $this->db->insert($this->tableRP,$datos);
+        return $this->db->insert($this->tableRP,$datos);
     }
 
-    public function buscarRol($nombreRol){
-        return $this->db->comparaRol($this->table,$nombreRol);
-     }
 }

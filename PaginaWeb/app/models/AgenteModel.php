@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class Agentes extends Model
+class AgenteModel extends Model
 {
     protected $table = 'agentes';
     protected $tableEspecializacion='especializacion';
@@ -47,7 +47,11 @@ class Agentes extends Model
     }
 
     public function insert(array $datos){
-      $this->db->insert($this->table, $datos);
+      if(!($this->db->buscarIfExists($this->table,$datos))){
+        return $this->db->insert($this->table, $datos);
+        } else {
+        return false;
+      }
     }
 
 

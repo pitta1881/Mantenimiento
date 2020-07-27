@@ -4,7 +4,7 @@ function fichaSector(idSector) {
     };
     $.ajax({
         data: parametros, //datos que se envian a traves de ajax
-        url: '/fichaSector', //archivo que recibe la peticion
+        url: '/sectores/fichaSector', //archivo que recibe la peticion
         type: 'post', //método de envio
         success: function (
             response

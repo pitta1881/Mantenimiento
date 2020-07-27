@@ -3,40 +3,42 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\Especializacion;
+use App\Models\EspecializacionModel;
 
 class EspecializacionController extends Controller
 {
    public function __construct()
     {
-      $this->model = new Especializacion();
+      $this->model = new EspecializacionModel();
       session_start();   
    }
 
 
-    public function vistaAdministracionEspecializacion($boolError = false){
+    public function administracionEspecializaciones($new = null,$update = null,$delete = null){
         $todasEspecializaciones = $this->model->get(); 
         $datos['todasEspecializaciones'] = $todasEspecializaciones;
         $datos["userLogueado"] = $_SESSION['user'];
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
-        if ($boolError) {
-            $datos['errorInsert'] = true;
+        if(!is_null($new)){
+            $datos['newOK'] = $new;
+        }
+        if(!is_null($update)){
+            $datos['updateOK'] = $update;
+        }
+        if(!is_null($delete)){
+            $datos['deleteOK'] = $delete;
         }
         $datos['urlheader']="> HOME > ESPECIALIZACION";
-        return view('/especializacion/especializacion.administracion', compact('datos'));
-    }
-       
+        return view('/especializacion/EspecializacionesView', compact('datos'));
+    }       
     
-    public function guardarEspecializacion() {
-        $datos['nombre'] = $_POST['nombre'];
-        $statement = $this->model->buscarEspecializacion($datos['nombre']);        
-        if (empty($statement)) {
-            $this->model->insert($datos); 
-            return $this->vistaAdministracionEspecializacion();
-        } else {
-            return $this->vistaAdministracionEspecializacion(true);
-        }
+    public function new() {
+        $especializacion = [
+            'nombre' => $_POST['nombre']
+        ];       
+        $insertOk = $this->model->insert($especializacion);
+        return $this->administracionEspecializaciones($insertOk);
     }
     public function update(){
         $idEspecializacion = $_POST['idEspecializacion'];
@@ -44,12 +46,12 @@ class EspecializacionController extends Controller
             'nombre' => $_POST['nombre']
         ];
         $this->model->update($datos,$idEspecializacion);
-        return $this->vistaAdministracionEspecializacion();
+        return $this->administracionEspecializaciones();
      }
 
      public function delete(){
         $this->model->delete($_POST['idEspecializacion']);
-        return $this->vistaAdministracionEspecializacion();
+        return $this->administracionEspecializaciones();
     }
     
 

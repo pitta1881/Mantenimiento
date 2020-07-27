@@ -63,7 +63,7 @@ class OrdenDeTrabajo extends Model
     }
 
     public function insertItemOT($datos){
-        $this->db->insert($this->tableItem,$datos);
+        return $this->db->insert($this->tableItem,$datos);
     }
 
     public function updateEstadoTarea($idPedido,$idTarea,$estado){
