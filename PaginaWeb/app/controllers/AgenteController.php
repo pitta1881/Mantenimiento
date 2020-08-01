@@ -13,14 +13,15 @@ class AgenteController extends Controller
       session_start();   
    }
 
+   private $table = 'agentes';
+
 
     public function administracionAgentes($new = null,$update = null,$delete = null){
-        $todosAgentes = $this->model->get(); 
-        $datos['todosAgentes'] = $todosAgentes;
+        $datos['todosAgentes'] = $this->model->get($this->table); 
+        $datos["userLogueado"] = $_SESSION['user'];
+        $datos['permisos'] = $this->model->getPermisos();
         $datos['personas'] = $this->model->getPersonasNoAgentes();
         $datos['especializaciones'] = $this->model->getEspecializaciones();
-        $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos($_SESSION['rol']);
         if(!is_null($new)){
             $datos['newOK'] = $new;
         }
@@ -35,28 +36,27 @@ class AgenteController extends Controller
     }       
     
     public function new() {
-        $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']);
         $agente = [
             'idAgente' => $_POST['idAgente'],
-            'idEspecializacion' => $idEspecializacion
+            'idEspecializacion' => $_POST['idEspecializacion']
         ];
-        $insertOk = $this->model->insert($agente);
+        $insertOk = $this->model->insert($this->table,$agente);
         return $this->administracionAgentes($insertOk);
     }
 
     public function update(){
-        $idAgente = $_POST['idAgente'];
-        $idEspecializacion = $this->model->getIdEspecializacionPorNombre($_POST['especializacion']); 
-        $datos = [
-            'idEspecializacion' => $idEspecializacion
+        $agente = [
+            'idAgente' => $_POST['idAgente'],
+            'idEspecializacion' => $_POST['idEspecializacion']
         ];
-        $this->model->update($datos,$idAgente);
-        return $this->administracionAgentes(null,true);
+        $updateOk = $this->model->update($this->table,$agente);
+        return $this->administracionAgentes(null,$updateOk);
      }
 
      public function delete(){
-        $this->model->delete($_POST['idAgente']);
-        return $this->administracionAgentes(null,null,true);
+        $agente['idAgente'] = $_POST['idAgente'];
+        $deleteOk = $this->model->delete($this->table,$agente);
+        return $this->administracionAgentes(null,null,$deleteOk);
     }
     
 }

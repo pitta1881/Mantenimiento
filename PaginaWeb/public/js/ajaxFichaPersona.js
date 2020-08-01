@@ -1,6 +1,6 @@
-function fichaPersona(idAgente) {
+function fichaPersona(dni) {
     var parametros = {
-        "idAgente": idAgente,
+        "dni": dni,
     };
     $.ajax({
         data: parametros, //datos que se envian a traves de ajax
@@ -17,6 +17,12 @@ function fichaPersona(idAgente) {
                 "<br> <strong>Direccion:</strong> " + miPersona.direccion +
                 "<br> <strong>Email:</strong> " + miPersona.email
             );
-        }
+        },
+        error: function (response) {
+
+        },
+
+
+
     });
 }

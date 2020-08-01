@@ -18,11 +18,7 @@ class OrdenDeTrabajo extends Model
 
 
 
-    public function getPermisos($idRol){
-        $roles = $this->db->selectPermisosByRol($idRol);
-        $misRoles = json_decode(json_encode($roles), True);
-        return $misRoles; 
-    }
+
 
     public function get(){
         $ot = $this->db->selectAll($this->tableOT);

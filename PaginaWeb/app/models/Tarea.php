@@ -19,11 +19,7 @@ class Tarea extends Model
     protected $tableInsumo = 'insumo';
 
     
-    public function getPermisos($idRol){
-        $roles = $this->db->selectPermisosByRol($idRol);
-        $misRoles = json_decode(json_encode($roles), True);
-        return $misRoles; 
-    }
+
 
     public function getEspecializaciones() {
         $especializaciones = $this->db->getEspecializaciones($this->tableEspecializacion);

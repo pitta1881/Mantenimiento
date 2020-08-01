@@ -17,11 +17,17 @@
         "El Rol ya existe..");
 </script>
 {% endif %}
-{% if datos.okUpdate %}
+{% if datos.updateOK %}
 <script>
     alertify.alert(
-        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificaciones realizadas</span>",
-        "Permisos actualizados correctamente");
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
+        "Rol Modificado Correctamente");
+</script>
+{% elseif datos.updateOK is not null and datos.updateOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Rol</span>",
+        "El Rol no se pudo modificar..");
 </script>
 {% endif %}
 <div>

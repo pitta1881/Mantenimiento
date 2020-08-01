@@ -65,7 +65,7 @@
                                     <option value="" selected>Seleccione una Persona</option>
                                     {% for persona in datos.todosPersonas %}
                                     {% if persona.dni != '0' %}
-                                    <option value={{ persona.dni }}>{{ persona.nombre }},&nbsp;{{ persona.apellido }}
+                                    <option value="{{ persona.dni }}">{{ persona.nombre }},&nbsp;{{ persona.apellido }}
                                     </option>
                                     {% endif %}
                                     {% endfor %}
@@ -79,7 +79,7 @@
                                 <select name="idRol" class="form-control custom-select" required>
                                     <option value="" selected>Seleccione un Rol</option>
                                     {% for rol in datos.roles %}
-                                    <option value={{ rol.idRol }}>{{ rol.nombreRol }}</option>
+                                    <option value="{{ rol.idRol }}">{{ rol.nombreRol }}</option>
                                     {% endfor %}}
                                 </select>
                             </div>

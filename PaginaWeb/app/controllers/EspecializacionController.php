@@ -13,13 +13,14 @@ class EspecializacionController extends Controller
       session_start();   
    }
 
+    private $table='especializacion';
+    private $tableTarea = 'tarea';  
+    private $tableAgentes='agentes';
 
     public function administracionEspecializaciones($new = null,$update = null,$delete = null){
-        $todasEspecializaciones = $this->model->get(); 
-        $datos['todasEspecializaciones'] = $todasEspecializaciones;
+        $datos['todasEspecializaciones'] = $this->model->get($this->table,array($this->tableTarea,$this->tableAgentes)); 
         $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
+        $datos['permisos'] = $this->model->getPermisos();
         if(!is_null($new)){
             $datos['newOK'] = $new;
         }
@@ -34,24 +35,23 @@ class EspecializacionController extends Controller
     }       
     
     public function new() {
-        $especializacion = [
-            'nombre' => $_POST['nombre']
-        ];       
-        $insertOk = $this->model->insert($especializacion);
+        $especializacion['nombre'] = $_POST['nombre'];       
+        $insertOk = $this->model->insert($this->table,$especializacion);
         return $this->administracionEspecializaciones($insertOk);
     }
     public function update(){
-        $idEspecializacion = $_POST['idEspecializacion'];
-        $datos = [
+        $especializacion = [
+            'idEspecializacion' => $_POST['idEspecializacion'],
             'nombre' => $_POST['nombre']
         ];
-        $this->model->update($datos,$idEspecializacion);
-        return $this->administracionEspecializaciones();
+        $updateOk = $this->model->update($this->table,$especializacion);
+        return $this->administracionEspecializaciones(null,$updateOk);
      }
 
      public function delete(){
-        $this->model->delete($_POST['idEspecializacion']);
-        return $this->administracionEspecializaciones();
+        $especializacion['idEspecializacion'] = $_POST['idEspecializacion'];  
+        $deleteOk = $this->model->delete($this->table,$especializacion);
+        return $this->administracionEspecializaciones(null,null,$deleteOk);
     }
     
 

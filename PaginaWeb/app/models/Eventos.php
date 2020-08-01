@@ -8,11 +8,7 @@ class Eventos extends Model{
     protected $table = 'eventos';
 
  
-    public function getPermisos($idRol){
-        $roles = $this->db->selectPermisosByRol($idRol);
-        $misRoles = json_decode(json_encode($roles), True);
-        return $misRoles; 
-    }
+
     
     public function get(){
         $eventos = $this->db->selectAll($this->table);      

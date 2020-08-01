@@ -17,11 +17,30 @@
         "El Permiso ya existe..");
 </script>
 {% endif %}
-{% if datos.okUpdate %}
+{% if datos.updateOK %}
 <script>
     alertify.alert(
-        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificaciones realizadas</span>",
-        "Permisos actualizado correctamente");
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
+        "Permiso Modificado Correctamente");
+</script>
+{% elseif datos.updateOK is not null and datos.updateOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Permiso</span>",
+        "El Permiso no se pudo modificar..");
+</script>
+{% endif %}
+{% if datos.deleteOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja Realizada</span>",
+        "Permiso Eliminado Correctamente");
+</script>
+{% elseif datos.deleteOK is not null and datos.deleteOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al eliminar Permiso</span>",
+        "El Permiso no se pudo eliminar..");
 </script>
 {% endif %}
 <div>

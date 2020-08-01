@@ -10,19 +10,37 @@
         "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta realizada</span>",
         "Agente creado correctamente");
 </script>
+{% elseif datos.newOK is not null and datos.newOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Agente</span>",
+        "El Agente ya existe..");
+</script>
 {% endif %}
 {% if datos.updateOK %}
 <script>
     alertify.alert(
-        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación realizada</span>",
-        "Agente modificado correctamente");
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
+        "Agente Modificado Correctamente");
+</script>
+{% elseif datos.updateOK is not null and datos.updateOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Agente</span>",
+        "El Agente no se pudo modificar..");
 </script>
 {% endif %}
 {% if datos.deleteOK %}
 <script>
     alertify.alert(
-        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja realizada</span>",
-        "Agente eliminado correctamente");
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja Realizada</span>",
+        "Agente Eliminado Correctamente");
+</script>
+{% elseif datos.deleteOK is not null and datos.deleteOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al eliminar Agente</span>",
+        "El Agente no se pudo eliminar..");
 </script>
 {% endif %}
 <div>
@@ -69,10 +87,11 @@
                             <div class="invalid-feedback">Complete este campo</div>
                         </div>
                         <div class="form-group">
-                            <label for="especializacion">Especializacion</label><span class="asterisco">*</span>
-                            <select name="especializacion" class="form-control custom-select">
+                            <label for="idEspecializacion">Especializacion</label><span class="asterisco">*</span>
+                            <select name="idEspecializacion" class="form-control custom-select">
                                 {% for especializacion in datos.especializaciones %}
-                                <option value="{{ especializacion.nombre }}">{{ especializacion.nombre }}</option>
+                                <option value="{{ especializacion.idEspecializacion }}">{{ especializacion.nombre }}
+                                </option>
                                 {% endfor %}
                             </select>
                             <div class="invalid-feedback">Complete este campo</div>
@@ -136,15 +155,15 @@
                                                 value="{{ agente.nombre }},&nbsp; {{ agente.apellido }}" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="especializacion">Especializacion</label><span
+                                            <label for="idEspecializacion">Especializacion</label><span
                                                 class="asterisco">*</span>
-                                            <select name="especializacion" class="form-control custom-select">
+                                            <select name="idEspecializacion" class="form-control custom-select">
                                                 {% for especializacion in datos.especializaciones %}
                                                 {% if especializacion.nombre == agente.especializacionNombre %}
-                                                <option value="{{ especializacion.nombre }}" selected>
+                                                <option value="{{ especializacion.idEspecializacion }}" selected>
                                                     {{ especializacion.nombre }}</option>
                                                 {% else %}
-                                                <option value="{{ especializacion.nombre }}">
+                                                <option value="{{ especializacion.idEspecializacion }}">
                                                     {{ especializacion.nombre }}
                                                 </option>
                                                 {% endif %}

@@ -1,11 +1,12 @@
 <?php
 
-    $router->get('', 'PagesController@login');
-    $router->get('home', 'PagesController@home');
-    $router->get('cerrarSesion', 'PagesController@cerrarSesion');
+//rutas logIn-logOut
+    $router->get('', 'LogInOutController@logIn');
+    $router->post('login/validar', 'LogInOutController@validarLogin');
+    $router->get('logOut', 'LogInOutController@logOut');
 
-//rutas Login
-    $router->post('login/validar', 'LoginController@validarLogin');
+//rutas Home
+    $router->get('home', 'HomeController@home');
 
 //rutas Usuarios
     $router->get('administracion/usuarios','UsuarioController@administracionUsuarios');
@@ -52,14 +53,13 @@
     $router->post('sectores/deleteSector', 'SectorController@delete');
     $router->post('sectores/fichaSector', 'SectorController@ficha');
 
-    //rutas pedidos
-    $router->get('pedido/verTodos', 'PedidoController@index');
-    $router->get('fichaPedido', 'PedidoController@ficha');
-    $router->post('pedido/guardar', 'PedidoController@guardar');
-    $router->post('pedido/buscar', 'PedidoController@buscarPor');
-    $router->post('pedido/modificar', 'PedidoController@modificar');
-    $router->post('pedido/finalizar', 'PedidoController@finalizar');
-    $router->post('pedido/cancelar', 'PedidoController@cancelar');
+//rutas pedidos
+    $router->get('pedidos', 'PedidoController@administracionPedidos');
+    $router->post('pedidos/newPedido', 'PedidoController@new');
+    $router->post('pedidos/updatePedido', 'PedidoController@update');
+    $router->post('pedidos/finishPedido', 'PedidoController@finish');
+    $router->post('pedidos/cancelPedido', 'PedidoController@cancel');
+    $router->get('pedidos/fichaPedido', 'PedidoController@ficha');
     
 //rutas tareas
     $router->post('tarea/guardar', 'TareaController@guardar');

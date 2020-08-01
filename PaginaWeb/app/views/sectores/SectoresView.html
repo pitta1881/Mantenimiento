@@ -30,6 +30,19 @@
         "El Sector no se pudo modificar..");
 </script>
 {% endif %}
+{% if datos.deleteOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja Realizada</span>",
+        "Sector Eliminado Correctamente");
+</script>
+{% elseif datos.deleteOK is not null and datos.deleteOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al eliminar Sector</span>",
+        "El Sector no se pudo eliminar..");
+</script>
+{% endif %}
 <div>
     {% block header %}
     {% include 'partials/header.html' with {datos:datos} only %}

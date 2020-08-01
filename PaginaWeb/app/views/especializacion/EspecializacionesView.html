@@ -17,6 +17,32 @@
         "La Especialización ya existe..");
 </script>
 {% endif %}
+{% if datos.updateOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
+        "Especialización Modificada Correctamente");
+</script>
+{% elseif datos.updateOK is not null and datos.updateOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Especialización</span>",
+        "La Especialización no se pudo modificar..");
+</script>
+{% endif %}
+{% if datos.deleteOK %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja Realizada</span>",
+        "Especialización Eliminado Correctamente");
+</script>
+{% elseif datos.deleteOK is not null and datos.deleteOK == false %}
+<script>
+    alertify.alert(
+        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al eliminar Especialización</span>",
+        "La Especialización no se pudo eliminar..");
+</script>
+{% endif %}
 <div>
     {% block header %}
     {% include 'partials/header.html' with {datos:datos} only %}

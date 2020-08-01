@@ -3,31 +3,78 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\Pedido;
+use App\Models\PedidoModel;
 use App\Models\Tarea;
 
 class PedidoController extends Controller{
 
     public function __construct(){
-        $this->model = new Pedido();
+        $this->model = new PedidoModel();
         session_start();
     }
 
+    protected $table = 'pedido';
+
     /*Show all pedidos*/
-    public function index(){
-        $todosPedidos = $this->model->get(); 
-        $datos['todosPedidos'] = $todosPedidos;
-        $datos["diaHoy"] = date("Y-m-d");
+    public function administracionPedidos($new = null,$update = null,$delete = null){
+        $datos['todosPedidos'] = $this->model->get($this->table); 
+        $datos["userLogueado"] = $_SESSION['user'];
+        $datos['permisos'] = $this->model->getPermisos();
         $datos["sectores"] = $this->model->getSectores();
         $datos["prioridades"] = $this->model->getPrioridades();
-        if (!empty($_GET)) {
-            $datos['evento']=$this->model->getEventoById($_GET['idEvento']);
-        }
         $datos["estados"] = $this->model->getEstados();
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
+        $datos["diaHoy"] = date("Y-m-d");
+        if(!is_null($new)){
+            $datos['newOK'] = $new;
+        }
+        if(!is_null($update)){
+            $datos['updateOK'] = $update;
+        }
+        if(!is_null($delete)){
+            $datos['deleteOK'] = $delete;
+        }
+        $datos['urlheader']="> HOME > PEDIDOS";
         return view('/pedidos/pedidosVerTodos', compact('datos'));
+    }
+
+    public function new(){
+        $pedido = [
+            'fechaInicio' => $_POST['fechaInicio'],
+            'estado' => $_POST['estado'],
+            'descripcion' => $_POST['descripcion'],
+            'idSector' => $_POST['idSector'],
+            'prioridad' => $_POST['prioridad'],
+            'nombreUsuario' => $_POST['nombreUsuario']
+        ];
+      $insertOk = $this->model->insert($this->table,$pedido,true);
+      return $this->administracionPedidos($insertOk);
+    }
+
+    public function update(){
+        $pedido = [
+            'id' => $_POST['id'],
+            'estado' => $_POST['estado'],
+            'descripcion' => $_POST['descripcion'],
+            'idSector' => $_POST['idSector'],
+            'prioridad' => $_POST['prioridad'],
+        ];
+        $updateOk = $this->model->update($this->table,$pedido);
+        return $this->administracionPedidos(null,$updateOk);
+    }
+    
+     public function finish(){
+         $this->model->updateEstadoPedido($_POST['id'],'Finalizado');
+         redirect("fichaPedido?id=".$_POST['id']);
+     }
+
+     public function cancel(){
+        $this->model->updateEstadoPedido($_POST['id'],'Cancelado');
+        redirect("fichaPedido?id=".$_POST['id']);
+    }
+
+    public function getDatos(){
+        $todosPedidos = $this->model->get(); 
+        echo json_encode($todosPedidos);
     }
 
     /*muestra un solo pedido especifico ingresado por GET*/
@@ -42,66 +89,5 @@ class PedidoController extends Controller{
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
         return view('/pedidos/pedidoVerFicha', compact('datos'));
-    }
-
-    public function guardar(){
-        $idSector = $this->model->getIdSectorPorNombre($_POST['sector']);
-        $datos['idSector']= $idSector;
-        $pedido = [
-            'fechaInicio' => $_POST['fechaInicio'],
-            'estado' => $_POST['estado'],
-            'descripcion' => $_POST['descripcion'],
-            'idSector' => $idSector,
-            'prioridad' => $_POST['prioridad'],
-            'nombreUsuario' => $_POST['nombreUsuario']
-        ];
-      $this->model->insert($pedido);
-      if(!empty($_POST['idEvento'])){
-        $this->model->eliminarEvento($_POST['idEvento']);
-      }
-      $datos['arrayPedido'] = $pedido;
-      $datos["userLogueado"] = $_SESSION['user'];
-      $permisos=$this->model->getPermisos($_SESSION['rol']);
-      $datos['permisos']= $permisos;
-      $idNuevoPedido = $this->model->getIdUltimoPedido();
-      redirect("fichaPedido?id=".$idNuevoPedido);
-    }
-
-    public function modificar(){
-        $idPedido = $_POST['id'];
-        $idSector = $this->model->getIdSectorPorNombre($_POST['sector']);
-        $datos['idSector']= $idSector;
-        $arrayPedido = [
-            'fechaInicio' => $_POST['fechaInicio'],
-            'estado' => $_POST['estado'],
-            'descripcion' => $_POST['descripcion'],
-            'idSector' => $idSector,
-            'prioridad' => $_POST['prioridad'],
-        ];
-        $this->model->updatePedido($arrayPedido,$idPedido);
-        redirect("fichaPedido?id=".$idPedido);
-    }
-    
-    public function buscarPor(){
-        $filter = $_POST['filtro'];
-        $value = $_POST['textBusqueda'];
-        $datos['todosPedidos'] = $this->model->getAllbyFilter($filter,$value);
-        $datos['userLogueado'] = $_SESSION['user'];           
-        return view('/pedidos/pedidosVerTodos', compact('datos'));         
-     }
-
-     public function finalizar(){
-         $this->model->updateEstadoPedido($_POST['id'],'Finalizado');
-         redirect("fichaPedido?id=".$_POST['id']);
-     }
-
-     public function cancelar(){
-        $this->model->updateEstadoPedido($_POST['id'],'Cancelado');
-        redirect("fichaPedido?id=".$_POST['id']);
-    }
-
-    public function getDatos(){
-        $todosPedidos = $this->model->get(); 
-        echo json_encode($todosPedidos);
     }
 }

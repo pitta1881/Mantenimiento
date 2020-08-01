@@ -10,15 +10,17 @@ class PersonaController extends Controller{
         $this->model = new PersonaModel();
         session_start();    
     }
+
+    private $table = 'personas';
+    private $tableAgentes = 'agentes';
     
     public function administracionPersonas($new = null,$update = null,$delete = null){
-        $todasPersonas = $this->model->get(); 
-        $datos['todasPersonas'] = $todasPersonas;
+        $datos['todasPersonas'] = $this->model->get($this->table,array($this->tableAgentes)); 
+        $datos["userLogueado"] = $_SESSION['user'];
+        $datos['permisos'] = $this->model->getPermisos();
         $datos['estados'] = $this->model->getEstadosPersona();
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
-        $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos($_SESSION['rol']);
         if(!is_null($new)){
             $datos['newOK'] = $new;
         }
@@ -42,26 +44,27 @@ class PersonaController extends Controller{
             'fecha_nacimiento' => $_POST['fecha_nacimiento'],
             'estado' => $_POST['estado']
         ]; 
-        $insertOk = $this->model->insert($persona);
+        $insertOk = $this->model->insert($this->table,$persona);
         return $this->administracionPersonas($insertOk);
     }
 
     public function update(){
-        $idPersona = $_POST['dni'];
         $persona = [
+            'dni' => $_POST['dni'],
             'nombre' => $_POST['nombre'],
             'apellido' => $_POST['apellido'],
             'direccion' => $_POST['direccion'],
             'email' => $_POST['email'],
             'fecha_nacimiento' => $_POST['fecha_nacimiento']
         ];
-        $this->model->update($persona,$idPersona);
-        return $this->administracionPersonas();
+        $updateOk = $this->model->update($this->table,$persona);
+        return $this->administracionPersonas(null,$updateOk);
     }
     
     public function delete(){
-        $this->model->delete($_POST['dni']);
-        return $this->administracionPersonas();
+        $persona['dni'] = $_POST['dni'];
+        $deleteOk = $this->model->delete($this->table,$persona);
+        return $this->administracionPersonas(null,null,$deleteOk);
     }
 
     public function updateEstado(){
@@ -69,7 +72,8 @@ class PersonaController extends Controller{
     }
 
     public function ficha(){
-        $miPersona = $this->model->getByIdPersona($_POST['idAgente']);
+        $persona['dni'] = $_POST['dni'];
+        $miPersona = $this->model->getFicha($this->table,$persona);
         echo json_encode($miPersona);
     }
     

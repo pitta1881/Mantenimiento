@@ -13,12 +13,13 @@ class RolController extends Controller{
         session_start();
     }
 
+    private $table = 'roles';
+
     /*Show all pedidos*/
     public function administracionRoles($new = null,$update = null,$delete = null){
-        $todosRoles = $this->model->get(); 
-        $datos["todosRoles"] = $todosRoles;
+        $datos["todosRoles"] = $this->model->get($this->table); 
         $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos($_SESSION['rol']);
+        $datos['permisos'] = $this->model->getPermisos();
         if(!is_null($new)){
             $datos['newOK'] = $new;
         }
@@ -33,31 +34,26 @@ class RolController extends Controller{
     }
 
     public function new(){
-        $rol = [
-            'nombreRol' => $_POST['nombreRol']
-        ];
+        $rol['nombreRol'] = $_POST['nombreRol'];
         $insertOk = $this->model->insert($rol);
         return $this->administracionRoles($insertOk);
     }
 
-    public function update(){      
-        $idRol= $_POST["idRol"];
+    public function update(){     
+        $rol['idRol'] = $_POST["idRol"];
         $permisos= $_POST["permisos"];
-        $this->model->borrarPermisosAsoc($idRol);
+        $this->model->borrarPermisosAsoc($rol);
         for ($i=0;$i<count($permisos);$i++)    {  
-            $rol = [
-                'idRol' => $idRol,
-                'idPermiso' => $permisos[$i]                
-            ];
-            $this->model->agregarPermisosAsoc($idRol,$rol);
+            $rol['idPermiso'] = $permisos[$i];
+            $this->model->agregarPermisosAsoc($rol);
         }
-        return $this->administracionRoles(false,true);
+        return $this->administracionRoles(null,true);
     }
 
     public function ficha(){
-        $idRol= $_POST['idRol'];
-        $miRol['miRol'] = $this->model->getRol($idRol); 
-        $miRol["misPermisos"]= $this->model->getPermisos($idRol);
+        $rol['idRol'] = $_POST['idRol'];
+        $miRol['miRol'] = $this->model->getFicha($this->table,$rol);
+        $miRol["misPermisos"] = $this->model->getPermisos($rol['idRol']);
         echo json_encode($miRol);
     }
 }

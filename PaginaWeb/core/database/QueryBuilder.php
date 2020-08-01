@@ -26,6 +26,21 @@ class QueryBuilder
     }
 
     /**
+     * Limpia guiones - que puedan venir en los nombre de los parametros
+     * ya que esto no funciona con PDO
+     *
+     * Ver: http://php.net/manual/en/pdo.prepared-statements.php#97162
+     */
+    private function cleanParameterName($parameters)
+    {
+        $cleaned_params = [];
+        foreach ($parameters as $name => $value) {
+            $cleaned_params[str_replace('-', '', $name)] = str_replace('-', '', $value) ;
+        }
+        return $cleaned_params;
+    }
+
+    /**
      * Select all records from a database table.
      *
      * @param string $table
@@ -35,7 +50,7 @@ class QueryBuilder
             "SELECT * FROM {$table}"
         );
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -57,8 +72,7 @@ class QueryBuilder
             return $statement->execute($parameters);
         } catch (Exception $e) {
             return false;
-        }
-        
+        }        
     }
 
     public function buscarIfExists($table, $parameters){  
@@ -83,6 +97,32 @@ class QueryBuilder
         }
     }
 
+    public function buscarIfExistsAnd($table, $parameters){
+        $columnaCompara = array_key_first($parameters);
+        $datoColumnaCompara = $parameters[$columnaCompara];
+        array_shift($parameters);
+        $parameters = $this->cleanParameterName($parameters);
+        $setPart = array();
+        $bindings = array();
+
+        foreach ($parameters as $key => $value){
+           $setPart[] = "{$key} = :{$key}";
+           $bindings[":{$key}"] = $value;
+        }
+            try {
+                 $sql = "SELECT 1 FROM {$table} WHERE ".implode('AND ', $setPart)." LIMIT 1";
+                 $stmt = $this->pdo->prepare($sql);
+                 $stmt->execute($bindings);
+                 if($stmt->fetchColumn()){
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (Exception $e) {
+                return false;
+            }   
+    }
+
     public function update($table, $parameters){
         $columnaCompara = array_key_first($parameters);
         $datoColumnaCompara = $parameters[$columnaCompara];
@@ -105,23 +145,101 @@ class QueryBuilder
             }   
     }
 
-    public function borrarPermisosAsociados($idRol){
-        $statement = $this->pdo->prepare(
-            "DELETE FROM rolesxPermisos WHERE idRol=$idRol"
-         );
-         $statement->execute(); 
+    public function delete($table, $parameters){
+        $columnaCompara = array_key_first($parameters);
+        $datoColumnaCompara = $parameters[$columnaCompara];
+        $sql = sprintf(
+            "delete from %s where %s='%s'",
+            $table,
+            $columnaCompara,
+            $datoColumnaCompara
+        );
+        try {
+            $statement = $this->pdo->prepare($sql);
+            return $statement->execute($parameters);
+        } catch (Exception $e) {
+             return false;
+        }
     } 
 
+    public function selectAllWhere($table, $parameters){
+        $columnaCompara = array_key_first($parameters);
+        $datoColumnaCompara = $parameters[$columnaCompara];
+        $sql = sprintf(
+            "select * from %s where %s='%s'",
+            $table,
+            $columnaCompara,
+            $datoColumnaCompara
+        );
+        try {
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute($parameters);
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+             return false;
+        }
+    } 
 
-    public function updateRol($table, $parameters, $id){
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET  nombreRol=:nombreRol WHERE idRol=$id"; //recontra HARDCODEADO
-            try {
-                $statement = $this->pdo->prepare($sql);
-                $statement->execute($parameters);
-            } catch (Exception $e) {
-                $this->sendToLog($e);
-            }   
+    public function selectWhat($table,$what){
+        $sql = sprintf(
+            "select %s from %s",
+            $what,
+            $table
+        );
+        try {
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+             return false;
+        }
+    }
+
+    public function selectWhatWhere($table, $what, $parameters){
+        $columnaCompara = array_key_first($parameters);
+        $datoColumnaCompara = $parameters[$columnaCompara];
+        $sql = sprintf(
+            "select %s from %s where %s='%s'",
+            $what,
+            $table,
+            $columnaCompara,
+            $datoColumnaCompara
+        );
+        try {
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute($parameters);
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+             return false;
+        }
+    } 
+
+    public function selectWhatWherePerm($table, $what, $parameters){
+        $columnaCompara = array_key_first($parameters);
+        $datoColumnaCompara = $parameters[$columnaCompara];
+        $sql = sprintf(
+            "select %s from %s where %s='%s'",
+            $what,
+            $table,
+            $columnaCompara,
+            $datoColumnaCompara
+        );
+        try {
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute($parameters);
+            return $statement->fetchAll(PDO::FETCH_COLUMN);
+        } catch (Exception $e) {
+             return false;
+        }
+    }
+
+    public function validarLogin($table, $usuario ,$password){
+        $statement = $this->pdo->prepare(
+            "SELECT * FROM {$table} 
+            WHERE nombre='{$usuario}' AND password='{$password}' "
+        );
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
         /*
@@ -141,16 +259,6 @@ class QueryBuilder
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$table} 
             WHERE idPedido={$numero}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    
-    public function validarLogin($table, $usuario ,$password){
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE nombre='{$usuario}' AND password='{$password}' "
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -217,43 +325,11 @@ class QueryBuilder
 }
 
     
-    /**
-     * update a record .
-     *
-     * @param  string $table
-     * @param  array  $parameters
-     */
-    public function updatePedido($table, $parameters, $id){
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET fechaInicio=:fechaInicio, estado=:estado, descripcion=:descripcion, idSector=:idSector, prioridad=:prioridad WHERE id=$id"; //recontra HARDCODEADO
-            try {
-                $statement = $this->pdo->prepare($sql);
-                $statement->execute($parameters);
-            } catch (Exception $e) {
-                $this->sendToLog($e);
-            }   
-    }
-
     private function sendToLog(Exception $e)
     {
         if ($this->logger) {
             $this->logger->error('Error', ["Error" => $e]);
         }
-    }
-
-    /**
-     * Limpia guiones - que puedan venir en los nombre de los parametros
-     * ya que esto no funciona con PDO
-     *
-     * Ver: http://php.net/manual/en/pdo.prepared-statements.php#97162
-     */
-    private function cleanParameterName($parameters)
-    {
-        $cleaned_params = [];
-        foreach ($parameters as $name => $value) {
-            $cleaned_params[str_replace('-', '', $name)] = $value ;
-        }
-        return $cleaned_params;
     }
 
     public function idTareaSiguiente($table,$idPedido){
@@ -366,69 +442,6 @@ class QueryBuilder
         $statement->execute();
     }
 
-    public function selectAgenteById($table, $nAgente){
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE idAgente={$nAgente}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function selectUsuarioByNombre($table, $nAgente){
-        $statement = $this->pdo->prepare(
-            "SELECT nombre,idRol,idPersona FROM {$table} 
-            WHERE nombre='{$nAgente}'"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function updateAgente($table, $parameters, $nAgente){
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET idEspecializacion=:idEspecializacion WHERE idAgente=$nAgente";
-            try {
-                $statement = $this->pdo->prepare($sql);
-                $statement->execute($parameters);
-            } catch (Exception $e) {
-                $this->sendToLog($e);
-            }   
-    }
-
-    public function deleteAgente($table,$idAgente){ //table = agentes
-        $statement = $this->pdo->prepare(
-           "DELETE FROM $table  WHERE idAgente = $idAgente"
-        );
-        $statement->execute();
-    }
-
-    public function selectEspecializacionById($table, $nEspecializacion){
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE idEspecializacion={$nEspecializacion}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function updateEspecializacion($table, $parameters, $nEspecializacion){
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET nombre=:nombre WHERE idEspecializacion=$nEspecializacion";
-            try {
-                $statement = $this->pdo->prepare($sql);
-                $statement->execute($parameters);
-            } catch (Exception $e) {
-                $this->sendToLog($e);
-            }   
-    }
-
-    public function deleteEspecializacion($table,$idEspecializacion){ //table = agentes
-        $statement = $this->pdo->prepare(
-           "DELETE FROM $table  WHERE idEspecializacion = $idEspecializacion"
-        );
-        $statement->execute();
-    }
-
     public function deletePermiso($table,$idEspecializacion){ //table = agentes
         $statement = $this->pdo->prepare(
            "DELETE FROM $table  WHERE idPermiso = $idEspecializacion"
@@ -436,14 +449,6 @@ class QueryBuilder
         $statement->execute();
     }
 
-
-    public function getEspecializaciones($table){ //table = especializacion
-        $statement = $this->pdo->prepare(
-           "SELECT nombre FROM $table"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
 
     public function getIdFromNombreEspecializacion($tableEsp,$nombre){
         $statement = $this->pdo->prepare(
@@ -461,14 +466,6 @@ class QueryBuilder
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function getNombreFromIdPermiso($tableEsp,$idEsp){
-        $statement = $this->pdo->prepare(
-           "SELECT idPermiso, nombrePermiso FROM $tableEsp WHERE idPermiso=$idEsp"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
     public function deleteSector($table,$idSector){ 
         $statement = $this->pdo->prepare(
            "DELETE FROM $table  WHERE idSector = $idSector"
@@ -484,25 +481,9 @@ public function selectSectorById($table, $nSector){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function getSectores($table){ //table = sectores
-        $statement = $this->pdo->prepare(
-           "SELECT nombreSector FROM $table"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
     public function getIdFromNombreSector($tableSector,$nombre){
         $statement = $this->pdo->prepare(
            "SELECT (idSector) FROM $tableSector WHERE nombreSector='$nombre'"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function getNombreFromIdSector($tableSector,$idSector){
-        $statement = $this->pdo->prepare(
-           "SELECT (nombreSector) FROM $tableSector WHERE idSector=$idSector"
     );
     $statement->execute();
     return $statement->fetchAll(PDO::FETCH_NUM);
@@ -741,32 +722,7 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function selectPersonaByDNI($tablePersona, $dni){ 
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tablePersona WHERE dni=$dni"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-    
-
-    public function selectRolById($tableRol, $idRol){ 
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableRol WHERE idRol=$idRol"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-
-    public function selectPermisosByRol( $idRol){ 
-        $statement = $this->pdo->prepare(
-            "SELECT idPermiso FROM rolesxpermisos WHERE idRol=$idRol"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_COLUMN,0);
-    }
-    
+   
     public function getFromAgenteConIdPersona($tableAgente,$nAgente){ 
         $statement = $this->pdo->prepare(
            "SELECT idAgente FROM $tableAgente WHERE idAgente=$nAgente"
@@ -775,47 +731,6 @@ public function updateEvento($table, $parameters, $idEvento){
     return $statement->fetchAll(PDO::FETCH_CLASS);
     }
     
-    public function updatePersona($tablePersona, $parameters, $dni){
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $tablePersona SET nombre=:nombre, apellido=:apellido, direccion=:direccion, email=:email, fecha_nacimiento=:fecha_nacimiento WHERE dni=$dni"; //recontra HARDCODEADO
-            try {
-                $statement = $this->pdo->prepare($sql);
-                $statement->execute($parameters);
-            } catch (Exception $e) {
-                $this->sendToLog($e);
-            }   
-    }
-
-
-    public function updatePermiso($table, $parameters, $nEspecializacion){
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET nombrePermiso=:nombrePermiso WHERE idPermiso=$nEspecializacion";
-            try {
-                $statement = $this->pdo->prepare($sql);
-                $statement->execute($parameters);
-            } catch (Exception $e) {
-                $this->sendToLog($e);
-            }   
-    }
-
-    public function deletePersona($table,$idPersona){ 
-        $statement = $this->pdo->prepare(
-           "DELETE FROM $table  WHERE dni = $idPersona"
-        );
-        $statement->execute();
-    }
-
-    public function selectPermisosNombre($nombreUser){
-        
-        $statement = $this->pdo->prepare(
-            "SELECT P.nombrePermiso FROM rolesxpermisos RP 
-            INNER JOIN permisos P ON RP.idPermiso= P.idPermiso WHERE RP.idRol=(SELECT idRol FROM usuarios 
-            WHERE nombre ='$nombreUser')"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
     public function getSize($tabla){
         $statement = $this->pdo->prepare(
             "SELECT * FROM $tabla"
@@ -861,14 +776,6 @@ public function updateEvento($table, $parameters, $idEvento){
     $statement->execute();
     
        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function selectAllpermisosByIdRol($tableRolesxPermisos, $idRol){        
-        $statement = $this->pdo->prepare(
-            "SELECT P.nombrePermiso FROM $tableRolesxPermisos RP INNER JOIN permisos P ON RP.idPermiso=P.idPermiso WHERE RP.idRol=$idRol"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
     public function selectCantidadInsumoItem($tableItemInsumo,$idInsumo){
@@ -1103,7 +1010,3 @@ SELECT estado ,COUNT(*) as suma FROM $tablaPedido WHERE fechaInicio>=$fechaDesde
     
     
 }
-
-
-
-

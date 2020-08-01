@@ -22,7 +22,7 @@ class Pages extends Model
    
     }
 
- public function get()
+ public function getEventos()
     {
      $this->validarEventos();
         $eventos = $this->db->selectAllEventosOrdenados($this->table);
@@ -55,11 +55,7 @@ class Pages extends Model
         return $nombre[0][0];
       } 
 
-      public function getPermisos($idRol){
-        $roles = $this->db->selectPermisosByRol($idRol);
-        $misRoles = json_decode(json_encode($roles), True);
-        return $misRoles; 
-    }
+  
 
 
     public function validarEventos(){

@@ -12,11 +12,12 @@ class UsuarioController extends Controller
         session_start();    
     }
 
+    private $table = 'usuarios';
+
     public function administracionUsuarios($new = null,$update = null,$delete = null){
-        $todosUsuarios = $this->model->get();     
-        $datos['todosUsuarios'] = $todosUsuarios;
-        $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos']= $this->model->getPermisos($_SESSION['rol']);
+        $datos['todosUsuarios'] = $this->model->get($this->table);
+        $datos['userLogueado'] = $_SESSION['user'];
+        $datos['permisos'] = $this->model->getPermisos();
         $datos['roles'] = $this->model->getRoles();  
         $datos['todosPersonas'] = $this->model->getPersonas(); 
         if(!is_null($new)){
@@ -39,7 +40,7 @@ class UsuarioController extends Controller
             'idRol' => $_POST['idRol'],
             'idPersona' => $_POST['dni'],
         ];
-        $insertOk = $this->model->insert($usuario);
+        $insertOk = $this->model->insert($this->table,$usuario);
         return $this->administracionUsuarios($insertOk);
     }
 
@@ -48,7 +49,7 @@ class UsuarioController extends Controller
             'nombre' => $_POST['nombre'],
             'password' => $_POST['password']
         ];
-        $updateOk = $this->model->update($usuario);
+        $updateOk = $this->model->update($this->table,$usuario);
         return $this->administracionUsuarios(null,$updateOk);
      }
     

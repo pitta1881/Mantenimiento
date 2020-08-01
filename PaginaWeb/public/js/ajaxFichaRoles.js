@@ -257,7 +257,7 @@ function fichaRoles(idRol, modificar) {
             }
 
             alertify.myAlert(headerAlert,
-                "<form action='updateRol' method='post'>" +
+                "<form action='/administracion/roles/updateRol' method='post'>" +
                 "<input type='text' name='idRol' value=" + idRol + " hidden>" +
                 "<table id='miTabla' class='table table-bordered table-sm table-striped table-hover text-nowrap'>" +
                 "<thead class='headtable'>" +

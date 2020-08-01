@@ -11,14 +11,12 @@ class PermisoController extends Controller{
         session_start();
     }
 
-    /*Show all pedidos*/
+    private $table = 'permisos';
 
     public function administracionPermisos($new = null,$update = null,$delete = null){
-        $todosPermisos= $this->model->get(); 
-        $datos['todosPermisos'] = $todosPermisos;
-        $datos["userLogueado"] = $_SESSION['user'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
+        $datos['todosPermisos'] = $this->model->get($this->table);
+        $datos['userLogueado'] = $_SESSION['user'];
+        $datos['permisos'] = $this->model->getPermisos();
         if(!is_null($new)){
             $datos['newOK'] = $new;
         }
@@ -33,25 +31,23 @@ class PermisoController extends Controller{
     }
 
     public function new() {
-        $permiso = [
-            'nombrePermiso' => $_POST['nombrePermiso']
-        ];
-        $insertOk = $this->model->insert($permiso);
+        $permiso['nombrePermiso'] = $_POST['nombrePermiso'];
+        $insertOk = $this->model->insert($this->table,$permiso);
         return $this->administracionPermisos($insertOk); 
     }
 
     public function update(){
-        $idPermiso = $_POST['idPermiso'];
-        $datos = [
+        $permiso = [
+            'idPermiso' => $_POST['idPermiso'],
             'nombrePermiso' => $_POST['nombrePermiso']
         ];
-        $this->model->update($datos,$idPermiso);
-        return $this->administracionPermisos();
+        $updateOk = $this->model->update($this->table,$permiso);
+        return $this->administracionPermisos(null,$updateOk);
      }
 
      public function delete(){
-        $this->model->delete($_POST['idPermiso']);
-        return $this->administracionPermisos();
+        $permiso['idPermiso'] = $_POST['idPermiso'];
+        $deleteOk = $this->model->delete($this->table,$permiso);
+        return $this->administracionPermisos(null,null,$deleteOk);
     }
-
 }
