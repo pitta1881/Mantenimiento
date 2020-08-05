@@ -34,7 +34,7 @@ class PedidoController extends Controller{
             $datos['deleteOK'] = $delete;
         }
         $datos['urlheader']="> HOME > PEDIDOS";
-        return view('/pedidos/pedidosVerTodos', compact('datos'));
+        return view('/pedidos/PedidosView', compact('datos'));
     }
 
     public function new(){
@@ -63,13 +63,23 @@ class PedidoController extends Controller{
     }
     
      public function finish(){
-         $this->model->updateEstadoPedido($_POST['id'],'Finalizado');
-         redirect("fichaPedido?id=".$_POST['id']);
+        $pedido = [
+            'id' => $_POST['id'],
+            'estado' => 'Finalizado',
+            'fechaFin' => date("Y-m-d")
+        ];
+        $deleteOk = $this->model->update($this->table,$pedido);
+        return $this->administracionPedidos(null,null,$deleteOk);
      }
 
      public function cancel(){
-        $this->model->updateEstadoPedido($_POST['id'],'Cancelado');
-        redirect("fichaPedido?id=".$_POST['id']);
+        $pedido = [
+            'id' => $_POST['id'],
+            'estado' => 'Cancelado',
+            'fechaFin' => date("Y-m-d")
+        ];
+        $deleteOk = $this->model->update($this->table,$pedido);
+        return $this->administracionPedidos(null,null,$deleteOk);
     }
 
     public function getDatos(){

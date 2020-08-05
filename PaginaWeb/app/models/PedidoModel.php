@@ -33,7 +33,7 @@ class PedidoModel extends Model{
         $pedidos = $this->db->selectAll($this->table);    
         foreach ($pedidos as &$miPedido) {
             $miPedido['nombreSector'] = $this->db->selectWhatWhere($this->tableSectores,'nombreSector',array('idSector' => $miPedido['idSector']))[0]['nombreSector'];
-            $miPedido['tareasAsignadas'] = $this->getTareasAsignadasAPedido($miPedido['id']);
+            $miPedido['tareasAsignadas'] = $this->db->countTareasAsignadas($this->tableTarea,$miPedido['id'])[0][0];
             $miPedido['fechaInicio'] = date("d/m/Y", strtotime($miPedido['fechaInicio']));
             $miPedido['fechaInicioSinFormato'] = date("Y-m-d", strtotime($miPedido['fechaInicio']));
             if (is_null($miPedido['fechaFin'])){
@@ -43,12 +43,6 @@ class PedidoModel extends Model{
             }
         }  
         return $pedidos;
-    }
-    
-    public function getAllbyFilter($filter,$value){
-        $pedido = $this->db->buscar($this->table,$filter,$value);
-        $miPedido = json_decode(json_encode($pedido), True);
-        return $miPedido;
     }
     
    
@@ -63,7 +57,7 @@ class PedidoModel extends Model{
         } else {
             $miPedido['fechaFin'] = date("d/m/Y", strtotime($miPedido['fechaFin']));
         }
-        $miPedido['nombreSector'] = $this->getNombreSectorPorId($miPedido['idSector']);
+        $miPedido['nombreSector'] = $this->db->selectWhatWhere($this->tableSectores,'nombreSector',array('idSector' => $miPedido['idSector']))[0]['nombreSector'];
         $miPedido['tareas'] = $tareas;
         return $miPedido;
     }
@@ -81,33 +75,13 @@ class PedidoModel extends Model{
           return $todasTareas;
     }
 
-    public function getTareasAsignadasAPedido($idPedido){
-        $contadorTareasObj = $this->db->countTareasAsignadas($this->tableTarea,$idPedido);
-        return $contadorTareasObj[0][0];
-    }
-
     public function getTareaEspecializaciones(){
         $tarea = new Tarea();
         return $tarea->getEspecializaciones();
     }    
 
-    public function getIdUltimoPedido(){
-        $ultimo =  $this->db->getIdUltimoPedidoDB($this->table);
-        return $ultimo[0][0];
-    }
-
     public function getNombreEspecializacionPorId($idEspecializacion) {
         $nombre = $this->db->getNombreFromIdEspecializacion($this->tableEspecializacion, $idEspecializacion);
-        return $nombre[0][0];
-      }
-
-      public function getIdSectorPorNombre($nombreSector) {
-        $id = $this->db->getIdFromNombreSector($this->tableSectores, $nombreSector);
-        return $id[0][0];
-      } 
-
-      public function getNombreSectorPorId($idSector) {
-        $nombre = $this->db->getNombreFromIdSector($this->tableSectores, $idSector);
         return $nombre[0][0];
       }
 
@@ -121,13 +95,6 @@ class PedidoModel extends Model{
         return $cantidad[0][0];
       }
 
-      public function updateEstadoPedido($idPedido,$estado){
-        $this->db->updateEstadoPedido($this->table,$idPedido,$estado);
-        if ($estado == "Finalizado" || $estado == "Cancelado") {
-            $this->db->updateFechaFinPedido($this->table,$idPedido,date("Y-m-d"));
-        }
-    }
-
     public function getOTByIdId($idPedido, $idTarea){
         $miOTid['idOT'] = "";
         $OTid = $this->db->selectOTPorNPedidoNTarea($this->tableOT,$this->tableItemOT,$idPedido,$idTarea);
@@ -136,15 +103,5 @@ class PedidoModel extends Model{
         }        
         return $miOTid['idOT'];
     }
-
-    public function eliminarEvento($idEvento){
-        $this->db->deleteEventoValidar($this->tableEvento,$idEvento);
-    }
-
-    public function getEventoById($idEvento) {
-        $evento = $this->db->getEventoById($this->tableEvento, $idEvento);
-        $miEvento = json_decode(json_encode($evento[0]), True);
-        return $miEvento;
-      }
 
 }

@@ -100,11 +100,6 @@ div.dataTables_wrapper div.dataTables_filter {
   font-weight: bold;
 }
 
-
-
-
-
-
 .inline {
   display: inline-block;
   padding: 0;
@@ -123,4 +118,8 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .imprimir:hover {
   background-color: #6d5290 !important;
+}
+
+.headtable {
+  background-color: lightskyblue;
 }

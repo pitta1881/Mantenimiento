@@ -298,16 +298,6 @@ class QueryBuilder
         
     }
     
-    public function buscar($table,$filter,$value){
-            $statement = $this->pdo->prepare(
-               "SELECT * FROM {$table} 
-            WHERE {$filter} = '{$value}' ORDER BY '{$filter}'"
-   
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
     public function getActivos($table,$columna){
             $statement = $this->pdo->prepare(
                "SELECT COUNT($columna) FROM $table WHERE estado = 'Iniciado'"   
@@ -371,14 +361,6 @@ class QueryBuilder
             } catch (Exception $e) {
                 $this->sendToLog($e);
             }   
-    }
-
-    public function getIdUltimoPedidoDB($table){
-        $statement = $this->pdo->prepare(
-           "SELECT MAX(id) FROM $table"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
     public function selectTareasSinAsignar($tableTarea){
@@ -481,13 +463,6 @@ public function selectSectorById($table, $nSector){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function getIdFromNombreSector($tableSector,$nombre){
-        $statement = $this->pdo->prepare(
-           "SELECT (idSector) FROM $tableSector WHERE nombreSector='$nombre'"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_NUM);
-    }
 
     public function selectAgentesDisponibles($tableAgente, $urgencia){
         if ($urgencia) {
@@ -655,13 +630,6 @@ public function updateEvento($table, $parameters, $idEvento){
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function updateEstadoPedido($tablePedido, $nPedido,$estado){
-        $statement = $this->pdo->prepare(
-            "UPDATE $tablePedido SET estado='$estado' WHERE id=$nPedido"
-        );
-        $statement->execute();
-        }
-
     public function updateEstadoTarea($tableTarea, $nPedido, $nTarea, $estado){
         $statement = $this->pdo->prepare(
             "UPDATE $tableTarea SET estado='$estado' WHERE idPedido=$nPedido AND idTarea=$nTarea"
@@ -672,13 +640,6 @@ public function updateEvento($table, $parameters, $idEvento){
     public function updateEstadoOT($tableOT, $nOT,$estado){
         $statement = $this->pdo->prepare(
             "UPDATE $tableOT SET estado='$estado' WHERE idOT=$nOT"
-        );
-        $statement->execute();
-    }
-
-    public function updateFechaFinPedido($tablePedido, $nPedido,$fechaFin){
-        $statement = $this->pdo->prepare(
-            "UPDATE $tablePedido SET fechaFin='$fechaFin' WHERE id=$nPedido"
         );
         $statement->execute();
     }
@@ -980,13 +941,7 @@ public function selectAnteUltimoItemAgente($tableItemAgente,$idAgente){
         $statement->execute();
     }
 
-    public function getEventoById($tableEvento,$idEvento){
-        $statement = $this->pdo->prepare(
-           "SELECT * FROM $tableEvento WHERE idEvento=$idEvento"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
+
 public function  dameinformeEspe($tablaTarea,$tablaEspecializacion,$tablaPedido,$fechaDesde,$fechaHasta){
      
        $statement = $this->pdo->prepare( "

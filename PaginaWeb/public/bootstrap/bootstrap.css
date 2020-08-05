@@ -117,7 +117,7 @@ address {
 dl,
 ol,
 ul {
-    /* margin-top: 0; */
+    margin-top: 0;
     /* margin-bottom: 1rem; */
 }
 
@@ -221,7 +221,7 @@ svg {
 }
 
 table {
-    border-collapse: collapse
+    border-collapse: collapse;
 }
 
 caption {
@@ -710,7 +710,7 @@ pre code {
     position: relative;
     width: 100%;
     padding-right: 15px;
-    padding-left: 15px
+    padding-left: 15px;
 }
 
 .col {
@@ -718,7 +718,7 @@ pre code {
     flex-basis: 0;
     -ms-flex-positive: 1;
     flex-grow: 1;
-    max-width: 100%
+    max-width: 100%;
 }
 
 .col-auto {
@@ -8636,7 +8636,7 @@ button.bg-dark:hover {
 }
 
 .m-0 {
-    margin: 0 !important
+    margin: 0 !important;
 }
 
 .mt-0,
@@ -10816,7 +10816,7 @@ button.bg-dark:hover {
 }
 
 .text-nowrap {
-    white-space: nowrap !important
+    white-space: nowrap !important;
 }
 
 .text-truncate {

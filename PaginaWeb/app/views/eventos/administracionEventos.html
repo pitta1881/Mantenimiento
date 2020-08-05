@@ -3,7 +3,7 @@
     "titulo": "Gestión de Eventos"
 }) %}
 {% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %} 
+{% endblock %}
 {% block main %}
 <div class="contenido3">
     {% for value in datos.permisos %}
@@ -18,7 +18,7 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Alta de Evento</h4>
+                    <h3 class="modal-title m-0">Alta de Evento</h3>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -90,7 +90,7 @@
                         <div class="modal-content">
                             <!-- Modal Header -->
                             <div class="modal-header">
-                                <h4 class="modal-title">Modificar Evento</h4>
+                                <h3 class="modal-title m-0">Modificar Evento</h3>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <!-- Modal body -->

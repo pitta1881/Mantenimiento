@@ -1,23 +1,17 @@
-    <nav class="navbar navbar-expand navbar-dark mx-background-top-linear" style="
-    margin: -3rem -3rem 0; padding: .2rem;">
-        <div class="container headerurl col-lg-5">
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+        <div class="row mx-background-top-linear" style="margin: -3rem -3rem 0; padding: .2rem;">
+            <div class="headerurl col-4">
                 <div class="divheaderurl">
                     <span> {{ datos.urlheader}} </span>
                 </div>
             </div>
-        </div>
-        <div class="container headerfechahora col-lg-2">
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <div id="date" style="font-size: 13px; position: relative; margin:auto">
+            <div class="headerfechahora col-4">
+                <div id="date" style="font-size: 13px;">
                     <span id="ctl00_CtrlTimeNow_scriptFechaHora">
                     </span>
                     <span id="divReloj"><b class="texto11Azul"></b></span>
                 </div>
             </div>
-        </div>
-        <div class="container headerurl col-lg-5">
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="headerurl col-4">
                 <div class="divheaderprofile">
                     <span style="color: darkgrey;"> {{ datos.userLogueado }} |</span>
                     <a href="/logOut"><span class="fa fa-sign-out mr-3" aria-hidden="true"
@@ -25,5 +19,5 @@
                 </div>
             </div>
         </div>
-    </nav>
-    <script src="/public/js/horafecha.js"></script>
+
+        <script src="/public/js/horafecha.js"></script>
