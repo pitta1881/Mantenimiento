@@ -14,23 +14,26 @@ class AgenteController extends Controller
    }
 
    private $table = 'agentes';
+   private $tableItemAgentes = 'itemAgente';
 
 
     public function administracionAgentes($new = null,$update = null,$delete = null){
-        $datos['todosAgentes'] = $this->model->get($this->table); 
+        $comparaTablasIfUsado = array(
+                                    array(  "tabla" => $this->tableItemAgentes, 
+                                            "comparaKey" => 'idAgente'
+                                    )
+                                );
+        $datos['todosAgentes'] = $this->model->get($this->table,$comparaTablasIfUsado); 
         $datos["userLogueado"] = $_SESSION['user'];
         $datos['permisos'] = $this->model->getPermisos();
         $datos['personas'] = $this->model->getPersonasNoAgentes();
         $datos['especializaciones'] = $this->model->getEspecializaciones();
-        if(!is_null($new)){
-            $datos['newOK'] = $new;
-        }
-        if(!is_null($update)){
-            $datos['updateOK'] = $update;
-        }
-        if(!is_null($delete)){
-            $datos['deleteOK'] = $delete;
-        }
+        $alertas = [
+            'new' => $new,
+            'update' => $update,
+            'delete' => $delete
+        ];
+        $datos['alertas'] = $alertas;
         $datos['urlheader']="> HOME > AGENTES";
         return view('/agentes/AgentesView', compact('datos'));
     }       
@@ -53,7 +56,7 @@ class AgenteController extends Controller
         return $this->administracionAgentes(null,$updateOk);
      }
 
-     public function delete(){
+    public function delete(){
         $agente['idAgente'] = $_POST['idAgente'];
         $deleteOk = $this->model->delete($this->table,$agente);
         return $this->administracionAgentes(null,null,$deleteOk);

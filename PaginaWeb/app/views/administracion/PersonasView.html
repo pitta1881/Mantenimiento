@@ -4,112 +4,19 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.newOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta Realizada</span>",
-        "Persona Creada Correctamente");
-</script>
-{% elseif datos.newOK is not null and datos.newOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nueva Persona</span>",
-        "La Persona ya existe..");
-</script>
-{% endif %}
-{% if datos.updateOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
-        "Persona Modificada Correctamente");
-</script>
-{% elseif datos.updateOK is not null and datos.updateOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Persona</span>",
-        "La Persona no se pudo modificar..");
-</script>
-{% endif %}
-{% if datos.deleteOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja Realizada</span>",
-        "Persona Eliminada Correctamente");
-</script>
-{% elseif datos.deleteOK is not null and datos.deleteOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al eliminar Persona</span>",
-        "La Persona no se pudo eliminar..");
-</script>
-{% endif %}
+{% block header %}
+{% include 'partials/header.html' with {datos:datos} only %}
+{% endblock %}
 <div>
-    {% block header %}
-    {% include 'partials/header.html' with {datos:datos} only %}
-    {% endblock %}
     <h2 class="titulo-tabla">Personas Registradas </h2>
-    <!-- Button to Open the Modal -->
-    {% if "1" in datos.permisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevoModal"><i
-            class="fa fa-plus"></i> Crear Nuevo</button>
-    <!-- The Modal -->
-    <div class="modal fade" id="nuevoModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h3 class="modal-title m-0">Alta de Persona</h3>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="newPersona" method="post" class="was-validated">
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="dni">DNI:</label><span class="asterisco">*</span>
-                                <input type="number" name="dni" class="form-control" autofocus required min="10000000">
-                                <div class="invalid-feedback">Min:10.000.000</div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="nombre">Nombre:</label><span class="asterisco">*</span>
-                                <input type="text" name="nombre" class="form-control" required>
-                                <div class="invalid-feedback">Complete este campo</div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="apellido">Apellido:</label><span class="asterisco">*</span>
-                                <input type="text" name="apellido" class="form-control" required>
-                                <div class="invalid-feedback">Complete este campo</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="direccion">Direccion:</label>
-                            <input type="text" name="direccion" class="form-control">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="email">Email:</label>
-                                <input type="email" name="email" class="form-control">
-                                <div class="invalid-feedback">El formato es incorrecto</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="fecha_nacimiento">Fecha De Nacimiento:</label><span
-                                    class="asterisco">*</span>
-                                <input type="date" name="fecha_nacimiento" class="form-control"
-                                    max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}" required>
-                            </div>
-                        </div>
-                        <input type="text" name="estado" value="Activo" hidden>
-                        <!-- Modal Footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                            <button type="submit" class="btn btn-success">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <!-- BOTON NEW PERSONA -->
+    {% if "45" in datos.permisos %}
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
+            class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
+
+    <!-- TABLA PERSONAS -->
     <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
         <thead class="headtable">
             <tr>
@@ -132,165 +39,30 @@
                 <td>{{ persona.apellido }}</td>
                 <td>{{ persona.direccion }}</td>
                 <td>{{ persona.email }}</td>
-                <td>{{ persona.fecha_nacimiento }}</td>
+                <td>{{ persona.fecha_nacimiento|date("d/m/Y") }}</td>
                 <td>{{ persona.estado }}</td>
                 <td>
-                    <!--MODIFICAR PERSONA-->
-                    {% if "47" in datos.permisos %}
-                    <!-- The Modal -->
-                    <div class="modal fade" id="myModalModif{{ persona.dni }}">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h3 class="modal-title m-0">Modificar Persona</h3>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <form action="updatePersona" method="post" class="was-validated">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label for="dni">DNI:</label><span class="asterisco">*</span>
-                                                <input type="number" name="dni" value="{{ persona.dni }}"
-                                                    class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="nombre">Nombre:</label><span class="asterisco">*</span>
-                                                <input type="text" name="nombre" value="{{ persona.nombre }}"
-                                                    class="form-control" required>
-                                                <div class="invalid-feedback">Complete este campo</div>
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="apellido">Apellido:</label><span class="asterisco">*</span>
-                                                <input type="text" name="apellido" value="{{ persona.apellido }}"
-                                                    class="form-control" required>
-                                                <div class="invalid-feedback">Complete este campo</div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="direccion">Direccion:</label>
-                                            <input type="text" name="direccion" value="{{ persona.direccion }}"
-                                                class="form-control">
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="email">Email:</label>
-                                                <input type="email" name="email" value="{{ persona.email }}"
-                                                    class="form-control">
-                                                <div class="invalid-feedback">El formato es incorrecto</div>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="fecha_nacimiento">Fecha De Nacimiento:</label><span
-                                                    class="asterisco">*</span>
-                                                <input type="date" name="fecha_nacimiento"
-                                                    value="{{ persona.fecha_nacimientoSinFormato }}"
-                                                    class="form-control" max="{{ datos.minimo18 }}"
-                                                    min="{{ datos.maximo70 }}" required>
-                                            </div>
-                                        </div>
-                                        <input type="text" name="estado" value="Activo" hidden>
-                                        <!-- Modal Footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Salir</button>
-                                            <button type="submit" class="btn btn-success">Enviar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    {% if "47" in datos.permisos %}
-                    <!--MODIFICAR ESTADO-->
-                    <!-- The Modal -->
-                    <div class="modal fade" id="myModalEstado{{ persona.dni }}">
-                        <div class="modal-dialog modal-xs">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h3 class="modal-title m-0">Cambiar Estado</h3>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <form action="updateEstadoPersona" method="post">
-                                        <input type="text" name="dni" value="{{ persona.dni }}" hidden>
-                                        <div class="form-group">
-                                            <label for="estado" style="display: block;">Nuevo Estado:</label>
-                                            <select name="estado" class="form-control custom-select">
-                                                {% for estado in datos.estados %}
-                                                {% if estado != persona.estado %}
-                                                <option value="{{ estado }}">{{ estado }}</option>
-                                                {% endif %}
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <!-- Modal Footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Salir</button>
-                                            <button type="submit" class="btn btn-success">Enviar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    <!--ELIMINAR PERSONA SI NO ESTA USADO-->
-                    {% if "46" in datos.permisos %}
-                    <form action="deletePersona" method="post" style="display: inline-block"
-                        id="formEliminarPersona{{ persona.dni }}">
-                        <input type="text" name="dni" value="{{ persona.dni }}" hidden>
-                        <div class="modal fade" id="eliminarModal{{ persona.dni }}" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title m-0">Eliminar Persona Nº
-                                            {{ persona.dni }}</h3>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>¿Está seguro?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary btn-modal"
-                                            data-dismiss="modal">Salir</button>
-                                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    {% endif %}
-
                     {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if persona.usado == false %}
                     {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
-                    <div class="btn-group" role="group" aria-label="Basic example" style="float: none;">
+                    <div class="btn-group float-none" role="group">
                         {% if "47" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            data-target="#myModalModif{{ persona.dni }}" title="Editar Persona"><i
-                                class="fa fa-pencil fa-2x fa-fw"></i>
+                            onclick="modificarModal('{{ persona|json_encode }}');" title="Editar Persona"><i
+                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
                         </button>
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            data-target="#myModalEstado{{ persona.dni }}" title="Editar Estado"><i
-                                class="fa fa-clock-o fa-2x fa-fw"></i>
+                            onclick="modificarEstadoModal('{{ persona|json_encode }}');" title="Editar Estado"><i
+                                class="fal fa-user-clock fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
                         {% if "46" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" data-target="#eliminarModal{{ persona.dni }}"
-                            title="Eliminar Persona"><i class="fa fa-trash-o fa-2x fa-fw"></i>
+                            data-toggle="modal" onclick="eliminarModal('{{ persona|json_encode }}');"
+                            title="Eliminar Persona"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -303,10 +75,193 @@
         </tbody>
     </table>
 </div>
+
+<!-- MODALES NEW, UPDATE Y DELETE -->
+<!--NEW PERSONA-->
+{% if "45" in datos.permisos %}
+<div class="modal fade" id="modalNew">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0">Alta de Persona</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="newPersona" method="post" class="was-validated">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="dni">DNI:</label><span class="asterisco">*</span>
+                            <input type="number" name="dni" class="form-control" autofocus required min="10000000">
+                            <div class="invalid-feedback">Min:10.000.000</div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="nombre">Nombre:</label><span class="asterisco">*</span>
+                            <input type="text" name="nombre" class="form-control" required>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="apellido">Apellido:</label><span class="asterisco">*</span>
+                            <input type="text" name="apellido" class="form-control" required>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Direccion:</label>
+                        <input type="text" name="direccion" class="form-control">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" class="form-control">
+                            <div class="invalid-feedback">El formato es incorrecto</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="fecha_nacimiento">Fecha De Nacimiento:</label><span class="asterisco">*</span>
+                            <input type="date" name="fecha_nacimiento" class="form-control" max="{{ datos.minimo18 }}"
+                                min="{{ datos.maximo70 }}" required>
+                        </div>
+                    </div>
+                    <input type="text" name="estado" value="Activo" hidden>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--MODIFICAR PERSONA-->
+{% if "47" in datos.permisos %}
+<div class="modal fade" id="modalUpdate">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="updatePersona" method="post" class="was-validated">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="dni">DNI:</label><span class="asterisco">*</span>
+                            <input type="number" name="dni" id="updateID" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="nombre">Nombre:</label><span class="asterisco">*</span>
+                            <input type="text" name="nombre" id="nombreAnteriorUpdate" class="form-control" required>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="apellido">Apellido:</label><span class="asterisco">*</span>
+                            <input type="text" name="apellido" id="apellidoAnteriorUpdate" class="form-control"
+                                required>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Direccion:</label>
+                        <input type="text" name="direccion" id="direccionAnteriorUpdate" class="form-control">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="emailAnteriorUpdate" class="form-control">
+                            <div class="invalid-feedback">El formato es incorrecto</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="fecha_nacimiento">Fecha De Nacimiento:</label><span class="asterisco">*</span>
+                            <input type="date" name="fecha_nacimiento" id="fechaAnteriorUpdate" class="form-control"
+                                max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}" required>
+                        </div>
+                    </div>
+                    <input type="text" name="estado" value="Activo" hidden>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--MODIFICAR ESTADO-->
+{% if "47" in datos.permisos %}
+<div class="modal fade" id="modalEstadoUpdate">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0">Cambiar Estado</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="updateEstadoPersona" method="post">
+                    <input type="text" name="dni" id="updateEstadoID" hidden>
+                    <div class="form-group">
+                        <label for="estado">Nuevo Estado:</label>
+                        <select name="estado" id="estadoUpdate" class="form-control custom-select">
+                            {% for estado in datos.estados %}
+                            <option value="{{ estado }}">{{ estado }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--ELIMINAR PERSONA SI NO ESTA USADO-->
+{% if "46" in datos.permisos %}
+<div class="modal fade" id="modalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p class="mb-3">¿Está seguro?</p>
+                <form action="deletePersona" method="post">
+                    <input type="text" name="dni" id="deleteID" hidden>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+
+<script src="/public/js/jsBasicos/jsPersona.js"></script>
 <script>
-    var columnas = '0,1,2,3,4,5,6';
-    var columNoOrdenar = 7;
-    var titulo = 'Personas Registradas';
+    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Persona');
+    ordenarTabla('miTabla', '0,1,2,3,4,5,6', [7], 'Personas Registradas');
 </script>
-<script src="/public/js/ordypagtablas.js"></script>
 {% endblock %}

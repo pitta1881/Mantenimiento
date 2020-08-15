@@ -1,20 +1,20 @@
     <nav>
         <div class="custom-menu">
             <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                <i class="fa fa-bars"></i>
-                <span class="sr-only">Toggle Menu</span>
+                <i class="fal fa-bars"></i>
+                <i class="sr-only">Toggle Menu</i>
             </button>
         </div>
-        <div class="p-4 pt-5">
+        <div class="p-3 pt-5">
             <h1><a href="/home" class="logo">Hospital Sommer</a></h1>
-            <ul class="list-unstyled components" style="margin-bottom: 0;">
+            <ul class="list-unstyled components mb-0">
                 <li class="active">
-                    <a href="/home"><span class="fa fa-home mr-3"></span>Home</a>
+                    <a href="/home"><i class="fal fa-home mr-2 fa-fw fa-lg"></i>Home</a>
                 </li>
                 {% if "4" in datos.permisos %}
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span
-                            class="fa fa-address-card-o mr-3" aria-hidden="true"></span>Administración</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                            class="fal fa-cogs mr-2 fa-fw fa-lg"></i>Administración</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
 
                         {% if "4" in datos.permisos %}
@@ -46,73 +46,72 @@
 
                 {% if "32" in datos.permisos %}
                 <li>
-                    <a href="/agentes/"><span class="fa fa-users mr-3" aria-hidden="true"></span>Agentes</a>
+                    <a href="/agentes/"><i class="fal fa-users mr-2 fa-fw fa-lg"></i>Agentes</a>
                 </li>
                 {% endif %}
 
                 {% if "36" in datos.permisos %}
                 <li>
-                    <a href="/especializaciones/"><span class="fa fa-paint-brush mr-3"
-                            aria-hidden="true"></span>Especializaciones</a>
+                    <a href="/especializaciones/"><i
+                            class="fal fa-paint-brush mr-2 fa-fw fa-lg"></i>Especializaciones</a>
                 </li>
                 {% endif %}
 
                 {% if "28" in datos.permisos %}
                 <li>
-                    <a href="/sectores/"><span class="fa fa-hospital-o mr-3" aria-hidden="true"></span>Sectores</a>
+                    <a href="/sectores/"><i class="fal fa-hospital mr-2 fa-fw fa-lg"></i>Sectores</a>
                 </li>
                 {% endif %}
 
                 {% if "16" in datos.permisos %}
                 <li>
-                    <a href="/pedidos/"><span class="fa fa-files-o mr-3"></span>Pedidos</a>
+                    <a href="/pedidos/"><i class="fal fa-file-signature mr-2 fa-fw fa-lg"></i>Pedidos</a>
                 </li>
                 {% endif %}
 
                 {% if "24" in datos.permisos %}
                 <li>
-                    <a href="/OT/verTodos"><span class="fa fa-cogs mr-3"></span>Ord. de Trabajo</a>
+                    <a href="/OT/verTodos"><i class="fal fa-clipboard-list-check mr-2 fa-fw fa-lg"></i>Ord. de
+                        Trabajo</a>
                 </li>
                 {% endif %}
 
                 {% if "40" in datos.permisos %}
                 <li>
-                    <a href="/eventos/administracionEventos"><span class="fa fa-calendar mr-3"></span>Eventos</a>
+                    <a href="/eventos/administracionEventos"><i
+                            class="fal fa-calendar-check mr-2 fa-fw fa-lg"></i>Eventos</a>
                 </li>
                 {% endif %}
 
                 {% if "16" in datos.permisos %}
                 <li>
-                    <a href="/informe/administracion"><span class="fa fa-line-chart mr-3"
-                            aria-hidden="true"></span>Informes</a>
+                    <a href="/informe/administracion"><i class="fal fa-chart-line mr-2 fa-fw fa-lg"></i>Informes</a>
                 </li>
                 {% endif %}
 
                 {% if "44" in datos.permisos %}
                 <li>
-                    <a href="/insumos/administracionInsumos"><span class="fa fa-wrench mr-3"
-                            aria-hidden="true"></span>Insumos</a>
+                    <a href="/insumos/administracionInsumos"><i class="fal fa-tools mr-2 fa-fw fa-lg"></i>Insumos</a>
                 </li>
                 {% endif %}
 
                 {% if "16" in datos.permisos %}
                 <li>
-                    <a href="/ordendecompra/administracionOC"><span class="fa fa-shopping-basket mr-3"
-                            aria-hidden="true"></span>Ord.
+                    <a href="/ordendecompra/administracionOC"><i class="fal fa-shopping-cart mr-2 fa-fw fa-lg"></i>Ord.
                         de Compra</a>
                 </li>
                 {% endif %}
 
                 <li>
-                    <a href="/public/res/ManualDeUsuario_Mantenimiento_Sommer.pdf" target="_blank"><span
-                            class="fa fa-info-circle mr-3" aria-hidden="true"></span>Ayuda</a>
+                    <a href="/public/res/ManualDeUsuario_Mantenimiento_Sommer.pdf" target="_blank"><i
+                            class="fal fa-question-circle mr-2 fa-fw fa-lg"></i>Ayuda</a>
                 </li>
 
                 <li>
-                    <a href="/logOut"><span class="fa fa-sign-out mr-3" aria-hidden="true"></span>Salir</a>
+                    <a href="/logOut"><i class="fal fa-sign-out-alt mr-2 fa-fw fa-lg"></i>Salir</a>
                 </li>
             </ul>
     </nav>
     </li>
 
-    <script src="/public/js/mainNav.js"></script>
+    <script src="/public/js/generales/mainNav.js"></script>

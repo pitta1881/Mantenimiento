@@ -24,15 +24,12 @@ class PedidoController extends Controller{
         $datos["prioridades"] = $this->model->getPrioridades();
         $datos["estados"] = $this->model->getEstados();
         $datos["diaHoy"] = date("Y-m-d");
-        if(!is_null($new)){
-            $datos['newOK'] = $new;
-        }
-        if(!is_null($update)){
-            $datos['updateOK'] = $update;
-        }
-        if(!is_null($delete)){
-            $datos['deleteOK'] = $delete;
-        }
+        $alertas = [
+            'new' => $new,
+            'update' => $update,
+            'delete' => $delete
+        ];
+        $datos['alertas'] = $alertas;
         $datos['urlheader']="> HOME > PEDIDOS";
         return view('/pedidos/PedidosView', compact('datos'));
     }

@@ -4,69 +4,19 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.newOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta Realizada</span>",
-        "Rol Creado Correctamente");
-</script>
-{% elseif datos.newOK is not null and datos.newOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Rol</span>",
-        "El Rol ya existe..");
-</script>
-{% endif %}
-{% if datos.updateOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
-        "Rol Modificado Correctamente");
-</script>
-{% elseif datos.updateOK is not null and datos.updateOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Rol</span>",
-        "El Rol no se pudo modificar..");
-</script>
-{% endif %}
+{% block header %}
+{% include 'partials/header.html' with {datos:datos} only %}
+{% endblock %}
 <div>
-    {% block header %}
-    {% include 'partials/header.html' with {datos:datos} only %}
-    {% endblock %}
     <h2 class="titulo-tabla">Roles Registrados </h2>
-    <!-- Button to Open the Modal -->
+
+    <!-- BOTON NEW ROL -->
     {% if "9" in datos.permisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevoModal"><i
-            class="fa fa-plus"></i> Crear Nuevo</button>
-    <!-- The Modal -->
-    <div class="modal fade" id="nuevoModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h3 class="modal-title m-0">Crear Rol</h3>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="newRol" method="post" class="was-validated">
-                        <div class="form-group">
-                            <label for="nombreRol">Nombre del Rol:</label>
-                            <input type="text" name="nombreRol" class="form-control" autofocus required>
-                            <div class="invalid-feedback">Complete este campo</div>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                            <button type="submit" class="btn btn-success">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
+            class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
+
+    <!-- TABLA ROLES -->
     <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
         <thead class="headtable">
             <tr>
@@ -81,18 +31,31 @@
                 <td>{{ rol.idRol }}</td>
                 <td>{{ rol.nombreRol }}</td>
                 <td>
-                    <div class="btn-group" role="group" aria-label="Basic example" style="float: none;">
+                    {% set deshabilitado = "disabled" %}
+                    {% set notAllowed = " notAllowed" %}
+                    {% if rol.usado == false %}
+                    {% set deshabilitado = "" %}
+                    {% set notAllowed = "" %}
+                    {% endif %}
+                    <div class="btn-group float-none" role="group">
                         {% if "12" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaRoles('{{ rol.idRol }}',false);return false;" title="Ver Mas"><i
-                                class="fa fa-eye fa-2x fa-fw"></i>
+                            onclick="fichaRoles('{{ rol.idRol }}',false);" title="Ver Mas"><i
+                                class="fal fa-eye fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
 
                         {% if "11" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaRoles('{{ rol.idRol }}',true);return false;" title="Modificar"><i
-                                class="fa fa-pencil fa-2x fa-fw"></i>
+                            onclick="fichaRoles('{{ rol.idRol }}',true);" title="Modificar"><i
+                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                        </button>
+                        {% endif %}
+
+                        {% if "10" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
+                            data-toggle="modal" onclick="eliminarModal('{{ rol|json_encode }}');"
+                            title="Eliminar Rol"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -104,11 +67,71 @@
         </tbody>
     </table>
 </div>
-<script src="/public/js/ajaxFichaRoles.js"></script>
+
+<!-- MODALES NEW, UPDATE Y DELETE -->
+<!-- NEW ROL -->
+{% if "9" in datos.permisos %}
+<div class="modal fade" id="modalNew">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0">Crear Rol</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="newRol" method="post" class="was-validated">
+                    <div class="form-group">
+                        <label for="nombreRol">Nombre del Rol:</label>
+                        <input type="text" name="nombreRol" class="form-control" autofocus required>
+                        <div class="invalid-feedback">Complete este campo</div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--DELETE AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
+{% if "10" in datos.permisos %}
+<div class="modal fade" id="modalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p class="mb-3">¿Está seguro?</p>
+                <form action="deleteRol" method="post">
+                    <input type="text" id="deleteID" name="idRol" hidden>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+
+<script src="/public/js/ajax/ajaxFichaRoles.js"></script>
 <script>
-    var columnas = '0,1';
-    var columNoOrdenar = 2;
-    var titulo = 'Roles Registrados';
+    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Rol');
+    ordenarTabla('miTabla', '0,1', [2], 'Roles Registrados');
 </script>
-<script src="/public/js/ordypagtablas.js"></script>
 {% endblock %}

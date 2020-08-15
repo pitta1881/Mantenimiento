@@ -13,23 +13,28 @@ class EspecializacionController extends Controller
       session_start();   
    }
 
-    private $table='especializacion';
+    private $table = 'especializacion';
     private $tableTarea = 'tarea';  
-    private $tableAgentes='agentes';
+    private $tableAgentes = 'agentes';
 
     public function administracionEspecializaciones($new = null,$update = null,$delete = null){
-        $datos['todasEspecializaciones'] = $this->model->get($this->table,array($this->tableTarea,$this->tableAgentes)); 
+        $comparaTablasIfUsado = array(
+                                    array(  "tabla" => $this->tableTarea, 
+                                            "comparaKey" => 'idEspecializacion'
+                                        ),
+                                    array(  "tabla" => $this->tableAgentes, 
+                                            "comparaKey" => 'idEspecializacion'
+                                        )
+                                );
+        $datos['todasEspecializaciones'] = $this->model->get($this->table,$comparaTablasIfUsado); 
         $datos["userLogueado"] = $_SESSION['user'];
         $datos['permisos'] = $this->model->getPermisos();
-        if(!is_null($new)){
-            $datos['newOK'] = $new;
-        }
-        if(!is_null($update)){
-            $datos['updateOK'] = $update;
-        }
-        if(!is_null($delete)){
-            $datos['deleteOK'] = $delete;
-        }
+        $alertas = [
+            'new' => $new,
+            'update' => $update,
+            'delete' => $delete
+        ];
+        $datos['alertas'] = $alertas;
         $datos['urlheader']="> HOME > ESPECIALIZACION";
         return view('/especializacion/EspecializacionesView', compact('datos'));
     }       

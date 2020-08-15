@@ -4,109 +4,19 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.newOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta Realizada</span>",
-        "Usuario Creado Correctamente");
-</script>
-{% elseif datos.newOK is not null and datos.newOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Usuario</span>",
-        "El Usuario ya existe..");
-</script>
-{% endif %}
-{% if datos.updateOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
-        "Usuario Modificado Correctamente");
-</script>
-{% elseif datos.updateOK is not null and datos.updateOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Usuario</span>",
-        "El Usuario no se pudo modificar..");
-</script>
-{% endif %}
-
+{% block header %}
+{% include 'partials/header.html' with {datos:datos} only %}
+{% endblock %}
 <div>
-    {% block header %}
-    {% include 'partials/header.html' with {datos:datos} only %}
-    {% endblock %}
     <h2 class="titulo-tabla">Usuarios Registrados </h2>
-    <!-- Button to Open the Modal -->
+
+    <!-- BOTON NEW USUARIO -->
     {% if "1" in datos.permisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevoModal"><i
-            class="fa fa-plus"></i> Crear Nuevo</button>
-    <!-- The Modal -->
-    <div class="modal fade" id="nuevoModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h3 class="modal-title m-0">Alta de Usuario</h3>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="newUsuario" method="post" id="formAlta">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="nombre" class="control-label">Nombre(nick):</label><span
-                                    class="asterisco">*</span>
-                                <input type="text" name="nombre" class="form-control" autofocus required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="dni" class="control-label">Persona Asociada:</label><span
-                                    class="asterisco">*</span>
-                                <select name="dni" class="form-control custom-select" required>
-                                    <option value="" selected>Seleccione una Persona</option>
-                                    {% for persona in datos.todosPersonas %}
-                                    {% if persona.dni != '0' %}
-                                    <option value="{{ persona.dni }}">{{ persona.nombre }},&nbsp;{{ persona.apellido }}
-                                    </option>
-                                    {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="idRol" class="control-label">Seleccionar Rol:</label><span
-                                    class="asterisco">*</span>
-                                <select name="idRol" class="form-control custom-select" required>
-                                    <option value="" selected>Seleccione un Rol</option>
-                                    {% for rol in datos.roles %}
-                                    <option value="{{ rol.idRol }}">{{ rol.nombreRol }}</option>
-                                    {% endfor %}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="password" class="control-label">Contraseña:</label><span
-                                    class="asterisco">*</span>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="password" class="control-label">Confirme Contraseña:</label><span
-                                    class="asterisco">*</span>
-                                <input type="password" name="confirmPassword" class="form-control" required>
-                            </div>
-                        </div>
-                        <!-- Modal Footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                            <button type="submit" class="btn btn-success">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
+            class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
+
+    <!-- TABLA USUARIOS -->
     <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
         <thead class="headtable">
             <tr>
@@ -121,81 +31,31 @@
             {% for usuario in datos.todosUsuarios %}
             <tr>
                 <td>{{ usuario.nombre }}</td>
-                <td><a href="#"
-                        onclick="fichaPersona('{{ usuario.idPersona }}');return false;">{{ usuario.idPersona }}</a>
+                <td><a href="#" onclick="fichaPersona('{{ usuario.idPersona }}');">{{ usuario.idPersona }}</a>
                 </td>
                 <td>{{ usuario.nombreApe }}</td>
                 <td>{{ usuario.nombreRol }}</td>
                 <td>
-                    {% if "3" in datos.permisos %}
-                    <!-- The Modal -->
-                    <div class="modal fade" id="myModalModif{{ usuario.nombre }}">
-                        <div class="modal-dialog modal-xs">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h3 class="modal-title m-0">Modificar Contraseña</h3>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <form action="updateUsuario" method="post" id="formModificar{{ usuario.nombre }}">
-                                        <input type="text" name="nombre" value="{{ usuario.nombre }}" hidden>
-                                        <div class="form-group">
-                                            <label for="password" class="control-label">Contraseña:</label><span
-                                                class="asterisco">*</span>
-                                            <input type="password" name="password" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password" class="control-label">Confirme
-                                                Contraseña:</label><span class="asterisco">*</span>
-                                            <input type="password" name="confirmPassword" class="form-control" required>
-                                        </div>
-                                        <!-- Modal Footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Salir</button>
-                                            <button type="submit" class="btn btn-success">Enviar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                        data-target="#myModalModif{{ usuario.nombre }}" title="Editar Usuario"><i
-                            class="fa fa-pencil fa-2x fa-fw"></i>
-                    </button>
-                    <script>
-                        $('#formModificar{{ usuario.nombre }}').bootstrapValidator({
-                            feedbackIcons: {
-                                valid: 'fa fa-thumbs-up',
-                                invalid: 'fa fa-remove',
-                                validating: 'fa fa-refresh'
-                            },
-                            fields: {
-                                password: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Ingrese una Contraseña'
-                                        }
-                                    }
-                                },
-                                confirmPassword: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'Repita la Contraseña'
-                                        },
-                                        identical: {
-                                            field: 'password',
-                                            message: 'Las Contraseñas no coinciden'
-                                        }
-                                    }
-                                },
-                            }
-                        });
-                    </script>
+                    {% set deshabilitado = "disabled" %}
+                    {% set notAllowed = " notAllowed" %}
+                    {% if usuario.usado == false %}
+                    {% set deshabilitado = "" %}
+                    {% set notAllowed = "" %}
                     {% endif %}
+                    <div class="btn-group float-none" role="group">
+                        {% if "3" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="modificarModal('{{ usuario|json_encode }}');" title="Editar Usuario"><i
+                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                        </button>
+                        {% endif %}
+                        {% if "2" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
+                            data-toggle="modal" onclick="eliminarModal('{{ usuario|json_encode }}');"
+                            title="Eliminar Usuario"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
+                        </button>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
             {% else %}
@@ -204,13 +64,148 @@
         </tbody>
     </table>
 </div>
-<script src="/public/js/ajaxFichaPersona.js"></script>
-<script src="/public/js/validarCampos.js"></script>
+
+<!-- MODALES NEW, UPDATE Y DELETE -->
+<!--NEW USUARIO-->
+{% if "1" in datos.permisos %}
+<div class="modal fade" id="modalNew">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0">Alta de Usuario</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="newUsuario" method="post" id="formAlta">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nombre" class="control-label">Nombre(nick):</label><span
+                                class="asterisco">*</span>
+                            <input type="text" name="nombre" class="form-control" autofocus required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="dni" class="control-label">Persona Asociada:</label><span
+                                class="asterisco">*</span>
+                            <select name="dni" class="form-control custom-select" required>
+                                <option value="" selected>Seleccione una Persona</option>
+                                {% for persona in datos.todosPersonas %}
+                                {% if persona.dni != '0' %}
+                                <option value="{{ persona.dni }}">{{ persona.nombre }},&nbsp;{{ persona.apellido }}
+                                </option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="idRol" class="control-label">Seleccionar Rol:</label><span
+                                class="asterisco">*</span>
+                            <select name="idRol" class="form-control custom-select" required>
+                                <option value="" selected>Seleccione un Rol</option>
+                                {% for rol in datos.roles %}
+                                <option value="{{ rol.idRol }}">{{ rol.nombreRol }}</option>
+                                {% endfor %}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="password" class="control-label">Contraseña:</label><span
+                                class="asterisco">*</span>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="password" class="control-label">Confirme Contraseña:</label><span
+                                class="asterisco">*</span>
+                            <input type="password" name="confirmPassword" class="form-control" required>
+                        </div>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--MODIFICAR USUARIO-->
+{% if "3" in datos.permisos %}
+<div class="modal fade" id="modalUpdate">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="updateUsuario" method="post" id="formModificar">
+                    <input type="text" name="nombre" id="updateID" hidden>
+                    <div class="form-group">
+                        <label for="password" class="control-label">Contraseña:</label><span class="asterisco">*</span>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label">Confirme
+                            Contraseña:</label><span class="asterisco">*</span>
+                        <input type="password" name="confirmPassword" class="form-control" required>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--ELIMINAR USUARIO SI NO ESTA USADO-->
+{% if "46" in datos.permisos %}
+<div class="modal fade" id="modalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p class="mb-3">¿Está seguro?</p>
+                <form action="deleteUsuario" method="post">
+                    <input type="text" name="nombre" id="deleteID" hidden>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+
+
+<script src="/public/js/ajax/ajaxFichaPersona.js"></script>
+<script src="/public/js/generales/validarCampos.js"></script>
+<script src="/public/js/jsBasicos/jsUsuario.js"></script>
 <script>
-    var columnas = '0,1,2,3';
-    var columNoOrdenar = 4;
-    var titulo = 'Usuarios Registrados';
-</script>
-<script src="/public/js/ordypagtablas.js">
+    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Usuario');
+    ordenarTabla('miTabla', '0,1,2,3', [4], 'Usuarios Registrados');
 </script>
 {% endblock %}

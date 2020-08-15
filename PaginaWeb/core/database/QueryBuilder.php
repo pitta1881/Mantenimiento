@@ -31,6 +31,7 @@ class QueryBuilder
      *
      * Ver: http://php.net/manual/en/pdo.prepared-statements.php#97162
      */
+
     private function cleanParameterName($parameters)
     {
         $cleaned_params = [];

@@ -17,19 +17,21 @@ class SectorController extends Controller{
     private $tablePedido = 'pedido';
     
     public function administracionSectores($new = null,$update = null,$delete = null){
-        $datos['todosSectores'] = $this->model->get($this->table,array($this->tablePedido)); 
+        $comparaTablasIfUsado = array(
+                                    array(  "tabla" => $this->tablePedido, 
+                                            "comparaKey" => 'idSector'
+                                        )
+        );
+        $datos['todosSectores'] = $this->model->get($this->table,$comparaTablasIfUsado); 
         $datos["userLogueado"] = $_SESSION['user'];
         $datos['permisos'] = $this->model->getPermisos();
         $datos['tipoSectores'] = $this->model->getTipoSector();
-        if(!is_null($new)){
-            $datos['newOK'] = $new;
-        }
-        if(!is_null($update)){
-            $datos['updateOK'] = $update;
-        }
-        if(!is_null($delete)){
-            $datos['deleteOK'] = $delete;
-        }
+        $alertas = [
+            'new' => $new,
+            'update' => $update,
+            'delete' => $delete
+        ];
+        $datos['alertas'] = $alertas;
         $datos['urlheader']="> HOME > SECTORES";
         return view('/sectores/SectoresView', compact('datos'));
     }

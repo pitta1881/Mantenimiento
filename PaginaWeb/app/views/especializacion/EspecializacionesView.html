@@ -4,83 +4,19 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.newOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta Realizada</span>",
-        "Especialización Creada Correctamente");
-</script>
-{% elseif datos.newOK is not null and datos.newOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nueva Especialización</span>",
-        "La Especialización ya existe..");
-</script>
-{% endif %}
-{% if datos.updateOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
-        "Especialización Modificada Correctamente");
-</script>
-{% elseif datos.updateOK is not null and datos.updateOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Especialización</span>",
-        "La Especialización no se pudo modificar..");
-</script>
-{% endif %}
-{% if datos.deleteOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja Realizada</span>",
-        "Especialización Eliminado Correctamente");
-</script>
-{% elseif datos.deleteOK is not null and datos.deleteOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al eliminar Especialización</span>",
-        "La Especialización no se pudo eliminar..");
-</script>
-{% endif %}
+{% block header %}
+{% include 'partials/header.html' with {datos:datos} only %}
+{% endblock %}
 <div>
-    {% block header %}
-    {% include 'partials/header.html' with {datos:datos} only %}
-    {% endblock %}
     <h2 class="titulo-tabla">Especializaciones Registradas </h2>
-    <!-- Button to Open the Modal -->
+
+    <!-- BOTON NEW ESPECIALIZACION -->
     {% if "33" in datos.permisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevoModal"><i
-            class="fa fa-plus"></i> Crear Nuevo</button>
-    <!-- The Modal -->
-    <div class="modal fade" id="nuevoModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h3 class="modal-title m-0">Crear Especializacion</h3>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="newEspecializacion" method="post" class="was-validated">
-                        <div class="form-group">
-                            <label for="nombre">Nombre de Especializacion:</label>
-                            <input type="text" name="nombre" class="form-control" autofocus required>
-                            <div class="invalid-feedback">Complete este campo</div>
-                        </div>
-                        <!-- Modal Footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-modal"
-                                data-dismiss="modal">Salir</button>
-                            <button type="submit" class="btn btn-success btn-modal">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
+            class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
+
+    <!-- TABLA ESPECIALIZACIONES -->
     <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
         <thead class="headtable">
             <tr>
@@ -95,90 +31,23 @@
                 <td>{{ especializacion.idEspecializacion }}</td>
                 <td>{{ especializacion.nombre }}</td>
                 <td>
-                    {% if "35" in datos.permisos %}
-                    <!--MODIFICAR ESPECIALIZACION-->
-                    <!-- The Modal -->
-                    <div class="modal fade" id="myModalModif{{ especializacion.idEspecializacion }}">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h3 class="modal-title m-0">Modificar Especializacion</h3>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <form action="updateEspecializacion" method="post" class="was-validated">
-                                        <input type="text" name="idEspecializacion"
-                                            value="{{ especializacion.idEspecializacion }}" hidden>
-                                        <div class="form-group">
-                                            <label for="nombreAnterior">Nombre Anterior:</label>
-                                            <input type="text" name="nombreAnterior" class="form-control"
-                                                value="{{ especializacion.nombre }}" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="nombre">Nuevo Nombre:</label>
-                                            <input type="text" name="nombre" class="form-control" autofocus required>
-                                            <div class="invalid-feedback">Complete este campo</div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Salir</button>
-                                            <button type="submit" class="btn btn-success">Enviar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if "34" in datos.permisos %}
-                    <!--ELIMINAR ESPECIALIZACION SI NO UTILIZADO-->
-                    <form action="deleteEspecializacion" method="post" style="display: inline-block"
-                        id="formEliminarEspecializacion{{ especializacion.idEspecializacion }}">
-                        <input type="text" name="idEspecializacion" value="{{ especializacion.idEspecializacion }}"
-                            hidden>
-                        <div class="modal fade" id="eliminarModal{{ especializacion.idEspecializacion }}" tabindex="-1"
-                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title m-0">Eliminar Especializacion Nº
-                                            {{ especializacion.idEspecializacion }}</h3>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>¿Está seguro?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary btn-modal"
-                                            data-dismiss="modal">Salir</button>
-                                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    {% endif %}
                     {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if especializacion.usado == false %}
                     {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
-                    <div class="btn-group" role="group" aria-label="Basic example" style="float: none;">
+                    <div class="btn-group float-none" role="group">
                         {% if "35" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" data-target="#myModalModif{{ especializacion.idEspecializacion }}"
-                            title="Editar Especializacion"><i class="fa fa-pencil fa-2x fa-fw"></i>
+                            data-toggle="modal" onclick="modificarModal('{{ especializacion|json_encode }}');"
+                            title="Editar Especializacion"><i class="fal fa-pencil-alt fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
                         {% if "34" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" data-target="#eliminarModal{{ especializacion.idEspecializacion }}"
-                            title="Eliminar Especializacion"><i class="fa fa-trash-o fa-2x fa-fw"></i>
+                            data-toggle="modal" onclick="eliminarModal('{{ especializacion|json_encode }}');"
+                            title="Eliminar Especializacion"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -190,10 +59,105 @@
         </tbody>
     </table>
 </div>
+
+<!-- MODALES NEW, UPDATE Y DELETE -->
+<!--NEW ESPECIALIZACION-->
+{% if "33" in datos.permisos %}
+<div class="modal fade" id="modalNew">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0">Crear Especializacion</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="newEspecializacion" method="post" class="was-validated">
+                    <div class="form-group">
+                        <label for="nombre">Nombre de Especializacion:</label>
+                        <input type="text" name="nombre" class="form-control" autofocus required>
+                        <div class="invalid-feedback">Complete este campo</div>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success btn-modal">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--MODIFICAR ESPECIALIZACION-->
+{% if "35" in datos.permisos %}
+<div class="modal fade" id="modalUpdate">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="updateEspecializacion" method="post" class="was-validated">
+                    <input type="text" name="idEspecializacion" id="updateID" hidden>
+                    <div class="form-group">
+                        <label for="nombreAnterior">Nombre Anterior:</label>
+                        <input type="text" name="nombreAnterior" id="nombreAnterior" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nuevo Nombre:</label>
+                        <input type="text" name="nombre" class="form-control" autofocus required>
+                        <div class="invalid-feedback">Complete este campo</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--ELIMINAR ESPECIALIZACION SI NO UTILIZADO-->
+{% if "34" in datos.permisos %}
+<div class="modal fade" id="modalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p class="mb-3">¿Está seguro?</p>
+                <form action="deleteEspecializacion" method="post">
+                    <input type="text" id="deleteID" name="idEspecializacion" hidden>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+
+<script src="/public/js/jsBasicos/jsEspecializacion.js"></script>
 <script>
-    var columnas = '0,1';
-    var columNoOrdenar = 2;
-    var titulo = 'Especializaciones Registradas';
+    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Especialización');
+    ordenarTabla('miTabla', '0,1', [2], 'Especializaciones Registradas');
 </script>
-<script src="/public/js/ordypagtablas.js"></script>
 {% endblock %}

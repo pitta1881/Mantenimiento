@@ -4,110 +4,19 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.newOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta Realizada</span>",
-        "Sector Creado Correctamente");
-</script>
-{% elseif datos.newOK is not null and datos.newOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Sector</span>",
-        "El Sector ya existe..");
-</script>
-{% endif %}
-{% if datos.updateOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
-        "Sector Modificado Correctamente");
-</script>
-{% elseif datos.updateOK is not null and datos.updateOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Sector</span>",
-        "El Sector no se pudo modificar..");
-</script>
-{% endif %}
-{% if datos.deleteOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Baja Realizada</span>",
-        "Sector Eliminado Correctamente");
-</script>
-{% elseif datos.deleteOK is not null and datos.deleteOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al eliminar Sector</span>",
-        "El Sector no se pudo eliminar..");
-</script>
-{% endif %}
+{% block header %}
+{% include 'partials/header.html' with {datos:datos} only %}
+{% endblock %}
 <div>
-    {% block header %}
-    {% include 'partials/header.html' with {datos:datos} only %}
-    {% endblock %}
     <h2 class="titulo-tabla">Sectores Registrados </h2>
-    <!-- Button to Open the Modal -->
+
+    <!-- BOTON NEW SECTOR -->
     {% if "25" in datos.permisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevoModal"><i
-            class="fa fa-plus"></i> Crear Nuevo</button>
-    <!-- The Modal -->
-    <div class="modal fade" id="nuevoModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h3 class="modal-title m-0">Alta de Sector</h3>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <form action="newSector" method="post" class="was-validated">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="nombreSector">Nombre del Sector:</label><span class="asterisco">*</span>
-                                <input type="text" name="nombreSector" class="form-control" autofocus required>
-                                <div class="invalid-feedback">Complete este campo</div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="responsable">Nombre del Responsable:</label><span class="asterisco">*</span>
-                                <input type="text" name="responsable" class="form-control" required>
-                                <div class="invalid-feedback">Complete este campo</div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <label for="tipo">Tipo</label><span class="asterisco">*</span>
-                                <select name="tipo" class="form-control custom-select">
-                                    {% for tipoSector in datos.tipoSectores %}
-                                    <option value="{{ tipoSector }}">{{ tipoSector }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="invalid-feedback">Complete este campo</div>
-                            </div>
-                            <div class="form-group col-md-5">
-                                <label for="telefono">Telefono:</label>
-                                <input type="tel" name="telefono" class="form-control telVerification">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="email">Email:</label>
-                                <input type="email" name="email" class="form-control">
-                                <div class="invalid-feedback">El formato es incorrecto</div>
-                            </div>
-                        </div>
-                        <!-- Modal Footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-modal"
-                                data-dismiss="modal">Salir</button>
-                            <button type="submit" class="btn btn-success btn-modal">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
+            class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
+
+    <!-- TABLA SECTORES -->
     <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
         <thead class="headtable">
             <tr>
@@ -131,123 +40,23 @@
                 <td>{{ sector.telefono }}</td>
                 <td>{{ sector.email }}</td>
                 <td>
-                    {% if "27" in datos.permisos %}
-                    <!--MODIFICAR SECTOR-->
-                    <!-- The Modal -->
-                    <div class="modal fade" id="myModalModif{{ sector.idSector }}">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h3 class="modal-title m-0">Modificar Sector Nº {{ sector.idSector }}</h3>
-                                    <button type="button" class="close" data-dismiss="modal"><span
-                                            aria-hidden="true">&times;</span></button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <form action="updateSector" method="post" class="was-validated">
-                                        <input type="text" name="idSector" value="{{ sector.idSector }}" hidden>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="nombreSector">Nombre del Sector:</label><span
-                                                    class="asterisco">*</span>
-                                                <input type="text" name="nombreSector" class="form-control" autofocus
-                                                    required value="{{ sector.nombreSector }}">
-                                                <div class="invalid-feedback">Complete este campo</div>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="responsable">Nombre del
-                                                    Responsable:</label><span class="asterisco">*</span>
-                                                <input type="text" name="responsable" class="form-control" required
-                                                    value="{{ sector.responsable }}">
-                                                <div class="invalid-feedback">Complete este campo</div>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label for="tipo">Tipo:<span class="asterisco">*</span></label>
-                                                <select name="tipo" class="form-control custom-select">
-                                                    {% for tipoSector in datos.tipoSectores %}
-                                                    {% if tipoSector == sector.tipo %}
-                                                    <option value="{{ tipoSector }}" selected>
-                                                        {{ tipoSector }}</option>
-                                                    {% else %}
-                                                    <option value="{{ tipoSector }}">{{ tipoSector }}
-                                                    </option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </select>
-                                                <div class="invalid-feedback">Complete este campo</div>
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="telefono">Telefono:</label>
-                                                <input type="tel" name="telefono" class="form-control telVerification"
-                                                    value="{{ sector.telefono }}">
-                                            </div>
-                                            <div class="form-group col-md-5">
-                                                <label for="email">Email:</label>
-                                                <input type="email" name="email" class="form-control"
-                                                    value="{{ sector.email }}">
-                                                <div class="invalid-feedback">El formato es incorrecto</div>
-                                            </div>
-                                        </div>
-                                        <!-- Modal Footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary btn-modal"
-                                                data-dismiss="modal">Salir</button>
-                                            <button type="submit" class="btn btn-success btn-modal">Enviar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% if "26" in datos.permisos %}
-                    <!--ELIMINAR SECTOR SI NO FUE USADO TODAVIA-->
-                    <form action="deleteSector" method="post" style="display: inline-block"
-                        id="formEliminarSector{{ sector.idSector }}">
-                        <input type="text" name="idSector" value="{{ sector.idSector }}" hidden>
-                        <div class="modal fade" id="eliminarModal{{ sector.idSector }}" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title m-0">Eliminar Sector Nº {{ sector.idSector }}</h3>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>¿Está seguro?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary btn-modal"
-                                            data-dismiss="modal">Salir</button>
-                                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    {% endif %}
                     {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if sector.usado == false %}
                     {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
-                    <div class="btn-group" role="group" aria-label="Basic example" style="float: none;">
+                    <div class="btn-group float-none" role="group">
                         {% if "27" in datos.permisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" data-target="#myModalModif{{ sector.idSector }}"
-                            title="Editar Sector"><i class="fa fa-pencil fa-2x fa-fw"></i>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="modificarModal('{{ sector|json_encode }}');" title="Editar Sector"><i
+                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
                         {% if "26" in datos.permisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" data-target="#eliminarModal{{ sector.idSector }}"
-                            title="Eliminar Sector"><i class="fa fa-trash-o fa-2x fa-fw"></i>
+                            data-toggle="modal" onclick="eliminarModal('{{ sector|json_encode }}');"
+                            title="Eliminar Sector"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -259,12 +68,160 @@
         </tbody>
     </table>
 </div>
-<script src="/public/js/validartelefono.js"></script>
+
+<!-- MODALES NEW, UPDATE Y DELETE -->
+<!--NEW SECTOR-->
+{% if "25" in datos.permisos %}
+<div class="modal fade" id="modalNew">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0">Alta de Sector</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="newSector" method="post" class="was-validated">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nombreSector">Nombre del Sector:</label><span class="asterisco">*</span>
+                            <input type="text" name="nombreSector" class="form-control" autofocus required>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="responsable">Nombre del Responsable:</label><span class="asterisco">*</span>
+                            <input type="text" name="responsable" class="form-control" required>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="tipo">Tipo</label><span class="asterisco">*</span>
+                            <select name="tipo" class="form-control custom-select">
+                                {% for tipoSector in datos.tipoSectores %}
+                                <option value="{{ tipoSector }}">{{ tipoSector }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="telefono">Telefono:</label>
+                            <input type="tel" name="telefono" class="form-control telVerification">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" class="form-control">
+                            <div class="invalid-feedback">El formato es incorrecto</div>
+                        </div>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success btn-modal">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--MODIFICAR SECTOR-->
+{% if "27" in datos.permisos %}
+<div class="modal fade" id="modalUpdate">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="updateSector" method="post" class="was-validated">
+                    <input type="text" name="idSector" id="updateID" hidden>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nombreSector">Nombre del Sector:</label><span class="asterisco">*</span>
+                            <input type="text" name="nombreSector" class="form-control" autofocus required
+                                id="nombreSectorUpdate">
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="responsable">Nombre del
+                                Responsable:</label><span class="asterisco">*</span>
+                            <input type="text" name="responsable" class="form-control" required id="responsableUpdate">
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="tipo">Tipo:<span class="asterisco">*</span></label>
+                            <select name="tipo" id="tipoUpdate" class="form-control custom-select">
+                                {% for tipoSector in datos.tipoSectores %}
+                                <option value="{{ tipoSector }}">
+                                    {{ tipoSector }}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="invalid-feedback">Complete este campo</div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="telefono">Telefono:</label>
+                            <input type="tel" name="telefono" class="form-control telVerification" id="telefonoUpdate">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" class="form-control" id="emailUpdate">
+                            <div class="invalid-feedback">El formato es incorrecto</div>
+                        </div>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success btn-modal">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--ELIMINAR SECTOR SI NO FUE USADO TODAVIA-->
+{% if "26" in datos.permisos %}
+<div class="modal fade" id="modalDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p class="mb-3">¿Está seguro?</p>
+                <form action="deleteSector" method="post">
+                    <input type="text" name="idSector" id="deleteID" hidden>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+
+<script src="/public/js/generales/validartelefono.js"></script>
+<script src="/public/js/jsBasicos/jsSector.js"></script>
 <script>
-    var columnas = '0,1,2,3,4,5';
-    var columNoOrdenar = 6;
-    var titulo = 'Sectores Registrados';
-</script>
-<script src="/public/js/ordypagtablas.js">
+    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Sector');
+    ordenarTabla('miTabla', '0,1,2,3,4,5', [6], 'Sectores Registrados');
 </script>
 {% endblock %}
