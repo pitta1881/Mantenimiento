@@ -114,7 +114,7 @@
         <dt>Estado:</dt>
         <dd>{{ datos.miPedido.estado }}</dd>
         <dt>Sector:</dt>
-        <dd><a href="#" onclick="fichaSector('{{ datos.miPedido.idSector }}');return false;"
+        <dd><a href="#" onclick="fichaSector('{{ datos.miPedido.idSector }}');"
                 title="Ver Mas">{{ datos.miPedido.nombreSector }}</a></dd>
         <dt>Prioridad:</dt>
         <dd>{{ datos.miPedido.prioridad }}</dd>
@@ -391,5 +391,5 @@
         {% endif %}
     </table>
 </div>
-<script src="/public/js/ajaxFichaSector.js"></script>
+<script src="/public/js/ajax/ajaxFichaSector.js"></script>
 {% endblock %}

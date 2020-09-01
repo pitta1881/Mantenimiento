@@ -12,6 +12,7 @@
     $router->get('administracion/usuarios','UsuarioController@administracionUsuarios');
     $router->post('administracion/usuarios/newUsuario','UsuarioController@new');
     $router->post('administracion/usuarios/updateUsuario', 'UsuarioController@update');
+    $router->post('administracion/usuarios/deleteUsuario','UsuarioController@delete');
 
 //rutas personas
     $router->get('administracion/personas','PersonaController@administracionPersonas');
@@ -25,7 +26,7 @@
     $router->get('administracion/roles','RolController@administracionRoles');
     $router->post('administracion/roles/newRol', 'RolController@new');
     $router->post('administracion/roles/updateRol', 'RolController@update');
-    //$router->post('administracion/roles/deleteRol', 'RolController@delete');
+    $router->post('administracion/roles/deleteRol', 'RolController@delete');
     $router->post('administracion/roles/fichaRol', 'RolController@ficha');
 
 //rutas permisos

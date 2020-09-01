@@ -15,21 +15,23 @@ class PersonaController extends Controller{
     private $tableAgentes = 'agentes';
     
     public function administracionPersonas($new = null,$update = null,$delete = null){
-        $datos['todasPersonas'] = $this->model->get($this->table,array($this->tableAgentes)); 
+        $comparaTablasIfUsado = array(
+                                    array(  "tabla" => $this->tableAgentes,
+                                            "comparaKey" => "idAgente"
+                                        )
+                                );
+        $datos['todasPersonas'] = $this->model->get($this->table,$comparaTablasIfUsado); 
         $datos["userLogueado"] = $_SESSION['user'];
         $datos['permisos'] = $this->model->getPermisos();
         $datos['estados'] = $this->model->getEstadosPersona();
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
-        if(!is_null($new)){
-            $datos['newOK'] = $new;
-        }
-        if(!is_null($update)){
-            $datos['updateOK'] = $update;
-        }
-        if(!is_null($delete)){
-            $datos['deleteOK'] = $delete;
-        }
+        $alertas = [
+            'new' => $new,
+            'update' => $update,
+            'delete' => $delete
+        ];
+        $datos['alertas'] = $alertas;
         $datos['urlheader']="> HOME > ADMINISTRACIÓN > PERSONAS";
         return view('/administracion/PersonasView', compact('datos'));
     }

@@ -1,23 +1,23 @@
-        <div class="row mx-background-top-linear" style="margin: -3rem -3rem 0; padding: .2rem;">
-            <div class="headerurl col-4">
-                <div class="divheaderurl">
-                    <span> {{ datos.urlheader}} </span>
-                </div>
-            </div>
-            <div class="headerfechahora col-4">
-                <div id="date" style="font-size: 13px;">
-                    <span id="ctl00_CtrlTimeNow_scriptFechaHora">
-                    </span>
-                    <span id="divReloj"><b class="texto11Azul"></b></span>
-                </div>
-            </div>
-            <div class="headerurl col-4">
-                <div class="divheaderprofile">
-                    <span style="color: darkgrey;"> {{ datos.userLogueado }} |</span>
-                    <a href="/logOut"><span class="fa fa-sign-out mr-3" aria-hidden="true"
-                            style="margin: 0 !important;"></span>Salir</a>
-                </div>
-            </div>
+<!-- HEADER FIXED -->
+<header class="row mx-background-top-linear" style="margin: -3rem -3rem 0; padding: .2rem;">
+    <div class="headerurl col-4">
+        <div class="divheaderurl">
+            <span> {{ datos.urlheader}} </span>
         </div>
+    </div>
+    <div class="headerfechahora col-4">
+        <div id="date">
+            <span id="ctl00_CtrlTimeNow_scriptFechaHora">
+            </span>
+            <span id="divReloj"><b class="texto11Azul"></b></span>
+        </div>
+    </div>
+    <div class="headerurl col-4">
+        <div class="divheaderprofile">
+            <span style="color: darkgrey;"> {{ datos.userLogueado }} |</span>
+            <a href="/logOut"><span class="fal fa-sign-out"></span>Salir</a>
+        </div>
+    </div>
+</header>
 
-        <script src="/public/js/horafecha.js"></script>
+<script src="/public/js/generales/horafecha.js"></script>

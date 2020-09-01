@@ -9,23 +9,27 @@ class PermisoController extends Controller{
     public function __construct(){
         $this->model = new PermisoModel();
         session_start();
-    }
+    }   
 
     private $table = 'permisos';
+    private $tableRxP = 'rolesxpermisos';
+
 
     public function administracionPermisos($new = null,$update = null,$delete = null){
-        $datos['todosPermisos'] = $this->model->get($this->table);
+        $comparaTablasIfUsado = array(
+            array(  "tabla" => $this->tableRxP,
+                    "comparaKey" => "idPermiso"
+                )
+        );
+        $datos['todosPermisos'] = $this->model->get($this->table,$comparaTablasIfUsado);
         $datos['userLogueado'] = $_SESSION['user'];
         $datos['permisos'] = $this->model->getPermisos();
-        if(!is_null($new)){
-            $datos['newOK'] = $new;
-        }
-        if(!is_null($update)){
-            $datos['updateOK'] = $update;
-        }
-        if(!is_null($delete)){
-            $datos['deleteOK'] = $delete;
-        }
+        $alertas = [
+            'new' => $new,
+            'update' => $update,
+            'delete' => $delete
+        ];
+        $datos['alertas'] = $alertas;
         $datos['urlheader']="> HOME > ADMINISTRACIÓN > PERMISOS";
         return view('/administracion/PermisosView', compact('datos'));
     }

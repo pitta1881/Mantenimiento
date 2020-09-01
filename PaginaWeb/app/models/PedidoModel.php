@@ -34,12 +34,8 @@ class PedidoModel extends Model{
         foreach ($pedidos as &$miPedido) {
             $miPedido['nombreSector'] = $this->db->selectWhatWhere($this->tableSectores,'nombreSector',array('idSector' => $miPedido['idSector']))[0]['nombreSector'];
             $miPedido['tareasAsignadas'] = $this->db->countTareasAsignadas($this->tableTarea,$miPedido['id'])[0][0];
-            $miPedido['fechaInicio'] = date("d/m/Y", strtotime($miPedido['fechaInicio']));
-            $miPedido['fechaInicioSinFormato'] = date("Y-m-d", strtotime($miPedido['fechaInicio']));
             if (is_null($miPedido['fechaFin'])){
                 $miPedido['fechaFin'] = $miPedido['estado'];
-            } else {
-                $miPedido['fechaFin'] = date("d/m/Y", strtotime($miPedido['fechaFin']));
             }
         }  
         return $pedidos;
@@ -50,12 +46,8 @@ class PedidoModel extends Model{
         $pedido = $this->db->selectNumeroPedido($this->table,$id);
         $miPedido = json_decode(json_encode($pedido[0]), True);
         $tareas = $this->getTareasByIdPedido($id);
-        $miPedido['fechaInicioSinFormato'] = $miPedido['fechaInicio'];
-        $miPedido['fechaInicio'] = date("d/m/Y",strtotime($miPedido['fechaInicio']));
         if (is_null($miPedido['fechaFin'])) {
             $miPedido['fechaFin'] = 'En Curso';
-        } else {
-            $miPedido['fechaFin'] = date("d/m/Y", strtotime($miPedido['fechaFin']));
         }
         $miPedido['nombreSector'] = $this->db->selectWhatWhere($this->tableSectores,'nombreSector',array('idSector' => $miPedido['idSector']))[0]['nombreSector'];
         $miPedido['tareas'] = $tareas;

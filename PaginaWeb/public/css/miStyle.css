@@ -20,6 +20,32 @@ body {
     opacity: 0.3 !important;
 }
 
-.asterisco{
-    color:red;
+.asterisco {
+    color: red;
+}
+
+@media print {
+
+    #miTabla2_filter,
+    .dt-buttons,
+    .pagination * {
+        visibility: hidden;
+    }
+
+    #miTabla2_filter,
+    .dt-buttons,
+    .pagination {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    dt,
+    dd {
+        display: inline-block;
+    }
+
+    #miTabla2 {
+        overflow: hidden;
+    }
 }

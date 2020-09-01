@@ -14,40 +14,55 @@ class RolController extends Controller{
     }
 
     private $table = 'roles';
+    private $tableUsuarios = 'usuarios';
+    private $tableRP = 'rolesxpermisos';
 
     /*Show all pedidos*/
     public function administracionRoles($new = null,$update = null,$delete = null){
-        $datos["todosRoles"] = $this->model->get($this->table); 
+        $comparaTablasIfUsado = array(
+                                    array(  "tabla" => $this->tableRP, 
+                                            "comparaKey" => 'idRol'
+                                    ),
+                                    array(  "tabla" => $this->tableUsuarios, 
+                                    "comparaKey" => 'idRol'
+                                    )
+                                );
+        $datos["todosRoles"] = $this->model->get($this->table,$comparaTablasIfUsado); 
         $datos["userLogueado"] = $_SESSION['user'];
         $datos['permisos'] = $this->model->getPermisos();
-        if(!is_null($new)){
-            $datos['newOK'] = $new;
-        }
-        if(!is_null($update)){
-            $datos['updateOK'] = $update;
-        }
-        if(!is_null($delete)){
-            $datos['deleteOK'] = $delete;
-        }
+        $alertas = [
+            'new' => $new,
+            'update' => $update,
+            'delete' => $delete
+        ];
+        $datos['alertas'] = $alertas;
         $datos['urlheader']="> HOME > ADMINISTRACIÓN > ROLES";
         return view('/administracion/RolesView', compact('datos'));
     }
 
     public function new(){
         $rol['nombreRol'] = $_POST['nombreRol'];
-        $insertOk = $this->model->insert($rol);
+        $insertOk = $this->model->insert($this->table,$rol);
         return $this->administracionRoles($insertOk);
     }
 
     public function update(){     
         $rol['idRol'] = $_POST["idRol"];
-        $permisos= $_POST["permisos"];
-        $this->model->borrarPermisosAsoc($rol);
-        for ($i=0;$i<count($permisos);$i++)    {  
-            $rol['idPermiso'] = $permisos[$i];
-            $this->model->agregarPermisosAsoc($rol);
+        $this->model->delete($this->tableRP,$rol);
+        if(isset($_POST["permisos"])){
+            $permisos= $_POST["permisos"];
+            for ($i=0;$i<count($permisos);$i++)    {  
+                $rol['idPermiso'] = $permisos[$i];
+                $this->model->insert($this->tableRP,$rol,true);
+            }
         }
         return $this->administracionRoles(null,true);
+    }
+
+    public function delete(){
+        $rol['idRol'] = $_POST['idRol'];
+        $deleteOk = $this->model->delete($this->table,$rol);
+        return $this->administracionRoles(null,null,$deleteOk);
     }
 
     public function ficha(){

@@ -419,7 +419,15 @@ VALUES (
         'heine@outlook.com',
         'Activo'
     ),
-    (11188169, 'Diaz', 'Adrian', '', '', '', 'Activo'),
+    (
+        11188169,
+        'Diaz',
+        'Adrian',
+        '',
+        '1971-02-10',
+        '',
+        'Activo'
+    ),
     (
         39447859,
         'Guerrero',

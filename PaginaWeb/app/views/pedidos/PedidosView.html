@@ -4,126 +4,19 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}
 {% block main %}
-{% if datos.newOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-check-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Alta realizada</span>",
-        "Pedido creado correctamente");
-</script>
-{% elseif datos.newOK is not null and datos.newOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al crear nuevo Pedido</span>",
-        "Error");
-</script>
-{% endif %}
-{% if datos.updateOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Modificación Realizada</span>",
-        "Pedido Modificado Correctamente");
-</script>
-{% elseif datos.updateOK is not null and datos.updateOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al modificar Pedido</span>",
-        "El Pedido no se pudo modificar..");
-</script>
-{% endif %}
-{% if datos.deleteOK %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#00e104'></span><span style='font-size:15px; color:black'> Pedido Cancelado</span>",
-        "Pedido Cancelado Correctamente");
-</script>
-{% elseif datos.deleteOK is not null and datos.deleteOK == false %}
-<script>
-    alertify.alert(
-        "<span class='fa fa-times-circle fa-2x' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error al eliminar Pedido</span>",
-        "El Pedido no se pudo cancelar..");
-</script>
-{% endif %}
+{% block header %}
+{% include 'partials/header.html' with {datos:datos} only %}
+{% endblock %}
 <div>
-    {% block header %}
-    {% include 'partials/header.html' with {datos:datos} only %}
-    {% endblock %}
     <h2 class="titulo-tabla">Pedidos Registrados </h2>
-    <!-- Button to Open the Modal -->
+
+    <!-- BOTON NEW PEDIDO -->
     {% if "13" in datos.permisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevoModal"><i
-            class="fa fa-plus"></i> Crear Nuevo</button>
-    <!-- The Modal -->
-    <div class="modal fade" id="nuevoModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h3 class="modal-title m-0">Alta de Pedido</h3>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    {% if datos.sectores is empty %}
-                    <div class="alert alert-danger text-center" role="alert">Primero debe añadir un Sector <a
-                            href="/sectores/administracionSectores" class="alert-link">HAGA CLICK AQUI</a>
-                    </div>
-                    {% else %}
-                    <form action="newPedido" method="post" class="was-validated">
-                        {% if datos.evento is not empty %}
-                        <input type="text" name="idEvento" value="{{ datos.evento.idEvento }}" hidden>
-                        {% endif %}
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="nombreUsuario">Usuario Creador:</label><span class="asterisco">*</span>
-                                <input type="text" name="nombreUsuario" class="form-control"
-                                    value="{{ datos.userLogueado }}" required readonly>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="fechaInicio">Fecha:</label><span class="asterisco">*</span>
-                                <input type="date" name="fechaInicio" class="form-control" value="{{ datos.diaHoy }}"
-                                    required readonly>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="estado">Estado:</label><span class="asterisco">*</span>
-                                <input type="text" name="estado" class="form-control" value="{{ datos.estados.0 }}"
-                                    required readonly>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="idSector">Sector:</label><span class="asterisco">*</span>
-                                <select name="idSector" class="form-control custom-select">
-                                    {% for sector in datos.sectores %}
-                                    <option value="{{ sector.idSector }}">{{ sector.nombreSector }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="prioridad">Prioridad:</label><span class="asterisco">*</span>
-                                <select name="prioridad" class="form-control custom-select">
-                                    {% for prioridad in datos.prioridades %}
-                                    <option value="{{ prioridad }}">{{ prioridad }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
-                            <textarea class="form-control" rows="4" id="descripcion" name="descripcion"
-                                required>{% if datos.evento is not empty %}{{ datos.evento.descripcion }}{% endif %}</textarea>
-                            <div class="invalid-feedback">Complete este campo</div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                            <button type="submit" class="btn btn-success">Enviar</button>
-                        </div>
-                    </form>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
+    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
+            class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
+
+    <!-- TABLA PEDIDOS -->
     <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
         <thead class="headtable">
             <tr>
@@ -144,97 +37,88 @@
             <tr>
                 <td>{{ pedido.id }}</td>
                 <td>{{ pedido.descripcion|slice(0, 55) }}</td>
-                {% if "28" in datos.permisos %}
-                <td><a href="#" onclick="fichaSector('{{ pedido.idSector }}');return false;"
+                <td><a href="#" onclick="fichaSector('{{ pedido.idSector }}');"
                         title="Ver Mas">{{ pedido.nombreSector }}</a>
                 </td>
-                {% endif %}
-                <td>{{ pedido.fechaInicio }}</td>
-                <td>{{ pedido.fechaFin }}</td>
+                <td>{{ pedido.fechaInicio|date("d/m/Y") }}</td>
+                <td>
+                    {% if pedido.fechaFin == 'Iniciado' or pedido.fechaFin == 'En Curso' or pedido.fechaFin == 'Pendiente' or pedido.fechaFin == 'Finalizado' %}
+                    {{ pedido.fechaFin }}
+                    {% else %}
+                    {{ pedido.fechaFin|date("d/m/Y") }}
+                    {% endif %}
+                </td>
                 <td>{{ pedido.tareasAsignadas }}</td>
                 <td>{{ pedido.estado }}</td>
                 <td>{{ pedido.prioridad }}</td>
                 <td>{{ pedido.nombreUsuario }}</td>
                 <td>
-
-                    {% if "16" in datos.permisos %}
-                    <div class="modal fade" id="myModalTareas{{ pedido.id }}">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-                                    <h3 class="modal-title m-0">Ver Pedido</h3>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <!-- Modal body -->
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <dl class="row m-0">
-                                                <dt class="col-lg-3 text-left my-1 mx-0">Pedido Nº:</dt>
-                                                <dd class="col-lg-9 text-left my-1 mx-0">{{ pedido.id }}</dd>
-                                                <dt class="col-lg-3 text-left my-1 mx-0">Usuario:</dt>
-                                                <dd class="col-lg-9 text-left my-1 mx-0">{{ pedido.nombreUsuario }}</dd>
-                                                <dt class="col-lg-3 text-left my-1 mx-0">Fecha:</dt>
-                                                <dd class="col-lg-9 text-left my-1 mx-0">{{ pedido.fechaInicio }}</dd>
-                                            </dl>
-                                        </div>
-                                        <div class="col-6">
-                                            <dl class="row m-0">
-                                                <dt class="col-lg-3 text-left my-1 mx-0">Estado:</dt>
-                                                <dd class="col-lg-9 text-left my-1 mx-0">{{ pedido.estado }}</dd>
-                                                <dt class="col-lg-3 text-left my-1 mx-0">Sector:</dt>
-                                                <dd class="col-lg-9 text-left my-1 mx-0">{{ pedido.nombreSector }}</dd>
-                                                <dt class="col-lg-3 text-left my-1 mx-0">Prioridad:</dt>
-                                                <dd class="col-lg-9 text-left my-1 mx-0">{{ pedido.prioridad }}</dd>
-                                            </dl>
-                                        </div>
-                                        <div class="col">
-                                            <dl class="row m-0">
-                                                <dt class="text-left my-1 mx-0 pl-1">
-                                                    &nbsp;&nbsp;&nbsp;Descripcion:</dt>
-                                                <dd class="text-justify my-1 mx-0">
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ pedido.descripcion }}
-                                                </dd>
-                                            </dl>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="btn-group float-none" role="group">
+                        {% if "16" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="verTareasModal('{{ pedido|json_encode }}');" title="Ver Mas"><i
+                                class="fal fa-eye fa-2x fa-fw"></i>
+                        </button>
+                        {% endif %}
+                        {% if "15" in datos.permisos and pedido.estado != "Finalizado" and pedido.estado != "Cancelado" %}
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="modificarModal('{{ pedido|json_encode }}');" title="Editar Pedido"><i
+                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                        </button>
+                        {% endif %}
+                        {% if "14" in datos.permisos %}
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="eliminarModal('{{ pedido|json_encode }}');" title="Eliminar Pedido"><i
+                                class="fal fa-trash-alt fa-2x fa-fw"></i>
+                        </button>
+                        {% endif %}
                     </div>
+                </td>
+            </tr>
+            {% else %}
+            <h2 class='error'>No hay Pedidos</h2>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-{% endif %}
+</div>
 
-<!--MODIFICAR PEDIDO-->
-{% if pedido.estado != "Finalizado" and pedido.estado != "Cancelado" %}
-<!-- The Modal -->
-<div class="modal fade" id="myModalModif{{ pedido.id }}">
+<!-- MODALES NEW, UPDATE Y DELETE -->
+<!--NEW PEDIDO-->
+{% if "13" in datos.permisos %}
+<div class="modal fade" id="modalNew">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h3 class="modal-title m-0">Modificar Pedido</h3>
+                <h3 class="modal-title m-0">Alta de Pedido</h3>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updatePedido" method="post" class="was-validated">
-                    <input type="text" name="id" value="{{ pedido.id }}" hidden>
+                {% if datos.sectores is empty %}
+                <div class="alert alert-danger text-center" role="alert">Primero debe añadir un Sector <a
+                        href="/sectores/administracionSectores" class="alert-link">HAGA CLICK AQUI</a>
+                </div>
+                {% else %}
+                <form action="newPedido" method="post" class="was-validated">
+                    {% if datos.evento is not empty %}
+                    <input type="text" name="idEvento" value="{{ datos.evento.idEvento }}" hidden>
+                    {% endif %}
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="nombreUsuario">Usuario Creador:</label><span class="asterisco">*</span>
                             <input type="text" name="nombreUsuario" class="form-control"
-                                value="{{ pedido.nombreUsuario }}" required readonly>
+                                value="{{ datos.userLogueado }}" required readonly>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="fechaInicio">Fecha:</label><span class="asterisco">*</span>
-                            <input type="date" name="fechaInicio" class="form-control"
-                                value="{{ pedido.fechaInicioSinFormato }}" required readonly>
+                            <input type="date" name="fechaInicio" class="form-control" value="{{ datos.diaHoy }}"
+                                required readonly>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="estado">Estado:</label><span class="asterisco">*</span>
-                            <input type="text" name="estado" class="form-control" value="{{ pedido.estado }}" required
+                            <input type="text" name="estado" class="form-control" value="{{ datos.estados.0 }}" required
                                 readonly>
                         </div>
                     </div>
@@ -243,13 +127,7 @@
                             <label for="idSector">Sector:</label><span class="asterisco">*</span>
                             <select name="idSector" class="form-control custom-select">
                                 {% for sector in datos.sectores %}
-                                {% if sector.nombreSector == pedido.nombreSector %}
-                                <option value="{{ sector.idSector }}" selected>
-                                    {{ sector.nombreSector }}</option>
-                                {% else %}
-                                <option value="{{ sector.idSector }}">{{ sector.nombreSector }}
-                                </option>
-                                {% endif %}
+                                <option value="{{ sector.idSector }}">{{ sector.nombreSector }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -257,19 +135,84 @@
                             <label for="prioridad">Prioridad:</label><span class="asterisco">*</span>
                             <select name="prioridad" class="form-control custom-select">
                                 {% for prioridad in datos.prioridades %}
-                                {% if prioridad == pedido.prioridad %}
-                                <option value="{{ prioridad }}" selected>{{ prioridad }}</option>
-                                {% else %}
                                 <option value="{{ prioridad }}">{{ prioridad }}</option>
-                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
-                        <textarea class="form-control" rows="4" name="descripcion"
-                            required>{{pedido.descripcion}}</textarea>
+                        <textarea class="form-control" rows="4" id="descripcion" name="descripcion"
+                            required>{% if datos.evento is not empty %}{{ datos.evento.descripcion }}{% endif %}</textarea>
+                        <div class="invalid-feedback">Complete este campo</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--MODIFICAR PEDIDO-->
+{% if "15" in datos.permisos %}
+<!-- The Modal -->
+<div class="modal fade" id="modalUpdate">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="updatePedido" method="post" class="was-validated">
+                    <input type="text" name="id" id="updateID" hidden>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="nombreUsuario">Usuario Creador:</label><span class="asterisco">*</span>
+                            <input type="text" name="nombreUsuario" class="form-control" id="nombreUsuarioUpdate"
+                                required readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="fechaInicio">Fecha:</label><span class="asterisco">*</span>
+                            <input type="date" name="fechaInicio" class="form-control" id="fechaInicioUpdate" required
+                                readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="estado">Estado:</label><span class="asterisco">*</span>
+                            <input type="text" name="estado" class="form-control" id="estadoUpdate" required readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="idSector">Sector:</label><span class="asterisco">*</span>
+                            <select name="idSector" id="idSectorUpdate" class="form-control custom-select">
+                                {% for sector in datos.sectores %}
+                                <option value="{{ sector.idSector }}">
+                                    {{ sector.nombreSector }}</option>
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="prioridad">Prioridad:</label><span class="asterisco">*</span>
+                            <select name="prioridad" id="prioridadUpdate" class="form-control custom-select">
+                                {% for prioridad in datos.prioridades %}
+                                <option value="{{ prioridad }}">{{ prioridad }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripcion:</label><span class="asterisco">*</span>
+                        <textarea class="form-control" rows="4" name="descripcion" id="descripcionUpdate"
+                            required></textarea>
                         <div class="invalid-feedback">Complete este campo</div>
                     </div>
                     <div class="modal-footer">
@@ -281,68 +224,115 @@
         </div>
     </div>
 </div>
+{% endif %}
 
 <!--ELIMINAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO-->
 {% if "14" in datos.permisos %}
-<form action="cancelPedido" method="post" style="display: inline-block" id="formEliminarPermiso{{ pedido.id }}">
-    <input type="text" name="id" value="{{ pedido.id }}" hidden>
-    <div class="modal fade" id="eliminarModal{{ pedido.id }}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title m-0">Eliminar Pedido &nbsp;{{ pedido.id }}</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Está seguro?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-                    <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-                </div>
+<div class="modal fade" id="modalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p class="mb-3">¿Está seguro?</p>
+                <form action="cancelPedido" method="post">
+                    <input type="text" name="id" id="deleteID" hidden>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</form>
+</div>
 {% endif %}
 
-<div class="btn-group" role="group" aria-label="Basic example" style="float: none;">
-    {% if "16" in datos.permisos %}
-    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-        data-target="#myModalTareas{{ pedido.id }}" title="Ver Mas"><i class="fa fa-eye fa-2x fa-fw"></i>
-    </button>
-    {% endif %}
-    {% if "15" in datos.permisos %}
-    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModalModif{{ pedido.id }}"
-        title="Editar Pedido"><i class="fa fa-pencil fa-2x fa-fw"></i>
-    </button>
-    {% endif %}
-    {% if "14" in datos.permisos %}
-    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-        data-target="#eliminarModal{{ pedido.id }}" title="Eliminar Pedido"><i class="fa fa-trash-o fa-2x fa-fw"></i>
-    </button>
-    {% endif %}
+{% if "16" in datos.permisos %}
+<div class="modal fade" id="modalTareas">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0">Ver Pedido</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="dt-buttons btn-group"> <button class="btn btn-secondary buttons-collection dropdown-toggle"
+                    tabindex="0" aria-controls="miTabla2" type="button" aria-haspopup="true"><i
+                        class="fal fa-download"></i> Descargar</button>
+                <button class="btn btn-secondary buttons-print export buttons-collection" tabindex="0"
+                    aria-controls="miTabla2" type="button" title="Imprimir" onclick='printDiv();'><i
+                        class="fal fa-print"></i>
+                    Imprimir</button> </div>
+            <div class="modal-body">
+                <div class="row border-bottom pb-3">
+                    <div class="col-6">
+                        <dl class="row m-0">
+                            <dt class="col-lg-3 text-left my-1 mx-0">Pedido Nº:</dt>
+                            <dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoID"></dd>
+                            <dt class="col-lg-3 text-left my-1 mx-0">Usuario:</dt>
+                            <dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoNombreUsuario"></dd>
+                            <dt class="col-lg-3 text-left my-1 mx-0">Fecha:</dt>
+                            <dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoFechaInicio"></dd>
+                        </dl>
+                    </div>
+                    <div class="col-6">
+                        <dl class="row m-0">
+                            <dt class="col-lg-3 text-left my-1 mx-0">Estado:</dt>
+                            <dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoEstado"></dd>
+                            <dt class="col-lg-3 text-left my-1 mx-0">Sector:</dt>
+                            <dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoNombreSector"></dd>
+                            <dt class="col-lg-3 text-left my-1 mx-0">Prioridad:</dt>
+                            <dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoPrioridad"></dd>
+                        </dl>
+                    </div>
+                    <div class="col">
+                        <dl class="row m-0">
+                            <dt class="text-left my-1 mx-0 pl-1">
+                                &nbsp;&nbsp;&nbsp;Descripcion:</dt>
+                            <dd class="text-justify my-1 mx-0" id="verPedidoDescripcion">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <table id="miTabla2"
+                    class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+                    <thead class="headtable">
+                        <th>Nº Tarea</th>
+                        <th>OT Asignada</th>
+                        <th>Descripcion</th>
+                        <th>Especializacion</th>
+                        <th>Prioridad</th>
+                        <th>Estado</th>
+                        <th>Agentes</th>
+                        <th>Insumos</th>
+                        <th>Accion</th>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endif %}
-</td>
-</tr>
-{% else %}
-<h2 class='error'>No hay Pedidos</h2>
-{% endfor %}
-</tbody>
-</table>
-</div>
-</div>
-<script src="/public/js/ajaxFichaSector.js"></script>
-<script src="/public/js/ajaxSpoilerTarea.js"></script>
+
+<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+
+
+<script src="/public/js/ajax/ajaxFichaSector.js"></script>
+<script src="/public/js/jsBasicos/jsPedido.js"></script>
+<script src="/public/js/generales/printThis.js"></script>
 <script>
-    var columnas = '0,1,2,3,4,5,6,7,8';
-    var columNoOrdenar = 9;
-    var titulo = 'Pedidos Registrados';
+    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Pedido');
+    ordenarTabla('miTabla', '0,1,2,3,4,5,6,7,8', [9], 'Pedidos Registrados');
+    ordenarTabla('miTabla2', '0,1,2,3,4,5,6,7', [8], 'Tareas Registradas');
 </script>
-<script src="/public/js/ordypagtablas.js"></script>
 {% endblock %}
