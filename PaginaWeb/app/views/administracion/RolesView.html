@@ -11,7 +11,7 @@
     <h2 class="titulo-tabla">Roles Registrados </h2>
 
     <!-- BOTON NEW ROL -->
-    {% if "9" in datos.permisos %}
+    {% if "9" in datos.datosSesion.listaPermisos %}
     <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
             class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
@@ -38,24 +38,24 @@
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
-                        {% if "12" in datos.permisos %}
+                        {% if "12" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                             onclick="fichaRoles('{{ rol.idRol }}',false);" title="Ver Mas"><i
-                                class="fal fa-eye fa-2x fa-fw"></i>
+                                class="fal fa-eye fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
 
-                        {% if "11" in datos.permisos %}
+                        {% if "11" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                             onclick="fichaRoles('{{ rol.idRol }}',true);" title="Modificar"><i
-                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
 
-                        {% if "10" in datos.permisos %}
+                        {% if "10" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
                             data-toggle="modal" onclick="eliminarModal('{{ rol|json_encode }}');"
-                            title="Eliminar Rol"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
+                            title="Eliminar Rol"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -70,7 +70,7 @@
 
 <!-- MODALES NEW, UPDATE Y DELETE -->
 <!-- NEW ROL -->
-{% if "9" in datos.permisos %}
+{% if "9" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalNew">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -100,7 +100,7 @@
 {% endif %}
 
 <!--DELETE AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
-{% if "10" in datos.permisos %}
+{% if "10" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalDelete">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

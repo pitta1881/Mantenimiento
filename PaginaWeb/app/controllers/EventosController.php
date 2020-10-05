@@ -9,14 +9,14 @@ class EventosController extends Controller{
    
     public function __construct(){
       $this->model = new Eventos();
-      session_start();    
+          
    }
     
     public function vistaAdministracionEventos(){
         $todosEventos = $this->model->get(); 
         $datos['todosEventos'] = $todosEventos;
         $datos["diaHoy"] = date("Y-m-d");
-        $datos["userLogueado"] = $_SESSION['user'];
+        
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
   
@@ -49,7 +49,7 @@ $newDate2 = date("d/m/Y", strtotime($originalDate2));*/
     public function vistaModificar(){
         $evento = $this->model->getByIdEvento($_GET['idEvento']);      
         $datos['evento'] = $evento;
-        $datos["userLogueado"] = $_SESSION['user'];
+        
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
         return view('/eventos/eventos.modificar', compact('datos'));

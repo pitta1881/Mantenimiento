@@ -70,7 +70,9 @@ class QueryBuilder
         );
         try {
             $statement = $this->pdo->prepare($sql);
-            return $statement->execute($parameters);
+            if($statement->execute($parameters)){
+                return $this->pdo->lastInsertId();
+            }
         } catch (Exception $e) {
             return false;
         }        
@@ -268,7 +270,7 @@ class QueryBuilder
    
     public function selectUsuarioPorPersonaPorRol($tableUsuario, $tablePersona, $tableRol){  
         $statement = $this->pdo->prepare(
-            "SELECT t1.nombre, t2.nombre,t2.apellido,t2.dni,t3.nombreRol FROM $tableUsuario t1 inner JOIN $tablePersona t2 ON t1.nombre=t2.dni inner JOIN $tableRol t3 ON t1.idRol=t3.idRol"
+            "SELECT t1.nombre, t2.nombre,t2.apellido,t2.id,t3.nombreRol FROM $tableUsuario t1 inner JOIN $tablePersona t2 ON t1.nombre=t2.id inner JOIN $tableRol t3 ON t1.idRol=t3.idRol"
         );
        try{
         $statement->execute();
@@ -398,33 +400,6 @@ class QueryBuilder
     return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function selectInsumoById($table, $nInsumo){
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE idInsumo={$nInsumo}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function updateInsumo($table, $parameters, $nInsumo){
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET nombreInsumo=:nombreInsumo, descripcion=:descripcion, stockMinimo=:stockMinimo WHERE idInsumo=$nInsumo";
-            try {
-                $statement = $this->pdo->prepare($sql);
-                $statement->execute($parameters);
-            } catch (Exception $e) {
-                $this->sendToLog($e);
-            }   
-    }
-
-    public function deleteInsumo($table,$idInsumo){ //table = insumos
-        $statement = $this->pdo->prepare(
-           "DELETE FROM $table  WHERE idInsumo = $idInsumo"
-        );
-        $statement->execute();
-    }
-
     public function deletePermiso($table,$idEspecializacion){ //table = agentes
         $statement = $this->pdo->prepare(
            "DELETE FROM $table  WHERE idPermiso = $idEspecializacion"
@@ -468,7 +443,7 @@ public function selectSectorById($table, $nSector){
     public function selectAgentesDisponibles($tableAgente, $urgencia){
         if ($urgencia) {
             $statement = $this->pdo->prepare(
-                "SELECT * FROM $tableAgente T1 INNER JOIN personas T2 ON T1.idAgente=T2.dni WHERE T2.estado='Activo'"
+                "SELECT * FROM $tableAgente T1 INNER JOIN personas T2 ON T1.idAgente=T2.id WHERE T2.estado='Activo'"
             );
         } else {
             $statement = $this->pdo->prepare(
@@ -678,7 +653,7 @@ public function updateEvento($table, $parameters, $idEvento){
 
     public function selectPersonasNoAgentes($tablePersona, $tableAgente){ 
         $statement = $this->pdo->prepare(
-            "SELECT * FROM $tablePersona T1 LEFT JOIN $tableAgente T2 ON T1.dni=T2.idAgente WHERE T2.idAgente IS NULL AND T1.dni<>0"
+            "SELECT * FROM $tablePersona T1 LEFT JOIN $tableAgente T2 ON T1.id=T2.idAgente WHERE T2.idAgente IS NULL AND T1.id<>0"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
@@ -705,7 +680,7 @@ public function updateEvento($table, $parameters, $idEvento){
  
     public function selectUsuarioPorPersonaPorRolLimit($tableUsuario, $tablePersona, $tableRol,$litinf,$litsup){        
         $statement = $this->pdo->prepare(
-        "SELECT $tableUsuario.nombre,$tablePersona.nombre,$tablePersona .apellido,$tablePersona .dni,$tableRol.nombreRol 
+        "SELECT $tableUsuario.nombre,$tablePersona.nombre,$tablePersona .apellido,$tablePersona .id,$tableRol.nombreRol 
             FROM $tableUsuario  inner JOIN $tablePersona  ON $tableUsuario.nombre=$tablePersona .idUsuario 
             inner JOIN $tableRol  ON $tableUsuario.idRol=$tableRol.idRol LIMIT $litinf, $litsup"
         );
@@ -738,14 +713,6 @@ public function updateEvento($table, $parameters, $idEvento){
     $statement->execute();
     
        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function selectCantidadInsumoItem($tableItemInsumo,$idInsumo){
-        $statement = $this->pdo->prepare(
-        "SELECT MAX(idInsumo) FROM $tableItemInsumo WHERE idInsumo=$idInsumo"
-    );
-    $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
     public function selectInsumosDisponibles($tableInsumos){

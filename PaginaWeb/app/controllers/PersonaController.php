@@ -8,7 +8,7 @@ use App\Models\PersonaModel;
 class PersonaController extends Controller{
     public function __construct(){
         $this->model = new PersonaModel();
-        session_start();    
+            
     }
 
     private $table = 'personas';
@@ -21,8 +21,8 @@ class PersonaController extends Controller{
                                         )
                                 );
         $datos['todasPersonas'] = $this->model->get($this->table,$comparaTablasIfUsado); 
-        $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos();
+        
+        
         $datos['estados'] = $this->model->getEstadosPersona();
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
@@ -38,7 +38,7 @@ class PersonaController extends Controller{
 
     public function new(){
         $persona = [
-            'dni' => $_POST['dni'],
+            'id' => $_POST['id'],
             'nombre' => $_POST['nombre'],
             'apellido' => $_POST['apellido'],
             'direccion' => $_POST['direccion'],
@@ -52,7 +52,7 @@ class PersonaController extends Controller{
 
     public function update(){
         $persona = [
-            'dni' => $_POST['dni'],
+            'id' => $_POST['id'],
             'nombre' => $_POST['nombre'],
             'apellido' => $_POST['apellido'],
             'direccion' => $_POST['direccion'],
@@ -64,7 +64,7 @@ class PersonaController extends Controller{
     }
     
     public function delete(){
-        $persona['dni'] = $_POST['dni'];
+        $persona['id'] = $_POST['id'];
         $deleteOk = $this->model->delete($this->table,$persona);
         return $this->administracionPersonas(null,null,$deleteOk);
     }
@@ -74,7 +74,7 @@ class PersonaController extends Controller{
     }
 
     public function ficha(){
-        $persona['dni'] = $_POST['dni'];
+        $persona['id'] = $_POST['id'];
         $miPersona = $this->model->getFicha($this->table,$persona);
         echo json_encode($miPersona);
     }

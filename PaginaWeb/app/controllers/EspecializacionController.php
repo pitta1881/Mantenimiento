@@ -10,7 +10,7 @@ class EspecializacionController extends Controller
    public function __construct()
     {
       $this->model = new EspecializacionModel();
-      session_start();   
+         
    }
 
     private $table = 'especializacion';
@@ -27,8 +27,8 @@ class EspecializacionController extends Controller
                                         )
                                 );
         $datos['todasEspecializaciones'] = $this->model->get($this->table,$comparaTablasIfUsado); 
-        $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos();
+        
+        
         $alertas = [
             'new' => $new,
             'update' => $update,

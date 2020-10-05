@@ -11,7 +11,7 @@
     <h2 class="titulo-tabla">Permisos Registrados </h2>
 
     <!-- BOTON NEW PERMISO -->
-    {% if "5" in datos.permisos %}
+    {% if "5" in datos.datosSesion.listaPermisos %}
     <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
             class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
@@ -38,17 +38,17 @@
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
-                        {% if "7" in datos.permisos %}
+                        {% if "7" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                             onclick="modificarModal('{{ permiso|json_encode }}');" title="Editar Permiso"><i
-                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
 
-                        {% if "6" in datos.permisos %}
+                        {% if "6" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
                             data-toggle="modal" onclick="eliminarModal('{{ permiso|json_encode }}');"
-                            title="Eliminar Permiso"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
+                            title="Eliminar Permiso"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -63,7 +63,7 @@
 
 <!-- MODALES NEW, UPDATE Y DELETE -->
 <!--NEW PERMISO-->
-{% if "5" in datos.permisos %}
+{% if "5" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalNew">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -93,7 +93,7 @@
 {% endif %}
 
 <!--MODIFICAR PERMISO-->
-{% if "7" in datos.permisos %}
+{% if "7" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalUpdate">
     <div class="modal-dialog modal-xs">
         <div class="modal-content">
@@ -128,7 +128,7 @@
 {% endif %}
 
 <!--ELIMINAR PERMISO-->
-{% if "6" in datos.permisos %}
+{% if "6" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalDelete">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

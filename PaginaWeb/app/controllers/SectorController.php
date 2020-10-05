@@ -10,7 +10,7 @@ class SectorController extends Controller{
     public function __construct()
     {
       $this->model = new SectorModel();
-      session_start();    
+          
    }
 
     private $table = 'sectores';
@@ -23,8 +23,8 @@ class SectorController extends Controller{
                                         )
         );
         $datos['todosSectores'] = $this->model->get($this->table,$comparaTablasIfUsado); 
-        $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos();
+        
+        
         $datos['tipoSectores'] = $this->model->getTipoSector();
         $alertas = [
             'new' => $new,

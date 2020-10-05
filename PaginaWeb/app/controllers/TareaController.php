@@ -8,7 +8,7 @@ use App\Models\Tarea;
 class TareaController extends Controller{
     public function __construct(){
         $this->model = new Tarea();
-        session_start();
+        
     }
 
     public function guardar()
@@ -61,7 +61,7 @@ class TareaController extends Controller{
         $agentesDisponibles = $this->model->verAgentesDisponibles($urgente);
         $datos["miTarea"] = $miTarea;
         $datos['agentesDisponibles'] = $agentesDisponibles;
-        $datos["userLogueado"] = $_SESSION['user'];
+        
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
         return view('/tareas/tareasAgentesDisponibles',compact('datos'));
@@ -83,7 +83,7 @@ class TareaController extends Controller{
             $datosItem[$i++] = $itemAgente;
         }
         $datos['itemAgente'] = $datosItem;
-        $datos["userLogueado"] = $_SESSION['user'];
+        
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
         redirect("fichaTarea?idPedido=".$idPedidoFinal."&idTarea=".$idTareaFinal);
@@ -95,7 +95,7 @@ class TareaController extends Controller{
             $datos["miTarea"] = $miTarea;  
             $datos["prioridades"] = $this->model->getPrioridades();
             $datos['especializaciones'] = $this->model->getEspecializaciones();
-            $datos["userLogueado"] = $_SESSION['user'];
+            
             $permisos=$this->model->getPermisos($_SESSION['rol']);
             $datos['permisos']= $permisos;
             return view('/tareas/tareaVerFicha', compact('datos'));
@@ -130,7 +130,7 @@ class TareaController extends Controller{
         public function verHistorial(){
             $historial = $this->model->verHistorial($_GET['idPedido'],$_GET['idTarea']);
             $datos['historial'] = $historial;
-            $datos["userLogueado"] = $_SESSION['user'];
+            
             $permisos=$this->model->getPermisos($_SESSION['rol']);
             $datos['permisos']= $permisos;
             return view('/tareas/verHistorial',compact('datos'));

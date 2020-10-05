@@ -16,19 +16,6 @@ class PedidoModel extends Model{
     protected $tableEvento='eventos';
     protected $tableItemInsumo = 'iteminsumo';
 
-    public function getSectores() {
-        return $this->db->selectWhat($this->tableSectores,'idSector, nombreSector');
-    }
-
-    public function getPrioridades() {
-        return array("Baja","Media","Alta","Urgente");
-    }
-
-    public function getEstados() {
-        return array("Iniciado","En Curso","Pendiente","Finalizado");
-    }
-
-
     public function get($table, $datos = null){
         $pedidos = $this->db->selectAll($this->table);    
         foreach ($pedidos as &$miPedido) {

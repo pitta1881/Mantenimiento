@@ -10,7 +10,7 @@ class PedidoController extends Controller{
 
     public function __construct(){
         $this->model = new PedidoModel();
-        session_start();
+        
     }
 
     protected $table = 'pedido';
@@ -18,10 +18,11 @@ class PedidoController extends Controller{
     /*Show all pedidos*/
     public function administracionPedidos($new = null,$update = null,$delete = null){
         $datos['todosPedidos'] = $this->model->get($this->table); 
-        $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos();
+        
+        
         $datos["sectores"] = $this->model->getSectores();
         $datos["prioridades"] = $this->model->getPrioridades();
+        $datos['especializaciones'] = $this->model->getEspecializaciones();
         $datos["estados"] = $this->model->getEstados();
         $datos["diaHoy"] = date("Y-m-d");
         $alertas = [
@@ -92,7 +93,7 @@ class PedidoController extends Controller{
         $datos["sectores"] = $this->model->getSectores();
         $datos["prioridades"] = $this->model->getPrioridades();
         $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
-        $datos["userLogueado"] = $_SESSION['user'];
+        
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
         return view('/pedidos/pedidoVerFicha', compact('datos'));

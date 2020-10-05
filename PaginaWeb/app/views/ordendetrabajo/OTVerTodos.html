@@ -5,7 +5,7 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}  {% block main %}
 <div class="contenido3">
-        {% for value in datos.permisos %}
+        {% for value in datos.datosSesion.listaPermisos %}
         {% if value.idPermiso == "21" %}
         <a href="/ot/crear" class="btn btn-info" role="button"><img class="iconos" src="/public/res/add.svg"
             title="Crear OT">Crear OT</a>
@@ -42,7 +42,7 @@
             <td {{ estilo }}>{{ OT.estado }}</td>
             <td {{ estilo }}>{{ OT.cantTareas }}</td>
             <td {{ estilo }}>
-                    {% for value in datos.permisos %}
+                    {% for value in datos.datosSesion.listaPermisos %}
                     {% if value.idPermiso == "24" %}
                     <a href='/fichaOT?idOT={{ OT.idOT }}'>
                         <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">

@@ -5,7 +5,7 @@
 {% include 'partials/nav.html' with {datos:datos} only %}
 {% endblock %}  {% block main %}
 <div class="contenido3">
-    {% for value in datos.permisos %}
+    {% for value in datos.datosSesion.listaPermisos %}
     {% if value.idPermiso == "49" %}
     <a href="/oc/crear" class="btn btn-info" role="button"><img class="iconos" src="/public/res/add.svg"
             title="Crear OC">Crear OC</a>
@@ -40,7 +40,7 @@
             <td {{ estilo }}>{{ OC.costoEstimado }}</td>
             <td {{ estilo }}>{{ OC.cantInsumos }}</td>
             <td {{ estilo }}>
-                {% for value in datos.permisos %}
+                {% for value in datos.datosSesion.listaPermisos %}
                 {% if value.idPermiso == "52" %}
                 <a href='/fichaOC?idOC={{ OC.idOC }}'>
                     <img class="iconos" src="/public/res/vermas.svg" title="Ver Mas">

@@ -13,18 +13,20 @@ class HomeController extends Controller{
         session_start();        
     }
 
-    public function home()
-    {               
+    public function home($rolChange = null){               
         if(empty($_SESSION)){
             redirect("");
         } else {
-         $datos['cantidadPedidos'] = $this->model->getActivos('pedido','id');
+            $datos['datosSesion'] = $_SESSION;
+            $datos['urlheader']="> HOME";
+            $alertas = [
+                'rolChange' => $rolChange
+            ];
+            $datos['alertas'] = $alertas;
+         /*$datos['cantidadPedidos'] = $this->model->getActivos('pedido','id');
          $datos['cantTareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
          $datos['agentesDisponibles'] = $this->model->getAgentesDisponibles('agentes');
          $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
-         $datos["userLogueado"] = $_SESSION['user'];
-         $permisos=$this->model->getPermisos();
-         $datos['permisos']= $permisos;
          
         //tabla de eventos en home
         $todosEventos = $this->model->getEventos();
@@ -33,9 +35,17 @@ class HomeController extends Controller{
         //tabla tareas sin asignar en home
         $tareasSinAsignar = $this->model->getTareasSinAsignar();
         $datos['tareasSinAsignar'] = $tareasSinAsignar;
-        $datos['urlheader']="> HOME";
-        
-        return view ('index.home',compact('datos'));
+        */
+        return view ('HomeView',compact('datos'));
         }
+    }
+
+    public function changeRol(){
+        $rol = explode("|", $_GET['rolChangeID']);
+        $rol['id'] = $rol[0];
+        $rol['nombre'] = $rol[1];
+        $_SESSION['rolActual'] = $rol;
+        $_SESSION['listaPermisos'] = $this->model->getPermisos();
+        return $this->home(true);
     }
 }

@@ -11,7 +11,7 @@
     <h2 class="titulo-tabla">Personas Registradas </h2>
 
     <!-- BOTON NEW PERSONA -->
-    {% if "45" in datos.permisos %}
+    {% if "45" in datos.datosSesion.listaPermisos %}
     <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
             class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
@@ -32,9 +32,9 @@
         </thead>
         <tbody>
             {% for persona in datos.todasPersonas %}
-            {% if persona.dni != '0' %}
+            {% if persona.id != '0' %}
             <tr>
-                <td>{{ persona.dni }}</td>
+                <td>{{ persona.id }}</td>
                 <td>{{ persona.nombre }}</td>
                 <td>{{ persona.apellido }}</td>
                 <td>{{ persona.direccion }}</td>
@@ -49,20 +49,20 @@
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
-                        {% if "47" in datos.permisos %}
+                        {% if "47" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                             onclick="modificarModal('{{ persona|json_encode }}');" title="Editar Persona"><i
-                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
                         </button>
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                             onclick="modificarEstadoModal('{{ persona|json_encode }}');" title="Editar Estado"><i
-                                class="fal fa-user-clock fa-2x fa-fw"></i>
+                                class="fal fa-user-clock fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
-                        {% if "46" in datos.permisos %}
+                        {% if "46" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
                             data-toggle="modal" onclick="eliminarModal('{{ persona|json_encode }}');"
-                            title="Eliminar Persona"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
+                            title="Eliminar Persona"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -78,7 +78,7 @@
 
 <!-- MODALES NEW, UPDATE Y DELETE -->
 <!--NEW PERSONA-->
-{% if "45" in datos.permisos %}
+{% if "45" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalNew">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -92,8 +92,8 @@
                 <form action="newPersona" method="post" class="was-validated">
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="dni">DNI:</label><span class="asterisco">*</span>
-                            <input type="number" name="dni" class="form-control" autofocus required min="10000000">
+                            <label for="id">DNI:</label><span class="asterisco">*</span>
+                            <input type="number" name="id" class="form-control" autofocus required min="10000000">
                             <div class="invalid-feedback">Min:10.000.000</div>
                         </div>
                         <div class="form-group col-md-4">
@@ -137,7 +137,7 @@
 {% endif %}
 
 <!--MODIFICAR PERSONA-->
-{% if "47" in datos.permisos %}
+{% if "47" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalUpdate">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -151,8 +151,8 @@
                 <form action="updatePersona" method="post" class="was-validated">
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="dni">DNI:</label><span class="asterisco">*</span>
-                            <input type="number" name="dni" id="updateID" class="form-control" readonly>
+                            <label for="id">DNI:</label><span class="asterisco">*</span>
+                            <input type="number" name="id" id="updateID" class="form-control" readonly>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="nombre">Nombre:</label><span class="asterisco">*</span>
@@ -196,7 +196,7 @@
 {% endif %}
 
 <!--MODIFICAR ESTADO-->
-{% if "47" in datos.permisos %}
+{% if "47" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalEstadoUpdate">
     <div class="modal-dialog modal-xs">
         <div class="modal-content">
@@ -208,7 +208,7 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <form action="updateEstadoPersona" method="post">
-                    <input type="text" name="dni" id="updateEstadoID" hidden>
+                    <input type="text" name="id" id="updateEstadoID" hidden>
                     <div class="form-group">
                         <label for="estado">Nuevo Estado:</label>
                         <select name="estado" id="estadoUpdate" class="form-control custom-select">
@@ -230,7 +230,7 @@
 {% endif %}
 
 <!--ELIMINAR PERSONA SI NO ESTA USADO-->
-{% if "46" in datos.permisos %}
+{% if "46" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalDelete">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -245,7 +245,7 @@
             <div class="modal-body">
                 <p class="mb-3">¿Está seguro?</p>
                 <form action="deletePersona" method="post">
-                    <input type="text" name="dni" id="deleteID" hidden>
+                    <input type="text" name="id" id="deleteID" hidden>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>

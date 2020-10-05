@@ -10,10 +10,13 @@ use App\Core\App;
 abstract class Model
 {
     protected $db = null;
-    protected $tableRP = 'rolesxpermisos';
+    protected $tableRxP = 'roles_x_permisos';
+    protected $tableRxU = 'roles_x_usuarios';
+    protected $tableRoles = 'roles';
     protected $tableEspecializacion = 'especializacion';
     protected $tablePersona = 'personas';
     protected $tableItemAgentes='itemAgente';
+    protected $tableSectores='sectores';
 
     public function __construct()
     {
@@ -24,9 +27,25 @@ abstract class Model
         if(!is_null($rolEntrada)){
             $rol['idRol'] = $rolEntrada;
         } else {
-            $rol['idRol'] = $_SESSION['rol'];
+            $rol['idRol'] = $_SESSION['rolActual']['id'];
         }
-        return $this->db->selectWhatWherePerm($this->tableRP,'idPermiso',$rol);
+        return $this->db->selectWhatWherePerm($this->tableRxP,'idPermiso',$rol);
+    }
+
+    public function getSectores() {
+        return $this->db->selectWhat($this->tableSectores,'idSector, nombreSector');
+    }
+
+    public function getPrioridades() {
+        return array("Baja","Media","Alta","Urgente");
+    }
+
+    public function getEstados() {
+        return array("Iniciado","En Curso","Pendiente","Finalizado");
+    }
+
+    public function getEspecializaciones() {
+        return $this->db->selectWhat($this->tableEspecializacion,'idEspecializacion, nombre');
     }
 
     //1er param = tabla en donde buscar
@@ -40,12 +59,19 @@ abstract class Model
                 }
             }
             if($table == 'usuarios'){
-                $persona = $this->db->selectWhatWhere($this->tablePersona,'nombre,apellido', array('dni' => $retornoUno['idPersona']))[0];
+                $persona = $this->db->selectWhatWhere($this->tablePersona,'nombre,apellido', array('id' => $retornoUno['idPersona']))[0];
                 $retornoUno['nombreApe'] = $persona['nombre'].' '.$persona['apellido'];
-                $retornoUno['nombreRol'] = $this->db->selectWhatWhere($this->tableRol,'nombreRol', array('idRol' => $retornoUno['idRol']))[0]['nombreRol'];
+                $idUsuario['idUsuario'] = $retornoUno['id'];
+                $roles = $this->db->selectWhatWhere($this->tableRxU,'idRol',$idUsuario);
+                $retornoRoles = null;
+                foreach ($roles as $key => $value) {
+                    $comparaColumna['id']=$value['idRol'];
+                    $retornoRoles[$key] = $this->db->selectWhatWhere($this->tableRoles,'id, nombre',$comparaColumna)[0];
+                }
+                $retornoUno['listaRoles'] = $retornoRoles;
             } else if ($table == 'agentes'){
                 $retornoUno['especializacionNombre']=$this->db->selectWhatWhere($this->tableEspecializacion,'nombre',array('idEspecializacion' => $retornoUno['idEspecializacion']))[0]['nombre'];
-                $persona = $this->db->selectWhatWhere($this->tablePersona,'nombre,apellido',array('dni' => $retornoUno['idAgente']))[0];
+                $persona = $this->db->selectWhatWhere($this->tablePersona,'nombre,apellido',array('id' => $retornoUno['idAgente']))[0];
                 $retornoUno['nombre']=$persona['nombre'];
                 $retornoUno['apellido']=$persona['apellido'];
                 if($retornoUno['disponible'] == 1){
@@ -57,8 +83,8 @@ abstract class Model
             if(!is_null($arrayTablaComparaIfUsado)){
                 $retornoUno['usado'] = false;
                 foreach($arrayTablaComparaIfUsado as $tablaComparaIfUsado){
-                    $keyTablaCompara = $tablaComparaIfUsado["comparaKey"];
-                    $comparaColumna[$keyTablaCompara]=$retornoUno[array_key_first($retornoUno)];
+                    $keyTablaCompara = $tablaComparaIfUsado["comparaKeyDest"];
+                    $comparaColumna[$keyTablaCompara]=$retornoUno[$tablaComparaIfUsado["comparaKeyOrig"]];
                     if($this->db->buscarIfExists($tablaComparaIfUsado["tabla"],$comparaColumna)){
                         $retornoUno['usado'] = true;
                     }
@@ -70,17 +96,8 @@ abstract class Model
 
     //1er param = tabla en donde insertar
     //2do param = datos a insertar (1er de estos actua como pk para ver si ya existe)
-    //3er param = true si inserto un pedido, ya que no tengo q compararlo con nada
-    public function insert($table, array $datos, $insertAnyway = false){
-        if($insertAnyway){
-            return $this->db->insert($table, $datos);
-        } else {
-            if(!($this->db->buscarIfExists($table, $datos))){
-                return $this->db->insert($table, $datos);
-                } else {
-                return false;
-            }       
-        }
+    public function insert($table, array $datos){
+        return $this->db->insert($table, $datos);
     }   
 
     public function update($table, array $datos){
@@ -99,6 +116,15 @@ abstract class Model
         }
     }
 
+    public function buscarRoles_x_Usuario($usuario){
+        $listaRoles = $this->db->selectWhatWhere($this->tableRxU,'idRol',$usuario);
+        foreach ($listaRoles as $key => $value) {
+            $comparaColumna['id']=$value['idRol'];
+            $rolesRetorno[$key] = $this->db->selectWhatWhere($this->tableRoles,'id, nombre',$comparaColumna)[0];
+        }
+        return $rolesRetorno;
+    }
+
     public function getFicha($table,array $where){
         $retornoUno = $this->db->selectAllWhere($table,$where)[0];
         foreach ($retornoUno as $key => $value) {
@@ -111,4 +137,5 @@ abstract class Model
         }
         return $retornoUno;
     }
+
 }

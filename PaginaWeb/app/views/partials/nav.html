@@ -11,31 +11,31 @@
                 <li class="active">
                     <a href="/home"><i class="fal fa-home mr-2 fa-fw fa-lg"></i>Home</a>
                 </li>
-                {% if "4" in datos.permisos %}
+                {% if "4" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
                             class="fal fa-cogs mr-2 fa-fw fa-lg"></i>Administración</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
 
-                        {% if "4" in datos.permisos %}
+                        {% if "4" in datos.datosSesion.listaPermisos %}
                         <li>
                             <a href="/administracion/usuarios/">Usuarios</a>
                         </li>
                         {% endif %}
 
-                        {% if "48" in datos.permisos %}
+                        {% if "48" in datos.datosSesion.listaPermisos %}
                         <li>
                             <a href="/administracion/personas/">Personas</a>
                         </li>
                         {% endif %}
 
-                        {% if "12" in datos.permisos %}
+                        {% if "12" in datos.datosSesion.listaPermisos %}
                         <li>
                             <a href="/administracion/roles/">Roles</a>
                         </li>
                         {% endif %}
 
-                        {% if "8" in datos.permisos %}
+                        {% if "8" in datos.datosSesion.listaPermisos %}
                         <li>
                             <a href="/administracion/permisos/">Permisos</a>
                         </li>
@@ -44,58 +44,58 @@
                 </li>
                 {% endif %}
 
-                {% if "32" in datos.permisos %}
+                {% if "32" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="/agentes/"><i class="fal fa-users mr-2 fa-fw fa-lg"></i>Agentes</a>
                 </li>
                 {% endif %}
 
-                {% if "36" in datos.permisos %}
+                {% if "36" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="/especializaciones/"><i
                             class="fal fa-paint-brush mr-2 fa-fw fa-lg"></i>Especializaciones</a>
                 </li>
                 {% endif %}
 
-                {% if "28" in datos.permisos %}
+                {% if "28" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="/sectores/"><i class="fal fa-hospital mr-2 fa-fw fa-lg"></i>Sectores</a>
                 </li>
                 {% endif %}
 
-                {% if "16" in datos.permisos %}
+                {% if "16" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="/pedidos/"><i class="fal fa-file-signature mr-2 fa-fw fa-lg"></i>Pedidos</a>
                 </li>
                 {% endif %}
 
-                {% if "24" in datos.permisos %}
+                {% if "24" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="/OT/verTodos"><i class="fal fa-clipboard-list-check mr-2 fa-fw fa-lg"></i>Ord. de
                         Trabajo</a>
                 </li>
                 {% endif %}
 
-                {% if "40" in datos.permisos %}
+                {% if "40" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="/eventos/administracionEventos"><i
                             class="fal fa-calendar-check mr-2 fa-fw fa-lg"></i>Eventos</a>
                 </li>
                 {% endif %}
 
-                {% if "16" in datos.permisos %}
+                {% if "16" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="/informe/administracion"><i class="fal fa-chart-line mr-2 fa-fw fa-lg"></i>Informes</a>
                 </li>
                 {% endif %}
 
-                {% if "44" in datos.permisos %}
+                {% if "44" in datos.datosSesion.listaPermisos %}
                 <li>
-                    <a href="/insumos/administracionInsumos"><i class="fal fa-tools mr-2 fa-fw fa-lg"></i>Insumos</a>
+                    <a href="/insumos/"><i class="fal fa-tools mr-2 fa-fw fa-lg"></i>Insumos</a>
                 </li>
                 {% endif %}
 
-                {% if "16" in datos.permisos %}
+                {% if "16" in datos.datosSesion.listaPermisos %}
                 <li>
                     <a href="/ordendecompra/administracionOC"><i class="fal fa-shopping-cart mr-2 fa-fw fa-lg"></i>Ord.
                         de Compra</a>

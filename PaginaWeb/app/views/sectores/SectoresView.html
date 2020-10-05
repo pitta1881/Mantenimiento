@@ -11,7 +11,7 @@
     <h2 class="titulo-tabla">Sectores Registrados </h2>
 
     <!-- BOTON NEW SECTOR -->
-    {% if "25" in datos.permisos %}
+    {% if "25" in datos.datosSesion.listaPermisos %}
     <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
             class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
@@ -47,16 +47,16 @@
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
-                        {% if "27" in datos.permisos %}
+                        {% if "27" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                             onclick="modificarModal('{{ sector|json_encode }}');" title="Editar Sector"><i
-                                class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
-                        {% if "26" in datos.permisos %}
+                        {% if "26" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
                             data-toggle="modal" onclick="eliminarModal('{{ sector|json_encode }}');"
-                            title="Eliminar Sector"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
+                            title="Eliminar Sector"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -71,7 +71,7 @@
 
 <!-- MODALES NEW, UPDATE Y DELETE -->
 <!--NEW SECTOR-->
-{% if "25" in datos.permisos %}
+{% if "25" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalNew">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -128,7 +128,7 @@
 {% endif %}
 
 <!--MODIFICAR SECTOR-->
-{% if "27" in datos.permisos %}
+{% if "27" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalUpdate">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -189,7 +189,7 @@
 {% endif %}
 
 <!--ELIMINAR SECTOR SI NO FUE USADO TODAVIA-->
-{% if "26" in datos.permisos %}
+{% if "26" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalDelete">
     <div class="modal-dialog">
         <div class="modal-content">

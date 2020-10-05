@@ -6,7 +6,7 @@
 {% endblock %}
 {% block main %}
 <div class="contenido3">
-    {% for value in datos.permisos %}
+    {% for value in datos.datosSesion.listaPermisos %}
     {% if value.idPermiso == "37" %}
     <a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos"
             src="/public/res/add.svg" title="Crear Sector">Crear Evento</a>
@@ -79,7 +79,7 @@
             <td>{{ evento.fechaInicio }}</td>
             <td>{{ evento.fechaFin }}</td>
             <td>
-                {% for value in datos.permisos %}
+                {% for value in datos.datosSesion.listaPermisos %}
                 {% if value.idPermiso == "39" %}
                 <a href='/eventos/administracionEventos/modificarEvento' role="button" data-toggle="modal"
                     data-target="#myModalModif{{ evento.idEvento }}">
@@ -141,7 +141,7 @@
                     id="formEliminarEvento{{ evento.idEvento }}">
                     <input type="text" name="idEvento" value="{{ evento.idEvento }}" hidden>
                 </form>
-                {% for value in datos.permisos %}
+                {% for value in datos.datosSesion.listaPermisos %}
                 {% if value.idPermiso == "38" %}
                 <a
                     onclick="alertify.confirm('Eliminar Evento','¿Esta seguro?',function(){document.getElementById('formEliminarEvento{{ evento.idEvento }}').submit()},function(){})"><img

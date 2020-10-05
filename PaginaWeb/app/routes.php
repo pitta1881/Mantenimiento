@@ -7,11 +7,13 @@
 
 //rutas Home
     $router->get('home', 'HomeController@home');
+    $router->get('changeRoles','HomeController@changeRol');
 
 //rutas Usuarios
     $router->get('administracion/usuarios','UsuarioController@administracionUsuarios');
     $router->post('administracion/usuarios/newUsuario','UsuarioController@new');
     $router->post('administracion/usuarios/updateUsuario', 'UsuarioController@update');
+    $router->post('administracion/usuarios/updateRolesUsuario', 'UsuarioController@updateRolesUsuario');
     $router->post('administracion/usuarios/deleteUsuario','UsuarioController@delete');
 
 //rutas personas
@@ -54,6 +56,16 @@
     $router->post('sectores/deleteSector', 'SectorController@delete');
     $router->post('sectores/fichaSector', 'SectorController@ficha');
 
+//rutas insumos
+    $router->get('insumos', 'InsumoController@administracionInsumos');
+    $router->post('insumos/administracionInsumos/guardarInsumo', 'InsumosController@guardarInsumo');
+    $router->post('insumos/administracionInsumos/modificarInsumo', 'InsumosController@update');
+    $router->post('insumo/eliminar', 'InsumosController@delete');
+    $router->get('insumo/verHistorial', 'InsumosController@verHistorial');
+    $router->post('insumo/updateStockSinItem', 'InsumosController@updateStockSinItem');
+    $router->get('insumo/verHistorialParticular', 'InsumosController@verHistorialParticular');
+
+
 //rutas pedidos
     $router->get('pedidos', 'PedidoController@administracionPedidos');
     $router->post('pedidos/newPedido', 'PedidoController@new');
@@ -80,17 +92,6 @@
     $router->get('ot/crear', 'OTController@verTareasSinAsignar');
     $router->post('ot/crear/seleccionados','OTController@crearOT');
     $router->get('fichaOT', 'OTController@ficha');
-
-
-//rutas insumos
-    $router->get('insumos/administracionInsumos', 'InsumosController@vistaAdministracionInsumos');
-    $router->post('insumos/administracionInsumos/guardarInsumo', 'InsumosController@guardarInsumo');
-    $router->post('insumos/administracionInsumos/modificarInsumo', 'InsumosController@update');
-    $router->post('insumo/eliminar', 'InsumosController@delete');
-    $router->get('insumo/verHistorial', 'InsumosController@verHistorial');
-    $router->post('insumo/updateStockSinItem', 'InsumosController@updateStockSinItem');
-    $router->get('insumo/verHistorialParticular', 'InsumosController@verHistorialParticular');
-
 
 //rutas Eventos
     $router->get('eventos/administracionEventos', 'EventosController@vistaAdministracionEventos');

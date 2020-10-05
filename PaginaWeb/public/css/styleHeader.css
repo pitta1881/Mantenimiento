@@ -1,16 +1,16 @@
 #divReloj {
   color: white;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .divheaderurl {
-  font-size: 16px;
+  font-size: 0.8rem;
   color: darkgrey;
   text-align: left;
 }
 
 .divheaderprofile {
-  font-size: 16px;
+  font-size: 0.8rem;
   text-align: right;
 }
 

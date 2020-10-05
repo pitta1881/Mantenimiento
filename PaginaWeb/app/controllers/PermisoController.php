@@ -8,7 +8,7 @@ use App\Models\PermisoModel;
 class PermisoController extends Controller{
     public function __construct(){
         $this->model = new PermisoModel();
-        session_start();
+        
     }   
 
     private $table = 'permisos';
@@ -22,8 +22,8 @@ class PermisoController extends Controller{
                 )
         );
         $datos['todosPermisos'] = $this->model->get($this->table,$comparaTablasIfUsado);
-        $datos['userLogueado'] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos();
+        
+        
         $alertas = [
             'new' => $new,
             'update' => $update,

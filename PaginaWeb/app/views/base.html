@@ -39,6 +39,7 @@
     <script src="/public/js/generales/ordypagtablas.js"></script>
     <script src="/public/alertifyjs/alertify.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/public/bootstrapvalidator/bootstrapValidator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -64,5 +65,19 @@
         {% endblock %}
     </main>
 </body>
+<script>
+    $(document).ready(function () {
+        //clear sessionStorage
+        $("a[href$='logOut']").click(function () {
+            sessionStorage.clear();
+        });
+        //toggle tooltips
+        $('[data-toggle="tooltip"]').tooltip();
+        //make modales draggables
+        $("#modalNew, #modalUpdate, #modalRolesUpdate, #modalDelete, #modalEstadoUpdate").draggable({
+            handle: ".modal-header"
+        });
+    });
+</script>
 
 </html>

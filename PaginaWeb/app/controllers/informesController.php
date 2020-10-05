@@ -10,14 +10,14 @@ class informesController extends Controller
    public function __construct()
     {
       $this->model = new informes();
-      session_start();   
+         
    
    }
 
 
    public function vistaAdministracionInformes(){
       
-         $datos["userLogueado"] = $_SESSION['user'];
+         
          $permisos=$this->model->getPermisos($_SESSION['rol']);
          $datos['permisos']= $permisos;
   
@@ -26,7 +26,7 @@ class informesController extends Controller
     }
      public function getDatos(){
 
-  $datos["userLogueado"] = $_SESSION['user'];
+  
   $permisos=$this->model->getPermisos($_SESSION['rol']);
   $datos['permisos']= $permisos;
       

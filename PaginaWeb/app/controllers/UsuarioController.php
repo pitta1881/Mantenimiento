@@ -13,55 +13,102 @@ class UsuarioController extends Controller
     }
 
     private $table = 'usuarios';
-    private $tablePedido = 'pedido';
-    private $tableMovimiento = 'movimiento';
+    private $tableRxU = 'roles_x_usuarios';
+    private $tablePedidos = 'pedidos';
+    private $tableMovimientos = 'movimientos';
+    private $tableRoles = 'roles';
+    private $tablePersonas = 'personas';
 
     public function administracionUsuarios($new = null,$update = null,$delete = null){
         $comparaTablasIfUsado = array(
-                                    array(  "tabla" => $this->tablePedido, 
-                                            "comparaKey" => "nombreUsuario"
+                                    array(  "tabla" => $this->tablePedidos, 
+                                            "comparaKeyOrig" => "id",
+                                            "comparaKeyDest" => "idUsuario",
                                         ),
-                                    array(  "tabla" => $this->tableMovimiento, 
-                                            "comparaKey" => "nombreUsuario"
+                                    array(  "tabla" => $this->tableMovimientos, 
+                                            "comparaKeyOrig" => "id",
+                                            "comparaKeyDest" => "idUsuario"
                                         )
         );
-        $datos['todosUsuarios'] = $this->model->get($this->table,$comparaTablasIfUsado);
-        $datos['userLogueado'] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos();
-        $datos['roles'] = $this->model->getRoles();  
-        $datos['todosPersonas'] = $this->model->getPersonas(); 
+        $comparaTablasIfUsado_2 = array(
+                                    array(  "tabla" => $this->table, 
+                                            "comparaKeyOrig" => "id",
+                                            "comparaKeyDest" => "idPersona"
+                                        )
+        );
+        $datos['todosUsuarios'] = $this->model->get($this->table,$comparaTablasIfUsado);        
+        $datos['todosRoles'] = $this->model->get($this->tableRoles);  
+        $datos['todosPersonas'] = $this->model->get($this->tablePersonas, $comparaTablasIfUsado_2);
         $alertas = [
             'new' => $new,
             'update' => $update,
             'delete' => $delete
         ];
         $datos['alertas'] = $alertas;
+        $datos['datosSesion'] = $_SESSION;
         $datos['urlheader']="> HOME > ADMINISTRACIÓN > USUARIOS";
         return view('/administracion/UsuariosView', compact('datos'));
     }
 
     public function new(){
         $usuario = [
-            'nombre' => $_POST['nombre'],
+            'nick' => $_POST['nick'],
             'password' => $_POST['password'],
-            'idRol' => $_POST['idRol'],
-            'idPersona' => $_POST['dni'],
+            'idPersona' => $_POST['idPersona'],
         ];
-        $insertOk = $this->model->insert($this->table,$usuario);
-        return $this->administracionUsuarios($insertOk);
+        $insertOk = $this->model->insert($this->table,$usuario);        
+        if(is_numeric($insertOk)){ //si falla la insercion(seguramente x nick repetido)
+            foreach ($_POST['idRol'] as $key => $value) {
+                $RxU = [
+                    'idRol' => $value,
+                    'idUsuario' => $insertOk
+                ];
+                $this->model->insert($this->tableRxU,$RxU);
+            }
+            return $this->administracionUsuarios(true);
+        } else {
+            return $this->administracionUsuarios($insertOk);            
+        }
     }
 
     public function update(){
         $usuario = [
-            'nombre' => $_POST['nombre'],
+            'id' => $_POST['id'],
             'password' => $_POST['password']
         ];
         $updateOk = $this->model->update($this->table,$usuario);
         return $this->administracionUsuarios(null,$updateOk);
     }
 
+    public function updateRolesUsuario(){
+        $usuario['idUsuario'] = $_POST['id'];
+        $this->model->delete($this->tableRxU,$usuario);
+        foreach ($_POST['idRol'] as $key => $value) {
+            $RxU = [
+                'idRol' => $value,
+                'idUsuario' => $_POST['id']
+            ];
+            $this->model->insert($this->tableRxU,$RxU);
+        }
+        if($_POST['id'] == $_SESSION['idUser']){
+            $usuario['idUsuario'] = $_SESSION['idUser'];
+            $_SESSION['listaRoles'] = $this->model->buscarRoles_x_Usuario($usuario);
+            $_SESSION['rolActual'] = $_SESSION['listaRoles'][0];
+            if(sizeof($_SESSION['listaRoles']) > 1){
+                $_SESSION['firstOrUnique'] = false;
+            } else {
+                $_SESSION['firstOrUnique'] = true;
+            }
+            $_SESSION['listaPermisos'] = $this->model->getPermisos();
+            redirect('home');
+        }
+        return $this->administracionUsuarios(null,true);
+    }
+
     public function delete(){
-        $usuario['nombre'] = $_POST['nombre'];
+        $usuarioRxU['idUsuario'] = $_POST['id'];
+        $usuario['id'] = $_POST['id'];
+        $this->model->delete($this->tableRxU,$usuarioRxU);
         $deleteOk = $this->model->delete($this->table,$usuario);
         return $this->administracionUsuarios(null,null,$deleteOk);
     }

@@ -9,13 +9,13 @@ class OCController extends Controller{
 
     public function __construct(){
         $this->model = new OrdenDeCompra();
-        session_start();
+        
     }
 
     public function index(){
         $todasOC = $this->model->get(); 
         $datos['todasOC'] = $todasOC;
-        $datos["userLogueado"] = $_SESSION['user'];
+        
         $datos['rol']=$_SESSION['rol'];
         $permisos=$this->model->getPermisos($_SESSION['rol']);
         $datos['permisos']= $permisos;
@@ -25,7 +25,7 @@ class OCController extends Controller{
     public function verInsumos(){
         $insumos = $this->model->getInsumos();
         $datos['insumos'] = $insumos;
-        $datos["userLogueado"] = $_SESSION['user'];
+        
         $datos['rol']=$_SESSION['rol'];
         return view('/ordendecompra/ocVerInsumosParaAsignar',compact('datos'));
     }
@@ -44,7 +44,7 @@ class OCController extends Controller{
     public function ficha(){
         $miOC = $this->model->getByIdOC($_GET['idOC']);
         $datos["miOC"] = $miOC;  
-        $datos["userLogueado"] = $_SESSION['user'];
+        
         $datos['rol']=$_SESSION['rol'];
         return view('/ordendecompra/ocVerFicha', compact('datos'));
     }

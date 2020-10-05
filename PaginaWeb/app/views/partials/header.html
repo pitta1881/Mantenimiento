@@ -1,23 +1,73 @@
 <!-- HEADER FIXED -->
 <header class="row mx-background-top-linear" style="margin: -3rem -3rem 0; padding: .2rem;">
-    <div class="headerurl col-4">
+    <div class="headerurl col-4 m-auto">
         <div class="divheaderurl">
             <span> {{ datos.urlheader}} </span>
         </div>
     </div>
-    <div class="headerfechahora col-4">
+    <div class="headerfechahora col-4 m-auto">
         <div id="date">
             <span id="ctl00_CtrlTimeNow_scriptFechaHora">
             </span>
             <span id="divReloj"><b class="texto11Azul"></b></span>
         </div>
     </div>
-    <div class="headerurl col-4">
+    <div class="headerurl col-4 m-auto">
         <div class="divheaderprofile">
-            <span style="color: darkgrey;"> {{ datos.userLogueado }} |</span>
+            <span style="color: darkgrey;">
+                {{ datos.datosSesion.nickUser }} <a href="#" data-toggle="modal"
+                    data-target="#modalSelectRol">({{ datos.datosSesion.rolActual.nombre }})</a>
+                |</span>
             <a href="/logOut"><span class="fal fa-sign-out"></span>Salir</a>
         </div>
     </div>
 </header>
 
+<!-- MODAL CAMBIAR ROL -->
+{% if not datos.datosSesion.firstOrUnique %}
+<div class="modal fade" id="modalSelectRol">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title m-0">Roles Asignados</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="changeRoles" method="get" class="was-validated">
+                    {% for rol in datos.datosSesion.listaRoles %}
+                    <div class="form-check text-left mb-3">
+                        {% if rol.id == datos.datosSesion.rolActual.id %}
+                        <input class="form-check-input" type="radio" name="rolChangeID" id="{{ rol.id }}"
+                            value="{{ rol.id }}|{{ rol.nombre }}" checked disabled>
+                        <label class="form-check-label" for="{{ rol.id }}">
+                            {{ rol.nombre }} (Actual)
+                        </label>
+                        {% else %}
+                        <input class="form-check-input" type="radio" name="rolChangeID" id="{{ rol.id }}"
+                            value="{{ rol.id }}|{{ rol.nombre }}" required>
+                        <label class="form-check-label" for="{{ rol.id }}">
+                            {{ rol.nombre }}
+                        </label>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No Cambiar</button>
+                        <button type="submit" class="btn btn-danger" disabled="disabled">Cambiar Rol</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
 <script src="/public/js/generales/horafecha.js"></script>
+<script src="/public/js/jsBasicos/jsRolChange.js"></script>
+<script>
+    verificarAlertas('{{ datos.alertas|json_encode|raw }}');
+</script>

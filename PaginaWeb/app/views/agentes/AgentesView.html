@@ -11,7 +11,7 @@
     <h2 class="titulo-tabla">Agentes Registrados</h2>
 
     <!-- BOTON NEW AGENTE -->
-    {% if "29" in datos.permisos %}
+    {% if "29" in datos.datosSesion.listaPermisos %}
     <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
             class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
@@ -45,22 +45,22 @@
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
-                        {% if "32" in datos.permisos %}
+                        {% if "32" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                             onclick="fichaPersona('{{ agente.idAgente }}');" title="Ver Mas"><i
-                                class="fal fa-eye fa-2x fa-fw"></i>
+                                class="fal fa-eye fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
-                        {% if "31" in datos.permisos %}
+                        {% if "31" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
                             data-toggle="modal" onclick="modificarModal('{{ agente|json_encode }}');"
-                            title="Editar Agente"><i class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                            title="Editar Agente"><i class="fal fa-pencil-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
-                        {% if "30" in datos.permisos %}
+                        {% if "30" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
                             data-toggle="modal" onclick="eliminarModal('{{ agente|json_encode }}');"
-                            title="Eliminar Agente"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
+                            title="Eliminar Agente"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -76,7 +76,7 @@
 
 <!-- MODALES NEW, UPDATE Y DELETE -->
 <!--NEW AGENTE-->
-{% if "29" in datos.permisos %}
+{% if "29" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalNew">
     <div class="modal-dialog modal-xs">
         <div class="modal-content">
@@ -104,7 +104,7 @@
                         <label for="idAgente">Persona</label><span class="asterisco">*</span>
                         <select name="idAgente" class="form-control custom-select">
                             {% for persona in datos.personas %}
-                            <option value="{{ persona.dni }}">{{ persona.nombre }},&nbsp; {{ persona.apellido }}
+                            <option value="{{ persona.id }}">{{ persona.nombre }},&nbsp; {{ persona.apellido }}
                             </option>
                             {% endfor %}
                         </select>
@@ -135,7 +135,7 @@
 {% endif %}
 
 <!--UPDATE AGENTE-->
-{% if "31" in datos.permisos %}
+{% if "31" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalUpdate">
     <div class="modal-dialog modal-xs">
         <div class="modal-content">
@@ -175,7 +175,7 @@
 {% endif %}
 
 <!--DELETE AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
-{% if "30" in datos.permisos %}
+{% if "30" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalDelete">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

@@ -13,29 +13,39 @@ class LogInOutController extends Controller{
 
     private $table = 'usuarios';
 
-    public function logIn(){
-        return view('login');
+    public function logIn($errorLogin = null){
+        $alertas = [
+            'errorLogin' => $errorLogin
+        ];
+        $datos['alertas'] = $alertas;
+        return view('login',compact('datos'));
     }
 
     public function validarLogin(){
         $user = [
-            'nombre' => $_POST['nombre'],
+            'nick' => $_POST['nick'],
             'password' => $_POST['password']
         ];
         $userMatch = $this->model->buscarUsuario($this->table, $user); 
         if(empty($userMatch)){
-            $datos['error'] = true;
-            return view ('login',compact('datos'));
+            return $this->logIn(true);
         }else{
             session_start();
-            $_SESSION['user'] = $_POST['nombre'];
-            $_SESSION['rol'] = $userMatch['idRol'];
-            redirect('home');         
+            $_SESSION['idUser'] = $userMatch['idUsuario'];
+            $_SESSION['nickUser'] = $_POST['nick'];
+            $_SESSION['listaRoles'] = $this->model->buscarRoles_x_Usuario($userMatch);
+            if(sizeof($_SESSION['listaRoles']) > 1){
+                $_SESSION['firstOrUnique'] = false;
+            } else {
+                $_SESSION['firstOrUnique'] = true;
+            }
+            $_SESSION['rolActual'] = $_SESSION['listaRoles'][0];
+            $_SESSION['listaPermisos'] = $this->model->getPermisos();
+            redirect('home');
         }       
     }
 
     public function logOut(){
-        session_unset();
         session_destroy();
         redirect('');
     }

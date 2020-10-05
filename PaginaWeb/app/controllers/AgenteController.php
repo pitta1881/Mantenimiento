@@ -24,8 +24,8 @@ class AgenteController extends Controller
                                     )
                                 );
         $datos['todosAgentes'] = $this->model->get($this->table,$comparaTablasIfUsado); 
-        $datos["userLogueado"] = $_SESSION['user'];
-        $datos['permisos'] = $this->model->getPermisos();
+        
+        
         $datos['personas'] = $this->model->getPersonasNoAgentes();
         $datos['especializaciones'] = $this->model->getEspecializaciones();
         $alertas = [

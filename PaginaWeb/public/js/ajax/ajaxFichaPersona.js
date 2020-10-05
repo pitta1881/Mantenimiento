@@ -1,6 +1,6 @@
-function fichaPersona(dni) {
+function fichaPersona(id) {
     var parametros = {
-        "dni": dni,
+        "id": id,
     };
     $.ajax({
         data: parametros, //datos que se envian a traves de ajax
@@ -11,9 +11,9 @@ function fichaPersona(dni) {
         ) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             var miPersona = JSON.parse(response);
             alertify.alert("Detalles Persona",
-                "<strong>DNI:</strong> " + miPersona.dni +
+                "<strong>DNI:</strong> " + miPersona.id +
                 "<br> <strong>Nombre y Apellido:</strong> " + miPersona.nombre + " " + miPersona.apellido +
-                "<br> <strong>Fecha de Nacimiento:</strong> " + miPersona.fecha_nacimiento +
+                "<br> <strong>Fecha de Nacimiento:</strong> " + miPersona.fechaNacimiento +
                 "<br> <strong>Direccion:</strong> " + miPersona.direccion +
                 "<br> <strong>Email:</strong> " + miPersona.email
             );

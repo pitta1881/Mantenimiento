@@ -11,7 +11,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/public/Login_v18/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/public/Login_v18/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="/public/fontawesome-pro/css/all.css" rel="stylesheet">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/public/Login_v18/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
     <!--===============================================================================================-->
@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="/public/Login_v18/css/util.css">
     <link rel="stylesheet" type="text/css" href="/public/Login_v18/css/main.css">
     <!--===============================================================================================-->
+    <script src="/public/js/generales/alertasABM.js"></script>
 </head>
 <main>
     {% if datos.error == true %}
@@ -50,7 +51,7 @@
 
 
                         <div class="wrap-input100 validate-input" data-validate="Campo Obligatorio">
-                            <input class="input100" type="text" name="nombre">
+                            <input class="input100" type="text" name="nick">
                             <span class="focus-input100"></span>
                             <span class="label-input100">Usuario</span>
                         </div>
@@ -76,8 +77,6 @@
 
 
 
-
-
         <!--===============================================================================================-->
         <script src="/public/Login_v18/vendor/jquery/jquery-3.2.1.min.js"></script>
         <!--===============================================================================================-->
@@ -94,6 +93,9 @@
         <script src="/public/Login_v18/vendor/countdowntime/countdowntime.js"></script>
         <!--===============================================================================================-->
         <script src="/public/Login_v18/js/main.js"></script>
+        <script>
+            verificarAlertas('{{ datos.alertas|json_encode|raw }}');
+        </script>
 </main>
 
 </html>

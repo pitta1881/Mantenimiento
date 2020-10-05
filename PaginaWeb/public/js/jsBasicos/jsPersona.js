@@ -1,7 +1,7 @@
 function modificarModal(datos) {
     datos = JSON.parse(datos);
     $('#h3TitleModalUpdate').text("Modificar Persona " + datos['nombre'] + " " + datos['apellido']);
-    $('#updateID').attr('value', datos['dni']);
+    $('#updateID').attr('value', datos['id']);
     $('#nombreAnteriorUpdate').attr('value', datos['nombre']);
     $('#apellidoAnteriorUpdate').attr('value', datos['apellido']);
     $('#direccionAnteriorUpdate').attr('value', datos['direccion']);
@@ -12,7 +12,7 @@ function modificarModal(datos) {
 
 function modificarEstadoModal(datos) {
     datos = JSON.parse(datos);
-    $('#updateEstadoID').attr('value', datos['dni']);
+    $('#updateEstadoID').attr('value', datos['id']);
     $("#estadoUpdate option[value=" + datos['estado'] + "]").remove();
     $('#modalEstadoUpdate').modal('show');
 }
@@ -20,6 +20,6 @@ function modificarEstadoModal(datos) {
 function eliminarModal(datos) {
     datos = JSON.parse(datos);
     $('#h3TitleModalDelete').text("Eliminar Persona " + datos['nombre'] + " " + datos['apellido']);
-    $('#deleteID').attr('value', datos['dni']);
+    $('#deleteID').attr('value', datos['id']);
     $('#modalDelete').modal('show');
 }

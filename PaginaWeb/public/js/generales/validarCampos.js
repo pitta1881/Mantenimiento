@@ -17,7 +17,7 @@ $('#formAlta').bootstrapValidator({
                 }
             }
         },
-        dni: {
+        id: {
             validators: {
                 notEmpty: {
                     message: 'Seleccione una Persona'

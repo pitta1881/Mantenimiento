@@ -11,7 +11,7 @@
     <h2 class="titulo-tabla">Especializaciones Registradas </h2>
 
     <!-- BOTON NEW ESPECIALIZACION -->
-    {% if "33" in datos.permisos %}
+    {% if "33" in datos.datosSesion.listaPermisos %}
     <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
             class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
@@ -38,16 +38,16 @@
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
-                        {% if "35" in datos.permisos %}
+                        {% if "35" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
                             data-toggle="modal" onclick="modificarModal('{{ especializacion|json_encode }}');"
-                            title="Editar Especializacion"><i class="fal fa-pencil-alt fa-2x fa-fw"></i>
+                            title="Editar Especializacion"><i class="fal fa-pencil-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
-                        {% if "34" in datos.permisos %}
+                        {% if "34" in datos.datosSesion.listaPermisos %}
                         <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
                             data-toggle="modal" onclick="eliminarModal('{{ especializacion|json_encode }}');"
-                            title="Eliminar Especializacion"><i class="fal fa-trash-alt fa-2x fa-fw"></i>
+                            title="Eliminar Especializacion"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
                         </button>
                         {% endif %}
                     </div>
@@ -62,7 +62,7 @@
 
 <!-- MODALES NEW, UPDATE Y DELETE -->
 <!--NEW ESPECIALIZACION-->
-{% if "33" in datos.permisos %}
+{% if "33" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalNew">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -92,7 +92,7 @@
 {% endif %}
 
 <!--MODIFICAR ESPECIALIZACION-->
-{% if "35" in datos.permisos %}
+{% if "35" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalUpdate">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -126,7 +126,7 @@
 {% endif %}
 
 <!--ELIMINAR ESPECIALIZACION SI NO UTILIZADO-->
-{% if "34" in datos.permisos %}
+{% if "34" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalDelete">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
