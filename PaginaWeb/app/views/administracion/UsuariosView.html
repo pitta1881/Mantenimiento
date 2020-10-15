@@ -23,7 +23,7 @@
                 <th>Nombre Usuario</th>
                 <th>DNI </th>
                 <th>Nombre y Apellido</th>
-                <th>Rol</th>
+                <th>Roles</th>
                 <th>Accion</th>
             </tr>
         </thead>
@@ -40,15 +40,14 @@
                     {% endfor %}
                 </td>
                 <td>
-                    {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if usuario.usado == false and usuario.id != 1 %}
-                    {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         <a data-toggle="tooltip" title="Modificar Roles" data-placement="top">
                             <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                data-target="#modalRolesUpdate"
                                 onclick="modificarRolesModal('{{ usuario|json_encode }}');"><i
                                     class="fal fa-user-cog fa-lg fa-fw"></i>
                             </button>
@@ -56,15 +55,15 @@
                         {% if "3" in datos.datosSesion.listaPermisos %}
                         <a data-toggle="tooltip" title="Modificar Contraseña" data-placement="top">
                             <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                onclick="modificarModal('{{ usuario|json_encode }}');"><i
+                                data-target="#modalUpdate" onclick="modificarModal('{{ usuario|json_encode }}');"><i
                                     class="fal fa-key fa-lg fa-fw"></i>
                             </button>
                         </a>
                         {% endif %}
                         {% if "2" in datos.datosSesion.listaPermisos %}
                         <a data-toggle="tooltip" title="Eliminar Usuario" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                                data-toggle="modal" onclick="eliminarModal('{{ usuario|json_encode }}');"><i
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                                data-target="#modalDelete" onclick="eliminarModal('{{ usuario|json_encode }}');"><i
                                     class="fal fa-trash-alt fa-lg fa-fw"></i>
                             </button>
                         </a>
@@ -92,17 +91,15 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="newUsuario" method="post" id="formAlta">
+                <form action="newUsuario" method="post" id="formUsuarioNew">
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="nick" class="control-label">Nombre(nick):</label><span
-                                class="asterisco">*</span>
-                            <input type="text" name="nick" class="form-control" autofocus required>
+                        <div class="form-group required col-md-6">
+                            <label for="nick">Nombre(nick):</label>
+                            <input type="text" name="nick" id="nick" class="form-control" autofocus>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="idPersona" class="control-label">Persona Asociada:</label><span
-                                class="asterisco">*</span>
-                            <select name="idPersona" class="form-control custom-select" required>
+                        <div class="form-group required col-md-6">
+                            <label for="idPersona">Persona Asociada:</label>
+                            <select name="idPersona" id="idPersona" class="form-control custom-select">
                                 <option value="" selected>Seleccione una Persona</option>
                                 {% for persona in datos.todosPersonas %}
                                 {% if persona.id != '0' and persona.usado != true %}
@@ -114,10 +111,10 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="idRol" class="control-label">Seleccionar Roles:</label><span
-                                class="asterisco">*</span>
-                            <select multiple name="idRol[]" class="form-control custom-select" required size="3">
+                        <div class="form-group required col-md-12">
+                            <label for="idRol">Seleccionar Roles: (CTRL+CLICK seleccion
+                                múltiple)</label>
+                            <select multiple name="idRol[]" id="idRol" class="form-control custom-select" size="3">
                                 {% for rol in datos.todosRoles %}
                                 <option value="{{ rol.id }}">{{ rol.nombre }}</option>
                                 {% endfor %}
@@ -125,15 +122,13 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="password" class="control-label">Contraseña:</label><span
-                                class="asterisco">*</span>
-                            <input type="password" name="password" class="form-control" required>
+                        <div class="form-group required col-md-6">
+                            <label for="password">Contraseña:</label>
+                            <input type="password" name="password" id='password' class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="password" class="control-label">Confirme Contraseña:</label><span
-                                class="asterisco">*</span>
-                            <input type="password" name="confirmPassword" class="form-control" required>
+                        <div class="form-group required col-md-6">
+                            <label for="passwordConfirm">Confirme Contraseña:</label>
+                            <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control">
                         </div>
                     </div>
                     <!-- Modal Footer -->
@@ -160,15 +155,17 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updateRolesUsuario" method="post" id="formModificarRoles">
+                <form action="updateRolesUsuario" method="post" id="formUsuarioRolesUpd">
                     <input type="text" name="id" id="updateRolIdUsuario" hidden>
-                    {% for rol in datos.todosRoles %}
-                    <div class="form-check text-left mb-3">
-                        <input class="form-check-input" type="checkbox" value="{{ rol.id }}" name="idRol[]"
-                            id="rolChkbx_{{ rol.id }}">
-                        <label class="form-check-label" for="rolChkbx_{{ rol.id }}">{{ rol.nombre }}</label>
+                    <div class="form-group required">
+                        <label for="idRolUpd">Seleccionar Roles: (CTRL+CLICK seleccion
+                            múltiple)</label>
+                        <select multiple name="idRol[]" id="idRolUpd" class="form-control custom-select" size="3">
+                            {% for rol in datos.todosRoles %}
+                            <option value="{{ rol.id }}">{{ rol.nombre }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                    {% endfor %}
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
@@ -193,16 +190,16 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updateUsuario" method="post" id="formModificar">
+                <form action="updateUsuario" method="post" id="formUsuarioUpd">
                     <input type="text" name="id" id="updateID" hidden>
-                    <div class="form-group">
-                        <label for="password" class="control-label">Contraseña:</label><span class="asterisco">*</span>
-                        <input type="password" name="password" class="form-control" required>
+                    <div class="form-group required">
+                        <label for="passwordUpd">Contraseña:</label>
+                        <input type="password" name="password" id="passwordUpd" class="form-control">
                     </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label">Confirme
-                            Contraseña:</label><span class="asterisco">*</span>
-                        <input type="password" name="confirmPassword" class="form-control" required>
+                    <div class="form-group required">
+                        <label for="passwordUpdConfirm">Confirme
+                            Contraseña:</label>
+                        <input type="password" name="passwordConfirm" id="passwordUpdConfirm" class="form-control">
                     </div>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
@@ -252,6 +249,16 @@
 <script src="/public/js/generales/validarCampos.js"></script>
 <script src="/public/js/jsBasicos/jsUsuario.js"></script>
 <script>
+    $(function () {
+        $('label').each(function (index, elem) {
+            $(elem).addClass('control-label');
+        })
+    });
+    var arrayRepetidosOld = [];
+    listaOld = JSON.parse('{{ datos.todosUsuarios|json_encode|raw }}');
+    listaOld.forEach(element => {
+        arrayRepetidosOld.push(element['nick']);
+    });
     verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Usuario');
     ordenarTabla('miTabla', '0,1,2,3', [4], 'Usuarios Registrados');
 </script>

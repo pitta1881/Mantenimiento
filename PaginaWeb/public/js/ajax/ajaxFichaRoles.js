@@ -1,6 +1,6 @@
 function fichaRoles(idRol, modificar) {
     var parametros = {
-        "idRol": idRol,
+        "id": idRol,
     };
     var modificable = '';
     var btnEnviar = '';
@@ -258,7 +258,7 @@ function fichaRoles(idRol, modificar) {
 
             alertify.myAlert(headerAlert,
                 "<form action='/administracion/roles/updateRol' method='post'>" +
-                "<input type='text' name='idRol' value=" + idRol + " hidden>" +
+                "<input type='text' name='id' value=" + idRol + " hidden>" +
                 "<table id='miTabla' class='table table-bordered table-sm table-striped table-hover text-nowrap'>" +
                 "<thead class='headtable'>" +
                 "<tr>" +
@@ -389,7 +389,6 @@ function fichaRoles(idRol, modificar) {
 
 function eliminarModal(datos) {
     datos = JSON.parse(datos);
-    $('#h3TitleModalDelete').text("Eliminar Rol " + datos['nombreRol']);
-    $('#deleteID').attr('value', datos['idRol']);
-    $('#modalDelete').modal('show');
+    $('#h3TitleModalDelete').text("Eliminar Rol " + datos['nombre']);
+    $('#deleteID').attr('value', datos['id']);
 }

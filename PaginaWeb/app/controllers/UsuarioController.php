@@ -45,8 +45,15 @@ class UsuarioController extends Controller
             'delete' => $delete
         ];
         $datos['alertas'] = $alertas;
+        $_SESSION['urlHeader'] = array(
+            array("url" => "/home",
+            "nombre" => "HOME"),
+            array("url" => "/administracion",
+            "nombre" => "ADMINISTRACION"),
+            array("url" => "/administracion/usuarios",
+            "nombre" => "USUARIOS") 
+        );
         $datos['datosSesion'] = $_SESSION;
-        $datos['urlheader']="> HOME > ADMINISTRACIÓN > USUARIOS";
         return view('/administracion/UsuariosView', compact('datos'));
     }
 
@@ -56,17 +63,15 @@ class UsuarioController extends Controller
             'password' => $_POST['password'],
             'idPersona' => $_POST['idPersona'],
         ];
-        $insertOk = $this->model->insert($this->table,$usuario);        
-        if(is_numeric($insertOk)){ //si falla la insercion(seguramente x nick repetido)
+        $insertOk = $this->model->insert($this->table,$usuario);   
+        if($insertOk){ //si falla la insercion(seguramente x nick repetido)
             foreach ($_POST['idRol'] as $key => $value) {
                 $RxU = [
                     'idRol' => $value,
-                    'idUsuario' => $insertOk
+                    'idUsuario' => $insertOk['lastInsertId']
                 ];
                 $this->model->insert($this->tableRxU,$RxU);
             }
-            return $this->administracionUsuarios(true);
-        } else {
             return $this->administracionUsuarios($insertOk);            
         }
     }
@@ -102,7 +107,6 @@ class UsuarioController extends Controller
             $_SESSION['listaPermisos'] = $this->model->getPermisos();
             redirect('home');
         }
-        return $this->administracionUsuarios(null,true);
     }
 
     public function delete(){

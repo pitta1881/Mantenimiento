@@ -7,6 +7,7 @@
 
 //rutas Home
     $router->get('home', 'HomeController@home');
+    $router->get('administracion', 'HomeController@administracionCards');
     $router->get('changeRoles','HomeController@changeRol');
 
 //rutas Usuarios
@@ -21,7 +22,7 @@
     $router->post('administracion/personas/newPersona','PersonaController@new');
     $router->post('administracion/personas/updatePersona','PersonaController@update');
     $router->post('administracion/personas/deletePersona','PersonaController@delete');
-    //$router->post('administracion/personas/updateEstadoPersona','PersonaController@updateEstado');
+    $router->post('administracion/personas/updateEstadoPersona','PersonaController@updateEstado');
     $router->post('administracion/personas/fichaPersona', 'PersonaController@ficha');
 
 //rutas rol

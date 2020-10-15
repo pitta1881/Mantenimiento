@@ -9,7 +9,6 @@
 {% endblock %}
 <div>
     <h2 class="titulo-tabla">Sectores Registrados </h2>
-
     <!-- BOTON NEW SECTOR -->
     {% if "25" in datos.datosSesion.listaPermisos %}
     <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
@@ -29,35 +28,37 @@
                 <th>Accion</th>
             </tr>
         </thead>
-
         <tbody>
             {% for sector in datos.todosSectores %}
             <tr>
-                <td>{{ sector.idSector }}</td>
-                <td>{{ sector.nombreSector }}</td>
-                <td>{{ sector.tipo }}</td>
+                <td>{{ sector.id }}</td>
+                <td>{{ sector.nombre }}</td>
+                <td>{{ sector.idTipoSector }}</td>
                 <td>{{ sector.responsable }}</td>
                 <td>{{ sector.telefono }}</td>
                 <td>{{ sector.email }}</td>
                 <td>
-                    {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if sector.usado == false %}
-                    {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "27" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="modificarModal('{{ sector|json_encode }}');" title="Editar Sector"><i
-                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Editar Sector" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                data-target="#modalUpdate" onclick="modificarModal('{{ sector|json_encode }}');"><i
+                                    class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                         {% if "26" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" onclick="eliminarModal('{{ sector|json_encode }}');"
-                            title="Eliminar Sector"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Eliminar Sector" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}"
+                                data-target="#modalDelete" data-toggle="modal"
+                                onclick="eliminarModal('{{ sector|json_encode }}');"><i
+                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                     </div>
                 </td>
@@ -82,37 +83,34 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="newSector" method="post" class="was-validated">
+                <form action="newSector" method="post" id="formSectorNew">
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="nombreSector">Nombre del Sector:</label><span class="asterisco">*</span>
-                            <input type="text" name="nombreSector" class="form-control" autofocus required>
-                            <div class="invalid-feedback">Complete este campo</div>
+                        <div class="form-group required col-md-6">
+                            <label for="nombre">Nombre del Sector:</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control" autofocus>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="responsable">Nombre del Responsable:</label><span class="asterisco">*</span>
-                            <input type="text" name="responsable" class="form-control" required>
-                            <div class="invalid-feedback">Complete este campo</div>
+                        <div class="form-group required col-md-6">
+                            <label for="responsable">Nombre del Responsable:</label>
+                            <input type="text" name="responsable" id="responsable" class="form-control">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="tipo">Tipo</label><span class="asterisco">*</span>
-                            <select name="tipo" class="form-control custom-select">
-                                {% for tipoSector in datos.tipoSectores %}
-                                <option value="{{ tipoSector }}">{{ tipoSector }}</option>
+                        <div class="form-group required col-md-3">
+                            <label for="idTipoSector">Tipo:</label>
+                            <select name="idTipoSector" id="idTipoSector" class="form-control custom-select">
+                                <option disabled selected>Seleccione una opcion</option>
+                                {% for tipoSector in datos.todosTiposSectores %}
+                                <option value="{{ tipoSector.id }}">{{ tipoSector.nombre }}</option>
                                 {% endfor %}
                             </select>
-                            <div class="invalid-feedback">Complete este campo</div>
                         </div>
                         <div class="form-group col-md-5">
                             <label for="telefono">Telefono:</label>
-                            <input type="tel" name="telefono" class="form-control telVerification">
+                            <input type="tel" name="telefono" id="telefono" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="email">Email:</label>
-                            <input type="email" name="email" class="form-control">
-                            <div class="invalid-feedback">El formato es incorrecto</div>
+                            <input type="email" name="email" id="email" class="form-control">
                         </div>
                     </div>
                     <!-- Modal Footer -->
@@ -139,41 +137,36 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updateSector" method="post" class="was-validated">
-                    <input type="text" name="idSector" id="updateID" hidden>
+                <form action="updateSector" method="post" id="formSectorModificar">
+                    <input type="text" name="id" id="updateID" hidden>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="nombreSector">Nombre del Sector:</label><span class="asterisco">*</span>
-                            <input type="text" name="nombreSector" class="form-control" autofocus required
-                                id="nombreSectorUpdate">
-                            <div class="invalid-feedback">Complete este campo</div>
+                        <div class="form-group required col-md-6">
+                            <label for="nombreUpdate">Nombre del Sector:</label>
+                            <input type="text" name="nombre" class="form-control" autofocus id="nombreUpdate">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="responsable">Nombre del
-                                Responsable:</label><span class="asterisco">*</span>
-                            <input type="text" name="responsable" class="form-control" required id="responsableUpdate">
-                            <div class="invalid-feedback">Complete este campo</div>
+                        <div class="form-group required col-md-6">
+                            <label for="responsableUpdate">Nombre del
+                                Responsable:</label>
+                            <input type="text" name="responsable" class="form-control" id="responsableUpdate">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="tipo">Tipo:<span class="asterisco">*</span></label>
-                            <select name="tipo" id="tipoUpdate" class="form-control custom-select">
-                                {% for tipoSector in datos.tipoSectores %}
-                                <option value="{{ tipoSector }}">
-                                    {{ tipoSector }}</option>
+                        <div class="form-group required col-md-4">
+                            <label for="idTipoSectorUpd">Tipo:</label>
+                            <select name="idTipoSector" id="idTipoSectorUpd" class="form-control custom-select">
+                                <option disabled selected>Seleccione una opcion</option>
+                                {% for tipoSector in datos.todosTiposSectores %}
+                                <option value="{{ tipoSector.id }}">{{ tipoSector.nombre }}</option>
                                 {% endfor %}
                             </select>
-                            <div class="invalid-feedback">Complete este campo</div>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="telefono">Telefono:</label>
-                            <input type="tel" name="telefono" class="form-control telVerification" id="telefonoUpdate">
+                            <label for="telefonoUpdate">Telefono:</label>
+                            <input type="tel" name="telefono" class="form-control" id="telefonoUpdate">
                         </div>
                         <div class="form-group col-md-5">
-                            <label for="email">Email:</label>
+                            <label for="emailUpdate">Email:</label>
                             <input type="email" name="email" class="form-control" id="emailUpdate">
-                            <div class="invalid-feedback">El formato es incorrecto</div>
                         </div>
                     </div>
                     <!-- Modal Footer -->
@@ -204,7 +197,7 @@
             <div class="modal-body">
                 <p class="mb-3">¿Está seguro?</p>
                 <form action="deleteSector" method="post">
-                    <input type="text" name="idSector" id="deleteID" hidden>
+                    <input type="text" name="id" id="deleteID" hidden>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
@@ -218,9 +211,19 @@
 {% endif %}
 <!-- FIN MODALES NEW, UPDATE Y DELETE -->
 
-<script src="/public/js/generales/validartelefono.js"></script>
 <script src="/public/js/jsBasicos/jsSector.js"></script>
+<script src="/public/js/generales/validarCampos.js"></script>
 <script>
+    $(function () {
+        $('label').each(function (index, elem) {
+            $(elem).addClass('control-label');
+        })
+    });
+    var arrayRepetidosOld = [];
+    listaOld = JSON.parse('{{ datos.todosSectores|json_encode|raw }}');
+    listaOld.forEach(element => {
+        arrayRepetidosOld.push(element['nombre']);
+    });
     verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Sector');
     ordenarTabla('miTabla', '0,1,2,3,4,5', [6], 'Sectores Registrados');
 </script>

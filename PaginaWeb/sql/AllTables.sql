@@ -1,12 +1,14 @@
 USE Mantenimiento;
 CREATE TABLE Roles (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE Permisos (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE Roles_x_Permisos (
@@ -19,7 +21,8 @@ CREATE TABLE Roles_x_Permisos (
 
 CREATE TABLE EstadosPersona (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE Personas (
@@ -53,7 +56,8 @@ CREATE TABLE Roles_x_Usuarios (
 
 CREATE TABLE TiposSector(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE Sectores (
@@ -63,32 +67,42 @@ CREATE TABLE Sectores (
     telefono VARCHAR(30),
     email VARCHAR(30),
     idTipoSector INTEGER NOT NULL,
+    UNIQUE(nombre),
     FOREIGN KEY (idTipoSector) REFERENCES TiposSector(id)
 );
 
 CREATE TABLE Especializaciones (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
-
 
 CREATE TABLE Agentes (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     idPersona INTEGER NOT NULL,
     isDisponible BOOLEAN NOT NULL DEFAULT TRUE,
-    idEspecializacion INTEGER NOT NULL,
-    FOREIGN KEY (idEspecializacion) REFERENCES Especializaciones (id),
+    UNIQUE (idPersona),
     FOREIGN KEY (idPersona) REFERENCES Personas (id)
+);
+
+CREATE TABLE Especializaciones_x_Agentes (
+    idEspecializacion INTEGER,
+    idAgente INTEGER,
+    PRIMARY KEY (idEspecializacion, idAgente),
+    FOREIGN KEY (idEspecializacion) REFERENCES Especializaciones (id),
+    FOREIGN KEY (idAgente) REFERENCES Agentes (id)
 );
 
 CREATE TABLE Estados(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE Prioridades(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE Pedidos (
@@ -144,7 +158,8 @@ CREATE TABLE Tareas_x_Agentes (
 
 CREATE TABLE Medidas (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE Insumos (
@@ -161,12 +176,14 @@ CREATE TABLE Insumos (
 
 CREATE TABLE EstadosOrdenesDeCompra (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE TiposOrdenesDeCompra (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(30) NOT NULL,
+    UNIQUE(nombre)
 );
 
 CREATE TABLE OrdenesDeCompra (

@@ -39,31 +39,36 @@
                 <td>{{ persona.apellido }}</td>
                 <td>{{ persona.direccion }}</td>
                 <td>{{ persona.email }}</td>
-                <td>{{ persona.fecha_nacimiento|date("d/m/Y") }}</td>
-                <td>{{ persona.estado }}</td>
+                <td>{{ persona.fechaNacimiento|date("d/m/Y") }}</td>
+                <td>{{ persona.estadoNombre }}</td>
                 <td>
-                    {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if persona.usado == false %}
-                    {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "47" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="modificarModal('{{ persona|json_encode }}');" title="Editar Persona"><i
-                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="modificarEstadoModal('{{ persona|json_encode }}');" title="Editar Estado"><i
-                                class="fal fa-user-clock fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Modificar Persona" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                data-target="#modalUpdate" onclick="modificarModal('{{ persona|json_encode }}');"><i
+                                    class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
+                        <a data-toggle="tooltip" title="Modificar Estado" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                data-target="#modalEstadoUpdate"
+                                onclick="modificarEstadoModal('{{ persona|json_encode }}');"><i
+                                    class="fal fa-user-clock fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                         {% if "46" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" onclick="eliminarModal('{{ persona|json_encode }}');"
-                            title="Eliminar Persona"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Eliminar Persona" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                                data-target="#modalDelete" onclick="eliminarModal('{{ persona|json_encode }}');"><i
+                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                     </div>
                 </td>
@@ -89,41 +94,36 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="newPersona" method="post" class="was-validated">
+                <form action="newPersona" method="post" id="formPersonaNew">
                     <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="id">DNI:</label><span class="asterisco">*</span>
-                            <input type="number" name="id" class="form-control" autofocus required min="10000000">
-                            <div class="invalid-feedback">Min:10.000.000</div>
+                        <div class="form-group required col-md-4">
+                            <label for="id">DNI:</label>
+                            <input type="number" id="id" name="id" class="form-control" autofocus>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="nombre">Nombre:</label><span class="asterisco">*</span>
-                            <input type="text" name="nombre" class="form-control" required>
-                            <div class="invalid-feedback">Complete este campo</div>
+                        <div class="form-group required col-md-4">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="apellido">Apellido:</label><span class="asterisco">*</span>
-                            <input type="text" name="apellido" class="form-control" required>
-                            <div class="invalid-feedback">Complete este campo</div>
+                        <div class="form-group required col-md-4">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" name="apellido" id="apellido" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="direccion">Direccion:</label>
-                        <input type="text" name="direccion" class="form-control">
+                        <input type="text" name="direccion" id="direccion" class="form-control">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="email">Email:</label>
-                            <input type="email" name="email" class="form-control">
-                            <div class="invalid-feedback">El formato es incorrecto</div>
+                            <input type="email" name="email" id="email" class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="fecha_nacimiento">Fecha De Nacimiento:</label><span class="asterisco">*</span>
-                            <input type="date" name="fecha_nacimiento" class="form-control" max="{{ datos.minimo18 }}"
-                                min="{{ datos.maximo70 }}" required>
+                        <div class="form-group required col-md-6">
+                            <label for="fechaNacimiento">Fecha De Nacimiento:</label>
+                            <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control"
+                                max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
                         </div>
                     </div>
-                    <input type="text" name="estado" value="Activo" hidden>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
@@ -148,41 +148,36 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updatePersona" method="post" class="was-validated">
+                <form action="updatePersona" method="post" id="formPersonaUpd">
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="id">DNI:</label><span class="asterisco">*</span>
+                            <label for="id">DNI:</label>
                             <input type="number" name="id" id="updateID" class="form-control" readonly>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="nombre">Nombre:</label><span class="asterisco">*</span>
-                            <input type="text" name="nombre" id="nombreAnteriorUpdate" class="form-control" required>
-                            <div class="invalid-feedback">Complete este campo</div>
+                        <div class="form-group required col-md-4">
+                            <label for="nombreAnteriorUpdate">Nombre:</label>
+                            <input type="text" name="nombre" id="nombreAnteriorUpdate" class="form-control">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="apellido">Apellido:</label><span class="asterisco">*</span>
-                            <input type="text" name="apellido" id="apellidoAnteriorUpdate" class="form-control"
-                                required>
-                            <div class="invalid-feedback">Complete este campo</div>
+                        <div class="form-group required col-md-4">
+                            <label for="apellidoAnteriorUpdate">Apellido:</label>
+                            <input type="text" name="apellido" id="apellidoAnteriorUpdate" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="direccion">Direccion:</label>
+                        <label for="direccionAnteriorUpdate">Direccion:</label>
                         <input type="text" name="direccion" id="direccionAnteriorUpdate" class="form-control">
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="email">Email:</label>
+                            <label for="emailAnteriorUpdate">Email:</label>
                             <input type="email" name="email" id="emailAnteriorUpdate" class="form-control">
-                            <div class="invalid-feedback">El formato es incorrecto</div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="fecha_nacimiento">Fecha De Nacimiento:</label><span class="asterisco">*</span>
-                            <input type="date" name="fecha_nacimiento" id="fechaAnteriorUpdate" class="form-control"
-                                max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}" required>
+                        <div class="form-group required col-md-6">
+                            <label for="fechaAnteriorUpdate">Fecha De Nacimiento:</label>
+                            <input type="date" name="fechaNacimiento" id="fechaAnteriorUpdate" class="form-control"
+                                max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
                         </div>
                     </div>
-                    <input type="text" name="estado" value="Activo" hidden>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
@@ -207,13 +202,14 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updateEstadoPersona" method="post">
-                    <input type="text" name="id" id="updateEstadoID" hidden>
-                    <div class="form-group">
-                        <label for="estado">Nuevo Estado:</label>
-                        <select name="estado" id="estadoUpdate" class="form-control custom-select">
-                            {% for estado in datos.estados %}
-                            <option value="{{ estado }}">{{ estado }}</option>
+                <form action="updateEstadoPersona" method="post" id="formPersonaEstadoUpd">
+                    <input type="text" name="idEstado" id="updateEstadoID" hidden>
+                    <div class="form-group required">
+                        <label for="estadoUpdate">Nuevo Estado:</label>
+                        <select name="idEstadoPersona" id="estadoUpdate" class="form-control custom-select">
+                            <option disabled selected>Seleccione una opcion</option>
+                            {% for estado in datos.todosEstados %}
+                            <option value="{{ estado.id }}">{{ estado.nombre }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -260,7 +256,18 @@
 <!-- FIN MODALES NEW, UPDATE Y DELETE -->
 
 <script src="/public/js/jsBasicos/jsPersona.js"></script>
+<script src="/public/js/generales/validarCampos.js"></script>
 <script>
+    $(function () {
+        $('label').each(function (index, elem) {
+            $(elem).addClass('control-label');
+        })
+    });
+    var arrayRepetidosOld = [];
+    listaOld = JSON.parse('{{ datos.todasPersonas|json_encode|raw }}');
+    listaOld.forEach(element => {
+        arrayRepetidosOld.push(element['id']);
+    });
     verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Persona');
     ordenarTabla('miTabla', '0,1,2,3,4,5,6', [7], 'Personas Registradas');
 </script>

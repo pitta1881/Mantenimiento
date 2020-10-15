@@ -16,4 +16,16 @@
 		$('#sidebar').toggleClass('active');
 	});
 
+
+	$(".menuPadre").hover(function () {
+		$(this).children('ul').collapse('show');
+	}, function () {
+		$(this).children('ul').collapse('hide');
+	});
+
+	$('.menuPadre').children('a').on('click', function (e) {
+		e.stopPropagation();
+	});
+
+
 })(jQuery);

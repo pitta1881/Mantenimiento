@@ -8,22 +8,27 @@ use App\Models\PersonaModel;
 class PersonaController extends Controller{
     public function __construct(){
         $this->model = new PersonaModel();
-            
+        session_start();        
     }
 
     private $table = 'personas';
     private $tableAgentes = 'agentes';
+    private $tableUsuarios = 'usuarios';
+    private $tableEstadosPersona = 'estadospersona';
     
     public function administracionPersonas($new = null,$update = null,$delete = null){
         $comparaTablasIfUsado = array(
                                     array(  "tabla" => $this->tableAgentes,
-                                            "comparaKey" => "idAgente"
-                                        )
-                                );
+                                            "comparaKeyOrig" => "id",
+                                            "comparaKeyDest" => "idPersona"
+                                    ),
+                                        array(  "tabla" => $this->tableUsuarios,
+                                                "comparaKeyOrig" => "id",
+                                                "comparaKeyDest" => "idPersona"
+                                            )
+                                    );
         $datos['todasPersonas'] = $this->model->get($this->table,$comparaTablasIfUsado); 
-        
-        
-        $datos['estados'] = $this->model->getEstadosPersona();
+        $datos['todosEstados'] = $this->model->get($this->tableEstadosPersona);
         $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
         $alertas = [
@@ -32,7 +37,15 @@ class PersonaController extends Controller{
             'delete' => $delete
         ];
         $datos['alertas'] = $alertas;
-        $datos['urlheader']="> HOME > ADMINISTRACIÓN > PERSONAS";
+        $_SESSION['urlHeader'] = array(
+            array("url" => "/home",
+            "nombre" => "HOME"),
+            array("url" => "/administracion",
+            "nombre" => "ADMINISTRACION"),
+            array("url" => "/administracion/personas",
+            "nombre" => "PERSONAS")    
+        );
+        $datos['datosSesion'] = $_SESSION;
         return view('/administracion/PersonasView', compact('datos'));
     }
 
@@ -43,8 +56,8 @@ class PersonaController extends Controller{
             'apellido' => $_POST['apellido'],
             'direccion' => $_POST['direccion'],
             'email' => $_POST['email'],
-            'fecha_nacimiento' => $_POST['fecha_nacimiento'],
-            'estado' => $_POST['estado']
+            'fechaNacimiento' => $_POST['fechaNacimiento'],
+            'idEstadoPersona' => 1
         ]; 
         $insertOk = $this->model->insert($this->table,$persona);
         return $this->administracionPersonas($insertOk);
@@ -57,7 +70,7 @@ class PersonaController extends Controller{
             'apellido' => $_POST['apellido'],
             'direccion' => $_POST['direccion'],
             'email' => $_POST['email'],
-            'fecha_nacimiento' => $_POST['fecha_nacimiento']
+            'fechaNacimiento' => $_POST['fechaNacimiento']
         ];
         $updateOk = $this->model->update($this->table,$persona);
         return $this->administracionPersonas(null,$updateOk);
@@ -70,7 +83,12 @@ class PersonaController extends Controller{
     }
 
     public function updateEstado(){
-        var_dump($_POST);
+        $persona = [
+            'id' => $_POST['idEstado'],
+            'idEstadoPersona' => $_POST['idEstadoPersona']
+        ];
+        $updateOk = $this->model->update($this->table,$persona);
+        return $this->administracionPersonas(null,$updateOk);
     }
 
     public function ficha(){

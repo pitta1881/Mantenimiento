@@ -71,10 +71,16 @@ class QueryBuilder
         try {
             $statement = $this->pdo->prepare($sql);
             if($statement->execute($parameters)){
-                return $this->pdo->lastInsertId();
+                return array("estado" => true,
+                             "lastInsertId" => $this->pdo->lastInsertId());
             }
         } catch (Exception $e) {
-            return false;
+            if ($e->errorInfo[1] == 1062) { //clave duplicada
+                return array("estado" => false,
+                            "mensaje" => "El nombre ya existe.. (clave duplicada)");
+             } else {
+                // an error other than duplicate entry occurred
+             }
         }        
     }
 
@@ -142,10 +148,18 @@ class QueryBuilder
             try {
                  $sql = "UPDATE {$table} SET ".implode(', ', $setPart)." WHERE {$columnaCompara} ='{$datoColumnaCompara}'";
                  $stmt = $this->pdo->prepare($sql);
-                 return $stmt->execute($bindings);
+                 if($stmt->execute($bindings)){
+                    return array("estado" => true,
+                                 "mensaje" => $this->pdo->lastInsertId());
+                }
             } catch (Exception $e) {
-                return false;
-            }   
+                if ($e->errorInfo[1] == 1062) { //clave duplicada
+                    return array("estado" => false,
+                                "mensaje" => "El nombre ya existe.. (clave duplicada)");
+                 } else {
+                    // an error other than duplicate entry occurred
+                 }
+            }       
     }
 
     public function delete($table, $parameters){
@@ -159,10 +173,18 @@ class QueryBuilder
         );
         try {
             $statement = $this->pdo->prepare($sql);
-            return $statement->execute($parameters);
+            if($statement->execute($parameters)){
+                return array("estado" => true,
+                             "mensaje" => "");
+            }
         } catch (Exception $e) {
-             return false;
-        }
+            if ($e->errorInfo[1] == 1451) { //no puede eliminar (o updatear) una fila padre
+                return array("estado" => false,
+                            "mensaje" => "No se puede eliminar una fila padre (FK)");
+             } else {
+                // an error other than duplicate entry occurred
+             }
+        }  
     } 
 
     public function selectAllWhere($table, $parameters){
@@ -646,14 +668,6 @@ public function updateEvento($table, $parameters, $idEvento){
     public function selectAllPersonas($tablePersona){
         $statement = $this->pdo->prepare(
             "SELECT * FROM {$tablePersona}"       
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function selectPersonasNoAgentes($tablePersona, $tableAgente){ 
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tablePersona T1 LEFT JOIN $tableAgente T2 ON T1.id=T2.idAgente WHERE T2.idAgente IS NULL AND T1.id<>0"
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);

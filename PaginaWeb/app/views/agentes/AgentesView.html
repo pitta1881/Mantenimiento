@@ -16,6 +16,7 @@
             class="fal fa-plus"></i> Crear Nuevo</button>
     {% endif %}
 
+
     <!-- TABLA AGENTES -->
     <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
         <thead class="headtable">
@@ -31,37 +32,43 @@
         <tbody>
             {% for agente in datos.todosAgentes %}
             <tr>
-                <td><a href="#" onclick="fichaPersona('{{ agente.idAgente }}');">{{ agente.idAgente }}</a>
+                <td><a href="#" onclick="fichaPersona('{{ agente.idPersona }}');">{{ agente.id }}</a>
                 </td>
                 <td>{{ agente.nombre }}</td>
                 <td>{{ agente.apellido }}</td>
-                <td>{{ agente.especializacionNombre }}</td>
-                <td>{{ agente.disponible }}</td>
+                <td>{% for especializacion in agente.listaEspecializaciones %}
+                    {{ especializacion.nombre }}<br>
+                    {% endfor %}
+                </td>
+                <td>{{ agente.isDisponible }}</td>
                 <td>
-                    {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if agente.usado == false %}
-                    {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "32" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaPersona('{{ agente.idAgente }}');" title="Ver Mas"><i
-                                class="fal fa-eye fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Mas Detalles" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                onclick="fichaPersona('{{ agente.idPersona }}');"><i class="fal fa-eye fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                         {% if "31" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" onclick="modificarModal('{{ agente|json_encode }}');"
-                            title="Editar Agente"><i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Modificar Agente" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                                data-target="#modalUpdate" onclick="modificarModal('{{ agente|json_encode }}');"><i
+                                    class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                         {% if "30" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" onclick="eliminarModal('{{ agente|json_encode }}');"
-                            title="Eliminar Agente"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Eliminar Agente" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                                data-target="#modalDelete" onclick="eliminarModal('{{ agente|json_encode }}');"><i
+                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                     </div>
                 </td>
@@ -87,7 +94,7 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                {% if datos.especializaciones is empty %}
+                {% if datos.todasEspecializaciones is empty %}
                 <div class="alert alert-danger text-center" role="alert">Primero debe añadir una Especializacion <a
                         href="/especializaciones" class="alert-link">HAGA CLICK AQUI</a>
                 </div>
@@ -99,26 +106,28 @@
                         CLICK AQUI</a>
                 </div>
                 {% else %}
-                <form action="newAgente" method="post" class="was-validated">
-                    <div class="form-group">
-                        <label for="idAgente">Persona</label><span class="asterisco">*</span>
-                        <select name="idAgente" class="form-control custom-select">
+                <form action="newAgente" method="post" id="formAgenteNew">
+                    <div class="form-group required">
+                        <label for="idPersona">Persona</label>
+                        <select name="idPersona" id="idPersona" class="form-control custom-select">
+                            <option disabled selected>Seleccione una opcion</option>
                             {% for persona in datos.personas %}
                             <option value="{{ persona.id }}">{{ persona.nombre }},&nbsp; {{ persona.apellido }}
                             </option>
                             {% endfor %}
                         </select>
-                        <div class="invalid-feedback">Complete este campo</div>
                     </div>
-                    <div class="form-group">
-                        <label for="idEspecializacion">Especializacion</label><span class="asterisco">*</span>
-                        <select name="idEspecializacion" class="form-control custom-select">
-                            {% for especializacion in datos.especializaciones %}
-                            <option value="{{ especializacion.idEspecializacion }}">{{ especializacion.nombre }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                        <div class="invalid-feedback">Complete este campo</div>
+                    <div class="form-row">
+                        <div class="form-group required col-md-12">
+                            <label for="idEspecializacion">Seleccionar Especializaciones: (CTRL+CLICK seleccion
+                                múltiple)</label>
+                            <select multiple name="idEspecializacion[]" id="idEspecializacion"
+                                class="form-control custom-select" size="5">
+                                {% for especializacion in datos.todasEspecializaciones %}
+                                <option value="{{ especializacion.id }}">{{ especializacion.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
@@ -146,19 +155,19 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updateAgente" method="post" class="was-validated">
-                    <input type="text" name="idAgente" id="updateID" hidden>
+                <form action="updateAgente" method="post" id="formAgenteUpd">
+                    <input type="text" name="id" id="updateID" hidden>
                     <div class="form-group">
                         <label for="nombreyape">Nombre y Apellido</label>
                         <input type="text" name="nombreyape" id="nombreyape" class="form-control" readonly>
                     </div>
-                    <div class="form-group">
-                        <label for="idEspecializacion">Especializacion</label><span class="asterisco">*</span>
-                        <select name="idEspecializacion" id="idEspecializacion" class="form-control custom-select">
-                            {% for especializacion in datos.especializaciones %}
-                            <option value="{{ especializacion.idEspecializacion }}">
-                                {{ especializacion.nombre }}
-                            </option>
+                    <div class="form-group required">
+                        <label for="idEspecializacionUpd">Seleccionar Roles: (CTRL+CLICK seleccion
+                            múltiple)</label>
+                        <select multiple name="idEspecializacion[]" id="idEspecializacionUpd"
+                            class="form-control custom-select" size="5">
+                            {% for especializacion in datos.todasEspecializaciones %}
+                            <option value="{{ especializacion.id }}">{{ especializacion.nombre }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -190,7 +199,7 @@
             <div class="modal-body">
                 <p class="mb-3">¿Está seguro?</p>
                 <form action="deleteAgente" method="post">
-                    <input type="text" id="deleteID" name="idAgente" hidden>
+                    <input type="text" id="deleteID" name="id" hidden>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
@@ -206,7 +215,13 @@
 
 <script src="/public/js/ajax/ajaxFichaPersona.js"></script>
 <script src="/public/js/jsBasicos/jsAgente.js"></script>
+<script src="/public/js/generales/validarCampos.js"></script>
 <script>
+    $(function () {
+        $('label').each(function (index, elem) {
+            $(elem).addClass('control-label');
+        })
+    });
     verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Agente');
     ordenarTabla('miTabla', '0,1,2,3,4', [5], 'Agentes Registrados');
 </script>

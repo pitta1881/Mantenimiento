@@ -28,28 +28,30 @@
         <tbody>
             {% for permiso in datos.todosPermisos %}
             <tr>
-                <td>{{ permiso.idPermiso }}</td>
-                <td>{{ permiso.nombrePermiso }}</td>
+                <td>{{ permiso.id }}</td>
+                <td>{{ permiso.nombre }}</td>
                 <td>
-                    {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if permiso.usado == false %}
-                    {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "7" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="modificarModal('{{ permiso|json_encode }}');" title="Editar Permiso"><i
-                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Modificar Permiso" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                data-target="#modalUpdate" onclick="modificarModal('{{ permiso|json_encode }}');"><i
+                                    class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
 
                         {% if "6" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" onclick="eliminarModal('{{ permiso|json_encode }}');"
-                            title="Eliminar Permiso"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Eliminar Permiso" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                                data-target="#modalDelete" onclick="eliminarModal('{{ permiso|json_encode }}');"><i
+                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                     </div>
                 </td>
@@ -74,11 +76,10 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="newPermiso" method="post" class="was-validated">
-                    <div class="form-group">
-                        <label for="nombrePermiso">Nombre del Permiso:</label>
-                        <input type="text" name="nombrePermiso" class="form-control" autofocus required>
-                        <div class="invalid-feedback">Complete este campo</div>
+                <form action="newPermiso" method="post" id="formPermisoNew">
+                    <div class="form-group required">
+                        <label for="nombre">Nombre del Permiso:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" autofocus>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -104,16 +105,16 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updatePermiso" method="post" class="was-validated">
-                    <input type="text" name="idPermiso" id="updateID" hidden>
+                <form action="updatePermiso" method="post" id="formPermisoUpd">
+                    <input type="text" name="id" id="updateID" hidden>
                     <div class="form-group">
-                        <label for="nombreAnterior">Nombre Anterior</label>
+                        <label for="nombreAnteriorUpdate">Nombre Anterior</label>
                         <input type="text" name="nombreAnterior" class="form-control" id="nombreAnteriorUpdate"
                             readonly>
                     </div>
                     <div class="form-group">
-                        <label for="nombrePermiso">Nombre Nuevo</label><span class="asterisco">*</span>
-                        <input type="text" name="nombrePermiso" class="form-control" required>
+                        <label for="nombreNuevo required">Nombre Nuevo</label>
+                        <input type="text" name="nombre" id="nombreNuevo" class="form-control">
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -143,7 +144,7 @@
             <div class="modal-body">
                 <p class="mb-3">¿Está seguro?</p>
                 <form action="deletePermiso" method="post">
-                    <input type="text" name="idPermiso" id="deleteID" hidden>
+                    <input type="text" name="id" id="deleteID" hidden>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
@@ -158,7 +159,18 @@
 <!-- FIN MODALES NEW, UPDATE Y DELETE -->
 
 <script src="/public/js/jsBasicos/jsPermiso.js"></script>
+<script src="/public/js/generales/validarCampos.js"></script>
 <script>
+    $(function () {
+        $('label').each(function (index, elem) {
+            $(elem).addClass('control-label');
+        })
+    });
+    var arrayRepetidosOld = [];
+    listaOld = JSON.parse('{{ datos.todosPermisos|json_encode|raw }}');
+    listaOld.forEach(element => {
+        arrayRepetidosOld.push(element['nombre']);
+    });
     verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Permiso');
     ordenarTabla('miTabla', '0,1', [2], 'Permisos Registrados');
 </script>

@@ -28,35 +28,37 @@
         <tbody>
             {% for rol in datos.todosRoles %}
             <tr>
-                <td>{{ rol.idRol }}</td>
-                <td>{{ rol.nombreRol }}</td>
+                <td>{{ rol.id }}</td>
+                <td>{{ rol.nombre }}</td>
                 <td>
-                    {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if rol.usado == false %}
-                    {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "12" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaRoles('{{ rol.idRol }}',false);" title="Ver Mas"><i
-                                class="fal fa-eye fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Ver Permisos" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                onclick="fichaRoles('{{ rol.id }}',false);"><i class="fal fa-eye fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
 
                         {% if "11" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaRoles('{{ rol.idRol }}',true);" title="Modificar"><i
-                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Editar Permisos" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                onclick="fichaRoles('{{ rol.id }}',true);"><i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
 
                         {% if "10" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" onclick="eliminarModal('{{ rol|json_encode }}');"
-                            title="Eliminar Rol"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                                data-target="#modalDelete" onclick="eliminarModal('{{ rol|json_encode }}');"><i
+                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                     </div>
                 </td>
@@ -81,11 +83,10 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="newRol" method="post" class="was-validated">
-                    <div class="form-group">
-                        <label for="nombreRol">Nombre del Rol:</label>
-                        <input type="text" name="nombreRol" class="form-control" autofocus required>
-                        <div class="invalid-feedback">Complete este campo</div>
+                <form action="newRol" method="post" id="formRolNew">
+                    <div class="form-group required">
+                        <label for="nombre">Nombre del Rol:</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" autofocus>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -99,7 +100,7 @@
 </div>
 {% endif %}
 
-<!--DELETE AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
+<!--DELETE ROL SI NO TIENE PERMISOS Y NO ESTÁ ASIGNADO A UN USUARIO-->
 {% if "10" in datos.datosSesion.listaPermisos %}
 <div class="modal fade" id="modalDelete">
     <div class="modal-dialog" role="document">
@@ -115,7 +116,7 @@
             <div class="modal-body">
                 <p class="mb-3">¿Está seguro?</p>
                 <form action="deleteRol" method="post">
-                    <input type="text" id="deleteID" name="idRol" hidden>
+                    <input type="text" id="deleteID" name="id" hidden>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
@@ -130,7 +131,18 @@
 <!-- FIN MODALES NEW, UPDATE Y DELETE -->
 
 <script src="/public/js/ajax/ajaxFichaRoles.js"></script>
+<script src="/public/js/generales/validarCampos.js"></script>
 <script>
+    $(function () {
+        $('label').each(function (index, elem) {
+            $(elem).addClass('control-label');
+        })
+    });
+    var arrayRepetidosOld = [];
+    listaOld = JSON.parse('{{ datos.todosRoles|json_encode|raw }}');
+    listaOld.forEach(element => {
+        arrayRepetidosOld.push(element['nombre']);
+    });
     verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Rol');
     ordenarTabla('miTabla', '0,1', [2], 'Roles Registrados');
 </script>

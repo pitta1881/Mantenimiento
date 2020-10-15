@@ -160,7 +160,7 @@ VALUES (
         'superAdmin',
         'superAdmin',
         NULL,
-        2000-02-20,
+        '2000-01-01',
         NULL,
         1
 );
@@ -282,7 +282,7 @@ VALUES (
         'Lombardo',
         'Cerrito 236 Piso 2',
         '1975-05-02',
-        'epopasu-1210@yopmail.com',
+        'epopasu_1210@yopmail.com',
         1
     ),
     (
@@ -368,12 +368,23 @@ VALUES (
     )
 ;
 
-INSERT INTO `Agentes` (`idPersona`, `idEspecializacion`, `isDisponible`)
-VALUES (26585543, 1, 1),
-    (39447859, 3, 1),
-    (17145072, 4, 1),
-    (16131891, 6, 1),
-    (22456368, 8, 1)
+INSERT INTO `Agentes` (`idPersona`, `isDisponible`)
+VALUES (26585543, 1),
+    (39447859, 1),
+    (17145072, 1),
+    (16131891, 1),
+    (22456368, 1)
+;
+
+INSERT INTO `Especializaciones_x_Agentes` (`idEspecializacion`, `idAgente`)
+VALUES (1, 1),
+(3, 1),
+(5, 2),
+(7, 2),
+(5, 3),
+(2, 4),
+(8, 4),
+(8, 5)
 ;
 
 INSERT INTO `Sectores` (

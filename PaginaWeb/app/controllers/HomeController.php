@@ -17,12 +17,14 @@ class HomeController extends Controller{
         if(empty($_SESSION)){
             redirect("");
         } else {
-            $datos['datosSesion'] = $_SESSION;
-            $datos['urlheader']="> HOME";
             $alertas = [
                 'rolChange' => $rolChange
             ];
             $datos['alertas'] = $alertas;
+            $_SESSION['urlHeader'] = array(
+                array("url" => "/home",
+                      "nombre" => "HOME"));
+            $datos['datosSesion'] = $_SESSION;
          /*$datos['cantidadPedidos'] = $this->model->getActivos('pedido','id');
          $datos['cantTareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
          $datos['agentesDisponibles'] = $this->model->getAgentesDisponibles('agentes');
@@ -47,5 +49,17 @@ class HomeController extends Controller{
         $_SESSION['rolActual'] = $rol;
         $_SESSION['listaPermisos'] = $this->model->getPermisos();
         return $this->home(true);
+    }
+
+    public function administracionCards(){
+        $datos['alertas'] = [];
+        $_SESSION['urlHeader'] = array(
+            array("url" => "/home",
+                  "nombre" => "HOME"),
+            array("url" => "/administracion",
+                  "nombre" => "ADMINISTRACION")
+                );
+        $datos['datosSesion'] = $_SESSION;
+        return view ('/administracion/AdministracionView',compact('datos'));
     }
 }

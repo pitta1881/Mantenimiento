@@ -28,27 +28,31 @@
         <tbody>
             {% for especializacion in datos.todasEspecializaciones %}
             <tr>
-                <td>{{ especializacion.idEspecializacion }}</td>
+                <td>{{ especializacion.id }}</td>
                 <td>{{ especializacion.nombre }}</td>
                 <td>
-                    {% set deshabilitado = "disabled" %}
                     {% set notAllowed = " notAllowed" %}
                     {% if especializacion.usado == false %}
-                    {% set deshabilitado = "" %}
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "35" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" onclick="modificarModal('{{ especializacion|json_encode }}');"
-                            title="Editar Especializacion"><i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Modificar Especializacion" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}"
+                                data-target="#modalUpdate" data-toggle="modal"
+                                onclick="modificarModal('{{ especializacion|json_encode }}');"><i
+                                    class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                         {% if "34" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" {{ deshabilitado }}
-                            data-toggle="modal" onclick="eliminarModal('{{ especializacion|json_encode }}');"
-                            title="Eliminar Especializacion"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
+                        <a data-toggle="tooltip" title="Eliminar Especializacion" data-placement="top">
+                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}"
+                                data-target="#modalDelete" data-toggle="modal"
+                                onclick="eliminarModal('{{ especializacion|json_encode }}');"><i
+                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
+                            </button>
+                        </a>
                         {% endif %}
                     </div>
                 </td>
@@ -73,16 +77,15 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="newEspecializacion" method="post" class="was-validated">
-                    <div class="form-group">
+                <form action="newEspecializacion" method="post" id="formEspecializacionNew">
+                    <div class="form-group required">
                         <label for="nombre">Nombre de Especializacion:</label>
-                        <input type="text" name="nombre" class="form-control" autofocus required>
-                        <div class="invalid-feedback">Complete este campo</div>
+                        <input type="text" name="nombre" id="nombre" class="form-control" autofocus>
                     </div>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-success btn-modal">Enviar</button>
+                        <button type="submit" class="btn btn-success btn-modal" disabled>Enviar</button>
                     </div>
                 </form>
             </div>
@@ -103,20 +106,19 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="updateEspecializacion" method="post" class="was-validated">
-                    <input type="text" name="idEspecializacion" id="updateID" hidden>
+                <form action="updateEspecializacion" method="post" id="formEspecializacionUpd">
+                    <input type="text" name="id" id="updateID" hidden>
                     <div class="form-group">
                         <label for="nombreAnterior">Nombre Anterior:</label>
                         <input type="text" name="nombreAnterior" id="nombreAnterior" class="form-control" readonly>
                     </div>
-                    <div class="form-group">
-                        <label for="nombre">Nuevo Nombre:</label>
-                        <input type="text" name="nombre" class="form-control" autofocus required>
-                        <div class="invalid-feedback">Complete este campo</div>
+                    <div class="form-group required">
+                        <label for="nombreUpd">Nuevo Nombre:</label>
+                        <input type="text" name="nombre" id="nombreUpd" class="form-control" autofocus>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-success">Enviar</button>
+                        <button type="submit" class="btn btn-success" disabled>Enviar</button>
                     </div>
                 </form>
             </div>
@@ -141,7 +143,7 @@
             <div class="modal-body">
                 <p class="mb-3">¿Está seguro?</p>
                 <form action="deleteEspecializacion" method="post">
-                    <input type="text" id="deleteID" name="idEspecializacion" hidden>
+                    <input type="text" id="deleteID" name="id" hidden>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
@@ -156,7 +158,18 @@
 <!-- FIN MODALES NEW, UPDATE Y DELETE -->
 
 <script src="/public/js/jsBasicos/jsEspecializacion.js"></script>
+<script src="/public/js/generales/validarCampos.js"></script>
 <script>
+    $(function () {
+        $('label').each(function (index, elem) {
+            $(elem).addClass('control-label');
+        })
+    });
+    var arrayRepetidosOld = [];
+    listaOld = JSON.parse('{{ datos.todasEspecializaciones|json_encode|raw }}');
+    listaOld.forEach(element => {
+        arrayRepetidosOld.push(element['nombre']);
+    });
     verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Especialización');
     ordenarTabla('miTabla', '0,1', [2], 'Especializaciones Registradas');
 </script>

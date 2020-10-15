@@ -142,3 +142,12 @@ a[data-toggle="collapse"] {
   transition: all 0.3s;
   text-align: center;
 }
+
+.collapsing {
+  transition: height .15s ease
+}
+
+#subMenu a {
+  padding: 6px !important;
+}
+

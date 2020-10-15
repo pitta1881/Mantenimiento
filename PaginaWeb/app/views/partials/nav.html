@@ -1,117 +1,118 @@
-    <nav>
-        <div class="custom-menu">
-            <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                <i class="fal fa-bars"></i>
-                <i class="sr-only">Toggle Menu</i>
-            </button>
-        </div>
-        <div class="p-3 pt-5">
-            <h1><a href="/home" class="logo">Hospital Sommer</a></h1>
-            <ul class="list-unstyled components mb-0">
-                <li class="active">
-                    <a href="/home"><i class="fal fa-home mr-2 fa-fw fa-lg"></i>Home</a>
-                </li>
-                {% if "4" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-                            class="fal fa-cogs mr-2 fa-fw fa-lg"></i>Administración</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
+<nav>
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fal fa-bars"></i>
+            <i class="sr-only">Toggle Menu</i>
+        </button>
+    </div>
+    <div class="p-3 pt-5">
+        <h1><a href="/home" class="logo">Hospital Sommer</a></h1>
+        <ul class="list-unstyled components mb-0">
+            <li class="active">
+                <a href="/home"><i class="fal fa-home mr-2 fa-fw fa-lg"></i>Home</a>
+            </li>
+            {% if "4" in datos.datosSesion.listaPermisos %}
+            <li class="menuPadre">
+                <a href="/administracion" data-toggle="collapse" data-target="#subMenu" aria-expanded="false"
+                    class="dropdown-toggle"><i class="fal fa-cogs mr-2 fa-fw fa-lg"></i>Administración</a>
+                <ul class="collapse list-unstyled ml-3 pr-3" id="subMenu">
 
-                        {% if "4" in datos.datosSesion.listaPermisos %}
-                        <li>
-                            <a href="/administracion/usuarios/">Usuarios</a>
-                        </li>
-                        {% endif %}
+                    {% if "4" in datos.datosSesion.listaPermisos %}
+                    <li>
+                        <a href="/administracion/usuarios/"><i
+                                class="fal fa-users-cog mr-2 fa-fw fa-sm "></i>Usuarios</a>
+                    </li>
+                    {% endif %}
 
-                        {% if "48" in datos.datosSesion.listaPermisos %}
-                        <li>
-                            <a href="/administracion/personas/">Personas</a>
-                        </li>
-                        {% endif %}
+                    {% if "48" in datos.datosSesion.listaPermisos %}
+                    <li>
+                        <a href="/administracion/personas/"><i class="fal fa-id-card mr-2 fa-fw fa-sm "></i>Personas</a>
+                    </li>
+                    {% endif %}
 
-                        {% if "12" in datos.datosSesion.listaPermisos %}
-                        <li>
-                            <a href="/administracion/roles/">Roles</a>
-                        </li>
-                        {% endif %}
+                    {% if "12" in datos.datosSesion.listaPermisos %}
+                    <li>
+                        <a href="/administracion/roles/"><i class="fal fa-repeat-alt mr-2 fa-fw fa-sm "></i>Roles</a>
+                    </li>
+                    {% endif %}
 
-                        {% if "8" in datos.datosSesion.listaPermisos %}
-                        <li>
-                            <a href="/administracion/permisos/">Permisos</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </li>
-                {% endif %}
+                    {% if "8" in datos.datosSesion.listaPermisos %}
+                    <li>
+                        <a href="/administracion/permisos/"><i class="fal fa-list mr-2 fa-fw fa-sm"></i>Permisos</a>
+                    </li>
+                    {% endif %}
 
-                {% if "32" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/agentes/"><i class="fal fa-users mr-2 fa-fw fa-lg"></i>Agentes</a>
-                </li>
-                {% endif %}
+                    {% if "36" in datos.datosSesion.listaPermisos %}
+                    <li>
+                        <a href="/especializaciones/"><i
+                                class="fal fa-paint-brush mr-2 fa-fw fa-sm"></i>Especializaciones</a>
+                    </li>
+                    {% endif %}
 
-                {% if "36" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/especializaciones/"><i
-                            class="fal fa-paint-brush mr-2 fa-fw fa-lg"></i>Especializaciones</a>
-                </li>
-                {% endif %}
+                    {% if "32" in datos.datosSesion.listaPermisos %}
+                    <li>
+                        <a href="/agentes/"><i class="fal fa-users mr-2 fa-fw fa-sm"></i>Agentes</a>
+                    </li>
+                    {% endif %}
 
-                {% if "28" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/sectores/"><i class="fal fa-hospital mr-2 fa-fw fa-lg"></i>Sectores</a>
-                </li>
-                {% endif %}
+                    {% if "28" in datos.datosSesion.listaPermisos %}
+                    <li>
+                        <a href="/sectores/"><i class="fal fa-hospital mr-2 fa-fw fa-sm"></i>Sectores</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </li>
+            {% endif %}
 
-                {% if "16" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/pedidos/"><i class="fal fa-file-signature mr-2 fa-fw fa-lg"></i>Pedidos</a>
-                </li>
-                {% endif %}
+            {% if "16" in datos.datosSesion.listaPermisos %}
+            <li>
+                <a href="/pedidos/"><i class="fal fa-file-signature mr-2 fa-fw fa-lg"></i>Pedidos</a>
+            </li>
+            {% endif %}
 
-                {% if "24" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/OT/verTodos"><i class="fal fa-clipboard-list-check mr-2 fa-fw fa-lg"></i>Ord. de
-                        Trabajo</a>
-                </li>
-                {% endif %}
+            {% if "24" in datos.datosSesion.listaPermisos %}
+            <li>
+                <a href="/OT/verTodos"><i class="fal fa-clipboard-list-check mr-2 fa-fw fa-lg"></i>Ord. de
+                    Trabajo</a>
+            </li>
+            {% endif %}
 
-                {% if "40" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/eventos/administracionEventos"><i
-                            class="fal fa-calendar-check mr-2 fa-fw fa-lg"></i>Eventos</a>
-                </li>
-                {% endif %}
+            {% if "40" in datos.datosSesion.listaPermisos %}
+            <li>
+                <a href="/eventos/administracionEventos"><i
+                        class="fal fa-calendar-check mr-2 fa-fw fa-lg"></i>Eventos</a>
+            </li>
+            {% endif %}
 
-                {% if "16" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/informe/administracion"><i class="fal fa-chart-line mr-2 fa-fw fa-lg"></i>Informes</a>
-                </li>
-                {% endif %}
+            {% if "16" in datos.datosSesion.listaPermisos %}
+            <li>
+                <a href="/informe/administracion"><i class="fal fa-chart-line mr-2 fa-fw fa-lg"></i>Informes</a>
+            </li>
+            {% endif %}
 
-                {% if "44" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/insumos/"><i class="fal fa-tools mr-2 fa-fw fa-lg"></i>Insumos</a>
-                </li>
-                {% endif %}
+            {% if "44" in datos.datosSesion.listaPermisos %}
+            <li>
+                <a href="/insumos/"><i class="fal fa-tools mr-2 fa-fw fa-lg"></i>Insumos</a>
+            </li>
+            {% endif %}
 
-                {% if "16" in datos.datosSesion.listaPermisos %}
-                <li>
-                    <a href="/ordendecompra/administracionOC"><i class="fal fa-shopping-cart mr-2 fa-fw fa-lg"></i>Ord.
-                        de Compra</a>
-                </li>
-                {% endif %}
+            {% if "16" in datos.datosSesion.listaPermisos %}
+            <li>
+                <a href="/ordendecompra/administracionOC"><i class="fal fa-shopping-cart mr-2 fa-fw fa-lg"></i>Ord.
+                    de Compra</a>
+            </li>
+            {% endif %}
 
-                <li>
-                    <a href="/public/res/ManualDeUsuario_Mantenimiento_Sommer.pdf" target="_blank"><i
-                            class="fal fa-question-circle mr-2 fa-fw fa-lg"></i>Ayuda</a>
-                </li>
+            <li>
+                <a href="/public/res/ManualDeUsuario_Mantenimiento_Sommer.pdf" target="_blank"><i
+                        class="fal fa-question-circle mr-2 fa-fw fa-lg"></i>Ayuda</a>
+            </li>
 
-                <li>
-                    <a href="/logOut"><i class="fal fa-sign-out-alt mr-2 fa-fw fa-lg"></i>Salir</a>
-                </li>
-            </ul>
-    </nav>
-    </li>
+            <li>
+                <a href="/logOut"><i class="fal fa-sign-out-alt mr-2 fa-fw fa-lg"></i>Salir</a>
+            </li>
+        </ul>
+</nav>
+</li>
 
-    <script src="/public/js/generales/mainNav.js"></script>
+<script src="/public/js/generales/mainNav.js"></script>

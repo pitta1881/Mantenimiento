@@ -40,9 +40,10 @@
     <script src="/public/alertifyjs/alertify.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/public/bootstrapvalidator/bootstrapValidator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+        src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
@@ -71,12 +72,24 @@
         $("a[href$='logOut']").click(function () {
             sessionStorage.clear();
         });
+
         //toggle tooltips
-        $('[data-toggle="tooltip"]').tooltip();
+        $("#miTabla").on('mouseenter', '[type="button"]', function () {
+            var listaBotones = $('[data-toggle="tooltip"]').children();
+            Object.keys(listaBotones).forEach(function (key) {
+                if (!($(listaBotones[key]).prop('disabled'))) {
+                    $(listaBotones[key]).parent().tooltip();
+                }
+            });
+        });
+
         //make modales draggables
-        $("#modalNew, #modalUpdate, #modalRolesUpdate, #modalDelete, #modalEstadoUpdate").draggable({
+        $(".modal").draggable({
             handle: ".modal-header"
         });
+
+        //disable los .notAllowed
+        $('.notAllowed').prop('disabled', 'disabled');
     });
 </script>
 
