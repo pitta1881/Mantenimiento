@@ -41,7 +41,7 @@ class SectorController extends Controller{
             "nombre" => "SECTORES")    
         );
         $datos['datosSesion'] = $_SESSION;
-        return view('/sectores/SectoresView', compact('datos'));
+        return view('/administracion/SectoresView', compact('datos'));
     }
     
     public function new() {

@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %} Gestion de Roles {% endblock %}
-{% block nav %}
-{% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %}
 {% block main %}
-{% block header %}
-{% include 'partials/header.html' with {datos:datos} only %}
-{% endblock %}
 <div>
     <h2 class="titulo-tabla">Roles Registrados </h2>
 
@@ -37,28 +31,23 @@
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "12" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Ver Permisos" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                onclick="fichaRoles('{{ rol.id }}',false);"><i class="fal fa-eye fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="fichaRoles('{{ rol.id }}',false);" data-toggle-2="tooltip" title="Ver Permisos"
+                            data-placement="top"><i class="fal fa-eye fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
-
                         {% if "11" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Editar Permisos" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                onclick="fichaRoles('{{ rol.id }}',true);"><i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="fichaRoles('{{ rol.id }}',true);" data-toggle-2="tooltip" title="Editar Permisos"
+                            data-placement="top"><i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
-
                         {% if "10" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
-                                data-target="#modalDelete" onclick="eliminarModal('{{ rol|json_encode }}');"><i
-                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                            data-target="#modalDelete" onclick="eliminarModal('{{ rol|json_encode }}');"
+                            data-toggle-2="tooltip" title="Eliminar Rol" data-placement="top"><i
+                                class="fal fa-trash-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                     </div>
                 </td>

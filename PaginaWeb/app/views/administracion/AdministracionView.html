@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %} Administracion {% endblock %}
-{% block nav %}
-{% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %}
 {% block main %}
-{% block header %}
-{% include 'partials/header.html' with {datos:datos} only %}
-{% endblock %}
 
 <div class="container-fluid mt-3">
     <div class="card-deck mb-3">
@@ -69,7 +63,7 @@
                 <p class="card-text">ABM de Especializaciones para los Agentes</p>
             </div>
             <div class="card-footer">
-                <a href="/especializaciones/" class="btn btn-primary">Especializaciones</a>
+                <a href="/administracion/especializaciones/" class="btn btn-primary">Especializaciones</a>
             </div>
         </div>
         {% endif %}
@@ -81,7 +75,7 @@
                 <p class="card-text">ABM de Agentes y sus Especializaciones</p>
             </div>
             <div class="card-footer">
-                <a href="/agentes/" class="btn btn-primary">Agentes</a>
+                <a href="/administracion/agentes/" class="btn btn-primary">Agentes</a>
             </div>
         </div>
         {% endif %}
@@ -91,10 +85,10 @@
             <div class="card-body pb-1">
                 <i class="fal fa-hospital fa-5x fa-fw"></i>
                 <h5 class="card-title mt-2">Sectores</h5>
-                <p class="card-text">ABM de Sectores</p>
+                <p class="card-text">ABM de Sectores, Telefono, Responsable y e-mail</p>
             </div>
             <div class="card-footer">
-                <a href="/sectores/" class="btn btn-primary">Sectores</a>
+                <a href="/administracion/sectores/" class="btn btn-primary">Sectores</a>
             </div>
         </div>
         {% endif %}

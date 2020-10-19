@@ -39,23 +39,23 @@
     $router->post('administracion/permisos/deletePermiso', 'PermisoController@delete');
 
 //rutas agentes
-    $router->get('agentes','AgenteController@administracionAgentes');
-    $router->post('agentes/newAgente', 'AgenteController@new');
-    $router->post('agentes/updateAgente', 'AgenteController@update');
-    $router->post('agentes/deleteAgente', 'AgenteController@delete');
+    $router->get('administracion/agentes','AgenteController@administracionAgentes');
+    $router->post('administracion/agentes/newAgente', 'AgenteController@new');
+    $router->post('administracion/agentes/updateAgente', 'AgenteController@update');
+    $router->post('administracion/agentes/deleteAgente', 'AgenteController@delete');
 
 //rutas especializaciones
-    $router->get('especializaciones','EspecializacionController@administracionEspecializaciones');
-    $router->post('especializaciones/newEspecializacion', 'EspecializacionController@new');
-    $router->post('especializaciones/updateEspecializacion', 'EspecializacionController@update');
-    $router->post('especializaciones/deleteEspecializacion', 'EspecializacionController@delete');
+    $router->get('administracion/especializaciones','EspecializacionController@administracionEspecializaciones');
+    $router->post('administracion/especializaciones/newEspecializacion', 'EspecializacionController@new');
+    $router->post('administracion/especializaciones/updateEspecializacion', 'EspecializacionController@update');
+    $router->post('administracion/especializaciones/deleteEspecializacion', 'EspecializacionController@delete');
 
 //rutas sectores
-    $router->get('sectores', 'SectorController@administracionSectores');
-    $router->post('sectores/newSector', 'SectorController@new');
-    $router->post('sectores/updateSector', 'SectorController@update');
-    $router->post('sectores/deleteSector', 'SectorController@delete');
-    $router->post('sectores/fichaSector', 'SectorController@ficha');
+    $router->get('administracion/sectores', 'SectorController@administracionSectores');
+    $router->post('administracion/sectores/newSector', 'SectorController@new');
+    $router->post('administracion/sectores/updateSector', 'SectorController@update');
+    $router->post('administracion/sectores/deleteSector', 'SectorController@delete');
+    $router->post('administracion/sectores/fichaSector', 'SectorController@ficha');
 
 //rutas insumos
     $router->get('insumos', 'InsumoController@administracionInsumos');

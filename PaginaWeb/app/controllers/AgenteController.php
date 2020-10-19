@@ -52,7 +52,7 @@ class AgenteController extends Controller
                                             "nombre" => "AGENTES")    
                                             );
         $datos['datosSesion'] = $_SESSION;
-        return view('/agentes/AgentesView', compact('datos'));
+        return view('/administracion/AgentesView', compact('datos'));
     }       
     
     public function new() {

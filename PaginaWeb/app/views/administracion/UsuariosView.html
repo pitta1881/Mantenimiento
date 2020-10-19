@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %} Gestion de Usuarios {% endblock %}
-{% block nav %}
-{% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %}
 {% block main %}
-{% block header %}
-{% include 'partials/header.html' with {datos:datos} only %}
-{% endblock %}
 <div>
     <h2 class="titulo-tabla">Usuarios Registrados </h2>
 
@@ -21,7 +15,7 @@
         <thead class="headtable">
             <tr>
                 <th>Nombre Usuario</th>
-                <th>DNI </th>
+                <th>DNI</th>
                 <th>Nombre y Apellido</th>
                 <th>Roles</th>
                 <th>Accion</th>
@@ -45,28 +39,24 @@
                     {% set notAllowed = "" %}
                     {% endif %}
                     <div class="btn-group float-none" role="group">
-                        <a data-toggle="tooltip" title="Modificar Roles" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                data-target="#modalRolesUpdate"
-                                onclick="modificarRolesModal('{{ usuario|json_encode }}');"><i
-                                    class="fal fa-user-cog fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#modalRolesUpdate" onclick="modificarRolesModal('{{ usuario|json_encode }}');"
+                            data-toggle-2="tooltip" title="Modificar Roles" data-placement="top"><i
+                                class="fal fa-user-cog fa-lg fa-fw"></i>
+                        </button>
                         {% if "3" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Modificar Contraseña" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                data-target="#modalUpdate" onclick="modificarModal('{{ usuario|json_encode }}');"><i
-                                    class="fal fa-key fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#modalUpdate" onclick="modificarModal('{{ usuario|json_encode }}');"
+                            data-toggle-2="tooltip" title="Modificar Contraseña" data-placement="top"><i
+                                class="fal fa-key fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                         {% if "2" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Eliminar Usuario" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
-                                data-target="#modalDelete" onclick="eliminarModal('{{ usuario|json_encode }}');"><i
-                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                            data-target="#modalDelete" onclick="eliminarModal('{{ usuario|json_encode }}');"
+                            data-toggle-2="tooltip" title="Eliminar Usuario" data-placement="top"><i
+                                class="fal fa-trash-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                     </div>
                 </td>

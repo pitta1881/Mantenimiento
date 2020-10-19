@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %} Gestion de Especializaciones {% endblock %}
-{% block nav %}
-{% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %}
 {% block main %}
-{% block header %}
-{% include 'partials/header.html' with {datos:datos} only %}
-{% endblock %}
 <div>
     <h2 class="titulo-tabla">Especializaciones Registradas </h2>
 
@@ -37,22 +31,20 @@
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "35" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Modificar Especializacion" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}"
-                                data-target="#modalUpdate" data-toggle="modal"
-                                onclick="modificarModal('{{ especializacion|json_encode }}');"><i
-                                    class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}"
+                            data-target="#modalUpdate" data-toggle="modal"
+                            onclick="modificarModal('{{ especializacion|json_encode }}');" data-toggle-2="tooltip"
+                            title="Modificar Especializacion" data-placement="top"><i
+                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                         {% if "34" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Eliminar Especializacion" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}"
-                                data-target="#modalDelete" data-toggle="modal"
-                                onclick="eliminarModal('{{ especializacion|json_encode }}');"><i
-                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}"
+                            data-target="#modalDelete" data-toggle="modal"
+                            onclick="eliminarModal('{{ especializacion|json_encode }}');" data-toggle-2="tooltip"
+                            title="Eliminar Especializacion" data-placement="top"><i
+                                class="fal fa-trash-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                     </div>
                 </td>

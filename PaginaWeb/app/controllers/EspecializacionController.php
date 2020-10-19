@@ -44,7 +44,7 @@ class EspecializacionController extends Controller
                 "nombre" => "ESPECIALIZACIONES")    
                 );
         $datos['datosSesion'] = $_SESSION;
-        return view('/especializacion/EspecializacionesView', compact('datos'));
+        return view('/administracion/EspecializacionesView', compact('datos'));
     }       
     
     public function new() {

@@ -1,4 +1,4 @@
-<nav>
+<nav id="sidebar">
     <div class="custom-menu">
         <button type="button" id="sidebarCollapse" class="btn btn-primary">
             <i class="fal fa-bars"></i>
@@ -44,20 +44,20 @@
 
                     {% if "36" in datos.datosSesion.listaPermisos %}
                     <li>
-                        <a href="/especializaciones/"><i
+                        <a href="/administracion/especializaciones/"><i
                                 class="fal fa-paint-brush mr-2 fa-fw fa-sm"></i>Especializaciones</a>
                     </li>
                     {% endif %}
 
                     {% if "32" in datos.datosSesion.listaPermisos %}
                     <li>
-                        <a href="/agentes/"><i class="fal fa-users mr-2 fa-fw fa-sm"></i>Agentes</a>
+                        <a href="/administracion/agentes/"><i class="fal fa-users mr-2 fa-fw fa-sm"></i>Agentes</a>
                     </li>
                     {% endif %}
 
                     {% if "28" in datos.datosSesion.listaPermisos %}
                     <li>
-                        <a href="/sectores/"><i class="fal fa-hospital mr-2 fa-fw fa-sm"></i>Sectores</a>
+                        <a href="/administracion/sectores/"><i class="fal fa-hospital mr-2 fa-fw fa-sm"></i>Sectores</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -113,6 +113,4 @@
             </li>
         </ul>
 </nav>
-</li>
-
 <script src="/public/js/generales/mainNav.js"></script>

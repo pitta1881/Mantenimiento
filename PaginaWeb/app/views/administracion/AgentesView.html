@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %} Gestion de Agentes {% endblock %}
-{% block nav %}
-{% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %}
 {% block main %}
-{% block header %}
-{% include 'partials/header.html' with {datos:datos} only %}
-{% endblock %}
 <div>
     <h2 class="titulo-tabla">Agentes Registrados</h2>
 
@@ -48,27 +42,24 @@
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "32" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Mas Detalles" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                onclick="fichaPersona('{{ agente.idPersona }}');"><i class="fal fa-eye fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            onclick="fichaPersona('{{ agente.idPersona }}');" data-toggle-2="tooltip"
+                            title="Mas Detalles" data-placement="top"><i class="fal fa-eye fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                         {% if "31" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Modificar Agente" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
-                                data-target="#modalUpdate" onclick="modificarModal('{{ agente|json_encode }}');"><i
-                                    class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                            data-target="#modalUpdate" onclick="modificarModal('{{ agente|json_encode }}');"
+                            data-toggle-2="tooltip" title="Modificar Agente" data-placement="top"><i
+                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                         {% if "30" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Eliminar Agente" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
-                                data-target="#modalDelete" onclick="eliminarModal('{{ agente|json_encode }}');"><i
-                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                            data-target="#modalDelete" onclick="eliminarModal('{{ agente|json_encode }}');"
+                            data-toggle-2="tooltip" title="Eliminar Agente" data-placement="top"><i
+                                class="fal fa-trash-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                     </div>
                 </td>

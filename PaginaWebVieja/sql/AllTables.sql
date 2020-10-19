@@ -1,4 +1,4 @@
-USE Mantenimiento;
+USE MantenimientoOld;
 CREATE TABLE roles (
     idRol INTEGER PRIMARY KEY,
     nombreRol VARCHAR(20) NOT NULL
@@ -7,12 +7,12 @@ INSERT INTO `roles`
 VALUES (0, 'superAdmin');
 INSERT INTO `roles`
 VALUES (1, 'Operador');
-USE Mantenimiento;
+
 CREATE TABLE permisos (
     idPermiso INTEGER PRIMARY KEY AUTO_INCREMENT,
     nombrePermiso VARCHAR(20) NOT NULL
 );
-USE Mantenimiento;
+
 CREATE TABLE personas (
     dni INTEGER(8) PRIMARY KEY,
     apellido VARCHAR(20) NOT NULL,
@@ -32,7 +32,7 @@ VALUES (
         NULL,
         'Activo'
     );
-USE Mantenimiento;
+
 CREATE TABLE usuarios(
     nombre VARCHAR(11) PRIMARY KEY,
     password VARCHAR(11) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE usuarios(
 );
 INSERT INTO `usuarios`
 VALUES ('admin', 'admin', 0, 00000000);
-USE Mantenimiento;
+
 CREATE TABLE rolesxpermisos (
     idRol INTEGER,
     idPermiso INTEGER,
@@ -104,7 +104,7 @@ VALUES (1, 'alta usuario'),
     (50, 'baja oc'),
     (51, 'modificar oc'),
     (52, 'visualizar oc');
-USE mantenimiento;
+
 CREATE TABLE sectores (
     idSector INTEGER AUTO_INCREMENT,
     nombreSector TEXT NOT NULL,
@@ -114,7 +114,7 @@ CREATE TABLE sectores (
     email varchar(20),
     PRIMARY KEY (idSector)
 );
-USE Mantenimiento;
+
 CREATE TABLE pedido (
     id INTEGER AUTO_INCREMENT,
     idSector INTEGER NOT NULL,
@@ -128,12 +128,12 @@ CREATE TABLE pedido (
     FOREIGN KEY (idSector) REFERENCES sectores(idSector),
     FOREIGN KEY (nombreUsuario) REFERENCES usuarios (nombre)
 );
-USE Mantenimiento;
+
 CREATE TABLE especializacion (
     idEspecializacion INTEGER PRIMARY KEY AUTO_INCREMENT,
     nombre varchar(20)
 );
-USE mantenimiento;
+
 CREATE TABLE tarea (
     idTarea integer NOT NULL,
     idPedido integer NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE tarea (
     FOREIGN KEY (idPedido) REFERENCES pedido(id) ON DELETE CASCADE,
     FOREIGN KEY (idEspecializacion) REFERENCES especializacion(idEspecializacion) ON DELETE CASCADE
 );
-USE Mantenimiento;
+
 CREATE TABLE OrdenDeTrabajo (
     idOT INTEGER AUTO_INCREMENT,
     fechaInicio DATE NOT NULL,
@@ -153,7 +153,7 @@ CREATE TABLE OrdenDeTrabajo (
     estado TEXT NOT NULL,
     PRIMARY KEY (idOT)
 );
-USE mantenimiento;
+
 CREATE TABLE itemOT (
     idTarea integer,
     idPedido integer,
@@ -162,7 +162,7 @@ CREATE TABLE itemOT (
     FOREIGN KEY (idTarea, idPedido) REFERENCES tarea(idTarea, idPedido),
     FOREIGN KEY (idOT) REFERENCES OrdenDeTrabajo(idOT)
 );
-USE mantenimiento;
+
 CREATE TABLE insumo (
     idInsumo INTEGER AUTO_INCREMENT,
     nombreInsumo TEXT NOT NULL,
@@ -171,7 +171,7 @@ CREATE TABLE insumo (
     stockMinimo Integer NOT NULL default 0,
     PRIMARY KEY (idInsumo)
 );
-USE Mantenimiento;
+
 CREATE TABLE agentes(
     idAgente INTEGER,
     idEspecializacion INTEGER,
@@ -180,7 +180,7 @@ CREATE TABLE agentes(
     FOREIGN KEY (idEspecializacion) REFERENCES especializacion (idEspecializacion),
     FOREIGN KEY (idAgente) REFERENCES personas(dni)
 );
-USE mantenimiento;
+
 CREATE TABLE itemAgente (
     idTarea integer,
     idPedido integer,
@@ -189,7 +189,7 @@ CREATE TABLE itemAgente (
     FOREIGN KEY (idTarea, idPedido) REFERENCES tarea(idTarea, idPedido),
     FOREIGN KEY (idAgente) REFERENCES agentes(idAgente)
 );
-USE mantenimiento;
+
 CREATE TABLE eventos (
     idEvento INTEGER AUTO_INCREMENT,
     nombreEvento varchar(20) NOT NULL,
@@ -198,7 +198,7 @@ CREATE TABLE eventos (
     fechaFin DATE NOT NULL,
     PRIMARY KEY (idEvento, nombreEvento)
 );
-USE mantenimiento;
+
 CREATE TABLE itemInsumo (
     idTarea integer,
     idPedido integer,
@@ -208,7 +208,7 @@ CREATE TABLE itemInsumo (
     FOREIGN KEY (idTarea, idPedido) REFERENCES tarea(idTarea, idPedido),
     FOREIGN KEY (idInsumo) REFERENCES insumo(idInsumo)
 );
-USE mantenimiento;
+
 CREATE TABLE movimiento (
     idMovimiento INTEGER AUTO_INCREMENT,
     idInsumo INTEGER,
@@ -224,7 +224,7 @@ CREATE TABLE movimiento (
     FOREIGN KEY (idInsumo) REFERENCES insumo(idInsumo),
     FOREIGN KEY (nombreUsuario) REFERENCES usuarios (nombre)
 );
-USE mantenimiento;
+
 CREATE TABLE historialEstado (
     idHistorial INTEGER,
     idTarea INTEGER,
@@ -235,7 +235,7 @@ CREATE TABLE historialEstado (
     PRIMARY KEY (idPedido, idTarea, idHistorial),
     FOREIGN KEY (idPedido, idTarea) REFERENCES tarea(idPedido, idTarea)
 );
-USE Mantenimiento;
+
 CREATE TABLE OrdenDeCompra (
     idOC INTEGER AUTO_INCREMENT,
     fecha DATE NOT NULL,
@@ -243,7 +243,7 @@ CREATE TABLE OrdenDeCompra (
     estado TEXT NOT NULL,
     PRIMARY KEY (idOC)
 );
-USE mantenimiento;
+
 CREATE TABLE itemOC (
     idInsumo integer,
     idOC integer,

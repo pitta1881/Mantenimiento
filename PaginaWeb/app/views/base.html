@@ -58,11 +58,11 @@
     {% endblock %}
 </head>
 
-<body class="wrapper d-flex align-items-stretch">
-    <nav id="sidebar">{% block nav %}{% endblock %}</nav>
-    <main id="content" class="p-4 p-md-5 pt-5">
+<body class="d-flex">
+    {% include 'partials/nav.html' with {datos:datos} only %}
+    <main class="container-fluid text-center">
+        {% include 'partials/header.html' with {datos:datos} only %}
         {% block main %}
-        {% block header %}{% endblock %}
         {% endblock %}
     </main>
 </body>
@@ -75,7 +75,7 @@
 
         //toggle tooltips
         $("#miTabla").on('mouseenter', '[type="button"]', function () {
-            var listaBotones = $('[data-toggle="tooltip"]').children();
+            var listaBotones = $('[data-toggle-2="tooltip"]').children();
             Object.keys(listaBotones).forEach(function (key) {
                 if (!($(listaBotones[key]).prop('disabled'))) {
                     $(listaBotones[key]).parent().tooltip();

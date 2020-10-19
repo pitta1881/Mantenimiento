@@ -3,7 +3,7 @@ use Monolog\Logger as MonologLogger;
 
 return [
     'database' => [
-        'name' => 'Mantenimiento',
+        'name' => 'MantenimientoOld',
         'username' => 'root',
         'password' => '',
         'connection' => 'mysql:host=127.0.0.1',

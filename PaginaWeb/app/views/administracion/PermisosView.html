@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %} Gestion de Permisos {% endblock %}
-{% block nav %}
-{% include 'partials/nav.html' with {datos:datos} only %}
-{% endblock %}
 {% block main %}
-{% block header %}
-{% include 'partials/header.html' with {datos:datos} only %}
-{% endblock %}
 <div>
     <h2 class="titulo-tabla">Permisos Registrados </h2>
 
@@ -37,21 +31,19 @@
                     {% endif %}
                     <div class="btn-group float-none" role="group">
                         {% if "7" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Modificar Permiso" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                data-target="#modalUpdate" onclick="modificarModal('{{ permiso|json_encode }}');"><i
-                                    class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#modalUpdate" onclick="modificarModal('{{ permiso|json_encode }}');"
+                            data-toggle-2="tooltip" title="Modificar Permiso" data-placement="top"><i
+                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
 
                         {% if "6" in datos.datosSesion.listaPermisos %}
-                        <a data-toggle="tooltip" title="Eliminar Permiso" data-placement="top">
-                            <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
-                                data-target="#modalDelete" onclick="eliminarModal('{{ permiso|json_encode }}');"><i
-                                    class="fal fa-trash-alt fa-lg fa-fw"></i>
-                            </button>
-                        </a>
+                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
+                            data-target="#modalDelete" onclick="eliminarModal('{{ permiso|json_encode }}');"
+                            data-toggle-2="tooltip" title="Eliminar Permiso" data-placement="top"><i
+                                class="fal fa-trash-alt fa-lg fa-fw"></i>
+                        </button>
                         {% endif %}
                     </div>
                 </td>
