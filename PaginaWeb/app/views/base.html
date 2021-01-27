@@ -1,96 +1,56 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    {% block head %}
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} - Mantenimiento</title>
-    <link rel="shortcut icon" href="/public/res/favicon.ico" />
-    <!--BOOTSTRAP-->
-    <link rel="stylesheet" href="/public/bootstrap/bootstrap.css">
-    <!--BOOTSTRAP END-->
-    <!--BOOTSTRAP VALIDATOR-->
-    <link href="/public/bootstrapvalidator/bootstrapValidator.css" rel="stylesheet" type="text/css">
-    <!--BOOTSTRAP VALIDATOR END-->
-    <!--NAV y HEADER MENU-->
-    <link href="/public/fonts/fontsgoogleapis.css" rel="stylesheet">
-    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ACTUALIZAR LA VERSION A LA ULTIMA SI NO ENCUENTRA UN ICONO!!!!!!!!!!!!!!!!
-    https://pro.fontawesome.com/releases/vX.XX.X/css/all.css-->
-    <link href="/public/fontawesome-pro/css/all.css" rel="stylesheet">
-    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ACTUALIZAR LA VERSION A LA ULTIMA SI NO ENCUENTRA UN ICONO!!!!!!!!!!!!!!!!-->
-    <link rel="stylesheet" href="/public/css/styleHeader.css">
-    <link href="/public/css/styleNav.css" rel="stylesheet">
-    <!--NAV y HEADER MENU END-->
-    <!--ALERTIFY-->
-    <link rel="stylesheet" href="/public/alertifyjs/css/alertify.min.css">
-    <link rel="stylesheet" href="/public/alertifyjs/css/themes/default.min.css" />
-    <!--ALERTIFY END-->
-    <!--DATATABLES-->
-    <link rel="stylesheet" href="/public/css/styleDatatables.css">
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
-    <!--DATATABLES END-->
-    <!--MIS ESTILOS-->
-    <link href="/public/css/miStyle.css" rel="stylesheet" type="text/css">
-    <!--MIS ESTILOS END-->
+	<head>
+		{% block head %}
+			<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>
+				{% block title %}{% endblock %}
+				- Mantenimiento
+			</title>
+			{% block stylesheet %}
+				<link rel="shortcut icon" href="/public/res/favicon.ico"/>
+				<link rel="stylesheet" href="/public/bootstrap/bootstrap.css">
+				<link href="/public/bootstrapvalidator/bootstrapValidator.css" rel="stylesheet" type="text/css">
+				<link
+				href="/public/fonts/fontsgoogleapis.css" rel="stylesheet">
+				<!--!!!!!!!!!!!!!!!!!!ACTUALIZAR LA VERSION A LA ULTIMA SI NO ENCUENTRA UN ICONO!!!!!!!!!!!!!!!																																																																																																																																																																																																																																											    https://pro.fontawesome.com/releases/vX.XX.X/css/all.css-->
+				<link
+				href="/public/fontawesome-pro/css/all.css" rel="stylesheet">
+				<!--!!!!!!!!!!!!!!!!!!ACTUALIZAR LA VERSION A LA ULTIMA SI NO ENCUENTRA UN ICONO!!!!!!!!!!!!!!!!-->
+				<link rel="stylesheet" href="/public/css/styleHeader.css">
+				<link href="/public/css/styleNav.css" rel="stylesheet">
+				<link rel="stylesheet" href="/public/alertifyjs/css/alertify.min.css">
+				<link rel="stylesheet" href="/public/alertifyjs/css/themes/default.min.css"/>
+				<link rel="stylesheet" href="/public/css/styleDatatables.css">
+				<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+				<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css" rel="stylesheet"/>
+				<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+				<link href="/public/css/miStyle.css" rel="stylesheet" type="text/css">
+			{% endblock %}
 
-    <script src="/public/js/generales/alertasABM.js"></script>
-    <script src="/public/js/generales/ordypagtablas.js"></script>
-    <script src="/public/alertifyjs/alertify.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-        src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    {% endblock %}
-</head>
+			{% block javascripts %}
+				<script src="/public/alertifyjs/alertify.js"></script>
+				<script src="/public/js/generales/misAlertas.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+				<script type="module">
+					import {logOut} from '/public/js/generales/jsGeneral.js';
+logOut();
+				</script>
+			{% endblock %}
+		{% endblock %}
+	</head>
 
-<body class="d-flex">
-    {% include 'partials/nav.html' with {datos:datos} only %}
-    <main class="container-fluid text-center">
-        {% include 'partials/header.html' with {datos:datos} only %}
-        {% block main %}
-        {% endblock %}
-    </main>
-</body>
-<script>
-    $(document).ready(function () {
-        //clear sessionStorage
-        $("a[href$='logOut']").click(function () {
-            sessionStorage.clear();
-        });
-
-        //toggle tooltips
-        $("#miTabla").on('mouseenter', '[type="button"]', function () {
-            var listaBotones = $('[data-toggle-2="tooltip"]').children();
-            Object.keys(listaBotones).forEach(function (key) {
-                if (!($(listaBotones[key]).prop('disabled'))) {
-                    $(listaBotones[key]).parent().tooltip();
-                }
-            });
-        });
-
-        //make modales draggables
-        $(".modal").draggable({
-            handle: ".modal-header"
-        });
-
-        //disable los .notAllowed
-        $('.notAllowed').prop('disabled', 'disabled');
-    });
-</script>
+	<body class="d-flex">
+		{% include 'partials/nav.html' with {datos:datos} only %}
+		<main class="container-fluid text-center">
+			{% include 'partials/header.html' with {datos:datos} only %}
+			{% block main %}{% endblock %}
+		</main>
+	</body>
 
 </html>

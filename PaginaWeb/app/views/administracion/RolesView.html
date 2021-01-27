@@ -1,138 +1,133 @@
 {% extends "base.html" %}
-{% block title %} Gestion de Roles {% endblock %}
+{% block title %}
+	Gestion de Roles
+{% endblock %}
 {% block main %}
-<div>
-    <h2 class="titulo-tabla">Roles Registrados </h2>
+	<div>
+		<h2 class="titulo-tabla">Roles Registrados
+		</h2>
 
-    <!-- BOTON NEW ROL -->
-    {% if "9" in datos.datosSesion.listaPermisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
-            class="fal fa-plus"></i> Crear Nuevo</button>
-    {% endif %}
+		<!-- BOTON NEW ROL -->
+		{% if "9" in datos.datosSesion.listaPermisos %}
+			<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew">
+				<i class="fal fa-plus"></i>
+				Crear Nuevo</button>
+		{% endif %}
 
-    <!-- TABLA ROLES -->
-    <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-        <thead class="headtable">
-            <tr>
-                <th>Nº Rol</th>
-                <th>Nombre</th>
-                <th>Accion</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for rol in datos.todosRoles %}
-            <tr>
-                <td>{{ rol.id }}</td>
-                <td>{{ rol.nombre }}</td>
-                <td>
-                    {% set notAllowed = " notAllowed" %}
-                    {% if rol.usado == false %}
-                    {% set notAllowed = "" %}
-                    {% endif %}
-                    <div class="btn-group float-none" role="group">
-                        {% if "12" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaRoles('{{ rol.id }}',false);" data-toggle-2="tooltip" title="Ver Permisos"
-                            data-placement="top"><i class="fal fa-eye fa-lg fa-fw"></i>
-                        </button>
-                        {% endif %}
-                        {% if "11" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            onclick="fichaRoles('{{ rol.id }}',true);" data-toggle-2="tooltip" title="Editar Permisos"
-                            data-placement="top"><i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
-                        {% endif %}
-                        {% if "10" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
-                            data-target="#modalDelete" onclick="eliminarModal('{{ rol|json_encode }}');"
-                            data-toggle-2="tooltip" title="Eliminar Rol" data-placement="top"><i
-                                class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
-                        {% endif %}
-                    </div>
-                </td>
-            </tr>
-            {% else %}
-            <h2 class="error">No hay Roles</h2>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+		<!-- TABLA ROLES -->
+		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+			<thead class="headtable">
+				<tr>
+					<th>Nº Rol</th>
+					<th>Nombre</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for rol in datos.todosRoles %}
+					<tr>
+						<td>{{ rol.id }}</td>
+						<td>{{ rol.nombre }}</td>
+						<td>
+							<div class="btn-group float-none" role="group">
+								{% if "12" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-outline-primary" data-toggle="modal" onclick="fichaRoles('{{ rol.id }}',false);" data-toggle="tooltip" title="Ver Permisos" data-placement="top">
+										<i class="fal fa-eye fa-lg fa-fw"></i>
+									</button>
+								{% endif %}
+								{% if "11" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-outline-primary" data-toggle="modal" onclick="fichaRoles('{{ rol.id }}',true);" data-toggle="tooltip" title="Editar Permisos" data-placement="top">
+										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+									</button>
+								{% endif %}
+								{% if "10" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-outline-primary" {{ rol.usado ? 'disabled' }} data-id='{{ rol.id }}' data-abm="delete" data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
+										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
+									</button>
+								{% endif %}
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					<h2 class="error">No hay Roles</h2>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
-<!-- MODALES NEW, UPDATE Y DELETE -->
-<!-- NEW ROL -->
-{% if "9" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalNew">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h3 class="modal-title m-0">Crear Rol</h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="newRol" method="post" id="formRolNew">
-                    <div class="form-group required">
-                        <label for="nombre">Nombre del Rol:</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" autofocus>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-success">Enviar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+	<!-- MODALES NEW, UPDATE Y DELETE -->
+	<!-- NEW ROL -->
+	{% if "9" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalNew">
+			<div class="modal-dialog">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Crear Rol</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="createRol" method="post" id="formRolNew">
+							<div class="form-group required">
+								<label for="nombre">Nombre del Rol:</label>
+								<input type="text" name="nombre" id="nombre" class="form-control" autofocus>
+							</div>
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 
-<!--DELETE ROL SI NO TIENE PERMISOS Y NO ESTÁ ASIGNADO A UN USUARIO-->
-{% if "10" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalDelete">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <p class="mb-3">¿Está seguro?</p>
-                <form action="deleteRol" method="post">
-                    <input type="text" id="deleteID" name="id" hidden>
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+	<!--DELETE ROL SI NO TIENE PERMISOS Y NO ESTÁ ASIGNADO A UN USUARIO-->
+	{% if "10" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalDelete">
+			<div class="modal-dialog" role="document">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<p class="mb-3">¿Está seguro?</p>
+						<form action="deleteRol" method="post">
+							<input
+							type="text" id="deleteID" name="id" hidden>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 
-<script src="/public/js/ajax/ajaxFichaRoles.js"></script>
-<script src="/public/js/generales/validarCampos.js"></script>
-<script>
-    $(function () {
-        $('label').each(function (index, elem) {
-            $(elem).addClass('control-label');
-        })
-    });
-    var arrayRepetidosOld = [];
-    listaOld = JSON.parse('{{ datos.todosRoles|json_encode|raw }}');
-    listaOld.forEach(element => {
-        arrayRepetidosOld.push(element['nombre']);
-    });
-    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Rol');
-    ordenarTabla('miTabla', '0,1', [2], 'Roles Registrados');
-</script>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'partials/scriptsDatatables.html' %}
+	<script src="/public/js/ajax/ajaxFichaRoles.js"></script>
+	<script src="/public/js/jsBasicos/jsRoles.js" type="module"></script>
+	<script>
+		$(function () {
+verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Rol');
+});
+	</script>
 {% endblock %}

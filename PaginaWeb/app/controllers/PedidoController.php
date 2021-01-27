@@ -35,7 +35,7 @@ class PedidoController extends Controller{
         return view('/pedidos/PedidosView', compact('datos'));
     }
 
-    public function new(){
+    public function create(){
         $pedido = [
             'fechaInicio' => $_POST['fechaInicio'],
             'estado' => $_POST['estado'],

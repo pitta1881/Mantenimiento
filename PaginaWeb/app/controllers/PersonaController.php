@@ -3,53 +3,53 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\MyInterface;
 use App\Models\PersonaModel;
 
-class PersonaController extends Controller{
-    public function __construct(){
-        $this->model = new PersonaModel();
-        session_start();        
-    }
+define("table", "personas");
+define("tableAgentes", "agentes");
+define("tableUsuarios", "usuarios");
+define("tableEstadosPersona", "estadospersona");
 
-    private $table = 'personas';
-    private $tableAgentes = 'agentes';
-    private $tableUsuarios = 'usuarios';
-    private $tableEstadosPersona = 'estadospersona';
+class PersonaController extends Controller implements MyInterface
+{
+    public function __construct()
+    {
+        $this->model = new PersonaModel();
+        session_start();
+    }
     
-    public function administracionPersonas($new = null,$update = null,$delete = null){
+    public function index($alerta = null)
+    {
         $comparaTablasIfUsado = array(
-                                    array(  "tabla" => $this->tableAgentes,
+                                    array(  "tabla" => tableAgentes,
                                             "comparaKeyOrig" => "id",
                                             "comparaKeyDest" => "idPersona"
                                     ),
-                                        array(  "tabla" => $this->tableUsuarios,
+                                        array(  "tabla" => tableUsuarios,
                                                 "comparaKeyOrig" => "id",
                                                 "comparaKeyDest" => "idPersona"
                                             )
                                     );
-        $datos['todasPersonas'] = $this->model->get($this->table,$comparaTablasIfUsado); 
-        $datos['todosEstados'] = $this->model->get($this->tableEstadosPersona);
-        $datos['minimo18'] = date('Y-m-d',strtotime('18 years ago'));
-        $datos['maximo70'] = date('Y-m-d',strtotime('70 years ago'));
-        $alertas = [
-            'new' => $new,
-            'update' => $update,
-            'delete' => $delete
-        ];
-        $datos['alertas'] = $alertas;
+        $datos['todasPersonas'] = $this->model->get(table, $comparaTablasIfUsado);
+        $datos['todosEstados'] = $this->model->get(tableEstadosPersona);
+        $datos['minimo18'] = date('Y-m-d', strtotime('18 years ago'));
+        $datos['maximo70'] = date('Y-m-d', strtotime('70 years ago'));
+        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
             array("url" => "/administracion",
             "nombre" => "ADMINISTRACION"),
             array("url" => "/administracion/personas",
-            "nombre" => "PERSONAS")    
+            "nombre" => "PERSONAS")
         );
         $datos['datosSesion'] = $_SESSION;
         return view('/administracion/PersonasView', compact('datos'));
     }
 
-    public function new(){
+    public function create()
+    {
         $persona = [
             'id' => $_POST['id'],
             'nombre' => $_POST['nombre'],
@@ -58,12 +58,13 @@ class PersonaController extends Controller{
             'email' => $_POST['email'],
             'fechaNacimiento' => $_POST['fechaNacimiento'],
             'idEstadoPersona' => 1
-        ]; 
-        $insertOk = $this->model->insert($this->table,$persona);
-        return $this->administracionPersonas($insertOk);
+        ];
+        $insert = $this->model->insert(table, $persona, "Persona");
+        return $this->index($insert);
     }
 
-    public function update(){
+    public function update()
+    {
         $persona = [
             'id' => $_POST['id'],
             'nombre' => $_POST['nombre'],
@@ -72,29 +73,24 @@ class PersonaController extends Controller{
             'email' => $_POST['email'],
             'fechaNacimiento' => $_POST['fechaNacimiento']
         ];
-        $updateOk = $this->model->update($this->table,$persona);
-        return $this->administracionPersonas(null,$updateOk);
+        $update = $this->model->update(table, $persona, "Persona");
+        return $this->index($update);
     }
     
-    public function delete(){
+    public function delete()
+    {
         $persona['id'] = $_POST['id'];
-        $deleteOk = $this->model->delete($this->table,$persona);
-        return $this->administracionPersonas(null,null,$deleteOk);
+        $delete = $this->model->delete(table, $persona, "Persona");
+        return $this->index($delete);
     }
 
-    public function updateEstado(){
+    public function updateEstado()
+    {
         $persona = [
             'id' => $_POST['idEstado'],
             'idEstadoPersona' => $_POST['idEstadoPersona']
         ];
-        $updateOk = $this->model->update($this->table,$persona);
-        return $this->administracionPersonas(null,$updateOk);
+        $update = $this->model->update(table, $persona, "Persona");
+        return $this->index($update);
     }
-
-    public function ficha(){
-        $persona['id'] = $_POST['id'];
-        $miPersona = $this->model->getFicha($this->table,$persona);
-        echo json_encode($miPersona);
-    }
-    
 }

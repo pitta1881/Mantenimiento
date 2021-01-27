@@ -3,61 +3,63 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\MyInterface;
 use App\Models\PermisoModel;
 
-class PermisoController extends Controller{
-    public function __construct(){
+define("table", "permisos");
+define("tableRxP", "roles_x_permisos");
+
+class PermisoController extends Controller implements MyInterface
+{
+    public function __construct()
+    {
         $this->model = new PermisoModel();
         session_start();
-    }   
+    }
 
-    private $table = 'permisos';
-    private $tableRxP = 'roles_x_permisos';
-
-    public function administracionPermisos($new = null,$update = null,$delete = null){
+    public function index($alerta = null)
+    {
         $comparaTablasIfUsado = array(
-            array(  "tabla" => $this->tableRxP,
+            array(  "tabla" => tableRxP,
                     "comparaKeyOrig" => "id",
                     "comparaKeyDest" => "idPermiso"
                 )
         );
-        $datos['todosPermisos'] = $this->model->get($this->table,$comparaTablasIfUsado);
-        $alertas = [
-            'new' => $new,
-            'update' => $update,
-            'delete' => $delete
-        ];
-        $datos['alertas'] = $alertas;
+        $datos['todosPermisos'] = $this->model->get(table, $comparaTablasIfUsado);
+        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
             array("url" => "/administracion",
             "nombre" => "ADMINISTRACION"),
             array("url" => "/administracion/permisos",
-            "nombre" => "PERMISOS")    
+            "nombre" => "PERMISOS")
         );
         $datos['datosSesion'] = $_SESSION;
         return view('/administracion/PermisosView', compact('datos'));
     }
 
-    public function new() {
+    public function create()
+    {
         $permiso['nombre'] = $_POST['nombre'];
-        $insertOk = $this->model->insert($this->table,$permiso);
-        return $this->administracionPermisos($insertOk); 
+        $insert = $this->model->insert(table, $permiso, "Permiso");
+        return $this->index($insert);
     }
 
-    public function update(){
+    public function update()
+    {
         $permiso = [
             'id' => $_POST['id'],
             'nombre' => $_POST['nombre']
         ];
-        $updateOk = $this->model->update($this->table,$permiso);
-        return $this->administracionPermisos(null,$updateOk);
-     }
+        $update = $this->model->update(table, $permiso, "Permiso");
+        return $this->index($update);
+    }
 
-     public function delete(){
+    public function delete()
+    {
         $permiso['id'] = $_POST['id'];
-        $deleteOk = $this->model->delete($this->table,$permiso);
-        return $this->administracionPermisos(null,null,$deleteOk);
+        $delete = $this->model->delete(table, $permiso, "Permiso");
+        return $this->index($delete);
     }
 }

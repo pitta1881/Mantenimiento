@@ -1,221 +1,213 @@
 {% extends "base.html" %}
-{% block title %} Gestion de Sectores {% endblock %}
+{% block title %}
+	Gestion de Sectores
+{% endblock %}
 {% block main %}
-<div>
-    <h2 class="titulo-tabla">Sectores Registrados </h2>
-    <!-- BOTON NEW SECTOR -->
-    {% if "25" in datos.datosSesion.listaPermisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
-            class="fal fa-plus"></i> Crear Nuevo</button>
-    {% endif %}
+	<div>
+		<h2 class="titulo-tabla">Sectores Registrados
+		</h2>
+		<!-- BOTON NEW SECTOR -->
+		{% if "25" in datos.datosSesion.listaPermisos %}
+			<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew">
+				<i class="fal fa-plus"></i>
+				Crear Nuevo</button>
+		{% endif %}
 
-    <!-- TABLA SECTORES -->
-    <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-        <thead class="headtable">
-            <tr>
-                <th>Nº Sector</th>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Responsable</th>
-                <th>Telefono</th>
-                <th>Email</th>
-                <th>Accion</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for sector in datos.todosSectores %}
-            <tr>
-                <td>{{ sector.id }}</td>
-                <td>{{ sector.nombre }}</td>
-                <td>{{ sector.idTipoSector }}</td>
-                <td>{{ sector.responsable }}</td>
-                <td>{{ sector.telefono }}</td>
-                <td>{{ sector.email }}</td>
-                <td>
-                    {% set notAllowed = " notAllowed" %}
-                    {% if sector.usado == false %}
-                    {% set notAllowed = "" %}
-                    {% endif %}
-                    <div class="btn-group float-none" role="group">
-                        {% if "27" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            data-target="#modalUpdate" onclick="modificarModal('{{ sector|json_encode }}');"
-                            data-toggle-2="tooltip" title="Editar Sector" data-placement="top"><i
-                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
-                        {% endif %}
-                        {% if "26" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}"
-                            data-target="#modalDelete" data-toggle="modal"
-                            onclick="eliminarModal('{{ sector|json_encode }}');" data-toggle-2="tooltip"
-                            title="Eliminar Sector" data-placement="top"><i class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
-                        {% endif %}
-                    </div>
-                </td>
-            </tr>
-            {% else %}
-            <h2 class='error'>No hay Sectores</h2>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+		<!-- TABLA SECTORES -->
+		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+			<thead class="headtable">
+				<tr>
+					<th>Nº Sector</th>
+					<th>Nombre</th>
+					<th>Tipo</th>
+					<th>Responsable</th>
+					<th>Telefono</th>
+					<th>Email</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for sector in datos.todosSectores %}
+					<tr>
+						<td>{{ sector.id }}</td>
+						<td>{{ sector.nombre }}</td>
+						<td>{{ sector.idTipoSector }}</td>
+						<td>{{ sector.responsable }}</td>
+						<td>{{ sector.telefono }}</td>
+						<td>{{ sector.email }}</td>
+						<td>
+							<div class="btn-group float-none" role="group">
+								{% if "27" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-outline-primary" data-id='{{ sector.id }}' data-abm="update" data-toggle="tooltip" title="Editar Sector" data-placement="top">
+										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+									</button>
+								{% endif %}
+								{% if "26" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-outline-primary" {{ sector.usado ? 'disabled' }} data-id='{{ sector.id }}' data-abm="delete" data-toggle="tooltip" title="Eliminar Sector" data-placement="top">
+										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
+									</button>
+								{% endif %}
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					<h2 class='error'>No hay Sectores</h2>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
-<!-- MODALES NEW, UPDATE Y DELETE -->
-<!--NEW SECTOR-->
-{% if "25" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalNew">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h3 class="modal-title m-0">Alta de Sector</h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="newSector" method="post" id="formSectorNew">
-                    <div class="form-row">
-                        <div class="form-group required col-md-6">
-                            <label for="nombre">Nombre del Sector:</label>
-                            <input type="text" name="nombre" id="nombre" class="form-control" autofocus>
-                        </div>
-                        <div class="form-group required col-md-6">
-                            <label for="responsable">Nombre del Responsable:</label>
-                            <input type="text" name="responsable" id="responsable" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group required col-md-3">
-                            <label for="idTipoSector">Tipo:</label>
-                            <select name="idTipoSector" id="idTipoSector" class="form-control custom-select">
-                                <option disabled selected>Seleccione una opcion</option>
-                                {% for tipoSector in datos.todosTiposSectores %}
-                                <option value="{{ tipoSector.id }}">{{ tipoSector.nombre }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label for="telefono">Telefono:</label>
-                            <input type="tel" name="telefono" id="telefono" class="form-control">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="email">Email:</label>
-                            <input type="email" name="email" id="email" class="form-control">
-                        </div>
-                    </div>
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-success btn-modal">Enviar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+	<!-- MODALES NEW, UPDATE Y DELETE -->
+	<!--NEW SECTOR-->
+	{% if "25" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalNew">
+			<div class="modal-dialog modal-lg">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Alta de Sector</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="createSector" method="post" id="formSectorNew">
+							<div class="form-row">
+								<div class="form-group required col-lg-6">
+									<label class="control-label" for="nombre">Nombre del Sector:</label>
+									<input type="text" name="nombre" id="nombre" class="form-control" autofocus>
+								</div>
+								<div class="form-group required col-lg-6">
+									<label class="control-label" for="responsable">Nombre del Responsable:</label>
+									<input type="text" name="responsable" id="responsable" class="form-control">
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group required col-lg-3">
+									<label class="control-label" for="idTipoSector">Tipo:</label>
+									<select name="idTipoSector" id="idTipoSector" class="form-control custom-select">
+										<option disabled selected>Seleccione una opcion</option>
+										{% for tipoSector in datos.todosTiposSectores %}
+											<option value="{{ tipoSector.id }}">{{ tipoSector.nombre }}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group col-lg-5">
+									<label class="control-label" for="telefono">Telefono:</label>
+									<input type="tel" name="telefono" id="telefono" class="form-control">
+								</div>
+								<div class="form-group col-lg-4">
+									<label class="control-label" for="email">Email:</label>
+									<input type="email" name="email" id="email" class="form-control">
+								</div>
+							</div>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success btn-modal">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 
-<!--MODIFICAR SECTOR-->
-{% if "27" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalUpdate">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="updateSector" method="post" id="formSectorModificar">
-                    <input type="text" name="id" id="updateID" hidden>
-                    <div class="form-row">
-                        <div class="form-group required col-md-6">
-                            <label for="nombreUpdate">Nombre del Sector:</label>
-                            <input type="text" name="nombre" class="form-control" autofocus id="nombreUpdate">
-                        </div>
-                        <div class="form-group required col-md-6">
-                            <label for="responsableUpdate">Nombre del
-                                Responsable:</label>
-                            <input type="text" name="responsable" class="form-control" id="responsableUpdate">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group required col-md-4">
-                            <label for="idTipoSectorUpd">Tipo:</label>
-                            <select name="idTipoSector" id="idTipoSectorUpd" class="form-control custom-select">
-                                <option disabled selected>Seleccione una opcion</option>
-                                {% for tipoSector in datos.todosTiposSectores %}
-                                <option value="{{ tipoSector.id }}">{{ tipoSector.nombre }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="telefonoUpdate">Telefono:</label>
-                            <input type="tel" name="telefono" class="form-control" id="telefonoUpdate">
-                        </div>
-                        <div class="form-group col-md-5">
-                            <label for="emailUpdate">Email:</label>
-                            <input type="email" name="email" class="form-control" id="emailUpdate">
-                        </div>
-                    </div>
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-success btn-modal">Enviar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+	<!--MODIFICAR SECTOR-->
+	{% if "27" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalUpdate">
+			<div class="modal-dialog modal-lg">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="updateSector" method="post" id="formSectorModificar">
+							<input type="text" name="id" id="updateID" hidden>
+							<div class="form-row">
+								<div class="form-group required col-lg-6">
+									<label class="control-label" for="nombreUpdate">Nombre del Sector:</label>
+									<input type="text" name="nombre" class="form-control" autofocus id="nombreUpdate">
+								</div>
+								<div class="form-group required col-lg-6">
+									<label class="control-label" for="responsableUpdate">Nombre del Responsable:</label>
+									<input type="text" name="responsable" class="form-control" id="responsableUpdate">
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group required col-lg-4">
+									<label class="control-label" for="idTipoSectorUpd">Tipo:</label>
+									<select name="idTipoSector" id="idTipoSectorUpd" class="form-control custom-select">
+										<option disabled selected>Seleccione una opcion</option>
+										{% for tipoSector in datos.todosTiposSectores %}
+											<option value="{{ tipoSector.id }}">{{ tipoSector.nombre }}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group col-lg-3">
+									<label class="control-label" for="telefonoUpdate">Telefono:</label>
+									<input type="tel" name="telefono" class="form-control" id="telefonoUpdate">
+								</div>
+								<div class="form-group col-lg-5">
+									<label class="control-label" for="emailUpdate">Email:</label>
+									<input type="email" name="email" class="form-control" id="emailUpdate">
+								</div>
+							</div>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success btn-modal">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 
-<!--ELIMINAR SECTOR SI NO FUE USADO TODAVIA-->
-{% if "26" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalDelete">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <p class="mb-3">¿Está seguro?</p>
-                <form action="deleteSector" method="post">
-                    <input type="text" name="id" id="deleteID" hidden>
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-<!-- FIN MODALES NEW, UPDATE Y DELETE -->
-
-<script src="/public/js/jsBasicos/jsSector.js"></script>
-<script src="/public/js/generales/validarCampos.js"></script>
-<script>
-    $(function () {
-        $('label').each(function (index, elem) {
-            $(elem).addClass('control-label');
-        })
-    });
-    var arrayRepetidosOld = [];
-    listaOld = JSON.parse('{{ datos.todosSectores|json_encode|raw }}');
-    listaOld.forEach(element => {
-        arrayRepetidosOld.push(element['nombre']);
-    });
-    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Sector');
-    ordenarTabla('miTabla', '0,1,2,3,4,5', [6], 'Sectores Registrados');
-</script>
+	<!--ELIMINAR SECTOR SI NO FUE USADO TODAVIA-->
+	{% if "26" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalDelete">
+			<div class="modal-dialog">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<p class="mb-3">¿Está seguro?</p>
+						<form action="deleteSector" method="post">
+							<input
+							type="text" name="id" id="deleteID" hidden>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'partials/scriptsDatatables.html' %}
+	<script src="/public/js/jsBasicos/jsSector.js" type="module"></script>
+	<script>
+		$(function () {
+verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Sector');
+});
+	</script>
 {% endblock %}

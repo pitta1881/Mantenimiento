@@ -1,16 +1,18 @@
-function modificarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalUpdate').text("Modificar Sector '" + datos['nombre'] + "'");
-    $('#updateID').attr('value', datos['id']);
-    $('#nombreUpdate').attr('value', datos['nombre']);
-    $('#responsableUpdate').attr('value', datos['responsable']);
-    $('#telefonoUpdate').attr('value', datos['telefono']);
-    $('#emailUpdate').attr('value', datos['email']);
-    $("#idTipoSectorUpd option[value='" + datos['idTipoSector'] + "']").prop('selected', true)
-}
+import {
+    setUrl,
+    modificarModalSector as modificarModal,
+    eliminarModalSector as deleteModal,
+    loadListenerActionButtons,
+    loadScriptValidarCampos,
+    loadScriptOrdenarPagTablas,
+    loadTooltips,
+    modalDrag
+} from '/public/js/generales/jsGeneral.js';
 
-function eliminarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalDelete').text("Eliminar Sector '" + datos['nombre'] + "'");
-    $('#deleteID').attr('value', datos['id']);
-}
+setUrl("/administracion/sectores/");
+
+loadTooltips();
+modalDrag();
+loadListenerActionButtons(modificarModal, deleteModal);
+loadScriptValidarCampos();
+loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5', [6], 'Sectores Registrados');

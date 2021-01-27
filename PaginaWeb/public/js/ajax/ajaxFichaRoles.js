@@ -15,12 +15,12 @@ function fichaRoles(idRol, modificar) {
     }
     $.ajax({
         data: parametros, //datos que se envian a traves de ajax
-        url: '/administracion/roles/fichaRol', //archivo que recibe la peticion
+        url: '/administracion/roles/fichaOne', //archivo que recibe la peticion
         type: 'post', //método de envio
         success: function (
             response
         ) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            var miRol = JSON.parse(response);
+            var miRol = response;
 
             var usuarioAlta = '';
             var usuarioBaja = '';
@@ -385,10 +385,4 @@ function fichaRoles(idRol, modificar) {
                 "</form>");
         }
     });
-}
-
-function eliminarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalDelete').text("Eliminar Rol " + datos['nombre']);
-    $('#deleteID').attr('value', datos['id']);
 }

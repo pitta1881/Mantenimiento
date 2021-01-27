@@ -1,12 +1,18 @@
-function modificarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalUpdate').text("Modificar Permiso");
-    $('#updateID').attr('value', datos['id']);
-    $('#nombreAnteriorUpdate').attr('value', datos['nombre']);
-}
+import {
+    setUrl,
+    modificarModalPermiso as modificarModal,
+    eliminarModalPermiso as deleteModal,
+    loadListenerActionButtons,
+    loadScriptValidarCampos,
+    loadScriptOrdenarPagTablas,
+    loadTooltips,
+    modalDrag
+} from '/public/js/generales/jsGeneral.js';
 
-function eliminarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalDelete').text("Eliminar Permiso " + datos['nombre']);
-    $('#deleteID').attr('value', datos['id']);
-}
+setUrl("/administracion/permisos/");
+
+loadTooltips();
+modalDrag();
+loadListenerActionButtons(modificarModal, deleteModal);
+loadScriptValidarCampos();
+loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Permisos Registrados');

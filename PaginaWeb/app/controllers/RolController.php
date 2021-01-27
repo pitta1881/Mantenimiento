@@ -3,81 +3,76 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\MyInterface;
 use App\Models\RolModel;
-use App\Models\PermisoModel;
 
-class RolController extends Controller{
+define("table", "roles");
+define("tableRxP", "roles_x_permisos");
+define("tableRxU", "roles_x_usuarios");
 
-    public function __construct(){
+class RolController extends Controller implements MyInterface
+{
+    public function __construct()
+    {
         $this->model = new RolModel();
         session_start();
     }
 
-    private $table = 'roles';
-    private $tableRxP = 'roles_x_permisos';
-    private $tableRxU = 'roles_x_usuarios';
-
-
-    public function administracionRoles($new = null,$update = null,$delete = null){
+    public function index($alerta = null)
+    {
         $comparaTablasIfUsado = array(
-                                    array(  "tabla" => $this->tableRxU, 
+                                    array(  "tabla" => tableRxU,
                                             "comparaKeyOrig" => "id",
                                             "comparaKeyDest" => "idRol"
                                     )
                                 );
-        $datos["todosRoles"] = $this->model->get($this->table,$comparaTablasIfUsado);
-        $alertas = [
-            'new' => $new,
-            'update' => $update,
-            'delete' => $delete
-        ];
-        $datos['alertas'] = $alertas;
+        $datos["todosRoles"] = $this->model->get(table, $comparaTablasIfUsado);
+        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
             array("url" => "/administracion",
             "nombre" => "ADMINISTRACION"),
             array("url" => "/administracion/roles",
-            "nombre" => "ROLES")    
+            "nombre" => "ROLES")
         );
-        if(!is_null($update)){
+        if (!is_null($alerta) && ($alerta["operacion"] == "update")) {
             $_SESSION['listaPermisos'] = $this->model->getPermisos();
         }
         $datos['datosSesion'] = $_SESSION;
         return view('/administracion/RolesView', compact('datos'));
     }
 
-    public function new(){
+    public function create()
+    {
         $rol['nombre'] = $_POST['nombre'];
-        $insertOk = $this->model->insert($this->table,$rol);
-        return $this->administracionRoles($insertOk);
+        $insert = $this->model->insert(table, $rol, "Rol");
+        return $this->index($insert);
     }
 
-    public function update(){     
+    public function update()
+    {
         $rol['idRol'] = $_POST["id"];
-        $this->model->delete($this->tableRxP,$rol);
-        if(isset($_POST["permisos"])){
+        $this->model->delete(tableRxP, $rol, "RxP");
+        if (isset($_POST["permisos"])) {
             $permisos= $_POST["permisos"];
-            for ($i=0;$i<count($permisos);$i++)    {  
+            for ($i=0;$i<count($permisos);$i++) {
                 $rol['idPermiso'] = $permisos[$i];
-                $insertOk = $this->model->insert($this->tableRxP,$rol);
+                $insert = $this->model->insert(tableRxP, $rol, "RxP");
             }
         }
-        return $this->administracionRoles(null,$insertOk);
+        $update = $insert;
+        $update['tipo'] = 'Rol';
+        $update['operacion'] = 'update';
+        return $this->index($update);
     }
 
-    public function delete(){
+    public function delete()
+    {
         $rol['id'] = $_POST['id'];
         $rolRxP['idRol'] = $_POST['id'];
-        $this->model->delete($this->tableRxP,$rolRxP);
-        $deleteOk = $this->model->delete($this->table,$rol);
-        return $this->administracionRoles(null,null,$deleteOk);
-    }
-
-    public function ficha(){
-        $rol['id'] = $_POST['id'];
-        $miRol['miRol'] = $this->model->getFicha($this->table,$rol);
-        $miRol["misPermisos"] = $this->model->getPermisos($rol['id']);
-        echo json_encode($miRol);
+        $this->model->delete(tableRxP, $rolRxP, "RxP");
+        $delete = $this->model->delete(table, $rol, "Rol");
+        return $this->index($delete);
     }
 }

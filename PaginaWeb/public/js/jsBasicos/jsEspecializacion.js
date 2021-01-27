@@ -1,12 +1,18 @@
-function modificarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalUpdate').text("Modificar Especializacion '" + datos['nombre'] + "'");
-    $('#updateID').text(datos['id']).val(datos['id']);
-    $('#nombreAnterior').text(datos['nombre']).val(datos['nombre']);
-}
+import {
+    setUrl,
+    modificarModalEspecializacion as modificarModal,
+    eliminarModalEspecializacion as deleteModal,
+    loadListenerActionButtons,
+    loadScriptValidarCampos,
+    loadScriptOrdenarPagTablas,
+    loadTooltips,
+    modalDrag
+} from '/public/js/generales/jsGeneral.js';
 
-function eliminarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalDelete').text("Eliminar Especializacion '" + datos['nombre'] + "'");
-    $('#deleteID').text(datos['id']).val(datos['id']);
-}
+setUrl("/administracion/especializaciones/");
+
+loadTooltips();
+modalDrag();
+loadListenerActionButtons(modificarModal, deleteModal);
+loadScriptValidarCampos();
+loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Especializaciones Registradas');

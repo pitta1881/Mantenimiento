@@ -1,169 +1,160 @@
 {% extends "base.html" %}
-{% block title %} Gestion de Permisos {% endblock %}
+{% block title %}
+	Gestion de Permisos
+{% endblock %}
 {% block main %}
-<div>
-    <h2 class="titulo-tabla">Permisos Registrados </h2>
+	<div>
+		<h2 class="titulo-tabla">Permisos Registrados
+		</h2>
 
-    <!-- BOTON NEW PERMISO -->
-    {% if "5" in datos.datosSesion.listaPermisos %}
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew"><i
-            class="fal fa-plus"></i> Crear Nuevo</button>
-    {% endif %}
+		<!-- BOTON NEW PERMISO -->
+		{% if "5" in datos.datosSesion.listaPermisos %}
+			<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew">
+				<i class="fal fa-plus"></i>
+				Crear Nuevo</button>
+		{% endif %}
 
-    <!-- TABLA PERMISOS -->
-    <table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-        <thead class="headtable">
-            <tr>
-                <th>ID Permiso</th>
-                <th>Nombre</th>
-                <th>Accion</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for permiso in datos.todosPermisos %}
-            <tr>
-                <td>{{ permiso.id }}</td>
-                <td>{{ permiso.nombre }}</td>
-                <td>
-                    {% set notAllowed = " notAllowed" %}
-                    {% if permiso.usado == false %}
-                    {% set notAllowed = "" %}
-                    {% endif %}
-                    <div class="btn-group float-none" role="group">
-                        {% if "7" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            data-target="#modalUpdate" onclick="modificarModal('{{ permiso|json_encode }}');"
-                            data-toggle-2="tooltip" title="Modificar Permiso" data-placement="top"><i
-                                class="fal fa-pencil-alt fa-lg fa-fw"></i>
-                        </button>
-                        {% endif %}
+		<!-- TABLA PERMISOS -->
+		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+			<thead class="headtable">
+				<tr>
+					<th>ID Permiso</th>
+					<th>Nombre</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for permiso in datos.todosPermisos %}
+					<tr>
+						<td>{{ permiso.id }}</td>
+						<td>{{ permiso.nombre }}</td>
+						<td>
+							<div class="btn-group float-none" role="group">
+								{% if "7" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-outline-primary" data-id='{{ permiso.id }}' data-abm="update" data-toggle="tooltip" title="Modificar Permiso" data-placement="top">
+										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+									</button>
+								{% endif %}
 
-                        {% if "6" in datos.datosSesion.listaPermisos %}
-                        <button type="button" class="btn btn-outline-primary {{ notAllowed }}" data-toggle="modal"
-                            data-target="#modalDelete" onclick="eliminarModal('{{ permiso|json_encode }}');"
-                            data-toggle-2="tooltip" title="Eliminar Permiso" data-placement="top"><i
-                                class="fal fa-trash-alt fa-lg fa-fw"></i>
-                        </button>
-                        {% endif %}
-                    </div>
-                </td>
-            </tr>
-            {% else %}
-            <h2 class="error">No hay ningun Permiso cargado</h2>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+								{% if "6" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-outline-primary" {{ permiso.usado ? 'disabled' }} data-id='{{ permiso.id }}' data-abm="delete" data-toggle="tooltip" title="Eliminar Permiso" data-placement="top">
+										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
+									</button>
+								{% endif %}
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					<h2 class="error">No hay ningun Permiso cargado</h2>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
-<!-- MODALES NEW, UPDATE Y DELETE -->
-<!--NEW PERMISO-->
-{% if "5" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalNew">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h3 class="modal-title m-0">Crear Permiso</h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="newPermiso" method="post" id="formPermisoNew">
-                    <div class="form-group required">
-                        <label for="nombre">Nombre del Permiso:</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" autofocus>
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-success">Enviar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+	<!-- MODALES NEW, UPDATE Y DELETE -->
+	<!--NEW PERMISO-->
+	{% if "5" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalNew">
+			<div class="modal-dialog">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Crear Permiso</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="createPermiso" method="post" id="formPermisoNew">
+							<div class="form-group required">
+								<label class="control-label" for="nombre">Nombre del Permiso:</label>
+								<input type="text" name="nombre" id="nombre" class="form-control" autofocus>
+							</div>
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 
-<!--MODIFICAR PERMISO-->
-{% if "7" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalUpdate">
-    <div class="modal-dialog modal-xs">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="updatePermiso" method="post" id="formPermisoUpd">
-                    <input type="text" name="id" id="updateID" hidden>
-                    <div class="form-group">
-                        <label for="nombreAnteriorUpdate">Nombre Anterior</label>
-                        <input type="text" name="nombreAnterior" class="form-control" id="nombreAnteriorUpdate"
-                            readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="nombreNuevo required">Nombre Nuevo</label>
-                        <input type="text" name="nombre" id="nombreNuevo" class="form-control">
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-success">Enviar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+	<!--MODIFICAR PERMISO-->
+	{% if "7" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalUpdate">
+			<div class="modal-dialog modal-xs">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="updatePermiso" method="post" id="formPermisoUpd">
+							<input type="text" name="id" id="updateID" hidden>
+							<div class="form-group">
+								<label class="control-label" for="nombreAnteriorUpdate">Nombre Anterior</label>
+								<input type="text" name="nombreAnterior" class="form-control" id="nombreAnteriorUpdate" readonly>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="nombreNuevo required">Nombre Nuevo</label>
+								<input type="text" name="nombre" id="nombreNuevo" class="form-control">
+							</div>
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 
-<!--ELIMINAR PERMISO-->
-{% if "6" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalDelete">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <p class="mb-3">¿Está seguro?</p>
-                <form action="deletePermiso" method="post">
-                    <input type="text" name="id" id="deleteID" hidden>
-                    <!-- Modal Footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-                        <button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+	<!--ELIMINAR PERMISO-->
+	{% if "6" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalDelete">
+			<div class="modal-dialog" role="document">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<p class="mb-3">¿Está seguro?</p>
+						<form action="deletePermiso" method="post">
+							<input
+							type="text" name="id" id="deleteID" hidden>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 
-<script src="/public/js/jsBasicos/jsPermiso.js"></script>
-<script src="/public/js/generales/validarCampos.js"></script>
-<script>
-    $(function () {
-        $('label').each(function (index, elem) {
-            $(elem).addClass('control-label');
-        })
-    });
-    var arrayRepetidosOld = [];
-    listaOld = JSON.parse('{{ datos.todosPermisos|json_encode|raw }}');
-    listaOld.forEach(element => {
-        arrayRepetidosOld.push(element['nombre']);
-    });
-    verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Permiso');
-    ordenarTabla('miTabla', '0,1', [2], 'Permisos Registrados');
-</script>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'partials/scriptsDatatables.html' %}
+	<script src="/public/js/jsBasicos/jsPermiso.js" type="module"></script>
+	<script>
+		verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Permiso');
+	</script>
 {% endblock %}

@@ -1,20 +1,21 @@
-function modificarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalUpdate').text("Modificar Agente '" + datos['nombre'] + " " + datos['apellido'] + "'");
-    $('#updateID').attr('value', datos['id']);
-    $('#nombreyape').attr('value', datos['nombre'] + " " + datos['apellido']);
-    var todasEspecializaciones = $('#idEspecializacionUpd').children();
-    for (let index = 0; index < todasEspecializaciones.length; index++) {
-        datos['listaEspecializaciones'].forEach(element => {
-            if (element['id'] == ($(todasEspecializaciones[index]).val())) {
-                $(todasEspecializaciones[index]).attr('selected', 'selected');
-            }
-        });
-    }
-}
+import {
+    setUrl,
+    setUrlAjax,
+    modificarModalAgente as modificarModal,
+    eliminarModalAgente as deleteModal,
+    visualizarPersonaAgente as visualizarModal,
+    loadListenerActionButtons,
+    loadScriptValidarCampos,
+    loadScriptOrdenarPagTablas,
+    loadTooltips,
+    modalDrag
+} from '/public/js/generales/jsGeneral.js';
 
-function eliminarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalDelete').text("Eliminar Agente '" + datos['nombre'] + " " + datos['apellido'] + "'");
-    $('#deleteID').attr('value', datos['id']);
-}
+setUrl("/administracion/agentes/");
+setUrlAjax("/administracion/personas/");
+
+loadTooltips();
+modalDrag();
+loadListenerActionButtons(modificarModal, deleteModal, visualizarModal);
+loadScriptValidarCampos();
+loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4', [5], 'Agentes Registrados');

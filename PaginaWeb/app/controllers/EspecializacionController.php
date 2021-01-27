@@ -3,70 +3,68 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\MyInterface;
 use App\Models\EspecializacionModel;
 
-class EspecializacionController extends Controller
+define("table", "especializaciones");
+define("tableTarea", "tareas");
+define("tableExA", "especializaciones_x_agentes");
+
+class EspecializacionController extends Controller implements MyInterface
 {
-   public function __construct()
+    public function __construct()
     {
-      $this->model = new EspecializacionModel();
-      session_start();    
-   }
+        $this->model = new EspecializacionModel();
+        session_start();
+    }
 
-    private $table = 'especializaciones';
-    private $tableTarea = 'tareas';  
-    private $tableExA = 'especializaciones_x_agentes';
-
-    public function administracionEspecializaciones($new = null,$update = null,$delete = null){
+    public function index($alerta = null)
+    {
         $comparaTablasIfUsado = array(
-                                    array(  "tabla" => $this->tableTarea, 
+                                    array(  "tabla" => tableTarea,
                                             "comparaKeyOrig" => "id",
                                             "comparaKeyDest" => "idEspecializacion"
                                         ),
-                                    array(  "tabla" => $this->tableExA, 
+                                    array(  "tabla" => tableExA,
                                             "comparaKeyOrig" => "id",
                                             "comparaKeyDest" => "idEspecializacion"
                                         )
                                 );
-        $datos['todasEspecializaciones'] = $this->model->get($this->table,$comparaTablasIfUsado);       
-        $alertas = [
-            'new' => $new,
-            'update' => $update,
-            'delete' => $delete
-        ];
-        $datos['alertas'] = $alertas;
+        $datos['todasEspecializaciones'] = $this->model->get(table, $comparaTablasIfUsado);
+        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
                  "nombre" => "HOME"),
             array("url" => "/administracion",
                  "nombre" => "ADMINISTRACION"),
             array("url" => "/especializaciones",
-                "nombre" => "ESPECIALIZACIONES")    
+                "nombre" => "ESPECIALIZACIONES")
                 );
         $datos['datosSesion'] = $_SESSION;
         return view('/administracion/EspecializacionesView', compact('datos'));
-    }       
-    
-    public function new() {
-        $especializacion['nombre'] = $_POST['nombre'];       
-        $insertOk = $this->model->insert($this->table,$especializacion);
-        return $this->administracionEspecializaciones($insertOk);
     }
     
-    public function update(){
+    public function create()
+    {
+        $especializacion['nombre'] = $_POST['nombre'];
+        $insert = $this->model->insert(table, $especializacion, "Especializacion");
+        return $this->administracionEspecializaciones($insert);
+    }
+    
+    public function update()
+    {
         $especializacion = [
             'id' => $_POST['id'],
             'nombre' => $_POST['nombre']
         ];
-        $updateOk = $this->model->update($this->table,$especializacion);
-        return $this->administracionEspecializaciones(null,$updateOk);
-     }
-
-     public function delete(){
-        $especializacion['id'] = $_POST['id'];  
-        $deleteOk = $this->model->delete($this->table,$especializacion);
-        return $this->administracionEspecializaciones(null,null,$deleteOk);
+        $update = $this->model->update(table, $especializacion, "Especializacion");
+        return $this->administracionEspecializaciones($update);
     }
-    
 
+    public function delete()
+    {
+        $especializacion['id'] = $_POST['id'];
+        $delete = $this->model->delete(table, $especializacion, "Especializacion");
+        return $this->administracionEspecializaciones($delete);
+    }
 }

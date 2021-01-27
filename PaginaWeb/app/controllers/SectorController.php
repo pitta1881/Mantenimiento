@@ -3,60 +3,59 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\MyInterface;
 use App\Models\SectorModel;
 
-class SectorController extends Controller{
-   
+define("table", "sectores");
+define("tablePedido", "pedidos");
+define("tableTiposSector", "tipossector");
+
+class SectorController extends Controller implements MyInterface
+{
     public function __construct()
     {
-      $this->model = new SectorModel();
-      session_start();
-   }
-
-    private $table = 'sectores';
-    private $tablePedido = 'pedidos';
-    private $tableTiposSector = 'tipossector';
+        $this->model = new SectorModel();
+        session_start();
+    }
     
-    public function administracionSectores($new = null,$update = null,$delete = null){
+    public function index($alerta = null)
+    {
         $comparaTablasIfUsado = array(
-                                        array(  "tabla" => $this->tablePedido, 
+                                        array(  "tabla" => tablePedido,
                                             "comparaKeyOrig" => "id",
                                             "comparaKeyDest" => "idSector"
                                     )
         );
-        $datos['todosSectores'] = $this->model->get($this->table,$comparaTablasIfUsado);
-        $datos['todosTiposSectores'] = $this->model->get($this->tableTiposSector);
-        $alertas = [
-            'new' => $new,
-            'update' => $update,
-            'delete' => $delete
-        ];
-        $datos['alertas'] = $alertas;
+        $datos['todosSectores'] = $this->model->get(table, $comparaTablasIfUsado);
+        $datos['todosTiposSectores'] = $this->model->get(tableTiposSector);
+        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
             array("url" => "/administracion",
             "nombre" => "ADMINISTRACION"),
             array("url" => "/sectores",
-            "nombre" => "SECTORES")    
+            "nombre" => "SECTORES")
         );
         $datos['datosSesion'] = $_SESSION;
         return view('/administracion/SectoresView', compact('datos'));
     }
     
-    public function new() {
+    public function create()
+    {
         $sector = [
             'nombre' => $_POST['nombre'],
             'responsable' => $_POST['responsable'],
             'telefono' => $_POST['telefono'],
             'email' => $_POST['email'],
             'idTipoSector' => $_POST['idTipoSector']
-        ];  
-        $insertOk = $this->model->insert($this->table,$sector);
-        return $this->administracionSectores($insertOk);
+        ];
+        $insert = $this->model->insert(table, $sector, "Sector");
+        return $this->index($insert);
     }
 
-    public function update(){
+    public function update()
+    {
         $sector = [
             'id' => $_POST['id'],
             'nombre' => $_POST['nombre'],
@@ -65,19 +64,14 @@ class SectorController extends Controller{
             'email' => $_POST['email'],
             'idTipoSector' => $_POST['idTipoSector']
         ];
-        $updateOk = $this->model->update($this->table,$sector);
-        return $this->administracionSectores(null,$updateOk);
-     }
-
-     public function delete(){
-        $sector['id'] = $_POST['id'];
-        $deleteOk = $this->model->delete($this->table,$sector);
-        return $this->administracionSectores(null,null,$deleteOk);
+        $update = $this->model->update(table, $sector, "Sector");
+        return $this->index($update);
     }
 
-    public function ficha(){
+    public function delete()
+    {
         $sector['id'] = $_POST['id'];
-        $miSector = $this->model->getFicha($this->table,$sector);
-        echo json_encode($miSector);
+        $delete = $this->model->delete(table, $sector, "Sector");
+        return $this->index($delete);
     }
 }
