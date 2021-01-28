@@ -31,17 +31,17 @@
 						<td>
 							<div class="btn-group float-none" role="group">
 								{% if "12" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-toggle="modal" onclick="fichaRoles('{{ rol.id }}',false);" data-toggle="tooltip" title="Ver Permisos" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" data-id='{{ rol.id }}' data-abm="visualizarRolesPermisos" data-toggle="tooltip" title="Ver Permisos" data-placement="top">
 										<i class="fal fa-eye fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
 								{% if "11" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-toggle="modal" onclick="fichaRoles('{{ rol.id }}',true);" data-toggle="tooltip" title="Editar Permisos" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" data-id='{{ rol.id }}' data-abm="updateRolesPermisos" data-toggle="tooltip" title="Editar Permisos" data-placement="top">
 										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
 								{% if "10" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ rol.usado ? 'disabled' }} data-id='{{ rol.id }}' data-abm="delete" data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" {{ rol.usado ? 'disabled' }} data-id='{{ rol.id }}' data-abm="modalDelete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
 										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
@@ -123,7 +123,6 @@
 {% block javascripts %}
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
-	<script src="/public/js/ajax/ajaxFichaRoles.js"></script>
 	<script src="/public/js/jsBasicos/jsRoles.js" type="module"></script>
 	<script>
 		$(function () {

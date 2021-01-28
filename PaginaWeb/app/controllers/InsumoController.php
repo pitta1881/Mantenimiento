@@ -22,7 +22,7 @@ class InsumoController extends Controller{
                                                 "comparaKey" => 'idInsumo'
                                         )
         );
-        $datos['todosInsumos'] = $this->model->get($this->table,$comparaTablasIfUsado); 
+        $datos['todosInsumos'] = $this->model->getFichaAll($this->table,$comparaTablasIfUsado); 
         
         $datos["unidad"] = $this->model->getUnidades();
         

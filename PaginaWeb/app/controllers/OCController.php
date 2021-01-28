@@ -13,7 +13,7 @@ class OCController extends Controller{
     }
 
     public function index(){
-        $todasOC = $this->model->get(); 
+        $todasOC = $this->model->getFichaAll(); 
         $datos['todasOC'] = $todasOC;
         
         $datos['rol']=$_SESSION['rol'];

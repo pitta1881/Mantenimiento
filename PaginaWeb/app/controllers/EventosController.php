@@ -13,7 +13,7 @@ class EventosController extends Controller{
    }
     
     public function vistaAdministracionEventos(){
-        $todosEventos = $this->model->get(); 
+        $todosEventos = $this->model->getFichaAll(); 
         $datos['todosEventos'] = $todosEventos;
         $datos["diaHoy"] = date("Y-m-d");
         

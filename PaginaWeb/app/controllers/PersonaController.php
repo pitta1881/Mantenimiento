@@ -31,8 +31,8 @@ class PersonaController extends Controller implements MyInterface
                                                 "comparaKeyDest" => "idPersona"
                                             )
                                     );
-        $datos['todasPersonas'] = $this->model->get(table, $comparaTablasIfUsado);
-        $datos['todosEstados'] = $this->model->get(tableEstadosPersona);
+        $datos['todasPersonas'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
+        $datos['todosEstados'] = $this->model->getFichaAll(tableEstadosPersona);
         $datos['minimo18'] = date('Y-m-d', strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d', strtotime('70 years ago'));
         $datos['alertas'] = $alerta;

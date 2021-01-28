@@ -30,7 +30,7 @@ class EspecializacionController extends Controller implements MyInterface
                                             "comparaKeyDest" => "idEspecializacion"
                                         )
                                 );
-        $datos['todasEspecializaciones'] = $this->model->get(table, $comparaTablasIfUsado);
+        $datos['todasEspecializaciones'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
         $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",

@@ -25,7 +25,7 @@ class PermisoController extends Controller implements MyInterface
                     "comparaKeyDest" => "idPermiso"
                 )
         );
-        $datos['todosPermisos'] = $this->model->get(table, $comparaTablasIfUsado);
+        $datos['todosPermisos'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
         $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",

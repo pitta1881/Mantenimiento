@@ -38,12 +38,12 @@
 						<td>
 							<div class="btn-group float-none" role="group">
 								{% if "27" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-id='{{ sector.id }}' data-abm="update" data-toggle="tooltip" title="Editar Sector" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" data-id='{{ sector.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Editar Sector" data-placement="top">
 										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
 								{% if "26" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ sector.usado ? 'disabled' }} data-id='{{ sector.id }}' data-abm="delete" data-toggle="tooltip" title="Eliminar Sector" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" {{ sector.usado ? 'disabled' }} data-id='{{ sector.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Sector" data-placement="top">
 										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
@@ -207,7 +207,7 @@
 	<script src="/public/js/jsBasicos/jsSector.js" type="module"></script>
 	<script>
 		$(function () {
-verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Sector');
+verificarAlertas('{{ datos.alertas|json_encode|raw }}');
 });
 	</script>
 {% endblock %}

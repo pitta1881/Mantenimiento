@@ -28,8 +28,8 @@ class AgenteController extends Controller implements MyInterface
                                             "comparaKeyDest" => "idAgente"
                                     )
                                 );
-        $datos['todosAgentes'] = $this->model->get(table, $comparaTablasIfUsado);
-        $datos['personas'] = $this->model->get(tablePersonas);
+        $datos['todosAgentes'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
+        $datos['personas'] = $this->model->getFichaAll(tablePersonas);
         foreach ($datos['todosAgentes'] as $keyAgente => $valueAgente) {
             foreach ($datos['personas'] as $keyPersona => $valuePersona) {
                 if ($valueAgente['idPersona'] == $valuePersona['id'] || $valuePersona['id'] == 0) {
@@ -37,7 +37,7 @@ class AgenteController extends Controller implements MyInterface
                 }
             }
         }
-        $datos['todasEspecializaciones'] = $this->model->get(tableEspecializaciones);
+        $datos['todasEspecializaciones'] = $this->model->getFichaAll(tableEspecializaciones);
         $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
                                         array("url" => "/home",

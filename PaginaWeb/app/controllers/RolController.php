@@ -26,7 +26,7 @@ class RolController extends Controller implements MyInterface
                                             "comparaKeyDest" => "idRol"
                                     )
                                 );
-        $datos["todosRoles"] = $this->model->get(table, $comparaTablasIfUsado);
+        $datos["todosRoles"] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
         $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",

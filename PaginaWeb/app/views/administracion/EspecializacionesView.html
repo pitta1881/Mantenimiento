@@ -31,12 +31,12 @@
 						<td>
 							<div class="btn-group float-none" role="group">
 								{% if "35" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ especializacion.usado ? 'disabled' }} data-id="{{ especializacion.id }}" data-abm="update" data-toggle="tooltip" title="Modificar Especializacion" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" {{ especializacion.usado ? 'disabled' }} data-id="{{ especializacion.id }}" data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Especializacion" data-placement="top">
 										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
 								{% if "34" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ especializacion.usado ? 'disabled' }} data-id="{{ especializacion.id }}" data-abm="delete" data-toggle="tooltip" title="Eliminar Especializacion" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" {{ especializacion.usado ? 'disabled' }} data-id="{{ especializacion.id }}" data-abm="delete" data-toggle="tooltip" data-target="#modalDelete" title="Eliminar Especializacion" data-placement="top">
 										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}

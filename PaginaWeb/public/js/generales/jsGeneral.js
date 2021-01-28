@@ -1,6 +1,14 @@
 export {
     setUrl,
     setUrlAjax,
+    setUrlAjaxRxP,
+    visualizarUpdateModalRxP,
+    modificarModalUsuario,
+    modificarRolesModalUsuario,
+    eliminarModalUsuario,
+    modificarModalPersona,
+    modificarEstadoModalPersona,
+    eliminarModalPersona,
     eliminarModalRol,
     modificarModalPermiso,
     eliminarModalPermiso,
@@ -21,6 +29,7 @@ export {
 
 let url;
 let urlAjax;
+let urlAjaxRxP;
 
 function setUrl(newUrl) {
     url = newUrl;
@@ -30,6 +39,112 @@ function setUrlAjax(newUrlAjax) {
     urlAjax = newUrlAjax;
 }
 
+function setUrlAjaxRxP(newUrlAjaxRxP) {
+    urlAjaxRxP = newUrlAjaxRxP;
+}
+
+function visualizarUpdateModalRxP(datos, modificar) {
+    console.log(datos);
+    var modificable = '';
+    var btnEnviar = '';
+    var disableChk = '';
+    var headerAlert = 'Detalle Rol';
+    if (modificar) {
+        btnEnviar = "<button type='submit' class='btn btn-success btn-modal float-right'>Enviar</button>";
+        headerAlert = "Modificar permisos del Rol"
+    } else {
+        modificable = " onclick='javascript: return false;'";
+        disableChk = 'disabled';
+    }
+    let permisosNombres = ['Usuarios', 'Permisos', 'Rol', 'Pedido', 'Tarea', 'OT', 'Sector', 'Agente', 'Especialidad', 'Evento', 'Insumo', 'Persona', 'OC'];
+    let permisosArrayLength = 52;
+    let td = function () {
+        let indexNombres = 0;
+        let retorno = `<tr>`;
+        for (let index = 0; index < permisosArrayLength; index++) {
+            let checkar = "";
+            (datos.misPermisos.includes((index + 1).toString()) ? checkar = "checked" : "");
+            if (index % 4 == 0) {
+                retorno += `</tr><tr><td>${permisosNombres[indexNombres++]}</td>`
+            }
+            retorno += `<td><input type='checkbox' name='permisos[]' value='${index + 1}' ${disableChk} readonly='readonly' ${checkar} ${modificable} ></td>`
+        }
+        retorno += `</tr>`
+        return retorno;
+    }
+    alertify.myAlert(headerAlert,
+        `<form action='/administracion/roles/updateRol' method='post'>
+                <input type='text' name='id' value=${datos.id} + " hidden>
+                <table id='miTabla' class='table table-bordered table-sm table-striped table-hover text-nowrap'>
+                <thead class='headtable'>
+                <tr>
+                <th>Modulo</th>
+                <th>A</th>
+                <th>B</th>
+                <th>M</th>
+                <th>V</th>
+                </tr>
+                </thead>
+                <tbody>                
+                ${td()}                
+                </tbody>
+                </table>
+                <div style='display:inline-block'>
+                <small class='text-muted d-block'>A=ALTA</small>
+                <small class='text-muted d-block'>B=BAJA</small>
+                <small class='text-muted d-block'>M=MODIFICACION</small>
+                <small class='text-muted d-block'>V=VISUALIZACION</small>
+                </div>
+                ${btnEnviar}
+                </form>`);
+}
+
+//--USUARIO--\\
+function modificarModalUsuario(datos) {
+    $('#h3TitleModalUpdate').text("Modificar Contraseña de '" + datos['nick'] + "'");
+    $('#updateID').attr('value', datos['id']);
+}
+
+function modificarRolesModalUsuario(datos) {
+    $('#h3TitleModalRolesUpdate').text("Modificar Roles de '" + datos['nick'] + "'");
+    $('#updateRolIdUsuario').attr('value', datos['id']);
+    var todosRoles = $('#idRolUpd').children();
+    for (let index = 0; index < todosRoles.length; index++) {
+        datos['listaRoles'].forEach(element => {
+            if (element['id'] == ($(todosRoles[index]).val())) {
+                $(todosRoles[index]).attr('selected', 'selected');
+            }
+        });
+    }
+}
+
+function eliminarModalUsuario(datos) {
+    $('#h3TitleModalDelete').text("Eliminar Usuario '" + datos['nick'] + "'");
+    $('#deleteID').attr('value', datos['id']);
+}
+
+
+//--PERSONA--\\
+function modificarModalPersona(datos) {
+    var myDate = datos['fechaNacimiento'].split("/").reverse().join("-");
+    $('#h3TitleModalUpdate').text("Modificar Persona '" + datos['nombre'] + " " + datos['apellido'] + "'");
+    $('#updateID').attr('value', datos['id']).val(datos['id']);
+    $('#nombreAnteriorUpdate').attr('value', datos['nombre']).val(datos['nombre']);
+    $('#apellidoAnteriorUpdate').attr('value', datos['apellido']).val(datos['apellido']);
+    $('#direccionAnteriorUpdate').attr('value', datos['direccion']).val(datos['direccion']);
+    $('#emailAnteriorUpdate').attr('value', datos['email']).val(datos['email']);
+    $('#fechaAnteriorUpdate').attr('value', myDate).val(myDate);
+}
+
+function modificarEstadoModalPersona(datos) {
+    $('#updateEstadoID').attr('value', datos['id']);
+    $("#estadoUpdate option[value=" + datos['idEstadoPersona'] + "]").remove();
+}
+
+function eliminarModalPersona(datos) {
+    $('#h3TitleModalDelete').text("Eliminar Persona '" + datos['nombre'] + " " + datos['apellido'] + "'");
+    $('#deleteID').attr('value', datos['id']);
+}
 
 //--ROL--\\
 function eliminarModalRol(datos) {
@@ -111,29 +226,48 @@ function eliminarModalEspecializacion(datos) {
 }
 
 //--FUNCIONES GENERALES--\\
-function loadListenerActionButtons(callbackUpdate, callbackDelete, callbackVisualizer) {
+function loadListenerActionButtons(callbackUpdate, callbackDelete, callbackVisualizer, callBackUpdateEstado, callBackUpdateRoles, visualizarUpdateModalRxP) {
     document.querySelector('#miTabla').addEventListener('click', async function (e) {
         let urlToUse = url;
         let btn = (e.target.closest('button, a'));
         if (btn && !btn.disabled) {
             if (btn.dataset.abm == "visualizer") {
                 urlToUse = urlAjax;
+            } else if (btn.dataset.abm == "visualizarRolesPermisos") {
+                urlToUse = urlAjaxRxP;
             }
             let ficha = await getFichaOne(btn.dataset.id, urlToUse);
             if (ficha) {
-                if (btn.dataset.abm == "update") {
-                    $("#modalUpdate form").bootstrapValidator('resetForm', true);
-                    $(':input').each(function () {
-                        $(this).removeClass('is-valid is-invalid');
-                    });
-                    callbackUpdate(ficha);
-                    $('#modalUpdate').modal('show');
-                } else if (btn.dataset.abm == "delete") {
-                    callbackDelete(ficha);
-                    $('#modalDelete').modal('show');
-                } else if (btn.dataset.abm == "visualizer") {
-                    callbackVisualizer(ficha);
+                switch (btn.dataset.abm) {
+                    case "update":
+                        $("#modalUpdate form").bootstrapValidator('resetForm', true);
+                        $(':input').each(function () {
+                            $(this).removeClass('is-valid is-invalid');
+                        });
+                        callbackUpdate(ficha);
+                        break;
+                    case "delete":
+                        callbackDelete(ficha);
+                        break;
+                    case "visualizer":
+                        callbackVisualizer(ficha);
+                        break;
+                    case "updateEstado":
+                        callBackUpdateEstado(ficha);
+                        break;
+                    case "updateRoles":
+                        callBackUpdateRoles(ficha);
+                        break;
+                    case "visualizarRolesPermisos":
+                        visualizarUpdateModalRxP(ficha, false);
+                        break;
+                    case "updateRolesPermisos":
+                        visualizarUpdateModalRxP(ficha, true);
+                        break;
+                    default:
+                        break;
                 }
+                $(btn.dataset.target).modal('show');
             } else {
                 alertify.alert("<span class='fal fa-times-circle  fa-lg' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error</span>", "No se puede encontrar el item seleccionado");
             }

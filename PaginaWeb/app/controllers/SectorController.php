@@ -26,8 +26,8 @@ class SectorController extends Controller implements MyInterface
                                             "comparaKeyDest" => "idSector"
                                     )
         );
-        $datos['todosSectores'] = $this->model->get(table, $comparaTablasIfUsado);
-        $datos['todosTiposSectores'] = $this->model->get(tableTiposSector);
+        $datos['todosSectores'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
+        $datos['todosTiposSectores'] = $this->model->getFichaAll(tableTiposSector);
         $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",

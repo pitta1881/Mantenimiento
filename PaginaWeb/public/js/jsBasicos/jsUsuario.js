@@ -1,25 +1,26 @@
-function modificarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalUpdate').text("Modificar Contraseña de '" + datos['nick'] + "'");
-    $('#updateID').attr('value', datos['id']);
-}
+import {
+    setUrl,
+    setUrlAjax,
+    setUrlAjaxRxP,
+    visualizarUpdateModalRxP,
+    modificarModalUsuario as modificarModal,
+    modificarRolesModalUsuario as modificarModalRoles,
+    visualizarPersonaAgente as visualizarModal,
+    eliminarModalUsuario as deleteModal,
+    loadListenerActionButtons,
+    loadScriptValidarCampos,
+    loadScriptOrdenarPagTablas,
+    loadTooltips,
+    modalDrag
+} from '/public/js/generales/jsGeneral.js';
 
-function modificarRolesModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalRolesUpdate').text("Modificar Roles de '" + datos['nick'] + "'");
-    $('#updateRolIdUsuario').attr('value', datos['id']);
-    var todosRoles = $('#idRolUpd').children();
-    for (let index = 0; index < todosRoles.length; index++) {
-        datos['listaRoles'].forEach(element => {
-            if (element['id'] == ($(todosRoles[index]).val())) {
-                $(todosRoles[index]).attr('selected', 'selected');
-            }
-        });
-    }
-}
+setUrl("/administracion/usuarios/");
+setUrlAjax("/administracion/personas/");
+setUrlAjaxRxP("/administracion/roles/");
 
-function eliminarModal(datos) {
-    datos = JSON.parse(datos);
-    $('#h3TitleModalDelete').text("Eliminar Usuario '" + datos['nick'] + "'");
-    $('#deleteID').attr('value', datos['id']);
-}
+loadTooltips();
+modalDrag();
+loadListenerActionButtons(modificarModal, deleteModal, visualizarModal, null, modificarModalRoles, visualizarUpdateModalRxP);
+loadScriptValidarCampos();
+
+loadScriptOrdenarPagTablas('miTabla', '0,1,2,3', [4], 'Usuarios Registrados');

@@ -31,13 +31,13 @@
 						<td>
 							<div class="btn-group float-none" role="group">
 								{% if "7" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-id='{{ permiso.id }}' data-abm="update" data-toggle="tooltip" title="Modificar Permiso" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" data-id='{{ permiso.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Permiso" data-placement="top">
 										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
 
 								{% if "6" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ permiso.usado ? 'disabled' }} data-id='{{ permiso.id }}' data-abm="delete" data-toggle="tooltip" title="Eliminar Permiso" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" {{ permiso.usado ? 'disabled' }} data-id='{{ permiso.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Permiso" data-placement="top">
 										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
@@ -155,6 +155,8 @@
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsPermiso.js" type="module"></script>
 	<script>
-		verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Permiso');
+		$(function () {
+verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Permiso');
+});
 	</script>
 {% endblock %}

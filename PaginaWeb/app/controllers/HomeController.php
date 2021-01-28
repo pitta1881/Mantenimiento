@@ -50,7 +50,7 @@ class HomeController extends Controller
         $rol['nombre'] = $rol[1];
         $_SESSION['rolActual'] = $rol;
         $_SESSION['listaPermisos'] = $this->model->getPermisos();
-        return $this->home(true);
+        return $this->index(true);
     }
 
     public function administracionCards()

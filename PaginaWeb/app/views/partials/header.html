@@ -25,7 +25,7 @@
 		<div class="divheaderprofile">
 			<span style="color: darkgrey;">
 				{{ datos.datosSesion.nickUser }}
-				<a href="#" data-toggle="modal" data-target="#modalSelectRol">({{ datos.datosSesion.rolActual.nombre }})</a>
+				<a href="#" data-toggle="modal" data-target="#modalSelectRol" {{ datos.datosSesion.firstOrUnique ? "style='color: darkgoldenrod;cursor: default'" }}>({{ datos.datosSesion.rolActual.nombre }})</a>
 				|</span>
 			<a href="/logOut">
 				<span class="fal fa-sign-out"></span>Salir</a>

@@ -13,7 +13,7 @@ class OTController extends Controller{
     }
 
     public function index(){
-        $todasOT = $this->model->get(); 
+        $todasOT = $this->model->getFichaAll(); 
         $datos['todasOT'] = $todasOT;
         
         $permisos=$this->model->getPermisos($_SESSION['rol']);

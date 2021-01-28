@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Core\MyInterface;
 use App\Models\UsuarioModel;
 
 define("table", "usuarios");
@@ -12,7 +13,7 @@ define("tableMovimientos", "movimientos");
 define("tableRoles", "roles");
 define("tablePersonas", "personas");
 
-class UsuarioController extends Controller
+class UsuarioController extends Controller implements MyInterface
 {
     public function __construct()
     {
@@ -20,7 +21,7 @@ class UsuarioController extends Controller
         session_start();
     }
 
-    public function administracionUsuarios($new = null, $update = null, $delete = null)
+    public function index($alerta = null)
     {
         $comparaTablasIfUsado = array(
                                     array(  "tabla" => tablePedidos,
@@ -38,15 +39,10 @@ class UsuarioController extends Controller
                                             "comparaKeyDest" => "idPersona"
                                         )
         );
-        $datos['todosUsuarios'] = $this->model->get(table, $comparaTablasIfUsado);
-        $datos['todosRoles'] = $this->model->get(tableRoles);
-        $datos['todosPersonas'] = $this->model->get(tablePersonas, $comparaTablasIfUsado_2);
-        $alertas = [
-            'new' => $new,
-            'update' => $update,
-            'delete' => $delete
-        ];
-        $datos['alertas'] = $alertas;
+        $datos['todosUsuarios'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
+        $datos['todosRoles'] = $this->model->getFichaAll(tableRoles);
+        $datos['todosPersonas'] = $this->model->getFichaAll(tablePersonas, $comparaTablasIfUsado_2);
+        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
@@ -66,16 +62,16 @@ class UsuarioController extends Controller
             'password' => $_POST['password'],
             'idPersona' => $_POST['idPersona'],
         ];
-        $insertOk = $this->model->insert(table, $usuario);
-        if ($insertOk) { //si falla la insercion(seguramente x nick repetido)
+        $insert = $this->model->insert(table, $usuario, "Usuario");
+        if ($insert) { //si falla la insercion(seguramente x nick repetido)
             foreach ($_POST['idRol'] as $key => $value) {
                 $RxU = [
                     'idRol' => $value,
-                    'idUsuario' => $insertOk['lastInsertId']
+                    'idUsuario' => $insert['mensaje']
                 ];
-                $this->model->insert(tableRxU, $RxU);
+                $this->model->insert(tableRxU, $RxU, "RxU");
             }
-            return $this->administracionUsuarios($insertOk);
+            return $this->index($insert);
         }
     }
 
@@ -85,20 +81,20 @@ class UsuarioController extends Controller
             'id' => $_POST['id'],
             'password' => $_POST['password']
         ];
-        $updateOk = $this->model->update(table, $usuario);
-        return $this->administracionUsuarios(null, $updateOk);
+        $update = $this->model->update(table, $usuario, "Usuario");
+        return $this->index($update);
     }
 
     public function updateRolesUsuario()
     {
         $usuario['idUsuario'] = $_POST['id'];
-        $this->model->delete(tableRxU, $usuario);
+        $this->model->delete(tableRxU, $usuario, "RxU");
         foreach ($_POST['idRol'] as $key => $value) {
             $RxU = [
                 'idRol' => $value,
                 'idUsuario' => $_POST['id']
             ];
-            $this->model->insert(tableRxU, $RxU);
+            $this->model->insert(tableRxU, $RxU, "RxU");
         }
         if ($_POST['id'] == $_SESSION['idUser']) {
             $usuario['idUsuario'] = $_SESSION['idUser'];
@@ -118,8 +114,8 @@ class UsuarioController extends Controller
     {
         $usuarioRxU['idUsuario'] = $_POST['id'];
         $usuario['id'] = $_POST['id'];
-        $this->model->delete(tableRxU, $usuarioRxU);
-        $deleteOk = $this->model->delete(table, $usuario);
-        return $this->administracionUsuarios(null, null, $deleteOk);
+        $this->model->delete(tableRxU, $usuarioRxU, "RxU");
+        $delete = $this->model->delete(table, $usuario, "Usuario");
+        return $this->index($delete);
     }
 }

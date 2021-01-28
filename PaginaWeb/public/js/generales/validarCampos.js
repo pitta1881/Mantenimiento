@@ -8,7 +8,7 @@ export default async function validarForm(callbackGetFichaAll) {
 
         //usuarios forms
         $('#formUsuarioNew, #formUsuarioUpd, #formUsuarioRolesUpd').bootstrapValidator({
-                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                excluded: [':disabled'],
                 fields: {
                     nick: {
                         validators: {
@@ -85,7 +85,7 @@ export default async function validarForm(callbackGetFichaAll) {
 
         //personas forms
         $('#formPersonaNew, #formPersonaUpd, #formPersonaEstadoUpd').bootstrapValidator({
-                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                excluded: [':disabled'],
                 fields: {
                     id: {
                         validators: {
@@ -146,7 +146,7 @@ export default async function validarForm(callbackGetFichaAll) {
                             },
                             regexp: {
                                 regexp: /^[a-zA-Z0-9º" ]+$/,
-                                message: 'Carácter no permitido'
+                                message: 'Caracter no permitido'
                             }
                         }
                     },

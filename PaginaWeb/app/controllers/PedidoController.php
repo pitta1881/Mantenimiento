@@ -17,7 +17,7 @@ class PedidoController extends Controller{
 
     /*Show all pedidos*/
     public function administracionPedidos($new = null,$update = null,$delete = null){
-        $datos['todosPedidos'] = $this->model->get($this->table); 
+        $datos['todosPedidos'] = $this->model->getFichaAll($this->table); 
         
         
         $datos["sectores"] = $this->model->getSectores();
@@ -81,7 +81,7 @@ class PedidoController extends Controller{
     }
 
     public function getDatos(){
-        $todosPedidos = $this->model->get(); 
+        $todosPedidos = $this->model->getFichaAll(); 
         echo json_encode($todosPedidos);
     }
 

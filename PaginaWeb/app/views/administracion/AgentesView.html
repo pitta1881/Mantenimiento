@@ -49,12 +49,12 @@
 									</button>
 								{% endif %}
 								{% if "31" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary {{ agente.usado ? 'disabled' }}" data-id='{{ agente.id }}' data-abm="update" data-toggle="tooltip" title="Modificar Agente" data-placement="top">
+									<button type="button" class="btn btn-outline-primary {{ agente.usado ? 'disabled' }}" data-id='{{ agente.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Agente" data-placement="top">
 										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
 								{% if "30" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary {{ agente.usado ? 'disabled' }}" data-id='{{ agente.id }}' data-abm="delete" data-toggle="tooltip" title="Eliminar Agente" data-placement="top">
+									<button type="button" class="btn btn-outline-primary {{ agente.usado ? 'disabled' }}" data-id='{{ agente.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Agente" data-placement="top">
 										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
@@ -90,11 +90,11 @@
 						{% else %}
 							{% if datos.personas is empty %}
 								<div class="alert alert-danger text-center" role="alert">No hay Personas cargadas o ya están todas
-																																																																																																																																																																											                    asignadas a
-																																																																																																																																																																											                    un Agente.<br>
+																																																																																																																																																																																													                    asignadas a
+																																																																																																																																																																																													                    un Agente.<br>
 									Para agregar mas Personas
 									<a href="/administracion/personas" class="alert-link">HAGA
-																																																																																																																																																																																														                        CLICK AQUI</a>
+																																																																																																																																																																																																																		                        CLICK AQUI</a>
 								</div>
 							{% else %}
 								<form action="createAgente" method="post" id="formAgenteNew">
@@ -112,7 +112,7 @@
 									<div class="form-row">
 										<div class="form-group required col-lg-12">
 											<label class="control-label" for="idEspecializacion">Seleccionar Especializaciones: (CTRL+CLICK seleccion
-																																																																																																																																																																																																																																				                                múltiple)</label>
+																																																																																																																																																																																																																																																												                                múltiple)</label>
 											<select multiple name="idEspecializacion[]" id="idEspecializacion" class="form-control custom-select" size="5">
 												{% for especializacion in datos.todasEspecializaciones %}
 													<option value="{{ especializacion.id }}">{{ especializacion.nombre }}</option>
@@ -155,7 +155,7 @@
 							</div>
 							<div class="form-group required">
 								<label class="control-label" for="idEspecializacionUpd">Seleccionar Roles: (CTRL+CLICK seleccion
-																																																																																																																																																																											                            múltiple)</label>
+																																																																																																																																																																																													                            múltiple)</label>
 								<select multiple name="idEspecializacion[]" id="idEspecializacionUpd" class="form-control custom-select" size="5">
 									{% for especializacion in datos.todasEspecializaciones %}
 										<option value="{{ especializacion.id }}">{{ especializacion.nombre }}</option>
