@@ -7,8 +7,6 @@ use App\Core\MyInterface;
 use App\Models\SectorModel;
 
 define("table", "sectores");
-define("tablePedido", "pedidos");
-define("tableTiposSector", "tipossector");
 
 class SectorController extends Controller implements MyInterface
 {
@@ -21,7 +19,7 @@ class SectorController extends Controller implements MyInterface
     public function index($alerta = null)
     {
         $comparaTablasIfUsado = array(
-                                        array(  "tabla" => tablePedido,
+                                        array(  "tabla" => tablePedidos,
                                             "comparaKeyOrig" => "id",
                                             "comparaKeyDest" => "idSector"
                                     )

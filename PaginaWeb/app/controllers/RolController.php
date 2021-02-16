@@ -7,8 +7,6 @@ use App\Core\MyInterface;
 use App\Models\RolModel;
 
 define("table", "roles");
-define("tableRxP", "roles_x_permisos");
-define("tableRxU", "roles_x_usuarios");
 
 class RolController extends Controller implements MyInterface
 {

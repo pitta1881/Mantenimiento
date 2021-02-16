@@ -13,6 +13,9 @@ setUrl("/administracion/sectores/");
 
 loadTooltips();
 modalDrag();
-loadListenerActionButtons(modificarModal, deleteModal);
+loadListenerActionButtons({
+    'update': modificarModal,
+    'delete': deleteModal
+});
 loadScriptValidarCampos();
 loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5', [6], 'Sectores Registrados');

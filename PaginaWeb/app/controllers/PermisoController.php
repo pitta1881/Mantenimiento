@@ -7,7 +7,6 @@ use App\Core\MyInterface;
 use App\Models\PermisoModel;
 
 define("table", "permisos");
-define("tableRxP", "roles_x_permisos");
 
 class PermisoController extends Controller implements MyInterface
 {

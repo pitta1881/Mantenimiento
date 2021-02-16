@@ -4,98 +4,136 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\PedidoModel;
+use App\Core\MyInterface;
 use App\Models\Tarea;
 
-class PedidoController extends Controller{
+define("table", "pedidos");
 
-    public function __construct(){
+class PedidoController extends Controller implements MyInterface
+{
+    public function __construct()
+    {
         $this->model = new PedidoModel();
-        
+        session_start();
     }
 
-    protected $table = 'pedido';
-
-    /*Show all pedidos*/
-    public function administracionPedidos($new = null,$update = null,$delete = null){
-        $datos['todosPedidos'] = $this->model->getFichaAll($this->table); 
-        
-        
-        $datos["sectores"] = $this->model->getSectores();
-        $datos["prioridades"] = $this->model->getPrioridades();
-        $datos['especializaciones'] = $this->model->getEspecializaciones();
-        $datos["estados"] = $this->model->getEstados();
+    public function index($alerta = null)
+    {
+        $datos['todosPedidos'] = $this->model->getFichaAll(table);
+        $datos['estados'] = $this->model->getFichaAll(tableEstados);
+        $datos['prioridades'] = $this->model->getFichaAll(tablePrioridades);
+        $datos["sectores"] = $this->model->getFichaAll(tableSectores);
+        $datos["usuarios"] = $this->model->getFichaAll(tableUsuarios);
+        $datos["especializaciones"] = $this->model->getFichaAll(tableEspecializaciones);
         $datos["diaHoy"] = date("Y-m-d");
-        $alertas = [
-            'new' => $new,
-            'update' => $update,
-            'delete' => $delete
-        ];
-        $datos['alertas'] = $alertas;
-        $datos['urlheader']="> HOME > PEDIDOS";
+        $datos['alertas'] = $alerta;
+        $_SESSION['urlHeader'] = array(
+            array("url" => "/home",
+            "nombre" => "HOME"),
+            array("url" => "/pedidos",
+            "nombre" => "PEDIDOS")
+        );
+        $datos['datosSesion'] = $_SESSION;
         return view('/pedidos/PedidosView', compact('datos'));
     }
 
-    public function create(){
+    public function create()
+    {
+        $ahora = date('Y-m-d H:i:s');
         $pedido = [
-            'fechaInicio' => $_POST['fechaInicio'],
-            'estado' => $_POST['estado'],
-            'descripcion' => $_POST['descripcion'],
+            'fechaInicio' => $ahora,
+            'idUsuario' => $_SESSION['idUser'],
+            'idEstado' => 1,
             'idSector' => $_POST['idSector'],
-            'prioridad' => $_POST['prioridad'],
-            'nombreUsuario' => $_POST['nombreUsuario']
+            'idPrioridad' => $_POST['idPrioridad'],
+            'descripcion' => $_POST['descripcion']
         ];
-      $insertOk = $this->model->insert($this->table,$pedido,true);
-      return $this->administracionPedidos($insertOk);
+        $insert = $this->model->insert(table, $pedido, "Pedido");
+        if ($insert['estado']) {
+            $historialPedido = [
+                'id' => 1,
+                'idPedido' => $insert['mensaje'],
+                'fecha' => $ahora,
+                'idUsuario' => $_SESSION['idUser'],
+                'idEstado' => 1,
+                'idSector' => $_POST['idSector'],
+                'idPrioridad' => $_POST['idPrioridad'],
+                'descripcion' => $_POST['descripcion'],
+                'observacion' => 'Pedido Creado'
+            ];
+            $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
+        }
+        return $this->index($insert);
     }
 
-    public function update(){
+    public function update()
+    {
         $pedido = [
             'id' => $_POST['id'],
-            'estado' => $_POST['estado'],
-            'descripcion' => $_POST['descripcion'],
             'idSector' => $_POST['idSector'],
-            'prioridad' => $_POST['prioridad'],
+            'idPrioridad' => $_POST['idPrioridad'],
+            'descripcion' => $_POST['descripcion']
         ];
-        $updateOk = $this->model->update($this->table,$pedido);
-        return $this->administracionPedidos(null,$updateOk);
+        $update = $this->model->update(table, $pedido, "Pedido");
+        if ($update['estado']) {
+            $historialPedido = [
+                'id' => $this->getIdHistorial($_POST['id']),
+                'idPedido' => $_POST['id'],
+                'fecha' => date('Y-m-d H:i:s'),
+                'idUsuario' => $_SESSION['idUser'],
+                'idEstado' => $_POST['idEstado'],
+                'idSector' => $_POST['idSector'],
+                'idPrioridad' => $_POST['idPrioridad'],
+                'descripcion' => $_POST['descripcion'],
+                'observacion' => 'Pedido Modificado'
+            ];
+            $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
+        }
+        return $this->index($update);
     }
     
-     public function finish(){
+    public function finish()    //idEstado = 5
+    {
         $pedido = [
             'id' => $_POST['id'],
-            'estado' => 'Finalizado',
+            'idEstado' => 5,
             'fechaFin' => date("Y-m-d")
         ];
-        $deleteOk = $this->model->update($this->table,$pedido);
-        return $this->administracionPedidos(null,null,$deleteOk);
-     }
+        $update = $this->model->update(table, $pedido, "Pedido");
+        return $this->index($update);
+    }
 
-     public function cancel(){
+    public function cancel()    //idEstado = 4
+    {
+        $ahora = date('Y-m-d H:i:s');
         $pedido = [
             'id' => $_POST['id'],
-            'estado' => 'Cancelado',
-            'fechaFin' => date("Y-m-d")
+            'idEstado' => 4,
+            'fechaFin' => $ahora
         ];
-        $deleteOk = $this->model->update($this->table,$pedido);
-        return $this->administracionPedidos(null,null,$deleteOk);
+        $update = $this->model->update(table, $pedido, "Pedido");
+        if ($update['estado']) {
+            $historialPedido = [
+                'id' => $this->getIdHistorial($_POST['id']),
+                'idPedido' => $_POST['id'],
+                'fecha' => $ahora,
+                'idEstado' => 4,
+                'idUsuario' => $_SESSION['idUser'],
+                'observacion' => 'Pedido Cancelado > '.$_POST['observacion']
+            ];
+            $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
+        }
+        return $this->index($update);
     }
 
-    public function getDatos(){
-        $todosPedidos = $this->model->getFichaAll(); 
-        echo json_encode($todosPedidos);
+
+    public function delete()
+    {
     }
 
-    /*muestra un solo pedido especifico ingresado por GET*/
-    public function ficha(){
-        $miPedido = $this->model->getByIdPedido($_GET['id']);
-        $datos["miPedido"] = $miPedido;  
-        $datos["estados"] = $this->model->getEstados();
-        $datos["sectores"] = $this->model->getSectores();
-        $datos["prioridades"] = $this->model->getPrioridades();
-        $datos['especializaciones'] = $this->model->getTareaEspecializaciones();
-        
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/pedidos/pedidoVerFicha', compact('datos'));
+    private function getIdHistorial($idPedido)
+    {
+        $datos['unPedido'] = $this->model->getFichaOne(table, array('id'=>$idPedido));
+        return end($datos['unPedido']['historial'])['id'] + 1;
     }
 }

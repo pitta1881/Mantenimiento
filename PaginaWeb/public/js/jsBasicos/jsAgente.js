@@ -16,6 +16,10 @@ setUrlAjax("/administracion/personas/");
 
 loadTooltips();
 modalDrag();
-loadListenerActionButtons(modificarModal, deleteModal, visualizarModal);
+loadListenerActionButtons({
+    'update': modificarModal,
+    'delete': deleteModal,
+    'visualize': visualizarModal
+});
 loadScriptValidarCampos();
 loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4', [5], 'Agentes Registrados');

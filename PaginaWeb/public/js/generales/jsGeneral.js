@@ -3,6 +3,10 @@ export {
     setUrlAjax,
     setUrlAjaxRxP,
     visualizarUpdateModalRxP,
+    visualizarSectorPedido,
+    visualizarPedidoGeneral,
+    modificarModalPedido,
+    deleteModalPedido,
     modificarModalUsuario,
     modificarRolesModalUsuario,
     eliminarModalUsuario,
@@ -43,14 +47,105 @@ function setUrlAjaxRxP(newUrlAjaxRxP) {
     urlAjaxRxP = newUrlAjaxRxP;
 }
 
+//--PEDIDOS--\\
+
+function visualizarPedidoGeneral(datos) {
+    loadDlPedido(datos);
+    loadHistorial(datos);
+    loadTareas(datos);
+}
+
+function loadDlPedido(datos) {
+    let textoInner = ``;
+    var myDate = datos['fechaInicio'].split(" ");
+    myDate[0] = myDate[0].split("-").reverse().join("/");
+    textoInner += `
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Nº Pedido</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.id}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Descripcion</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.descripcion}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Sector</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.sectorNombre}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Fecha Inicio</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fechaInicio}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Fecha Fin</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fechaFin}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Tareas</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.tareasAsignadas}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Estado</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.estadoNombre}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Prioridad</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.prioridadNombre}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Usuario</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.usuarioNick}</dd>
+            `;
+    document.getElementById('dlPedido').innerHTML = textoInner;
+}
+
+function loadHistorial(datos) {
+    let textoInner = ``;
+    datos.historial.forEach(element => {
+        var myDate = element['fecha'].split(" ");
+        myDate[0] = myDate[0].split("-").reverse().join("/");
+        textoInner += `
+        <tr>
+            <th scope="row">${element.id}</th>
+            <td>${myDate[0]} ${myDate[1]}</td>
+            <td>${element.nickUsuario}</td>
+            <td>${element.estadoNombre}</td>
+            <td>${element.observacion}</td>
+        </tr>
+            `
+    });
+    loadScriptOrdenarPagTablas('miTablaHistorial', '0,1,2,3', [], 'Historial', true, textoInner);
+}
+
+function loadTareas(datos) {
+
+    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7', [], 'Tareas Registradas', true);
+}
+
+function visualizarSectorPedido(datos) {
+    alertify.alert("Detalles Sector",
+        `
+        <strong>Nombre:</strong> ${datos.nombre}
+        <br> <strong>Responsable:</strong> ${datos.responsable}
+        <br> <strong>Tipo:</strong> ${datos.tipoSectorNombre}
+        <br> <strong>Email:</strong> ${datos.email}
+        <br> <strong>Telefono:</strong> ${datos.telefono}
+        `
+    );
+
+}
+
+function modificarModalPedido(datos) {
+    var myDate = datos['fechaInicio'].split(" ");
+    myDate = myDate[0].split("/").reverse().join("-");
+    $('#h3TitleModalUpdate').text("Modificar Pedido " + datos['id']);
+    $('#updateID').attr('value', datos['id']);
+    $('#idUsuarioUpdate').attr('value', datos['idUsuario']).val(datos['usuarioNick']);
+    $('#fechaInicioUpdate').attr('value', myDate).val(myDate);
+    $('#idEstadoUpdateHid').attr('value', datos['idEstado']).val(datos['idEstado']);
+    $('#idEstadoUpdate').attr('value', datos['estadoNombre']).val(datos['estadoNombre']);
+    $("#idSectorUpdate option[value=" + datos['idSector'] + "]").prop('selected', true)
+    $("#idPrioridadUpdate option[value=" + datos['idPrioridad'] + "]").prop('selected', true)
+    $('#descripcionUpdate').val(datos['descripcion']);
+}
+
+function deleteModalPedido(datos) {
+    $('#h3TitleModalDelete').text("Cancelar Pedido " + datos['id']);
+    $('#deleteID').attr('value', datos['id']);
+}
+
+
+//--Roles y Permisos--\\
 function visualizarUpdateModalRxP(datos, modificar) {
-    console.log(datos);
     var modificable = '';
     var btnEnviar = '';
     var disableChk = '';
     var headerAlert = 'Detalle Rol';
     if (modificar) {
-        btnEnviar = "<button type='submit' class='btn btn-success btn-modal float-right'>Enviar</button>";
+        btnEnviar = "<button type='submit' class='btn btn-success btn-modal float-left'>Enviar</button>";
         headerAlert = "Modificar permisos del Rol"
     } else {
         modificable = " onclick='javascript: return false;'";
@@ -119,8 +214,7 @@ function modificarRolesModalUsuario(datos) {
 }
 
 function eliminarModalUsuario(datos) {
-    $('#h3TitleModalDelete').text("Eliminar Usuario '" + datos['nick'] + "'");
-    $('#deleteID').attr('value', datos['id']);
+    document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Usuario ${datos['nick']}`);
 }
 
 
@@ -142,14 +236,12 @@ function modificarEstadoModalPersona(datos) {
 }
 
 function eliminarModalPersona(datos) {
-    $('#h3TitleModalDelete').text("Eliminar Persona '" + datos['nombre'] + " " + datos['apellido'] + "'");
-    $('#deleteID').attr('value', datos['id']);
+    document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Persona ${datos['nombre']} ${datos['apellido']}`);
 }
 
 //--ROL--\\
 function eliminarModalRol(datos) {
-    $('#h3TitleModalDelete').text("Eliminar Rol " + datos['nombre']);
-    $('#deleteID').attr('value', datos['id']);
+    document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Rol ${datos['nombre']}`);
 }
 
 
@@ -161,8 +253,7 @@ function modificarModalPermiso(datos) {
 }
 
 function eliminarModalPermiso(datos) {
-    $('#h3TitleModalDelete').text("Eliminar Permiso " + datos['nombre']);
-    $('#deleteID').attr('value', datos['id']);
+    document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Permiso ${datos['nombre']}`);
 }
 
 //--AGENTE--\\
@@ -181,8 +272,7 @@ function modificarModalAgente(datos) {
 }
 
 function eliminarModalAgente(datos) {
-    $('#h3TitleModalDelete').text("Eliminar Agente '" + datos['nombre'] + " " + datos['apellido'] + "'");
-    $('#deleteID').attr('value', datos['id']);
+    document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Agente ${datos['nombre']} ${datos['apellido']}`);
 }
 
 function visualizarPersonaAgente(datos) {
@@ -209,8 +299,7 @@ function modificarModalSector(datos) {
 }
 
 function eliminarModalSector(datos) {
-    $('#h3TitleModalDelete').text("Eliminar Sector '" + datos['nombre'] + "'");
-    $('#deleteID').attr("value", datos['id']).val(datos['id']);
+    document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Sector ${datos['nombre']}`);
 }
 
 //--ESPECIALIZACION--\\
@@ -221,17 +310,16 @@ function modificarModalEspecializacion(datos) {
 }
 
 function eliminarModalEspecializacion(datos) {
-    $('#h3TitleModalDelete').text("Eliminar Especializacion '" + datos['nombre'] + "'");
-    $('#deleteID').text(datos['id']).val(datos['id']);
+    document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Especializacion ${datos['nombre']}`);
 }
 
 //--FUNCIONES GENERALES--\\
-function loadListenerActionButtons(callbackUpdate, callbackDelete, callbackVisualizer, callBackUpdateEstado, callBackUpdateRoles, visualizarUpdateModalRxP) {
+function loadListenerActionButtons(callbacks) {
     document.querySelector('#miTabla').addEventListener('click', async function (e) {
         let urlToUse = url;
-        let btn = (e.target.closest('button, a'));
+        let btn = (e.target.closest('button[type="button"], a'));
         if (btn && !btn.disabled) {
-            if (btn.dataset.abm == "visualizer") {
+            if (btn.dataset.abm == "visualize-2") {
                 urlToUse = urlAjax;
             } else if (btn.dataset.abm == "visualizarRolesPermisos") {
                 urlToUse = urlAjaxRxP;
@@ -244,25 +332,28 @@ function loadListenerActionButtons(callbackUpdate, callbackDelete, callbackVisua
                         $(':input').each(function () {
                             $(this).removeClass('is-valid is-invalid');
                         });
-                        callbackUpdate(ficha);
+                        callbacks['update'](ficha);
                         break;
                     case "delete":
-                        callbackDelete(ficha);
+                        callbacks['delete'](ficha);
                         break;
-                    case "visualizer":
-                        callbackVisualizer(ficha);
+                    case "visualize":
+                        callbacks['visualize'](ficha);
+                        break;
+                    case "visualize-2":
+                        callbacks['visualize-2'](ficha);
                         break;
                     case "updateEstado":
-                        callBackUpdateEstado(ficha);
+                        callbacks['updateEstado'](ficha);
                         break;
                     case "updateRoles":
-                        callBackUpdateRoles(ficha);
+                        callbacks['updateRoles'](ficha);
                         break;
                     case "visualizarRolesPermisos":
-                        visualizarUpdateModalRxP(ficha, false);
+                        callbacks['visualizarRolesPermisos'](ficha, false);
                         break;
                     case "updateRolesPermisos":
-                        visualizarUpdateModalRxP(ficha, true);
+                        callbacks['updateRolesPermisos'](ficha, true);
                         break;
                     default:
                         break;
@@ -281,9 +372,9 @@ function loadScriptValidarCampos() {
     });
 }
 
-function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo) {
+function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo, modal, textoHTML) {
     import('/public/js/generales/ordypagtablas.js').then((Module) => {
-        Module.default(tablaID, columnas, columNoOrdenar, titulo);
+        Module.default(tablaID, columnas, columNoOrdenar, titulo, modal, textoHTML);
     });
 }
 
@@ -352,4 +443,36 @@ function handleJsonResponse(response) {
         throw new Error("Error ajax");
     }
     return response.json();
+}
+
+function modalGenDelete(idToDelete, titulo) {
+    return `
+    <div class="modal fade" id="modalDelete">
+			<div class="modal-dialog">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">${titulo}</h3>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<p class="mb-3">¿Está seguro?</p>
+						<form action="delete" method="post">
+							<input
+							type="text" name="id" value="${idToDelete}" hidden>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+        `
 }

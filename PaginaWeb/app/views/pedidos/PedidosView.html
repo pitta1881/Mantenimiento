@@ -1,395 +1,408 @@
 {% extends "base.html" %}
 {% block title %}
-	Gestion de Pedidos
-{% endblock %}
-{% block nav %}
-	{% include 'partials/nav.html' with {datos:datos} only %}
+	Pedidos
 {% endblock %}
 {% block main %}
-{% block header %}
-	{% include 'partials/header.html' with {datos:datos} only %}
-{% endblock %}
-<div>
-	<h2 class="titulo-tabla">Pedidos Registrados
-	</h2>
+	<div>
+		<h2 class="titulo-tabla">Pedidos Registrados</h2>
 
-	<!-- BOTON NEW PEDIDO -->
+		<!-- BOTON NEW PEDIDO -->
+		{% if "13" in datos.datosSesion.listaPermisos %}
+			<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew">
+				<i class="fal fa-plus"></i>
+				Crear Nuevo</button>
+		{% endif %}
+
+		<!-- TABLA PEDIDOS -->
+		<table id="miTabla" class="table table-bordered table-sm table-striped table-hover m-0 w-100">
+			<thead>
+				<tr>
+					<th>Nº Pedido</th>
+					<th>Descripcion</th>
+					<th>Sector</th>
+					<th>Fecha Inicio</th>
+					<th>Fecha Fin</th>
+					<th>Tareas</th>
+					<th>Estado</th>
+					<th>Prioridad</th>
+					<th>Usuario</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for pedido in datos.todosPedidos %}
+					<tr>
+						<th scope="row">{{ pedido.id }}</th>
+						<td>{{ pedido.descripcion|slice(0, 55) }}</td>
+						<td>
+							<a href="#" data-abm="visualize-2" data-id='{{ pedido.idSector }}'>
+								{{ pedido.sectorNombre }}
+							</a>
+						</td>
+						<td>{{ pedido.fechaInicio }}</td>
+						<td>{{ pedido.fechaFin }}</td>
+						<td>{{ pedido.tareasAsignadas }}</td>
+						<td>{{ pedido.estadoNombre }}</td>
+						<td>{{ pedido.prioridadNombre }}</td>
+						<td>{{ pedido.usuarioNick }}</td>
+						<td>
+							<div class="btn-group btn-group-sm float-none" role="group">
+								{% if "16" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-outline-primary" data-id='{{ pedido.id }}' data-abm="visualize" data-target="#modalGeneral" title="Ver Pedido" data-toggle="tooltip" data-placement="top">
+										<i class="fal fa-eye fa-lg fa-fw"></i>
+									</button>
+								{% endif %}
+								{% if pedido.idEstado != 4 and pedido.idEstado != 5 %}
+									{% if "15" in datos.datosSesion.listaPermisos %}
+										<button type="button" class="btn btn-outline-primary" data-id='{{ pedido.id }}' data-abm="update" data-target="#modalUpdate" title="Editar Pedido" data-toggle="tooltip" data-placement="top">
+											<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+										</button>
+									{% endif %}
+								{% endif %}
+								{% if pedido.idEstado == 1 and pedido.tareasAsignadas == 0 %}
+									{% if "14" in datos.datosSesion.listaPermisos %}
+										<button type="button" class="btn btn-outline-primary" data-id='{{ pedido.id }}' data-abm="delete" data-target="#modalDelete" title="Cancelar Pedido" data-toggle="tooltip" data-placement="top">
+											<i class="fal fa-trash-alt fa-lg fa-fw"></i>
+										</button>
+									{% endif %}
+								{% endif %}
+							</div>
+						</td>
+					</tr>
+				{% else %}
+					<h2 class='error'>No hay Pedidos</h2>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<!-- MODALES NEW, UPDATE Y DELETE -->
+
+
+	<!--NEW PEDIDO-->
 	{% if "13" in datos.datosSesion.listaPermisos %}
-		<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew">
-			<i class="fal fa-plus"></i>
-			Crear Nuevo</button>
+		<div class="modal fade" id="modalNew">
+			<div class="modal-dialog modal-lg">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Alta de Pedido</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						{% if datos.sectores is empty %}
+							<div class="alert alert-danger text-center" role="alert">Primero debe añadir un Sector
+								<a href="/sectores/administracionSectores" class="alert-link">HAGA CLICK AQUI</a>
+							</div>
+						{% else %}
+							<form action="createPedido" method="post" id="formPedidoNew">
+								{% if datos.evento is not empty %}
+									<input type="text" name="idEvento" value="{{ datos.evento.idEvento }}" hidden>
+								{% endif %}
+								<div class="form-row">
+									<div class="form-group required col-lg-4">
+										<label class="control-label" for="idUsuario">Usuario Creador:</label>
+										<input name="idUsuario" id="idUsuario" value="{{ datos.datosSesion.idUser }}" required readonly hidden>
+										<input type="text" class="form-control" value="{{ datos.datosSesion.nickUser }}" readonly>
+									</div>
+									<div class="form-group required col-lg-4">
+										<label class="control-label" for="fechaInicio">Fecha:</label>
+										<input type="date" name="fechaInicio" class="form-control" value="{{ datos.diaHoy }}" required readonly>
+									</div>
+									<div class="form-group required col-lg-4">
+										<label class="control-label" for="idEstado">Estado:</label>
+										{% for estado in datos.estados if estado.nombre == 'Iniciado' %}
+											<input name="idEstado" id="idEstado" value=" {{ estado.id }}" required readonly hidden>
+											<input type="text" class="form-control" value="{{ estado.nombre }}" readonly>
+										{% endfor %}
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group required col-lg-6">
+										<label class="control-label" for="idSector">Sector:</label>
+										<select name="idSector" id="idSector" class="form-control custom-select">
+											{% for sector in datos.sectores %}
+												<option value="{{ sector.id }}">{{ sector.nombre }}</option>
+											{% endfor %}
+										</select>
+									</div>
+									<div class="form-group required col-lg-6">
+										<label class="control-label" for="idPrioridad">Prioridad:</label>
+										<select name="idPrioridad" id="idPrioridad" class="form-control custom-select">
+											{% for prioridad in datos.prioridades %}
+												<option value="{{ prioridad.id }}">{{ prioridad.nombre }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="form-group required">
+									<label class="control-label" for="descripcion">Descripcion:</label>
+									<textarea class="form-control" rows="4" id="descripcion" name="descripcion" required></textarea>
+									<div class="invalid-feedback">Complete este campo</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+									<button type="submit" class="btn btn-success">Enviar</button>
+								</div>
+							</form>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
 	{% endif %}
 
-	<!-- TABLA PEDIDOS -->
-	<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-		<thead class="headtable">
-			<tr>
-				<th>Nº Pedido</th>
-				<th>Descripcion</th>
-				<th>Sector</th>
-				<th>Fecha Inicio</th>
-				<th>Fecha Fin</th>
-				<th>Tareas</th>
-				<th>Estado</th>
-				<th>Prioridad</th>
-				<th>Usuario</th>
-				<th>Accion</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for pedido in datos.todosPedidos %}
-				<tr>
-					<td>{{ pedido.id }}</td>
-					<td>{{ pedido.descripcion|slice(0, 55) }}</td>
-					<td>
-						<a href="#" onclick="fichaSector('{{ pedido.idSector }}');" title="Ver Mas">{{ pedido.nombreSector }}</a>
-					</td>
-					<td>{{ pedido.fechaInicio|date("d/m/Y") }}</td>
-					<td>
-						{% if pedido.fechaFin == 'Iniciado' or pedido.fechaFin == 'En Curso' or pedido.fechaFin == 'Pendiente' or pedido.fechaFin == 'Finalizado' %}
-							{{ pedido.fechaFin }}
-						{% else %}
-							{{ pedido.fechaFin|date("d/m/Y") }}
-						{% endif %}
-					</td>
-					<td>{{ pedido.tareasAsignadas }}</td>
-					<td>{{ pedido.estado }}</td>
-					<td>{{ pedido.prioridad }}</td>
-					<td>{{ pedido.nombreUsuario }}</td>
-					<td>
-						<div class="btn-group float-none" role="group">
-							{% if "16" in datos.datosSesion.listaPermisos %}
-								<button type="button" class="btn btn-outline-primary" data-toggle="modal" onclick="verTareasModal('{{ pedido|json_encode }}');" title="Ver Mas">
-									<i class="fal fa-eye fa-lg fa-fw"></i>
-								</button>
-							{% endif %}
-							{% if "15" in datos.datosSesion.listaPermisos and pedido.estado != "Finalizado" and pedido.estado != "Cancelado" %}
-								<button type="button" class="btn btn-outline-primary" data-toggle="modal" onclick="modificarModal('{{ pedido|json_encode }}');" title="Editar Pedido">
-									<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-								</button>
-							{% endif %}
-							{% if "14" in datos.datosSesion.listaPermisos %}
-								<button type="button" class="btn btn-outline-primary" data-toggle="modal" onclick="eliminarModal('{{ pedido|json_encode }}');" title="Eliminar Pedido">
-									<i class="fal fa-trash-alt fa-lg fa-fw"></i>
-								</button>
-							{% endif %}
-						</div>
-					</td>
-				</tr>
-			{% else %}
-				<h2 class='error'>No hay Pedidos</h2>
-			{% endfor %}
-		</tbody>
-	</table>
-</div></div><!-- MODALES NEW, UPDATE Y DELETE --><!--NEW PEDIDO-->{% if "13" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalNew">
-	<div class="modal-dialog modal-lg">
-		<div
-			class="modal-content">
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h3 class="modal-title m-0">Alta de Pedido</h3>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-			<!-- Modal body -->
-			<div class="modal-body">
-				{% if datos.sectores is empty %}
-					<div class="alert alert-danger text-center" role="alert">Primero debe añadir un Sector
-						<a href="/sectores/administracionSectores" class="alert-link">HAGA CLICK AQUI</a>
+	<!--MODIFICAR PEDIDO SI NO ESTÁ EN ESTADO CANCELADO/TERMINADO-->
+	{% if "15" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalUpdate">
+			<div class="modal-dialog modal-lg">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
-				{% else %}
-					<form action="createPedido" method="post" class="was-validated">
-						{% if datos.evento is not empty %}
-							<input type="text" name="idEvento" value="{{ datos.evento.idEvento }}" hidden>
-						{% endif %}
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="updatePedido" method="post" id="formPedidoUpd">
+							<input type="text" name="id" id="updateID" hidden>
+							<div class="form-row">
+								<div class="form-group col-lg-4 required">
+									<label class="control-label" for="idUsuarioUpdate">Usuario Creador:</label>
+									<input type="text" name="idUsuario" class="form-control" id="idUsuarioUpdate" required readonly>
+								</div>
+								<div class="form-group col-lg-4 required">
+									<label class="control-label" for="fechaInicioUpdate">Fecha:</label>
+									<input type="date" name="fechaInicio" class="form-control" id="fechaInicioUpdate" required readonly>
+								</div>
+								<div class="form-group col-lg-4 required">
+									<label class="control-label" for="idEstadoUpdate">Estado:</label>
+									<input type="text" name="idEstado" id="idEstadoUpdateHid" required readonly hidden>
+									<input type="text" class="form-control" id="idEstadoUpdate" required readonly>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-lg-6 required">
+									<label class="control-label" for="idSectorUpdate">Sector:</label>
+									<select name="idSector" id="idSectorUpdate" class="form-control custom-select">
+										{% for sector in datos.sectores %}
+											<option value="{{ sector.id }}">
+												{{ sector.nombre }}
+											</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group col-lg-6 required">
+									<label class="control-label" for="idPrioridadUpdate">Prioridad:</label>
+									<select name="idPrioridad" id="idPrioridadUpdate" class="form-control custom-select">
+										{% for prioridad in datos.prioridades %}
+											<option value="{{ prioridad.id }}">{{ prioridad.nombre }}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-group required">
+								<label class="control-label" for="descripcionUpdate">Descripcion:</label>
+								<textarea class="form-control" rows="4" name="descripcion" id="descripcionUpdate" required></textarea>
+								<div class="invalid-feedback">Complete este campo</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+	<!--ELIMINAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO Y TIENE 0 TAREAS-->
+	{% if "14" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalDelete">
+			<div class="modal-dialog" role="document">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="cancelPedido" method="post">
+							<input type="text" name="id" id="deleteID" hidden>
+							<div class="form-group required">
+								<label class="control-label" for="observacionCancel">Ingrese el motivo de la cancelación:</label>
+								<textarea class="form-control" rows="4" name="observacion" id="observacionCancel" required></textarea>
+							</div>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+	<!--MODAL GENERAL PEDIDOS-->
+	{% if "16" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalGeneral">
+			<div class="modal-dialog modal-xl">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Ver Pedido</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<nav class="px-4">
+						<div class="nav nav-tabs" id="nav-tab" role="tablist">
+							<a class="nav-item nav-link active" id="nav-pedido-tab" data-toggle="tab" href="#nav-pedido" role="tab" aria-controls="nav-pedido" aria-selected="true">Pedido</a>
+							<a class="nav-item nav-link" id="nav-historial-tab" data-toggle="tab" href="#nav-historial" role="tab" aria-controls="nav-historial" aria-selected="true">Historial</a>
+							<a class="nav-item nav-link" id="nav-tareas-tab" data-toggle="tab" href="#nav-tareas" role="tab" aria-controls="nav-profile" aria-selected="false">Tareas</a>
+						</div>
+					</nav>
+					<div
+						class="tab-content px-4 py-2" id="nav-tabContent">
+						<!--VER PEDIDO UNO-->
+						<div class="tab-pane fade show active" id="nav-pedido" role="tabpanel" aria-labelledby="nav-pedido-tab">
+							<dl class="row m-0 p-0" id='dlPedido'></dl>
+						</div>
+						<!--VER HISTORIAL-->
+						<div class="tab-pane fade" id="nav-historial" role="tabpanel" aria-labelledby="nav-historial-tab">
+							<table id="miTablaHistorial" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+								<thead>
+									<tr>
+										<th>Numero</th>
+										<th>Fecha</th>
+										<th>Usuario</th>
+										<th>Estado</th>
+										<th>Observacion</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyHistorial"></tbody>
+							</table>
+						</div>
+						<!--VER TAREAS-->
+						<div class="tab-pane fade" id="nav-tareas" role="tabpanel" aria-labelledby="nav-tareas-tab">
+							<table id="miTablaTarea" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+								<thead>
+									<tr>
+										<th>Numero</th>
+										<th>Fecha</th>
+										<th>Descripcion</th>
+										<th>Especializacion</th>
+										<th>Prioridad</th>
+										<th>Estado</th>
+										<th>Agentes</th>
+										<th>Insumos</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyTareas"></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+	<!--CREAR TAREA PARA UN PEDIDO MODAL-->
+	<div class="modal fade" id="modalNewTarea">
+		<div class="modal-dialog modal-lg">
+			<div
+				class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h3 class="modal-title m-0">Crear Tarea</h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="/tarea/guardar" method="post" class="was-validated">
+						<input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
 						<div class="form-row">
 							<div class="form-group col-lg-4">
-								<label for="nombreUsuario">Usuario Creador:</label>
+								<label class="control-label" for="idUsuario">Usuario Creador:</label>
 								<span class="asterisco">*</span>
-								<input type="text" name="nombreUsuario" class="form-control" value="{{ datos.userLogueado }}" required readonly>
+								<input type="text" name="idUsuario" class="form-control" value="{{ datos.userLogueado }}" required readonly>
 							</div>
 							<div class="form-group col-lg-4">
-								<label for="fechaInicio">Fecha:</label>
+								<label class="control-label" for="fechaInicio">Fecha:</label>
 								<span class="asterisco">*</span>
 								<input type="date" name="fechaInicio" class="form-control" value="{{ datos.diaHoy }}" required readonly>
 							</div>
 							<div class="form-group col-lg-4">
-								<label for="estado">Estado:</label>
+								<label class="control-label" for="estado">Estado:</label>
 								<span class="asterisco">*</span>
-								<input type="text" name="estado" class="form-control" value="{{ datos.estados.0 }}" required readonly>
+								<input type="text" name="idEstado" class="form-control" value="{{ datos.estados.0 }}" required readonly>
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-group col-lg-6">
-								<label for="idSector">Sector:</label>
+								<label class="control-label" for="especializacion">Especializacion:</label>
 								<span class="asterisco">*</span>
-								<select name="idSector" class="form-control custom-select">
-									{% for sector in datos.sectores %}
-										<option value="{{ sector.idSector }}">{{ sector.nombreSector }}</option>
+								<select name="especializacion" class="form-control custom-select">
+									{% for especializacion in datos.especializaciones %}
+										<option value="{{ especializacion.idEspecializacion }}">{{ especializacion.nombre }}
+										</option>
 									{% endfor %}
 								</select>
 							</div>
 							<div class="form-group col-lg-6">
-								<label for="prioridad">Prioridad:</label>
+								<label class="control-label" for="prioridad">Prioridad:</label>
 								<span class="asterisco">*</span>
-								<select name="prioridad" class="form-control custom-select">
-									{% for prioridad in datos.prioridades %}
-										<option value="{{ prioridad }}">{{ prioridad }}</option>
-									{% endfor %}
-								</select>
+								{% if datos.miPedido.prioridad == 'Urgente' %}
+									<input type="text" name="prioridad" value="Urgente" class="form-control" readonly>
+								{% else %}
+									<select name="prioridad" class="form-control custom-select">
+										{% for prioridad in datos.prioridades %}
+											<option value="{{ prioridad }}">{{ prioridad }}</option>
+										{% endfor %}
+									</select>
+								{% endif %}
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="descripcion">Descripcion:</label>
+							<label class="control-label" for="descripcionTarea">Descripcion:</label>
 							<span class="asterisco">*</span>
-							<textarea class="form-control" rows="4" id="descripcion" name="descripcion" required>
+							<textarea class="form-control" rows="4" id="descripcionTarea" name="descripcion" required>
 								{% if datos.evento is not empty %}
 									{{ datos.evento.descripcion }}
 								{% endif %}
 							</textarea>
 							<div class="invalid-feedback">Complete este campo</div>
 						</div>
+						<!-- Modal Footer -->
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
 							<button type="submit" class="btn btn-success">Enviar</button>
 						</div>
 					</form>
-				{% endif %}
+				</div>
 			</div>
 		</div>
 	</div>
-</div>{% endif %}<!--MODIFICAR PEDIDO-->{% if "15" in datos.datosSesion.listaPermisos %}
-<div class="modal fade" id="modalUpdate">
-	<div class="modal-dialog modal-lg">
-		<div
-			class="modal-content">
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
-			<!-- Modal body -->
-			<div class="modal-body">
-				<form action="updatePedido" method="post" class="was-validated">
-					<input type="text" name="id" id="updateID" hidden>
-					<div class="form-row">
-						<div class="form-group col-lg-4">
-							<label for="nombreUsuario">Usuario Creador:</label>
-							<span class="asterisco">*</span>
-							<input type="text" name="nombreUsuario" class="form-control" id="nombreUsuarioUpdate" required readonly>
-						</div>
-						<div class="form-group col-lg-4">
-							<label for="fechaInicio">Fecha:</label>
-							<span class="asterisco">*</span>
-							<input type="date" name="fechaInicio" class="form-control" id="fechaInicioUpdate" required readonly>
-						</div>
-						<div class="form-group col-lg-4">
-							<label for="estado">Estado:</label>
-							<span class="asterisco">*</span>
-							<input type="text" name="estado" class="form-control" id="estadoUpdate" required readonly>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-lg-6">
-							<label for="idSector">Sector:</label>
-							<span class="asterisco">*</span>
-							<select name="idSector" id="idSectorUpdate" class="form-control custom-select">
-								{% for sector in datos.sectores %}
-									<option value="{{ sector.idSector }}">
-										{{ sector.nombreSector }}</option>
-								</option>
-							{% endfor %}
-						</select>
-					</div>
-					<div class="form-group col-lg-6">
-						<label for="prioridad">Prioridad:</label>
-						<span class="asterisco">*</span>
-						<select name="prioridad" id="prioridadUpdate" class="form-control custom-select">
-							{% for prioridad in datos.prioridades %}
-								<option value="{{ prioridad }}">{{ prioridad }}</option>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="descripcion">Descripcion:</label>
-					<span class="asterisco">*</span>
-					<textarea class="form-control" rows="4" name="descripcion" id="descripcionUpdate" required></textarea>
-					<div class="invalid-feedback">Complete este campo</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-					<button type="submit" class="btn btn-success">Enviar</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div></div>{% endif %}<!--ELIMINAR PEDIDO SI SOLO ESTÁ EN ESTADO INICIADO-->{% if "14" in datos.datosSesion.listaPermisos %}<div class="modal fade" id="modalDelete">
-<div class="modal-dialog" role="document">
-	<div
-		class="modal-content">
-		<!-- Modal Header -->
-		<div class="modal-header">
-			<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-			<button type="button" class="close" data-dismiss="modal">
-				<span>&times;</span>
-			</button>
-		</div>
-		<!-- Modal body -->
-		<div class="modal-body">
-			<p class="mb-3">¿Está seguro?</p>
-			<form action="cancelPedido" method="post">
-				<input
-				type="text" name="id" id="deleteID" hidden>
-				<!-- Modal Footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-					<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div></div>{% endif %}<!--VER TAREAS DE UN PEDIDO-->{% if "16" in datos.datosSesion.listaPermisos %}<div class="modal fade" id="modalTareas">
-<div class="modal-dialog modal-xl">
-	<div
-		class="modal-content">
-		<!-- Modal Header -->
-		<div class="modal-header">
-			<h3 class="modal-title m-0">Ver Pedido</h3>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-		</div>
-		<!-- Modal body -->
-		<div class="dt-buttons btn-group">
-			<button class="btn btn-secondary buttons-collection dropdown-toggle" tabindex="0" aria-controls="miTabla2" type="button" aria-haspopup="true">
-				<i class="fal fa-download"></i>
-				Descargar</button>
-			<button class="btn btn-secondary buttons-print export buttons-collection" tabindex="0" aria-controls="miTabla2" type="button" title="Imprimir" onclick='printDiv();'>
-				<i class="fal fa-print"></i>
-				Imprimir</button>
-		</div>
-		<div class="modal-body">
-			<div class="row border-bottom pb-3">
-				<div class="col-6">
-					<dl class="row m-0">
-						<dt class="col-lg-3 text-left my-1 mx-0">Pedido Nº:</dt>
-						<dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoID"></dd>
-						<dt class="col-lg-3 text-left my-1 mx-0">Usuario:</dt>
-						<dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoNombreUsuario"></dd>
-						<dt class="col-lg-3 text-left my-1 mx-0">Fecha:</dt>
-						<dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoFechaInicio"></dd>
-					</dl>
-				</div>
-				<div class="col-6">
-					<dl class="row m-0">
-						<dt class="col-lg-3 text-left my-1 mx-0">Estado:</dt>
-						<dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoEstado"></dd>
-						<dt class="col-lg-3 text-left my-1 mx-0">Sector:</dt>
-						<dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoNombreSector"></dd>
-						<dt class="col-lg-3 text-left my-1 mx-0">Prioridad:</dt>
-						<dd class="col-lg-9 text-left my-1 mx-0" id="verPedidoPrioridad"></dd>
-					</dl>
-				</div>
-				<div class="col">
-					<dl class="row m-0">
-						<dt class="text-left my-1 mx-0 pl-1">
-							&nbsp;&nbsp;&nbsp;Descripcion:</dt>
-						<dd class="text-justify my-1 mx-0" id="verPedidoDescripcion">
-							&nbsp;&nbsp;&nbsp;&nbsp;
-						</dd>
-					</dl>
-				</div>
-			</div>
-			{% if "17" in datos.datosSesion.listaPermisos and (datos.miPedido.estado != "Finalizado") and (datos.miPedido.estado != "Cancelado")%}
-				<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNewTarea">
-					<i class="fal fa-plus"></i>
-					Crear Nuevo</button>
-			{% endif %}
-			<table id="miTabla2" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-				<thead class="headtable">
-					<th>Nº Tarea</th>
-					<th>OT Asignada</th>
-					<th>Descripcion</th>
-					<th>Especializacion</th>
-					<th>Prioridad</th>
-					<th>Estado</th>
-					<th>Agentes</th>
-					<th>Insumos</th>
-					<th>Accion</th>
-				</thead>
-			</table>
-		</div>
-	</div>
-</div></div>{% endif %}<!--CREAR TAREA PARA UN PEDIDO MODAL--><div class="modal fade" id="modalNewTarea"><div class="modal-dialog modal-lg">
-<div
-	class="modal-content">
-	<!-- Modal Header -->
-	<div class="modal-header">
-		<h3 class="modal-title m-0">Crear Tarea</h3>
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-	</div>
-	<!-- Modal body -->
-	<div class="modal-body">
-		<form action="/tarea/guardar" method="post" class="was-validated">
-			<input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
-			<div class="form-row">
-				<div class="form-group col-lg-4">
-					<label for="nombreUsuario">Usuario Creador:</label>
-					<span class="asterisco">*</span>
-					<input type="text" name="nombreUsuario" class="form-control" value="{{ datos.userLogueado }}" required readonly>
-				</div>
-				<div class="form-group col-lg-4">
-					<label for="fechaInicio">Fecha:</label>
-					<span class="asterisco">*</span>
-					<input type="date" name="fechaInicio" class="form-control" value="{{ datos.diaHoy }}" required readonly>
-				</div>
-				<div class="form-group col-lg-4">
-					<label for="estado">Estado:</label>
-					<span class="asterisco">*</span>
-					<input type="text" name="estado" class="form-control" value="{{ datos.estados.0 }}" required readonly>
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-lg-6">
-					<label for="especializacion">Especializacion:</label>
-					<span class="asterisco">*</span>
-					<select name="especializacion" class="form-control custom-select">
-						{% for especializacion in datos.especializaciones %}
-							<option value="{{ especializacion.idEspecializacion }}">{{ especializacion.nombre }}
-							</option>
-						{% endfor %}
-					</select>
-				</div>
-				<div class="form-group col-lg-6">
-					<label for="prioridad">Prioridad:</label>
-					<span class="asterisco">*</span>
-					{% if datos.miPedido.prioridad == 'Urgente' %}
-						<input type="text" name="prioridad" value="Urgente" class="form-control" readonly>
-					{% else %}
-						<select name="prioridad" class="form-control custom-select">
-							{% for prioridad in datos.prioridades %}
-								<option value="{{ prioridad }}">{{ prioridad }}</option>
-							{% endfor %}
-						</select>
-					{% endif %}
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="descripcion">Descripcion:</label>
-				<span class="asterisco">*</span>
-				<textarea class="form-control" rows="4" id="descripcion" name="descripcion" required>
-					{% if datos.evento is not empty %}
-						{{ datos.evento.descripcion }}
-					{% endif %}
-				</textarea>
-				<div class="invalid-feedback">Complete este campo</div>
-			</div>
-			<!-- Modal Footer -->
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-				<button type="submit" class="btn btn-success">Enviar</button>
-			</div>
-		</form>
-	</div>
-</div></div></div><!-- FIN MODALES NEW, UPDATE Y DELETE --><script src="/public/js/ajax/ajaxFichaSector.js"></script><script src="/public/js/jsBasicos/jsPedido.js"></script><script src="/public/js/generales/printThis.js"></script><script>verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Pedido');
-ordenarTabla('miTabla', '0,1,2,3,4,5,6,7,8', [9], 'Pedidos Registrados');
-ordenarTabla('miTabla2', '0,1,2,3,4,5,6,7', [8], 'Tareas Registradas');</script>{% endblock %}
+	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'partials/scriptsDatatables.html' %}
+	<script src="/public/js/jsBasicos/jsPedido.js" type="module"></script>
+	<script>
+		$(function () {
+verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Pedido');
+});
+	</script>
+{% endblock %}

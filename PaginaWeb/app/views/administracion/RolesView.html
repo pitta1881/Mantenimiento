@@ -16,7 +16,7 @@
 
 		<!-- TABLA ROLES -->
 		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-			<thead class="headtable">
+			<thead>
 				<tr>
 					<th>Nº Rol</th>
 					<th>Nombre</th>
@@ -29,7 +29,7 @@
 						<td>{{ rol.id }}</td>
 						<td>{{ rol.nombre }}</td>
 						<td>
-							<div class="btn-group float-none" role="group">
+							<div class="btn-group btn-group-sm float-none" role="group">
 								{% if "12" in datos.datosSesion.listaPermisos %}
 									<button type="button" class="btn btn-outline-primary" data-id='{{ rol.id }}' data-abm="visualizarRolesPermisos" data-toggle="tooltip" title="Ver Permisos" data-placement="top">
 										<i class="fal fa-eye fa-lg fa-fw"></i>
@@ -41,7 +41,7 @@
 									</button>
 								{% endif %}
 								{% if "10" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ rol.usado ? 'disabled' }} data-id='{{ rol.id }}' data-abm="modalDelete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" {{ rol.usado ? 'disabled' }} data-id='{{ rol.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
 										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
@@ -88,33 +88,7 @@
 
 	<!--DELETE ROL SI NO TIENE PERMISOS Y NO ESTÁ ASIGNADO A UN USUARIO-->
 	{% if "10" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalDelete">
-			<div class="modal-dialog" role="document">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-						<button type="button" class="close" data-dismiss="modal">
-							<span>&times;</span>
-						</button>
-					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<p class="mb-3">¿Está seguro?</p>
-						<form action="deleteRol" method="post">
-							<input
-							type="text" id="deleteID" name="id" hidden>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="containerModalDelete"></div>
 	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 

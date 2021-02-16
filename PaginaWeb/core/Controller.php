@@ -11,7 +11,7 @@ abstract class Controller
     public function fichaOne()
     {
         $ficha['id'] = $_POST['id'];
-        $miFicha = $this->model->getFichaOne(table, $ficha);
+        $miFicha = $this->model->getFichaOne(table, $ficha);    //en cada clase q implementa ésta, defino que es 'table'
         if ($miFicha) {
             http_response_code(200);
         } else {
@@ -24,7 +24,7 @@ abstract class Controller
 
     public function fichaAll()
     {
-        $misFichas = $this->model->getFichaAll(table);
+        $misFichas = $this->model->getFichaAll(table);          //en cada clase q implementa ésta, defino que es 'table'
         if ($misFichas) {
             http_response_code(200);
         } else {

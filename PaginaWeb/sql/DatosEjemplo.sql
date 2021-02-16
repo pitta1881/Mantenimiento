@@ -195,6 +195,7 @@ INSERT INTO `Estados` (`nombre`)
 VALUES ('Iniciado'),
     ('En Curso'),
     ('Pendiente'),
+    ('Cancelado'),
     ('Finalizado')
 ;
 
@@ -472,14 +473,14 @@ VALUES (
         '1'
     ),
     (
-        'Casa N.3',
+        'Casa 3',
         'Alfonso',
         963,
         'zonab@mail.com',
         '2'
     ),
     (
-        'Casa N.10',
+        'Casa 10',
         'Adriana',
         963,
         'zonab@mail.com',

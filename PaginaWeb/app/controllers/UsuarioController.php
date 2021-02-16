@@ -7,11 +7,6 @@ use App\Core\MyInterface;
 use App\Models\UsuarioModel;
 
 define("table", "usuarios");
-define("tableRxU", "roles_x_usuarios");
-define("tablePedidos", "pedidos");
-define("tableMovimientos", "movimientos");
-define("tableRoles", "roles");
-define("tablePersonas", "personas");
 
 class UsuarioController extends Controller implements MyInterface
 {

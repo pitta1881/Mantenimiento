@@ -5,7 +5,7 @@ import {
     visualizarUpdateModalRxP,
     modificarModalUsuario as modificarModal,
     modificarRolesModalUsuario as modificarModalRoles,
-    visualizarPersonaAgente as visualizarModal,
+    visualizarPersonaAgente,
     eliminarModalUsuario as deleteModal,
     loadListenerActionButtons,
     loadScriptValidarCampos,
@@ -20,7 +20,13 @@ setUrlAjaxRxP("/administracion/roles/");
 
 loadTooltips();
 modalDrag();
-loadListenerActionButtons(modificarModal, deleteModal, visualizarModal, null, modificarModalRoles, visualizarUpdateModalRxP);
+loadListenerActionButtons({
+    'update': modificarModal,
+    'delete': deleteModal,
+    'visualize': visualizarPersonaAgente,
+    'updateRoles': modificarModalRoles,
+    'visualizarRolesPermisos': visualizarUpdateModalRxP
+});
 loadScriptValidarCampos();
 
 loadScriptOrdenarPagTablas('miTabla', '0,1,2,3', [4], 'Usuarios Registrados');

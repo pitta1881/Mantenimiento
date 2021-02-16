@@ -16,10 +16,9 @@
 
 		<!-- TABLA PERSONAS -->
 		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-			<thead class="headtable">
+			<thead>
 				<tr>
-					<th>DNI
-					</th>
+					<th>DNI</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
 					<th>Direccion</th>
@@ -38,10 +37,10 @@
 							<td>{{ persona.apellido }}</td>
 							<td>{{ persona.direccion }}</td>
 							<td>{{ persona.email }}</td>
-							<td>{{ persona.fechaNacimiento|date("d/m/Y") }}</td>
+							<td>{{ persona.fechaNacimiento }}</td>
 							<td>{{ persona.estadoNombre }}</td>
 							<td>
-								<div class="btn-group float-none" role="group">
+								<div class="btn-group btn-group-sm float-none" role="group">
 									{% if "47" in datos.datosSesion.listaPermisos %}
 										<button type="button" class="btn btn-outline-primary" data-id='{{ persona.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Persona" data-placement="top">
 											<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
@@ -213,33 +212,7 @@
 
 	<!--ELIMINAR PERSONA SI NO ESTA USADO-->
 	{% if "46" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalDelete">
-			<div class="modal-dialog" role="document">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-						<button type="button" class="close" data-dismiss="modal">
-							<span>&times;</span>
-						</button>
-					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<p class="mb-3">¿Está seguro?</p>
-						<form action="deletePersona" method="post">
-							<input
-							type="text" name="id" id="deleteID" hidden>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="containerModalDelete"></div>
 	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}

@@ -16,7 +16,7 @@
 
 		<!-- TABLA ESPECIALIZACIONES -->
 		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-			<thead class="headtable">
+			<thead>
 				<tr>
 					<th>ID Especializacion</th>
 					<th>Nombre</th>
@@ -29,7 +29,7 @@
 						<td>{{ especializacion.id }}</td>
 						<td>{{ especializacion.nombre }}</td>
 						<td>
-							<div class="btn-group float-none" role="group">
+							<div class="btn-group btn-group-sm float-none" role="group">
 								{% if "35" in datos.datosSesion.listaPermisos %}
 									<button type="button" class="btn btn-outline-primary" {{ especializacion.usado ? 'disabled' }} data-id="{{ especializacion.id }}" data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Especializacion" data-placement="top">
 										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
@@ -83,6 +83,7 @@
 
 	<!--MODIFICAR ESPECIALIZACION-->
 	{% if "35" in datos.datosSesion.listaPermisos %}
+		<div id="containerModalUpdate"></div>
 		<div class="modal fade" id="modalUpdate">
 			<div class="modal-dialog">
 				<div
@@ -117,33 +118,7 @@
 
 	<!--ELIMINAR ESPECIALIZACION SI NO UTILIZADO-->
 	{% if "34" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalDelete">
-			<div class="modal-dialog" role="document">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-						<button type="button" class="close" data-dismiss="modal">
-							<span>&times;</span>
-						</button>
-					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<p class="mb-3">¿Está seguro?</p>
-						<form action="deleteEspecializacion" method="post">
-							<input
-							type="text" id="deleteID" name="id" hidden>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="containerModalDelete"></div>
 	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}

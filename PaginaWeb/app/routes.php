@@ -15,7 +15,7 @@
     $router->post('administracion/usuarios/createUsuario', 'UsuarioController@create');
     $router->post('administracion/usuarios/updateUsuario', 'UsuarioController@update');
     $router->post('administracion/usuarios/updateRolesUsuario', 'UsuarioController@updateRolesUsuario');
-    $router->post('administracion/usuarios/deleteUsuario', 'UsuarioController@delete');
+    $router->post('administracion/usuarios/delete', 'UsuarioController@delete');
     $router->post('administracion/usuarios/fichaOne', 'UsuarioController@fichaOne');
     $router->post('administracion/usuarios/fichaAll', 'UsuarioController@fichaAll');
 
@@ -23,7 +23,7 @@
     $router->get('administracion/personas', 'PersonaController@index');
     $router->post('administracion/personas/createPersona', 'PersonaController@create');
     $router->post('administracion/personas/updatePersona', 'PersonaController@update');
-    $router->post('administracion/personas/deletePersona', 'PersonaController@delete');
+    $router->post('administracion/personas/delete', 'PersonaController@delete');
     $router->post('administracion/personas/updateEstadoPersona', 'PersonaController@updateEstado');
     $router->post('administracion/personas/fichaOne', 'PersonaController@fichaOne');
     $router->post('administracion/personas/fichaAll', 'PersonaController@fichaAll');
@@ -32,7 +32,7 @@
     $router->get('administracion/roles', 'RolController@index');
     $router->post('administracion/roles/createRol', 'RolController@create');
     $router->post('administracion/roles/updateRol', 'RolController@update');
-    $router->post('administracion/roles/deleteRol', 'RolController@delete');
+    $router->post('administracion/roles/delete', 'RolController@delete');
     $router->post('administracion/roles/fichaOne', 'RolController@fichaOne');
     $router->post('administracion/roles/fichaAll', 'RolController@fichaAll');
 
@@ -40,7 +40,7 @@
     $router->get('administracion/permisos', 'PermisoController@index');
     $router->post('administracion/permisos/createPermiso', 'PermisoController@create');
     $router->post('administracion/permisos/updatePermiso', 'PermisoController@update');
-    $router->post('administracion/permisos/deletePermiso', 'PermisoController@delete');
+    $router->post('administracion/permisos/delete', 'PermisoController@delete');
     $router->post('administracion/permisos/fichaOne', 'PermisoController@fichaOne');
     $router->post('administracion/permisos/fichaAll', 'PermisoController@fichaAll');
 
@@ -48,7 +48,7 @@
     $router->get('administracion/agentes', 'AgenteController@index');
     $router->post('administracion/agentes/createAgente', 'AgenteController@create');
     $router->post('administracion/agentes/updateAgente', 'AgenteController@update');
-    $router->post('administracion/agentes/deleteAgente', 'AgenteController@delete');
+    $router->post('administracion/agentes/delete', 'AgenteController@delete');
     $router->post('administracion/agentes/fichaOne', 'AgenteController@fichaOne');
     $router->post('administracion/agentes/fichaAll', 'AgenteController@fichaAll');
 
@@ -56,7 +56,7 @@
     $router->get('administracion/especializaciones', 'EspecializacionController@index');
     $router->post('administracion/especializaciones/createEspecializacion', 'EspecializacionController@create');
     $router->post('administracion/especializaciones/updateEspecializacion', 'EspecializacionController@update');
-    $router->post('administracion/especializaciones/deleteEspecializacion', 'EspecializacionController@delete');
+    $router->post('administracion/especializaciones/delete', 'EspecializacionController@delete');
     $router->post('administracion/especializaciones/fichaOne', 'EspecializacionController@fichaOne');
     $router->post('administracion/especializaciones/fichaAll', 'EspecializacionController@fichaAll');
 
@@ -64,10 +64,19 @@
     $router->get('administracion/sectores', 'SectorController@index');
     $router->post('administracion/sectores/createSector', 'SectorController@create');
     $router->post('administracion/sectores/updateSector', 'SectorController@update');
-    $router->post('administracion/sectores/deleteSector', 'SectorController@delete');
+    $router->post('administracion/sectores/delete', 'SectorController@delete');
     $router->post('administracion/sectores/fichaOne', 'SectorController@fichaOne');
     $router->post('administracion/sectores/fichaAll', 'SectorController@fichaAll');
 
+//rutas pedidos
+    $router->get('pedidos', 'PedidoController@index');
+    $router->post('pedidos/createPedido', 'PedidoController@create');
+    $router->post('pedidos/updatePedido', 'PedidoController@update');
+    $router->post('pedidos/finishPedido', 'PedidoController@finish');
+    $router->post('pedidos/cancelPedido', 'PedidoController@cancel');
+    $router->post('pedidos/fichaOne', 'PedidoController@fichaOne');
+    $router->post('pedidos/fichaAll', 'PedidoController@fichaAll');
+        
 //rutas insumos
     $router->get('insumos', 'InsumoController@index');
     $router->post('insumos/administracionInsumos/guardarInsumo', 'InsumosController@guardarInsumo');
@@ -78,14 +87,6 @@
     $router->get('insumo/verHistorialParticular', 'InsumosController@verHistorialParticular');
 
 
-//rutas pedidos
-    $router->get('pedidos', 'PedidoController@index');
-    $router->post('pedidos/createPedido', 'PedidoController@create');
-    $router->post('pedidos/updatePedido', 'PedidoController@update');
-    $router->post('pedidos/finishPedido', 'PedidoController@finish');
-    $router->post('pedidos/cancelPedido', 'PedidoController@cancel');
-    $router->get('pedidos/fichaPedido', 'PedidoController@ficha');
-    
 //rutas tareas
     $router->post('tarea/guardar', 'TareaController@guardar');
     $router->post('tarea/modificar/guardar', 'TareaController@modificar');

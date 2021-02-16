@@ -7,8 +7,6 @@ use App\Core\MyInterface;
 use App\Models\EspecializacionModel;
 
 define("table", "especializaciones");
-define("tableTarea", "tareas");
-define("tableExA", "especializaciones_x_agentes");
 
 class EspecializacionController extends Controller implements MyInterface
 {
@@ -21,7 +19,7 @@ class EspecializacionController extends Controller implements MyInterface
     public function index($alerta = null)
     {
         $comparaTablasIfUsado = array(
-                                    array(  "tabla" => tableTarea,
+                                    array(  "tabla" => tableTareas,
                                             "comparaKeyOrig" => "id",
                                             "comparaKeyDest" => "idEspecializacion"
                                         ),

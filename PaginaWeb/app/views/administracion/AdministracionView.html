@@ -1,97 +1,99 @@
 {% extends "base.html" %}
-{% block title %} Administracion {% endblock %}
+{% block title %}
+	Administracion
+{% endblock %}
 {% block main %}
 
-<div class="container-fluid mt-3">
-    <div class="card-deck mb-3">
-        {% if "4" in datos.datosSesion.listaPermisos %}
-        <div class="card border-primary">
-            <div class="card-body pb-1">
-                <i class="fal fa-users-cog fa-5x fa-fw"></i>
-                <h5 class="card-title mt-2">Usuarios</h5>
-                <p class="card-text">ABM de Usuarios, Password y Roles</p>
-            </div>
-            <div class="card-footer">
-                <a href="/administracion/usuarios/" class="btn btn-primary">Usuarios</a>
-            </div>
-        </div>
-        {% endif %}
-        {% if "48" in datos.datosSesion.listaPermisos %}
-        <div class="card border-primary">
-            <div class="card-body pb-1">
-                <i class="fal fa-id-card fa-5x fa-fw"></i>
-                <h5 class="card-title mt-2">Personas</h5>
-                <p class="card-text">ABM de Personas y sus Estados</p>
-            </div>
-            <div class="card-footer">
-                <a href="/administracion/personas/" class="btn btn-primary">Personas</a>
-            </div>
-        </div>
-        {% endif %}
-        <div class="w-100 d-xl-none mt-4"></div>
-        {% if "12" in datos.datosSesion.listaPermisos %}
-        <div class="card border-primary">
-            <div class="card-body pb-1">
-                <i class="fal fa-repeat-alt fa-5x fa-fw"></i>
-                <h5 class="card-title mt-2">Roles</h5>
-                <p class="card-text">ABM de Roles, Asignacion de sus Permisos</p>
-            </div>
-            <div class="card-footer">
-                <a href="/administracion/roles/" class="btn btn-primary">Roles</a>
-            </div>
-        </div>
-        {% endif %}
-        {% if "8" in datos.datosSesion.listaPermisos %}
-        <div class="card border-primary">
-            <div class="card-body pb-1">
-                <i class="fal fa-list fa-5x fa-fw"></i>
-                <h5 class="card-title mt-2">Permisos</h5>
-                <p class="card-text">ABM de Permisos</p>
-            </div>
-            <div class="card-footer">
-                <a href="/administracion/permisos/" class="btn btn-primary">Permisos</a>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-    <div class="card-deck mb-3">
-        {% if "36" in datos.datosSesion.listaPermisos %}
-        <div class="card border-primary">
-            <div class="card-body pb-1">
-                <i class="fal fa-paint-brush fa-5x fa-fw"></i>
-                <h5 class="card-title mt-2">Especializaciones</h5>
-                <p class="card-text">ABM de Especializaciones para los Agentes</p>
-            </div>
-            <div class="card-footer">
-                <a href="/administracion/especializaciones/" class="btn btn-primary">Especializaciones</a>
-            </div>
-        </div>
-        {% endif %}
-        {% if "32" in datos.datosSesion.listaPermisos %}
-        <div class="card border-primary">
-            <div class="card-body pb-1">
-                <i class="fal fa-users fa-5x fa-fw"></i>
-                <h5 class="card-title mt-2">Agentes</h5>
-                <p class="card-text">ABM de Agentes y sus Especializaciones</p>
-            </div>
-            <div class="card-footer">
-                <a href="/administracion/agentes/" class="btn btn-primary">Agentes</a>
-            </div>
-        </div>
-        {% endif %}
-        <div class="w-100 d-xl-none mt-4"></div>
-        {% if "28" in datos.datosSesion.listaPermisos %}
-        <div class="card border-primary">
-            <div class="card-body pb-1">
-                <i class="fal fa-hospital fa-5x fa-fw"></i>
-                <h5 class="card-title mt-2">Sectores</h5>
-                <p class="card-text">ABM de Sectores, Telefono, Responsable y e-mail</p>
-            </div>
-            <div class="card-footer">
-                <a href="/administracion/sectores/" class="btn btn-primary">Sectores</a>
-            </div>
-        </div>
-        {% endif %}
-    </div>
-</div>
+	<div class="container-fluid mt-3">
+		<div class="card-deck mb-3">
+			{% if "4" in datos.datosSesion.listaPermisos %}
+				<div class="card border-primary">
+					<div class="card-body pb-1">
+						<i class="fal fa-users-cog fa-5x fa-fw"></i>
+						<h5 class="card-title mt-2">Usuarios</h5>
+						<p class="card-text">ABM de Usuarios, Password y Roles</p>
+					</div>
+					<div class="card-footer">
+						<a href="/administracion/usuarios/" class="btn btn-primary">Usuarios</a>
+					</div>
+				</div>
+			{% endif %}
+			{% if "48" in datos.datosSesion.listaPermisos %}
+				<div class="card border-primary">
+					<div class="card-body pb-1">
+						<i class="fal fa-id-card fa-5x fa-fw"></i>
+						<h5 class="card-title mt-2">Personas</h5>
+						<p class="card-text">ABM de Personas y sus Estados</p>
+					</div>
+					<div class="card-footer">
+						<a href="/administracion/personas/" class="btn btn-primary">Personas</a>
+					</div>
+				</div>
+			{% endif %}
+			<div class="w-100 d-xl-none mt-4"></div>
+			{% if "12" in datos.datosSesion.listaPermisos %}
+				<div class="card border-primary">
+					<div class="card-body pb-1">
+						<i class="fal fa-repeat-alt fa-5x fa-fw"></i>
+						<h5 class="card-title mt-2">Roles</h5>
+						<p class="card-text">ABM de Roles, Asignacion de sus Permisos</p>
+					</div>
+					<div class="card-footer">
+						<a href="/administracion/roles/" class="btn btn-primary">Roles</a>
+					</div>
+				</div>
+			{% endif %}
+			{% if "8" in datos.datosSesion.listaPermisos %}
+				<div class="card border-primary">
+					<div class="card-body pb-1">
+						<i class="fal fa-list fa-5x fa-fw"></i>
+						<h5 class="card-title mt-2">Permisos</h5>
+						<p class="card-text">ABM de Permisos</p>
+					</div>
+					<div class="card-footer">
+						<a href="/administracion/permisos/" class="btn btn-primary">Permisos</a>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+		<div class="card-deck mb-3">
+			{% if "36" in datos.datosSesion.listaPermisos %}
+				<div class="card border-primary">
+					<div class="card-body pb-1">
+						<i class="fal fa-paint-brush fa-5x fa-fw"></i>
+						<h5 class="card-title mt-2">Especializaciones</h5>
+						<p class="card-text">ABM de Especializaciones para los Agentes</p>
+					</div>
+					<div class="card-footer">
+						<a href="/administracion/especializaciones/" class="btn btn-primary">Especializaciones</a>
+					</div>
+				</div>
+			{% endif %}
+			{% if "32" in datos.datosSesion.listaPermisos %}
+				<div class="card border-primary">
+					<div class="card-body pb-1">
+						<i class="fal fa-users fa-5x fa-fw"></i>
+						<h5 class="card-title mt-2">Agentes</h5>
+						<p class="card-text">ABM de Agentes y sus Especializaciones</p>
+					</div>
+					<div class="card-footer">
+						<a href="/administracion/agentes/" class="btn btn-primary">Agentes</a>
+					</div>
+				</div>
+			{% endif %}
+			<div class="w-100 d-xl-none mt-4"></div>
+			{% if "28" in datos.datosSesion.listaPermisos %}
+				<div class="card border-primary">
+					<div class="card-body pb-1">
+						<i class="fal fa-hospital fa-5x fa-fw"></i>
+						<h5 class="card-title mt-2">Sectores</h5>
+						<p class="card-text">ABM de Sectores, Telefono, Responsable y e-mail</p>
+					</div>
+					<div class="card-footer">
+						<a href="/administracion/sectores/" class="btn btn-primary">Sectores</a>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}

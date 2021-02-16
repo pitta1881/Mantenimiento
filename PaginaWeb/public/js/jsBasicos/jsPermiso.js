@@ -13,6 +13,9 @@ setUrl("/administracion/permisos/");
 
 loadTooltips();
 modalDrag();
-loadListenerActionButtons(modificarModal, deleteModal);
+loadListenerActionButtons({
+    'update': modificarModal,
+    'delete': deleteModal
+});
 loadScriptValidarCampos();
 loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Permisos Registrados');

@@ -108,42 +108,40 @@ CREATE TABLE Prioridades(
 CREATE TABLE Pedidos (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     descripcion TEXT NOT NULL,
-    fechaInicio DATE NOT NULL,
-    fechaFin DATE,
+    fechaInicio DATETIME NOT NULL,
+    fechaFin DATETIME,
     idUsuario INTEGER NOT NULL,
-    idSector INTEGER NOT NULL,
     idEstado INTEGER NOT NULL,
+    idSector INTEGER NOT NULL,
     idPrioridad INTEGER NOT NULL,
     FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
-    FOREIGN KEY (idSector) REFERENCES Sectores (id),
     FOREIGN KEY (idEstado) REFERENCES Estados (id),
+    FOREIGN KEY (idSector) REFERENCES Sectores (id),
     FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
 );
 
 CREATE TABLE OrdenesDeTrabajo (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    fechaInicio DATE NOT NULL,
-    fechaFin DATE,
+    fechaInicio DATETIME NOT NULL,
+    fechaFin DATETIME,
     idEstado INTEGER NOT NULL,
     FOREIGN KEY (idEstado) REFERENCES Estados (id)
 );
 
 CREATE TABLE Tareas (
     id INTEGER NOT NULL,
-    fecha DATE NOT NULL,
+    fecha DATETIME NOT NULL,
     descripcion TEXT NOT NULL,
     idPedido INTEGER NOT NULL,
     idOrdenDeTrabajo INTEGER,
     idUsuario INTEGER NOT NULL,
     idEspecializacion INTEGER NOT NULL,
-    idEstado INTEGER NOT NULL,
     idPrioridad INTEGER NOT NULL,
     PRIMARY KEY (id, idPedido),
     FOREIGN KEY (idPedido) REFERENCES Pedidos (id),
     FOREIGN KEY (idOrdenDeTrabajo) REFERENCES OrdenesDeTrabajo (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
     FOREIGN KEY (idEspecializacion) REFERENCES Especializaciones (id),
-    FOREIGN KEY (idEstado) REFERENCES Estados (id),
     FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
 );
 
@@ -189,7 +187,7 @@ CREATE TABLE TiposOrdenesDeCompra (
 CREATE TABLE OrdenesDeCompra (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     costoEstimado INTEGER NOT NULL default 0,
-    fecha DATE NOT NULL,
+    fecha DATETIME NOT NULL,
     idEstado INTEGER NOT NULL,
     idUsuario INTEGER NOT NULL,
     idTipoOrdenDeCompra INTEGER NOT NULL,
@@ -202,7 +200,7 @@ CREATE TABLE Movimientos (
     id INTEGER AUTO_INCREMENT,
     idInsumo INTEGER NOT NULL,
     descripcion VARCHAR(50),
-    fecha DATE NOT NULL,
+    fecha DATETIME NOT NULL,
     entradaSalida BOOLEAN NOT NULL,
     isCompletado BOOLEAN NOT NULL,
     oldStock INTEGER NOT NULL,
@@ -218,14 +216,32 @@ CREATE TABLE Movimientos (
     FOREIGN KEY (idUsuario) REFERENCES Usuarios (id)
 );
 
-CREATE TABLE HistorialEstado (
-    idHistorial INTEGER,
-    idTarea INTEGER,
-    idPedido INTEGER,
-    fecha DATE NOT NULL,
-    descripcion VARCHAR(50),
+CREATE TABLE HistorialPedido (
+    id INTEGER NOT NULL,
+    idPedido INTEGER NOT NULL,
+    fecha DATETIME NOT NULL,
+    idUsuario INTEGER NOT NULL,
     idEstado INTEGER NOT NULL,
-    PRIMARY KEY (idPedido, idTarea, idHistorial),
+    idSector INTEGER,
+    idPrioridad INTEGER,
+    descripcion TEXT,
+    observacion TEXT NOT NULL,
+    PRIMARY KEY (id, idPedido),
+    FOREIGN KEY (idPedido) REFERENCES Pedidos (id),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
+    FOREIGN KEY (idEstado) REFERENCES Estados (id),
+    FOREIGN KEY (idSector) REFERENCES Sectores (id),
+    FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
+);
+
+CREATE TABLE HistorialTarea (
+    id INTEGER AUTO_INCREMENT,
+    idTarea INTEGER NOT NULL,
+    idPedido INTEGER NOT NULL,
+    fecha DATETIME NOT NULL,
+    descripcion VARCHAR(100),
+    idEstado INTEGER NOT NULL,
+    PRIMARY KEY (id, idPedido, idTarea),
     FOREIGN KEY (idPedido, idTarea) REFERENCES Tareas (idPedido, id),
     FOREIGN KEY (idEstado) REFERENCES Estados (id)
 );

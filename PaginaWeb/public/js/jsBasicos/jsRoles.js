@@ -15,6 +15,10 @@ setUrlAjaxRxP("/administracion/roles/");
 
 loadTooltips();
 modalDrag();
-loadListenerActionButtons(null, deleteModal, null, null, null, visualizarUpdateModalRxP);
+loadListenerActionButtons({
+    'delete': deleteModal,
+    'visualizarRolesPermisos': visualizarUpdateModalRxP,
+    'updateRolesPermisos': visualizarUpdateModalRxP
+});
 loadScriptValidarCampos();
 loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Roles Registrados');

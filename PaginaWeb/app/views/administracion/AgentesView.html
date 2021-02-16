@@ -16,10 +16,9 @@
 
 		<!-- TABLA AGENTES -->
 		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-			<thead class="headtable">
+			<thead>
 				<tr>
-					<th>Nº Agente
-					</th>
+					<th>Nº Agente</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
 					<th>Especializacion</th>
@@ -31,7 +30,7 @@
 				{% for agente in datos.todosAgentes %}
 					<tr>
 						<td>
-							<a href="#" data-abm="visualizer" data-id='{{ agente.idPersona }}'>{{ agente.id }}</a>
+							<a href="#" data-abm="visualize" data-id='{{ agente.idPersona }}'>{{ agente.id }}</a>
 						</td>
 						<td>{{ agente.nombre }}</td>
 						<td>{{ agente.apellido }}</td>
@@ -42,9 +41,9 @@
 						</td>
 						<td>{{ agente.isDisponible }}</td>
 						<td>
-							<div class="btn-group float-none" role="group">
+							<div class="btn-group btn-group-sm float-none" role="group">
 								{% if "32" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-abm="visualizer" data-id='{{ agente.idPersona }}' data-toggle="tooltip" title="Mas Detalles" data-placement="top">
+									<button type="button" class="btn btn-outline-primary" data-abm="visualize" data-id='{{ agente.idPersona }}' data-toggle="tooltip" title="Mas Detalles" data-placement="top">
 										<i class="fal fa-eye fa-lg fa-fw"></i>
 									</button>
 								{% endif %}
@@ -89,12 +88,9 @@
 							</div>
 						{% else %}
 							{% if datos.personas is empty %}
-								<div class="alert alert-danger text-center" role="alert">No hay Personas cargadas o ya están todas
-																																																																																																																																																																																													                    asignadas a
-																																																																																																																																																																																													                    un Agente.<br>
+								<div class="alert alert-danger text-center" role="alert">No hay Personas cargadas o ya están todas asignadas a un Agente.<br>
 									Para agregar mas Personas
-									<a href="/administracion/personas" class="alert-link">HAGA
-																																																																																																																																																																																																																		                        CLICK AQUI</a>
+									<a href="/administracion/personas" class="alert-link">HAGA CLICK AQUI</a>
 								</div>
 							{% else %}
 								<form action="createAgente" method="post" id="formAgenteNew">
@@ -111,8 +107,7 @@
 									</div>
 									<div class="form-row">
 										<div class="form-group required col-lg-12">
-											<label class="control-label" for="idEspecializacion">Seleccionar Especializaciones: (CTRL+CLICK seleccion
-																																																																																																																																																																																																																																																												                                múltiple)</label>
+											<label class="control-label" for="idEspecializacion">Seleccionar Especializaciones: (CTRL+CLICK seleccion múltiple)</label>
 											<select multiple name="idEspecializacion[]" id="idEspecializacion" class="form-control custom-select" size="5">
 												{% for especializacion in datos.todasEspecializaciones %}
 													<option value="{{ especializacion.id }}">{{ especializacion.nombre }}</option>
@@ -154,8 +149,7 @@
 								<input type="text" name="nombreyape" id="nombreyape" class="form-control" readonly>
 							</div>
 							<div class="form-group required">
-								<label class="control-label" for="idEspecializacionUpd">Seleccionar Roles: (CTRL+CLICK seleccion
-																																																																																																																																																																																													                            múltiple)</label>
+								<label class="control-label" for="idEspecializacionUpd">Seleccionar Roles: (CTRL+CLICK seleccion múltiple)</label>
 								<select multiple name="idEspecializacion[]" id="idEspecializacionUpd" class="form-control custom-select" size="5">
 									{% for especializacion in datos.todasEspecializaciones %}
 										<option value="{{ especializacion.id }}">{{ especializacion.nombre }}</option>
@@ -176,33 +170,7 @@
 
 	<!--DELETE AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
 	{% if "30" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalDelete">
-			<div class="modal-dialog" role="document">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-						<button type="button" class="close" data-dismiss="modal">
-							<span>&times;</span>
-						</button>
-					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<p class="mb-3">¿Está seguro?</p>
-						<form action="deleteAgente" method="post">
-							<input
-							type="text" id="deleteID" name="id" hidden>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="containerModalDelete"></div>
 	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}

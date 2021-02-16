@@ -7,10 +7,6 @@ use App\Core\MyInterface;
 use App\Models\AgenteModel;
 
 define("table", "agentes");
-define("tablePersonas", "personas");
-define("tableEspecializaciones", "especializaciones");
-define("tableTxA", "tareas_x_agentes");
-define("tableExA", "especializaciones_x_agentes");
 
 class AgenteController extends Controller implements MyInterface
 {

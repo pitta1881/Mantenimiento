@@ -7,9 +7,6 @@ use App\Core\MyInterface;
 use App\Models\PersonaModel;
 
 define("table", "personas");
-define("tableAgentes", "agentes");
-define("tableUsuarios", "usuarios");
-define("tableEstadosPersona", "estadospersona");
 
 class PersonaController extends Controller implements MyInterface
 {

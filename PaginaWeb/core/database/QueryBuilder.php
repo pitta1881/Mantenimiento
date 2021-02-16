@@ -35,8 +35,12 @@ class QueryBuilder
     private function cleanParameterName($parameters)
     {
         $cleaned_params = [];
-        foreach ($parameters as $name => $value) {
-            $cleaned_params[str_replace('-', '', $name)] = str_replace('-', '', $value) ;
+        foreach ($parameters as $key => $value) {
+            if (($key != 'fechaInicio') && ($key != 'fechaFin') && ($key != 'fecha')) {
+                $cleaned_params[str_replace('-', '', $key)] = str_replace('-', '', $value) ;
+            } else {
+                $cleaned_params[$key] = $value;
+            }
         }
         return $cleaned_params;
     }
@@ -267,14 +271,14 @@ class QueryBuilder
         }
     }
 
-    public function validarLogin($table, $usuario, $password)
+    public function countTareasAsignadas($idPedido)
     {
         $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE nombre='{$usuario}' AND password='{$password}' "
+            "SELECT COUNT(id) FROM tareas
+        WHERE idPedido = $idPedido"
         );
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
+        return $statement->fetchAll(PDO::FETCH_COLUMN);
     }
 
     /*
@@ -300,22 +304,6 @@ class QueryBuilder
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
-
-   
-    public function selectUsuarioPorPersonaPorRol($tableUsuario, $tablePersona, $tableRol)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT t1.nombre, t2.nombre,t2.apellido,t2.id,t3.nombreRol FROM $tableUsuario t1 inner JOIN $tablePersona t2 ON t1.nombre=t2.id inner JOIN $tableRol t3 ON t1.idRol=t3.idRol"
-        );
-        try {
-            $statement->execute();
-        } catch (Exception $e) {
-            $this->sendToLog($e);
-        }
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-
 
     
     public function comparaInsumos($table, $nombreInsumo, $descripcion)
@@ -368,16 +356,6 @@ class QueryBuilder
     {
         $statement = $this->pdo->prepare(
             "SELECT MAX(idTarea) FROM $table
-        WHERE idPedido = $idPedido"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function countTareasAsignadas($table, $idPedido)
-    { //table = tarea
-        $statement = $this->pdo->prepare(
-            "SELECT COUNT(idTarea) FROM $table
         WHERE idPedido = $idPedido"
         );
         $statement->execute();
@@ -447,14 +425,6 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
-    public function deletePermiso($table, $idEspecializacion)
-    { //table = agentes
-        $statement = $this->pdo->prepare(
-            "DELETE FROM $table  WHERE idPermiso = $idEspecializacion"
-        );
-        $statement->execute();
-    }
-
 
     public function getIdFromNombreEspecializacion($tableEsp, $nombre)
     {
@@ -472,23 +442,6 @@ class QueryBuilder
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function deleteSector($table, $idSector)
-    {
-        $statement = $this->pdo->prepare(
-            "DELETE FROM $table  WHERE idSector = $idSector"
-        );
-        $statement->execute();
-    }
-    public function selectSectorById($table, $nSector)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE idSector={$nSector}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
 
@@ -602,42 +555,6 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    
-    public function getFromPedidoConIdSector($tablePedido, $nSector)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT id FROM $tablePedido WHERE idSector=$nSector"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function getFromItemAgenteConIdAgente($tableItemAgente, $nAgente)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT idPedido FROM $tableItemAgente WHERE idAgente=$nAgente"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function getFromAgenteConIdEspecializacion($tableAgente, $nEspecializacion)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT idAgente FROM $tableAgente WHERE idEspecializacion=$nEspecializacion"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function getFromTareaConIdEspecializacion($tableTarea, $nEspecializacion)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT idTarea FROM $tableTarea WHERE idEspecializacion=$nEspecializacion"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
 
     public function selectOTById($table, $nOT)
     { //table = ot
@@ -708,60 +625,7 @@ class QueryBuilder
         );
         $statement->execute();
     }
-
-    public function selectAllPermisos($tablePermisos)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$tablePermisos} ORDER BY nombrePermiso ASC "
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function selectAllPersonas($tablePersona)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$tablePersona}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-   
-    public function getFromAgenteConIdPersona($tableAgente, $nAgente)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT idAgente FROM $tableAgente WHERE idAgente=$nAgente"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
     
-    public function getSize($tabla)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tabla"
-        );
-        $statement->execute();
-        $num_filas=$statement->rowCount();
-        return $num_filas;
-    }
-    
- 
-    public function selectUsuarioPorPersonaPorRolLimit($tableUsuario, $tablePersona, $tableRol, $litinf, $litsup)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT $tableUsuario.nombre,$tablePersona.nombre,$tablePersona .apellido,$tablePersona .id,$tableRol.nombreRol 
-            FROM $tableUsuario  inner JOIN $tablePersona  ON $tableUsuario.nombre=$tablePersona .idUsuario 
-            inner JOIN $tableRol  ON $tableUsuario.idRol=$tableRol.idRol LIMIT $litinf, $litsup"
-        );
-        try {
-            $statement->execute();
-        } catch (Exception $e) {
-            $this->sendToLog($e);
-        }
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
 
     public function idHistoriaSiguiente($tableHistoria, $idPedido, $idTarea)
     {
@@ -780,15 +644,6 @@ class QueryBuilder
         );
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-    public function getIdRol($tableRol, $nombreRol)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT (idRol) FROM $tableRol   WHERE nombreRol='$nombreRol'"
-        );
-        $statement->execute();
-    
-        return $statement->fetchAll(PDO::FETCH_NUM);
     }
 
     public function selectInsumosDisponibles($tableInsumos)

@@ -36,17 +36,55 @@ var idioma = {
     }
 };
 
-export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo) {
-    var table = $('#' + tablaID).DataTable({
+export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, modal, datosHTML) {
+
+    if ($('#' + tablaID + " thead button").length == 0) {
+        let query = '#' + tablaID + " thead tr th";
+        if ($('#' + tablaID + " thead tr th:last-child").text() == 'Accion') {
+            query = '#' + tablaID + " thead tr th:not(:last-child)";
+        }
+        $(query).each(function (i) {
+            $(this).append(`
+            <button class="btn btn-sm btn-outline-secondary" type="reset">
+                <i class="fa fa-search"></i>
+            </button>
+            <input class="form-control form-control-sm py-2 border-left-0 border d-none" type="search" id=${tablaID}_${i}>
+        `);
+            $('button', this).on('click', function () {
+                $(`#${tablaID}_${i}`).toggleClass("d-none");
+            });
+            $('button, input', this).on('click', function (e) {
+                e.stopPropagation();
+            });
+
+            $('input', this).on('keyup change', function () {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+    }
+
+    if (modal) {
+        $('#' + tablaID).DataTable().clear().destroy();
+        $('#' + tablaID + " tbody").empty();
+        $('#tbodyHistorial').html(datosHTML);
+    }
+
+    let table = $('#' + tablaID).DataTable({
+        orderCellsTop: true,
         dom: 'Bfrt<"col-lg-6 inline"i> <"col-lg-6 inline"p>',
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": true,
-        "language": idioma,
-        "columnDefs": [{
+        paging: true,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: true,
+        language: idioma,
+        columnDefs: [{
             "orderable": false,
             "targets": columNoOrdenar
         }, ],

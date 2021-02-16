@@ -16,7 +16,7 @@
 
 		<!-- TABLA PERMISOS -->
 		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-			<thead class="headtable">
+			<thead>
 				<tr>
 					<th>ID Permiso</th>
 					<th>Nombre</th>
@@ -29,7 +29,7 @@
 						<td>{{ permiso.id }}</td>
 						<td>{{ permiso.nombre }}</td>
 						<td>
-							<div class="btn-group float-none" role="group">
+							<div class="btn-group btn-group-sm float-none" role="group">
 								{% if "7" in datos.datosSesion.listaPermisos %}
 									<button type="button" class="btn btn-outline-primary" data-id='{{ permiso.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Permiso" data-placement="top">
 										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
@@ -119,33 +119,7 @@
 
 	<!--ELIMINAR PERMISO-->
 	{% if "6" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalDelete">
-			<div class="modal-dialog" role="document">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-						<button type="button" class="close" data-dismiss="modal">
-							<span>&times;</span>
-						</button>
-					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<p class="mb-3">¿Está seguro?</p>
-						<form action="deletePermiso" method="post">
-							<input
-							type="text" name="id" id="deleteID" hidden>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="containerModalDelete"></div>
 	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 

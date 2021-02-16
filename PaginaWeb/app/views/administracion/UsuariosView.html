@@ -16,7 +16,7 @@
 
 		<!-- TABLA USUARIOS -->
 		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-			<thead class="headtable">
+			<thead>
 				<tr>
 					<th>Nombre Usuario</th>
 					<th>DNI</th>
@@ -30,7 +30,7 @@
 					<tr>
 						<td>{{ usuario.nick }}</td>
 						<td>
-							<a href="#" data-abm="visualizer" data-id='{{ usuario.idPersona }}'>{{ usuario.idPersona }}</a>
+							<a href="#" data-abm="visualize" data-id='{{ usuario.idPersona }}'>{{ usuario.idPersona }}</a>
 						</td>
 						<td>{{ usuario.nombreApe }}</td>
 						<td>
@@ -39,7 +39,7 @@
 							{% endfor %}
 						</td>
 						<td>
-							<div class="btn-group float-none" role="group">
+							<div class="btn-group btn-group-sm float-none" role="group">
 								<button type="button" class="btn btn-outline-primary" data-id='{{ usuario.id }}' data-abm="updateRoles" data-toggle="tooltip" data-target="#modalRolesUpdate" title="Modificar Roles" data-placement="top">
 									<i class="fal fa-user-cog fa-lg fa-fw"></i>
 								</button>
@@ -98,8 +98,7 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group required col-lg-12">
-									<label class="control-label" for="idRol">Seleccionar Roles: (CTRL+CLICK seleccion
-																																																																																																																																																																																																								                                múltiple)</label>
+									<label class="control-label" for="idRol">Seleccionar Roles: (CTRL+CLICK seleccion múltiple)</label>
 									<select multiple name="idRol[]" id="idRol" class="form-control custom-select" size="3">
 										{% for rol in datos.todosRoles %}
 											<option value="{{ rol.id }}">{{ rol.nombre }}</option>
@@ -145,8 +144,7 @@
 						<form action="updateRolesUsuario" method="post" id="formUsuarioRolesUpd">
 							<input type="text" name="id" id="updateRolIdUsuario" hidden>
 							<div class="form-group required">
-								<label class="control-label" for="idRolUpd">Seleccionar Roles: (CTRL+CLICK seleccion
-																																																																																																																																																																																				                            múltiple)</label>
+								<label class="control-label" for="idRolUpd">Seleccionar Roles: (CTRL+CLICK seleccion múltiple)</label>
 								<select multiple name="idRol[]" id="idRolUpd" class="form-control custom-select" size="3">
 									{% for rol in datos.todosRoles %}
 										<option value="{{ rol.id }}">{{ rol.nombre }}</option>
@@ -186,7 +184,7 @@
 							</div>
 							<div class="form-group required">
 								<label class="control-label" for="passwordUpdConfirm">Confirme
-																																																																																																																																																																																				                            Contraseña:</label>
+																																																																																																																																																																																																																																																																																																									                            Contraseña:</label>
 								<input type="password" name="passwordConfirm" id="passwordUpdConfirm" class="form-control">
 							</div>
 							<!-- Modal Footer -->
@@ -203,33 +201,7 @@
 
 	<!--ELIMINAR USUARIO SI NO ESTA USADO-->
 	{% if "46" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalDelete">
-			<div class="modal-dialog" role="document">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0" id="h3TitleModalDelete"></h3>
-						<button type="button" class="close" data-dismiss="modal">
-							<span>&times;</span>
-						</button>
-					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<p class="mb-3">¿Está seguro?</p>
-						<form action="deleteUsuario" method="post">
-							<input
-							type="text" name="id" id="deleteID" hidden>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div id="containerModalDelete"></div>
 	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 

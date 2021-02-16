@@ -14,6 +14,10 @@ setUrl("/administracion/personas/");
 
 loadTooltips();
 modalDrag();
-loadListenerActionButtons(modificarModal, deleteModal, null, modificarEstadoModal);
+loadListenerActionButtons({
+    'update': modificarModal,
+    'delete': deleteModal,
+    'updateEstado': modificarEstadoModal
+});
 loadScriptValidarCampos();
 loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6', [7], 'Personas Registradas');
