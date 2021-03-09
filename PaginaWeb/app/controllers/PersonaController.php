@@ -16,23 +16,11 @@ class PersonaController extends Controller implements MyInterface
         session_start();
     }
     
-    public function index($alerta = null)
+    public function index()
     {
-        $comparaTablasIfUsado = array(
-                                    array(  "tabla" => tableAgentes,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idPersona"
-                                    ),
-                                        array(  "tabla" => tableUsuarios,
-                                                "comparaKeyOrig" => "id",
-                                                "comparaKeyDest" => "idPersona"
-                                            )
-                                    );
-        $datos['todasPersonas'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
         $datos['todosEstados'] = $this->model->getFichaAll(tableEstadosPersona);
         $datos['minimo18'] = date('Y-m-d', strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d', strtotime('70 years ago'));
-        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
@@ -57,7 +45,7 @@ class PersonaController extends Controller implements MyInterface
             'idEstadoPersona' => 1
         ];
         $insert = $this->model->insert(table, $persona, "Persona");
-        return $this->index($insert);
+        json_encode($insert);
     }
 
     public function update()
@@ -71,23 +59,23 @@ class PersonaController extends Controller implements MyInterface
             'fechaNacimiento' => $_POST['fechaNacimiento']
         ];
         $update = $this->model->update(table, $persona, "Persona");
-        return $this->index($update);
+        echo json_encode($update);
     }
     
     public function delete()
     {
         $persona['id'] = $_POST['id'];
         $delete = $this->model->delete(table, $persona, "Persona");
-        return $this->index($delete);
+        echo json_encode($delete);
     }
 
     public function updateEstado()
     {
         $persona = [
-            'id' => $_POST['idEstado'],
+            'id' => $_POST['idPersona'],
             'idEstadoPersona' => $_POST['idEstadoPersona']
         ];
         $update = $this->model->update(table, $persona, "Persona");
-        return $this->index($update);
+        echo json_encode($update);
     }
 }

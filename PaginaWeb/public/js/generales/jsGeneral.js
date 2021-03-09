@@ -1,26 +1,35 @@
 export {
     setUrl,
     setUrlAjax,
+    setUrlAjax2,
     setUrlAjaxRxP,
     visualizarUpdateModalRxP,
+    loadTablePedido,
     visualizarSectorPedido,
     visualizarPedidoGeneral,
     modificarModalPedido,
     deleteModalPedido,
+    loadTableUsuario,
     modificarModalUsuario,
     modificarRolesModalUsuario,
     eliminarModalUsuario,
+    loadTablePersona,
     modificarModalPersona,
     modificarEstadoModalPersona,
     eliminarModalPersona,
+    loadTableRol,
     eliminarModalRol,
+    loadTablePermiso,
     modificarModalPermiso,
     eliminarModalPermiso,
+    loadTableAgente,
     modificarModalAgente,
     eliminarModalAgente,
     visualizarPersonaAgente,
+    loadTableSector,
     modificarModalSector,
     eliminarModalSector,
+    loadTableEspecializacion,
     modificarModalEspecializacion,
     eliminarModalEspecializacion,
     loadListenerActionButtons,
@@ -33,6 +42,7 @@ export {
 
 let url;
 let urlAjax;
+let urlAjax2;
 let urlAjaxRxP;
 
 function setUrl(newUrl) {
@@ -43,11 +53,73 @@ function setUrlAjax(newUrlAjax) {
     urlAjax = newUrlAjax;
 }
 
+function setUrlAjax2(newUrlAjax2) {
+    urlAjax2 = newUrlAjax2;
+}
+
 function setUrlAjaxRxP(newUrlAjaxRxP) {
     urlAjaxRxP = newUrlAjaxRxP;
 }
 
 //--PEDIDOS--\\
+async function loadTablePedido() {
+    let fichaAll = await getFichaAll();
+    let permisosRolActual = await getPermisosRolActual();
+    $('#miTabla').DataTable().clear().destroy();
+    let textoInner = ``;
+    if (fichaAll.length > 0) {
+        fichaAll.forEach(element => {
+            let disabled = ``;
+            let btnEye = ``;
+            let btnPencil = ``;
+            let btnTrash = ``;
+            (element.usado || element.id == 1 ? disabled = `disabled` : ``);
+            if (permisosRolActual.some(item => item == 16)) {
+                btnEye = ` 
+            <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="visualize" data-target="#modalGeneral" title="Ver Pedido" data-toggle="tooltip" data-placement="top">
+                <i class="fal fa-eye fa-lg fa-fw"></i>
+            </button>`;
+            }
+            if (element.idEstado != 4 && element.idEstado != 5 && permisosRolActual.some(item => item == 15)) {
+                btnPencil = ` 
+            <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="update" data-target="#modalUpdate" title="Editar Pedido" data-toggle="tooltip" data-placement="top">
+                <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+            </button>`;
+            }
+            if (element.idEstado == 1 && element.tareasAsignadas == 0 && permisosRolActual.some(item => item == 14)) {
+                btnTrash = ` 
+            <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="delete" data-target="#modalDelete" title="Cancelar Pedido" data-toggle="tooltip" data-placement="top">
+                <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>
+            `;
+            }
+            textoInner += `
+        <tr>
+            <th scope="row">${element.id}</th>
+            <td>${element.descripcion}</td>
+            <td>
+                <a href="#" data-abm="visualize-2" data-id='${element.idSector}'>${element.sectorNombre}</a>
+            </td>
+            <td>${element.fechaInicio}</td>
+            <td>${element.fechaFin}</td>
+            <td>${element.tareasAsignadas}</td>
+            <td>${element.estadoNombre}</td>
+            <td>${element.prioridadNombre}</td>
+            <td>${element.usuarioNick}</td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnEye}
+                    ${btnPencil}
+                    ${btnTrash}
+                </div>
+            </td>
+        </tr>
+        `;
+        });
+    }
+    $('#miTabla tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6,7,8', [9], 'Pedidos Registrados', false);
+}
 
 function visualizarPedidoGeneral(datos) {
     loadDlPedido(datos);
@@ -85,7 +157,7 @@ function loadDlPedido(datos) {
 function loadHistorial(datos) {
     let textoInner = ``;
     datos.historial.forEach(element => {
-        var myDate = element['fecha'].split(" ");
+        let myDate = element['fecha'].split(" ");
         myDate[0] = myDate[0].split("-").reverse().join("/");
         textoInner += `
         <tr>
@@ -101,8 +173,42 @@ function loadHistorial(datos) {
 }
 
 function loadTareas(datos) {
-
-    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7', [], 'Tareas Registradas', true);
+    let textoInner = ``;
+    if (datos.idEstado == 4 || datos.idEstado == 6) {
+        $('button[data-target="#modalNewTarea"]').hide();
+    } else {
+        $('button[data-target="#modalNewTarea"]').show();
+    }
+    datos.tareas.forEach(tarea => {
+        let myDateInicio = tarea['fechaInicio'].split(" ");
+        myDateInicio[0] = myDateInicio[0].split("-").reverse().join("/");
+        let myDateFin = ['-', ''];
+        if (tarea['fechaFin'] != '-') {
+            myDateFin = tarea['fechaFin'].split(" ");
+            myDateFin[0] = myDateFin[0].split("-").reverse().join("/");
+        }
+        let agentesHTML = '';
+        tarea.agentes.forEach(agente => {
+            agentesHTML += `<a href="#" data-abm="visualize-3" data-id=${agente.id}>${agente.nombre} ${agente.apellido}</a><br>`
+        })
+        textoInner += `
+        <tr>
+            <th scope="row">${tarea.id}</th>
+            <td>${myDateInicio[0]} ${myDateInicio[1]}</td>
+            <td>${myDateFin[0]} ${myDateFin[1]}</td>
+            <td>${tarea.descripcion}</td>
+            <td>${tarea.especializacionNombre}</td>
+            <td>${tarea.prioridadNombre}</td>
+            <td>${tarea.estadoNombre}</td>
+            <td>${tarea.nickUsuario}</td>
+            <td>${agentesHTML}</td>
+            
+        </tr>
+        `
+    });
+    $('#idPedidoTarea').attr('value', datos.id).val(datos.id);
+    $('#idPrioridadTarea option[value=' + datos.idPrioridad + ']').prop('selected', true);
+    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7,8', [], 'Tareas Registradas', true, textoInner);
 }
 
 function visualizarSectorPedido(datos) {
@@ -168,7 +274,7 @@ function visualizarUpdateModalRxP(datos, modificar) {
         return retorno;
     }
     alertify.myAlert(headerAlert,
-        `<form action='/administracion/roles/updateRol' method='post'>
+        `<form action='/administracion/roles/update' method='post' id="formRolUpd">
                 <input type='text' name='id' value=${datos.id} + " hidden>
                 <table id='miTabla' class='table table-bordered table-sm table-striped table-hover text-nowrap'>
                 <thead class='headtable'>
@@ -192,9 +298,74 @@ function visualizarUpdateModalRxP(datos, modificar) {
                 </div>
                 ${btnEnviar}
                 </form>`);
+    $('#formRolUpd').bootstrapValidator().on('success.form.bv', function (e) {
+        e.preventDefault();
+        $.post($(this).attr('action'), $(this).serialize())
+            .done(function (data) {
+                verificarAlertas(data);
+                loadTableRol();
+                alertify.myAlert().close();
+            });;
+    });
 }
 
 //--USUARIO--\\
+async function loadTableUsuario() {
+    let fichaAll = await getFichaAll();
+    let permisosRolActual = await getPermisosRolActual();
+    $('#miTabla').DataTable().clear().destroy();
+    let textoInner = ``;
+    fichaAll.forEach(element => {
+        let disabled = ``;
+        let rolesHTML = ``;
+        let btnCog = ``;
+        let btnKey = ``;
+        let btnTrash = ``;
+        (element.usado || element.id == 1 ? disabled = `disabled` : ``);
+        element.listaRoles.forEach(rol => {
+            rolesHTML += `<a href="#" data-id='${rol.id}' data-abm="visualizarRolesPermisos">${rol.nombre}</a><br>`
+        });
+        btnCog = ` 
+            <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="updateRoles" data-toggle="tooltip" data-target="#modalRolesUpdate" title="Modificar Roles" data-placement="top">
+                <i class="fal fa-user-cog fa-lg fa-fw"></i>
+            </button>`;
+        if (permisosRolActual.some(item => item == 3)) {
+            btnKey = ` 
+            <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Contraseña" data-placement="top">
+                <i class="fal fa-key fa-lg fa-fw"></i>
+            </button>`;
+        }
+        if (permisosRolActual.some(item => item == 2)) {
+            btnTrash = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id='${element.id}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Usuario" data-placement="top">
+                <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>
+            `;
+        }
+        textoInner += `
+        <tr>
+            <td>${element.nick}</td>
+            <td>
+                <a href="#" data-abm="visualize-2" data-id='${element.idPersona}'>${element.idPersona}</a>
+            </td>
+            <td>${element.nombreApe}</td>
+            <td>
+                ${rolesHTML}
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnCog}
+                    ${btnKey}
+                    ${btnTrash}
+                </div>
+            </td>
+        </tr>
+        `;
+    });
+    $('#miTabla tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3', [4], 'Usuarios Registrados');
+}
+
 function modificarModalUsuario(datos) {
     $('#h3TitleModalUpdate').text("Modificar Contraseña de '" + datos['nick'] + "'");
     $('#updateID').attr('value', datos['id']);
@@ -219,6 +390,60 @@ function eliminarModalUsuario(datos) {
 
 
 //--PERSONA--\\
+async function loadTablePersona() {
+    let fichaAll = await getFichaAll();
+    let permisosRolActual = await getPermisosRolActual();
+    $('#miTabla').DataTable().clear().destroy();
+    let textoInner = ``;
+    fichaAll.forEach(element => {
+        if (element.id != 0) {
+            let disabled = ``;
+            let btnPencil = ``;
+            let btnClock = ``;
+            let btnTrash = ``;
+            (element.usado ? disabled = `disabled` : ``);
+            if (permisosRolActual.some(item => item == 47)) {
+                btnPencil = ` 
+            <button type="button" class="btn btn-outline-primary" data-id="${element.id}" data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Persona" data-placement="top">
+                <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+            </button>`;
+                btnClock = `
+            <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="updateEstado" data-target="#modalEstadoUpdate" data-toggle="tooltip" title="Modificar Estado" data-placement="top">
+                <i class="fal fa-user-clock fa-lg fa-fw"></i>
+            </button>
+            `;
+            }
+            if (permisosRolActual.some(item => item == 46)) {
+                btnTrash = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id="${element.id}" data-abm="delete" data-toggle="tooltip" data-target="#modalDelete" title="Eliminar Persona" data-placement="top">
+                <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>
+            `;
+            }
+            textoInner += `
+        <tr>
+            <td>${element.id}</td>
+            <td>${element.nombre}</td>
+            <td>${element.apellido}</td>
+            <td>${element.direccion}</td>
+            <td>${element.email}</td>
+            <td>${element.fechaNacimiento}</td>
+            <td>${element.estadoNombre}</td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnPencil}
+                    ${btnClock}
+                    ${btnTrash}
+                </div>
+            </td>
+        </tr>
+        `;
+        }
+    });
+    $('#miTabla tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6', [7], 'Personas Registradas');
+}
+
 function modificarModalPersona(datos) {
     var myDate = datos['fechaNacimiento'].split("/").reverse().join("-");
     $('#h3TitleModalUpdate').text("Modificar Persona '" + datos['nombre'] + " " + datos['apellido'] + "'");
@@ -232,7 +457,7 @@ function modificarModalPersona(datos) {
 
 function modificarEstadoModalPersona(datos) {
     $('#updateEstadoID').attr('value', datos['id']);
-    $("#estadoUpdate option[value=" + datos['idEstadoPersona'] + "]").remove();
+    $('#estadoUpdate option[value=' + datos.idEstadoPersona + ']').prop('selected', true);
 }
 
 function eliminarModalPersona(datos) {
@@ -240,12 +465,103 @@ function eliminarModalPersona(datos) {
 }
 
 //--ROL--\\
+async function loadTableRol() {
+    let fichaAll = await getFichaAll();
+    let permisosRolActual = await getPermisosRolActual();
+    $('#miTabla').DataTable().clear().destroy();
+    let textoInner = ``;
+    fichaAll.forEach(element => {
+        if (element.id != 0) {
+            let disabled = ``;
+            let btnEye = ``;
+            let btnPencil = ``;
+            let btnTrash = ``;
+            (element.usado ? disabled = `disabled` : ``);
+            if (permisosRolActual.some(item => item == 12)) {
+                btnEye = ` 
+                <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="visualizarRolesPermisos" data-toggle="tooltip" title="Ver Permisos" data-placement="top">
+                <i class="fal fa-eye fa-lg fa-fw"></i>
+            </button>`;
+            }
+            if (permisosRolActual.some(item => item == 11)) {
+                btnPencil = `
+                <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="updateRolesPermisos" data-toggle="tooltip" title="Editar Permisos" data-placement="top">
+                    <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+                </button>
+            `;
+            }
+            if (permisosRolActual.some(item => item == 10)) {
+                btnTrash = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id='${element.id}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
+                <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>
+            `;
+            }
+            textoInner += `
+            <tr>
+                <td>${element.id}</td>
+                <td>${element.nombre}</td>
+                <td>
+                    <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnEye}
+                    ${btnPencil}
+                    ${btnTrash}
+                    </div>
+                </td>
+            </tr>
+        `;
+        }
+    });
+    $('#miTabla tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Roles Registrados');
+}
+
 function eliminarModalRol(datos) {
     document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Rol ${datos['nombre']}`);
 }
 
 
 //--PERMISO--\\
+async function loadTablePermiso() {
+    let fichaAll = await getFichaAll();
+    let permisosRolActual = await getPermisosRolActual();
+    $('#miTabla').DataTable().clear().destroy();
+    let textoInner = ``;
+    fichaAll.forEach(element => {
+        let disabled = ``;
+        let btnPencil = ``;
+        let btnTrash = ``;
+        (element.usado ? disabled = `disabled` : ``);
+        if (permisosRolActual.some(item => item == 7)) {
+            btnPencil = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id="${element.id}" data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Permiso" data-placement="top">
+                <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+            </button>`;
+        }
+        if (permisosRolActual.some(item => item == 6)) {
+            btnTrash = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id="${element.id}" data-abm="delete" data-toggle="tooltip" data-target="#modalDelete" title="Eliminar Permiso" data-placement="top">
+                <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>
+            `;
+        }
+        textoInner += `
+        <tr>
+            <td>${element.id}</td>
+            <td>${element.nombre}</td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnPencil}
+                    ${btnTrash}
+                </div>
+            </td>
+        </tr>
+        `;
+    });
+    $('#miTabla tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Permisos Registrados');
+}
+
 function modificarModalPermiso(datos) {
     $('#h3TitleModalUpdate').text("Modificar Permiso");
     $('#updateID').attr('value', datos['id']);
@@ -257,6 +573,63 @@ function eliminarModalPermiso(datos) {
 }
 
 //--AGENTE--\\
+async function loadTableAgente() {
+    let fichaAll = await getFichaAll();
+    let permisosRolActual = await getPermisosRolActual();
+    $('#miTabla').DataTable().clear().destroy();
+    let textoInner = ``;
+    fichaAll.forEach(element => {
+        let disabled = ``;
+        let especializacionHTML = ``;
+        let btnEye = ``;
+        let btnPencil = ``;
+        let btnTrash = ``;
+        (element.usado ? disabled = `disabled` : ``);
+        element.listaEspecializaciones.forEach(especializacion => {
+            especializacionHTML += `${especializacion.nombre}<br>`
+        })
+        if (permisosRolActual.some(item => item == 32)) {
+            btnEye = ` 
+            <button type="button" class="btn btn-outline-primary" data-abm="visualize-2" data-id='${element.idPersona}' data-toggle="tooltip" title="Mas Detalles" data-placement="top">
+                <i class="fal fa-eye fa-lg fa-fw"></i>
+            </button>`;
+        }
+        if (permisosRolActual.some(item => item == 31)) {
+            btnPencil = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id='${element.id}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Agente" data-placement="top">
+                <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+            </button>`;
+        }
+        if (permisosRolActual.some(item => item == 30)) {
+            btnTrash = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id='${element.id}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Agente" data-placement="top">
+                <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>`;
+        }
+        textoInner += `
+        <tr>
+            <td>
+                <a href="#" data-abm="visualize-2" data-id='${element.idPersona}'>${element.id}</a>
+            </td>
+            <td>${element.nombre}</td>
+            <td>${element.apellido}</td>
+            <td>
+                ${especializacionHTML}
+            </td>
+            <td>${element.isDisponible}</td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnEye}
+                    ${btnPencil}
+                    ${btnTrash}                                  
+                </div>
+            </td>
+        </tr>`;
+    });
+    $('#miTabla tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4', [5], 'Agentes Registrados');
+}
+
 function modificarModalAgente(datos) {
     $('#h3TitleModalUpdate').text("Modificar Agente '" + datos['nombre'] + " " + datos['apellido'] + "'");
     $('#updateID').attr('value', datos['id']).val(datos['id']);
@@ -288,6 +661,50 @@ function visualizarPersonaAgente(datos) {
 }
 
 //--SECTOR--\\
+async function loadTableSector() {
+    let fichaAll = await getFichaAll();
+    let permisosRolActual = await getPermisosRolActual();
+    $('#miTabla').DataTable().clear().destroy();
+    let textoInner = ``;
+    fichaAll.forEach(element => {
+        let disabled = ``;
+        let btnPencil = ``;
+        let btnTrash = ``;
+        (element.usado ? disabled = `disabled` : ``);
+        if (permisosRolActual.some(item => item == 27)) {
+            btnPencil = ` 
+            <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Editar Sector" data-placement="top">
+                <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+            </button>`;
+        }
+        if (permisosRolActual.some(item => item == 26)) {
+            btnTrash = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id='${element.id}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Sector" data-placement="top">
+                <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>
+            `;
+        }
+        textoInner += `
+            <tr>
+                <td>${element.id}</td>
+                <td>${element.nombre}</td>
+                <td>${element.tipoSectorNombre}</td>
+                <td>${element.responsable}</td>
+                <td>${element.telefono}</td>
+                <td>${element.email}</td>
+                <td>
+                    <div class="btn-group btn-group-sm float-none" role="group">
+                        ${btnPencil}
+                        ${btnTrash}
+                    </div>
+                </td>
+            </tr>
+        `;
+    });
+    $('#miTabla tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5', [6], 'Sectores Registrados');
+}
+
 function modificarModalSector(datos) {
     $('#h3TitleModalUpdate').text("Modificar Sector '" + datos['nombre'] + "'");
     $('#updateID').attr("value", datos['id']).val(datos['id']);
@@ -303,6 +720,45 @@ function eliminarModalSector(datos) {
 }
 
 //--ESPECIALIZACION--\\
+async function loadTableEspecializacion() {
+    let fichaAll = await getFichaAll();
+    let permisosRolActual = await getPermisosRolActual();
+    $('#miTabla').DataTable().clear().destroy();
+    let textoInner = ``;
+    fichaAll.forEach(element => {
+        let disabled = ``;
+        let btnPencil = ``;
+        let btnTrash = ``;
+        (element.usado ? disabled = `disabled` : ``);
+        if (permisosRolActual.some(item => item == 35)) {
+            btnPencil = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id="${element.id}" data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Especializacion" data-placement="top">
+                <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+            </button>`;
+        }
+        if (permisosRolActual.some(item => item == 34)) {
+            btnTrash = ` 
+            <button type="button" class="btn btn-outline-primary" ${disabled} data-id="${element.id}" data-abm="delete" data-toggle="tooltip" data-target="#modalDelete" title="Eliminar Especializacion" data-placement="top">
+                <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>
+            `;
+        }
+        textoInner += `
+        <tr>
+            <td>${element.id}</td>
+            <td>${element.nombre}</td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnPencil}
+                    ${btnTrash}
+                </div>
+            </td>
+        </tr>`;
+    });
+    $('#miTabla tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Especializaciones Registradas');
+}
+
 function modificarModalEspecializacion(datos) {
     $('#h3TitleModalUpdate').text("Modificar Especializacion '" + datos['nombre'] + "'");
     $('#updateID').text(datos['id']).val(datos['id']);
@@ -315,33 +771,48 @@ function eliminarModalEspecializacion(datos) {
 
 //--FUNCIONES GENERALES--\\
 function loadListenerActionButtons(callbacks) {
-    document.querySelector('#miTabla').addEventListener('click', async function (e) {
+    $('#miTabla').on('click', async function (e) {
         let urlToUse = url;
         let btn = (e.target.closest('button[type="button"], a'));
         if (btn && !btn.disabled) {
             if (btn.dataset.abm == "visualize-2") {
                 urlToUse = urlAjax;
+            } else if (btn.dataset.abm == "visualize-3") {
+                urlToUse = urlAjax2;
             } else if (btn.dataset.abm == "visualizarRolesPermisos") {
                 urlToUse = urlAjaxRxP;
             }
             let ficha = await getFichaOne(btn.dataset.id, urlToUse);
             if (ficha) {
+                $(btn.dataset.target + " form").bootstrapValidator('resetForm', true);
+                $(':input').each(function () {
+                    $(this).removeClass('is-valid is-invalid');
+                });
                 switch (btn.dataset.abm) {
                     case "update":
-                        $("#modalUpdate form").bootstrapValidator('resetForm', true);
-                        $(':input').each(function () {
-                            $(this).removeClass('is-valid is-invalid');
-                        });
                         callbacks['update'](ficha);
                         break;
                     case "delete":
                         callbacks['delete'](ficha);
+                        $('#modalDelete form').on('submit', function (e) {
+                            e.preventDefault();
+                            let that = this;
+                            $.post($(this).attr('action'), $(this).serialize())
+                                .done(function (data) {
+                                    verificarAlertas(data);
+                                    callbacks['loadTable']();
+                                    $(that).closest('.modal').modal('hide');
+                                });;
+                        })
                         break;
                     case "visualize":
                         callbacks['visualize'](ficha);
                         break;
                     case "visualize-2":
                         callbacks['visualize-2'](ficha);
+                        break;
+                    case "visualize-3":
+                        callbacks['visualize-3'](ficha);
                         break;
                     case "updateEstado":
                         callbacks['updateEstado'](ficha);
@@ -364,11 +835,17 @@ function loadListenerActionButtons(callbacks) {
             }
         }
     })
+    $('button[data-target="#modalNew"]').on('click', function () {
+        $('#modalNew form').bootstrapValidator('resetForm', true);
+        $(':input').each(function () {
+            $(this).removeClass('is-valid is-invalid');
+        });
+    })
 }
 
-function loadScriptValidarCampos() {
+function loadScriptValidarCampos(callBackAfterReloadTable) {
     import('/public/js/generales/validarCampos.js').then((Module) => {
-        Module.default(getFichaAll);
+        Module.default(getFichaAll, callBackAfterReloadTable);
     });
 }
 
@@ -428,6 +905,22 @@ function getFichaAll() {
         redirect: 'follow'
     };
     let miJson = fetch(url + "fichaAll", requestOptions)
+        .then(handleJsonResponse)
+        .then(datos => {
+            return datos
+        })
+        .catch(error => {
+            return false
+        });
+    return miJson;
+}
+
+function getPermisosRolActual() {
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+    let miJson = fetch('/permisosRolActual', requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
             return datos

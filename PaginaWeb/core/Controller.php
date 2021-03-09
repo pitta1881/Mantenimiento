@@ -25,10 +25,10 @@ abstract class Controller
     public function fichaAll()
     {
         $misFichas = $this->model->getFichaAll(table);          //en cada clase q implementa ésta, defino que es 'table'
-        if ($misFichas) {
-            http_response_code(200);
-        } else {
+        if (is_null($misFichas)) {
             http_response_code(404);
+        } else {
+            http_response_code(200);
         }
         header("Content-Type: application/json");
         echo json_encode($misFichas);

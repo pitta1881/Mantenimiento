@@ -16,20 +16,8 @@ class EspecializacionController extends Controller implements MyInterface
         session_start();
     }
 
-    public function index($alerta = null)
+    public function index()
     {
-        $comparaTablasIfUsado = array(
-                                    array(  "tabla" => tableTareas,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idEspecializacion"
-                                        ),
-                                    array(  "tabla" => tableExA,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idEspecializacion"
-                                        )
-                                );
-        $datos['todasEspecializaciones'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
-        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
                  "nombre" => "HOME"),
@@ -46,7 +34,7 @@ class EspecializacionController extends Controller implements MyInterface
     {
         $especializacion['nombre'] = $_POST['nombre'];
         $insert = $this->model->insert(table, $especializacion, "Especializacion");
-        return $this->administracionEspecializaciones($insert);
+        echo json_encode($insert);
     }
     
     public function update()
@@ -56,13 +44,13 @@ class EspecializacionController extends Controller implements MyInterface
             'nombre' => $_POST['nombre']
         ];
         $update = $this->model->update(table, $especializacion, "Especializacion");
-        return $this->administracionEspecializaciones($update);
+        echo json_encode($update);
     }
 
     public function delete()
     {
         $especializacion['id'] = $_POST['id'];
         $delete = $this->model->delete(table, $especializacion, "Especializacion");
-        return $this->administracionEspecializaciones($delete);
+        echo json_encode($delete);
     }
 }

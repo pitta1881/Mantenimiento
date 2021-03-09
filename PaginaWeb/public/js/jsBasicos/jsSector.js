@@ -1,5 +1,6 @@
 import {
     setUrl,
+    loadTableSector as loadTable,
     modificarModalSector as modificarModal,
     eliminarModalSector as deleteModal,
     loadListenerActionButtons,
@@ -11,11 +12,12 @@ import {
 
 setUrl("/administracion/sectores/");
 
+loadTable();
 loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
-    'delete': deleteModal
+    'delete': deleteModal,
+    'loadTable': loadTable,
 });
-loadScriptValidarCampos();
-loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5', [6], 'Sectores Registrados');
+loadScriptValidarCampos(loadTable);

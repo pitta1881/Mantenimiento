@@ -38,6 +38,7 @@ var idioma = {
 
 export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, modal, datosHTML) {
 
+    $('#' + tablaID + " thead button").remove();
     if ($('#' + tablaID + " thead button").length == 0) {
         let query = '#' + tablaID + " thead tr th";
         if ($('#' + tablaID + " thead tr th:last-child").text() == 'Accion') {
@@ -68,11 +69,18 @@ export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, 
         });
     }
 
+    let datosPedido = '';
     if (modal) {
         $('#' + tablaID).DataTable().clear().destroy();
         $('#' + tablaID + " tbody").empty();
-        $('#tbodyHistorial').html(datosHTML);
+        datosPedido = $('#nav-pedido').html();
+        if (tablaID === 'miTablaHistorial') {
+            $('#tbodyHistorial').html(datosHTML);
+        } else if (tablaID === 'miTablaTarea') {
+            $('#tbodyTareas').html(datosHTML);
+        }
     }
+
 
     let table = $('#' + tablaID).DataTable({
         orderCellsTop: true,
@@ -152,6 +160,7 @@ export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, 
                     extend: 'print',
                     text: '<i class="fal fa-print"></i> Imprimir',
                     title: titulo,
+                    messageTop: datosPedido,
                     titleAttr: 'Imprimir',
                     className: 'btn export buttons-collection',
                     exportOptions: {

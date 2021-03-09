@@ -1,4 +1,4 @@
-export default async function validarForm(callbackGetFichaAll) {
+export default async function validarForm(callbackGetFichaAll, callbackAfterReloadTable) {
     let datos = await callbackGetFichaAll();
     let arrayRepetidosOld = [];
     if (datos) {
@@ -7,7 +7,7 @@ export default async function validarForm(callbackGetFichaAll) {
         });
 
         //usuarios forms
-        $('#formUsuarioNew, #formUsuarioUpd, #formUsuarioRolesUpd').bootstrapValidator({
+        $('#formUsuarioNew, #formUsuarioUpd').bootstrapValidator({
                 excluded: [':disabled'],
                 fields: {
                     nick: {
@@ -80,6 +80,9 @@ export default async function validarForm(callbackGetFichaAll) {
             .on('error.field.bv', function (e, data) {
                 data.element.removeClass('is-valid');
                 data.element.addClass('is-invalid');
+            })
+            .on('success.form.bv', function (e) {
+                reloadTable(e, this);
             });
 
 
@@ -190,10 +193,13 @@ export default async function validarForm(callbackGetFichaAll) {
             .on('error.field.bv', function (e, data) {
                 data.element.removeClass('is-valid');
                 data.element.addClass('is-invalid');
+            })
+            .on('success.form.bv', function (e) {
+                reloadTable(e, this);
             });
 
         //rol forms
-        $('#formRolNew').bootstrapValidator({
+        $('#formRolNew, #formRolUpd').bootstrapValidator({
                 excluded: [':disabled', ':hidden', ':not(:visible)'],
                 fields: {
                     nombre: {
@@ -229,6 +235,9 @@ export default async function validarForm(callbackGetFichaAll) {
             .on('error.field.bv', function (e, data) {
                 data.element.removeClass('is-valid');
                 data.element.addClass('is-invalid');
+            })
+            .on('success.form.bv', function (e) {
+                reloadTable(e, this);
             });
 
         //permisos forms
@@ -268,6 +277,9 @@ export default async function validarForm(callbackGetFichaAll) {
             .on('error.field.bv', function (e, data) {
                 data.element.removeClass('is-valid');
                 data.element.addClass('is-invalid');
+            })
+            .on('success.form.bv', function (e) {
+                reloadTable(e, this);
             });
 
         //agentes forms
@@ -307,6 +319,9 @@ export default async function validarForm(callbackGetFichaAll) {
             .on('error.field.bv', function (e, data) {
                 data.element.removeClass('is-valid');
                 data.element.addClass('is-invalid');
+            })
+            .on('success.form.bv', function (e) {
+                reloadTable(e, this);
             });
 
         //especializacion forms
@@ -346,11 +361,14 @@ export default async function validarForm(callbackGetFichaAll) {
             .on('error.field.bv', function (e, data) {
                 data.element.removeClass('is-valid');
                 data.element.addClass('is-invalid');
-            });
+            })
+            .on('success.form.bv', function (e) {
+                reloadTable(e, this);
+            });;
 
         //sector forms
         $('#formSectorNew, #formSectorModificar').bootstrapValidator({
-                excluded: ':disabled',
+                excluded: [':disabled'],
                 fields: {
                     nombre: {
                         validators: {
@@ -427,6 +445,95 @@ export default async function validarForm(callbackGetFichaAll) {
             .on('error.field.bv', function (e, data) {
                 data.element.removeClass('is-valid');
                 data.element.addClass('is-invalid');
+            })
+            .on('success.form.bv', function (e) {
+                reloadTable(e, this);
             });
+    }
+
+    //pedidos forms
+    $('#formPedidoNew, #formPedidoUpd, #formPedidoDel').bootstrapValidator({
+            excluded: [':disabled'],
+            fields: {
+                idUsuario: {
+                    excluded: true
+                },
+                fechaInicio: {
+                    excluded: true
+                },
+                idEstado: {
+                    excluded: true
+                },
+                idSector: {
+                    validators: {
+                        callback: {
+                            callback: function (value, validator, $field) {
+                                if (!value) {
+                                    return {
+                                        valid: false,
+                                        message: 'Seleccione una opcion'
+                                    }
+                                }
+                                return {
+                                    valid: true
+                                }
+                            }
+                        }
+                    }
+                },
+                idPrioridad: {
+                    validators: {
+                        callback: {
+                            callback: function (value, validator, $field) {
+                                if (!value) {
+                                    return {
+                                        valid: false,
+                                        message: 'Seleccione una opcion'
+                                    }
+                                }
+                                return {
+                                    valid: true
+                                }
+                            }
+                        }
+                    }
+                },
+                descripcion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Descripcion'
+                        }
+                    }
+                },
+                observacion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Descripcion'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.field.bv', function (e, data) {
+            data.element.removeClass('is-invalid');
+            data.element.addClass('is-valid');
+        })
+        .on('error.field.bv', function (e, data) {
+            data.element.removeClass('is-valid');
+            data.element.addClass('is-invalid');
+        })
+        .on('success.form.bv', function (e) {
+            reloadTable(e, this);
+        });
+
+    function reloadTable(e, form) {
+        e.preventDefault();
+        let that = form;
+        $.post($(form).attr('action'), $(form).serialize())
+            .done(function (data) {
+                verificarAlertas(data);
+                callbackAfterReloadTable();
+                $(that).closest('.modal').modal('hide');
+            });;
     }
 }

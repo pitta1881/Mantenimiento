@@ -1,6 +1,7 @@
 import {
     setUrl,
     setUrlAjaxRxP,
+    loadTableRol as loadTable,
     visualizarUpdateModalRxP,
     eliminarModalRol as deleteModal,
     loadListenerActionButtons,
@@ -13,12 +14,13 @@ import {
 setUrl("/administracion/roles/");
 setUrlAjaxRxP("/administracion/roles/");
 
+loadTable();
 loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'delete': deleteModal,
     'visualizarRolesPermisos': visualizarUpdateModalRxP,
-    'updateRolesPermisos': visualizarUpdateModalRxP
+    'updateRolesPermisos': visualizarUpdateModalRxP,
+    'loadTable': loadTable,
 });
-loadScriptValidarCampos();
-loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Roles Registrados');
+loadScriptValidarCampos(loadTable);

@@ -25,41 +25,7 @@
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for usuario in datos.todosUsuarios %}
-					<tr>
-						<td>{{ usuario.nick }}</td>
-						<td>
-							<a href="#" data-abm="visualize" data-id='{{ usuario.idPersona }}'>{{ usuario.idPersona }}</a>
-						</td>
-						<td>{{ usuario.nombreApe }}</td>
-						<td>
-							{% for rol in usuario.listaRoles %}
-								<a href="#" data-id='{{ rol.id }}' data-abm="visualizarRolesPermisos">{{ rol.nombre }}</a><br>
-							{% endfor %}
-						</td>
-						<td>
-							<div class="btn-group btn-group-sm float-none" role="group">
-								<button type="button" class="btn btn-outline-primary" data-id='{{ usuario.id }}' data-abm="updateRoles" data-toggle="tooltip" data-target="#modalRolesUpdate" title="Modificar Roles" data-placement="top">
-									<i class="fal fa-user-cog fa-lg fa-fw"></i>
-								</button>
-								{% if "3" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-id='{{ usuario.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Contraseña" data-placement="top">
-										<i class="fal fa-key fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-								{% if "2" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ usuario.usado or usuario.id == 1 ? 'disabled' }} data-id='{{ usuario.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Usuario" data-placement="top">
-										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-							</div>
-						</td>
-					</tr>
-				{% else %}
-					<h2 class='error'>No hay Usuarios para mostrar</h2>
-				{% endfor %}
-			</tbody>
+			<tbody></tbody>
 		</table>
 	</div>
 
@@ -77,7 +43,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="createUsuario" method="post" id="formUsuarioNew">
+						<form action="create" method="post" id="formUsuarioNew">
 							<div class="form-row">
 								<div class="form-group required col-lg-6">
 									<label class="control-label" for="nick">Nombre(nick):</label>
@@ -176,7 +142,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="updateUsuario" method="post" id="formUsuarioUpd">
+						<form action="update" method="post" id="formUsuarioUpd">
 							<input type="text" name="id" id="updateID" hidden>
 							<div class="form-group required">
 								<label class="control-label" for="passwordUpd">Contraseña:</label>
@@ -184,7 +150,7 @@
 							</div>
 							<div class="form-group required">
 								<label class="control-label" for="passwordUpdConfirm">Confirme
-																																																																																																																																																																																																																																																																																																									                            Contraseña:</label>
+																																																																																																																																																																																																																																																																																																																																																						                            Contraseña:</label>
 								<input type="password" name="passwordConfirm" id="passwordUpdConfirm" class="form-control">
 							</div>
 							<!-- Modal Footer -->
@@ -210,9 +176,4 @@
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsUsuario.js" type="module"></script>
-	<script>
-		$(function () {
-verificarAlertas('{{ datos.alertas|json_encode|raw }}');
-});
-	</script>
 {% endblock %}

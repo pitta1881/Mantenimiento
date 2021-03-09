@@ -1,21 +1,22 @@
 import {
     setUrl,
+    loadTablePermiso as loadTable,
     modificarModalPermiso as modificarModal,
     eliminarModalPermiso as deleteModal,
     loadListenerActionButtons,
     loadScriptValidarCampos,
-    loadScriptOrdenarPagTablas,
     loadTooltips,
     modalDrag
 } from '/public/js/generales/jsGeneral.js';
 
 setUrl("/administracion/permisos/");
 
+loadTable();
 loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
-    'delete': deleteModal
+    'delete': deleteModal,
+    'loadTable': loadTable,
 });
-loadScriptValidarCampos();
-loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Permisos Registrados');
+loadScriptValidarCampos(loadTable);

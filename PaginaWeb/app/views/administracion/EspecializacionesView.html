@@ -23,30 +23,7 @@
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for especializacion in datos.todasEspecializaciones %}
-					<tr>
-						<td>{{ especializacion.id }}</td>
-						<td>{{ especializacion.nombre }}</td>
-						<td>
-							<div class="btn-group btn-group-sm float-none" role="group">
-								{% if "35" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ especializacion.usado ? 'disabled' }} data-id="{{ especializacion.id }}" data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Especializacion" data-placement="top">
-										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-								{% if "34" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ especializacion.usado ? 'disabled' }} data-id="{{ especializacion.id }}" data-abm="delete" data-toggle="tooltip" data-target="#modalDelete" title="Eliminar Especializacion" data-placement="top">
-										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-							</div>
-						</td>
-					</tr>
-				{% else %}
-					<h2 class='error'>No hay ninguna Especializacion cargada</h2>
-				{% endfor %}
-			</tbody>
+			<tbody></tbody>
 		</table>
 	</div>
 
@@ -64,7 +41,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="createEspecializacion" method="post" id="formEspecializacionNew">
+						<form action="create" method="post" id="formEspecializacionNew">
 							<div class="form-group required">
 								<label class="control-label" for="nombre">Nombre de Especializacion:</label>
 								<input type="text" name="nombre" id="nombre" class="form-control" autofocus>
@@ -95,7 +72,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="updateEspecializacion" method="post" id="formEspecializacionUpd">
+						<form action="update" method="post" id="formEspecializacionUpd">
 							<input type="text" name="id" id="updateID" hidden>
 							<div class="form-group">
 								<label class="control-label" for="nombreAnterior">Nombre Anterior:</label>
@@ -126,9 +103,4 @@
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsEspecializacion.js" type="module"></script>
-	<script>
-		$(function () {
-verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Especialización');
-});
-	</script>
 {% endblock %}

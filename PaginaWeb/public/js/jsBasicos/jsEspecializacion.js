@@ -1,21 +1,22 @@
 import {
     setUrl,
+    loadTableEspecializacion as loadTable,
     modificarModalEspecializacion as modificarModal,
     eliminarModalEspecializacion as deleteModal,
     loadListenerActionButtons,
     loadScriptValidarCampos,
-    loadScriptOrdenarPagTablas,
     loadTooltips,
     modalDrag
 } from '/public/js/generales/jsGeneral.js';
 
 setUrl("/administracion/especializaciones/");
 
+loadTable();
 loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
-    'delete': deleteModal
+    'delete': deleteModal,
+    'loadTable': loadTable
 });
-loadScriptValidarCampos();
-loadScriptOrdenarPagTablas('miTabla', '0,1', [2], 'Especializaciones Registradas');
+loadScriptValidarCampos(loadTable);

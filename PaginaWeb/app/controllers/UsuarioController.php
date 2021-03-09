@@ -16,28 +16,10 @@ class UsuarioController extends Controller implements MyInterface
         session_start();
     }
 
-    public function index($alerta = null)
+    public function index()
     {
-        $comparaTablasIfUsado = array(
-                                    array(  "tabla" => tablePedidos,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idUsuario",
-                                        ),
-                                    array(  "tabla" => tableMovimientos,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idUsuario"
-                                        )
-        );
-        $comparaTablasIfUsado_2 = array(
-                                    array(  "tabla" => table,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idPersona"
-                                        )
-        );
-        $datos['todosUsuarios'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
         $datos['todosRoles'] = $this->model->getFichaAll(tableRoles);
-        $datos['todosPersonas'] = $this->model->getFichaAll(tablePersonas, $comparaTablasIfUsado_2);
-        $datos['alertas'] = $alerta;
+        $datos['todosPersonas'] = $this->model->getFichaAll(tablePersonas);
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
@@ -66,7 +48,7 @@ class UsuarioController extends Controller implements MyInterface
                 ];
                 $this->model->insert(tableRxU, $RxU, "RxU");
             }
-            return $this->index($insert);
+            echo json_encode($insert);
         }
     }
 
@@ -77,7 +59,7 @@ class UsuarioController extends Controller implements MyInterface
             'password' => $_POST['password']
         ];
         $update = $this->model->update(table, $usuario, "Usuario");
-        return $this->index($update);
+        echo json_encode($update);
     }
 
     public function updateRolesUsuario()
@@ -111,6 +93,6 @@ class UsuarioController extends Controller implements MyInterface
         $usuario['id'] = $_POST['id'];
         $this->model->delete(tableRxU, $usuarioRxU, "RxU");
         $delete = $this->model->delete(table, $usuario, "Usuario");
-        return $this->index($delete);
+        echo json_encode($delete);
     }
 }

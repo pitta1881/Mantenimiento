@@ -18,15 +18,7 @@ class SectorController extends Controller implements MyInterface
     
     public function index($alerta = null)
     {
-        $comparaTablasIfUsado = array(
-                                        array(  "tabla" => tablePedidos,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idSector"
-                                    )
-        );
-        $datos['todosSectores'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
         $datos['todosTiposSectores'] = $this->model->getFichaAll(tableTiposSector);
-        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
@@ -49,7 +41,7 @@ class SectorController extends Controller implements MyInterface
             'idTipoSector' => $_POST['idTipoSector']
         ];
         $insert = $this->model->insert(table, $sector, "Sector");
-        return $this->index($insert);
+        echo json_encode($insert);
     }
 
     public function update()
@@ -63,13 +55,13 @@ class SectorController extends Controller implements MyInterface
             'idTipoSector' => $_POST['idTipoSector']
         ];
         $update = $this->model->update(table, $sector, "Sector");
-        return $this->index($update);
+        echo json_encode($update);
     }
 
     public function delete()
     {
         $sector['id'] = $_POST['id'];
         $delete = $this->model->delete(table, $sector, "Sector");
-        return $this->index($delete);
+        echo json_encode($delete);
     }
 }

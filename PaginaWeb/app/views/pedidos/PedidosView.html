@@ -17,11 +17,11 @@
 		<table id="miTabla" class="table table-bordered table-sm table-striped table-hover m-0 w-100">
 			<thead>
 				<tr>
-					<th>Nº Pedido</th>
+					<th>Nº</th>
 					<th>Descripcion</th>
 					<th>Sector</th>
-					<th>Fecha Inicio</th>
-					<th>Fecha Fin</th>
+					<th>F. Inicio</th>
+					<th>F. Fin</th>
 					<th>Tareas</th>
 					<th>Estado</th>
 					<th>Prioridad</th>
@@ -29,50 +29,7 @@
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for pedido in datos.todosPedidos %}
-					<tr>
-						<th scope="row">{{ pedido.id }}</th>
-						<td>{{ pedido.descripcion|slice(0, 55) }}</td>
-						<td>
-							<a href="#" data-abm="visualize-2" data-id='{{ pedido.idSector }}'>
-								{{ pedido.sectorNombre }}
-							</a>
-						</td>
-						<td>{{ pedido.fechaInicio }}</td>
-						<td>{{ pedido.fechaFin }}</td>
-						<td>{{ pedido.tareasAsignadas }}</td>
-						<td>{{ pedido.estadoNombre }}</td>
-						<td>{{ pedido.prioridadNombre }}</td>
-						<td>{{ pedido.usuarioNick }}</td>
-						<td>
-							<div class="btn-group btn-group-sm float-none" role="group">
-								{% if "16" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-id='{{ pedido.id }}' data-abm="visualize" data-target="#modalGeneral" title="Ver Pedido" data-toggle="tooltip" data-placement="top">
-										<i class="fal fa-eye fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-								{% if pedido.idEstado != 4 and pedido.idEstado != 5 %}
-									{% if "15" in datos.datosSesion.listaPermisos %}
-										<button type="button" class="btn btn-outline-primary" data-id='{{ pedido.id }}' data-abm="update" data-target="#modalUpdate" title="Editar Pedido" data-toggle="tooltip" data-placement="top">
-											<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-										</button>
-									{% endif %}
-								{% endif %}
-								{% if pedido.idEstado == 1 and pedido.tareasAsignadas == 0 %}
-									{% if "14" in datos.datosSesion.listaPermisos %}
-										<button type="button" class="btn btn-outline-primary" data-id='{{ pedido.id }}' data-abm="delete" data-target="#modalDelete" title="Cancelar Pedido" data-toggle="tooltip" data-placement="top">
-											<i class="fal fa-trash-alt fa-lg fa-fw"></i>
-										</button>
-									{% endif %}
-								{% endif %}
-							</div>
-						</td>
-					</tr>
-				{% else %}
-					<h2 class='error'>No hay Pedidos</h2>
-				{% endfor %}
-			</tbody>
+			<tbody></tbody>
 		</table>
 	</div>
 
@@ -97,7 +54,7 @@
 								<a href="/sectores/administracionSectores" class="alert-link">HAGA CLICK AQUI</a>
 							</div>
 						{% else %}
-							<form action="createPedido" method="post" id="formPedidoNew">
+							<form action="create" method="post" id="formPedidoNew">
 								{% if datos.evento is not empty %}
 									<input type="text" name="idEvento" value="{{ datos.evento.idEvento }}" hidden>
 								{% endif %}
@@ -140,7 +97,6 @@
 								<div class="form-group required">
 									<label class="control-label" for="descripcion">Descripcion:</label>
 									<textarea class="form-control" rows="4" id="descripcion" name="descripcion" required></textarea>
-									<div class="invalid-feedback">Complete este campo</div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
@@ -167,7 +123,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="updatePedido" method="post" id="formPedidoUpd">
+						<form action="update" method="post" id="formPedidoUpd">
 							<input type="text" name="id" id="updateID" hidden>
 							<div class="form-row">
 								<div class="form-group col-lg-4 required">
@@ -207,7 +163,6 @@
 							<div class="form-group required">
 								<label class="control-label" for="descripcionUpdate">Descripcion:</label>
 								<textarea class="form-control" rows="4" name="descripcion" id="descripcionUpdate" required></textarea>
-								<div class="invalid-feedback">Complete este campo</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
@@ -235,7 +190,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="cancelPedido" method="post">
+						<form action="cancel" method="post" id="formPedidoDel">
 							<input type="text" name="id" id="deleteID" hidden>
 							<div class="form-group required">
 								<label class="control-label" for="observacionCancel">Ingrese el motivo de la cancelación:</label>
@@ -269,7 +224,9 @@
 						<div class="nav nav-tabs" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link active" id="nav-pedido-tab" data-toggle="tab" href="#nav-pedido" role="tab" aria-controls="nav-pedido" aria-selected="true">Pedido</a>
 							<a class="nav-item nav-link" id="nav-historial-tab" data-toggle="tab" href="#nav-historial" role="tab" aria-controls="nav-historial" aria-selected="true">Historial</a>
-							<a class="nav-item nav-link" id="nav-tareas-tab" data-toggle="tab" href="#nav-tareas" role="tab" aria-controls="nav-profile" aria-selected="false">Tareas</a>
+							{% if "20" in datos.datosSesion.listaPermisos %}
+								<a class="nav-item nav-link" id="nav-tareas-tab" data-toggle="tab" href="#nav-tareas" role="tab" aria-controls="nav-profile" aria-selected="false">Tareas</a>
+							{% endif %}
 						</div>
 					</nav>
 					<div
@@ -283,7 +240,7 @@
 							<table id="miTablaHistorial" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
 								<thead>
 									<tr>
-										<th>Numero</th>
+										<th>Nº</th>
 										<th>Fecha</th>
 										<th>Usuario</th>
 										<th>Estado</th>
@@ -294,23 +251,31 @@
 							</table>
 						</div>
 						<!--VER TAREAS-->
-						<div class="tab-pane fade" id="nav-tareas" role="tabpanel" aria-labelledby="nav-tareas-tab">
-							<table id="miTablaTarea" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-								<thead>
-									<tr>
-										<th>Numero</th>
-										<th>Fecha</th>
-										<th>Descripcion</th>
-										<th>Especializacion</th>
-										<th>Prioridad</th>
-										<th>Estado</th>
-										<th>Agentes</th>
-										<th>Insumos</th>
-									</tr>
-								</thead>
-								<tbody id="tbodyTareas"></tbody>
-							</table>
-						</div>
+						{% if "20" in datos.datosSesion.listaPermisos %}
+							<div class="tab-pane fade" id="nav-tareas" role="tabpanel" aria-labelledby="nav-tareas-tab">
+								{% if "17" in datos.datosSesion.listaPermisos %}
+									<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNewTarea">
+										<i class="fal fa-plus"></i>
+										Crear Tarea</button>
+								{% endif %}
+								<table id="miTablaTarea" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+									<thead>
+										<tr>
+											<th>Numero</th>
+											<th>F. Inicio</th>
+											<th>F. Fin</th>
+											<th>Descripcion</th>
+											<th>Especializacion</th>
+											<th>Prioridad</th>
+											<th>Estado</th>
+											<th>Usuario</th>
+											<th>Agentes</th>
+										</tr>
+									</thead>
+									<tbody id="tbodyTareas"></tbody>
+								</table>
+							</div>
+						{% endif %}
 					</div>
 				</div>
 			</div>
@@ -329,59 +294,51 @@
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form action="/tarea/guardar" method="post" class="was-validated">
-						<input type="text" name="idPedido" value="{{ datos.miPedido.id }}" hidden>
+					<form action="/tarea/createTarea" method="post">
 						<div class="form-row">
-							<div class="form-group col-lg-4">
-								<label class="control-label" for="idUsuario">Usuario Creador:</label>
-								<span class="asterisco">*</span>
-								<input type="text" name="idUsuario" class="form-control" value="{{ datos.userLogueado }}" required readonly>
+							<div class="form-group required col-lg-3">
+								<label class="control-label" for="idPedidoTarea">Pedido Nº:</label>
+								<input type="text" class="form-control" name="idPedido" id="idPedidoTarea" readonly>
 							</div>
-							<div class="form-group col-lg-4">
-								<label class="control-label" for="fechaInicio">Fecha:</label>
-								<span class="asterisco">*</span>
-								<input type="date" name="fechaInicio" class="form-control" value="{{ datos.diaHoy }}" required readonly>
+							<div class="form-group required col-lg-3">
+								<label class="control-label" for="idUsuarioTarea">Usuario Creador:</label>
+								<input name="idUsuario" value="{{ datos.datosSesion.idUser }}" required readonly hidden>
+								<input type="text" name="idUsuario" class="form-control" id="idUsuarioTarea" value="{{ datos.datosSesion.nickUser }}" readonly>
 							</div>
-							<div class="form-group col-lg-4">
-								<label class="control-label" for="estado">Estado:</label>
-								<span class="asterisco">*</span>
-								<input type="text" name="idEstado" class="form-control" value="{{ datos.estados.0 }}" required readonly>
+							<div class="form-group required col-lg-3">
+								<label class="control-label" for="fechaInicioTarea">Fecha:</label>
+								<input type="date" name="fechaInicio" class="form-control" id="fechaInicioTarea" value="{{ datos.diaHoy }}" required readonly>
+							</div>
+							<div class="form-group required col-lg-3">
+								<label class="control-label" for="idEstadoTarea">Estado:</label>
+								{% for estado in datos.estados if estado.nombre == 'Iniciado' %}
+									<input name="idEstado" value=" {{ estado.id }}" required readonly hidden>
+									<input type="text" class="form-control" id="idEstadoTarea" value="{{ estado.nombre }}" readonly>
+								{% endfor %}
 							</div>
 						</div>
 						<div class="form-row">
-							<div class="form-group col-lg-6">
-								<label class="control-label" for="especializacion">Especializacion:</label>
-								<span class="asterisco">*</span>
-								<select name="especializacion" class="form-control custom-select">
+							<div class="form-group required col-lg-6">
+								<label class="control-label" for="idEspecializacionTarea">Especializacion:</label>
+								<select name="idEspecializacion" id="idEspecializacionTarea" class="form-control custom-select">
 									{% for especializacion in datos.especializaciones %}
-										<option value="{{ especializacion.idEspecializacion }}">{{ especializacion.nombre }}
+										<option value="{{ especializacion.id }}">{{ especializacion.nombre }}
 										</option>
 									{% endfor %}
 								</select>
 							</div>
-							<div class="form-group col-lg-6">
-								<label class="control-label" for="prioridad">Prioridad:</label>
-								<span class="asterisco">*</span>
-								{% if datos.miPedido.prioridad == 'Urgente' %}
-									<input type="text" name="prioridad" value="Urgente" class="form-control" readonly>
-								{% else %}
-									<select name="prioridad" class="form-control custom-select">
-										{% for prioridad in datos.prioridades %}
-											<option value="{{ prioridad }}">{{ prioridad }}</option>
-										{% endfor %}
-									</select>
-								{% endif %}
+							<div class="form-group required col-lg-6">
+								<label class="control-label" for="idPrioridadTarea">Prioridad:</label>
+								<select name="idPrioridad" id="idPrioridadTarea" class="form-control custom-select">
+									{% for prioridad in datos.prioridades %}
+										<option value="{{ prioridad.id }}">{{ prioridad.nombre }}</option>
+									{% endfor %}
+								</select>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group required">
 							<label class="control-label" for="descripcionTarea">Descripcion:</label>
-							<span class="asterisco">*</span>
-							<textarea class="form-control" rows="4" id="descripcionTarea" name="descripcion" required>
-								{% if datos.evento is not empty %}
-									{{ datos.evento.descripcion }}
-								{% endif %}
-							</textarea>
-							<div class="invalid-feedback">Complete este campo</div>
+							<textarea class="form-control" rows="4" id="descripcionTarea" name="descripcion" required></textarea>
 						</div>
 						<!-- Modal Footer -->
 						<div class="modal-footer">
@@ -400,9 +357,4 @@
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsPedido.js" type="module"></script>
-	<script>
-		$(function () {
-verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Pedido');
-});
-	</script>
 {% endblock %}

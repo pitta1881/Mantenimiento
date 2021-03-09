@@ -28,40 +28,7 @@
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for persona in datos.todasPersonas %}
-					{% if persona.id != '0' %}
-						<tr>
-							<td>{{ persona.id }}</td>
-							<td>{{ persona.nombre }}</td>
-							<td>{{ persona.apellido }}</td>
-							<td>{{ persona.direccion }}</td>
-							<td>{{ persona.email }}</td>
-							<td>{{ persona.fechaNacimiento }}</td>
-							<td>{{ persona.estadoNombre }}</td>
-							<td>
-								<div class="btn-group btn-group-sm float-none" role="group">
-									{% if "47" in datos.datosSesion.listaPermisos %}
-										<button type="button" class="btn btn-outline-primary" data-id='{{ persona.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Persona" data-placement="top">
-											<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-										</button>
-										<button type="button" class="btn btn-outline-primary" data-id='{{ persona.id }}' data-abm="updateEstado" data-target="#modalEstadoUpdate" data-toggle="tooltip" title="Modificar Estado" data-placement="top">
-											<i class="fal fa-user-clock fa-lg fa-fw"></i>
-										</button>
-									{% endif %}
-									{% if "46" in datos.datosSesion.listaPermisos %}
-										<button type="button" class="btn btn-outline-primary" {{ persona.usado ? 'disabled' }} data-id='{{ persona.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Persona" data-placement="top">
-											<i class="fal fa-trash-alt fa-lg fa-fw"></i>
-										</button>
-									{% endif %}
-								</div>
-							</td>
-						</tr>
-					{% endif %}
-				{% else %}
-					<h2 class='error'>No hay Personas</h2>
-				{% endfor %}
-			</tbody>
+			<tbody></tbody>
 		</table>
 	</div>
 
@@ -79,7 +46,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="createPersona" method="post" id="formPersonaNew">
+						<form action="create" method="post" id="formPersonaNew">
 							<div class="form-row">
 								<div class="form-group required col-lg-4">
 									<label class="control-label" for="id">DNI:</label>
@@ -133,7 +100,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="updatePersona" method="post" id="formPersonaUpd">
+						<form action="update" method="post" id="formPersonaUpd">
 							<div class="form-row">
 								<div class="form-group col-lg-4">
 									<label class="control-label" for="id">DNI:</label>
@@ -188,7 +155,7 @@
 					<!-- Modal body -->
 					<div class="modal-body">
 						<form action="updateEstadoPersona" method="post" id="formPersonaEstadoUpd">
-							<input type="text" name="idEstado" id="updateEstadoID" hidden>
+							<input type="text" name="idPersona" id="updateEstadoID" hidden>
 							<div class="form-group required">
 								<label class="control-label" for="estadoUpdate">Nuevo Estado:</label>
 								<select name="idEstadoPersona" id="estadoUpdate" class="form-control custom-select">
@@ -220,9 +187,4 @@
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsPersona.js" type="module"></script>
-	<script>
-		$(function () {
-verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Persona');
-});
-	</script>
 {% endblock %}

@@ -5,28 +5,29 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\PedidoModel;
 use App\Core\MyInterface;
-use App\Models\Tarea;
-
-define("table", "pedidos");
 
 class PedidoController extends Controller implements MyInterface
 {
-    public function __construct()
+    public function __construct($session = true)
     {
         $this->model = new PedidoModel();
-        session_start();
+        if ($session) {
+            session_start();
+            define("table", "pedidos");
+        }
     }
 
-    public function index($alerta = null)
+    public function index($model = null)
     {
-        $datos['todosPedidos'] = $this->model->getFichaAll(table);
+        if (!is_null($model)) {
+            $this->model = $model;
+        }
         $datos['estados'] = $this->model->getFichaAll(tableEstados);
         $datos['prioridades'] = $this->model->getFichaAll(tablePrioridades);
         $datos["sectores"] = $this->model->getFichaAll(tableSectores);
         $datos["usuarios"] = $this->model->getFichaAll(tableUsuarios);
         $datos["especializaciones"] = $this->model->getFichaAll(tableEspecializaciones);
         $datos["diaHoy"] = date("Y-m-d");
-        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
@@ -63,7 +64,7 @@ class PedidoController extends Controller implements MyInterface
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
         }
-        return $this->index($insert);
+        echo json_encode($insert);
     }
 
     public function update()
@@ -89,7 +90,7 @@ class PedidoController extends Controller implements MyInterface
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
         }
-        return $this->index($update);
+        echo json_encode($update);
     }
     
     public function finish()    //idEstado = 5
@@ -100,7 +101,7 @@ class PedidoController extends Controller implements MyInterface
             'fechaFin' => date("Y-m-d")
         ];
         $update = $this->model->update(table, $pedido, "Pedido");
-        return $this->index($update);
+        echo json_encode($update);
     }
 
     public function cancel()    //idEstado = 4
@@ -123,7 +124,7 @@ class PedidoController extends Controller implements MyInterface
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
         }
-        return $this->index($update);
+        echo json_encode($update);
     }
 
 

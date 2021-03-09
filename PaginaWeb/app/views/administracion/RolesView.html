@@ -23,35 +23,7 @@
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for rol in datos.todosRoles %}
-					<tr>
-						<td>{{ rol.id }}</td>
-						<td>{{ rol.nombre }}</td>
-						<td>
-							<div class="btn-group btn-group-sm float-none" role="group">
-								{% if "12" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-id='{{ rol.id }}' data-abm="visualizarRolesPermisos" data-toggle="tooltip" title="Ver Permisos" data-placement="top">
-										<i class="fal fa-eye fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-								{% if "11" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-id='{{ rol.id }}' data-abm="updateRolesPermisos" data-toggle="tooltip" title="Editar Permisos" data-placement="top">
-										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-								{% if "10" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ rol.usado ? 'disabled' }} data-id='{{ rol.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Rol" data-placement="top">
-										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-							</div>
-						</td>
-					</tr>
-				{% else %}
-					<h2 class="error">No hay Roles</h2>
-				{% endfor %}
-			</tbody>
+			<tbody></tbody>
 		</table>
 	</div>
 
@@ -69,7 +41,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="createRol" method="post" id="formRolNew">
+						<form action="create" method="post" id="formRolNew">
 							<div class="form-group required">
 								<label for="nombre">Nombre del Rol:</label>
 								<input type="text" name="nombre" id="nombre" class="form-control" autofocus>
@@ -98,9 +70,4 @@
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsRoles.js" type="module"></script>
-	<script>
-		$(function () {
-verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Rol');
-});
-	</script>
 {% endblock %}

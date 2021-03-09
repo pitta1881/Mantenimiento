@@ -130,22 +130,25 @@ CREATE TABLE OrdenesDeTrabajo (
 
 CREATE TABLE Tareas (
     id INTEGER NOT NULL,
-    fecha DATETIME NOT NULL,
+    fechaInicio DATETIME NOT NULL,
+    fechaFin DATETIME,
     descripcion TEXT NOT NULL,
     idPedido INTEGER NOT NULL,
     idOrdenDeTrabajo INTEGER,
     idUsuario INTEGER NOT NULL,
     idEspecializacion INTEGER NOT NULL,
+    idEstado INTEGER NOT NULL,
     idPrioridad INTEGER NOT NULL,
     PRIMARY KEY (id, idPedido),
     FOREIGN KEY (idPedido) REFERENCES Pedidos (id),
     FOREIGN KEY (idOrdenDeTrabajo) REFERENCES OrdenesDeTrabajo (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
     FOREIGN KEY (idEspecializacion) REFERENCES Especializaciones (id),
+    FOREIGN KEY (idEstado) REFERENCES Estados (id),
     FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
 );
 
-CREATE TABLE Tareas_x_Agentes (
+CREATE TABLE Agentes_x_Tareas (
     idTarea INTEGER,
     idPedido INTEGER,
     idAgente INTEGER,
@@ -235,13 +238,20 @@ CREATE TABLE HistorialPedido (
 );
 
 CREATE TABLE HistorialTarea (
-    id INTEGER AUTO_INCREMENT,
+    id INTEGER NOT NULL,
     idTarea INTEGER NOT NULL,
     idPedido INTEGER NOT NULL,
     fecha DATETIME NOT NULL,
-    descripcion VARCHAR(100),
+    idUsuario INTEGER NOT NULL,
+    idPrioridad INTEGER NOT NULL,
     idEstado INTEGER NOT NULL,
+    idEspecializacion INTEGER NOT NULL,
+    descripcion TEXT,
+    observacion TEXT NOT NULL,
     PRIMARY KEY (id, idPedido, idTarea),
     FOREIGN KEY (idPedido, idTarea) REFERENCES Tareas (idPedido, id),
-    FOREIGN KEY (idEstado) REFERENCES Estados (id)
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
+    FOREIGN KEY (idEspecializacion) REFERENCES Especializaciones (id),
+    FOREIGN KEY (idEstado) REFERENCES Estados (id),
+    FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
 );

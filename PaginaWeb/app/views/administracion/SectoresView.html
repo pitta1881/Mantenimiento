@@ -26,34 +26,7 @@
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for sector in datos.todosSectores %}
-					<tr>
-						<td>{{ sector.id }}</td>
-						<td>{{ sector.nombre }}</td>
-						<td>{{ sector.idTipoSector }}</td>
-						<td>{{ sector.responsable }}</td>
-						<td>{{ sector.telefono }}</td>
-						<td>{{ sector.email }}</td>
-						<td>
-							<div class="btn-group btn-group-sm float-none" role="group">
-								{% if "27" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-id='{{ sector.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Editar Sector" data-placement="top">
-										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-								{% if "26" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ sector.usado ? 'disabled' }} data-id='{{ sector.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Sector" data-placement="top">
-										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-							</div>
-						</td>
-					</tr>
-				{% else %}
-					<h2 class='error'>No hay Sectores</h2>
-				{% endfor %}
-			</tbody>
+			<tbody></tbody>
 		</table>
 	</div>
 
@@ -71,7 +44,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="createSector" method="post" id="formSectorNew">
+						<form action="create" method="post" id="formSectorNew">
 							<div class="form-row">
 								<div class="form-group required col-lg-6">
 									<label class="control-label" for="nombre">Nombre del Sector:</label>
@@ -126,7 +99,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="updateSector" method="post" id="formSectorModificar">
+						<form action="update" method="post" id="formSectorModificar">
 							<input type="text" name="id" id="updateID" hidden>
 							<div class="form-row">
 								<div class="form-group required col-lg-6">
@@ -179,9 +152,4 @@
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsSector.js" type="module"></script>
-	<script>
-		$(function () {
-verificarAlertas('{{ datos.alertas|json_encode|raw }}');
-});
-	</script>
 {% endblock %}

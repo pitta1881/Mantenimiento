@@ -16,25 +16,10 @@ class AgenteController extends Controller implements MyInterface
         session_start();
     }
 
-    public function index($alerta = null)
+    public function index()
     {
-        $comparaTablasIfUsado = array(
-                                    array(  "tabla" => tableTxA,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idAgente"
-                                    )
-                                );
-        $datos['todosAgentes'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
-        $datos['personas'] = $this->model->getFichaAll(tablePersonas);
-        foreach ($datos['todosAgentes'] as $keyAgente => $valueAgente) {
-            foreach ($datos['personas'] as $keyPersona => $valuePersona) {
-                if ($valueAgente['idPersona'] == $valuePersona['id'] || $valuePersona['id'] == 0) {
-                    unset($datos['personas'][$keyPersona]);
-                }
-            }
-        }
+        $datos['todasPersonas'] = $this->model->getFichaAll(tablePersonas);
         $datos['todasEspecializaciones'] = $this->model->getFichaAll(tableEspecializaciones);
-        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
                                         array("url" => "/home",
                                              "nombre" => "HOME"),
@@ -62,13 +47,13 @@ class AgenteController extends Controller implements MyInterface
                 $this->model->insert(tableExA, $ExA, "ExA");
             }
         }
-        return $this->index($insert);
+        echo json_encode($insert);
     }
 
     public function update()
     {
         $agente['idAgente'] = $_POST['id'];
-        $this->model->delete(tableExA, $agente);
+        $this->model->delete(tableExA, $agente, "ExA");
         foreach ($_POST['idEspecializacion'] as $key => $value) {
             $ExA = [
                 'idEspecializacion' => $value,
@@ -79,7 +64,7 @@ class AgenteController extends Controller implements MyInterface
         $update = $insert;
         $update['tipo'] = 'Agente';
         $update['operacion'] = 'update';
-        return $this->index($update);
+        echo json_encode($update);
     }
 
     public function delete()
@@ -88,6 +73,6 @@ class AgenteController extends Controller implements MyInterface
         $agente['id'] = $_POST['id'];
         $this->model->delete(tableExA, $agenteExA, "ExA");
         $delete = $this->model->delete(table, $agente, "Agente");
-        return $this->index($delete);
+        echo json_encode($delete);
     }
 }

@@ -4,6 +4,6 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class PedidoModel extends Model
+class TareaModel extends Model
 {
 }

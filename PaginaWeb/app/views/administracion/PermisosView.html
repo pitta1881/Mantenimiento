@@ -23,31 +23,7 @@
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for permiso in datos.todosPermisos %}
-					<tr>
-						<td>{{ permiso.id }}</td>
-						<td>{{ permiso.nombre }}</td>
-						<td>
-							<div class="btn-group btn-group-sm float-none" role="group">
-								{% if "7" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" data-id='{{ permiso.id }}' data-abm="update" data-target="#modalUpdate" data-toggle="tooltip" title="Modificar Permiso" data-placement="top">
-										<i class="fal fa-pencil-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-
-								{% if "6" in datos.datosSesion.listaPermisos %}
-									<button type="button" class="btn btn-outline-primary" {{ permiso.usado ? 'disabled' }} data-id='{{ permiso.id }}' data-abm="delete" data-target="#modalDelete" data-toggle="tooltip" title="Eliminar Permiso" data-placement="top">
-										<i class="fal fa-trash-alt fa-lg fa-fw"></i>
-									</button>
-								{% endif %}
-							</div>
-						</td>
-					</tr>
-				{% else %}
-					<h2 class="error">No hay ningun Permiso cargado</h2>
-				{% endfor %}
-			</tbody>
+			<tbody></tbody>
 		</table>
 	</div>
 
@@ -65,7 +41,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="createPermiso" method="post" id="formPermisoNew">
+						<form action="create" method="post" id="formPermisoNew">
 							<div class="form-group required">
 								<label class="control-label" for="nombre">Nombre del Permiso:</label>
 								<input type="text" name="nombre" id="nombre" class="form-control" autofocus>
@@ -95,7 +71,7 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="updatePermiso" method="post" id="formPermisoUpd">
+						<form action="update" method="post" id="formPermisoUpd">
 							<input type="text" name="id" id="updateID" hidden>
 							<div class="form-group">
 								<label class="control-label" for="nombreAnteriorUpdate">Nombre Anterior</label>
@@ -128,9 +104,4 @@
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsPermiso.js" type="module"></script>
-	<script>
-		$(function () {
-verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Permiso');
-});
-	</script>
 {% endblock %}

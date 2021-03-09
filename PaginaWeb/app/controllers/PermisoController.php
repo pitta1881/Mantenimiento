@@ -16,16 +16,8 @@ class PermisoController extends Controller implements MyInterface
         session_start();
     }
 
-    public function index($alerta = null)
+    public function index()
     {
-        $comparaTablasIfUsado = array(
-            array(  "tabla" => tableRxP,
-                    "comparaKeyOrig" => "id",
-                    "comparaKeyDest" => "idPermiso"
-                )
-        );
-        $datos['todosPermisos'] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
-        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
@@ -42,7 +34,7 @@ class PermisoController extends Controller implements MyInterface
     {
         $permiso['nombre'] = $_POST['nombre'];
         $insert = $this->model->insert(table, $permiso, "Permiso");
-        return $this->index($insert);
+        echo json_encode($insert);
     }
 
     public function update()
@@ -52,13 +44,13 @@ class PermisoController extends Controller implements MyInterface
             'nombre' => $_POST['nombre']
         ];
         $update = $this->model->update(table, $permiso, "Permiso");
-        return $this->index($update);
+        echo json_encode($update);
     }
 
     public function delete()
     {
         $permiso['id'] = $_POST['id'];
         $delete = $this->model->delete(table, $permiso, "Permiso");
-        return $this->index($delete);
+        echo json_encode($delete);
     }
 }

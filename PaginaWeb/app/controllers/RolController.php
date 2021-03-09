@@ -16,16 +16,8 @@ class RolController extends Controller implements MyInterface
         session_start();
     }
 
-    public function index($alerta = null)
+    public function index()
     {
-        $comparaTablasIfUsado = array(
-                                    array(  "tabla" => tableRxU,
-                                            "comparaKeyOrig" => "id",
-                                            "comparaKeyDest" => "idRol"
-                                    )
-                                );
-        $datos["todosRoles"] = $this->model->getFichaAll(table, $comparaTablasIfUsado);
-        $datos['alertas'] = $alerta;
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
@@ -34,9 +26,6 @@ class RolController extends Controller implements MyInterface
             array("url" => "/administracion/roles",
             "nombre" => "ROLES")
         );
-        if (!is_null($alerta) && ($alerta["operacion"] == "update")) {
-            $_SESSION['listaPermisos'] = $this->model->getPermisos();
-        }
         $datos['datosSesion'] = $_SESSION;
         return view('/administracion/RolesView', compact('datos'));
     }
@@ -45,7 +34,7 @@ class RolController extends Controller implements MyInterface
     {
         $rol['nombre'] = $_POST['nombre'];
         $insert = $this->model->insert(table, $rol, "Rol");
-        return $this->index($insert);
+        echo json_encode($insert);
     }
 
     public function update()
@@ -62,7 +51,8 @@ class RolController extends Controller implements MyInterface
         $update = $insert;
         $update['tipo'] = 'Rol';
         $update['operacion'] = 'update';
-        return $this->index($update);
+        $_SESSION['listaPermisos'] = $this->model->getPermisos();
+        echo json_encode($update);
     }
 
     public function delete()
@@ -71,6 +61,18 @@ class RolController extends Controller implements MyInterface
         $rolRxP['idRol'] = $_POST['id'];
         $this->model->delete(tableRxP, $rolRxP, "RxP");
         $delete = $this->model->delete(table, $rol, "Rol");
-        return $this->index($delete);
+        echo json_encode($delete);
+    }
+
+    public function getPermisos()
+    {
+        $listaPermisos = $this->model->getPermisos();          //en cada clase q implementa ésta, defino que es 'table'
+        if ($listaPermisos) {
+            http_response_code(200);
+        } else {
+            http_response_code(404);
+        }
+        header("Content-Type: application/json");
+        echo json_encode($listaPermisos);
     }
 }

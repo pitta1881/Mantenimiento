@@ -1,12 +1,12 @@
 import {
     setUrl,
     setUrlAjax,
+    loadTableAgente as loadTable,
     modificarModalAgente as modificarModal,
     eliminarModalAgente as deleteModal,
     visualizarPersonaAgente as visualizarModal,
     loadListenerActionButtons,
     loadScriptValidarCampos,
-    loadScriptOrdenarPagTablas,
     loadTooltips,
     modalDrag
 } from '/public/js/generales/jsGeneral.js';
@@ -14,12 +14,13 @@ import {
 setUrl("/administracion/agentes/");
 setUrlAjax("/administracion/personas/");
 
+loadTable();
 loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
     'delete': deleteModal,
-    'visualize': visualizarModal
+    'visualize-2': visualizarModal,
+    'loadTable': loadTable
 });
-loadScriptValidarCampos();
-loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4', [5], 'Agentes Registrados');
+loadScriptValidarCampos(loadTable);
