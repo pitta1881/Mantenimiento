@@ -48,7 +48,7 @@ class UsuarioController extends Controller implements MyInterface
                 ];
                 $this->model->insert(tableRxU, $RxU, "RxU");
             }
-            echo json_encode($insert);
+            return json_encode($insert);
         }
     }
 
@@ -59,7 +59,7 @@ class UsuarioController extends Controller implements MyInterface
             'password' => $_POST['password']
         ];
         $update = $this->model->update(table, $usuario, "Usuario");
-        echo json_encode($update);
+        return json_encode($update);
     }
 
     public function updateRolesUsuario()
@@ -93,6 +93,6 @@ class UsuarioController extends Controller implements MyInterface
         $usuario['id'] = $_POST['id'];
         $this->model->delete(tableRxU, $usuarioRxU, "RxU");
         $delete = $this->model->delete(table, $usuario, "Usuario");
-        echo json_encode($delete);
+        return json_encode($delete);
     }
 }

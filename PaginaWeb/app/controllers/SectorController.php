@@ -41,7 +41,7 @@ class SectorController extends Controller implements MyInterface
             'idTipoSector' => $_POST['idTipoSector']
         ];
         $insert = $this->model->insert(table, $sector, "Sector");
-        echo json_encode($insert);
+        return json_encode($insert);
     }
 
     public function update()
@@ -55,13 +55,13 @@ class SectorController extends Controller implements MyInterface
             'idTipoSector' => $_POST['idTipoSector']
         ];
         $update = $this->model->update(table, $sector, "Sector");
-        echo json_encode($update);
+        return json_encode($update);
     }
 
     public function delete()
     {
         $sector['id'] = $_POST['id'];
         $delete = $this->model->delete(table, $sector, "Sector");
-        echo json_encode($delete);
+        return json_encode($delete);
     }
 }

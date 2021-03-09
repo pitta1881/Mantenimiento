@@ -59,14 +59,14 @@ class PersonaController extends Controller implements MyInterface
             'fechaNacimiento' => $_POST['fechaNacimiento']
         ];
         $update = $this->model->update(table, $persona, "Persona");
-        echo json_encode($update);
+        return json_encode($update);
     }
     
     public function delete()
     {
         $persona['id'] = $_POST['id'];
         $delete = $this->model->delete(table, $persona, "Persona");
-        echo json_encode($delete);
+        return json_encode($delete);
     }
 
     public function updateEstado()
@@ -76,6 +76,6 @@ class PersonaController extends Controller implements MyInterface
             'idEstadoPersona' => $_POST['idEstadoPersona']
         ];
         $update = $this->model->update(table, $persona, "Persona");
-        echo json_encode($update);
+        return json_encode($update);
     }
 }

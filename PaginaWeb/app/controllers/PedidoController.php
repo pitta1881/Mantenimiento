@@ -64,7 +64,7 @@ class PedidoController extends Controller implements MyInterface
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
         }
-        echo json_encode($insert);
+        return json_encode($insert);
     }
 
     public function update()
@@ -90,7 +90,7 @@ class PedidoController extends Controller implements MyInterface
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
         }
-        echo json_encode($update);
+        return json_encode($update);
     }
     
     public function finish()    //idEstado = 5
@@ -101,7 +101,7 @@ class PedidoController extends Controller implements MyInterface
             'fechaFin' => date("Y-m-d")
         ];
         $update = $this->model->update(table, $pedido, "Pedido");
-        echo json_encode($update);
+        return json_encode($update);
     }
 
     public function cancel()    //idEstado = 4
@@ -124,7 +124,7 @@ class PedidoController extends Controller implements MyInterface
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
         }
-        echo json_encode($update);
+        return json_encode($update);
     }
 
 

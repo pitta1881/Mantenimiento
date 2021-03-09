@@ -34,7 +34,7 @@ class EspecializacionController extends Controller implements MyInterface
     {
         $especializacion['nombre'] = $_POST['nombre'];
         $insert = $this->model->insert(table, $especializacion, "Especializacion");
-        echo json_encode($insert);
+        return json_encode($insert);
     }
     
     public function update()
@@ -44,13 +44,13 @@ class EspecializacionController extends Controller implements MyInterface
             'nombre' => $_POST['nombre']
         ];
         $update = $this->model->update(table, $especializacion, "Especializacion");
-        echo json_encode($update);
+        return json_encode($update);
     }
 
     public function delete()
     {
         $especializacion['id'] = $_POST['id'];
         $delete = $this->model->delete(table, $especializacion, "Especializacion");
-        echo json_encode($delete);
+        return json_encode($delete);
     }
 }

@@ -47,7 +47,7 @@ class AgenteController extends Controller implements MyInterface
                 $this->model->insert(tableExA, $ExA, "ExA");
             }
         }
-        echo json_encode($insert);
+        return json_encode($insert);
     }
 
     public function update()
@@ -64,7 +64,7 @@ class AgenteController extends Controller implements MyInterface
         $update = $insert;
         $update['tipo'] = 'Agente';
         $update['operacion'] = 'update';
-        echo json_encode($update);
+        return json_encode($update);
     }
 
     public function delete()
@@ -73,6 +73,6 @@ class AgenteController extends Controller implements MyInterface
         $agente['id'] = $_POST['id'];
         $this->model->delete(tableExA, $agenteExA, "ExA");
         $delete = $this->model->delete(table, $agente, "Agente");
-        echo json_encode($delete);
+        return json_encode($delete);
     }
 }

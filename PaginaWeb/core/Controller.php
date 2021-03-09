@@ -18,7 +18,7 @@ abstract class Controller
             http_response_code(404);
         }
         header("Content-Type: application/json");
-        echo json_encode($miFicha);
+        return json_encode($miFicha);
     }
     
 
@@ -31,6 +31,6 @@ abstract class Controller
             http_response_code(200);
         }
         header("Content-Type: application/json");
-        echo json_encode($misFichas);
+        return json_encode($misFichas);
     }
 }

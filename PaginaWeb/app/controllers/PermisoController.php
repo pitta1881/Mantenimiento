@@ -34,7 +34,7 @@ class PermisoController extends Controller implements MyInterface
     {
         $permiso['nombre'] = $_POST['nombre'];
         $insert = $this->model->insert(table, $permiso, "Permiso");
-        echo json_encode($insert);
+        return json_encode($insert);
     }
 
     public function update()
@@ -44,13 +44,13 @@ class PermisoController extends Controller implements MyInterface
             'nombre' => $_POST['nombre']
         ];
         $update = $this->model->update(table, $permiso, "Permiso");
-        echo json_encode($update);
+        return json_encode($update);
     }
 
     public function delete()
     {
         $permiso['id'] = $_POST['id'];
         $delete = $this->model->delete(table, $permiso, "Permiso");
-        echo json_encode($delete);
+        return json_encode($delete);
     }
 }

@@ -34,7 +34,7 @@ class RolController extends Controller implements MyInterface
     {
         $rol['nombre'] = $_POST['nombre'];
         $insert = $this->model->insert(table, $rol, "Rol");
-        echo json_encode($insert);
+        return json_encode($insert);
     }
 
     public function update()
@@ -52,7 +52,7 @@ class RolController extends Controller implements MyInterface
         $update['tipo'] = 'Rol';
         $update['operacion'] = 'update';
         $_SESSION['listaPermisos'] = $this->model->getPermisos();
-        echo json_encode($update);
+        return json_encode($update);
     }
 
     public function delete()
@@ -61,7 +61,7 @@ class RolController extends Controller implements MyInterface
         $rolRxP['idRol'] = $_POST['id'];
         $this->model->delete(tableRxP, $rolRxP, "RxP");
         $delete = $this->model->delete(table, $rol, "Rol");
-        echo json_encode($delete);
+        return json_encode($delete);
     }
 
     public function getPermisos()
@@ -73,6 +73,6 @@ class RolController extends Controller implements MyInterface
             http_response_code(404);
         }
         header("Content-Type: application/json");
-        echo json_encode($listaPermisos);
+        return json_encode($listaPermisos);
     }
 }
