@@ -4,8 +4,6 @@
 
 -seguir con xq no muestra alertify de agente en tab tares de pedido
 
--cuando modificas o eliminas de pedido lo hace 2 veces D:
-
--acciones de tareas
+- !! acciones de tareas !!
 
 -insumos de tareas

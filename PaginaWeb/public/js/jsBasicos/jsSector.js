@@ -5,7 +5,6 @@ import {
     eliminarModalSector as deleteModal,
     loadListenerActionButtons,
     loadScriptValidarCampos,
-    loadScriptOrdenarPagTablas,
     loadTooltips,
     modalDrag
 } from '/public/js/generales/jsGeneral.js';

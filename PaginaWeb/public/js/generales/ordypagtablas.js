@@ -36,7 +36,7 @@ var idioma = {
     }
 };
 
-export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, modal, datosHTML) {
+export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo) {
 
     $('#' + tablaID + " thead button").remove();
     if ($('#' + tablaID + " thead button").length == 0) {
@@ -69,24 +69,13 @@ export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, 
         });
     }
 
-    let datosPedido = '';
-    if (modal) {
-        $('#' + tablaID).DataTable().clear().destroy();
-        $('#' + tablaID + " tbody").empty();
-        datosPedido = $('#nav-pedido').html();
-        if (tablaID === 'miTablaHistorial') {
-            $('#tbodyHistorial').html(datosHTML);
-        } else if (tablaID === 'miTablaTarea') {
-            $('#tbodyTareas').html(datosHTML);
-        }
-    }
-
+    let datosPedido = $('#nav-pedido').html();
 
     let table = $('#' + tablaID).DataTable({
         orderCellsTop: true,
         dom: 'Bfrt<"col-lg-6 inline"i> <"col-lg-6 inline"p>',
         paging: true,
-        lengthChange: false,
+        pageLength: 5,
         searching: true,
         ordering: true,
         info: true,

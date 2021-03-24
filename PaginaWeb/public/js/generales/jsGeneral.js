@@ -3,6 +3,7 @@ export {
     setUrlAjax,
     setUrlAjax2,
     setUrlAjaxRxP,
+    loadTableTareas,
     visualizarUpdateModalRxP,
     loadTablePedido,
     visualizarSectorPedido,
@@ -118,13 +119,12 @@ async function loadTablePedido() {
         });
     }
     $('#miTabla tbody').html(textoInner);
-    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6,7,8', [9], 'Pedidos Registrados', false);
+    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6,7,8', [9], 'Pedidos Registrados');
 }
 
 function visualizarPedidoGeneral(datos) {
     loadDlPedido(datos);
-    loadHistorial(datos);
-    loadTareas(datos);
+    loadTableTareas(datos);
 }
 
 function loadDlPedido(datos) {
@@ -155,6 +155,7 @@ function loadDlPedido(datos) {
 }
 
 function loadHistorial(datos) {
+    $('#miTablaHistorial').DataTable().clear().destroy();
     let textoInner = ``;
     datos.historial.forEach(element => {
         let myDate = element['fecha'].split(" ");
@@ -169,10 +170,15 @@ function loadHistorial(datos) {
         </tr>
             `
     });
-    loadScriptOrdenarPagTablas('miTablaHistorial', '0,1,2,3', [], 'Historial', true, textoInner);
+    $('#miTablaHistorial tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTablaHistorial', '0,1,2,3', [], 'Historial');
 }
 
-function loadTareas(datos) {
+async function loadTableTareas(datos) {
+    if (Number.isInteger(datos)) {
+        datos = await getFichaOne(datos, url);
+    }
+    $('#miTablaTarea').DataTable().clear().destroy();
     let textoInner = ``;
     if (datos.idEstado == 4 || datos.idEstado == 6) {
         $('button[data-target="#modalNewTarea"]').hide();
@@ -208,7 +214,9 @@ function loadTareas(datos) {
     });
     $('#idPedidoTarea').attr('value', datos.id).val(datos.id);
     $('#idPrioridadTarea option[value=' + datos.idPrioridad + ']').prop('selected', true);
-    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7,8', [], 'Tareas Registradas', true, textoInner);
+    $('#miTablaTarea tbody').html(textoInner);
+    loadHistorial(datos);
+    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7,8', [], 'Tareas Registradas');
 }
 
 function visualizarSectorPedido(datos) {
@@ -794,16 +802,18 @@ function loadListenerActionButtons(callbacks) {
                         break;
                     case "delete":
                         callbacks['delete'](ficha);
-                        $('#modalDelete form').on('submit', function (e) {
-                            e.preventDefault();
-                            let that = this;
-                            $.post($(this).attr('action'), $(this).serialize())
-                                .done(function (data) {
-                                    verificarAlertas(data);
-                                    callbacks['loadTable']();
-                                    $(that).closest('.modal').modal('hide');
-                                });;
-                        })
+                        if (urlToUse != '/pedidos/') {
+                            $('#modalDelete form').on('submit', function (e) {
+                                e.preventDefault();
+                                let that = this;
+                                $.post($(this).attr('action'), $(this).serialize())
+                                    .done(function (data) {
+                                        verificarAlertas(data);
+                                        callbacks['loadTable']();
+                                        $(that).closest('.modal').modal('hide');
+                                    });;
+                            })
+                        }
                         break;
                     case "visualize":
                         callbacks['visualize'](ficha);
@@ -843,15 +853,15 @@ function loadListenerActionButtons(callbacks) {
     })
 }
 
-function loadScriptValidarCampos(callBackAfterReloadTable) {
+function loadScriptValidarCampos(callBackAfterReloadTable, callBackAfterReloadTable2) {
     import('/public/js/generales/validarCampos.js').then((Module) => {
-        Module.default(getFichaAll, callBackAfterReloadTable);
+        Module.default(getFichaAll, callBackAfterReloadTable, callBackAfterReloadTable2);
     });
 }
 
-function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo, modal, textoHTML) {
+function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo) {
     import('/public/js/generales/ordypagtablas.js').then((Module) => {
-        Module.default(tablaID, columnas, columNoOrdenar, titulo, modal, textoHTML);
+        Module.default(tablaID, columnas, columNoOrdenar, titulo);
     });
 }
 

@@ -26,7 +26,8 @@ class TareaController extends Controller implements MyInterface
     public function create()
     {
         $ahora = date('Y-m-d H:i:s');
-        $idTarea = $this->getIdTarea($_POST['idPedido']);
+        $pedidoRelacionado = $this->getPedido($_POST['idPedido']);
+        $idTarea = $pedidoRelacionado['tareasAsignadas'] + 1;
         $tarea = [
             'id' => $idTarea,
             'idPedido' => $_POST['idPedido'],
@@ -52,8 +53,20 @@ class TareaController extends Controller implements MyInterface
                 'observacion' => 'Tarea Creada'
             ];
             $insert2 = $this->model->insert(tableHistorialTarea, $historialTarea, "historialTarea");
+            $historialPedido = [
+                'id' => end($pedidoRelacionado['historial'])['id'] + 1,
+                'idPedido' => $_POST['idPedido'],
+                'fecha' => $ahora,
+                'idUsuario' => $_SESSION['idUser'],
+                'idEstado' => $pedidoRelacionado['idEstado'],
+                'idSector' => $pedidoRelacionado['idSector'],
+                'idPrioridad' => $pedidoRelacionado['idPrioridad'],
+                'descripcion' => $pedidoRelacionado['descripcion'],
+                'observacion' => 'Tarea Creada -> '.$_POST['descripcion']
+            ];
+            $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
         }
-        return $this->index($insert);
+        return json_encode($insert);
     }
 
     public function update()
@@ -64,9 +77,8 @@ class TareaController extends Controller implements MyInterface
     {
     }
 
-    private function getIdTarea($idPedido)
+    private function getPedido($idPedido)
     {
-        $datos['unPedido'] = $this->model->getFichaOne(tablePedidos, array('id'=>$idPedido));
-        return ($datos['unPedido']['tareasAsignadas'] + 1);
+        return $this->model->getFichaOne(tablePedidos, array('id'=>$idPedido));
     }
 }

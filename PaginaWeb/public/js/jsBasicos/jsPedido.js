@@ -2,7 +2,8 @@ import {
     setUrl,
     setUrlAjax,
     setUrlAjax2,
-    loadTablePedido as loadTable,
+    loadTablePedido,
+    loadTableTareas,
     modificarModalPedido as modificarModal,
     deleteModalPedido as deleteModal,
     visualizarPersonaAgente,
@@ -18,7 +19,7 @@ setUrl("/pedidos/");
 setUrlAjax("/administracion/sectores/");
 setUrlAjax2("/administracion/personas/");
 
-loadTable();
+loadTablePedido();
 loadTooltips();
 modalDrag();
 loadListenerActionButtons({
@@ -27,6 +28,6 @@ loadListenerActionButtons({
     'visualize': visualizarPedidoGeneral,
     'visualize-2': visualizarSectorPedido,
     'visualize-3': visualizarPersonaAgente,
-    'loadTable': loadTable
+    'loadTable': loadTablePedido
 });
-loadScriptValidarCampos(loadTable);
+loadScriptValidarCampos(loadTablePedido, loadTableTareas);
