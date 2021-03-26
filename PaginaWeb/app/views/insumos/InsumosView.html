@@ -6,7 +6,7 @@
 	<div>
 		<h2 class="titulo-tabla">Insumos Registrados</h2>
 
-		<!-- BOTON NEW AGENTE -->
+		<!-- BOTON NEW INSUMO -->
 		{% if "41" in datos.datosSesion.listaPermisos %}
 			<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew">
 				<i class="fal fa-plus"></i>
@@ -21,187 +21,80 @@
 					<th>Nombre</th>
 					<th>Descripcion</th>
 					<th>Stock Actual</th>
+					<th>Stock Comprometido</th>
+					<th>Stock Futuro</th>
 					<th>Medida</th>
 					<th>Aviso Minimo</th>
 					<th>Accion</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% for insumo in datos.todosInsumos %}
-					<tr>
-						<td>{{ insumo.id }}</td>
-						<td>{{ insumo.nombre }}</td>
-						<td>{{ insumo.descripcion }}</td>
-						<td>{{ insumo.stockReal }}</td>
-						<td>{{ insumo.medidaNombre }}</td>
-						<td>{{ insumo.stockMinimo }}</td>
-						<td>
-							<!--SUMAR/RESTAR INSUMOS-->
-							<form action="/insumo/updateStockSinItem" method="post" hidden id="formSumar{{ insumo.id }}">
-								<input type="text" name="id" value="{{ insumo.id }}" hidden>
-								<input type="number" name="cantidad_{{ insumo.id }}" hidden>
-								<input type="text" name="nombreUsuario" value="{{ datos.userLogueado }}" hidden>
-								<input type="text" name="descripcion_{{ insumo.id }}" hidden>
-								<input type="number" name="tipoMovimiento_{{ insumo.id }}" value="1" hidden>
-							</form>
-							<img
-							class="iconos" src="/public/res/masmenos.svg" title="Modificar Stock" onclick="alertify.prompt('Modificar Stock','Seleccione la cantidad a modificar(min=-{{insumo.stockReal}})','',
-																								                    function(evt,value){
-																								                        document.getElementsByName('cantidad_{{ insumo.id }}')[0].value = value;
-																								                        var boolerror = false;
-																								                        if((value < -'{{insumo.stockReal}}')){
-																								                            alertify.alert('Error','Debe ingresar un valor válido');
-																								                            boolerror = true;
-																								                        } else if(value > 0){
-																								                            document.getElementsByName('tipoMovimiento_{{ insumo.id }}')[0].value = 0;
-																								                        } else if(value < 0){
-																								                            document.getElementsByName('tipoMovimiento_{{ insumo.id }}')[0].value = 1;
-																								                        } else {
-																								                            alertify.alert('Error','Debe ingresar un valor válido');
-																								                        }
-																								                        if ((value != 0) && (!boolerror)){
-																								                            alertify.prompt2('Modificar Stock','Ingrese una Descripcion','',
-																								                            function(evt,value2){
-																								                                document.getElementsByName('descripcion_{{ insumo.id }}')[0].value = value2 ;
-																								                                document.getElementById('formSumar{{ insumo.id }}').submit()
-																								                            },
-																								                            function(){}
-																								                            ).set({'type':'text'});
-																								                        }
-																								                    },
-																								                        function(){}
-																								                        ).set({'type':'number','value':0,'min':-'{{insumo.stockReal}}'});">
-							<!--MODIFICAR INSUMO-->
-							{% for value in datos.datosSesion.listaPermisos %}
-								{% if value.idPermiso == "43" %}
-									<a href="#" id="btnCrearUsuario" data-toggle="modal" data-target="#modalFormModificar{{ insumo.id }}" title="Modificar Insumo"><img class="iconos" src="/public/res/update.svg"></a>
-								{% endif %}
-							{% endfor %}
-							<!-- The Modal -->
-							<div class="modal fade" id="modalFormModificar{{ insumo.id }}">
-								<div class="modal-dialog modal-xs">
-									<div
-										class="modal-content">
-										<!-- Modal Header -->
-										<div class="modal-header">
-											<h3 class="modal-title m-0">Modificar Insumo(No Stock)</h3>
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-										</div>
-										<!-- Modal body -->
-										<div class="modal-body">
-											<form action="/insumos/administracionInsumos/modificarInsumo" method="post" id="formModificar{{ insumo.id }}">
-												<input type="text" name="id" value="{{ insumo.id }}" hidden>
-												<div class="form-row">
-													<div class="form-group col-lg-4">
-														<label for="nombre">Nombre:</label>
-														<span class="asterisco">*</span>
-														<input type="text" name="nombre" value="{{ insumo.nombre}}" class="form-control" required>
-													</div>
-													<div class="form-group col-lg-6">
-														<label for="descripcion">Descripcion:</label>
-														<span class="asterisco">*</span>
-														<textarea class="form-control" rows="2" id="descripcion" name="descripcion" required>{{ insumo.descripcion }}</textarea>
-													</div>
-												</div>
-												<div class="form-group">
-													<label for="stockMinimo">Stock Minimo(Aviso):</label>
-													<span class="asterisco">*</span>
-													<input type="number" name="stockMinimo" value="{{ insumo.stockMinimo}}" class="form-control" required min="0">
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-													<button type="submit" class="btn btn-success">Enviar</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--VER HISTORIAL-->
-							{% for value in datos.datosSesion.listaPermisos %}
-								{% if value.idPermiso == "44" %}
-									<a href="/insumo/verHistorial?id={{ insumo.id }}"><img class="iconosTitulo" src="/public/res/historyEstado.svg" title="Ver Historial"></a>
-								{% endif %}
-							{% endfor %}
-							<!--ELIMINAR INSUMO-->
-							{% if insumo.eliminarBool == true %}
-								{% for value in datos.datosSesion.listaPermisos %}
-									{% if value.idPermiso == "42" %}
-										<form action="/insumo/eliminar" method="post" style="display: inline-block" id="formEliminarInsumo{{ insumo.id }}">
-											<input type="text" name="id" value="{{ insumo.id }}" hidden>
-										</form>
-										<a onclick="alertify.confirm('Eliminar Insumo','¿Esta seguro?',function(){document.getElementById('formEliminarInsumo{{ insumo.id }}').submit()},function(){})"><img class="iconos" src="/public/res/del.svg" title="Eliminar Insumo"></a>
-									{% endif %}
-								{% endfor %}
-							{% endif %}
-						</td>
-					</tr>
-				{% else %}
-					<h2 class='error'>No hay insumo</h2>
-				{% endfor %}
-			</tbody>
+			<tbody></tbody>
 		</table>
 	</div>
 
 	<!-- MODALES NEW, UPDATE Y DELETE -->
 	<!--NEW INSUMO-->
-	<div class="modal fade" id="modalNew">
-		<div class="modal-dialog modal-xs">
-			<div
-				class="modal-content">
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<h3 class="modal-title m-0">Alta de Insumo</h3>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+	{% if "41" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalNew">
+			<div class="modal-dialog modal-xs">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Alta de Insumo</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="create" method="post">
+							<div class="form-row">
+								<div class="form-group required col-lg-6">
+									<label for="nombreNew">Nombre:</label>
+									<input type="text" name="nombre" id="nombreNew" class="form-control" required>
+								</div>
+								<div class="form-group required col-lg-6">
+									<label for="idUnidadNew">Unidad:</label>
+									<select name="idUnidad" id="idUnidadNew" class="form-control custom-select">
+										{% for medida in datos.todasMedidas %}
+											<option value="{{ medida.id }}">{{ medida.nombre }}
+											</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group required col-lg-6">
+									<label for="stockNew">Stock Actual:</label>
+									<input type="number" name="stock" id="stockNew" class="form-control" required min="0">
+								</div>
+								<div class="form-group required col-lg-6">
+									<label for="stockMinimoNew">Aviso Min.:</label>
+									<input type="number" name="stockMinimo" id="stockMinimoNew" class="form-control" required min="0">
+								</div>
+							</div>
+							<div class="form-group required">
+								<label for="descripcionNew">Descripcion:</label>
+								<textarea class="form-control" rows="2" id="descripcionNew" name="descripcion" required></textarea>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
 				</div>
-				<!-- Modal body -->
-				<div class="modal-body">
-					<form action="createInsumo" method="post" class="was-validated"></form>
-					<div class="form-row">
-						<div class="form-group col-lg-12">
-							<label for="nombre">Nombre:</label>
-							<span class="asterisco">*</span>
-							<input type="text" name="nombre" class="form-control" required>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-lg-4">
-							<label for="stock">Stock:</label>
-							<span class="asterisco">*</span>
-							<input type="number" name="stock" class="form-control" required min="0">
-						</div>
-						<div class="form-group col-lg-4">
-							<label for="idUnidad">Unidad:</label>
-							<span class="asterisco">*</span>
-							<select name="idUnidad" class="form-control custom-select">
-								{% for unidad in datos.unidad %}
-									<option value="{{ unidad }}">{{ unidad }}
-									</option>
-								{% endfor %}
-							</select>
-						</div>
-						<div class="form-group col-lg-4">
-							<label for="stockMinimo">Aviso Min.:</label>
-							<span class="asterisco">*</span>
-							<input type="number" name="stockMinimo" class="form-control" required min="0">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="descripcion">Descripcion:</label>
-						<span class="asterisco">*</span>
-						<textarea class="form-control" rows="2" id="descripcion" name="descripcion" required></textarea>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-						<button type="submit" class="btn btn-success">Enviar</button>
-					</div>
-				</form>
 			</div>
 		</div>
-	</div>
-</div>
+	{% endif %}
 
-<script>
-	verificarAlertas('{{ datos.alertas|json_encode|raw }}', 'Insumos');
-ordenarTabla('miTabla', '0,1,2,3,4,5', [6], 'Insumos Registrados');
-</script>{% endblock %}
+	<!--DELETE AGENTE SI NO ESTUVO TRABAJANDO EN ALGUNA TAREA-->
+	{% if "42" in datos.datosSesion.listaPermisos %}
+		<div id="containerModalDelete"></div>
+	{% endif %}
+	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'partials/scriptsDatatables.html' %}
+	<script src="/public/js/jsBasicos/jsInsumo.js" type="module"></script>
+{% endblock %}

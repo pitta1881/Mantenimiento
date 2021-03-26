@@ -21,3 +21,9 @@ $(function () {
         });
     }
 });
+
+$(function () {
+    $("a[href$='logOut']").click(function () {
+        sessionStorage.clear();
+    });
+});

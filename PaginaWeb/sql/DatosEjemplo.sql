@@ -239,7 +239,7 @@ INSERT INTO `Insumos` (
         `stockComprometido`,
         `stockFuturo`,
         `stockMinimo`,
-        `idMedidas`
+        `idMedida`
     )
 VALUES ('tornillo', 'cruz chico', 100, 0, 0, 100, 1),
     ('tornillo', 'cruz mediano', 200, 0, 0, 100, 1),

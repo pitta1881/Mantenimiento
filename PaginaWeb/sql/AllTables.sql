@@ -171,8 +171,19 @@ CREATE TABLE Insumos (
     stockComprometido INTEGER NOT NULL DEFAULT 0,
     stockFuturo INTEGER NOT NULL DEFAULT 0,
     stockMinimo INTEGER NOT NULL,
-    idMedidas INTEGER NOT NULL,
-    FOREIGN KEY (idMedidas) REFERENCES Medidas (id)
+    idMedida INTEGER NOT NULL,
+    FOREIGN KEY (idMedida) REFERENCES Medidas (id)
+);
+
+CREATE TABLE Insumos_x_Tarea (
+    id INTEGER NOT NULL,
+    idInsumo INTEGER NOT NULL,
+    idPedido INTEGER NOT NULL,
+    idTarea INTEGER NOT NULL,
+    fecha DATETIME NOT NULL,
+    PRIMARY KEY (id, idInsumo, idPedido, idTarea),
+    FOREIGN KEY (idInsumo) REFERENCES Insumos (id),
+    FOREIGN KEY (idPedido, idTarea) REFERENCES Tareas (idPedido, id)
 );
 
 CREATE TABLE EstadosOrdenesDeCompra (
@@ -191,32 +202,22 @@ CREATE TABLE OrdenesDeCompra (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     costoEstimado INTEGER NOT NULL default 0,
     fecha DATETIME NOT NULL,
-    idEstado INTEGER NOT NULL,
+    idEstadoOC INTEGER NOT NULL,
     idUsuario INTEGER NOT NULL,
     idTipoOrdenDeCompra INTEGER NOT NULL,
-    FOREIGN KEY (idEstado) REFERENCES EstadosOrdenesDeCompra (id),
+    FOREIGN KEY (idEstadoOC) REFERENCES EstadosOrdenesDeCompra (id),
     FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
     FOREIGN KEY (idTipoOrdenDeCompra) REFERENCES TiposOrdenesDeCompra (id)
 );
 
-CREATE TABLE Movimientos (
-    id INTEGER AUTO_INCREMENT,
+CREATE TABLE Insumos_x_OC (
     idInsumo INTEGER NOT NULL,
-    descripcion VARCHAR(50),
-    fecha DATETIME NOT NULL,
-    entradaSalida BOOLEAN NOT NULL,
-    isCompletado BOOLEAN NOT NULL,
-    oldStock INTEGER NOT NULL,
-    newStock INTEGER NOT NULL,
-    idUsuario INTEGER NOT NULL,
-    idPedido INTEGER NOT NULL,
-    idTarea INTEGER NOT NULL,
-    idOrdenDeCompra INTEGER NOT NULL,
-    PRIMARY KEY (id, idInsumo),
-    FOREIGN KEY (idPedido, idTarea) REFERENCES Tareas (idPedido, id),
+    idOC INTEGER NOT NULL,
+    cantidadPedida INTEGER NOT NULL,
+    cantidadRecibida INTEGER,
+    PRIMARY KEY (idInsumo, idOC),
     FOREIGN KEY (idInsumo) REFERENCES Insumos (id),
-    FOREIGN KEY (idOrdenDeCompra) REFERENCES OrdenesDeCompra (id),
-    FOREIGN KEY (idUsuario) REFERENCES Usuarios (id)
+    FOREIGN KEY (idOC) REFERENCES OrdenesDeCompra (id)
 );
 
 CREATE TABLE HistorialPedido (

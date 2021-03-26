@@ -8,13 +8,13 @@ define("tableRxP", "roles_x_permisos");
 define("tableRxU", "roles_x_usuarios");
 define("tableExA", "especializaciones_x_agentes");
 define("tableAxT", "agentes_x_tareas");
-define("tableMovimientos", "movimientos");
+define("tableIxT", "insumos_x_tareas");
+define("tableIxOC", "insumos_x_OC");
 define("tableRoles", "roles");
 define("tableAgentes", "agentes");
 define("tableUsuarios", "usuarios");
 define("tableEspecializaciones", "especializaciones");
 define("tablePersonas", "personas");
-define("tableItemAgentes", "itemAgente");
 define("tableSectores", "sectores");
 define("tableEstadosPersona", "estadospersona");
 define("tablePedidos", "pedidos");
@@ -24,6 +24,7 @@ define("tableTareas", "tareas");
 define("tableTiposSector", "tipossector");
 define("tableHistorialPedido", "historialpedido");
 define("tableHistorialTarea", "historialtarea");
+define("tableMedidas", "medidas");
 
 /**
  * Clase abstracta para manejar los modelos
@@ -127,7 +128,18 @@ abstract class Model
                         )
                 );
                 break;
-            
+            case 'insumos':
+                $comparaTablasIfUsado = array(
+                    array(  "tabla" => tableIxT,
+                            "comparaKeyOrig" => 'id',
+                            "comparaKeyDest" => "idInsumo"
+                    ),
+                    array(  "tabla" => tableIxOC,
+                                "comparaKeyOrig" => 'id',
+                                "comparaKeyDest" => "idInsumo"
+                        )
+                    );
+                break;
             default:
                 $comparaTablasIfUsado = null;
                 break;
@@ -174,6 +186,9 @@ abstract class Model
                 break;
             case 'personas':
                 $datoUno['estadoNombre']=$this->db->selectWhatWhere(tableEstadosPersona, 'nombre', array('id' => $datoUno['idEstadoPersona']))[0]['nombre'];
+                break;
+            case 'insumos':
+                $datoUno['medidaNombre']=$this->db->selectWhatWhere(tableMedidas, 'nombre', array('id' => $datoUno['idMedida']))[0]['nombre'];
                 break;
             case 'pedidos':
                 $datoUno['tareasAsignadas'] = $this->db->countTareasAsignadas($datoUno['id'])[0];
