@@ -196,9 +196,9 @@ function loadScriptValidarCampos(callBackAfterReloadTable, callBackAfterReloadTa
     });
 }
 
-function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo) {
+function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo, bButtons) {
     import('/public/js/generales/ordypagtablas.js').then((Module) => {
-        Module.default(tablaID, columnas, columNoOrdenar, titulo);
+        Module.default(tablaID, columnas, columNoOrdenar, titulo, bButtons);
     });
 }
 
@@ -228,7 +228,7 @@ function getFichaOne(id, urlConsulta) {
         body: formdata,
         redirect: 'follow'
     };
-    let miJson = fetch(urlConsulta + "fichaOne", requestOptions)
+    let miJson = fetch((urlConsulta || url) + "fichaOne", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
             return datos
@@ -239,12 +239,12 @@ function getFichaOne(id, urlConsulta) {
     return miJson;
 }
 
-function getFichaAll() {
+function getFichaAll(urlParam) {
     let requestOptions = {
         method: 'POST',
         redirect: 'follow'
     };
-    let miJson = fetch(url + "fichaAll", requestOptions)
+    let miJson = fetch((urlParam || url) + "fichaAll", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
             return datos

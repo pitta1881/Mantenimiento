@@ -36,7 +36,7 @@ var idioma = {
     }
 };
 
-export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo) {
+export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, bButtons) {
 
     $('#' + tablaID + " thead button").remove();
     if ($('#' + tablaID + " thead button").length == 0) {
@@ -71,6 +71,73 @@ export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo) 
 
     let datosPedido = $('#nav-pedido').html();
 
+    (typeof bButtons === 'undefined' ? bButtons = true : '');
+    let botonesInner = (!bButtons ? '' : [{
+            extend: 'collection',
+            text: '<i class="fal fa-download"></i> Descargar',
+            buttons: [{
+                    extend: 'csvHtml5',
+                    text: '<i class="fal fa-file-text-o"></i>CSV',
+                    title: titulo,
+                    titleAttr: 'CSV',
+                    className: 'btn btn-app export csv',
+                    exportOptions: {
+                        columns: [columnas]
+                    }
+                }, {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fal fa-file-pdf-o"></i>PDF',
+                    title: titulo,
+                    titleAttr: 'PDF',
+                    className: 'btn btn-app export pdf',
+                    exportOptions: {
+                        columns: [columnas]
+                    },
+                    customize: function (doc) {
+
+                        doc.styles.title = {
+                            color: '#4c8aa0',
+                            fontSize: '30',
+                            alignment: 'center'
+                        }
+                        doc.styles['td:nth-child(2)'] = {
+                                width: '100px',
+                                'max-width': '100px'
+                            },
+                            doc.styles.tableHeader = {
+                                fillColor: '#4c8aa0',
+                                color: 'white',
+                                alignment: 'center'
+                            },
+                            doc.content[1].margin = [100, 0, 100, 0]
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: '<i class="fal fa-file-excel-o"></i>Excel',
+                    title: titulo,
+                    titleAttr: 'Excel',
+                    className: 'btn btn-app export excel',
+                    exportOptions: {
+                        columns: [columnas]
+                    },
+                }
+
+            ]
+        },
+        {
+            extend: 'print',
+            text: '<i class="fal fa-print"></i> Imprimir',
+            title: titulo,
+            messageTop: datosPedido,
+            titleAttr: 'Imprimir',
+            className: 'btn export buttons-collection',
+            exportOptions: {
+                columns: [columnas]
+            }
+        }
+    ]);
+
     let table = $('#' + tablaID).DataTable({
         orderCellsTop: true,
         dom: 'Bfrt<"col-lg-6 inline"i> <"col-lg-6 inline"p>',
@@ -92,71 +159,7 @@ export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo) 
                     tag: null
                 }
             },
-            buttons: [{
-                    extend: 'collection',
-                    text: '<i class="fal fa-download"></i> Descargar',
-                    buttons: [{
-                            extend: 'csvHtml5',
-                            text: '<i class="fal fa-file-text-o"></i>CSV',
-                            title: titulo,
-                            titleAttr: 'CSV',
-                            className: 'btn btn-app export csv',
-                            exportOptions: {
-                                columns: [columnas]
-                            }
-                        }, {
-                            extend: 'pdfHtml5',
-                            text: '<i class="fal fa-file-pdf-o"></i>PDF',
-                            title: titulo,
-                            titleAttr: 'PDF',
-                            className: 'btn btn-app export pdf',
-                            exportOptions: {
-                                columns: [columnas]
-                            },
-                            customize: function (doc) {
-
-                                doc.styles.title = {
-                                    color: '#4c8aa0',
-                                    fontSize: '30',
-                                    alignment: 'center'
-                                }
-                                doc.styles['td:nth-child(2)'] = {
-                                        width: '100px',
-                                        'max-width': '100px'
-                                    },
-                                    doc.styles.tableHeader = {
-                                        fillColor: '#4c8aa0',
-                                        color: 'white',
-                                        alignment: 'center'
-                                    },
-                                    doc.content[1].margin = [100, 0, 100, 0]
-                            }
-                        },
-                        {
-                            extend: 'excelHtml5',
-                            text: '<i class="fal fa-file-excel-o"></i>Excel',
-                            title: titulo,
-                            titleAttr: 'Excel',
-                            className: 'btn btn-app export excel',
-                            exportOptions: {
-                                columns: [columnas]
-                            },
-                        }
-
-                    ]
-                },
-                {
-                    extend: 'print',
-                    text: '<i class="fal fa-print"></i> Imprimir',
-                    title: titulo,
-                    messageTop: datosPedido,
-                    titleAttr: 'Imprimir',
-                    className: 'btn export buttons-collection',
-                    exportOptions: {
-                        columns: [columnas]
-                    }
-                }
-            ],
+            buttons: botonesInner
         }
     });
 };

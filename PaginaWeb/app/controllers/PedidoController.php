@@ -27,7 +27,6 @@ class PedidoController extends Controller implements MyInterface
         $datos["sectores"] = $this->model->getFichaAll(tableSectores);
         $datos["usuarios"] = $this->model->getFichaAll(tableUsuarios);
         $datos["especializaciones"] = $this->model->getFichaAll(tableEspecializaciones);
-        $datos["diaHoy"] = date("Y-m-d");
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),

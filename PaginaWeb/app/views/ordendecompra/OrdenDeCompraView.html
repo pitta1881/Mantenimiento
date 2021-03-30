@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}
+	Gestion de Orden de Compra
+{% endblock %}
+{% block main %}
+	<div>
+		<h2 class="titulo-tabla">Ordenes de Compra Registradas</h2>
+
+		<!-- BOTON NEW OC -->
+		{% if "49" in datos.datosSesion.listaPermisos %}
+			<button id="btnCreateOC" type="button" class="btn btn-success btn-lg" data-target="#modalNew">
+				<i class="fal fa-plus"></i>
+				Crear Nuevo</button>
+		{% endif %}
+
+		<!-- TABLA ORDEN DE COMPRA -->
+		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+			<thead>
+				<tr>
+					<th>Nº Insumo</th>
+					<th>Fecha</th>
+					<th>Estado</th>
+					<th>Tipo</th>
+					<th>Costo Estimado</th>
+					<th>Usuario</th>
+					<th>Cantidad Insumos</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+
+	<!-- MODALES NEW, UPDATE Y DELETE -->
+	<!--NEW ORDEN DE COMPRA-->
+	{% if "49" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalNew">
+			<div class="modal-dialog modal-xl">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Elegir Insumos</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="create" method="post" id="formOCNew">
+							<div class="form-row">
+								<div class="form-group required col-lg-3">
+									<label class="control-label" for="idUsuario">Usuario Creador:</label>
+									<input id="idUsuario" value="{{ datos.datosSesion.idUser }}" required readonly hidden>
+									<input type="text" class="form-control" value="{{ datos.datosSesion.nickUser }}" readonly>
+								</div>
+								<div class="form-group required col-lg-3">
+									<label class="control-label" for="fecha">Fecha:</label>
+									<input type="text" class="form-control" value="{{ "now"|date("d/m/Y") }}" required readonly>
+								</div>
+								<div class="form-group required col-lg-3">
+									<label class="control-label" for="idEstadoOC">Estado:</label>
+									{% for estadoOC in datos.todosEstadosOC if estadoOC.nombre == 'Iniciado' %}
+										<input id="idEstadoOC" value="{{ estadoOC.id }}" required readonly hidden>
+										<input type="text" class="form-control" value="{{ estadoOC.nombre }}" readonly>
+									{% endfor %}
+								</div>
+								<div class="form-group required col-lg-3">
+									<label class="control-label" for="idTiposOC">Tipo:</label>
+									<select name="idTiposOC" id="idTiposOC" class="form-control custom-select">
+										<option value="" selected disabled>Seleccione un Tipo</option>
+										{% for tiposOC in datos.todosTiposOC %}
+											<option value="{{ tiposOC.id }}">{{ tiposOC.nombre }}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+							<table id="tableInsumos" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+								<thead>
+									<tr>
+										<th>Nombre</th>
+										<th>Descripcion</th>
+										<th>Stock Actual</th>
+										<th>Stock Comprometido</th>
+										<th>Stock Futuro</th>
+										<th>Medida</th>
+										<th>Seleccionar</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+							<div class="form-group">
+								<div>
+									<label class="control-label" for="radioInsumoChk"></label>
+									<input type="radio" id="radioInsumoChk" name="insumoChk" hidden required>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" data-target="#modalCheckAndSetCosto" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+	<div class="modal fade" id="modalCheckAndSetCosto">
+		<div class="modal-dialog modal-xs">
+			<div
+				class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h3 class="modal-title m-0" id="h3TitleModalUpdate">Revistar Lista</h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div id="carritoModalCheck"></div>
+					<form action="create" method="post" id="formCheckAndSetCosto">
+						<div class="form-group required">
+							<label class="control-label" for="costoEstimado">Costo Estimado(ARS):</label>
+							<input type="number" name="costoEstimado" id="costoEstimado" class="form-control" value="0" min="0" required>
+						</div>
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+							<button type="submit" class="btn btn-success">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}{% include 'partials/scriptsDatatables.html' %}
+	<script src="/public/js/jsBasicos/jsOrdenDeCompra.js" type="module"></script>
+{% endblock %}

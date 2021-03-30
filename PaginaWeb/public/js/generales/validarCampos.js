@@ -289,18 +289,8 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
             fields: {
                 idPersona: {
                     validators: {
-                        callback: {
-                            callback: function (value, validator, $field) {
-                                if (!value) {
-                                    return {
-                                        valid: false,
-                                        message: 'Seleccione una opcion'
-                                    }
-                                }
-                                return {
-                                    valid: true
-                                }
-                            }
+                        notEmpty: {
+                            message: 'Seleccione una Persona'
                         }
                     }
                 },
@@ -408,18 +398,8 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                 },
                 idTipoSector: {
                     validators: {
-                        callback: {
-                            callback: function (value, validator, $field) {
-                                if (!value) {
-                                    return {
-                                        valid: false,
-                                        message: 'Seleccione una opcion'
-                                    }
-                                }
-                                return {
-                                    valid: true
-                                }
-                            }
+                        notEmpty: {
+                            message: 'Seleccione un Tipo'
                         }
                     }
                 },
@@ -597,14 +577,155 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
             reloadTable(e, this);
         });
 
+    //insumos forms
+    $('#formInsumoNew, #formInsumoUpd').bootstrapValidator({
+            excluded: [':disabled'],
+            fields: {
+                nombre: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese un Nombre'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z ]+$/,
+                            message: 'Solo acepta Letras'
+                        }
+                    }
+                },
+                idMedida: {
+                    validators: {
+                        callback: {
+                            callback: function (value, validator, $field) {
+                                if (!value) {
+                                    return {
+                                        valid: false,
+                                        message: 'Seleccione una opcion'
+                                    }
+                                }
+                                return {
+                                    valid: true
+                                }
+                            }
+                        }
+                    }
+                },
+                stock: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese Stock Actual'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            inclusive: true,
+                            message: 'Debe ser mayor o igual a 0'
+                        }
+                    }
+                },
+                stockMinimo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese un stock min.'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            inclusive: true,
+                            message: 'Debe ser mayor o igual a 0'
+                        }
+                    }
+                },
+                descripcion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Descripcion'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.field.bv', function (e, data) {
+            data.element.removeClass('is-invalid');
+            data.element.addClass('is-valid');
+        })
+        .on('error.field.bv', function (e, data) {
+            data.element.removeClass('is-valid');
+            data.element.addClass('is-invalid');
+        })
+        .on('success.form.bv', function (e) {
+            reloadTable(e, this);
+        });
+
+    //orden de compra forms
+    $('#formOCNew, #formOCUpd, #formCheckAndSetCosto').bootstrapValidator({
+            excluded: [':disabled'],
+            fields: {
+                idUsuario: {
+                    excluded: true
+                },
+                idEstadoOC: {
+                    excluded: true
+                },
+                idTiposOC: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Opcion'
+                        }
+                    }
+                },
+                insumoChk: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe seleccionar al menos un Insumo'
+                        },
+                    }
+                },
+                costoEstimado: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese un Costo Estimado'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            inclusive: false,
+                            message: 'Debe ser mayor a 0'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.field.bv', function (e, data) {
+            data.element.removeClass('is-invalid');
+            data.element.addClass('is-valid');
+        })
+        .on('error.field.bv', function (e, data) {
+            data.element.removeClass('is-valid');
+            data.element.addClass('is-invalid');
+        })
+        .on('success.form.bv', function (e) {
+            reloadTable(e, this);
+        });
+
     function reloadTable(e, form) {
         e.preventDefault();
-        let that = form;
-        $.post($(form).attr('action'), $(form).serialize())
-            .done(function (data) {
-                verificarAlertas(data);
-                (!($(form).attr('action')).includes("tarea") ? callbackAfterReloadTable() : callBackAfterReloadTable2(Number($('#idPedidoTarea').val())));
-                $(that).closest('.modal').modal('hide');
-            });
+        let dataForm = $(form).serializeArray();
+        if ($(form).attr('id') == 'formOCNew') {
+            localStorage.setItem('idTiposOC', dataForm.find(element => element.name === 'idTiposOC')['value']);
+            $('#modalCheckAndSetCosto').modal('show');
+        } else {
+            if ($(form).attr('id') == 'formCheckAndSetCosto') {
+                dataForm.push({
+                    name: 'idTiposOC',
+                    value: JSON.parse(localStorage.getItem('idTiposOC'))
+                }, {
+                    name: 'insumos',
+                    value: localStorage.getItem('insumos')
+                });
+            }
+            $.post($(form).attr('action'), dataForm)
+                .done(function (data) {
+                    verificarAlertas(data);
+                    (!($(form).attr('action')).includes("tarea") ? callbackAfterReloadTable() : callBackAfterReloadTable2(Number($('#idPedidoTarea').val())));
+                    $('.modal').modal('hide');
+                });
+        }
     }
 }

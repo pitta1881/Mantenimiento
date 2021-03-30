@@ -32,13 +32,34 @@ class InsumoController extends Controller implements MyInterface
     
     public function create()
     {
+        $insumo = [
+            'nombre' => $_POST['nombre'],
+            'descripcion' => $_POST['descripcion'],
+            'stockReal' => $_POST['stock'],
+            'stockMinimo' => $_POST['stockMinimo'],
+            'idMedida' => $_POST['idMedida']
+        ];
+        $insert = $this->model->insert(table, $insumo, "Insumo");
+        return json_encode($insert);
     }
 
     public function update()
     {
+        $insumo = [
+            'id' => $_POST['id'],
+            'nombre' => $_POST['nombre'],
+            'descripcion' => $_POST['descripcion'],
+            'stockMinimo' => $_POST['stockMinimo'],
+            'idMedida' => $_POST['idMedida']
+        ];
+        $update = $this->model->update(table, $insumo, "Insumo");
+        return json_encode($update);
     }
 
     public function delete()
     {
+        $insumo['id'] = $_POST['id'];
+        $delete = $this->model->delete(table, $insumo, "Insumo");
+        return json_encode($delete);
     }
 }

@@ -52,7 +52,7 @@
 								<div class="form-group required col-lg-6">
 									<label class="control-label" for="idPersona">Persona Asociada:</label>
 									<select name="idPersona" id="idPersona" class="form-control custom-select">
-										<option value="" selected>Seleccione una Persona</option>
+										<option value="" selected disabled>Seleccione una Persona</option>
 										{% for persona in datos.todosPersonas %}
 											{% if persona.id != '0' and persona.usado != true %}
 												<option value="{{ persona.id }}">{{ persona.nombre }},&nbsp;{{ persona.apellido }}
@@ -150,7 +150,7 @@
 							</div>
 							<div class="form-group required">
 								<label class="control-label" for="passwordUpdConfirm">Confirme
-																																																																																																																																																																																																																																																																																																																																																						                            Contraseña:</label>
+																																																																																																																																																																																																																																																																																																																																																															                            Contraseña:</label>
 								<input type="password" name="passwordConfirm" id="passwordUpdConfirm" class="form-control">
 							</div>
 							<!-- Modal Footer -->

@@ -3,71 +3,67 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\OrdenDeCompra;
+use App\Core\MyInterface;
+use App\Models\OCModel;
 
-class OCController extends Controller{
+define("table", "ordenesdecompra");
 
-    public function __construct(){
-        $this->model = new OrdenDeCompra();
+class OCController extends Controller implements MyInterface
+{
+    public function __construct()
+    {
+        $this->model = new OCModel();
+        session_start();
+    }
+
+    public function index()
+    {
+        $datos["todosEstadosOC"] = $this->model->getFichaAll(tableEstadosOC);
+        $datos["todosTiposOC"] = $this->model->getFichaAll(tableTiposOC);
         
+        $_SESSION['urlHeader'] = array(
+            array("url" => "/home",
+                 "nombre" => "HOME"),
+            array("url" => "/ordendecompra",
+                "nombre" => "ORDEN DE COMPRA")
+                );
+        $datos['datosSesion'] = $_SESSION;
+        return view('/ordendecompra/OrdenDeCompraView', compact('datos'));
     }
 
-    public function index(){
-        $todasOC = $this->model->getFichaAll(); 
-        $datos['todasOC'] = $todasOC;
-        
-        $datos['rol']=$_SESSION['rol'];
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/ordendecompra/OCVerTodos', compact('datos'));
-    }
-
-    public function verInsumos(){
-        $insumos = $this->model->getInsumos();
-        $datos['insumos'] = $insumos;
-        
-        $datos['rol']=$_SESSION['rol'];
-        return view('/ordendecompra/ocVerInsumosParaAsignar',compact('datos'));
-    }
-
-    public function crearOC(){
-        $idOCCreada = $this->model->newOC($_POST['costoEstimado'],'Creado');
-        $itemOC['idOC'] = $idOCCreada;
-        for ($i=0; $i < count($_POST['idInsumo']); $i++) { 
-            $itemOC['idInsumo'] = $_POST['idInsumo'][$i];
-            $itemOC['cantidad'] = $_POST['cantidad'][$i];
-            $this->model->insertItemOC($itemOC);
-        }            
-        redirect('fichaOC?idOC='.$idOCCreada);
-    }
-
-    public function ficha(){
-        $miOC = $this->model->getByIdOC($_GET['idOC']);
-        $datos["miOC"] = $miOC;  
-        
-        $datos['rol']=$_SESSION['rol'];
-        return view('/ordendecompra/ocVerFicha', compact('datos'));
-    }
-
-    public function ingreso(){
-        $itemOC = [
-            'idOC' => $_POST['idOC'],
-            'idInsumo' => $_POST['idInsumo'],
-            'cantidadIngresada' => $_POST['cantidadIngresada']
+    public function create()
+    {
+        $ahora = date('Y-m-d H:i:s');
+        $ordenDeCompra = [
+            'fecha' => $ahora,
+            'costoEstimado' => $_POST['costoEstimado'],
+            'idEstadoOC' => 1,
+            'idTipoOrdenDeCompra' => $_POST['idTiposOC'],
+            'idUsuario' => $_SESSION['idUser']
         ];
-        $itemMovimiento = [
-            'idInsumo' => $_POST['idInsumo'],
-            'nombreUsuario' => $_POST['nombreUsuario'],
-            'descripcion' => $_POST['descripcion'],
-            'tipoMovimiento' => $_POST['tipoMovimiento']
-        ];
-        $this->model->updateItemOC($itemOC);
-        $this->model->registrarMovimiento($_POST['idInsumo'],$itemMovimiento,$_POST['cantidadIngresada']);
-        $this->model->updateStock($_POST['idInsumo'],$_POST['cantidadIngresada'],$_POST['tipoMovimiento']);
-        $this->model->verificarFinOC($_POST['idOC']);
-        redirect('fichaOC?idOC='.$_POST['idOC']);
+        $insert = $this->model->insert(table, $ordenDeCompra, "Orden De Compra");
+        $insumos = json_decode($_POST['insumos'], true);
+        foreach ($insumos as $insumo) {
+            $IxOC = [
+                'idInsumo' => $insumo['id'],
+                'idOC' => $insert['mensaje'],
+                'cantidadPedida' => $insumo['cantidad']
+            ];
+            $this->model->insert(tableIxOC, $IxOC, "IxOC");
+            $insumo = [
+                'id' => $insumo['id'],
+                'stockFuturo' => $insumo['cantidad']
+            ];
+            $update = $this->model->update(tableInsumos, $insumo, "Insumo");
+        }
+        return json_encode($insert);
     }
 
+    public function update()
+    {
+    }
 
-
+    public function delete()
+    {
+    }
 }

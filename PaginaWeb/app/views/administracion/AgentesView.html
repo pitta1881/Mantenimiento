@@ -60,7 +60,7 @@
 									<div class="form-group required">
 										<label class="control-label" for="idPersona">Persona</label>
 										<select name="idPersona" id="idPersona" class="form-control custom-select">
-											<option disabled selected>Seleccione una opcion</option>
+											<option value="" selected disabled>Seleccione una opcion</option>
 											{% for persona in datos.todasPersonas if not persona.usado and not persona.id == 0 %}
 												<option value="{{ persona.id }}">{{ persona.nombre }},&nbsp;
 													{{ persona.apellido }}

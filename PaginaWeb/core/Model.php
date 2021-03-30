@@ -24,7 +24,11 @@ define("tableTareas", "tareas");
 define("tableTiposSector", "tipossector");
 define("tableHistorialPedido", "historialpedido");
 define("tableHistorialTarea", "historialtarea");
+define("tableInsumos", "insumos");
 define("tableMedidas", "medidas");
+define("tableOC", "ordenesdecompra");
+define("tableTiposOC", "tiposordenesdecompra");
+define("tableEstadosOC", "estadosordenesdecompra");
 
 /**
  * Clase abstracta para manejar los modelos
@@ -190,8 +194,14 @@ abstract class Model
             case 'insumos':
                 $datoUno['medidaNombre']=$this->db->selectWhatWhere(tableMedidas, 'nombre', array('id' => $datoUno['idMedida']))[0]['nombre'];
                 break;
+            case 'ordenesdecompra':
+                $datoUno['estadoNombre']=$this->db->selectWhatWhere(tableEstadosOC, 'nombre', array('id' => $datoUno['idEstadoOC']))[0]['nombre'];
+                $datoUno['tipoNombre']=$this->db->selectWhatWhere(tableTiposOC, 'nombre', array('id' => $datoUno['idTipoOrdenDeCompra']))[0]['nombre'];
+                $datoUno['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $datoUno['idUsuario']))[0]['nick'];
+                $datoUno['cantidadInsumos'] = $this->db->countWhatFromWhere(tableIxOC, 'idInsumo', array('idOC' => $datoUno['id']))[0];
+                break;
             case 'pedidos':
-                $datoUno['tareasAsignadas'] = $this->db->countTareasAsignadas($datoUno['id'])[0];
+                $datoUno['tareasAsignadas'] = $this->db->countWhatFromWhere(tableTareas, 'id', array('idPedido' => $datoUno['id']))[0];
                 $datoUno['sectorNombre'] = $this->db->selectWhatWhere(tableSectores, 'nombre', array('id' => $datoUno['idSector']))[0]['nombre'];
                 $datoUno['prioridadNombre'] = $this->db->selectWhatWhere(tablePrioridades, 'nombre', array('id' => $datoUno['idPrioridad']))[0]['nombre'];
                 $datoUno['usuarioNick'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $datoUno['idUsuario']))[0]['nick'];
@@ -202,20 +212,20 @@ abstract class Model
                     $rowHistorial['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $rowHistorial['idEstado']))[0]['nombre'];
                 }
                 $datoUno['tareas'] = $this->db->selectAllWhere(tableTareas, array('idPedido' => $datoUno['id']));
-                foreach ($datoUno['tareas'] as &$rowTarea) {
-                    $rowTarea = $this->verificarFechasyVacios($rowTarea);
-                    $rowTarea['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $rowTarea['idUsuario']))[0]['nick'];
-                    $rowTarea['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $rowTarea['idEstado']))[0]['nombre'];
-                    $rowTarea['especializacionNombre'] = $this->db->selectWhatWhere(tableEspecializaciones, 'nombre', array('id' => $rowTarea['idEspecializacion']))[0]['nombre'];
-                    $rowTarea['prioridadNombre'] = $this->db->selectWhatWhere(tablePrioridades, 'nombre', array('id' => $rowTarea['idPrioridad']))[0]['nombre'];
-                    $agentes = $this->db->selectWhatWhere(tableAxT, 'idAgente', array('idTarea' => $rowTarea['id']));
+                foreach ($datoUno['tareas'] as &$tarea) {
+                    $tarea = $this->verificarFechasyVacios($tarea);
+                    $tarea['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $tarea['idUsuario']))[0]['nick'];
+                    $tarea['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $tarea['idEstado']))[0]['nombre'];
+                    $tarea['especializacionNombre'] = $this->db->selectWhatWhere(tableEspecializaciones, 'nombre', array('id' => $tarea['idEspecializacion']))[0]['nombre'];
+                    $tarea['prioridadNombre'] = $this->db->selectWhatWhere(tablePrioridades, 'nombre', array('id' => $tarea['idPrioridad']))[0]['nombre'];
+                    $agentes = $this->db->selectWhatWhere(tableAxT, 'idAgente', array('idTarea' => $tarea['id']));
                     $retornoAgentesPersona = [];
                     foreach ($agentes as $agente) {
                         $agenteSinDatos = $this->db->selectWhatWhere(tableAgentes, 'idPersona', array('id' => $agente['idAgente']))[0];
                         array_push($retornoAgentesPersona, $this->verificarFechasyVacios($this->db->selectWhatWhere(tablePersonas, 'id, nombre, apellido', array('id' => $agenteSinDatos['idPersona']))[0]));
                     }
-                    $rowTarea['agentes'] = $retornoAgentesPersona;
-                    $rowTarea['insumos'] = [];
+                    $tarea['agentes'] = $retornoAgentesPersona;
+                    $tarea['insumos'] = [];
                 }
                 break;
             default:

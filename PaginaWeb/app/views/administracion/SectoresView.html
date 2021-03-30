@@ -59,7 +59,7 @@
 								<div class="form-group required col-lg-3">
 									<label class="control-label" for="idTipoSector">Tipo:</label>
 									<select name="idTipoSector" id="idTipoSector" class="form-control custom-select">
-										<option disabled selected>Seleccione una opcion</option>
+										<option value="" disabled selected>Seleccione una opcion</option>
 										{% for tipoSector in datos.todosTiposSectores %}
 											<option value="{{ tipoSector.id }}">{{ tipoSector.nombre }}</option>
 										{% endfor %}

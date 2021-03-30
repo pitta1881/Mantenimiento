@@ -71,8 +71,11 @@ async function loadTable() {
 
 function modificarModal(datos) {
     $('#h3TitleModalUpdate').text("Modificar Permiso");
-    $('#updateID').attr('value', datos['id']);
-    $('#nombreAnteriorUpdate').attr('value', datos['nombre']);
+    $('#updateID').attr('value', datos['id']).val(datos['id']);
+    $('#nombreUpd').attr('value', datos['nombre']).val(datos['nombre']);
+    $('#idMedidaUpd option[value=' + datos.idMedida + ']').prop('selected', true);
+    $('#stockMinimoUpd').attr('value', datos['stockMinimo']).val(datos['stockMinimo']);
+    $('#descripcionUpd').attr('value', datos['descripcion']).val(datos['descripcion']);
 }
 
 function deleteModal(datos) {

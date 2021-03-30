@@ -94,6 +94,12 @@
     $router->post('insumos/fichaOne', 'InsumoController@fichaOne');
     $router->post('insumos/fichaAll', 'InsumoController@fichaAll');
 
+//rutas Orden de Compra
+    $router->get('ordendecompra', 'OCController@index');
+    $router->post('ordendecompra/create', 'OCController@create');
+    $router->post('ordendecompra/fichaOne', 'OCController@fichaOne');
+    $router->post('ordendecompra/fichaAll', 'OCController@fichaAll');
+
 //rutas OT
     $router->get('OT/verTodos', 'OTController@index');
     $router->get('ot/crear', 'OTController@verTareasSinAsignar');
@@ -112,10 +118,3 @@
     $router->get('not_found', 'ProjectController@internalError');
     $router->get('internal_error', 'ProjectController@internalError');
     $router->post('informePedidos', 'PedidoController@getDatos');
-
-//rutas Orden de Compra
-    $router->get('ordendecompra/administracionOC', 'OCController@index');
-    $router->get('oc/crear', 'OCController@verInsumos');
-    $router->post('oc/asignarInsumos/seleccionados', 'OCController@crearOC');
-    $router->get('fichaOC', 'OCController@ficha');
-    $router->post('oc/insumos/ingreso', 'OCController@ingreso');

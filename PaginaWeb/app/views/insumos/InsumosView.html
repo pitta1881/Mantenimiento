@@ -46,15 +46,15 @@
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
-						<form action="create" method="post">
+						<form action="create" method="post" id="formInsumoNew">
 							<div class="form-row">
 								<div class="form-group required col-lg-6">
-									<label for="nombreNew">Nombre:</label>
+									<label class="control-label" for="nombreNew">Nombre:</label>
 									<input type="text" name="nombre" id="nombreNew" class="form-control" required>
 								</div>
 								<div class="form-group required col-lg-6">
-									<label for="idUnidadNew">Unidad:</label>
-									<select name="idUnidad" id="idUnidadNew" class="form-control custom-select">
+									<label class="control-label" for="idMedidaNew">Medida:</label>
+									<select name="idMedida" id="idMedidaNew" class="form-control custom-select">
 										{% for medida in datos.todasMedidas %}
 											<option value="{{ medida.id }}">{{ medida.nombre }}
 											</option>
@@ -64,17 +64,66 @@
 							</div>
 							<div class="form-row">
 								<div class="form-group required col-lg-6">
-									<label for="stockNew">Stock Actual:</label>
+									<label class="control-label" for="stockNew">Stock Actual:</label>
 									<input type="number" name="stock" id="stockNew" class="form-control" required min="0">
 								</div>
 								<div class="form-group required col-lg-6">
-									<label for="stockMinimoNew">Aviso Min.:</label>
+									<label class="control-label" for="stockMinimoNew">Aviso Min.:</label>
 									<input type="number" name="stockMinimo" id="stockMinimoNew" class="form-control" required min="0">
 								</div>
 							</div>
 							<div class="form-group required">
-								<label for="descripcionNew">Descripcion:</label>
+								<label class="control-label" for="descripcionNew">Descripcion:</label>
 								<textarea class="form-control" rows="2" id="descripcionNew" name="descripcion" required></textarea>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+	<!--UPDATE INSUMO-->
+	{% if "43" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalUpdate">
+			<div class="modal-dialog modal-xs">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Modificación de Insumo</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="update" method="post" id="formInsumoUpd">
+							<input type="text" name="id" id="updateID" hidden>
+							<div class="form-group required">
+								<label class="control-label" for="nombreUpd">Nombre:</label>
+								<input type="text" name="nombre" id="nombreUpd" class="form-control" required>
+							</div>
+							<div class="form-row">
+								<div class="form-group required col-lg-6">
+									<label class="control-label" for="idMedidaUpd">Medida:</label>
+									<select name="idMedida" id="idMedidaUpd" class="form-control custom-select">
+										{% for medida in datos.todasMedidas %}
+											<option value="{{ medida.id }}">{{ medida.nombre }}
+											</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="form-group required col-lg-6">
+									<label class="control-label" for="stockMinimoUpd">Aviso Min.:</label>
+									<input type="number" name="stockMinimo" id="stockMinimoUpd" class="form-control" required min="0">
+								</div>
+							</div>
+							<div class="form-group required">
+								<label class="control-label" for="descripcionUpd">Descripcion:</label>
+								<textarea class="form-control" rows="2" id="descripcionUpd" name="descripcion" required></textarea>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>

@@ -271,41 +271,26 @@ class QueryBuilder
         }
     }
 
-    public function countTareasAsignadas($idPedido)
+    public function countWhatFromWhere($table, $what, $parameters)
     {
-        $statement = $this->pdo->prepare(
-            "SELECT COUNT(id) FROM tareas
-        WHERE idPedido = $idPedido"
+        $columnaCompara = array_key_first($parameters);
+        $datoColumnaCompara = $parameters[$columnaCompara];
+        $sql = sprintf(
+            "SELECT COUNT(%s) from %s where %s='%s'",
+            $what,
+            $table,
+            $columnaCompara,
+            $datoColumnaCompara
         );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_COLUMN);
+        try {
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute($parameters);
+            return $statement->fetchAll(PDO::FETCH_COLUMN);
+        } catch (Exception $e) {
+            return false;
+        }
     }
-
-    /*
-    Selecciono un registro especifico cuyo PK viene por parametro
-    PARA PEDIDO
-    */
-    public function selectNumeroPedido($table, $numero)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE id={$numero}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-    
-    public function selectTareasPorNPedido($table, $numero)
-    { //table = tarea
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE idPedido={$numero}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    
+  
     public function comparaInsumos($table, $nombreInsumo, $descripcion)
     {
         $statement = $this->pdo->prepare(
@@ -349,41 +334,6 @@ class QueryBuilder
     {
         if ($this->logger) {
             $this->logger->error('Error', ["Error" => $e]);
-        }
-    }
-
-    public function idTareaSiguiente($table, $idPedido)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT MAX(idTarea) FROM $table
-        WHERE idPedido = $idPedido"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-    
-
-    
-    public function selectTareaByIdId($table, $nPedido, $nTarea)
-    { //table = tarea
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE idPedido={$nPedido} AND idTarea={$nTarea}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function updateTarea($table, $parameters, $nTarea, $nPedido)
-    {
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET descripcion=:descripcion, prioridad=:prioridad, idEspecializacion=:idEspecializacion
-        WHERE idTarea=$nTarea AND idPedido=$nPedido"; //recontra HARDCODEADO
-        try {
-            $statement = $this->pdo->prepare($sql);
-            $statement->execute($parameters);
-        } catch (Exception $e) {
-            $this->sendToLog($e);
         }
     }
 
@@ -625,156 +575,6 @@ class QueryBuilder
         );
         $statement->execute();
     }
-    
-
-    public function idHistoriaSiguiente($tableHistoria, $idPedido, $idTarea)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT MAX(idHistorial) FROM $tableHistoria
-        WHERE idPedido = $idPedido AND idTarea = $idTarea"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function selectHistorias($tableHistoria, $idPedido, $idTarea)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableHistoria WHERE idPedido=$idPedido AND idTarea=$idTarea"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function selectInsumosDisponibles($tableInsumos)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableInsumos WHERE stock>0"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function restarInsumo($tableInsumo, $nInsumo, $cantidad)
-    {
-        $statement = $this->pdo->prepare(
-            "UPDATE $tableInsumo SET stock=stock-$cantidad WHERE idInsumo=$nInsumo"
-        );
-        $statement->execute();
-    }
-    public function sumarInsumo($tableInsumo, $nInsumo, $cantidad)
-    {
-        $statement = $this->pdo->prepare(
-            "UPDATE $tableInsumo SET stock=stock+$cantidad WHERE idInsumo=$nInsumo"
-        );
-        $statement->execute();
-    }
-   
-    public function getStock($tableInsumo, $idInsumo)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT stock FROM $tableInsumo WHERE idInsumo=$idInsumo"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function selectInsumosPorNPedidoNTarea($tableInsumo, $tableItemInsumo, $nPedido, $nTarea)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableItemInsumo T1 INNER JOIN $tableInsumo T2 ON T1.idInsumo=T2.idInsumo WHERE idPedido=$nPedido AND idTarea=$nTarea"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function selectHistoriasInsumo($tableMovimiento, $idInsumo)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableMovimiento WHERE idInsumo=$idInsumo"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-   
-    public function getNombreInsumoFromId($tableInsumo, $idInsumo)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT nombreInsumo,descripcion FROM $tableInsumo WHERE idInsumo=$idInsumo"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function selectInsumosUsados($tableItemInsumos, $tableInsumo, $idPedido, $idTarea)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT T1.idInsumo FROM $tableItemInsumos T1 INNER JOIN $tableInsumo T2 ON T1.idInsumo = T2.idInsumo WHERE idPedido=$idPedido AND idTarea=$idTarea"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function updateItemInsumo($table, $parameters, $tipoMovimiento)
-    {
-        $parameters = $this->cleanParameterName($parameters);
-        if ($tipoMovimiento == 1) {
-            $sql = "UPDATE $table SET cantidad=cantidad+:cantidad WHERE idPedido=:idPedido AND idTarea=:idTarea AND idInsumo=:idInsumo";
-        } else {
-            $sql = "UPDATE $table SET cantidad=cantidad-:cantidad WHERE idPedido=:idPedido AND idTarea=:idTarea AND idInsumo=:idInsumo";
-        }
-        try {
-            $statement = $this->pdo->prepare($sql);
-            $statement->execute($parameters);
-        } catch (Exception $e) {
-            $this->sendToLog($e);
-        }
-    }
-
-    public function deleteItemInsumo($tableItem, $idPedido, $idTarea, $idInsumo)
-    {
-        $statement = $this->pdo->prepare(
-            "DELETE FROM $tableItem  WHERE idPedido=$idPedido AND idTarea=$idTarea AND idInsumo = $idInsumo"
-        );
-        $statement->execute();
-    }
-    
-    public function selectCantidadByIdIdId($tableItemInsumos, $idPedido, $idTarea, $idInsumo)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT cantidad FROM $tableItemInsumos WHERE idPedido=$idPedido AND idTarea=$idTarea AND idInsumo=$idInsumo"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function selectHistoriasInsumoPorIdIdId($tableMovimiento, $idPedido, $idTarea, $idInsumo)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableMovimiento WHERE idPedido=$idPedido AND idTarea=$idTarea AND idInsumo=$idInsumo"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function selectUltimoItemAgente($tableItemAgente, $idAgente)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableItemAgente WHERE idAgente=$idAgente ORDER BY idPedido DESC ,idTarea DESC LIMIT 1"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function selectAnteUltimoItemAgente($tableItemAgente, $idAgente)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableItemAgente WHERE idAgente=$idAgente ORDER BY idPedido DESC ,idTarea DESC LIMIT 1,1"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
 
     
     public function dameSectores($tablaPedidos, $tablaSectores, $fechaDesde, $fechafin)
@@ -786,81 +586,7 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function getCantInsumosOC($tableItem, $idOC)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT COUNT(idInsumo) FROM $tableItem
-        WHERE idOC = $idOC"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
-
-    public function newOC($tableOC, $costo, $estado)
-    {
-        $hoy = date("Y-m-d");
-        $statement = $this->pdo->prepare(
-            "INSERT INTO $tableOC(fecha,costoEstimado,estado) VALUES ('$hoy','$costo','$estado')"
-        );
-        $statement->execute();
-    }
-
-    public function getIdUltimoOC($tableOC)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT MAX(idOC) FROM $tableOC"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
     
-    public function selectOCById($table, $nOC)
-    { //table = oc
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table} 
-            WHERE idOC={$nOC}"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function selectInsumosPorNOC($tableInsumo, $tableItemOC, $nOC)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableInsumo T1 INNER JOIN $tableItemOC T2 ON T1.idInsumo=T2.idInsumo WHERE idOC=$nOC"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-    
-    public function updateItemOC($table, $parameters)
-    {
-        $parameters = $this->cleanParameterName($parameters);
-        $sql = "UPDATE $table SET cantidadIngresada=cantidadIngresada+:cantidadIngresada WHERE idInsumo=:idInsumo AND idOC=:idOC";
-        try {
-            $statement = $this->pdo->prepare($sql);
-            $statement->execute($parameters);
-        } catch (Exception $e) {
-            $this->sendToLog($e);
-        }
-    }
-
-    public function selectItemOCPorNOC($tableItemOC, $nOC)
-    {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM $tableItemOC WHERE idOC=$nOC"
-        );
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
-    }
-
-    public function updateEstadoOC($tableOC, $nOC, $estado)
-    {
-        $statement = $this->pdo->prepare(
-            "UPDATE $tableOC SET estado='$estado' WHERE idOC=$nOC"
-        );
-        $statement->execute();
-    }
 
 
     public function dameinformeEspe($tablaTarea, $tablaEspecializacion, $tablaPedido, $fechaDesde, $fechaHasta)
