@@ -7,10 +7,15 @@ use App\Core\Model;
 class Eventos extends Model{
     protected $table = 'eventos';
 
- 
+   /* public function getPermisos($idRol){
+       echo "ENTROOOOOO";
+        $roles = $this->db->selectPermisosByRol($idRol);
+        $misRoles = json_decode(json_encode($roles), True);
+        return $misRoles; 
+    }*/
 
     
-    public function get(){
+    public function getEvento(){
         $eventos = $this->db->selectAll($this->table);      
         $todosEventos = json_decode(json_encode($eventos), True);
         foreach ($todosEventos as $indice => $datos) {
@@ -45,7 +50,7 @@ class Eventos extends Model{
         return $miEvento[0];
     }
 
-    public function update(array $datos,$idEvento)
+   public function update(array $datos,$idEvento)
     {
         $this->db->updateEvento($this->table, $datos,$idEvento);
     }
@@ -54,5 +59,4 @@ class Eventos extends Model{
         
         $this->db->deleteEvento($this->table,$nEvento);
      }  
-
 }

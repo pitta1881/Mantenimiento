@@ -9,11 +9,14 @@
 {% endblock %}
 {% block main %}
 	<div class="contenido3">
-		{% for value in datos.datosSesion.listaPermisos %}
-			{% if value.idPermiso == "37" %}
-				<a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos" src="/public/res/add.svg" title="Crear Sector">Crear Evento</a>
+		<h2 class="titulo-tabla">Eventos		</h2>
+
+			{% if "37" in datos.datosSesion.listaPermisos %}
+			
+			<a href="#" class="btn btn-info" role="button" data-toggle="modal" data-target="#myModal"><img class="iconos" src="/public/res/add.svg" title="Crear Sector">Crear Evento</a>
+			
 			{% endif %}
-		{% endfor %}
+		
 		<!-- The Modal -->
 		<div class="modal fade" id="myModal">
 			<div class="modal-dialog modal-lg">
@@ -50,10 +53,16 @@
 								<textarea class="form-control" rows="4" id="descripcion" name="descripcion" required></textarea>
 								<div class="invalid-feedback">Complete este campo</div>
 							</div>
+							<div class="form-group col-lg-4">
+								<label for="periodicidad">Periodicidad:</label>
+								<span class="asterisco">*</span>
+								<input type="number" name="periodicidad" class="form-control" min="{{ 0 }}" required>
+							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
 								<button type="submit" class="btn btn-success">Enviar</button>
 							</div>
+							
 						</form>
 					</div>
 				</div>
@@ -64,7 +73,7 @@
 $('#miTabla').DataTable();
 });
 		</script>
-		<table id="miTabla">
+		<table id="miTabla"  class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
 			<thead>
 				<tr>
 					<th onclick="sortTable(0,'miTabla')">Nº Evento</th>
@@ -76,15 +85,15 @@ $('#miTabla').DataTable();
 				</tr>
 			</thead>
 			{% for evento in datos.todosEventos %}
-				<tr>
+			
+			<tr>
 					<td>{{ evento.idEvento }}</td>
 					<td>{{ evento.nombreEvento }}</td>
 					<td>{{ evento.descripcion }}</td>
 					<td>{{ evento.fechaInicio }}</td>
 					<td>{{ evento.fechaFin }}</td>
 					<td>
-						{% for value in datos.datosSesion.listaPermisos %}
-							{% if value.idPermiso == "39" %}
+												{% if "39" in datos.datosSesion.listaPermisos %}
 								<a href='/eventos/administracionEventos/modificarEvento' role="button" data-toggle="modal" data-target="#myModalModif{{ evento.idEvento }}">
 									<img class="iconos" src="/public/res/update.svg" title="Modificar Pedido">
 								</a>
@@ -124,6 +133,11 @@ $('#miTabla').DataTable();
 														<textarea class="form-control" rows="4" id="descripcion" name="descripcion" required>{{ evento.descripcion }}</textarea>
 														<div class="invalid-feedback">Complete este campo</div>
 													</div>
+													<div class="form-group col-lg-4">
+														<label for="periodicidad">Periodicidad:</label>
+														<span class="asterisco">*</span>
+														<input type="number" name="periodicidad" class="form-control" min="{{ evento.periodicidad }}" required>
+													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
 														<button type="submit" class="btn btn-success">Enviar</button>
@@ -134,16 +148,14 @@ $('#miTabla').DataTable();
 									</div>
 								</div>
 							{% endif %}
-						{% endfor %}
+						
 						<form action="/eventos/eliminar" method="post" style="display: inline-block" id="formEliminarEvento{{ evento.idEvento }}">
 							<input type="text" name="idEvento" value="{{ evento.idEvento }}" hidden>
 						</form>
-						{% for value in datos.datosSesion.listaPermisos %}
-							{% if value.idPermiso == "38" %}
+						{% if "38" in datos.datosSesion.listaPermisos %}
 								<a onclick="alertify.confirm('Eliminar Evento','¿Esta seguro?',function(){document.getElementById('formEliminarEvento{{ evento.idEvento }}').submit()},function(){})"><img class="iconos" src="/public/res/del.svg" title="Eliminar Evento"></a>
 							{% endif %}
-						{% endfor %}
-
+						
 					</td>
 				</tr>
 			{% else %}
@@ -152,3 +164,4 @@ $('#miTabla').DataTable();
 		</table>
 	</div>
 {% endblock %}
+
