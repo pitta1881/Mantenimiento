@@ -199,12 +199,17 @@ abstract class Model
                 $datoUno['tipoNombre']=$this->db->selectWhatWhere(tableTiposOC, 'nombre', array('id' => $datoUno['idTipoOrdenDeCompra']))[0]['nombre'];
                 $datoUno['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $datoUno['idUsuario']))[0]['nick'];
                 $datoUno['cantidadInsumos'] = $this->db->countWhatFromWhere(tableIxOC, 'idInsumo', array('idOC' => $datoUno['id']))[0];
+                $datoUno['insumos'] = $this->db->selectAllWhere(tableIxOC, array('idOC' => $datoUno['id']));
+                foreach ($datoUno['insumos'] as &$insumo) {
+                    $insumo['nombre'] = $this->db->selectWhatWhere(tableInsumos, 'nombre', array('id' => $insumo['idInsumo']))[0]['nombre'];
+                    $insumo['descripcion'] = $this->db->selectWhatWhere(tableInsumos, 'descripcion', array('id' => $insumo['idInsumo']))[0]['descripcion'];
+                }
                 break;
             case 'pedidos':
                 $datoUno['tareasAsignadas'] = $this->db->countWhatFromWhere(tableTareas, 'id', array('idPedido' => $datoUno['id']))[0];
                 $datoUno['sectorNombre'] = $this->db->selectWhatWhere(tableSectores, 'nombre', array('id' => $datoUno['idSector']))[0]['nombre'];
                 $datoUno['prioridadNombre'] = $this->db->selectWhatWhere(tablePrioridades, 'nombre', array('id' => $datoUno['idPrioridad']))[0]['nombre'];
-                $datoUno['usuarioNick'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $datoUno['idUsuario']))[0]['nick'];
+                $datoUno['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $datoUno['idUsuario']))[0]['nick'];
                 $datoUno['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $datoUno['idEstado']))[0]['nombre'];
                 $datoUno['historial'] = $this->db->selectAllWhere(tableHistorialPedido, array('idPedido' => $datoUno['id']));
                 foreach ($datoUno['historial'] as &$rowHistorial) {

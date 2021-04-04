@@ -62,7 +62,8 @@ button:disabled {
     display: none;
 }
 
-.input-cart {
+.input-cart,
+.input-recibido {
     width: 30px;
 }
 

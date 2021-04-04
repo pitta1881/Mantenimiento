@@ -214,7 +214,7 @@ CREATE TABLE Insumos_x_OC (
     idInsumo INTEGER NOT NULL,
     idOC INTEGER NOT NULL,
     cantidadPedida INTEGER NOT NULL,
-    cantidadRecibida INTEGER,
+    cantidadRecibida INTEGER default 0,
     PRIMARY KEY (idInsumo, idOC),
     FOREIGN KEY (idInsumo) REFERENCES Insumos (id),
     FOREIGN KEY (idOC) REFERENCES OrdenesDeCompra (id)

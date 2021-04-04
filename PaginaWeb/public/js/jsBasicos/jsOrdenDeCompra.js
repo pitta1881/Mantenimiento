@@ -15,6 +15,7 @@ loadTable();
 loadTooltips();
 modalDrag();
 loadListenerActionButtons({
+    'visualize': visualizarOCParticular,
     'loadTable': loadTable
 });
 loadScriptValidarCampos(loadTable);
@@ -22,7 +23,7 @@ localStorage.clear();
 
 $(function () {
     $('#btnCreateOC').on('click', function () {
-        visualizarInsumosModal();
+        loadTableInsumosUpdateOCNewOC();
         $(this.dataset.target).modal('show');
     })
 
@@ -48,7 +49,7 @@ async function loadTable() {
         (element.usado ? disabled = `disabled` : ``);
         if (permisosRolActual.some(item => item == 49)) {
             btnEye = ` 
-            <button type="button" class="btn btn-outline-primary" data-abm="visualize-2" data-id='${element.id}' data-toggle="tooltip" title="Mas Detalles" data-placement="top">
+            <button type="button" class="btn btn-outline-primary" data-abm="visualize" data-id='${element.id}' data-target="#modalGeneral" data-toggle="tooltip" title="Mas Detalles" data-placement="top">
                 <i class="fal fa-eye fa-lg fa-fw"></i>
             </button>`;
         }
@@ -73,7 +74,7 @@ async function loadTable() {
     loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6', [7], 'Ordenes de Compra Registrados');
 }
 
-async function visualizarInsumosModal() {
+async function loadTableInsumosUpdateOCNewOC() {
     let fichaAll = await getFichaAll('/insumos/');
     $('#tableInsumos').DataTable().clear().destroy();
     let textoInner = ``;
@@ -104,10 +105,117 @@ async function visualizarInsumosModal() {
     });
     $('#tableInsumos tbody').html(textoInner);
     loadScriptOrdenarPagTablas('tableInsumos', '0,1,2,3,4,5', [6], 'Insumos Registrados', false);
-    loadEventosTableInsumo();
+    loadEventosTableInsumosNewOC();
 }
 
-function loadEventosTableInsumo() {
+function visualizarOCParticular(datos) {
+    loadDlOrdenDeCompra(datos);
+    loadTableInsumosUpdateOC(datos);
+}
+
+function loadDlOrdenDeCompra(datos) {
+    let textoInner = ``;
+    textoInner += `
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Nº OC</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.id}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Fecha</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fecha}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Estado</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.estadoNombre}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Tipo</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.tipoNombre}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Costo Est.</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">$${datos.costoEstimado}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Usuario</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.nickUsuario}</dd>
+            `;
+    document.getElementById('dlOrdenDeCompra').innerHTML = textoInner;
+}
+
+function loadTableInsumosUpdateOC(datos) {
+    $('#miTablaListaInsumos').DataTable().clear().destroy();
+    let textoInner = ``;
+    datos.insumos.forEach(insumo => {
+        let btnSumar = ``;
+        (insumo.cantidadRecibida == insumo.cantidadPedida ? btnSumar = insumo.cantidadRecibida :
+            btnSumar = ` 
+            <button type="button" class="btn btn-minus-recibido btn-md btn-primary border-right-0 border" disabled><i class="fal fa-minus"></i></button>
+            <input type="number" data-name="idInsumo" value="${insumo.idInsumo}" hidden>
+            <input type="number" data-name="cantidadInsumo" class="input-recibido" value="${Number(insumo.cantidadRecibida)}" min="${Number(insumo.cantidadRecibida)}" max="${Number(insumo.cantidadPedida)}" readonly>
+            <button type="button" class="btn btn-plus-recibido btn-primary border-left-0 border"><i class="fal fa-plus"></i></button>`);
+        textoInner += `
+        <tr>
+            <th>${insumo.nombre}</th>
+            <td>${insumo.descripcion}</td>
+            <td>${insumo.cantidadPedida}</td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnSumar}
+                </div>
+            </td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    
+                </div>
+            </td>           
+        </tr>
+        `
+    });
+    $('#miTablaListaInsumos tbody').html(textoInner);
+    loadScriptOrdenarPagTablas('miTablaListaInsumos', '0,1,2,3', [4], 'Insumos Pedidos', false);
+    loadEventosTableInsumosUpdateOC();
+}
+
+function loadEventosTableInsumosUpdateOC() {
+    localStorage.removeItem('insumosUpdate');
+
+    $(".btn-minus-recibido").on("click", function () {
+        let inputCart = $(this).siblings('.input-recibido');
+        $(this).siblings('.btn-plus-recibido').attr('disabled', false);
+        if (inputCart.val() > inputCart.attr('min')) {
+            inputCart.val(Number(inputCart.val()) - 1);
+            if (inputCart.val() == inputCart.attr('min')) {
+                $(this).attr('disabled', true);
+            }
+        }
+        changeLSInsumoUpdate.call(this);
+    })
+
+    $(".btn-plus-recibido").on("click", function () {
+        let inputCart = $(this).siblings('.input-recibido');
+        $(this).siblings('.btn-minus-recibido').attr('disabled', false);
+        if (inputCart.val() < inputCart.attr('max')) {
+            inputCart.val(Number(inputCart.val()) + 1);
+            if (inputCart.val() == inputCart.attr('max')) {
+                $(this).attr('disabled', true);
+            }
+        }
+        changeLSInsumoUpdate.call(this);
+    })
+
+    function changeLSInsumoUpdate() {
+        let insumosUpdate = JSON.parse(localStorage.getItem('insumosUpdate')) || [];
+        let idInsumoElegido = $(this).siblings('[data-name=idInsumo]').val();
+        let cantidadInsumoElegido = $(this).siblings('[data-name=cantidadInsumo]').val();
+        let insumoToChange = {
+            'id': idInsumoElegido,
+            'cantidad': cantidadInsumoElegido
+        }
+        let indexInsumoLocal = insumosUpdate.findIndex(element => element.id == idInsumoElegido);
+        if (indexInsumoLocal >= 0) {
+            if (cantidadInsumoElegido == $(this).siblings('[data-name=cantidadInsumo]').attr('min')) {
+                insumosUpdate.splice(indexInsumoLocal, 1);
+            } else {
+                insumosUpdate[indexInsumoLocal].cantidad = cantidadInsumoElegido
+            }
+        } else {
+            insumosUpdate.push(insumoToChange);
+        }
+        localStorage.setItem('insumosUpdate', JSON.stringify(insumosUpdate));
+    }
+}
+
+function loadEventosTableInsumosNewOC() {
     $("#tableInsumos .btn-agregar").on("click", function () {
         $(this).toggle();
         $(this).siblings(".btn-minus-cart, .input-cart, .btn-plus-cart").toggle();

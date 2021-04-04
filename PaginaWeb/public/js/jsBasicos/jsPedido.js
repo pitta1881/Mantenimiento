@@ -74,7 +74,7 @@ async function loadTablePedido() {
             <td>${element.tareasAsignadas}</td>
             <td>${element.estadoNombre}</td>
             <td>${element.prioridadNombre}</td>
-            <td>${element.usuarioNick}</td>
+            <td>${element.nickUsuario}</td>
             <td>
                 <div class="btn-group btn-group-sm float-none" role="group">
                     ${btnEye}
@@ -97,8 +97,6 @@ function visualizarPedidoGeneral(datos) {
 
 function loadDlPedido(datos) {
     let textoInner = ``;
-    var myDate = datos['fechaInicio'].split(" ");
-    myDate[0] = myDate[0].split("-").reverse().join("/");
     textoInner += `
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Nº Pedido</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.id}</dd>
@@ -117,7 +115,7 @@ function loadDlPedido(datos) {
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Prioridad</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.prioridadNombre}</dd>
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Usuario</dt>
-        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.usuarioNick}</dd>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.nickUsuario}</dd>
             `;
     document.getElementById('dlPedido').innerHTML = textoInner;
 }
@@ -205,7 +203,7 @@ function modificarModal(datos) {
     myDate = myDate[0].split("/").reverse().join("-");
     $('#h3TitleModalUpdate').text("Modificar Pedido " + datos['id']);
     $('#updateID').attr('value', datos['id']);
-    $('#idUsuarioUpdate').attr('value', datos['idUsuario']).val(datos['usuarioNick']);
+    $('#idUsuarioUpdate').attr('value', datos['idUsuario']).val(datos['nickUsuario']);
     $('#fechaInicioUpdate').attr('value', myDate).val(myDate);
     $('#idEstadoUpdateHid').attr('value', datos['idEstado']).val(datos['idEstado']);
     $('#idEstadoUpdate').attr('value', datos['estadoNombre']).val(datos['estadoNombre']);

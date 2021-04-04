@@ -131,6 +131,50 @@
 			</div>
 		</div>
 	</div>
+
+	{% if "49" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalGeneral">
+			<div class="modal-dialog modal-xl">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Orden de Compra</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<nav class="px-4">
+						<div class="nav nav-tabs" id="nav-tab" role="tablist">
+							<a class="nav-item nav-link active" id="nav-ordendecompra-tab" data-toggle="tab" href="#nav-ordendecompra" role="tab" aria-controls="nav-ordendecompra" aria-selected="true">Orden de Compra</a>
+							<a class="nav-item nav-link" id="nav-listaInsumos-tab" data-toggle="tab" href="#nav-listaInsumos" role="tab" aria-controls="nav-listaInsumos" aria-selected="true">Lista Insumos</a>
+						</div>
+					</nav>
+					<div
+						class="tab-content px-4 py-2" id="nav-tabContent">
+						<!--VER ORDEN DE COMPRA UNO-->
+						<div class="tab-pane fade show active" id="nav-ordendecompra" role="tabpanel" aria-labelledby="nav-ordendecompra-tab">
+							<dl class="row m-0 p-0" id='dlOrdenDeCompra'></dl>
+						</div>
+						<!--VER Lista Insumos-->
+						<div class="tab-pane fade" id="nav-listaInsumos" role="tabpanel" aria-labelledby="nav-listaInsumos-tab">
+							<table id="miTablaListaInsumos" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+								<thead>
+									<tr>
+										<th>Nombre</th>
+										<th>Descripcion</th>
+										<th>Cantidad Solicitada</th>
+										<th>Cantidad Recibida</th>
+										<th>Acción</th>
+									</tr>
+								</thead>
+								<tbody id="tbodyListaInsumos"></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}
 {% block javascripts %}
