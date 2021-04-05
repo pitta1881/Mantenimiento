@@ -137,7 +137,7 @@ function loadHistorial(datos) {
             `
     });
     $('#miTablaHistorial tbody').html(textoInner);
-    loadScriptOrdenarPagTablas('miTablaHistorial', '0,1,2,3', [], 'Historial');
+    loadScriptOrdenarPagTablas('miTablaHistorial', '0,1,2,3', [], 'Historial', true, 'nav-pedido');
 }
 
 async function loadTableTareas(datos) {
@@ -182,7 +182,7 @@ async function loadTableTareas(datos) {
     $('#idPrioridadTarea option[value=' + datos.idPrioridad + ']').prop('selected', true);
     $('#miTablaTarea tbody').html(textoInner);
     loadHistorial(datos);
-    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7,8', [], 'Tareas Registradas');
+    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7,8', [], 'Tareas Registradas', true, 'nav-pedido');
 }
 
 function visualizarSectorPedido(datos) {

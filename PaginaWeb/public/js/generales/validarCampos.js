@@ -655,7 +655,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         });
 
     //orden de compra forms
-    $('#formOCNew, #formOCUpd, #formCheckAndSetCosto').bootstrapValidator({
+    $('#formOCNew, #formOCUpd, #formCheckAndSetCosto, #formOCUpdInsumos, #formCancelInsumo').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
                 idUsuario: {
@@ -720,11 +720,18 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     value: localStorage.getItem('insumos')
                 });
             }
+            if ($(form).attr('id') == 'formOCUpdInsumos') {
+                dataForm.push({
+                    name: 'insumos',
+                    value: localStorage.getItem('insumosUpdate')
+                });
+            }
             $.post($(form).attr('action'), dataForm)
                 .done(function (data) {
                     verificarAlertas(data);
                     (!($(form).attr('action')).includes("tarea") ? callbackAfterReloadTable() : callBackAfterReloadTable2(Number($('#idPedidoTarea').val())));
                     $('.modal').modal('hide');
+                    localStorage.clear();
                 });
         }
     }

@@ -146,17 +146,15 @@
 					<nav class="px-4">
 						<div class="nav nav-tabs" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link active" id="nav-ordendecompra-tab" data-toggle="tab" href="#nav-ordendecompra" role="tab" aria-controls="nav-ordendecompra" aria-selected="true">Orden de Compra</a>
-							<a class="nav-item nav-link" id="nav-listaInsumos-tab" data-toggle="tab" href="#nav-listaInsumos" role="tab" aria-controls="nav-listaInsumos" aria-selected="true">Lista Insumos</a>
+							<a class="nav-item nav-link" id="nav-listaInsumosUpd-tab" data-toggle="tab" href="#nav-listaInsumosUpd" role="tab" aria-controls="nav-listaInsumosUpd" aria-selected="true">Sumar Entrada</a>
 						</div>
 					</nav>
 					<div
 						class="tab-content px-4 py-2" id="nav-tabContent">
 						<!--VER ORDEN DE COMPRA UNO-->
 						<div class="tab-pane fade show active" id="nav-ordendecompra" role="tabpanel" aria-labelledby="nav-ordendecompra-tab">
-							<dl class="row m-0 p-0" id='dlOrdenDeCompra'></dl>
-						</div>
-						<!--VER Lista Insumos-->
-						<div class="tab-pane fade" id="nav-listaInsumos" role="tabpanel" aria-labelledby="nav-listaInsumos-tab">
+							<dl class="m-0 p-0" id='dlOrdenDeCompra'></dl>
+							<!--VER Lista Insumos-->
 							<table id="miTablaListaInsumos" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
 								<thead>
 									<tr>
@@ -164,17 +162,64 @@
 										<th>Descripcion</th>
 										<th>Cantidad Solicitada</th>
 										<th>Cantidad Recibida</th>
-										<th>Acción</th>
+										<th>Estado</th>
 									</tr>
 								</thead>
 								<tbody id="tbodyListaInsumos"></tbody>
 							</table>
+						</div>
+						<!--SUMAR CANTIDAD en Lista Insumos-->
+						<div class="tab-pane fade" id="nav-listaInsumosUpd" role="tabpanel" aria-labelledby="nav-listaInsumosUpd-tab">
+							<form action="updateInsumos" method="post" id="formOCUpdInsumos">
+								<input type="text" name="idOC" id="idOCUpdateInsumo" hidden>
+								<table id="miTablaListaInsumosUpd" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+									<thead>
+										<tr>
+											<th>Nombre</th>
+											<th>Descripcion</th>
+											<th>Cantidad Solicitada</th>
+											<th>Cantidad Recibida</th>
+											<th>Estado</th>
+											<th>Acción</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+									<button type="submit" data-target="#modalCheckAndSetCosto" class="btn btn-success">Enviar</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	{% endif %}
+
+	<div class="modal fade" id="modalConfirmCancelInsumo">
+		<div class="modal-dialog modal-xs">
+			<div
+				class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h3 class="modal-title m-0" id="h3TitleModalUpdate">Cancelar Resto de Insumo</h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="cancelInsumo" method="post" id="formCancelInsumo">
+						<div id="containerCancelInsumo"></div>
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+							<button type="submit" class="btn btn-success">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}
 {% block javascripts %}

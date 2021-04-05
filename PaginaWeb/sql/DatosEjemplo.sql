@@ -210,7 +210,8 @@ INSERT INTO `EstadosOrdenesDeCompra` (`nombre`)
 VALUES ('Iniciado'),
     ('Parcial'),
     ('Completo'),
-    ('Cancelado')
+    ('Cancelado'),
+    ('Parcial Completo')
 ;
 
 INSERT INTO `TiposOrdenesDeCompra` (`nombre`)

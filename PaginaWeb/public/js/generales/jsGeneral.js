@@ -196,9 +196,9 @@ function loadScriptValidarCampos(callBackAfterReloadTable, callBackAfterReloadTa
     });
 }
 
-function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo, bButtons) {
+function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo, bButtons, printDLName) {
     import('/public/js/generales/ordypagtablas.js').then((Module) => {
-        Module.default(tablaID, columnas, columNoOrdenar, titulo, bButtons);
+        Module.default(tablaID, columnas, columNoOrdenar, titulo, bButtons, printDLName);
     });
 }
 

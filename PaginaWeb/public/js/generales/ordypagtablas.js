@@ -36,7 +36,7 @@ var idioma = {
     }
 };
 
-export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, bButtons) {
+export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, bButtons, printDLName) {
 
     $('#' + tablaID + " thead button").remove();
     if ($('#' + tablaID + " thead button").length == 0) {
@@ -69,7 +69,7 @@ export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, 
         });
     }
 
-    let datosPedido = $('#nav-pedido').html();
+    let dlToPrint = $('#' + printDLName).html();
 
     (typeof bButtons === 'undefined' ? bButtons = true : '');
     let botonesInner = (!bButtons ? '' : [{
@@ -129,7 +129,7 @@ export default function ordenarTabla(tablaID, columnas, columNoOrdenar, titulo, 
             extend: 'print',
             text: '<i class="fal fa-print"></i> Imprimir',
             title: titulo,
-            messageTop: datosPedido,
+            messageTop: dlToPrint,
             titleAttr: 'Imprimir',
             className: 'btn export buttons-collection',
             exportOptions: {

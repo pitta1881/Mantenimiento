@@ -97,6 +97,8 @@
 //rutas Orden de Compra
     $router->get('ordendecompra', 'OCController@index');
     $router->post('ordendecompra/create', 'OCController@create');
+    $router->post('ordendecompra/updateInsumos', 'OCController@updateInsumos');
+    $router->post('ordendecompra/cancelInsumo', 'OCController@cancelInsumo');
     $router->post('ordendecompra/fichaOne', 'OCController@fichaOne');
     $router->post('ordendecompra/fichaAll', 'OCController@fichaAll');
 

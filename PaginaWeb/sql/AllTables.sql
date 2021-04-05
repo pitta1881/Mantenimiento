@@ -215,9 +215,11 @@ CREATE TABLE Insumos_x_OC (
     idOC INTEGER NOT NULL,
     cantidadPedida INTEGER NOT NULL,
     cantidadRecibida INTEGER default 0,
+    idEstado INTEGER NOT NULL,
     PRIMARY KEY (idInsumo, idOC),
     FOREIGN KEY (idInsumo) REFERENCES Insumos (id),
-    FOREIGN KEY (idOC) REFERENCES OrdenesDeCompra (id)
+    FOREIGN KEY (idOC) REFERENCES OrdenesDeCompra (id),
+    FOREIGN KEY (idEstado) REFERENCES EstadosOrdenesDeCompra (id)
 );
 
 CREATE TABLE HistorialPedido (

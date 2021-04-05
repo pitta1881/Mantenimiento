@@ -203,6 +203,7 @@ abstract class Model
                 foreach ($datoUno['insumos'] as &$insumo) {
                     $insumo['nombre'] = $this->db->selectWhatWhere(tableInsumos, 'nombre', array('id' => $insumo['idInsumo']))[0]['nombre'];
                     $insumo['descripcion'] = $this->db->selectWhatWhere(tableInsumos, 'descripcion', array('id' => $insumo['idInsumo']))[0]['descripcion'];
+                    $insumo['estadoNombre'] = $this->db->selectWhatWhere(tableEstadosOC, 'nombre', array('id' => $insumo['idEstado']))[0]['nombre'];
                 }
                 break;
             case 'pedidos':

@@ -97,7 +97,11 @@ async function loadTableInsumosUpdateOCNewOC() {
             <td>${element.medidaNombre}</td>
             <td>
                 <div class="btn-group btn-group-sm float-none" role="group">
-                    ${carritoItem}
+                    ${(element.stockFuturo == 0 ? carritoItem : `
+                    <button type="button" class="btn btn-outline-warning" data-toggle="tooltip" title="Ya está en una OC Abierta" data-placement="top">
+                        <i class="fal fa-exclamation-circle fa-lg"></i>
+                    </button>
+                    `)}
                 </div>
             </td>
         </tr>
@@ -109,43 +113,63 @@ async function loadTableInsumosUpdateOCNewOC() {
 }
 
 function visualizarOCParticular(datos) {
+    $('#nav-ordendecompra-tab').click();
     loadDlOrdenDeCompra(datos);
-    loadTableInsumosUpdateOC(datos);
+    (datos.idEstadoOC == 3 ? $('#nav-listaInsumosUpd-tab').hide() : (
+        $('#nav-listaInsumosUpd-tab').show(),
+        loadTableInsumosOC('miTablaListaInsumosUpd', datos)
+    ));
 }
 
 function loadDlOrdenDeCompra(datos) {
     let textoInner = ``;
     textoInner += `
+    <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Nº OC</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.id}</dd>
+    </div>
+    <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Fecha</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fecha}</dd>
+    </div>
+    <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Estado</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.estadoNombre}</dd>
+    </div>
+    <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Tipo</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.tipoNombre}</dd>
+    </div>
+    <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Costo Est.</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">$${datos.costoEstimado}</dd>
+    </div>
+    <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Usuario</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.nickUsuario}</dd>
+    </div>
+    <div class="row m-0">
             `;
     document.getElementById('dlOrdenDeCompra').innerHTML = textoInner;
+    loadTableInsumosOC('miTablaListaInsumos', datos)
 }
 
-function loadTableInsumosUpdateOC(datos) {
-    $('#miTablaListaInsumos').DataTable().clear().destroy();
+function loadTableInsumosOC(table, datos) {
+    $('#' + table).DataTable().clear().destroy();
     let textoInner = ``;
     datos.insumos.forEach(insumo => {
         let btnSumar = ``;
-        (insumo.cantidadRecibida == insumo.cantidadPedida ? btnSumar = insumo.cantidadRecibida :
-            btnSumar = ` 
+        (table === 'miTablaListaInsumos' ? btnSumar = insumo.cantidadRecibida :
+            (insumo.idEstado != 1 && insumo.idEstado != 2 ? btnSumar = insumo.cantidadRecibida :
+                btnSumar = ` 
             <button type="button" class="btn btn-minus-recibido btn-md btn-primary border-right-0 border" disabled><i class="fal fa-minus"></i></button>
-            <input type="number" data-name="idInsumo" value="${insumo.idInsumo}" hidden>
-            <input type="number" data-name="cantidadInsumo" class="input-recibido" value="${Number(insumo.cantidadRecibida)}" min="${Number(insumo.cantidadRecibida)}" max="${Number(insumo.cantidadPedida)}" readonly>
-            <button type="button" class="btn btn-plus-recibido btn-primary border-left-0 border"><i class="fal fa-plus"></i></button>`);
+            <input type="number" data-name="idInsumo" value=${insumo.idInsumo} hidden>
+            <input type="number" data-name="cantidadInicialInsumo" value=${Number(insumo.cantidadRecibida)} hidden>
+            <input type="number" data-name="cantidadInsumo" class="input-recibido" value=${Number(insumo.cantidadRecibida)} min=${Number(insumo.cantidadRecibida)} max=${Number(insumo.cantidadPedida)} readonly>
+            <button type="button" class="btn btn-plus-recibido btn-primary border-left-0 border"><i class="fal fa-plus"></i></button>`));
         textoInner += `
         <tr>
-            <th>${insumo.nombre}</th>
+            <td>${insumo.nombre}</td>
             <td>${insumo.descripcion}</td>
             <td>${insumo.cantidadPedida}</td>
             <td>
@@ -153,16 +177,44 @@ function loadTableInsumosUpdateOC(datos) {
                     ${btnSumar}
                 </div>
             </td>
-            <td>
+            <td>${insumo.estadoNombre}</td>
+            ${(table === 'miTablaListaInsumos' ? '': `<td>` +
+            (insumo.idEstado == 1 || insumo.idEstado == 2 ? 
+                `
                 <div class="btn-group btn-group-sm float-none" role="group">
-                    
+                    <button type="button" class="btn btn-outline-danger btnCancelInsumo" data-target="#modalConfirmCancelInsumo" data-toggle="tooltip" title="Cancelar Cantidad Restante" data-placement="top"
+                    data-id-insumo=${insumo.idInsumo}
+                    data-id-oc=${datos.id}
+                    data-id-estado=${(insumo.cantidadRecibida == 0 ? 4 : 5)}
+                    data-cantidadfaltantecancelada=${(insumo.cantidadPedida - insumo.cantidadRecibida)}
+                    ><i class="fal fa-trash"></i></button>
                 </div>
-            </td>           
+            `: `-`) + `</td>`
+            )}
+            
         </tr>
         `
     });
-    $('#miTablaListaInsumos tbody').html(textoInner);
-    loadScriptOrdenarPagTablas('miTablaListaInsumos', '0,1,2,3', [4], 'Insumos Pedidos', false);
+    $('#' + table + ' tbody').html(textoInner);
+    $('input#idOCUpdateInsumo').val(datos.id);
+    (table === 'miTablaListaInsumos' ? loadScriptOrdenarPagTablas(table, '0,1,2,3', [], 'Insumos Pedidos', true, 'dlOrdenDeCompra') : loadScriptOrdenarPagTablas(table, '0,1,2,3,4', [5], 'Insumos Pedidos', false))
+    $('.btnCancelInsumo').on('click', function () {
+        $('#formCancelInsumo').bootstrapValidator('resetForm', true);
+        let buttonPressed = $(this);
+        let idInsumo = buttonPressed.data('id-insumo');
+        let idOC = buttonPressed.data('id-oc');
+        let idEstado = buttonPressed.data('id-estado');
+        let cantidadFaltanteCancelada = buttonPressed.data('cantidadfaltantecancelada');
+        let innerForm = `
+        <input name="idInsumo" value=${idInsumo} hidden>
+        <input name="idOC" value=${idOC} hidden>
+        <input name="idEstado" value=${idEstado} hidden>
+        <input name="cantidadFaltanteCancelada" value=${cantidadFaltanteCancelada} hidden></input>
+        <p> ¿Está seguro que quiere cancelar la cantidad faltante (${cantidadFaltanteCancelada}) del insumo?</p>
+        `;
+        $('#formCancelInsumo #containerCancelInsumo').html(innerForm);
+        $('#modalConfirmCancelInsumo').modal('show');
+    });
     loadEventosTableInsumosUpdateOC();
 }
 
@@ -172,7 +224,7 @@ function loadEventosTableInsumosUpdateOC() {
     $(".btn-minus-recibido").on("click", function () {
         let inputCart = $(this).siblings('.input-recibido');
         $(this).siblings('.btn-plus-recibido').attr('disabled', false);
-        if (inputCart.val() > inputCart.attr('min')) {
+        if (Number(inputCart.val()) > Number(inputCart.attr('min'))) {
             inputCart.val(Number(inputCart.val()) - 1);
             if (inputCart.val() == inputCart.attr('min')) {
                 $(this).attr('disabled', true);
@@ -184,7 +236,7 @@ function loadEventosTableInsumosUpdateOC() {
     $(".btn-plus-recibido").on("click", function () {
         let inputCart = $(this).siblings('.input-recibido');
         $(this).siblings('.btn-minus-recibido').attr('disabled', false);
-        if (inputCart.val() < inputCart.attr('max')) {
+        if (Number(inputCart.val()) < Number(inputCart.attr('max'))) {
             inputCart.val(Number(inputCart.val()) + 1);
             if (inputCart.val() == inputCart.attr('max')) {
                 $(this).attr('disabled', true);
@@ -195,18 +247,26 @@ function loadEventosTableInsumosUpdateOC() {
 
     function changeLSInsumoUpdate() {
         let insumosUpdate = JSON.parse(localStorage.getItem('insumosUpdate')) || [];
-        let idInsumoElegido = $(this).siblings('[data-name=idInsumo]').val();
-        let cantidadInsumoElegido = $(this).siblings('[data-name=cantidadInsumo]').val();
+        let idInsumoElegido = Number($(this).siblings('[data-name=idInsumo]').val());
+        let cantidadInicial = Number($(this).siblings('[data-name=cantidadInicialInsumo]').val());
+        let cantidadInsumoElegido = Number($(this).siblings('[data-name=cantidadInsumo]').val());
         let insumoToChange = {
             'id': idInsumoElegido,
-            'cantidad': cantidadInsumoElegido
+            'cantidadInicial': cantidadInicial,
+            'cantidad': cantidadInsumoElegido,
+            'idEstado': (cantidadInsumoElegido == $(this).siblings('[data-name=cantidadInsumo]').attr('max') ? 3 : 2)
         }
         let indexInsumoLocal = insumosUpdate.findIndex(element => element.id == idInsumoElegido);
         if (indexInsumoLocal >= 0) {
-            if (cantidadInsumoElegido == $(this).siblings('[data-name=cantidadInsumo]').attr('min')) {
+            if (cantidadInsumoElegido == Number($(this).siblings('[data-name=cantidadInsumo]').attr('min'))) {
                 insumosUpdate.splice(indexInsumoLocal, 1);
             } else {
                 insumosUpdate[indexInsumoLocal].cantidad = cantidadInsumoElegido
+                if (cantidadInsumoElegido == Number($(this).siblings('[data-name=cantidadInsumo]').attr('max'))) {
+                    insumosUpdate[indexInsumoLocal].idEstado = 3
+                } else {
+                    insumosUpdate[indexInsumoLocal].idEstado = 2
+                }
             }
         } else {
             insumosUpdate.push(insumoToChange);
