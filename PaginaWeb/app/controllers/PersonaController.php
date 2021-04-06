@@ -51,31 +51,28 @@ class PersonaController extends Controller implements MyInterface
     public function update()
     {
         $persona = [
-            'id' => $_POST['id'],
             'nombre' => $_POST['nombre'],
             'apellido' => $_POST['apellido'],
             'direccion' => $_POST['direccion'],
             'email' => $_POST['email'],
             'fechaNacimiento' => $_POST['fechaNacimiento']
         ];
-        $update = $this->model->update(table, $persona, "Persona");
+        $update = $this->model->update(table, $persona, array('id' => $_POST['id']), "Persona");
         return json_encode($update);
     }
     
     public function delete()
     {
-        $persona['id'] = $_POST['id'];
-        $delete = $this->model->delete(table, $persona, "Persona");
+        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Persona");
         return json_encode($delete);
     }
 
     public function updateEstado()
     {
         $persona = [
-            'id' => $_POST['idPersona'],
             'idEstadoPersona' => $_POST['idEstadoPersona']
         ];
-        $update = $this->model->update(table, $persona, "Persona");
+        $update = $this->model->update(table, $persona, array('id' => $_POST['idPersona']), "Persona");
         return json_encode($update);
     }
 }

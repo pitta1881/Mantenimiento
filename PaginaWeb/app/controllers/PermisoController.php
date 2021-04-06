@@ -40,17 +40,15 @@ class PermisoController extends Controller implements MyInterface
     public function update()
     {
         $permiso = [
-            'id' => $_POST['id'],
             'nombre' => $_POST['nombre']
         ];
-        $update = $this->model->update(table, $permiso, "Permiso");
+        $update = $this->model->update(table, $permiso, array('id' => $_POST['id']), "Permiso");
         return json_encode($update);
     }
 
     public function delete()
     {
-        $permiso['id'] = $_POST['id'];
-        $delete = $this->model->delete(table, $permiso, "Permiso");
+        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Permiso");
         return json_encode($delete);
     }
 }

@@ -46,20 +46,18 @@ class InsumoController extends Controller implements MyInterface
     public function update()
     {
         $insumo = [
-            'id' => $_POST['id'],
             'nombre' => $_POST['nombre'],
             'descripcion' => $_POST['descripcion'],
             'stockMinimo' => $_POST['stockMinimo'],
             'idMedida' => $_POST['idMedida']
         ];
-        $update = $this->model->update(table, $insumo, "Insumo");
+        $update = $this->model->update(table, $insumo, array('id' => $_POST['id']), "Insumo");
         return json_encode($update);
     }
 
     public function delete()
     {
-        $insumo['id'] = $_POST['id'];
-        $delete = $this->model->delete(table, $insumo, "Insumo");
+        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Insumo");
         return json_encode($delete);
     }
 }

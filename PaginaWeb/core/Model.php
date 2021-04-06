@@ -241,9 +241,7 @@ abstract class Model
         if (!is_null($arrayTablaComparaIfUsado)) {
             $datoUno['usado'] = false;
             foreach ($arrayTablaComparaIfUsado as $tablaComparaIfUsado) {
-                $keyTablaCompara = $tablaComparaIfUsado["comparaKeyDest"];
-                $comparaColumna[$keyTablaCompara]=$datoUno[$tablaComparaIfUsado["comparaKeyOrig"]];
-                if ($this->db->buscarIfExists($tablaComparaIfUsado["tabla"], $comparaColumna)) {
+                if ($this->db->buscarIfExists($tablaComparaIfUsado["tabla"], array($tablaComparaIfUsado["comparaKeyDest"] => $datoUno[$tablaComparaIfUsado["comparaKeyOrig"]]))) {
                     $datoUno['usado'] = true;
                 }
             }
@@ -279,18 +277,18 @@ abstract class Model
         return $retorno;
     }
 
-    public function update($table, array $datos, $tipo)
+    public function update($table, array $datos, array $where, $tipo)
     {
         $retorno = array(
                 "tipo" => $tipo,
                 "operacion" => "update");
-        if (!($this->db->buscarIfExists($table, $datos))) {
+        if (!($this->db->buscarIfExists($table, $where))) {
             $retorno = array_merge($retorno, array(
                 "estado" => false,
                 "mensaje" => "El item no existe"
             ));
         } else {
-            $datos = $this->db->update($table, $datos);
+            $datos = $this->db->update($table, $datos, $where);
             $retorno = array_merge($retorno, array(
                 "estado" => $datos["estado"],
                 "mensaje" => $datos["mensaje"]
@@ -299,18 +297,18 @@ abstract class Model
         return $retorno;
     }
 
-    public function delete($table, array $datos, $tipo)
+    public function delete($table, array $where, $tipo)
     {
         $retorno = array(
             "tipo" => $tipo,
             "operacion" => "delete");
-        if (!($this->db->buscarIfExists($table, $datos))) {
+        if (!($this->db->buscarIfExists($table, $where))) {
             $retorno = array_merge($retorno, array(
                 "estado" => false,
                 "mensaje" => "El item no existe"
             ));
         } else {
-            $datos = $this->db->delete($table, $datos);
+            $datos = $this->db->delete($table, $where);
             $retorno = array_merge($retorno, array(
                 "estado" => $datos["estado"],
                 "mensaje" => $datos["mensaje"]

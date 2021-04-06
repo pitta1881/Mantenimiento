@@ -39,12 +39,14 @@ class RolController extends Controller implements MyInterface
 
     public function update()
     {
-        $rol['idRol'] = $_POST["id"];
-        $this->model->delete(tableRxP, $rol, "RxP");
+        $this->model->delete(tableRxP, array('idRol' => $_POST["id"]), "RxP");
         if (isset($_POST["permisos"])) {
             $permisos= $_POST["permisos"];
             for ($i=0;$i<count($permisos);$i++) {
-                $rol['idPermiso'] = $permisos[$i];
+                $rol = [
+                    'idRol' => $_POST["id"],
+                    'idPermiso' => $permisos[$i]
+                ];
                 $insert = $this->model->insert(tableRxP, $rol, "RxP");
             }
         }
@@ -57,10 +59,8 @@ class RolController extends Controller implements MyInterface
 
     public function delete()
     {
-        $rol['id'] = $_POST['id'];
-        $rolRxP['idRol'] = $_POST['id'];
-        $this->model->delete(tableRxP, $rolRxP, "RxP");
-        $delete = $this->model->delete(table, $rol, "Rol");
+        $this->model->delete(tableRxP, array('idRol' => $_POST['id']), "RxP");
+        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Rol");
         return json_encode($delete);
     }
 

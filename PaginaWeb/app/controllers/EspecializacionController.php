@@ -40,17 +40,15 @@ class EspecializacionController extends Controller implements MyInterface
     public function update()
     {
         $especializacion = [
-            'id' => $_POST['id'],
             'nombre' => $_POST['nombre']
         ];
-        $update = $this->model->update(table, $especializacion, "Especializacion");
+        $update = $this->model->update(table, $especializacion, array('id' => $_POST['id']), "Especializacion");
         return json_encode($update);
     }
 
     public function delete()
     {
-        $especializacion['id'] = $_POST['id'];
-        $delete = $this->model->delete(table, $especializacion, "Especializacion");
+        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Especializacion");
         return json_encode($delete);
     }
 }

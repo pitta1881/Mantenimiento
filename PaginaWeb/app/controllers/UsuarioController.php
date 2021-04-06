@@ -55,17 +55,15 @@ class UsuarioController extends Controller implements MyInterface
     public function update()
     {
         $usuario = [
-            'id' => $_POST['id'],
             'password' => $_POST['password']
         ];
-        $update = $this->model->update(table, $usuario, "Usuario");
+        $update = $this->model->update(table, $usuario, array('id' => $_POST['id']), "Usuario");
         return json_encode($update);
     }
 
     public function updateRolesUsuario()
     {
-        $usuario['idUsuario'] = $_POST['id'];
-        $this->model->delete(tableRxU, $usuario, "RxU");
+        $this->model->delete(tableRxU, array(['idUsuario'] => $_POST['id']), "RxU");
         foreach ($_POST['idRol'] as $key => $value) {
             $RxU = [
                 'idRol' => $value,
@@ -89,10 +87,8 @@ class UsuarioController extends Controller implements MyInterface
 
     public function delete()
     {
-        $usuarioRxU['idUsuario'] = $_POST['id'];
-        $usuario['id'] = $_POST['id'];
-        $this->model->delete(tableRxU, $usuarioRxU, "RxU");
-        $delete = $this->model->delete(table, $usuario, "Usuario");
+        $this->model->delete(tableRxU, array('idUsuario' => $_POST['id']), "RxU");
+        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Usuario");
         return json_encode($delete);
     }
 }

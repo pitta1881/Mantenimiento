@@ -69,12 +69,11 @@ class PedidoController extends Controller implements MyInterface
     public function update()
     {
         $pedido = [
-            'id' => $_POST['id'],
             'idSector' => $_POST['idSector'],
             'idPrioridad' => $_POST['idPrioridad'],
             'descripcion' => $_POST['descripcion']
         ];
-        $update = $this->model->update(table, $pedido, "Pedido");
+        $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
         if ($update['estado']) {
             $historialPedido = [
                 'id' => $this->getIdHistorial($_POST['id']),
@@ -95,11 +94,10 @@ class PedidoController extends Controller implements MyInterface
     public function finish()    //idEstado = 5
     {
         $pedido = [
-            'id' => $_POST['id'],
             'idEstado' => 5,
             'fechaFin' => date("Y-m-d")
         ];
-        $update = $this->model->update(table, $pedido, "Pedido");
+        $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
         return json_encode($update);
     }
 
@@ -107,11 +105,10 @@ class PedidoController extends Controller implements MyInterface
     {
         $ahora = date('Y-m-d H:i:s');
         $pedido = [
-            'id' => $_POST['id'],
             'idEstado' => 4,
             'fechaFin' => $ahora
         ];
-        $update = $this->model->update(table, $pedido, "Pedido");
+        $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
         if ($update['estado']) {
             $historialPedido = [
                 'id' => $this->getIdHistorial($_POST['id']),

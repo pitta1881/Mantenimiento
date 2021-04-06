@@ -56,11 +56,10 @@ class OCController extends Controller implements MyInterface
                 $insert2 = $this->model->insert(tableIxOC, $IxOC, "IxOC");
                 //actualizo stockFuturo del insumos
                 if ($insert2) {
-                    $insumo = [
-                        'id' => $insumo['id'],
+                    $insumoToUpdate = [
                         'stockFuturo' => $insumo['cantidad']
                     ];
-                    $update = $this->model->update(tableInsumos, $insumo, "Insumo");
+                    $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Insumo");
                 }
             }
         }
@@ -82,29 +81,26 @@ class OCController extends Controller implements MyInterface
         foreach ($insumos as $insumo) {
             $insumoRelacionado = $this->getInsumo($insumo['id']);
             $IxOC = [
-                'idInsumo' => $insumo['id'],
-                'idOC' => $_POST['idOC'],
                 'cantidadRecibida' => $insumo['cantidad'],
                 'idEstado' => $insumo['idEstado']
             ];
-            $update = $this->model->update(tableIxOC, $IxOC, "IxOC");
+            $update = $this->model->update(tableIxOC, $IxOC, array('idInsumo' => $insumo['id'],
+                                                                    'idOC' => $_POST['idOC']), "IxOC");
             //update +stockReal y -stockFuturo del Insumo
             if ($update) {
                 $cantidadRecibidaAhora = $insumo['cantidad'] - $insumo['cantidadInicial'];
-                $insumo = [
-                    'id' => $insumo['id'],
+                $insumoToUpdate = [
                     'stockReal' => $insumoRelacionado['stockReal'] + $cantidadRecibidaAhora,
                     'stockFuturo' => $insumoRelacionado['stockFuturo'] - $cantidadRecibidaAhora
                 ];
-                $update = $this->model->update(tableInsumos, $insumo, "Insumo");
+                $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Insumo");
             }
         }
         //update estado de la Orden de Compra
         $ordenDeCompra = [
-            'id' => $_POST['idOC'],
             'idEstadoOC' => ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2)
         ];
-        $this->model->update(table, $ordenDeCompra, "Orden De Compra");
+        $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
         return json_encode($update);
     }
 
@@ -113,25 +109,22 @@ class OCController extends Controller implements MyInterface
         //update item IxOC cantRecibida == 0 ? Cancelado(4) : Parcial Completo(5)
         $insumoRelacionado = $this->getInsumo($_POST['idInsumo']);
         $IxOC = [
-                'idInsumo' => $_POST['idInsumo'],
-                'idOC' => $_POST['idOC'],
                 'idEstado' => $_POST['idEstado'] //4 o 5
             ];
-        $update = $this->model->update(tableIxOC, $IxOC, "IxOC");
+        $update = $this->model->update(tableIxOC, $IxOC, array('idInsumo' => $_POST['idInsumo'],
+                                                                'idOC' => $_POST['idOC']), "IxOC");
         //update solo -stockFuturo del Insumo
         if ($update) {
-            $insumo = [
-                    'id' => $_POST['idInsumo'],
+            $insumoToUpdate = [
                     'stockFuturo' => $insumoRelacionado['stockFuturo'] - $_POST['cantidadFaltanteCancelada']
                 ];
-            $update = $this->model->update(tableInsumos, $insumo, "Insumo");
+            $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $_POST['idInsumo']), "Insumo");
         }
         //update estado de la Orden de Compra
         $ordenDeCompra = [
-            'id' => $_POST['idOC'],
             'idEstadoOC' => ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2)
         ];
-        $this->model->update(table, $ordenDeCompra, "Orden De Compra");
+        $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
         return json_encode($update);
     }
 

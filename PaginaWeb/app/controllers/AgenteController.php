@@ -52,8 +52,7 @@ class AgenteController extends Controller implements MyInterface
 
     public function update()
     {
-        $agente['idAgente'] = $_POST['id'];
-        $this->model->delete(tableExA, $agente, "ExA");
+        $this->model->delete(tableExA, array('idAgente' => $_POST['id']), "ExA");
         foreach ($_POST['idEspecializacion'] as $key => $value) {
             $ExA = [
                 'idEspecializacion' => $value,
@@ -69,10 +68,8 @@ class AgenteController extends Controller implements MyInterface
 
     public function delete()
     {
-        $agenteExA['idAgente'] = $_POST['id'];
-        $agente['id'] = $_POST['id'];
-        $this->model->delete(tableExA, $agenteExA, "ExA");
-        $delete = $this->model->delete(table, $agente, "Agente");
+        $this->model->delete(tableExA, array('idAgente' => $_POST['id']), "ExA");
+        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Agente");
         return json_encode($delete);
     }
 }

@@ -47,21 +47,19 @@ class SectorController extends Controller implements MyInterface
     public function update()
     {
         $sector = [
-            'id' => $_POST['id'],
             'nombre' => $_POST['nombre'],
             'responsable' => $_POST['responsable'],
             'telefono' => $_POST['telefono'],
             'email' => $_POST['email'],
             'idTipoSector' => $_POST['idTipoSector']
         ];
-        $update = $this->model->update(table, $sector, "Sector");
+        $update = $this->model->update(table, $sector, array('id' => $_POST['id']), "Sector");
         return json_encode($update);
     }
 
     public function delete()
     {
-        $sector['id'] = $_POST['id'];
-        $delete = $this->model->delete(table, $sector, "Sector");
+        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Sector");
         return json_encode($delete);
     }
 }

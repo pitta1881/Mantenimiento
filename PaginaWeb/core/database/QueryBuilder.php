@@ -90,44 +90,14 @@ class QueryBuilder
         }
     }
 
-    public function buscarIfExists($table, $parameters)
+    public function buscarIfExists($table, $where)
     {
-        $columnaCompara = array_key_first($parameters);
-        $datoColumnaCompara = $parameters[$columnaCompara];
-        $sql = sprintf(
-            "select 1 from %s where %s='%s' limit 1",
-            $table,
-            $columnaCompara,
-            $datoColumnaCompara
-        );
-        try {
-            $statement = $this->pdo->prepare($sql);
-            $statement->execute();
-            if ($statement->fetchColumn()) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception $e) {
-            $e->getCode();
-        }
-    }
-
-    public function buscarIfExistsAnd($table, $parameters)
-    {
-        $columnaCompara = array_key_first($parameters);
-        $datoColumnaCompara = $parameters[$columnaCompara];
-        array_shift($parameters);
-        $parameters = $this->cleanParameterName($parameters);
-        $setPart = array();
-        $bindings = array();
-
-        foreach ($parameters as $key => $value) {
+        foreach ($where as $key => $value) {
             $setPart[] = "{$key} = :{$key}";
             $bindings[":{$key}"] = $value;
         }
         try {
-            $sql = "SELECT 1 FROM {$table} WHERE ".implode('AND ', $setPart)." LIMIT 1";
+            $sql = "SELECT 1 FROM {$table} WHERE ".implode(' AND ', $setPart)." LIMIT 1";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($bindings);
             if ($stmt->fetchColumn()) {
@@ -140,23 +110,21 @@ class QueryBuilder
         }
     }
 
-    public function update($table, $parameters)
+    public function update($table, $parameters, $where)
     {
-        $columnaCompara = array_key_first($parameters);
-        $datoColumnaCompara = $parameters[$columnaCompara];
-        array_shift($parameters);
-        $parameters = $this->cleanParameterName($parameters);
-        $setPart = array();
-        $bindings = array();
-
         foreach ($parameters as $key => $value) {
-            $setPart[] = "{$key} = :{$key}";
-            $bindings[":{$key}"] = $value;
+            $setPartData[] = "{$key} = :{$key}";
+            $bindingsData[":{$key}"] = $value;
         }
+        foreach ($where as $key => $value) {
+            $setPartWhere[] = "{$key} = :{$key}";
+            $bindingsWhere[":{$key}"] = $value;
+        }
+        $arrayBindings = array_merge($bindingsData, $bindingsWhere);
         try {
-            $sql = "UPDATE {$table} SET ".implode(', ', $setPart)." WHERE {$columnaCompara} ='{$datoColumnaCompara}'";
+            $sql = "UPDATE {$table} SET ".implode(', ', $setPartData)." WHERE ".implode(' AND ', $setPartWhere);
             $stmt = $this->pdo->prepare($sql);
-            if ($stmt->execute($bindings)) {
+            if ($stmt->execute($arrayBindings)) {
                 return array("estado" => true,
                             "mensaje" => $this->pdo->lastInsertId());
             }
@@ -170,19 +138,16 @@ class QueryBuilder
         }
     }
 
-    public function delete($table, $parameters)
+    public function delete($table, $where)
     {
-        $columnaCompara = array_key_first($parameters);
-        $datoColumnaCompara = $parameters[$columnaCompara];
-        $sql = sprintf(
-            "delete from %s where %s='%s'",
-            $table,
-            $columnaCompara,
-            $datoColumnaCompara
-        );
+        foreach ($where as $key => $value) {
+            $setPartWhere[] = "{$key} = :{$key}";
+            $bindingsWhere[":{$key}"] = $value;
+        }
         try {
-            $statement = $this->pdo->prepare($sql);
-            if ($statement->execute($parameters)) {
+            $sql = "DELETE FROM {$table} WHERE ".implode(' AND ', $setPartWhere);
+            $stmt = $this->pdo->prepare($sql);
+            if ($stmt->execute($bindingsWhere)) {
                 return array("estado" => true,
                              "mensaje" => "Eliminado Correctamente");
             }
