@@ -80,3 +80,9 @@ input[type=number] {
     -moz-appearance: textfield;
     /* Firefox */
 }
+
+.btn-badge-insumo-alert {
+    position: absolute;
+    top: -15px;
+    padding: 0 3px;
+}

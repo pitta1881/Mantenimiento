@@ -22,6 +22,7 @@ define("tableEstados", "estados");
 define("tablePrioridades", "prioridades");
 define("tableTareas", "tareas");
 define("tableTiposSector", "tipossector");
+define("tableHistorialInsumo", "historialinsumo");
 define("tableHistorialPedido", "historialpedido");
 define("tableHistorialTarea", "historialtarea");
 define("tableInsumos", "insumos");
@@ -193,6 +194,10 @@ abstract class Model
                 break;
             case 'insumos':
                 $datoUno['medidaNombre']=$this->db->selectWhatWhere(tableMedidas, 'nombre', array('id' => $datoUno['idMedida']))[0]['nombre'];
+                $datoUno['historial'] = $this->db->selectAllWhere(tableHistorialInsumo, array('idInsumo' => $datoUno['id']));
+                foreach ($datoUno['historial'] as &$rowHistorial) {
+                    $rowHistorial['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $rowHistorial['idUsuario']))[0]['nick'];
+                }
                 break;
             case 'ordenesdecompra':
                 $datoUno['estadoNombre']=$this->db->selectWhatWhere(tableEstadosOC, 'nombre', array('id' => $datoUno['idEstadoOC']))[0]['nombre'];

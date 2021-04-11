@@ -22,6 +22,7 @@
 					<th>Estado</th>
 					<th>Tipo</th>
 					<th>Costo Estimado</th>
+					<th>Costo Final</th>
 					<th>Usuario</th>
 					<th>Cantidad Insumos</th>
 					<th>Accion</th>
@@ -115,11 +116,11 @@
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div id="carritoModalCheck"></div>
+					<div id="carritoModalCheck" class="mb-3"></div>
 					<form action="create" method="post" id="formCheckAndSetCosto">
 						<div class="form-group required">
 							<label class="control-label" for="costoEstimado">Costo Estimado(ARS):</label>
-							<input type="number" name="costoEstimado" id="costoEstimado" class="form-control" value="0" min="0" required>
+							<input type="number" name="costoEstimado" id="costoEstimado" class="form-control" step="0.01" value="0" min="0" required>
 						</div>
 						<!-- Modal footer -->
 						<div class="modal-footer">
@@ -187,7 +188,7 @@
 								</table>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-									<button type="submit" data-target="#modalCheckAndSetCosto" class="btn btn-success">Enviar</button>
+									<button type="submit" class="btn btn-success">Enviar</button>
 								</div>
 							</form>
 						</div>
@@ -220,6 +221,71 @@
 			</div>
 		</div>
 	</div>
+
+	<!--MODIFICAR TIPO-->
+	{% if "51" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalTipoUpdate">
+			<div class="modal-dialog modal-xs">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Cambiar Tipo</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="update" method="post" id="formOCUpd">
+							<input type="text" name="idOC" id="updateOCid" hidden>
+							<div class="form-group required">
+								<label class="control-label" for="tipoOCUpdate">Nuevo Tipo:</label>
+								<select name="idTiposOC" id="tipoOCUpdate" class="form-control custom-select">
+									<option disabled selected>Seleccione una opcion</option>
+									{% for tipo in datos.todosTiposOC %}
+										<option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="modalCostoFinalUpdate">
+			<div class="modal-dialog modal-xs">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalUpdate">Completar Costo Final</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="updateCostoFinal" method="post" id="formSetCostoFinal">
+							<div class="form-group required">
+								<input type="text" name="idOC" id="updateCostoFinalOCid" hidden>
+								<label class="control-label" for="costoFinal">Costo Final(ARS):</label>
+								<input type="number" name="costoFinal" id="costoFinal" class="form-control" step="0.01" min="0" required>
+							</div>
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}
 {% block javascripts %}

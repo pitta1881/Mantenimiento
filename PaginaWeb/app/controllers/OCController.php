@@ -68,6 +68,20 @@ class OCController extends Controller implements MyInterface
 
     public function update()
     {
+        $ordenDeCompra = [
+            'idTipoOrdenDeCompra' => $_POST['idTiposOC']
+        ];
+        $update = $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden de Compra");
+        return json_encode($update);
+    }
+
+    public function updateCostoFinal()
+    {
+        $ordenDeCompra = [
+            'costoFinal' => $_POST['costoFinal']
+        ];
+        $update = $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden de Compra");
+        return json_encode($update);
     }
 
     public function delete()
@@ -76,6 +90,7 @@ class OCController extends Controller implements MyInterface
 
     public function updateInsumos()
     {
+        $ahora = date('Y-m-d H:i:s');
         //update cantidad recibida en item IxOC
         $insumos = json_decode($_POST['insumos'], true);
         foreach ($insumos as $insumo) {
@@ -94,6 +109,20 @@ class OCController extends Controller implements MyInterface
                     'stockFuturo' => $insumoRelacionado['stockFuturo'] - $cantidadRecibidaAhora
                 ];
                 $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Insumo");
+                if ($update) {
+                    //create item historialInsumo
+                    $historialInsumo = [
+                        'id' => $this->getIdHistorial($insumo['id']),
+                        'idInsumo' => $insumo['id'],
+                        'fecha' => $ahora,
+                        'idUsuario' => $_SESSION['idUser'],
+                        'oldStock' => $insumoRelacionado['stockReal'],
+                        'newStock' => $insumoRelacionado['stockReal'] + $cantidadRecibidaAhora,
+                        'inOrOut' => 1,
+                        'idOC' => $_POST['idOC']
+                    ];
+                    $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
+                }
             }
         }
         //update estado de la Orden de Compra
@@ -121,8 +150,9 @@ class OCController extends Controller implements MyInterface
             $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $_POST['idInsumo']), "Insumo");
         }
         //update estado de la Orden de Compra
+        $estadoOC = ($this->checkOCCancelada($_POST['idOC']) ? 4 : ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2));
         $ordenDeCompra = [
-            'idEstadoOC' => ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2)
+            'idEstadoOC' => $estadoOC
         ];
         $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
         return json_encode($update);
@@ -142,5 +172,22 @@ class OCController extends Controller implements MyInterface
             };
         }
         return true;
+    }
+
+    private function checkOCCancelada($idOC)
+    {
+        $oc = $this->model->getFichaOne(table, array('id'=>$idOC));
+        foreach ($oc['insumos'] as $insumo) {
+            if ($insumo['idEstado'] != 4) {
+                return false;
+            };
+        }
+        return true;
+    }
+
+    private function getIdHistorial($idInsumo)
+    {
+        $datos['unInsumo'] = $this->model->getFichaOne(tableInsumos, array('id'=>$idInsumo));
+        return (empty($datos['unInsumo']['historial']) ? 1 : end($datos['unInsumo']['historial'])['id'] + 1);
     }
 }

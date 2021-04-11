@@ -200,7 +200,8 @@ CREATE TABLE TiposOrdenesDeCompra (
 
 CREATE TABLE OrdenesDeCompra (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    costoEstimado INTEGER NOT NULL default 0,
+    costoEstimado FLOAT NOT NULL default 0.00,
+    costoFinal FLOAT,
     fecha DATETIME NOT NULL,
     idEstadoOC INTEGER NOT NULL,
     idUsuario INTEGER NOT NULL,
@@ -220,6 +221,24 @@ CREATE TABLE Insumos_x_OC (
     FOREIGN KEY (idInsumo) REFERENCES Insumos (id),
     FOREIGN KEY (idOC) REFERENCES OrdenesDeCompra (id),
     FOREIGN KEY (idEstado) REFERENCES EstadosOrdenesDeCompra (id)
+);
+
+CREATE TABLE HistorialInsumo (
+    id INTEGER NOT NULL,
+    idInsumo INTEGER NOT NULL,
+    fecha DATETIME NOT NULL,
+    idUsuario INTEGER NOT NULL,
+    oldStock FLOAT NOT NULL,
+    newStock FLOAT NOT NULL,
+    inOrOut BOOLEAN NOT NULL,
+    idOC INTEGER DEFAULT NULL,
+    idTarea INTEGER DEFAULT NULL,
+    idPedido INTEGER DEFAULT NULL,
+    PRIMARY KEY (id, idInsumo),
+    FOREIGN KEY (idInsumo) REFERENCES Insumos (id),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
+    FOREIGN KEY (idOC) REFERENCES OrdenesDeCompra (id),
+    FOREIGN KEY (idTarea, idPedido) REFERENCES Tareas (id, idPedido)
 );
 
 CREATE TABLE HistorialPedido (
@@ -258,3 +277,23 @@ CREATE TABLE HistorialTarea (
     FOREIGN KEY (idEstado) REFERENCES Estados (id),
     FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
 );
+
+CREATE TABLE eventos (
+    idEvento INTEGER AUTO_INCREMENT,
+    nombreEvento varchar(20) NOT NULL,
+    descripcion TEXT NOT NULL,
+    fechaInicio DATE NOT NULL,
+    fechaFin DATE NOT NULL,
+    periodicidad INTEGER default 0,
+    UNIQUE(nombreEvento),
+    PRIMARY KEY (idEvento)
+);
+
+CREATE  EVENT eliminaVencidos ON SCHEDULE EVERY 1 DAY STARTS '2021-03-31 23:59:00' ON COMPLETION NOT PRESERVE ENABLE 
+DO DELETE FROM mantenimiento.eventos 
+where eventos.periodicidad=0 AND eventos.fechaFin = (SELECT curdate());
+
+CREATE  EVENT modificaPeriodicos ON SCHEDULE EVERY 1 DAY STARTS '2021-03-31 23:59:00' ON COMPLETION NOT PRESERVE ENABLE 
+DO UPDATE mantenimiento.eventos set eventos.fechaFin = (select DATE_ADD(eventos.fechaFin, 
+INTERVAL eventos.periodicidad DAY)),eventos.fechaInicio = (select DATE_ADD(eventos.fechaInicio, INTERVAL eventos.periodicidad DAY)) 
+where eventos.periodicidad<>0 and eventos.fechaFin =(SELECT curdate());

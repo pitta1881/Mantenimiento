@@ -134,9 +134,6 @@ function loadListenerActionButtons(callbacks) {
                     $(this).removeClass('is-valid is-invalid');
                 });
                 switch (btn.dataset.abm) {
-                    case "update":
-                        callbacks['update'](ficha);
-                        break;
                     case "delete":
                         callbacks['delete'](ficha);
                         if (urlToUse != '/pedidos/') {
@@ -152,21 +149,6 @@ function loadListenerActionButtons(callbacks) {
                             })
                         }
                         break;
-                    case "visualize":
-                        callbacks['visualize'](ficha);
-                        break;
-                    case "visualize-2":
-                        callbacks['visualize-2'](ficha);
-                        break;
-                    case "visualize-3":
-                        callbacks['visualize-3'](ficha);
-                        break;
-                    case "updateEstado":
-                        callbacks['updateEstado'](ficha);
-                        break;
-                    case "updateRoles":
-                        callbacks['updateRoles'](ficha);
-                        break;
                     case "visualizarRolesPermisos":
                         callbacks['visualizarRolesPermisos'](ficha, false);
                         break;
@@ -174,6 +156,7 @@ function loadListenerActionButtons(callbacks) {
                         callbacks['updateRolesPermisos'](ficha, true);
                         break;
                     default:
+                        callbacks[btn.dataset.abm](ficha);
                         break;
                 }
                 $(btn.dataset.target).modal('show');

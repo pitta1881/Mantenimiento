@@ -170,18 +170,8 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                 },
                 idEstadoPersona: {
                     validators: {
-                        callback: {
-                            callback: function (value, validator, $field) {
-                                if (!value) {
-                                    return {
-                                        valid: false,
-                                        message: 'Seleccione una opcion'
-                                    }
-                                }
-                                return {
-                                    valid: true
-                                }
-                            }
+                        notEmpty: {
+                            message: 'Ingrese una Opcion'
                         }
                     }
                 }
@@ -655,7 +645,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         });
 
     //orden de compra forms
-    $('#formOCNew, #formOCUpd, #formCheckAndSetCosto, #formOCUpdInsumos, #formCancelInsumo').bootstrapValidator({
+    $('#formOCNew, #formOCUpd, #formCheckAndSetCosto, #formOCUpdInsumos, #formCancelInsumo, #formSetCostoFinal').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
                 idUsuario: {
@@ -665,6 +655,13 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     excluded: true
                 },
                 idTiposOC: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Opcion'
+                        }
+                    }
+                },
+                tipoOCUpdate: {
                     validators: {
                         notEmpty: {
                             message: 'Ingrese una Opcion'
@@ -682,6 +679,18 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     validators: {
                         notEmpty: {
                             message: 'Ingrese un Costo Estimado'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            inclusive: false,
+                            message: 'Debe ser mayor a 0'
+                        }
+                    }
+                },
+                costoFinal: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese el Costo Final'
                         },
                         greaterThan: {
                             value: 0,

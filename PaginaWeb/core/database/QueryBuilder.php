@@ -85,7 +85,7 @@ class QueryBuilder
                 return array("estado" => false,
                             "mensaje" => "El nombre ya existe.. (clave duplicada)");
             } else {
-                // an error other than duplicate entry occurred
+                return $e;
             }
         }
     }
@@ -133,7 +133,7 @@ class QueryBuilder
                 return array("estado" => false,
                             "mensaje" => "El nombre ya existe.. (clave duplicada)");
             } else {
-                // an error other than duplicate entry occurred
+                return $e;
             }
         }
     }
@@ -156,7 +156,7 @@ class QueryBuilder
                 return array("estado" => false,
                             "mensaje" => "No se puede eliminar una fila padre (FK)");
             } else {
-                // an error other than duplicate entry occurred
+                return $e;
             }
         }
     }

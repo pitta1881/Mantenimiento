@@ -16,6 +16,8 @@ loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'visualize': visualizarOCParticular,
+    'update': modificarTipoModal,
+    'updateCostoFinal': modificarCostoFinalModal,
     'loadTable': loadTable
 });
 loadScriptValidarCampos(loadTable);
@@ -31,7 +33,11 @@ $(function () {
         let itemsCarrito = JSON.parse(localStorage.getItem('insumos'));
         let carritoInner = ``;
         itemsCarrito.forEach(element => {
-            carritoInner += `<p class="text-left border-bottom">${element.nombre} - ${element.cantidad}</p>`
+            carritoInner += `
+            <div class="d-flex justify-content-between border-bottom mb-2">
+                <p class="m-0">${element.nombre}</p>
+                <p class="m-0">${element.cantidad}</p>
+            </div>`
         });
         $('#carritoModalCheck').html(carritoInner);
     })
@@ -46,12 +52,29 @@ async function loadTable() {
     fichaAll.forEach(element => {
         let disabled = ``;
         let btnEye = ``;
+        let btnUpdateTipo = ``;
+        let btnUpdateCostoFinal = ``;
         (element.usado ? disabled = `disabled` : ``);
         if (permisosRolActual.some(item => item == 49)) {
             btnEye = ` 
             <button type="button" class="btn btn-outline-primary" data-abm="visualize" data-id='${element.id}' data-target="#modalGeneral" data-toggle="tooltip" title="Mas Detalles" data-placement="top">
                 <i class="fal fa-eye fa-lg fa-fw"></i>
             </button>`;
+        }
+        if (permisosRolActual.some(item => item == 51)) {
+            if (element.idEstadoOC != 3 && element.idEstadoOC != 4 && element.idEstadoOC != 5) {
+                btnUpdateTipo = ` 
+                <button type="button" class="btn btn-outline-primary" data-abm="update" data-id='${element.id}' data-target="#modalTipoUpdate" data-toggle="tooltip" title="Editar Tipo" data-placement="top">
+                    <i class="fal fa-pencil fa-lg fa-fw"></i>
+                </button>`;
+            } else {
+                if (element.costoFinal === '-' && element.idEstadoOC != 4) {
+                    btnUpdateCostoFinal = ` 
+                    <button type="button" class="btn btn-outline-primary" data-abm="updateCostoFinal" data-id='${element.id}' data-target="#modalCostoFinalUpdate" data-toggle="tooltip" title="Editar Costo Final" data-placement="top">
+                        <i class="fal fa-money-check-edit-alt fa-lg fa-fw"></i>
+                    </button>`;
+                }
+            }
         }
         textoInner += `
         <tr>
@@ -60,18 +83,31 @@ async function loadTable() {
             <td>${element.estadoNombre}</td>
             <td>${element.tipoNombre}</td>
             <td>$${element.costoEstimado}</td>
+            <td>${(element.costoFinal == '-' ? '-' : `$${element.costoFinal}`)}</td>
             <td>${element.nickUsuario}</td>
             <td>${element.cantidadInsumos}</td>
             <td>
                 <div class="btn-group btn-group-sm float-none" role="group">
                     ${btnEye}
+                    ${btnUpdateTipo}
+                    ${btnUpdateCostoFinal}
                 </div>
             </td>
         </tr>
         `;
     });
     $('#miTabla tbody').html(textoInner);
-    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6', [7], 'Ordenes de Compra Registrados');
+    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6,7', [8], 'Ordenes de Compra Registrados');
+}
+
+function modificarTipoModal(datos) {
+    $('#updateOCid').attr('value', datos['id']);
+    $('#tipoOCUpdate option[value=' + datos.idTipoOrdenDeCompra + ']').prop('selected', true);
+}
+
+function modificarCostoFinalModal(datos) {
+    $('#updateCostoFinalOCid').attr('value', datos['id']);
+    $('#costoFinal').attr('value', datos['costoEstimado']).val(datos['costoEstimado']);
 }
 
 async function loadTableInsumosUpdateOCNewOC() {
@@ -81,7 +117,9 @@ async function loadTableInsumosUpdateOCNewOC() {
     fichaAll.forEach(element => {
         let carritoItem = ``;
         carritoItem = ` 
-            <button type="button" class="btn btn-outline-primary btn-agregar" data-toggle="tooltip" title="Agregar Insumo" data-placement="top">Agregar</button>
+            <button type="button" class="btn btn-outline-primary btn-agregar" data-toggle="tooltip" title="Agregar Insumo" data-placement="top">Agregar
+                ${(Number(element.stockReal) < Number(element.stockMinimo) ? `<a class="btn btn-danger btn-badge-insumo-alert" data-toggle="tooltip" title="Stock por debajo del mínimo" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` : ``)}
+            </button>
             <button type="button" class="btn btn-minus-cart btn-md btn-primary border-right-0 border"><i class="fal fa-minus"></i></button>
             <input type="number" data-name="idInsumo" value="${element.id}" hidden>
             <input type="text" data-name="nombre" value="${element.nombre} ${element.descripcion}" hidden>
@@ -115,7 +153,7 @@ async function loadTableInsumosUpdateOCNewOC() {
 function visualizarOCParticular(datos) {
     $('#nav-ordendecompra-tab').click();
     loadDlOrdenDeCompra(datos);
-    (datos.idEstadoOC == 3 ? $('#nav-listaInsumosUpd-tab').hide() : (
+    (datos.idEstadoOC == 3 || datos.idEstadoOC == 4 ? $('#nav-listaInsumosUpd-tab').hide() : (
         $('#nav-listaInsumosUpd-tab').show(),
         loadTableInsumosOC('miTablaListaInsumosUpd', datos)
     ));
@@ -143,6 +181,10 @@ function loadDlOrdenDeCompra(datos) {
     <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Costo Est.</dt>
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">$${datos.costoEstimado}</dd>
+    </div>
+    <div class="row m-0">
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Costo Final.</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">$${datos.costoFinal}</dd>
     </div>
     <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Usuario</dt>
