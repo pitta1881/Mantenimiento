@@ -105,6 +105,18 @@ CREATE TABLE Prioridades(
     UNIQUE(nombre)
 );
 
+CREATE TABLE Eventos (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    idEstado INTEGER NOT NULL,
+    nombre varchar(30) NOT NULL,
+    descripcion TEXT NOT NULL,
+    fechaInicio DATE NOT NULL,
+    fechaFin DATE NOT NULL,
+    periodicidad INTEGER default 0,
+    FOREIGN KEY (idEstado) REFERENCES Estados (id),
+    UNIQUE(nombre)
+);
+
 CREATE TABLE Pedidos (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     descripcion TEXT NOT NULL,
@@ -114,10 +126,12 @@ CREATE TABLE Pedidos (
     idEstado INTEGER NOT NULL,
     idSector INTEGER NOT NULL,
     idPrioridad INTEGER NOT NULL,
+    idEvento INTEGER DEFAULT NULL,
     FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
     FOREIGN KEY (idEstado) REFERENCES Estados (id),
     FOREIGN KEY (idSector) REFERENCES Sectores (id),
-    FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
+    FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id),
+    FOREIGN KEY (idEvento) REFERENCES Eventos (id)
 );
 
 CREATE TABLE OrdenesDeTrabajo (
@@ -276,17 +290,6 @@ CREATE TABLE HistorialTarea (
     FOREIGN KEY (idEspecializacion) REFERENCES Especializaciones (id),
     FOREIGN KEY (idEstado) REFERENCES Estados (id),
     FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
-);
-
-CREATE TABLE eventos (
-    idEvento INTEGER AUTO_INCREMENT,
-    nombreEvento varchar(20) NOT NULL,
-    descripcion TEXT NOT NULL,
-    fechaInicio DATE NOT NULL,
-    fechaFin DATE NOT NULL,
-    periodicidad INTEGER default 0,
-    UNIQUE(nombreEvento),
-    PRIMARY KEY (idEvento)
 );
 
 CREATE  EVENT eliminaVencidos ON SCHEDULE EVERY 1 DAY STARTS '2021-03-31 23:59:00' ON COMPLETION NOT PRESERVE ENABLE 

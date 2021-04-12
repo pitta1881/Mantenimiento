@@ -4,4 +4,6 @@ namespace App\Models;
 
 use App\Core\Model;
 
-class InsumoModel extends Model{}
+class InsumoModel extends Model
+{
+}

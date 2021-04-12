@@ -30,6 +30,7 @@ define("tableMedidas", "medidas");
 define("tableOC", "ordenesdecompra");
 define("tableTiposOC", "tiposordenesdecompra");
 define("tableEstadosOC", "estadosordenesdecompra");
+define("tableEventos", "eventos");
 
 /**
  * Clase abstracta para manejar los modelos
@@ -238,6 +239,9 @@ abstract class Model
                     $tarea['agentes'] = $retornoAgentesPersona;
                     $tarea['insumos'] = [];
                 }
+                break;
+            case 'eventos':
+                $datoUno['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $datoUno['idEstado']))[0]['nombre'];
                 break;
             default:
                 # code...

@@ -71,6 +71,7 @@
 
 //rutas pedidos
     $router->get('pedidos', 'PedidoController@index');
+    $router->post('pedidos', 'PedidoController@index');
     $router->post('pedidos/create', 'PedidoController@create');
     $router->post('pedidos/update', 'PedidoController@update');
     $router->post('pedidos/finish', 'PedidoController@finish');
@@ -104,17 +105,20 @@
     $router->post('ordendecompra/fichaOne', 'OCController@fichaOne');
     $router->post('ordendecompra/fichaAll', 'OCController@fichaAll');
 
+//rutas Eventos
+    $router->get('eventos', 'EventoController@index');
+    $router->post('eventos/create', 'EventoController@create');
+    $router->post('eventos/update', 'EventoController@update');
+    $router->post('eventos/delete', 'EventoController@delete');
+    $router->post('eventos/fichaOne', 'EventoController@fichaOne');
+    $router->post('eventos/fichaAll', 'EventoController@fichaAll');
+
 //rutas OT
     $router->get('OT/verTodos', 'OTController@index');
     $router->get('ot/crear', 'OTController@verTareasSinAsignar');
     $router->post('ot/crear/seleccionados', 'OTController@crearOT');
     $router->get('fichaOT', 'OTController@ficha');
 
-//rutas Eventos
-    $router->get('eventos/administracionEventos', 'EventosController@vistaAdministracionEventos');
-    $router->post('eventos/administracionEventos/guardarEvento', 'EventosController@guardarEvento');
-    $router->post('eventos/administracionEventos/modificarEvento', 'EventosController@update');
-    $router->post('eventos/eliminar', 'EventosController@delete');
 
 // rutas informes
     $router->get('informe/administracion', 'informesController@vistaAdministracionInformes');

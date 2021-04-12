@@ -712,6 +712,56 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         .on('success.form.bv', function (e) {
             reloadTable(e, this);
         });
+    //orden de compra forms
+    $('#formEventoNew, #formEventoUpdate').bootstrapValidator({
+            excluded: [':disabled'],
+            fields: {
+                nombre: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese un Nombre'
+                        }
+                    }
+                },
+                descripcion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Descripcion'
+                        }
+                    }
+                },
+                fechaInicio: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Seleccione una Fecha'
+                        },
+                    }
+                },
+                periodicidad: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Periodicidad'
+                        },
+                        greaterThan: {
+                            value: 0,
+                            inclusive: false,
+                            message: 'Debe ser mayor a 0'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.field.bv', function (e, data) {
+            data.element.removeClass('is-invalid');
+            data.element.addClass('is-valid');
+        })
+        .on('error.field.bv', function (e, data) {
+            data.element.removeClass('is-valid');
+            data.element.addClass('is-invalid');
+        })
+        .on('success.form.bv', function (e) {
+            reloadTable(e, this);
+        });
 
     function reloadTable(e, form) {
         e.preventDefault();

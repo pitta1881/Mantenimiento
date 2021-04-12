@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}
+	Gestion de Eventos
+{% endblock %}
+{% block main %}
+	<div>
+		<h2 class="titulo-tabla">Eventos Registrados</h2>
+
+		<!-- BOTON NEW EVENTO -->
+		{% if "37" in datos.datosSesion.listaPermisos %}
+			<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew">
+				<i class="fal fa-plus"></i>
+				Crear Nuevo</button>
+		{% endif %}
+
+		<!-- TABLA EVENTOS -->
+		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+			<thead>
+				<tr>
+					<th>Nº Evento</th>
+					<th>Nombre</th>
+					<th>Descripcion</th>
+					<th>Fecha Inicio</th>
+					<th>Fecha Fin</th>
+					<th>Periodicidad</th>
+					<th>Estado</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+
+	<!-- MODALES NEW, UPDATE Y DELETE -->
+	{% if "37" in datos.datosSesion.listaPermisos %}
+		<!--NEW EVENTO-->
+		<div class="modal fade" id="modalNew">
+			<div class="modal-dialog modal-lg">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Alta de Evento</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="create" method="post" id="formEventoNew">
+							<div class="form-row">
+								<div class="form-group required col-lg-4">
+									<label for="nombreNew">Nombre:</label>
+									<input type="text" name="nombre" id="nombreNew" class="form-control" required>
+								</div>
+								<div class="form-group required col-lg-4">
+									<label for="periodicidadNew">Periodicidad(dias):</label>
+									<input type="number" name="periodicidad" id="periodicidadNew" class="form-control" min="0" required>
+								</div>
+								<div class="form-group required col-lg-4">
+									<label for="fechaInicioNew">Fecha Inicio:</label>
+									<input type="date" name="fechaInicio" id="fechaInicioNew" class="form-control" value="{{ datos.diaHoy }}" min="{{ datos.diaHoy }}" required>
+								</div>
+							</div>
+							<div class="form-group required">
+								<label for="descripcionNew">Descripcion:</label>
+								<textarea class="form-control" id="descripcionNew" name="descripcion" rows="4" required></textarea>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+	{% if "39" in datos.datosSesion.listaPermisos %}
+		<!--UPDATE EVENTO-->
+		<div class="modal fade" id="modalUpdate">
+			<div class="modal-dialog modal-lg">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Modificación de Evento</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="update" method="post" id="formEventoUpdate">
+							<input type="text" name="id" id="updateID" hidden>
+							<div class="form-row">
+								<div class="form-group required col-lg-4">
+									<label for="nombreUpd">Nombre del Evento:</label>
+									<input type="text" name="nombre" id="nombreUpd" class="form-control" required>
+								</div>
+								<div class="form-group required col-lg-4">
+									<label for="periodicidadUpd">Periodicidad(dias):</label>
+									<input type="number" name="periodicidad" id="periodicidadUpd" class="form-control" min="0" required>
+								</div>
+								<div class="form-group required col-lg-4">
+									<label for="fechaInicioUpd">Fecha Inicio:</label>
+									<input type="date" name="fechaInicio" id="fechaInicioUpd" class="form-control" required>
+								</div>
+							</div>
+							<div class="form-group required">
+								<label for="descripcionUpd">Descripcion:</label>
+								<textarea class="form-control" id="descripcionUpd" name="descripcion" rows="4" required></textarea>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+	{% if "38" in datos.datosSesion.listaPermisos %}
+		<div id="containerModalDelete"></div>
+	{% endif %}
+
+	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'partials/scriptsDatatables.html' %}
+	<script src="/public/js/jsBasicos/jsEventos.js" type="module"></script>
+{% endblock %}

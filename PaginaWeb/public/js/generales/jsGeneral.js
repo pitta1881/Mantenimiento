@@ -165,12 +165,6 @@ function loadListenerActionButtons(callbacks) {
             }
         }
     })
-    $('button[data-target="#modalNew"]').on('click', function () {
-        $('#modalNew form').bootstrapValidator('resetForm', true);
-        $(':input').each(function () {
-            $(this).removeClass('is-valid is-invalid');
-        });
-    })
 }
 
 function loadScriptValidarCampos(callBackAfterReloadTable, callBackAfterReloadTable2) {

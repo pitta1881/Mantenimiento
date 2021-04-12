@@ -27,6 +27,13 @@ class PedidoController extends Controller implements MyInterface
         $datos["sectores"] = $this->model->getFichaAll(tableSectores);
         $datos["usuarios"] = $this->model->getFichaAll(tableUsuarios);
         $datos["especializaciones"] = $this->model->getFichaAll(tableEspecializaciones);
+        if (isset($_POST['eventoID'])) {
+            $datos["evento"] = [
+                "id" => $_POST['eventoID'],
+                "nombre" => $_POST['eventoNombre'],
+                "descripcion" => $_POST['eventoDescripcion']
+            ];
+        }
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),
@@ -48,6 +55,11 @@ class PedidoController extends Controller implements MyInterface
             'idPrioridad' => $_POST['idPrioridad'],
             'descripcion' => $_POST['descripcion']
         ];
+        if (isset($_POST['idEvento'])) {
+            $pedido['idEvento'] = $_POST['idEvento'];
+            $this->model->update(tableEventos, array('idEstado' => 2), array('id' => $_POST['idEvento']), "Evento");
+        }
+        $observacion = 'Pedido Creado'. (isset($_POST['idEvento']) ? ' por Evento Nº'.$_POST['idEvento'] : '');
         $insert = $this->model->insert(table, $pedido, "Pedido");
         if ($insert['estado']) {
             $historialPedido = [
@@ -59,7 +71,7 @@ class PedidoController extends Controller implements MyInterface
                 'idSector' => $_POST['idSector'],
                 'idPrioridad' => $_POST['idPrioridad'],
                 'descripcion' => $_POST['descripcion'],
-                'observacion' => 'Pedido Creado'
+                'observacion' => $observacion
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
         }
@@ -98,6 +110,11 @@ class PedidoController extends Controller implements MyInterface
             'fechaFin' => date("Y-m-d")
         ];
         $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
+        //si era por evento, le seteo el estado a terminado
+        $idEvento = $this->hasEventoRelacionado($_POST['id']);
+        if ($idEvento) {
+            $this->model->update(tableEventos, array('idEstado' => 6), array('id' => $idEvento), "Evento");
+        }
         return json_encode($update);
     }
 
@@ -132,5 +149,11 @@ class PedidoController extends Controller implements MyInterface
     {
         $datos['unPedido'] = $this->model->getFichaOne(table, array('id'=>$idPedido));
         return end($datos['unPedido']['historial'])['id'] + 1;
+    }
+
+    private function hasEventoRelacionado($idPedido)
+    {
+        $datos['unPedido'] = $this->model->getFichaOne(table, array('id'=>$idPedido));
+        return (is_null($datos['unPedido']['idEvento']) ? false : $datos['unPedido']['idEvento']);
     }
 }

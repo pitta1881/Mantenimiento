@@ -55,8 +55,17 @@
 							</div>
 						{% else %}
 							<form action="create" method="post" id="formPedidoNew">
-								{% if datos.evento is not empty %}
-									<input type="text" name="idEvento" value="{{ datos.evento.idEvento }}" hidden>
+								{% if datos.evento %}
+									<div class="form-row">
+										<div class="form-group required col-lg-3">
+											<label class="control-label" for="idEventoNew">ID Evento:</label>
+											<input type="text" name="idEvento" class="form-control" id="idEventoNew" value="{{ datos.evento.id }}" readonly>
+										</div>
+										<div class="form-group required col-lg-9">
+											<label class="control-label" for="nombreEventoNew">Nombre Evento:</label>
+											<input type="text" class="form-control" id="nombreEventoNew" value="{{ datos.evento.nombre }}" readonly>
+										</div>
+									</div>
 								{% endif %}
 								<div class="form-row">
 									<div class="form-group required col-lg-4">
@@ -96,7 +105,7 @@
 								</div>
 								<div class="form-group required">
 									<label class="control-label" for="descripcion">Descripcion:</label>
-									<textarea class="form-control" rows="4" id="descripcion" name="descripcion" required></textarea>
+									<textarea class="form-control" rows="4" id="descripcion" name="descripcion" required>{{ datos.evento.descripcion }}</textarea>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
@@ -357,4 +366,11 @@
 	{{ parent() }}
 	{% include 'partials/scriptsDatatables.html' %}
 	<script src="/public/js/jsBasicos/jsPedido.js" type="module"></script>
+	{% if datos.evento %}
+		<script>
+			$(function () {
+$('#modalNew').modal('show');
+})
+		</script>
+	{% endif %}
 {% endblock %}

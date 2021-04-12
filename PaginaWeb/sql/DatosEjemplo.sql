@@ -196,7 +196,8 @@ VALUES ('Iniciado'),
     ('En Curso'),
     ('Pendiente'),
     ('Cancelado'),
-    ('Finalizado')
+    ('Finalizado'),
+    ('Cumplido')
 ;
 
 INSERT INTO `Prioridades` (`nombre`)

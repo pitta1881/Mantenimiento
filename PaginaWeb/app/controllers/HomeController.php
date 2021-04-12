@@ -3,13 +3,13 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\pages;
+use App\Models\HomeModel;
 
 class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->model = new Pages();
+        $this->model = new HomeModel();
         session_start();
     }
 
@@ -26,19 +26,6 @@ class HomeController extends Controller
                 array("url" => "/home",
                       "nombre" => "HOME"));
             $datos['datosSesion'] = $_SESSION;
-            /*$datos['cantidadPedidos'] = $this->model->getActivos('pedido','id');
-            $datos['cantTareasSinAsignar'] = $this->model->getActivos('tarea','idTarea');
-            $datos['agentesDisponibles'] = $this->model->getAgentesDisponibles('agentes');
-            $datos['otActivas'] = $this->model->getActivos('ordendetrabajo','idOT');
-
-            //tabla de eventos en home
-            $todosEventos = $this->model->getEventos();
-            $datos['todosEventos']=$todosEventos;
-
-            //tabla tareas sin asignar en home
-            $tareasSinAsignar = $this->model->getTareasSinAsignar();
-            $datos['tareasSinAsignar'] = $tareasSinAsignar;
-            */
             return view('HomeView', compact('datos'));
         }
     }
