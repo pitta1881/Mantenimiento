@@ -38,7 +38,7 @@ class AgenteController extends Controller implements MyInterface
             'idPersona' => $_POST['idPersona']
         ];
         $insert = $this->model->insert(table, $agente, "Agente");
-        if ($insert) { //si falla la insercion(seguramente x nick repetido)
+        if ($insert['estado']) { //si falla la insercion(seguramente x nick repetido)
             foreach ($_POST['idEspecializacion'] as $key => $value) {
                 $ExA = [
                     'idEspecializacion' => $value,

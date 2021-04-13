@@ -44,7 +44,7 @@ class OCController extends Controller implements MyInterface
         ];
         $insert = $this->model->insert(table, $ordenDeCompra, "Orden De Compra");
         //crear items IxOC
-        if ($insert) {
+        if ($insert['estado']) {
             $insumos = json_decode($_POST['insumos'], true);
             foreach ($insumos as $insumo) {
                 $IxOC = [

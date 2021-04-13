@@ -40,7 +40,7 @@ class UsuarioController extends Controller implements MyInterface
             'idPersona' => $_POST['idPersona'],
         ];
         $insert = $this->model->insert(table, $usuario, "Usuario");
-        if ($insert) { //si falla la insercion(seguramente x nick repetido)
+        if ($insert['estado']) { //si falla la insercion(seguramente x nick repetido)
             foreach ($_POST['idRol'] as $key => $value) {
                 $RxU = [
                     'idRol' => $value,
@@ -48,8 +48,8 @@ class UsuarioController extends Controller implements MyInterface
                 ];
                 $this->model->insert(tableRxU, $RxU, "RxU");
             }
-            return json_encode($insert);
         }
+        return json_encode($insert);
     }
 
     public function update()
