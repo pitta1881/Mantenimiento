@@ -1,8 +1,8 @@
 import {
     setUrl,
-    setUrlAjaxRxP,
     loadListenerActionButtons,
     loadScriptValidarCampos,
+    visualizarUpdateModalRxP,
     loadTooltips,
     modalDrag,
     loadScriptOrdenarPagTablas,
@@ -12,7 +12,6 @@ import {
 } from '/public/js/generales/jsGeneral.js';
 
 setUrl("/administracion/roles/");
-setUrlAjaxRxP("/administracion/roles/");
 
 loadTable();
 loadTooltips();
@@ -79,68 +78,4 @@ async function loadTable() {
 
 function deleteModal(datos) {
     document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Rol ${datos['nombre']}`);
-}
-
-function visualizarUpdateModalRxP(datos, modificar) {
-    var modificable = '';
-    var btnEnviar = '';
-    var disableChk = '';
-    var headerAlert = 'Detalle Rol';
-    if (modificar) {
-        btnEnviar = "<button type='submit' class='btn btn-success btn-modal float-left'>Enviar</button>";
-        headerAlert = "Modificar permisos del Rol"
-    } else {
-        modificable = " onclick='javascript: return false;'";
-        disableChk = 'disabled';
-    }
-    let permisosNombres = ['Usuarios', 'Permisos', 'Rol', 'Pedido', 'Tarea', 'OT', 'Sector', 'Agente', 'Especialidad', 'Evento', 'Insumo', 'Persona', 'OC'];
-    let permisosArrayLength = 52;
-    let td = function () {
-        let indexNombres = 0;
-        let retorno = `<tr>`;
-        for (let index = 0; index < permisosArrayLength; index++) {
-            let checkar = "";
-            (datos.misPermisos.includes((index + 1).toString()) ? checkar = "checked" : "");
-            if (index % 4 == 0) {
-                retorno += `</tr><tr><td>${permisosNombres[indexNombres++]}</td>`
-            }
-            retorno += `<td><input type='checkbox' name='permisos[]' value='${index + 1}' ${disableChk} readonly='readonly' ${checkar} ${modificable} ></td>`
-        }
-        retorno += `</tr>`
-        return retorno;
-    }
-    alertify.myAlert(headerAlert,
-        `<form action='/administracion/roles/update' method='post' id="formRolUpd">
-                <input type='text' name='id' value=${datos.id} + " hidden>
-                <table id='miTabla' class='table table-bordered table-sm table-striped table-hover text-nowrap'>
-                <thead class='headtable'>
-                <tr>
-                <th>Modulo</th>
-                <th>A</th>
-                <th>B</th>
-                <th>M</th>
-                <th>V</th>
-                </tr>
-                </thead>
-                <tbody>                
-                ${td()}                
-                </tbody>
-                </table>
-                <div style='display:inline-block'>
-                <small class='text-muted d-block'>A=ALTA</small>
-                <small class='text-muted d-block'>B=BAJA</small>
-                <small class='text-muted d-block'>M=MODIFICACION</small>
-                <small class='text-muted d-block'>V=VISUALIZACION</small>
-                </div>
-                ${btnEnviar}
-                </form>`);
-    $('#formRolUpd').bootstrapValidator().on('success.form.bv', function (e) {
-        e.preventDefault();
-        $.post($(this).attr('action'), $(this).serialize())
-            .done(function (data) {
-                verificarAlertas(data);
-                loadTable();
-                alertify.myAlert().close();
-            });;
-    });
 }

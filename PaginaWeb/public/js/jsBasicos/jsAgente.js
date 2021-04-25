@@ -1,6 +1,5 @@
 import {
     setUrl,
-    setUrlAjax,
     visualizarPersonaAgente as visualizarModal,
     loadListenerActionButtons,
     loadScriptValidarCampos,
@@ -13,7 +12,6 @@ import {
 } from '/public/js/generales/jsGeneral.js';
 
 setUrl("/administracion/agentes/");
-setUrlAjax("/administracion/personas/");
 
 loadTable();
 loadTooltips();
@@ -21,7 +19,10 @@ modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
     'delete': deleteModal,
-    'visualize-2': visualizarModal,
+    'visualize-2': {
+        'callback': visualizarModal,
+        'url': "/administracion/personas/"
+    },
     'loadTable': loadTable
 });
 loadScriptValidarCampos(loadTable);

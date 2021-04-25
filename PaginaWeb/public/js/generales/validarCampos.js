@@ -1,4 +1,4 @@
-export default async function validarForm(callbackGetFichaAll, callbackAfterReloadTable, callBackAfterReloadTable2) {
+export default async function validarForm(callbackGetFichaAll, callbackAfterReloadTable) {
     let datos = await callbackGetFichaAll();
     let arrayRepetidosOld = [];
     if (datos) {
@@ -789,7 +789,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
             $.post($(form).attr('action'), dataForm)
                 .done(function (data) {
                     verificarAlertas(data);
-                    (!($(form).attr('action')).includes("tarea") ? callbackAfterReloadTable() : callBackAfterReloadTable2(Number($('#idPedidoTarea').val())));
+                    callbackAfterReloadTable();
                     $('.modal').modal('hide');
                     if ($(form).attr('id') == 'formUsuarioNew' || $(form).attr('id') == 'formAgenteNew') {
                         $(`#${$(form).attr('id')} option[value=${dataForm.find(element => element.name == 'idPersona').value}]`).remove();

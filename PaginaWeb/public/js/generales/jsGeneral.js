@@ -1,8 +1,5 @@
 export {
     setUrl,
-    setUrlAjax,
-    setUrlAjax2,
-    setUrlAjaxRxP,
     visualizarUpdateModalRxP,
     visualizarPersonaAgente,
     getPermisosRolActual,
@@ -17,24 +14,9 @@ export {
 }
 
 let url;
-let urlAjax;
-let urlAjax2;
-let urlAjaxRxP;
 
 function setUrl(newUrl) {
     url = newUrl;
-}
-
-function setUrlAjax(newUrlAjax) {
-    urlAjax = newUrlAjax;
-}
-
-function setUrlAjax2(newUrlAjax2) {
-    urlAjax2 = newUrlAjax2;
-}
-
-function setUrlAjaxRxP(newUrlAjaxRxP) {
-    urlAjaxRxP = newUrlAjaxRxP;
 }
 
 //--FUNCIONES GENERALES--\\
@@ -97,7 +79,6 @@ function visualizarUpdateModalRxP(datos, modificar) {
         $.post($(this).attr('action'), $(this).serialize())
             .done(function (data) {
                 verificarAlertas(data);
-                loadTable();
                 alertify.myAlert().close();
             });;
     });
@@ -120,14 +101,7 @@ function loadListenerActionButtons(callbacks) {
         let urlToUse = url;
         let btn = (e.target.closest('button[type="button"], a'));
         if (btn && !btn.disabled) {
-            if (btn.dataset.abm == "visualize-2") {
-                urlToUse = urlAjax;
-            } else if (btn.dataset.abm == "visualize-3") {
-                urlToUse = urlAjax2;
-            } else if (btn.dataset.abm == "visualizarRolesPermisos") {
-                urlToUse = urlAjaxRxP;
-            }
-            let ficha = await getFichaOne(btn.dataset.id, urlToUse);
+            let ficha = await getFichaOne(btn.dataset.id, callbacks[btn.dataset.abm].url || urlToUse);
             if (ficha) {
                 $(btn.dataset.target + " form").bootstrapValidator('resetForm', true);
                 $(':input').each(function () {
@@ -149,14 +123,11 @@ function loadListenerActionButtons(callbacks) {
                             })
                         }
                         break;
-                    case "visualizarRolesPermisos":
-                        callbacks['visualizarRolesPermisos'](ficha, false);
-                        break;
                     case "updateRolesPermisos":
                         callbacks['updateRolesPermisos'](ficha, true);
                         break;
                     default:
-                        callbacks[btn.dataset.abm](ficha);
+                        (callbacks[btn.dataset.abm].callback ? callbacks[btn.dataset.abm].callback(ficha) : callbacks[btn.dataset.abm](ficha));
                         break;
                 }
                 $(btn.dataset.target).modal('show');
@@ -173,9 +144,9 @@ function loadListenerActionButtons(callbacks) {
     })
 }
 
-function loadScriptValidarCampos(callBackAfterReloadTable, callBackAfterReloadTable2) {
+function loadScriptValidarCampos(callBackAfterReloadTable) {
     import('/public/js/generales/validarCampos.js').then((Module) => {
-        Module.default(getFichaAll, callBackAfterReloadTable, callBackAfterReloadTable2);
+        Module.default(getFichaAll, callBackAfterReloadTable);
     });
 }
 

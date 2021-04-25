@@ -272,15 +272,17 @@
 								<table id="miTablaTarea" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
 									<thead>
 										<tr>
-											<th>Numero</th>
-											<th>F. Inicio</th>
-											<th>F. Fin</th>
+											<th>Nº</th>
+											<th>F.Inicio</th>
+											<th>F.Fin</th>
 											<th>Descripcion</th>
-											<th>Especializacion</th>
-											<th>Prioridad</th>
+											<th>Espec.</th>
+											<th>Prior.</th>
 											<th>Estado</th>
 											<th>Usuario</th>
 											<th>Agentes</th>
+											<th>Insumos</th>
+											<th>Acciones</th>
 										</tr>
 									</thead>
 									<tbody id="tbodyTareas"></tbody>
@@ -318,7 +320,7 @@
 							</div>
 							<div class="form-group required col-lg-3">
 								<label class="control-label" for="fechaInicioTarea">Fecha:</label>
-								<input type="date" name="fechaInicio" class="form-control" id="fechaInicioTarea" value="{{ datos.diaHoy }}" required readonly>
+								<input type="text" class="form-control" value="{{ "now"|date("d/m/Y") }}" required readonly>
 							</div>
 							<div class="form-group required col-lg-3">
 								<label class="control-label" for="idEstadoTarea">Estado:</label>

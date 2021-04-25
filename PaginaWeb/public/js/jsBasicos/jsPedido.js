@@ -1,21 +1,16 @@
 import {
     setUrl,
-    setUrlAjax,
-    setUrlAjax2,
     visualizarPersonaAgente,
     loadListenerActionButtons,
     loadScriptValidarCampos,
     loadTooltips,
     modalDrag,
     loadScriptOrdenarPagTablas,
-    getFichaOne,
     getFichaAll,
     getPermisosRolActual
 } from '/public/js/generales/jsGeneral.js';
 
 setUrl("/pedidos/");
-setUrlAjax("/administracion/sectores/");
-setUrlAjax2("/administracion/personas/");
 
 loadTablePedido();
 loadTooltips();
@@ -24,11 +19,17 @@ loadListenerActionButtons({
     'update': modificarModal,
     'delete': deleteModal,
     'visualize': visualizarPedidoGeneral,
-    'visualize-2': visualizarSectorPedido,
-    'visualize-3': visualizarPersonaAgente,
+    'visualize-2': {
+        'callback': visualizarSectorPedido,
+        'url': "/administracion/sectores/"
+    },
+    'visualize-3': {
+        'callback': visualizarPersonaAgente,
+        'url': "/administracion/personas/"
+    },
     'loadTable': loadTablePedido
 });
-loadScriptValidarCampos(loadTablePedido, loadTableTareas);
+loadScriptValidarCampos(loadTablePedido);
 
 //--PEDIDOS--\\
 async function loadTablePedido() {
@@ -90,7 +91,7 @@ async function loadTablePedido() {
     loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6,7,8', [9], 'Pedidos Registrados');
 }
 
-function visualizarPedidoGeneral(datos) {
+async function visualizarPedidoGeneral(datos) {
     loadDlPedido(datos);
     loadTableTareas(datos);
 }
@@ -140,10 +141,7 @@ function loadHistorial(datos) {
     loadScriptOrdenarPagTablas('miTablaHistorial', '0,1,2,3', [], 'Historial', true, 'nav-pedido');
 }
 
-async function loadTableTareas(datos) {
-    if (Number.isInteger(datos)) {
-        datos = await getFichaOne(datos, url);
-    }
+function loadTableTareas(datos) {
     $('#miTablaTarea').DataTable().clear().destroy();
     let textoInner = ``;
     if (datos.idEstado == 4 || datos.idEstado == 6) {
@@ -155,13 +153,17 @@ async function loadTableTareas(datos) {
         let myDateInicio = tarea['fechaInicio'].split(" ");
         myDateInicio[0] = myDateInicio[0].split("-").reverse().join("/");
         let myDateFin = ['-', ''];
+        let agentesHTML = '';
+        let insumosHTML = '';
         if (tarea['fechaFin'] != '-') {
             myDateFin = tarea['fechaFin'].split(" ");
             myDateFin[0] = myDateFin[0].split("-").reverse().join("/");
         }
-        let agentesHTML = '';
         tarea.agentes.forEach(agente => {
             agentesHTML += `<a href="#" data-abm="visualize-3" data-id=${agente.id}>${agente.nombre} ${agente.apellido}</a><br>`
+        })
+        tarea.agentes.forEach(agente => {
+            insumosHTML += `<a href="#" data-abm="visualize-3" data-id=${agente.id}>${agente.nombre} ${agente.apellido}</a><br>`
         })
         textoInner += `
         <tr>
@@ -174,6 +176,8 @@ async function loadTableTareas(datos) {
             <td>${tarea.estadoNombre}</td>
             <td>${tarea.nickUsuario}</td>
             <td>${agentesHTML}</td>
+            <td>${insumosHTML}</td>
+            <td></td>
             
         </tr>
         `
@@ -195,7 +199,6 @@ function visualizarSectorPedido(datos) {
         <br> <strong>Telefono:</strong> ${datos.telefono}
         `
     );
-
 }
 
 function modificarModal(datos) {
