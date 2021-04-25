@@ -89,6 +89,7 @@
 									<div class="form-group required col-lg-6">
 										<label class="control-label" for="idSector">Sector:</label>
 										<select name="idSector" id="idSector" class="form-control custom-select">
+											<option value="" selected disabled>Seleccione una opcion</option>
 											{% for sector in datos.sectores %}
 												<option value="{{ sector.id }}">{{ sector.nombre }}</option>
 											{% endfor %}
@@ -97,6 +98,7 @@
 									<div class="form-group required col-lg-6">
 										<label class="control-label" for="idPrioridad">Prioridad:</label>
 										<select name="idPrioridad" id="idPrioridad" class="form-control custom-select">
+											<option value="" selected disabled>Seleccione una opcion</option>
 											{% for prioridad in datos.prioridades %}
 												<option value="{{ prioridad.id }}">{{ prioridad.nombre }}</option>
 											{% endfor %}

@@ -58,6 +58,15 @@ class EventoController extends Controller implements MyInterface
         return json_encode($update);
     }
 
+    public function updateEstado()
+    {
+        $evento = [
+            'idEstado' => 6
+        ];
+        $update = $this->model->update(table, $evento, array('id' => $_POST['id']), 'Evento');
+        return json_encode($update);
+    }
+
     public function delete()
     {
         $delete = $this->model->delete(table, array('id' => $_POST['id']), 'Evento');

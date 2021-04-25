@@ -55,6 +55,7 @@
 								<div class="form-group required col-lg-6">
 									<label class="control-label" for="idMedidaNew">Medida:</label>
 									<select name="idMedida" id="idMedidaNew" class="form-control custom-select">
+										<option value="" selected disabled>Seleccione una opcion</option>
 										{% for medida in datos.todasMedidas %}
 											<option value="{{ medida.id }}">{{ medida.nombre }}
 											</option>

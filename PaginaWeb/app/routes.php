@@ -109,6 +109,7 @@
     $router->get('eventos', 'EventoController@index');
     $router->post('eventos/create', 'EventoController@create');
     $router->post('eventos/update', 'EventoController@update');
+    $router->post('eventos/updateEstado', 'EventoController@updateEstado');
     $router->post('eventos/delete', 'EventoController@delete');
     $router->post('eventos/fichaOne', 'EventoController@fichaOne');
     $router->post('eventos/fichaAll', 'EventoController@fichaAll');

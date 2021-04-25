@@ -126,12 +126,10 @@ CREATE TABLE Pedidos (
     idEstado INTEGER NOT NULL,
     idSector INTEGER NOT NULL,
     idPrioridad INTEGER NOT NULL,
-    idEvento INTEGER DEFAULT NULL,
     FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
     FOREIGN KEY (idEstado) REFERENCES Estados (id),
     FOREIGN KEY (idSector) REFERENCES Sectores (id),
-    FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id),
-    FOREIGN KEY (idEvento) REFERENCES Eventos (id)
+    FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
 );
 
 CREATE TABLE OrdenesDeTrabajo (
@@ -292,11 +290,7 @@ CREATE TABLE HistorialTarea (
     FOREIGN KEY (idPrioridad) REFERENCES Prioridades (id)
 );
 
-CREATE  EVENT eliminaVencidos ON SCHEDULE EVERY 1 DAY STARTS '2021-03-31 23:59:00' ON COMPLETION NOT PRESERVE ENABLE 
-DO DELETE FROM mantenimiento.eventos 
-where eventos.periodicidad=0 AND eventos.fechaFin = (SELECT curdate());
-
 CREATE  EVENT modificaPeriodicos ON SCHEDULE EVERY 1 DAY STARTS '2021-03-31 23:59:00' ON COMPLETION NOT PRESERVE ENABLE 
-DO UPDATE mantenimiento.eventos set eventos.fechaFin = (select DATE_ADD(eventos.fechaFin, 
+DO UPDATE mantenimiento.eventos set eventos.idEstado = 3, eventos.fechaFin = (select DATE_ADD(eventos.fechaFin, 
 INTERVAL eventos.periodicidad DAY)),eventos.fechaInicio = (select DATE_ADD(eventos.fechaInicio, INTERVAL eventos.periodicidad DAY)) 
-where eventos.periodicidad<>0 and eventos.fechaFin =(SELECT curdate());
+where eventos.fechaFin =(SELECT curdate());

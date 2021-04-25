@@ -7,5 +7,3 @@
 - !! acciones de tareas !!
 
 -insumos de tareas
-
-- arreglar update con where AND !!

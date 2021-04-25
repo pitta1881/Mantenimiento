@@ -119,9 +119,40 @@
 		</div>
 	{% endif %}
 
+	{% if "39" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalUpdateEstado">
+			<div class="modal-dialog">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Cambiar Estado</h3>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<p class="mb-3">¿Marcar como Pedido ya Realizado?</p>
+						<form action="updateEstado" method="post" id="formEventoUpdateEstado">
+							<input
+							name="id" id="updateEstadoID" hidden>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success btn-modal">Actualizar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
 	{% if "38" in datos.datosSesion.listaPermisos %}
 		<div id="containerModalDelete"></div>
 	{% endif %}
+
 
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}

@@ -17,6 +17,7 @@ loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
+    'updateEstado': modificarEstadoModal,
     'delete': deleteModal,
     'loadTable': loadTable
 });
@@ -31,6 +32,7 @@ async function loadTable() {
     fichaAll.forEach(element => {
         let disabled = ``;
         let btnCrearPedido = ``;
+        let btnSetFinalizado = ``;
         let btnPencil = ``;
         let btnTrash = ``;
         (element.usado ? disabled = `disabled` : ``);
@@ -44,6 +46,11 @@ async function loadTable() {
                     <input type="text" name="eventoDescripcion" value="${element.descripcion}" hidden>
                     <i class="fal fa-file-plus fa-lg fa-fw"></i>
                 </form>
+            </button>
+            `;
+                btnSetFinalizado = ` 
+            <button type="button" class="btn btn-outline-primary" data-id="${element.id}" data-abm="updateEstado" data-target="#modalUpdateEstado" data-toggle="tooltip" title="Marcar como Hecho" data-placement="top">
+                <i class="fal fa-check-circle fa-lg fa-fw"></i>
             </button>
             `;
             }
@@ -68,10 +75,11 @@ async function loadTable() {
             <td>${element.descripcion}</td>
             <td>${element.fechaInicio.split(" ")[0]}</td>
             <td>${element.fechaFin.split(" ")[0]}</td>
-            <td>${element.periodicidad}</td>
-            <td>${element.estadoNombre}</td>
+            <td>${element.periodicidad} días</td>
+            <td>${(element.idEstado == 6 ? 'Pedido Creado' : element.estadoNombre)}</td>
             <td>
                 <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnSetFinalizado}    
                     ${btnCrearPedido}
                     ${btnPencil}
                     ${btnTrash}
@@ -100,4 +108,8 @@ function modificarModal(datos) {
 
 function deleteModal(datos) {
     document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Evento ${datos['nombre']}`);
+}
+
+function modificarEstadoModal(datos) {
+    $('#updateEstadoID').text(datos['id']).val(datos['id']);
 }

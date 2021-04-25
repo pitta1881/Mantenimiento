@@ -712,8 +712,9 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         .on('success.form.bv', function (e) {
             reloadTable(e, this);
         });
-    //orden de compra forms
-    $('#formEventoNew, #formEventoUpdate').bootstrapValidator({
+
+    //eventos forms
+    $('#formEventoNew, #formEventoUpdate, #formEventoUpdateEstado').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
                 nombre: {
@@ -790,6 +791,9 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     verificarAlertas(data);
                     (!($(form).attr('action')).includes("tarea") ? callbackAfterReloadTable() : callBackAfterReloadTable2(Number($('#idPedidoTarea').val())));
                     $('.modal').modal('hide');
+                    if ($(form).attr('id') == 'formUsuarioNew' || $(form).attr('id') == 'formAgenteNew') {
+                        $(`#${$(form).attr('id')} option[value=${dataForm.find(element => element.name == 'idPersona').value}]`).remove();
+                    }
                     localStorage.clear();
                 });
         }
