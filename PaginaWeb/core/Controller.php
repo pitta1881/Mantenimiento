@@ -10,7 +10,9 @@ abstract class Controller
 
     public function fichaOne()
     {
-        $ficha['id'] = $_POST['id'];
+        foreach ($_POST as $key => $value) {
+            $ficha[$key] = $value;
+        }
         $miFicha = $this->model->getFichaOne(table, $ficha);    //en cada clase q implementa ésta, defino que es 'table'
         if ($miFicha) {
             http_response_code(200);

@@ -10,7 +10,8 @@ export {
     modalDrag,
     getFichaOne,
     getFichaAll,
-    modalGenDelete
+    modalGenDelete,
+    reloadListenerActionButtonsTableGeneral
 }
 
 let url;
@@ -96,52 +97,63 @@ function visualizarPersonaAgente(datos) {
     );
 }
 
-function loadListenerActionButtons(callbacks) {
-    $('#miTabla').on('click', async function (e) {
-        let urlToUse = url;
-        let btn = (e.target.closest('button[type="button"], a'));
-        if (btn && !btn.disabled) {
-            let ficha = await getFichaOne(btn.dataset.id, callbacks[btn.dataset.abm].url || urlToUse);
-            if (ficha) {
-                $(btn.dataset.target + " form").bootstrapValidator('resetForm', true);
-                $(':input').each(function () {
-                    $(this).removeClass('is-valid is-invalid');
-                });
-                switch (btn.dataset.abm) {
-                    case "delete":
-                        callbacks['delete'](ficha);
-                        if (urlToUse != '/pedidos/') {
-                            $('#modalDelete form').on('submit', function (e) {
-                                e.preventDefault();
-                                let that = this;
-                                $.post($(this).attr('action'), $(this).serialize())
-                                    .done(function (data) {
-                                        verificarAlertas(data);
-                                        callbacks['loadTable']();
-                                        $(that).closest('.modal').modal('hide');
-                                    });;
-                            })
-                        }
-                        break;
-                    case "updateRolesPermisos":
-                        callbacks['updateRolesPermisos'](ficha, true);
-                        break;
-                    default:
-                        (callbacks[btn.dataset.abm].callback ? callbacks[btn.dataset.abm].callback(ficha) : callbacks[btn.dataset.abm](ficha));
-                        break;
-                }
-                $(btn.dataset.target).modal('show');
-            } else {
-                alertify.alert("<span class='fal fa-times-circle  fa-lg' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error</span>", "No se puede encontrar el item seleccionado");
+const loadEventGenerico = async (e) => {
+    let urlToUse = url;
+    let btn = (e.target.closest('button[type="button"], a'));
+    if (btn && !btn.disabled) {
+        let ficha = await getFichaOne({
+            'id': btn.dataset.id
+        }, callbacks[btn.dataset.abm].url || urlToUse);
+        if (ficha) {
+            $(btn.dataset.target + " form").bootstrapValidator('resetForm', true);
+            $(':input').each(function () {
+                $(this).removeClass('is-valid is-invalid');
+            });
+            switch (btn.dataset.abm) {
+                case "delete":
+                    callbacks['delete'](ficha);
+                    if (urlToUse != '/pedidos/') {
+                        $('#modalDelete form').on('submit', function (e) {
+                            e.preventDefault();
+                            let that = this;
+                            $.post($(this).attr('action'), $(this).serialize())
+                                .done(function (data) {
+                                    verificarAlertas(data);
+                                    callbacks['loadTable']();
+                                    $(that).closest('.modal').modal('hide');
+                                });;
+                        })
+                    }
+                    break;
+                case "updateRolesPermisos":
+                    callbacks['updateRolesPermisos'](ficha, true);
+                    break;
+                default:
+                    (callbacks[btn.dataset.abm].callback ? callbacks[btn.dataset.abm].callback(ficha) : callbacks[btn.dataset.abm](ficha));
+                    break;
             }
+            $(btn.dataset.target).modal('show');
+        } else {
+            alertify.alert("<span class='fal fa-times-circle  fa-lg' style='vertical-align:middle;color:#e10000'></span><span style='font-size:15px; color:black'> Error</span>", "No se puede encontrar el item seleccionado");
         }
-    })
-    $('button[data-target="#modalNew"]').on('click', function () {
+    }
+}
+
+function loadListenerActionButtons(callbacks) {
+    window.callbacks = callbacks;
+    document.getElementById('miTabla').addEventListener('click', loadEventGenerico);
+    $('button[data-target="#modalNew"], button[data-target="#modalNewTarea"]').on('click', function () {
         $('#modalNew form').bootstrapValidator('resetForm', true);
+        $('#modalNewTarea form').bootstrapValidator('resetForm', true);
         $(':input').each(function () {
             $(this).removeClass('is-valid is-invalid');
         });
     })
+}
+
+function reloadListenerActionButtonsTableGeneral() {
+    document.getElementById('miTablaTarea').removeEventListener('click', loadEventGenerico);
+    document.getElementById('miTablaTarea').addEventListener('click', loadEventGenerico)
 }
 
 function loadScriptValidarCampos(callBackAfterReloadTable) {
@@ -174,9 +186,11 @@ function modalDrag() {
     });
 }
 
-function getFichaOne(id, urlConsulta) {
+function getFichaOne(whereJson, urlConsulta) {
     let formdata = new FormData();
-    formdata.append("id", id);
+    for (let index = 0; index < Object.keys(whereJson).length; index++) {
+        formdata.append(Object.keys(whereJson)[index], Object.values(whereJson)[index]);
+    }
     let requestOptions = {
         method: 'POST',
         body: formdata,

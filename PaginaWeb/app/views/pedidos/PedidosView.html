@@ -222,7 +222,7 @@
 	<!--MODAL GENERAL PEDIDOS-->
 	{% if "16" in datos.datosSesion.listaPermisos %}
 		<div class="modal fade" id="modalGeneral">
-			<div class="modal-dialog modal-xl">
+			<div class="modal-dialog modal-xxl">
 				<div
 					class="modal-content">
 					<!-- Modal Header -->
@@ -269,7 +269,7 @@
 										<i class="fal fa-plus"></i>
 										Crear Tarea</button>
 								{% endif %}
-								<table id="miTablaTarea" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+								<table id="miTablaTarea" class="table table-bordered table-sm table-responsive-xl table-striped table-hover">
 									<thead>
 										<tr>
 											<th>Nº</th>
@@ -316,7 +316,7 @@
 							<div class="form-group required col-lg-3">
 								<label class="control-label" for="idUsuarioTarea">Usuario Creador:</label>
 								<input name="idUsuario" value="{{ datos.datosSesion.idUser }}" required readonly hidden>
-								<input type="text" name="idUsuario" class="form-control" id="idUsuarioTarea" value="{{ datos.datosSesion.nickUser }}" readonly>
+								<input type="text" class="form-control" id="idUsuarioTarea" value="{{ datos.datosSesion.nickUser }}" readonly>
 							</div>
 							<div class="form-group required col-lg-3">
 								<label class="control-label" for="fechaInicioTarea">Fecha:</label>
@@ -334,6 +334,7 @@
 							<div class="form-group required col-lg-6">
 								<label class="control-label" for="idEspecializacionTarea">Especializacion:</label>
 								<select name="idEspecializacion" id="idEspecializacionTarea" class="form-control custom-select">
+									<option value="" selected disabled>Seleccione una opcion</option>
 									{% for especializacion in datos.especializaciones %}
 										<option value="{{ especializacion.id }}">{{ especializacion.nombre }}
 										</option>
@@ -343,6 +344,7 @@
 							<div class="form-group required col-lg-6">
 								<label class="control-label" for="idPrioridadTarea">Prioridad:</label>
 								<select name="idPrioridad" id="idPrioridadTarea" class="form-control custom-select">
+									<option value="" selected disabled>Seleccione una opcion</option>
 									{% for prioridad in datos.prioridades %}
 										<option value="{{ prioridad.id }}">{{ prioridad.nombre }}</option>
 									{% endfor %}
@@ -363,6 +365,89 @@
 			</div>
 		</div>
 	</div>
+
+	<!--UPDATE TAREA PARA UN PEDIDO MODAL-->
+	<div class="modal fade" id="modalUpdateTarea">
+		<div class="modal-dialog modal-lg">
+			<div
+				class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h3 class="modal-title m-0">Modificar Tarea</h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="/tarea/update" method="post" id="formTareaUpdate">
+						<div id="hidden-inputs"></div>
+						<div class="form-row">
+							<div class="form-group required col-lg-6">
+								<label class="control-label" for="idEspecializacionTareaUpd">Especializacion:</label>
+								<select name="idEspecializacion" id="idEspecializacionTareaUpd" class="form-control custom-select">
+									{% for especializacion in datos.especializaciones %}
+										<option value="{{ especializacion.id }}">{{ especializacion.nombre }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="form-group required col-lg-6">
+								<label class="control-label" for="idPrioridadTareaUpd">Prioridad:</label>
+								<select name="idPrioridad" id="idPrioridadTareaUpd" class="form-control custom-select">
+									{% for prioridad in datos.prioridades %}
+										<option value="{{ prioridad.id }}">{{ prioridad.nombre }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="control-label" for="descripcionTareaUpd">Descripcion:</label>
+							<textarea class="form-control" rows="4" id="descripcionTareaUpd" name="descripcion" required></textarea>
+						</div>
+						<!-- Modal Footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+							<button type="submit" class="btn btn-success">Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--ELIMINAR TAREA SI SOLO ESTÁ EN ESTADO INICIADO-->
+	{% if "18" in datos.datosSesion.listaPermisos %}
+		<div class="modal fade" id="modalDeleteTarea">
+			<div class="modal-dialog" role="document">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Cancelar Tarea</h3>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="/tarea/cancel" method="post" id="formTareaDel">
+							<input type="text" name="idTarea" id="deleteIDTarea" hidden>
+							<input type="text" name="idPedido" id="deleteIDPedido" hidden>
+							<div class="form-group required">
+								<label class="control-label" for="observacionCancelTarea">Ingrese el motivo de la cancelación:</label>
+								<textarea class="form-control" rows="4" name="observacion" id="observacionCancelTarea" required></textarea>
+							</div>
+							<small>Al cancelar, se desasignarán los agentes y los insumos serán devueltos.</small>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}
 

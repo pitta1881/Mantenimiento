@@ -7,7 +7,8 @@ import {
     modalDrag,
     loadScriptOrdenarPagTablas,
     getFichaAll,
-    getPermisosRolActual
+    getPermisosRolActual,
+    reloadListenerActionButtonsTableGeneral
 } from '/public/js/generales/jsGeneral.js';
 
 setUrl("/pedidos/");
@@ -17,7 +18,15 @@ loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
+    'updateTarea': {
+        'callback': modificarTareaModal,
+        'url': "/tarea/"
+    },
     'delete': deleteModal,
+    'deleteTarea': {
+        'callback': deleteModalTarea,
+        'url': "/tarea/"
+    },
     'visualize': visualizarPedidoGeneral,
     'visualize-2': {
         'callback': visualizarSectorPedido,
@@ -26,6 +35,10 @@ loadListenerActionButtons({
     'visualize-3': {
         'callback': visualizarPersonaAgente,
         'url': "/administracion/personas/"
+    },
+    'visualize-4': {
+        'callback': visualizarInsumo,
+        'url': "/insumos/"
     },
     'loadTable': loadTablePedido
 });
@@ -92,6 +105,7 @@ async function loadTablePedido() {
 }
 
 async function visualizarPedidoGeneral(datos) {
+    reloadListenerActionButtonsTableGeneral();
     loadDlPedido(datos);
     loadTableTareas(datos);
 }
@@ -141,8 +155,9 @@ function loadHistorial(datos) {
     loadScriptOrdenarPagTablas('miTablaHistorial', '0,1,2,3', [], 'Historial', true, 'nav-pedido');
 }
 
-function loadTableTareas(datos) {
+async function loadTableTareas(datos) {
     $('#miTablaTarea').DataTable().clear().destroy();
+    let permisosRolActual = await getPermisosRolActual();
     let textoInner = ``;
     if (datos.idEstado == 4 || datos.idEstado == 6) {
         $('button[data-target="#modalNewTarea"]').hide();
@@ -155,16 +170,31 @@ function loadTableTareas(datos) {
         let myDateFin = ['-', ''];
         let agentesHTML = '';
         let insumosHTML = '';
+        let btnPencil = ``;
+        let btnTrash = ``;
         if (tarea['fechaFin'] != '-') {
             myDateFin = tarea['fechaFin'].split(" ");
             myDateFin[0] = myDateFin[0].split("-").reverse().join("/");
         }
         tarea.agentes.forEach(agente => {
-            agentesHTML += `<a href="#" data-abm="visualize-3" data-id=${agente.id}>${agente.nombre} ${agente.apellido}</a><br>`
+            agentesHTML += `<a href="#" data-abm="visualize-3" data-id=${agente.idPersona}>${agente.nombre.slice(0,1)}. ${agente.apellido}</a><br>`
         })
-        tarea.agentes.forEach(agente => {
-            insumosHTML += `<a href="#" data-abm="visualize-3" data-id=${agente.id}>${agente.nombre} ${agente.apellido}</a><br>`
+        tarea.insumos.forEach(insumo => {
+            insumosHTML += `<a href="#" data-abm="visualize-4" data-id=${insumo.idInsumo}>${insumo.nombre}</a><br>`
         })
+        if (tarea.idEstado == 1 && permisosRolActual.some(item => item == 19)) {
+            btnPencil = ` 
+        <button type="button" class="btn btn-outline-primary" data-id='${tarea.id}' data-abm="updateTarea" data-target="#modalUpdateTarea" title="Editar Tarea" data-toggle="tooltip" data-placement="top">
+            <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
+        </button>`;
+        }
+        if (tarea.idEstado == 1 && permisosRolActual.some(item => item == 18)) {
+            btnTrash = ` 
+        <button type="button" class="btn btn-outline-primary" data-id='${tarea.id}' data-abm="deleteTarea" data-target="#modalDeleteTarea" title="Cancelar Tarea" data-toggle="tooltip" data-placement="top">
+            <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+        </button>
+        `;
+        }
         textoInner += `
         <tr>
             <th scope="row">${tarea.id}</th>
@@ -175,10 +205,14 @@ function loadTableTareas(datos) {
             <td>${tarea.prioridadNombre}</td>
             <td>${tarea.estadoNombre}</td>
             <td>${tarea.nickUsuario}</td>
-            <td>${agentesHTML}</td>
-            <td>${insumosHTML}</td>
-            <td></td>
-            
+            <td>${agentesHTML ? agentesHTML : '-'}</td>
+            <td>${insumosHTML ? insumosHTML : '-'}</td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnPencil}
+                    ${btnTrash}
+                </div>
+            </td>            
         </tr>
         `
     });
@@ -201,6 +235,19 @@ function visualizarSectorPedido(datos) {
     );
 }
 
+function visualizarInsumo(datos) {
+    alertify.alert("Detalles Insumo",
+        `
+        <strong>Nombre:</strong> ${datos.nombre}
+        <br> <strong>Descripcion:</strong> ${datos.descripcion}
+        <br> <strong>Medida:</strong> ${datos.medidaNombre}
+        <br> <strong>Stock Actual:</strong> ${datos.stockReal}
+        <br> <strong>Stock Comprometido:</strong> ${datos.stockComprometido}
+        <br> <strong>Stock Futuro:</strong> ${datos.stockFuturo}
+        `
+    );
+}
+
 function modificarModal(datos) {
     var myDate = datos['fechaInicio'].split(" ");
     myDate = myDate[0].split("/").reverse().join("-");
@@ -215,7 +262,24 @@ function modificarModal(datos) {
     $('#descripcionUpdate').val(datos['descripcion']);
 }
 
+function modificarTareaModal(datos) {
+    $('#formTareaUpdate #hidden-inputs').html(`
+            <input type="text" name="idTarea" value="${datos['id']}" required hidden>
+            <input type="text" name="idPedido" value="${datos['idPedido']}" required hidden>
+            <input type="text" name="idEstado" value="${datos['idEstado']}" required hidden>
+            <input type="text" name="idEspecializacion" value="${datos['idEspecializacion']}" required hidden>
+    `)
+    $("#idEspecializacionTareaUpd option[value=" + datos['idEspecializacion'] + "]").prop('selected', true)
+    $("#idPrioridadTareaUpd option[value=" + datos['idPrioridad'] + "]").prop('selected', true)
+    $('#descripcionTareaUpd').val(datos['descripcion']);
+}
+
 function deleteModal(datos) {
     $('#h3TitleModalDelete').text("Cancelar Pedido " + datos['id']);
     $('#deleteID').attr('value', datos['id']);
+}
+
+function deleteModalTarea(datos) {
+    $('#deleteIDTarea').attr('value', datos['id']);
+    $('#deleteIDPedido').attr('value', datos['idPedido']);
 }

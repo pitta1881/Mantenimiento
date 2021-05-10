@@ -187,12 +187,13 @@ CREATE TABLE Insumos (
     FOREIGN KEY (idMedida) REFERENCES Medidas (id)
 );
 
-CREATE TABLE Insumos_x_Tarea (
+CREATE TABLE Insumos_x_Tareas (
     id INTEGER NOT NULL,
     idInsumo INTEGER NOT NULL,
     idPedido INTEGER NOT NULL,
     idTarea INTEGER NOT NULL,
     fecha DATETIME NOT NULL,
+    cantidad INTEGER NOT NULL,
     PRIMARY KEY (id, idInsumo, idPedido, idTarea),
     FOREIGN KEY (idInsumo) REFERENCES Insumos (id),
     FOREIGN KEY (idPedido, idTarea) REFERENCES Tareas (idPedido, id)
@@ -277,9 +278,9 @@ CREATE TABLE HistorialTarea (
     idPedido INTEGER NOT NULL,
     fecha DATETIME NOT NULL,
     idUsuario INTEGER NOT NULL,
-    idPrioridad INTEGER NOT NULL,
     idEstado INTEGER NOT NULL,
-    idEspecializacion INTEGER NOT NULL,
+    idPrioridad INTEGER,
+    idEspecializacion INTEGER,
     descripcion TEXT,
     observacion TEXT NOT NULL,
     PRIMARY KEY (id, idPedido, idTarea),

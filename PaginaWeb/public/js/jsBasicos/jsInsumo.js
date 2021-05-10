@@ -109,7 +109,7 @@ function loadHistorial(datos) {
             <td>${(element.idOC != null ? `
             <a href="#" data-abm="visualize-2" data-id='${element.idOC}'>Orden de Compra Nº ${element.idOC}</a>
             `:`
-            <a href="#" data-abm="visualize-3" data-id-pedido='${element.idPedido} data-id-tarea='${element.idTarea}'>Pedido Nº ${element.idPedido} - Tarea Nº ${element.idTarea}</a>
+            <a href="#" data-abm="visualize-3" data-id-pedido=${element.idPedido} data-id-tarea=${element.idTarea}>Pedido Nº ${element.idPedido} - Tarea Nº ${element.idTarea}</a>
             `)}</td>
         </tr>
             `
@@ -126,7 +126,9 @@ function loadHistorial(datos) {
 }
 
 async function visualizarOrdenDeCompraRelacionada(idOC) {
-    let datos = await getFichaOne(idOC, "/ordendecompra/");
+    let datos = await getFichaOne({
+        "id": idOC
+    }, "/ordendecompra/");
     alertify.alert(
         "Detalles Orden de Compra",
         `<strong>ID:</strong> ${datos.id}
@@ -140,15 +142,18 @@ async function visualizarOrdenDeCompraRelacionada(idOC) {
     );
 }
 
-async function visualizarPedidoTareaRelacionada(idOC) {
-    let datos = await getFichaOne(idOC, "/tarea/");
+async function visualizarPedidoTareaRelacionada(idPedido, idTarea) {
+    let datos = await getFichaOne({
+        "id": idTarea,
+        "idPedido": idPedido
+    }, "/tarea/");
     alertify.alert(
         "Detalles Tarea",
         `<strong>ID Pedido:</strong> ${datos.idPedido}
-        <strong>ID Tarea:</strong> ${datos.id}
+        <br><strong>ID Tarea:</strong> ${datos.id}
         <br><strong>Fecha Inicio:</strong> ${datos.fechaInicio}
         <br><strong>Fecha Fin:</strong> ${datos.fechaFin}
-        <br><strong>Descripcion:</strong> $${datos.descripcion}
+        <br><strong>Descripcion:</strong> ${datos.descripcion}
         <br><strong>Especializacion:</strong> ${datos.especializacionNombre}
         <br><strong>Estado:</strong> ${datos.estadoNombre}
         <br><strong>Prioridad:</strong> ${datos.prioridadNombre}

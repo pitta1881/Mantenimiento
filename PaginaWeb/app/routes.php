@@ -82,9 +82,7 @@
 //rutas tareas
     $router->post('tarea/create', 'TareaController@create');
     $router->post('tarea/update', 'TareaController@update');
-    $router->post('tarea/updateTareaAgente', 'TareaController@updateTareaAgente');
-    $router->post('tarea/updateEstado', 'TareaController@updateEstado');
-    $router->post('tarea/updateTareaInsumo', 'InsumoController@updateTareaInsumo');
+    $router->post('tarea/cancel', 'TareaController@cancel');
     $router->post('tarea/fichaOne', 'TareaController@fichaOne');
 
 //rutas insumos

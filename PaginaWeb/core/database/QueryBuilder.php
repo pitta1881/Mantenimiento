@@ -161,19 +161,16 @@ class QueryBuilder
         }
     }
 
-    public function selectAllWhere($table, $parameters)
+    public function selectAllWhere($table, $where)
     {
-        $columnaCompara = array_key_first($parameters);
-        $datoColumnaCompara = $parameters[$columnaCompara];
-        $sql = sprintf(
-            "select * from %s where %s='%s'",
-            $table,
-            $columnaCompara,
-            $datoColumnaCompara
-        );
+        foreach ($where as $key => $value) {
+            $setPartWhere[] = "{$key} = :{$key}";
+            $bindingsWhere[":{$key}"] = $value;
+        }
         try {
+            $sql = "SELECT * FROM $table WHERE ".implode(' AND ', $setPartWhere);
             $statement = $this->pdo->prepare($sql);
-            $statement->execute($parameters);
+            $statement->execute($bindingsWhere);
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             return false;
@@ -196,20 +193,16 @@ class QueryBuilder
         }
     }
 
-    public function selectWhatWhere($table, $what, $parameters)
+    public function selectWhatWhere($table, $what, $where)
     {
-        $columnaCompara = array_key_first($parameters);
-        $datoColumnaCompara = $parameters[$columnaCompara];
-        $sql = sprintf(
-            "select %s from %s where %s='%s'",
-            $what,
-            $table,
-            $columnaCompara,
-            $datoColumnaCompara
-        );
+        foreach ($where as $key => $value) {
+            $setPartWhere[] = "{$key} = :{$key}";
+            $bindingsWhere[":{$key}"] = $value;
+        }
         try {
+            $sql = "SELECT $what FROM $table WHERE ".implode(' AND ', $setPartWhere);
             $statement = $this->pdo->prepare($sql);
-            $statement->execute($parameters);
+            $statement->execute($bindingsWhere);
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             return false;

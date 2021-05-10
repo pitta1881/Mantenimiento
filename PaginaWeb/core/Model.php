@@ -165,24 +165,24 @@ abstract class Model
             case 'usuarios':
                 $persona = $this->db->selectWhatWhere(tablePersonas, 'nombre,apellido', array('id' => $datoUno['idPersona']))[0];
                 $datoUno['nombreApe'] = $persona['nombre'].' '.$persona['apellido'];
-                $roles = $this->db->selectWhatWhere(tableRxU, 'idRol', array('idUsuario' => $datoUno['id']));
-                $retornoRoles = [];
-                foreach ($roles as $rol) {
-                    array_push($retornoRoles, $this->db->selectWhatWhere(tableRoles, 'id, nombre', array('id' => $rol['idRol']))[0]);
+                $datoUno['listaRoles'] = $this->db->selectWhatWhere(tableRxU, 'idRol', array('idUsuario' => $datoUno['id']));
+                foreach ($datoUno['listaRoles'] as &$rol) {
+                    $returnRol = $this->db->selectWhatWhere(tableRoles, 'id, nombre', array('id' => $rol['idRol']))[0];
+                    $rol['id'] =  $returnRol['id'];
+                    $rol['nombre'] =  $returnRol['nombre'];
                 }
-                $datoUno['listaRoles'] = $retornoRoles;
                 break;
             case 'agentes':
                 $persona = $this->db->selectWhatWhere(tablePersonas, 'nombre,apellido', array('id' => $datoUno['idPersona']))[0];
                 $datoUno['nombre']=$persona['nombre'];
                 $datoUno['apellido']=$persona['apellido'];
                 ($datoUno['isDisponible'] == 1 ? $datoUno['isDisponible'] = "DISPONIBLE" : $datoUno['isDisponible'] = "OCUPADO");
-                $especializaciones = $this->db->selectWhatWhere(tableExA, 'idEspecializacion', array('idAgente' => $datoUno['id']));
-                $retornoEspecializaciones = [];
-                foreach ($especializaciones as $especializacion) {
-                    array_push($retornoEspecializaciones, $this->db->selectWhatWhere(tableEspecializaciones, 'id, nombre', array('id' => $especializacion['idEspecializacion']))[0]);
+                $datoUno['listaEspecializaciones'] = $this->db->selectWhatWhere(tableExA, 'idEspecializacion', array('idAgente' => $datoUno['id']));
+                foreach ($datoUno['listaEspecializaciones'] as &$especializacion) {
+                    $returnEspecializacion = $this->db->selectWhatWhere(tableEspecializaciones, 'id, nombre', array('id' => $especializacion['idEspecializacion']))[0];
+                    $especializacion['id'] =  $returnEspecializacion['id'];
+                    $especializacion['nombre'] =  $returnEspecializacion['nombre'];
                 }
-                $datoUno['listaEspecializaciones'] = $retornoEspecializaciones;
                 break;
             case 'roles':
                 $datoUno['misPermisos'] = $this->getPermisos($datoUno['id']);
@@ -207,8 +207,9 @@ abstract class Model
                 $datoUno['cantidadInsumos'] = $this->db->countWhatFromWhere(tableIxOC, 'idInsumo', array('idOC' => $datoUno['id']))[0];
                 $datoUno['insumos'] = $this->db->selectAllWhere(tableIxOC, array('idOC' => $datoUno['id']));
                 foreach ($datoUno['insumos'] as &$insumo) {
-                    $insumo['nombre'] = $this->db->selectWhatWhere(tableInsumos, 'nombre', array('id' => $insumo['idInsumo']))[0]['nombre'];
-                    $insumo['descripcion'] = $this->db->selectWhatWhere(tableInsumos, 'descripcion', array('id' => $insumo['idInsumo']))[0]['descripcion'];
+                    $returnInsumo = $this->db->selectWhatWhere(tableInsumos, 'nombre, descripcion', array('id' => $insumo['idInsumo']))[0];
+                    $insumo['nombre'] = $returnInsumo['nombre'];
+                    $insumo['descripcion'] = $returnInsumo['descripcion'];
                     $insumo['estadoNombre'] = $this->db->selectWhatWhere(tableEstadosOC, 'nombre', array('id' => $insumo['idEstado']))[0]['nombre'];
                 }
                 break;
@@ -230,15 +231,36 @@ abstract class Model
                     $tarea['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $tarea['idEstado']))[0]['nombre'];
                     $tarea['especializacionNombre'] = $this->db->selectWhatWhere(tableEspecializaciones, 'nombre', array('id' => $tarea['idEspecializacion']))[0]['nombre'];
                     $tarea['prioridadNombre'] = $this->db->selectWhatWhere(tablePrioridades, 'nombre', array('id' => $tarea['idPrioridad']))[0]['nombre'];
-                    $agentes = $this->db->selectWhatWhere(tableAxT, 'idAgente', array('idTarea' => $tarea['id']));
-                    $retornoAgentesPersona = [];
-                    foreach ($agentes as $agente) {
-                        $agenteSinDatos = $this->db->selectWhatWhere(tableAgentes, 'idPersona', array('id' => $agente['idAgente']))[0];
-                        array_push($retornoAgentesPersona, $this->verificarFechasyVacios($this->db->selectWhatWhere(tablePersonas, 'id, nombre, apellido', array('id' => $agenteSinDatos['idPersona']))[0]));
+                    $tarea['agentes'] = $this->db->selectWhatWhere(tableAxT, 'idAgente', array('idTarea' => $tarea['id'],'idPedido'=>$tarea['idPedido']));
+                    foreach ($tarea['agentes'] as &$agente) {
+                        $agente['idPersona'] = $this->db->selectWhatWhere(tableAgentes, 'idPersona', array('id' => $agente['idAgente']))[0]['idPersona'];
+                        $returnPersona = $this->db->selectWhatWhere(tablePersonas, 'nombre, apellido', array('id' => $agente['idPersona']))[0];
+                        $agente['nombre'] = $returnPersona['nombre'];
+                        $agente['apellido'] = $returnPersona['apellido'];
                     }
-                    $tarea['agentes'] = $retornoAgentesPersona;
-                    $tarea['insumos'] = [];
+                    $tarea['insumos'] = $this->db->selectWhatWhere(tableIxT, 'idInsumo', array('idTarea' => $tarea['id'],'idPedido'=>$tarea['idPedido']));
+                    foreach ($tarea['insumos'] as &$insumo) {
+                        $returnInsumo = $this->db->selectWhatWhere(tableInsumos, 'nombre, descripcion', array('id' => $insumo['idInsumo']))[0];
+                        $insumo['nombre'] = $returnInsumo['nombre'];
+                        $insumo['descripcion'] = $returnInsumo['descripcion'];
+                    }
                 }
+                break;
+            case 'tareas':
+                $datoUno['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $datoUno['idEstado']))[0]['nombre'];
+                $datoUno['especializacionNombre'] = $this->db->selectWhatWhere(tableEspecializaciones, 'nombre', array('id' => $datoUno['idEspecializacion']))[0]['nombre'];
+                $datoUno['prioridadNombre'] = $this->db->selectWhatWhere(tablePrioridades, 'nombre', array('id' => $datoUno['idPrioridad']))[0]['nombre'];
+                $datoUno['historial'] = $this->db->selectAllWhere(tableHistorialTarea, array('idTarea' => $datoUno['id'], 'idPedido' => $datoUno['idPedido']));
+                foreach ($datoUno['historial'] as &$rowHistorial) {
+                    $rowHistorial['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $rowHistorial['idUsuario']))[0]['nick'];
+                    $rowHistorial['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $rowHistorial['idEstado']))[0]['nombre'];
+                }
+                $datoUno['agentes'] = $this->db->selectWhatWhere(tableAxT, 'idAgente', array('idTarea' => $datoUno['id'],'idPedido'=>$datoUno['idPedido']));
+                foreach ($datoUno['agentes'] as &$agente) {
+                    $agente['idPersona'] = $this->db->selectWhatWhere(tableAgentes, 'idPersona', array('id' => $agente['idAgente']))[0]['idPersona'];
+                    $agente['idEstadoPersona'] = $this->db->selectWhatWhere(tablePersonas, 'idEstadoPersona', array('id' => $agente['idPersona']))[0]['idEstadoPersona'];
+                }
+                $datoUno['insumos'] = $this->db->selectWhatWhere(tableIxT, 'idInsumo, cantidad', array('idTarea' => $datoUno['id'],'idPedido'=>$datoUno['idPedido']));
                 break;
             case 'eventos':
                 $datoUno['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $datoUno['idEstado']))[0]['nombre'];

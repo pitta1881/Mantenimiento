@@ -422,7 +422,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         });
 
     //pedidos forms
-    $('#formPedidoNew, #formPedidoUpd').bootstrapValidator({
+    $('#formPedidoNew, #formPedidoUpd, #formPedidoDel').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
                 idUsuario: {
@@ -478,7 +478,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                 observacion: {
                     validators: {
                         notEmpty: {
-                            message: 'Ingrese una Descripcion'
+                            message: 'Ingrese una Observación'
                         }
                     }
                 }
@@ -497,12 +497,9 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         });
 
     //tareas forms
-    $('#formTareaNew').bootstrapValidator({
+    $('#formTareaNew, #formTareaUpdate, #formTareaDel').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
-                idPedido: {
-                    excluded: true
-                },
                 idUsuario: {
                     excluded: true
                 },
@@ -550,6 +547,13 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     validators: {
                         notEmpty: {
                             message: 'Ingrese una Descripcion'
+                        }
+                    }
+                },
+                observacion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Observación'
                         }
                     }
                 }
