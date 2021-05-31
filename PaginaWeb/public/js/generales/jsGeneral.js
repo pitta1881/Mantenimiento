@@ -11,6 +11,7 @@ export {
     getFichaOne,
     getFichaAll,
     modalGenDelete,
+    getAgentesInsumos,
     reloadListenerActionButtonsTableGeneral
 }
 
@@ -99,7 +100,7 @@ function visualizarPersonaAgente(datos) {
 
 const loadEventGenerico = async (e) => {
     let urlToUse = url;
-    let btn = (e.target.closest('button[type="button"], a'));
+    let btn = (e.target.closest('[data-abm]'));
     if (btn && !btn.disabled) {
         let ficha = await getFichaOne({
             'id': btn.dataset.id
@@ -170,13 +171,8 @@ function loadScriptOrdenarPagTablas(tablaID, columnas, columNoOrdenar, titulo, b
 
 
 function loadTooltips() {
-    $("#miTabla").on('mouseenter', '[type="button"]', function () {
-        var listaBotones = $('[data-toggle="tooltip"]').children();
-        Object.keys(listaBotones).forEach(function (key) {
-            if (!($(listaBotones[key]).prop('disabled'))) {
-                $(listaBotones[key]).parent().tooltip();
-            }
-        });
+    $('table').on('mouseenter', 'a, button', function () {
+        $('[data-toggle="tooltip"]').tooltip();
     });
 }
 
@@ -229,6 +225,22 @@ function getPermisosRolActual() {
         redirect: 'follow'
     };
     let miJson = fetch('/permisosRolActual', requestOptions)
+        .then(handleJsonResponse)
+        .then(datos => {
+            return datos
+        })
+        .catch(error => {
+            return false
+        });
+    return miJson;
+}
+
+function getAgentesInsumos() {
+    let requestOptions = {
+        method: 'POST',
+        redirect: 'follow'
+    };
+    let miJson = fetch("/tarea/getAgentesInsumos/", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
             return datos

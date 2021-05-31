@@ -18,7 +18,7 @@ class PersonaController extends Controller implements MyInterface
     
     public function index()
     {
-        $datos['todosEstados'] = $this->model->getFichaAll(tableEstadosPersona);
+        $datos['todosEstados'] = $this->model->getFichaAllModel(tableEstadosPersona);
         $datos['minimo18'] = date('Y-m-d', strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d', strtotime('70 years ago'));
         $_SESSION['urlHeader'] = array(

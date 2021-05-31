@@ -19,7 +19,7 @@ class InsumoController extends Controller implements MyInterface
     
     public function index()
     {
-        $datos["todasMedidas"] = $this->model->getFichaAll(tableMedidas);
+        $datos["todasMedidas"] = $this->model->getFichaAllModel(tableMedidas);
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
                  "nombre" => "HOME"),

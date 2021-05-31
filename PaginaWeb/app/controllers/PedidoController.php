@@ -3,18 +3,23 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\PedidoModel;
 use App\Core\MyInterface;
+use App\Models\PedidoModel;
+use App\Models\SectorModel;
+use App\Models\UsuarioModel;
+use App\Models\EspecializacionModel;
+
+define("table", "pedidos");
 
 class PedidoController extends Controller implements MyInterface
 {
     public function __construct($session = true)
     {
         $this->model = new PedidoModel();
-        if ($session) {
-            session_start();
-            define("table", "pedidos");
-        }
+        $this->modelSector = new SectorModel();
+        $this->modelUsuario = new UsuarioModel();
+        $this->modelEspecializacion = new EspecializacionModel();
+        session_start();
     }
 
     public function index($model = null)
@@ -22,11 +27,11 @@ class PedidoController extends Controller implements MyInterface
         if (!is_null($model)) {
             $this->model = $model;
         }
-        $datos['estados'] = $this->model->getFichaAll(tableEstados);
-        $datos['prioridades'] = $this->model->getFichaAll(tablePrioridades);
-        $datos["sectores"] = $this->model->getFichaAll(tableSectores);
-        $datos["usuarios"] = $this->model->getFichaAll(tableUsuarios);
-        $datos["especializaciones"] = $this->model->getFichaAll(tableEspecializaciones);
+        $datos['estados'] = $this->model->getFichaAllModel(tableEstados);
+        $datos['prioridades'] = $this->model->getFichaAllModel(tablePrioridades);
+        $datos["sectores"] = $this->modelSector->getFichaAll(tableSectores);
+        $datos["usuarios"] = $this->modelUsuario->getFichaAll(tableUsuarios);
+        $datos["especializaciones"] = $this->modelEspecializacion->getFichaAll(tableEspecializaciones);
         if (isset($_POST['eventoID'])) {
             $datos["evento"] = [
                 "id" => $_POST['eventoID'],

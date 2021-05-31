@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\MyInterface;
 use App\Models\OCModel;
+use App\Models\InsumoModel;
 
 define("table", "ordenesdecompra");
 
@@ -13,13 +14,14 @@ class OCController extends Controller implements MyInterface
     public function __construct()
     {
         $this->model = new OCModel();
+        $this->insumoModel = new InsumoModel();
         session_start();
     }
 
     public function index()
     {
-        $datos["todosEstadosOC"] = $this->model->getFichaAll(tableEstadosOC);
-        $datos["todosTiposOC"] = $this->model->getFichaAll(tableTiposOC);
+        $datos["todosEstadosOC"] = $this->model->getFichaAllModel(tableEstadosOC);
+        $datos["todosTiposOC"] = $this->model->getFichaAllModel(tableTiposOC);
         
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
@@ -160,7 +162,7 @@ class OCController extends Controller implements MyInterface
 
     private function getInsumo($idInsumo)
     {
-        return $this->model->getFichaOne(tableInsumos, array('id'=>$idInsumo));
+        return $this->insumoModel->getFichaOne(tableInsumos, array('id'=>$idInsumo));
     }
 
     private function checkOCCompleto($idOC)
@@ -187,7 +189,7 @@ class OCController extends Controller implements MyInterface
 
     private function getIdHistorial($idInsumo)
     {
-        $datos['unInsumo'] = $this->model->getFichaOne(tableInsumos, array('id'=>$idInsumo));
+        $datos['unInsumo'] = $this->insumoModel->getFichaOne(tableInsumos, array('id'=>$idInsumo));
         return (empty($datos['unInsumo']['historial']) ? 1 : end($datos['unInsumo']['historial'])['id'] + 1);
     }
 }

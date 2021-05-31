@@ -371,12 +371,12 @@ VALUES (
     )
 ;
 
-INSERT INTO `Agentes` (`idPersona`, `isDisponible`)
-VALUES (26585543, 1),
-    (39447859, 1),
-    (17145072, 1),
-    (16131891, 1),
-    (22456368, 1)
+INSERT INTO `Agentes` (`idPersona`)
+VALUES (26585543),
+    (39447859),
+    (17145072),
+    (16131891),
+    (22456368)
 ;
 
 INSERT INTO `Especializaciones_x_Agentes` (`idEspecializacion`, `idAgente`)

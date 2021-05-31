@@ -80,7 +80,7 @@ CREATE TABLE Especializaciones (
 CREATE TABLE Agentes (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     idPersona INTEGER NOT NULL,
-    isDisponible BOOLEAN NOT NULL DEFAULT TRUE,
+    tareasActuales INTEGER NOT NULL DEFAULT 0,
     UNIQUE (idPersona),
     FOREIGN KEY (idPersona) REFERENCES Personas (id)
 );

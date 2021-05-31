@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\MyInterface;
 use App\Models\AgenteModel;
+use App\Models\EspecializacionModel;
+use App\Models\PersonaModel;
 
 define("table", "agentes");
 
@@ -13,13 +15,15 @@ class AgenteController extends Controller implements MyInterface
     public function __construct()
     {
         $this->model = new AgenteModel();
+        $this->especializacionModel = new EspecializacionModel();
+        $this->personaModel = new PersonaModel();
         session_start();
     }
 
     public function index()
     {
-        $datos['todasPersonas'] = $this->model->getFichaAll(tablePersonas);
-        $datos['todasEspecializaciones'] = $this->model->getFichaAll(tableEspecializaciones);
+        $datos['todasEspecializaciones'] = $this->especializacionModel->getFichaAll(tableEspecializaciones);
+        $datos['todasPersonas'] = $this->personaModel->getFichaAll(tablePersonas);
         $_SESSION['urlHeader'] = array(
                                         array("url" => "/home",
                                              "nombre" => "HOME"),

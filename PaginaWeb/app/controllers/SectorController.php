@@ -18,7 +18,7 @@ class SectorController extends Controller implements MyInterface
     
     public function index($alerta = null)
     {
-        $datos['todosTiposSectores'] = $this->model->getFichaAll(tableTiposSector);
+        $datos['todosTiposSectores'] = $this->model->getFichaAllModel(tableTiposSector);
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),

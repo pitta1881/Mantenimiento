@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\MyInterface;
 use App\Models\UsuarioModel;
+use App\Models\RolModel;
+use App\Models\PersonaModel;
 
 define("table", "usuarios");
 
@@ -13,13 +15,15 @@ class UsuarioController extends Controller implements MyInterface
     public function __construct()
     {
         $this->model = new UsuarioModel();
+        $this->rolModel = new RolModel();
+        $this->personaModel = new PersonaModel();
         session_start();
     }
 
     public function index()
     {
-        $datos['todosRoles'] = $this->model->getFichaAll(tableRoles);
-        $datos['todosPersonas'] = $this->model->getFichaAll(tablePersonas);
+        $datos['todosRoles'] = $this->rolModel->getFichaAll(tableRoles);
+        $datos['todosPersonas'] = $this->personaModel->getFichaAll(tablePersonas);
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
             "nombre" => "HOME"),

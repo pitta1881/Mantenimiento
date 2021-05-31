@@ -3,8 +3,11 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\TareaModel;
 use App\Core\MyInterface;
+use App\Models\TareaModel;
+use App\Models\PedidoModel;
+use App\Models\InsumoModel;
+use App\Models\AgenteModel;
 
 define("table", "tareas");
 
@@ -13,14 +16,14 @@ class TareaController extends Controller implements MyInterface
     public function __construct()
     {
         $this->model = new TareaModel();
+        $this->modelPedido = new PedidoModel();
+        $this->modelInsumo = new InsumoModel();
+        $this->modelAgente = new AgenteModel();
         session_start();
     }
 
     public function index()
     {
-        $pedidoModel = new PedidoController(false);
-        $view = $pedidoModel->index();
-        return $view;
     }
 
     public function create()
@@ -152,7 +155,7 @@ class TareaController extends Controller implements MyInterface
 
     private function getPedido($idPedido)
     {
-        return $this->model->getFichaOne(tablePedidos, array('id'=>$idPedido));
+        return $this->modelPedido->getFichaOne(tablePedidos, array('id'=>$idPedido));
     }
 
     private function getIdHistorial($idTarea, $idPedido)
@@ -168,7 +171,7 @@ class TareaController extends Controller implements MyInterface
         if (!empty($datos['unaTarea']['agentes'])) {
             foreach ($datos['unaTarea']['agentes'] as $agente) {
                 if ($agente['idEstadoPersona'] == 1) {
-                    $this->model->update(tableAgentes, array('isDisponible' => 1), array('id' => $agente['idAgente']), "Agente");
+                    $this->model->update(tableAgentes, array('tareasActuales' => $agente['tareasActuales']-1), array('id' => $agente['idAgente']), "Agente");
                 }
             }
             $this->model->delete(tableAxT, array('idTarea' => $idTarea, 'idPedido' => $idPedido), "AxT");
@@ -176,7 +179,7 @@ class TareaController extends Controller implements MyInterface
         //insumos
         if (!empty($datos['unaTarea']['insumos'])) {
             foreach ($datos['unaTarea']['insumos'] as $insumo) {
-                $insumoRelacionado = $this->model->getFichaOne(tableInsumos, array('id' => $insumo['idInsumo']));
+                $insumoRelacionado = $this->modelInsumo->getFichaOne(tableInsumos, array('id' => $insumo['idInsumo']));
                 $insumoToUpdate = [
                     'stockReal' => $insumoRelacionado['stockReal'] + $insumo['cantidad'],
                     'stockComprometido' => $insumoRelacionado['stockComprometido'] - $insumo['cantidad']
@@ -201,7 +204,14 @@ class TareaController extends Controller implements MyInterface
 
     private function getIdHistorialInsumo($idInsumo)
     {
-        $datos['unInsumo'] = $this->model->getFichaOne(tableInsumos, array('id'=>$idInsumo));
+        $datos['unInsumo'] = $this->modelInsumo->getFichaOne(tableInsumos, array('id'=>$idInsumo));
         return (empty($datos['unInsumo']['historial']) ? 1 : end($datos['unInsumo']['historial'])['id'] + 1);
+    }
+
+    public function getAgentesInsumos()
+    {
+        $datos['agentes'] = $this->modelAgente->getFichaAll(tableAgentes);
+        $datos['insumos'] = $this->modelInsumo->getFichaAll(tableInsumos);
+        return json_encode($datos);
     }
 }

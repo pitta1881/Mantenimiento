@@ -83,6 +83,7 @@
     $router->post('tarea/create', 'TareaController@create');
     $router->post('tarea/update', 'TareaController@update');
     $router->post('tarea/cancel', 'TareaController@cancel');
+    $router->post('tarea/getAgentesInsumos', 'TareaController@getAgentesInsumos');
     $router->post('tarea/fichaOne', 'TareaController@fichaOne');
 
 //rutas insumos

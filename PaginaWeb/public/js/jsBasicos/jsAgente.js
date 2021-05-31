@@ -71,7 +71,7 @@ async function loadTable() {
             <td>
                 ${especializacionHTML}
             </td>
-            <td>${element.isDisponible}</td>
+            <td>${element.tareasActuales}</td>
             <td>
                 <div class="btn-group btn-group-sm float-none" role="group">
                     ${btnEye}
