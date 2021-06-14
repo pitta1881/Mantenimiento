@@ -144,7 +144,7 @@ class TareaController extends Controller implements MyInterface
                 'observacion' => 'Tarea Nº'.$_POST['idTarea'].' Cancelada > '.$_POST['observacion']
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
-            $this->desasignarAgentesInsumos($_POST['idTarea'], $_POST['idPedido']);
+            $this->desasignarTodosAgentesInsumos($_POST['idTarea'], $_POST['idPedido']);
         }
         return json_encode($update);
     }
@@ -164,7 +164,7 @@ class TareaController extends Controller implements MyInterface
         return end($datos['unaTarea']['historial'])['id'] + 1;
     }
 
-    private function desasignarAgentesInsumos($idTarea, $idPedido)
+    private function desasignarTodosAgentesInsumos($idTarea, $idPedido)
     {
         $datos['unaTarea'] = $this->model->getFichaOne(table, array('id'=>$idTarea, 'idPedido' => $idPedido));
         //agentes
@@ -181,21 +181,20 @@ class TareaController extends Controller implements MyInterface
             foreach ($datos['unaTarea']['insumos'] as $insumo) {
                 $insumoRelacionado = $this->modelInsumo->getFichaOne(tableInsumos, array('id' => $insumo['idInsumo']));
                 $insumoToUpdate = [
-                    'stockReal' => $insumoRelacionado['stockReal'] + $insumo['cantidad'],
                     'stockComprometido' => $insumoRelacionado['stockComprometido'] - $insumo['cantidad']
                 ];
                 $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['idInsumo']), "Insumo");
                 $historialInsumo = [
-                'id' => $this->getIdHistorialInsumo($insumo['idInsumo']),
-                'idInsumo' => $insumo['idInsumo'],
-                'fecha' => date('Y-m-d H:i:s'),
-                'idUsuario' => $_SESSION['idUser'],
-                'oldStock' => $insumoRelacionado['stockReal'],
-                'newStock' => $insumoRelacionado['stockReal'] + $insumo['cantidad'],
-                'inOrOut' => 1,
-                'idTarea' => $idTarea,
-                'idPedido' => $idPedido
-            ];
+                    'id' => $this->getIdHistorialInsumo($insumo['idInsumo']),
+                    'idInsumo' => $insumo['idInsumo'],
+                    'fecha' => date('Y-m-d H:i:s'),
+                    'idUsuario' => $_SESSION['idUser'],
+                    'oldStock' => $insumoRelacionado['stockReal'],
+                    'newStock' => $insumoRelacionado['stockReal'] + $insumo['cantidad'],
+                    'inOrOut' => 1,
+                    'idTarea' => $idTarea,
+                    'idPedido' => $idPedido
+                ];
                 $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
             }
             $this->model->delete(tableIxT, array('idTarea' => $idTarea, 'idPedido' => $idPedido), "IxT");
@@ -213,5 +212,81 @@ class TareaController extends Controller implements MyInterface
         $datos['agentes'] = $this->modelAgente->getFichaAll(tableAgentes);
         $datos['insumos'] = $this->modelInsumo->getFichaAll(tableInsumos);
         return json_encode($datos);
+    }
+
+    public function asignarAgentesInsumos()
+    {
+        $idTarea = $_POST['idTarea'];
+        $idPedido = $_POST['idPedido'];
+        if (isset($_POST['agentes']) && !empty($_POST['agentes'])) {
+            $agentes = json_decode($_POST['agentes'], true);
+            foreach ($agentes as $agente) {
+                $datos = [
+                    'idTarea' => $idTarea,
+                    'idPedido' => $idPedido,
+                    'idAgente' => $agente['id']
+                ];
+                $this->model->insert(tableAxT, $datos, "Agente");
+                $datosAgenteBDD = $this->modelAgente->getFichaOne(tableAgentes, array('id'=>$agente['id']));
+                $update = $this->model->update(tableAgentes, array('tareasActuales' => $datosAgenteBDD['tareasActuales']+1), array('id' => $agente['id']), "Tarea");
+            }
+        }
+        if (isset($_POST['insumos']) && !empty($_POST['insumos'])) {
+            $insumos = json_decode($_POST['insumos'], true);
+            foreach ($insumos as $insumo) {
+                $insumoRelacionado = $this->modelInsumo->getFichaOne(tableInsumos, array('id' => $insumo['id']));
+                $insumoToUpdate = [
+                    'stockComprometido' => $insumoRelacionado['stockComprometido'] + $insumo['cantidad']
+                ];
+                $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Tarea");
+                $historialInsumo = [
+                    'id' => $this->getIdHistorialInsumo($insumo['id']),
+                    'idInsumo' => $insumo['id'],
+                    'fecha' => date('Y-m-d H:i:s'),
+                    'idUsuario' => $_SESSION['idUser'],
+                    'oldStock' => $insumoRelacionado['stockReal'],
+                    'newStock' => $insumoRelacionado['stockReal'] - $insumo['cantidad'],
+                    'inOrOut' => 0,
+                    'idTarea' => $idTarea,
+                    'idPedido' => $idPedido
+                ];
+                $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
+                $datos = [
+                    'idTarea' => $idTarea,
+                    'idPedido' => $idPedido,
+                    'idInsumo' => $insumo['id'],
+                    'fecha' => date('Y-m-d H:i:s'),
+                    'cantidad' => $insumo['cantidad']
+                ];
+                $this->model->insert(tableIxT, $datos, "IxT");
+            }
+        }
+        return json_encode($update);
+    }
+
+    public function desasignarAgentesInsumos()
+    {
+        $idTarea = $_POST['idTarea'];
+        $idPedido = $_POST['idPedido'];
+        if (isset($_POST['agentes']) && !empty($_POST['agentes'])) {
+            $agentes = json_decode($_POST['agentes'], true);
+            foreach ($agentes as $agente) {
+                $datos = [
+                    'idTarea' => $idTarea,
+                    'idPedido' => $idPedido,
+                    'idAgente' => $agente['id']
+                ];
+                $this->model->delete(tableAxT, $datos, "AxT");
+                $datosAgenteBDD = $this->modelAgente->getFichaOne(tableAgentes, array('id'=>$agente['id']));
+                $update = $this->model->update(tableAgentes, array('tareasActuales' => $datosAgenteBDD['tareasActuales']-1), array('id' => $agente['id']), "Tarea");
+            }
+        }
+        if (isset($_POST['insumos']) && !empty($_POST['insumos'])) {
+            $insumos = json_decode($_POST['insumos'], true);
+            foreach ($insumos as $insumo) {
+                var_dump($insumo['id'].'-'.$insumo['cantidad']);
+            }
+        }
+        return json_encode($update);
     }
 }

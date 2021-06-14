@@ -26,10 +26,11 @@ class InsumoModel extends Model
         return $this->getFichaAllModel($table, 'retornoUnoLogic', $comparaTablasIfUsado);
     }
 
-    public function retornoUnoLogic( $datoUno)
+    public function retornoUnoLogic($datoUno)
     {
         $datoUno['medidaNombre']=$this->db->selectWhatWhere(tableMedidas, 'nombre', array('id' => $datoUno['idMedida']))[0]['nombre'];
         $datoUno['historial'] = $this->db->selectAllWhere(tableHistorialInsumo, array('idInsumo' => $datoUno['id']));
+        $datoUno['listaTareas'] = $this->db->selectAllWhere(tableIxT, array('idInsumo' => $datoUno['id']));
         foreach ($datoUno['historial'] as &$rowHistorial) {
             $rowHistorial['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $rowHistorial['idUsuario']))[0]['nick'];
         }

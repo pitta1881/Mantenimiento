@@ -188,13 +188,12 @@ CREATE TABLE Insumos (
 );
 
 CREATE TABLE Insumos_x_Tareas (
-    id INTEGER NOT NULL,
     idInsumo INTEGER NOT NULL,
     idPedido INTEGER NOT NULL,
     idTarea INTEGER NOT NULL,
     fecha DATETIME NOT NULL,
     cantidad INTEGER NOT NULL,
-    PRIMARY KEY (id, idInsumo, idPedido, idTarea),
+    PRIMARY KEY (idInsumo, idPedido, idTarea),
     FOREIGN KEY (idInsumo) REFERENCES Insumos (id),
     FOREIGN KEY (idPedido, idTarea) REFERENCES Tareas (idPedido, id)
 );

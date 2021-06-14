@@ -497,7 +497,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         });
 
     //tareas forms
-    $('#formTareaNew, #formTareaUpdate, #formTareaDel').bootstrapValidator({
+    $('#formTareaNew, #formTareaUpdate, #formTareaDel, #formAsignaciones, #formDesasignaciones').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
                 idUsuario: {
@@ -788,6 +788,15 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                 dataForm.push({
                     name: 'insumos',
                     value: localStorage.getItem('insumosUpdate')
+                });
+            }
+            if ($(form).attr('id') == 'formAsignaciones' || $(form).attr('id') == 'formDesasignaciones') {
+                dataForm.push({
+                    name: 'agentes',
+                    value: localStorage.getItem('agentes')
+                }, {
+                    name: 'insumos',
+                    value: localStorage.getItem('insumos')
                 });
             }
             $.post($(form).attr('action'), dataForm)

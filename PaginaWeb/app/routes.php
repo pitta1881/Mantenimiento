@@ -84,6 +84,8 @@
     $router->post('tarea/update', 'TareaController@update');
     $router->post('tarea/cancel', 'TareaController@cancel');
     $router->post('tarea/getAgentesInsumos', 'TareaController@getAgentesInsumos');
+    $router->post('tarea/asignaciones', 'TareaController@asignarAgentesInsumos');
+    $router->post('tarea/desasignaciones', 'TareaController@desasignarAgentesInsumos');
     $router->post('tarea/fichaOne', 'TareaController@fichaOne');
 
 //rutas insumos

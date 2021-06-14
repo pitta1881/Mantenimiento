@@ -31,7 +31,10 @@ class TareaModel extends Model
             $agenteOne = $this->db->selectWhatWhere(tableAgentes, 'idPersona, tareasActuales', array('id' => $agente['idAgente']))[0];
             $agente['idPersona'] = $agenteOne['idPersona'];
             $agente['tareasActuales'] = $agenteOne['tareasActuales'];
-            $agente['idEstadoPersona'] = $this->db->selectWhatWhere(tablePersonas, 'idEstadoPersona', array('id' => $agente['idPersona']))[0]['idEstadoPersona'];
+            $personaOne = $this->db->selectWhatWhere(tablePersonas, 'nombre, apellido, idEstadoPersona', array('id' => $agente['idPersona']))[0];
+            $agente['idEstadoPersona'] = $personaOne['idEstadoPersona'];
+            $agente['nombre'] = $personaOne['nombre'];
+            $agente['apellido'] = $personaOne['apellido'];
         }
         $datoUno['insumos'] = $this->db->selectWhatWhere(tableIxT, 'idInsumo, cantidad', array('idTarea' => $datoUno['id'],'idPedido'=>$datoUno['idPedido']));
         return $datoUno;
