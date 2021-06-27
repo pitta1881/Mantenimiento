@@ -284,7 +284,32 @@ class TareaController extends Controller implements MyInterface
         if (isset($_POST['insumos']) && !empty($_POST['insumos'])) {
             $insumos = json_decode($_POST['insumos'], true);
             foreach ($insumos as $insumo) {
-                var_dump($insumo['id'].'-'.$insumo['cantidad']);
+                $insumoRelacionado = $this->modelInsumo->getFichaOne(tableInsumos, array('id' => $insumo['id']));
+                $insumoToUpdate = [
+                    'stockComprometido' => $insumoRelacionado['stockComprometido'] - $insumo['cantidad']
+                ];
+                $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Tarea");
+                $historialInsumo = [
+                    'id' => $this->getIdHistorialInsumo($insumo['id']),
+                    'idInsumo' => $insumo['id'],
+                    'fecha' => date('Y-m-d H:i:s'),
+                    'idUsuario' => $_SESSION['idUser'],
+                    'oldStock' => $insumoRelacionado['stockReal'],
+                    'newStock' => $insumoRelacionado['stockReal'] + $insumo['cantidad'],
+                    'inOrOut' => 1,
+                    'idTarea' => $idTarea,
+                    'idPedido' => $idPedido
+                ];
+                $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
+                $datos = [
+                    'fecha' => date('Y-m-d H:i:s'),
+                    'cantidad' => $insumo['cantidadInicial'] - $insumo['cantidad']
+                ];
+                if($insumo['cantidad'] == $insumo['cantidadInicial']){
+                    $this->model->delete(tableIxT, array('idTarea' => $idTarea, 'idPedido' => $idPedido, 'idInsumo' => $insumo['id']), "IxT");
+                } else {
+                    $this->model->update(tableIxT, $datos, array('idTarea' => $idTarea, 'idPedido' => $idPedido, 'idInsumo' => $insumo['id']), "IxT");
+                }
             }
         }
         return json_encode($update);

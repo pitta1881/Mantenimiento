@@ -320,10 +320,32 @@ async function desasignarAgentesInsumos(e) {
     $('#tableInsumosDesasignar').DataTable().clear().destroy();
     let agentesHTML = ``;
     let insumosHTML = ``;
+    let carritoItem;
     let agenteItem;
 
     datosTarea.insumos.forEach(element => {
-
+        carritoItem = ``;
+        carritoItem = ` 
+        ${`
+            <button type="button" class="btn btn-outline-primary btn-agregar" data-toggle="tooltip" title="Editar Insumo" data-placement="top">Editar</button>
+            <button type="button" class="btn btn-minus-cart btn-md btn-primary border-right-0 border"><i class="fal fa-minus"></i></button>
+            <input type="number" data-name="idInsumo" value="${element.idInsumo}" hidden>
+            <input type="number" data-name="cantidadInicial" value="${element.cantidad}" hidden>
+            <input type="number" data-name="cantidadInsumo" class="input-cart" placeholder="0" value="0" min="0" max="${element.cantidad}" readonly>
+            <button type="button" class="btn btn-plus-cart btn-primary border-left-0 border"><i class="fal fa-plus"></i></button>
+            `}`;
+        insumosHTML += `
+        <tr>
+            <td>${element.nombre}</td>
+            <td>${element.descripcion}</td>
+            <td>${element.cantidad}</td>
+            <td>
+                <div class="btn-group btn-group-sm float-none" role="group">
+                    ${carritoItem}
+                </div>
+            </td>
+        </tr>
+        `;
     });
 
     datosTarea.agentes.forEach(element => {
@@ -349,9 +371,9 @@ async function desasignarAgentesInsumos(e) {
     $('#tableAgentesDesasignar tbody').html(agentesHTML);
     $('#tableInsumosDesasignar tbody').html(insumosHTML);
     loadScriptOrdenarPagTablas('tableAgentesDesasignar', '0,1', [2], 'Agentes Registrados', false);
-    loadScriptOrdenarPagTablas('tableInsumosDesasignar', '0,1,2,3', [4], 'Insumos Registrados', false);
+    loadScriptOrdenarPagTablas('tableInsumosDesasignar', '0,1,2', [3], 'Insumos Registrados', false);
     loadEventosTableAgentes('tableAgentesDesasignar');
-    //loadEventosTableDesasignarInsumos();
+    loadEventosTableInsumos('tableInsumosDesasignar');
     $(btn.dataset.target).modal('show');
 };
 
@@ -480,6 +502,9 @@ function loadEventosTableInsumos(idTable) {
         $(this).siblings(".btn-minus-cart, .input-cart, .btn-plus-cart").toggle();
         let inputCart = $(this).siblings('.input-cart');
         inputCart.val(1);
+        if (inputCart.prop("max") == inputCart.val()) {
+            $(this).siblings('.btn-plus-cart').attr('disabled', true);
+        }
         $(`#${idTable}`).parents('form').find('button[type=submit]').attr('disabled', false);
         changeLSInsumo.call(this);
     })
@@ -489,7 +514,7 @@ function loadEventosTableInsumos(idTable) {
         $(this).siblings('.btn-plus-cart').attr('disabled', false);
         if (inputCart.val() == 1) {
             $(this).toggle();
-            $(this).siblings("#tableInsumosAsignar .btn-agregar, .input-cart, .btn-plus-cart").toggle();
+            $(this).siblings(`#${idTable} .btn-agregar, .input-cart, .btn-plus-cart`).toggle();
         }
         inputCart.val(Number(inputCart.val()) - 1);
         changeLSInsumo.call(this);
@@ -510,9 +535,11 @@ function loadEventosTableInsumos(idTable) {
     function changeLSInsumo() {
         let insumos = JSON.parse(localStorage.getItem('insumos')) || [];
         let idInsumoElegido = $(this).siblings('[data-name=idInsumo]').val();
+        let cantidadInicial = $(this).siblings('[data-name=cantidadInicial]').val();
         let cantidadInsumoElegido = $(this).siblings('[data-name=cantidadInsumo]').val();
         let insumoToChange = {
             'id': idInsumoElegido,
+            'cantidadInicial': cantidadInicial,
             'cantidad': cantidadInsumoElegido
         }
         let indexInsumoLocal = insumos.findIndex(element => element.id == idInsumoElegido);
