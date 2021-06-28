@@ -163,17 +163,25 @@ class QueryBuilder
 
     public function selectAllWhere($table, $where)
     {
-        foreach ($where as $key => $value) {
-            $setPartWhere[] = "{$key} = :{$key}";
-            $bindingsWhere[":{$key}"] = $value;
-        }
-        try {
-            $sql = "SELECT * FROM $table WHERE ".implode(' AND ', $setPartWhere);
-            $statement = $this->pdo->prepare($sql);
-            $statement->execute($bindingsWhere);
+        if(!is_array($where) and strpos($where, 'null') !== false){
+            $statement = $this->pdo->prepare(
+                "SELECT * FROM {$table} WHERE {$where}"
+            );
+            $statement->execute();
             return $statement->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            return false;
+        } else {
+            foreach ($where as $key => $value) {
+                $setPartWhere[] = "{$key} = :{$key}";
+                $bindingsWhere[":{$key}"] = $value;
+            }
+            try {
+                $sql = "SELECT * FROM $table WHERE ".implode(' AND ', $setPartWhere);
+                $statement = $this->pdo->prepare($sql);
+                $statement->execute($bindingsWhere);
+                return $statement->fetchAll(PDO::FETCH_ASSOC);
+            } catch (Exception $e) {
+                return false;
+            }
         }
     }
 

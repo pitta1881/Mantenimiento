@@ -20,15 +20,7 @@ loadTooltips();
 modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
-    'updateTarea': {
-        'callback': modificarTareaModal,
-        'url': "/tarea/"
-    },
     'delete': deleteModal,
-    'deleteTarea': {
-        'callback': deleteModalTarea,
-        'url': "/tarea/"
-    },
     'visualize': visualizarPedidoGeneral,
     'visualize-2': {
         'callback': visualizarSectorPedido,
@@ -194,7 +186,7 @@ async function loadTableTareas(datos) {
             <i class="fal fa-plus-circle fa-lg fa-fw"></i>
         </button>`;
         }
-        if (tarea.idEstado == 1 && permisosRolActual.some(item => item == 19) && tarea.agentes.length != 0 || tarea.insumos.length != 0) {
+        if (tarea.idEstado == 1 && (permisosRolActual.some(item => item == 19) && tarea.agentes.length != 0 || tarea.insumos.length != 0)) {
             btnDesasignar = ` 
         <button type="button" class="btn btn-outline-primary desasignarAgentesInsumos" data-idTarea='${tarea.id}' data-idPedido='${tarea.idPedido}' data-target="#modalDesasignaciones" title="Desasignar Agentes e Insumos" data-toggle="tooltip" data-placement="top">
             <i class="fal fa-minus-circle fa-lg fa-fw"></i>
@@ -202,13 +194,13 @@ async function loadTableTareas(datos) {
         }
         if (tarea.idEstado == 1 && permisosRolActual.some(item => item == 19)) {
             btnPencil = ` 
-        <button type="button" class="btn btn-outline-primary" data-id='${tarea.id}' data-abm="updateTarea" data-target="#modalUpdateTarea" title="Editar Tarea" data-toggle="tooltip" data-placement="top">
+        <button type="button" class="btn btn-outline-primary updateTarea" data-idTarea='${tarea.id}' data-idPedido='${tarea.idPedido}'  data-target="#modalUpdateTarea" title="Editar Tarea" data-toggle="tooltip" data-placement="top">
             <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
         </button>`;
         }
         if (tarea.idEstado == 1 && permisosRolActual.some(item => item == 18)) {
             btnTrash = ` 
-        <button type="button" class="btn btn-outline-primary" data-id='${tarea.id}' data-abm="deleteTarea" data-target="#modalDeleteTarea" title="Cancelar Tarea" data-toggle="tooltip" data-placement="top">
+        <button type="button" class="btn btn-outline-primary deleteTarea" data-idTarea='${tarea.id}' data-idPedido='${tarea.idPedido}' data-target="#modalDeleteTarea" title="Cancelar Tarea" data-toggle="tooltip" data-placement="top">
             <i class="fal fa-trash-alt fa-lg fa-fw"></i>
         </button>
         `;
@@ -231,6 +223,9 @@ async function loadTableTareas(datos) {
                     ${btnDesasignar}    
                     ${btnPencil}
                     ${btnTrash}
+                    ${(tarea.idEstado != 1) ?
+                        `<a href="/ordendetrabajo">Orden de Trabajo Nº ${tarea.idOrdenDeTrabajo}</a>` : ''
+                    }
                 </div>
             </td>            
         </tr>
@@ -242,7 +237,9 @@ async function loadTableTareas(datos) {
     loadHistorial(datos);
     $('.asignarAgentesInsumos').on('click', asignarAgentesInsumos);
     $('.desasignarAgentesInsumos').on('click', desasignarAgentesInsumos);
-    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7,8', [], 'Tareas Registradas', true, 'nav-pedido');
+    $('.updateTarea').on('click', modificarTareaModal)
+    $('.deleteTarea').on('click', deleteModalTarea)
+    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,45,6,7', [8, 9, 10], 'Tareas Registradas', true, 'nav-pedido');
 }
 
 function visualizarSectorPedido(datos) {
@@ -284,7 +281,12 @@ function modificarModal(datos) {
     $('#descripcionUpdate').val(datos['descripcion']);
 }
 
-function modificarTareaModal(datos) {
+async function modificarTareaModal(e) {
+    let btn = (e.target.closest('[data-target]'));
+    let datos = await getFichaOne({
+        "idPedido": btn.dataset.idpedido,
+        "id": btn.dataset.idtarea
+    }, "/tarea/");
     $('#formTareaUpdate #hidden-inputs').html(`
             <input type="text" name="idTarea" value="${datos['id']}" required hidden>
             <input type="text" name="idPedido" value="${datos['idPedido']}" required hidden>
@@ -294,6 +296,7 @@ function modificarTareaModal(datos) {
     $("#idEspecializacionTareaUpd option[value=" + datos['idEspecializacion'] + "]").prop('selected', true)
     $("#idPrioridadTareaUpd option[value=" + datos['idPrioridad'] + "]").prop('selected', true)
     $('#descripcionTareaUpd').val(datos['descripcion']);
+    $(btn.dataset.target).modal('show');
 }
 
 function deleteModal(datos) {
@@ -301,9 +304,15 @@ function deleteModal(datos) {
     $('#deleteID').attr('value', datos['id']);
 }
 
-function deleteModalTarea(datos) {
+async function deleteModalTarea(e) {
+    let btn = (e.target.closest('[data-target]'));
+    let datos = await getFichaOne({
+        "idPedido": btn.dataset.idpedido,
+        "id": btn.dataset.idtarea
+    }, "/tarea/");
     $('#deleteIDTarea').attr('value', datos['id']);
     $('#deleteIDPedido').attr('value', datos['idPedido']);
+    $(btn.dataset.target).modal('show');
 }
 
 async function desasignarAgentesInsumos(e) {

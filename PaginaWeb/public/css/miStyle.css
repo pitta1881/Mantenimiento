@@ -59,7 +59,8 @@ button:disabled {
 .btn-minus-cart,
 .btn-plus-cart,
 .input-cart,
-.btn-agente-added {
+.btn-agente-added,
+.btn-tarea-added {
     display: none;
 }
 

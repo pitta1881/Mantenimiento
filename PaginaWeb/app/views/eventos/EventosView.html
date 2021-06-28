@@ -57,7 +57,7 @@
 								</div>
 								<div class="form-group required col-lg-4">
 									<label for="fechaInicioNew">Fecha Inicio:</label>
-									<input type="date" name="fechaInicio" id="fechaInicioNew" class="form-control" value="{{ datos.diaHoy }}" min="{{ datos.diaHoy }}" required>
+									<input type="date" name="fechaInicio" id="fechaInicioNew" class="form-control" value="{{ "now"|date("Y-m-d") }}" min="{{ "now"|date("Y-m-d") }}" required>
 								</div>
 							</div>
 							<div class="form-group required">

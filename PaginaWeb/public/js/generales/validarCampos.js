@@ -768,14 +768,39 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
             reloadTable(e, this);
         });
 
+    //orden de compra forms
+    $('#formOTNew').bootstrapValidator({
+            excluded: [':disabled'],
+            fields: {
+                idUsuario: {
+                    excluded: true
+                },
+                idEstado: {
+                    excluded: true
+                }
+            }
+        })
+        .on('success.field.bv', function (e, data) {
+            data.element.removeClass('is-invalid');
+            data.element.addClass('is-valid');
+        })
+        .on('error.field.bv', function (e, data) {
+            data.element.removeClass('is-valid');
+            data.element.addClass('is-invalid');
+        })
+        .on('success.form.bv', function (e) {
+            reloadTable(e, this);
+        });
+
     function reloadTable(e, form) {
         e.preventDefault();
+        const formNameID = $(form).attr('id');
         let dataForm = $(form).serializeArray();
-        if ($(form).attr('id') == 'formOCNew') {
+        if (formNameID == 'formOCNew') {
             localStorage.setItem('idTiposOC', dataForm.find(element => element.name === 'idTiposOC')['value']);
             $('#modalCheckAndSetCosto').modal('show');
         } else {
-            if ($(form).attr('id') == 'formCheckAndSetCosto') {
+            if (formNameID == 'formCheckAndSetCosto') {
                 dataForm.push({
                     name: 'idTiposOC',
                     value: JSON.parse(localStorage.getItem('idTiposOC'))
@@ -784,13 +809,13 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     value: localStorage.getItem('insumos')
                 });
             }
-            if ($(form).attr('id') == 'formOCUpdInsumos') {
+            if (formNameID == 'formOCUpdInsumos') {
                 dataForm.push({
                     name: 'insumos',
                     value: localStorage.getItem('insumosUpdate')
                 });
             }
-            if ($(form).attr('id') == 'formAsignaciones' || $(form).attr('id') == 'formDesasignaciones') {
+            if (formNameID == 'formAsignaciones' || formNameID == 'formDesasignaciones') {
                 dataForm.push({
                     name: 'agentes',
                     value: localStorage.getItem('agentes')
@@ -799,13 +824,19 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     value: localStorage.getItem('insumos')
                 });
             }
+            if (formNameID == 'formOTNew') {
+                dataForm.push({
+                    name: 'tareas',
+                    value: localStorage.getItem('tareas')
+                });
+            }
             $.post($(form).attr('action'), dataForm)
                 .done(function (data) {
                     verificarAlertas(data);
                     callbackAfterReloadTable();
                     $('.modal').modal('hide');
-                    if ($(form).attr('id') == 'formUsuarioNew' || $(form).attr('id') == 'formAgenteNew') {
-                        $(`#${$(form).attr('id')} option[value=${dataForm.find(element => element.name == 'idPersona').value}]`).remove();
+                    if (formNameID == 'formUsuarioNew' || formNameID == 'formAgenteNew') {
+                        $(`#${formNameID} option[value=${dataForm.find(element => element.name == 'idPersona').value}]`).remove();
                     }
                     localStorage.clear();
                 });

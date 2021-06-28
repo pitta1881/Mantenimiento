@@ -87,6 +87,7 @@
     $router->post('tarea/asignaciones', 'TareaController@asignarAgentesInsumos');
     $router->post('tarea/desasignaciones', 'TareaController@desasignarAgentesInsumos');
     $router->post('tarea/fichaOne', 'TareaController@fichaOne');
+    $router->post('tarea/getTareasSinOT', 'TareaController@getTareasSinOT');
 
 //rutas insumos
     $router->get('insumos', 'InsumoController@index');
@@ -116,10 +117,11 @@
     $router->post('eventos/fichaAll', 'EventoController@fichaAll');
 
 //rutas OT
-    $router->get('OT/verTodos', 'OTController@index');
-    $router->get('ot/crear', 'OTController@verTareasSinAsignar');
-    $router->post('ot/crear/seleccionados', 'OTController@crearOT');
-    $router->get('fichaOT', 'OTController@ficha');
+    $router->get('ordendetrabajo', 'OTController@index');
+    $router->post('ordendetrabajo/create', 'OTController@create');
+    $router->post('ordendetrabajo/update', 'OTController@update');
+    $router->post('ordendetrabajo/fichaOne', 'OTController@fichaOne');
+    $router->post('ordendetrabajo/fichaAll', 'OTController@fichaAll');
 
 
 // rutas informes

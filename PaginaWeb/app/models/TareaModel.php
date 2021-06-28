@@ -44,4 +44,12 @@ class TareaModel extends Model
         }
         return $datoUno;
     }
+
+    public function getTareasSinOT(){
+        $tareasSinOT = $this->db->selectAllWhere(tableTareas, 'idOrdenDeTrabajo is null');
+        foreach ($tareasSinOT as &$tarea) {
+            $tarea = $this->retornoUnoLogic($tarea);
+        }
+        return $tareasSinOT;
+    }
 }

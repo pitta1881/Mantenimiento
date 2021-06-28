@@ -12,7 +12,8 @@ export {
     getFichaAll,
     modalGenDelete,
     getAgentesInsumos,
-    reloadListenerActionButtonsTableGeneral
+    reloadListenerActionButtonsTableGeneral,
+    getTareasSinOT
 }
 
 let url;
@@ -241,6 +242,22 @@ function getAgentesInsumos() {
         redirect: 'follow'
     };
     let miJson = fetch("/tarea/getAgentesInsumos/", requestOptions)
+        .then(handleJsonResponse)
+        .then(datos => {
+            return datos
+        })
+        .catch(error => {
+            return false
+        });
+    return miJson;
+}
+
+function getTareasSinOT() {
+    let requestOptions = {
+        method: 'POST',
+        redirect: 'follow'
+    };
+    let miJson = fetch("/tarea/getTareasSinOT/", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
             return datos

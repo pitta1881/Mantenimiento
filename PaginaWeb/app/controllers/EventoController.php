@@ -18,7 +18,6 @@ class EventoController extends Controller implements MyInterface
     
     public function index()
     {
-        $datos["diaHoy"] = date("Y-m-d");
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
                  "nombre" => "HOME"),

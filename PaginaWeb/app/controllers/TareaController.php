@@ -314,4 +314,10 @@ class TareaController extends Controller implements MyInterface
         }
         return json_encode($update);
     }
+
+    public function getTareasSinOT()
+    {
+        $datos['tareas'] = $this->model->getTareasSinOT();
+        return json_encode($datos);
+    }
 }

@@ -31,6 +31,7 @@ define("tableOC", "ordenesdecompra");
 define("tableTiposOC", "tiposordenesdecompra");
 define("tableEstadosOC", "estadosordenesdecompra");
 define("tableEventos", "eventos");
+define("tableOT", "ordenesdetrabajo");
 
 /**
  * Clase abstracta para manejar los modelos

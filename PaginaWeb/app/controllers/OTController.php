@@ -3,57 +3,73 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\OrdenDeTrabajo;
+use App\Core\MyInterface;
+use App\Models\OTModel;
+use App\Models\TareaModel;
 
-class OTController extends Controller{
+define("table", "ordenesdetrabajo");
+
+class OTController extends Controller implements MyInterface{
 
     public function __construct(){
-        $this->model = new OrdenDeTrabajo();
-        
+        $this->model = new OTModel();
+        $this->modelTarea = new TareaModel();
+        session_start();
     }
 
     public function index(){
-        $todasOT = $this->model->getFichaAll(); 
-        $datos['todasOT'] = $todasOT;
-        
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/ordendetrabajo/OTVerTodos', compact('datos'));
+        $datos['estados'] = $this->model->getFichaAllModel(tableEstados);
+        $_SESSION['urlHeader'] = array(
+            array("url" => "/home",
+                 "nombre" => "HOME"),
+            array("url" => "/ordendetrabajo",
+                "nombre" => "ORDEN DE TRABAJO")
+                );
+        $datos['datosSesion'] = $_SESSION;
+        return view('/ordendetrabajo/OrdenDeTrabajoView', compact('datos'));
     }
 
-    public function verTareasSinAsignar(){
-        $tareasSinAsignar = $this->model->verTareasSinAsignar();
-        $datos['tareasSinAsignar'] = $tareasSinAsignar;
-        
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/ordendetrabajo/OTTareasSinAsignar',compact('datos'));
-    }
-
-    public function crearOT(){
-        $idOTCreada = $this->model->newOT();
-        $i = 0;
-        foreach ($_POST as $idPedido => $idTarea) {
-            $idPedidoFinal = explode('_',$idPedido)[1];
-            $itemOT = [
-                'idOT' => $idOTCreada,
-                'idPedido' => $idPedidoFinal,
-                'idTarea' => $idTarea
+    public function create()
+    {
+        $ahora = date('Y-m-d H:i:s');
+        $datosOT = [
+            'fechaInicio' => $ahora,
+            'idEstado' => 2
+        ];
+        $insert = $this->model->insert(tableOT, $datosOT, "Orden de Trabajo");
+        $tareas = json_decode($_POST['tareas'], true);
+        foreach ($tareas as $tarea) {
+            $datos = [
+                'idOrdenDeTrabajo' => $insert['mensaje'],
+                'idEstado' => 2
             ];
-            $this->model->insertItemOT($itemOT);
-            $this->model->updateEstadoTarea($idPedidoFinal,$idTarea,'En Curso');
-            $datosItem[$i++] = $itemOT;
+            $this->model->update(tableTareas, $datos, array('idPedido'=>$tarea['idPedido'],'id'=>$tarea['idTarea']), "Tarea");
+            $historialTarea = [
+                'id' => $this->getIdHistorial($tarea['idTarea'], $tarea['idPedido']),
+                'idTarea' => $tarea['idTarea'],
+                'idPedido' => $tarea['idPedido'],
+                'fecha' => $ahora,
+                'idUsuario' => $_SESSION['idUser'],
+                'idEstado' => 2,
+                'idEspecializacion' => '',
+                'idPrioridad' => '',
+                'descripcion' => '',
+                'observacion' => 'Tarea Asignada a la Orden de Trabajo Nº '.$insert['mensaje']
+            ];
+            $this->model->insert(tableHistorialTarea, $historialTarea, "historialTarea");
         }
-        redirect('fichaOT?idOT='.$idOTCreada);
+        return json_encode($insert);
     }
 
-    public function ficha(){
-        $miOT = $this->model->getByIdOT($_GET['idOT']);
-        $datos["miOT"] = $miOT;  
-        
-        $permisos=$this->model->getPermisos($_SESSION['rol']);
-        $datos['permisos']= $permisos;
-        return view('/ordendetrabajo/otVerFicha', compact('datos'));
-    }
+    public function update()
+    {}
+    
+    public function delete()
+    {}
 
+    private function getIdHistorial($idTarea, $idPedido)
+    {
+        $datos['unaTarea'] = $this->modelTarea->getFichaOne(tableTareas, array('id'=>$idTarea, 'idPedido' => $idPedido));
+        return end($datos['unaTarea']['historial'])['id'] + 1;
+    }
 }
