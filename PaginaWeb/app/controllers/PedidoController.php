@@ -8,6 +8,7 @@ use App\Models\PedidoModel;
 use App\Models\SectorModel;
 use App\Models\UsuarioModel;
 use App\Models\EspecializacionModel;
+use Exception;
 
 define("table", "pedidos");
 
@@ -51,21 +52,22 @@ class PedidoController extends Controller implements MyInterface
 
     public function create()
     {
-        $ahora = date('Y-m-d H:i:s');
-        $pedido = [
-            'fechaInicio' => $ahora,
-            'idUsuario' => $_SESSION['idUser'],
-            'idEstado' => 1,
-            'idSector' => $_POST['idSector'],
-            'idPrioridad' => $_POST['idPrioridad'],
-            'descripcion' => $_POST['descripcion']
-        ];
-        if (isset($_POST['idEvento'])) {
-            $this->model->update(tableEventos, array('idEstado' => 6), array('id' => $_POST['idEvento']), "Evento");
-        }
-        $observacion = 'Pedido Creado'. (isset($_POST['idEvento']) ? ' por un Evento' : '');
-        $insert = $this->model->insert(table, $pedido, "Pedido");
-        if ($insert['estado']) {
+        try {
+            $this->model->startTransaction();
+            $ahora = date('Y-m-d H:i:s');
+            $pedido = [
+                'fechaInicio' => $ahora,
+                'idUsuario' => $_SESSION['idUser'],
+                'idEstado' => 1,
+                'idSector' => $_POST['idSector'],
+                'idPrioridad' => $_POST['idPrioridad'],
+                'descripcion' => $_POST['descripcion']
+            ];
+            if (isset($_POST['idEvento'])) {
+                $this->model->update(tableEventos, array('idEstado' => 6), array('id' => $_POST['idEvento']), "Evento");
+            }
+            $observacion = 'Pedido Creado'. (isset($_POST['idEvento']) ? ' por un Evento' : '');
+            $insert = $this->model->insert(table, $pedido, "Pedido");
             $historialPedido = [
                 'id' => 1,
                 'idPedido' => $insert['mensaje'],
@@ -78,19 +80,29 @@ class PedidoController extends Controller implements MyInterface
                 'observacion' => $observacion
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
+            $this->model->commit();
+            return json_encode($insert);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Pedido',
+                    "operacion" => "insert",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
-        return json_encode($insert);
     }
 
     public function update()
     {
-        $pedido = [
-            'idSector' => $_POST['idSector'],
-            'idPrioridad' => $_POST['idPrioridad'],
-            'descripcion' => $_POST['descripcion']
-        ];
-        $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
-        if ($update['estado']) {
+        try {
+            $this->model->startTransaction();
+            $pedido = [
+                'idSector' => $_POST['idSector'],
+                'idPrioridad' => $_POST['idPrioridad'],
+                'descripcion' => $_POST['descripcion']
+            ];
+            $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
             $historialPedido = [
                 'id' => $this->getIdHistorial($_POST['id']),
                 'idPedido' => $_POST['id'],
@@ -103,29 +115,61 @@ class PedidoController extends Controller implements MyInterface
                 'observacion' => 'Pedido Modificado'
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Pedido',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
-        return json_encode($update);
     }
     
     public function finish()    //idEstado = 5
     {
-        $pedido = [
-            'idEstado' => 5,
-            'fechaFin' => date("Y-m-d")
-        ];
-        $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
-        return json_encode($update);
+        try {
+            $this->model->startTransaction();
+            $ahora = date('Y-m-d H:i:s');
+            $pedido = [
+                'idEstado' => 5,
+                'fechaFin' => $ahora
+            ];
+            $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
+            $historialPedido = [
+                'id' => $this->getIdHistorial($_POST['id']),
+                'idPedido' => $_POST['id'],
+                'fecha' => $ahora,
+                'idEstado' => 4,
+                'idUsuario' => $_SESSION['idUser'],
+                'observacion' => 'Pedido Finalizado'
+            ];
+            $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Pedido',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function cancel()    //idEstado = 4
     {
-        $ahora = date('Y-m-d H:i:s');
-        $pedido = [
-            'idEstado' => 4,
-            'fechaFin' => $ahora
-        ];
-        $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
-        if ($update['estado']) {
+        try {
+            $this->model->startTransaction();
+            $ahora = date('Y-m-d H:i:s');
+            $pedido = [
+                'idEstado' => 4,
+                'fechaFin' => $ahora
+            ];
+            $update = $this->model->update(table, $pedido, array('id' => $_POST['id']), "Pedido");
             $historialPedido = [
                 'id' => $this->getIdHistorial($_POST['id']),
                 'idPedido' => $_POST['id'],
@@ -135,8 +179,17 @@ class PedidoController extends Controller implements MyInterface
                 'observacion' => 'Pedido Cancelado > '.$_POST['observacion']
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Pedido',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
-        return json_encode($update);
     }
 
 

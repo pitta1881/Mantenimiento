@@ -6,6 +6,8 @@ use App\Core\Controller;
 use App\Core\MyInterface;
 use App\Models\EspecializacionModel;
 
+use Exception;
+
 define("table", "especializaciones");
 
 class EspecializacionController extends Controller implements MyInterface
@@ -32,23 +34,59 @@ class EspecializacionController extends Controller implements MyInterface
     
     public function create()
     {
-        $especializacion['nombre'] = $_POST['nombre'];
-        $insert = $this->model->insert(table, $especializacion, "Especializacion");
-        return json_encode($insert);
+        try {
+            $this->model->startTransaction();
+            $especializacion['nombre'] = $_POST['nombre'];
+            $insert = $this->model->insert(table, $especializacion, "Especializacion");
+            $this->model->commit();
+            return json_encode($insert);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                        "tipo" => 'Especializacion',
+                        "operacion" => "insert",
+                        "estado" => false,
+                        "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
     
     public function update()
     {
-        $especializacion = [
-            'nombre' => $_POST['nombre']
-        ];
-        $update = $this->model->update(table, $especializacion, array('id' => $_POST['id']), "Especializacion");
-        return json_encode($update);
+        try {
+            $this->model->startTransaction();
+            $especializacion = [
+                'nombre' => $_POST['nombre']
+            ];
+            $update = $this->model->update(table, $especializacion, array('id' => $_POST['id']), "Especializacion");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Especializacion',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function delete()
     {
-        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Especializacion");
-        return json_encode($delete);
+        try {
+            $this->model->startTransaction();
+            $delete = $this->model->delete(table, array('id' => $_POST['id']), "Especializacion");
+            $this->model->commit();
+            return json_encode($delete);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                "tipo" => 'Especializacion',
+                "operacion" => "delete",
+                "estado" => false,
+                "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 }

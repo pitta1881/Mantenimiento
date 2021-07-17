@@ -8,7 +8,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
     }
 
     //usuarios forms
-    $('#formUsuarioNew, #formUsuarioUpd').bootstrapValidator({
+    $('#formUsuarioNew, #formUsuarioUpd, #formUsuarioRolesUpd').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
                 nick: {
@@ -832,6 +832,9 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
             }
             $.post($(form).attr('action'), dataForm)
                 .done(function (data) {
+                    if (formNameID == 'formUsuarioRolesUpd' && JSON.parse(data).redirect) {
+                        location.reload();
+                    }
                     verificarAlertas(data);
                     callbackAfterReloadTable();
                     $('.modal').modal('hide');

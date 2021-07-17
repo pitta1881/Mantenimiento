@@ -6,6 +6,7 @@ use App\Core\Controller;
 use App\Core\MyInterface;
 use App\Models\OCModel;
 use App\Models\InsumoModel;
+use Exception;
 
 define("table", "ordenesdecompra");
 
@@ -35,55 +36,89 @@ class OCController extends Controller implements MyInterface
 
     public function create()
     {
-        $ahora = date('Y-m-d H:i:s');
-        //crear Orden De Compra
-        $ordenDeCompra = [
-            'fecha' => $ahora,
-            'costoEstimado' => $_POST['costoEstimado'],
-            'idEstadoOC' => 1,
-            'idTipoOrdenDeCompra' => $_POST['idTiposOC'],
-            'idUsuario' => $_SESSION['idUser']
-        ];
-        $insert = $this->model->insert(table, $ordenDeCompra, "Orden De Compra");
-        //crear items IxOC
-        if ($insert['estado']) {
+        try {
+            $this->model->startTransaction();
+            $ahora = date('Y-m-d H:i:s');
+            //crear Orden De Compra
+            $ordenDeCompra = [
+                'fecha' => $ahora,
+                'costoEstimado' => $_POST['costoEstimado'],
+                'idEstadoOC' => 1,
+                'idTipoOrdenDeCompra' => $_POST['idTiposOC'],
+                'idUsuario' => $_SESSION['idUser']
+            ];
+            $insert = $this->model->insert(table, $ordenDeCompra, "Orden De Compra");
+            //crear items IxOC
             $insumos = json_decode($_POST['insumos'], true);
             foreach ($insumos as $insumo) {
                 $IxOC = [
-                'idInsumo' => $insumo['id'],
-                'idOC' => $insert['mensaje'],
-                'cantidadPedida' => $insumo['cantidad'],
-                'idEstado' => 1
+                    'idInsumo' => $insumo['id'],
+                    'idOC' => $insert['mensaje'],
+                    'cantidadPedida' => $insumo['cantidad'],
+                    'idEstado' => 1
             ];
                 $insert2 = $this->model->insert(tableIxOC, $IxOC, "IxOC");
                 //actualizo stockFuturo del insumos
                 if ($insert2) {
                     $insumoToUpdate = [
-                        'stockFuturo' => $insumo['cantidad']
-                    ];
-                    $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Insumo");
+                            'stockFuturo' => $insumo['cantidad']
+                        ];
+                    $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Insumo");
                 }
             }
+            $this->model->commit();
+            return json_encode($insert);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Orden De Compra',
+                    "operacion" => "insert",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
-        return json_encode($insert);
     }
 
     public function update()
     {
-        $ordenDeCompra = [
-            'idTipoOrdenDeCompra' => $_POST['idTiposOC']
-        ];
-        $update = $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden de Compra");
-        return json_encode($update);
+        try {
+            $this->model->startTransaction();
+            $ordenDeCompra = [
+                'idTipoOrdenDeCompra' => $_POST['idTiposOC']
+            ];
+            $update = $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden de Compra");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Orden De Compra',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function updateCostoFinal()
     {
-        $ordenDeCompra = [
-            'costoFinal' => $_POST['costoFinal']
-        ];
-        $update = $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden de Compra");
-        return json_encode($update);
+        try {
+            $this->model->startTransaction();
+            $ordenDeCompra = [
+                'costoFinal' => $_POST['costoFinal']
+            ];
+            $update = $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden de Compra");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Orden De Compra',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function delete()
@@ -92,72 +127,90 @@ class OCController extends Controller implements MyInterface
 
     public function updateInsumos()
     {
-        $ahora = date('Y-m-d H:i:s');
-        //update cantidad recibida en item IxOC
-        $insumos = json_decode($_POST['insumos'], true);
-        foreach ($insumos as $insumo) {
-            $insumoRelacionado = $this->getInsumo($insumo['id']);
-            $IxOC = [
-                'cantidadRecibida' => $insumo['cantidad'],
-                'idEstado' => $insumo['idEstado']
-            ];
-            $update = $this->model->update(tableIxOC, $IxOC, array('idInsumo' => $insumo['id'],
+        try {
+            $this->model->startTransaction();
+            $ahora = date('Y-m-d H:i:s');
+            //update cantidad recibida en item IxOC
+            $insumos = json_decode($_POST['insumos'], true);
+            foreach ($insumos as $insumo) {
+                $insumoRelacionado = $this->getInsumo($insumo['id']);
+                $IxOC = [
+                    'cantidadRecibida' => $insumo['cantidad'],
+                    'idEstado' => $insumo['idEstado']
+                ];
+                $update = $this->model->update(tableIxOC, $IxOC, array('idInsumo' => $insumo['id'],
                                                                     'idOC' => $_POST['idOC']), "IxOC");
-            //update +stockReal y -stockFuturo del Insumo
-            if ($update) {
+                //update +stockReal y -stockFuturo del Insumo
                 $cantidadRecibidaAhora = $insumo['cantidad'] - $insumo['cantidadInicial'];
                 $insumoToUpdate = [
                     'stockReal' => $insumoRelacionado['stockReal'] + $cantidadRecibidaAhora,
                     'stockFuturo' => $insumoRelacionado['stockFuturo'] - $cantidadRecibidaAhora
                 ];
                 $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Insumo");
-                if ($update) {
-                    //create item historialInsumo
-                    $historialInsumo = [
-                        'id' => $this->getIdHistorial($insumo['id']),
-                        'idInsumo' => $insumo['id'],
-                        'fecha' => $ahora,
-                        'idUsuario' => $_SESSION['idUser'],
-                        'oldStock' => $insumoRelacionado['stockReal'],
-                        'newStock' => $insumoRelacionado['stockReal'] + $cantidadRecibidaAhora,
-                        'inOrOut' => 1,
-                        'idOC' => $_POST['idOC']
-                    ];
-                    $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
-                }
+                //create item historialInsumo
+                $historialInsumo = [
+                    'id' => $this->getIdHistorial($insumo['id']),
+                    'idInsumo' => $insumo['id'],
+                    'fecha' => $ahora,
+                    'idUsuario' => $_SESSION['idUser'],
+                    'oldStock' => $insumoRelacionado['stockReal'],
+                    'newStock' => $insumoRelacionado['stockReal'] + $cantidadRecibidaAhora,
+                    'inOrOut' => 1,
+                    'idOC' => $_POST['idOC']
+                ];
+                $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
             }
+            //update estado de la Orden de Compra
+            $ordenDeCompra = [
+                'idEstadoOC' => ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2)
+            ];
+            $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                "tipo" => 'Insumo',
+                "operacion" => "update",
+                "estado" => false,
+                "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
-        //update estado de la Orden de Compra
-        $ordenDeCompra = [
-            'idEstadoOC' => ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2)
-        ];
-        $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
-        return json_encode($update);
     }
 
     public function cancelInsumo()
     {
-        //update item IxOC cantRecibida == 0 ? Cancelado(4) : Parcial Completo(5)
-        $insumoRelacionado = $this->getInsumo($_POST['idInsumo']);
-        $IxOC = [
+        try {
+            $this->model->startTransaction();
+            //update item IxOC cantRecibida == 0 ? Cancelado(4) : Parcial Completo(5)
+            $insumoRelacionado = $this->getInsumo($_POST['idInsumo']);
+            $IxOC = [
                 'idEstado' => $_POST['idEstado'] //4 o 5
             ];
-        $update = $this->model->update(tableIxOC, $IxOC, array('idInsumo' => $_POST['idInsumo'],
+            $update = $this->model->update(tableIxOC, $IxOC, array('idInsumo' => $_POST['idInsumo'],
                                                                 'idOC' => $_POST['idOC']), "IxOC");
-        //update solo -stockFuturo del Insumo
-        if ($update) {
+            //update solo -stockFuturo del Insumo
             $insumoToUpdate = [
-                    'stockFuturo' => $insumoRelacionado['stockFuturo'] - $_POST['cantidadFaltanteCancelada']
-                ];
+                'stockFuturo' => $insumoRelacionado['stockFuturo'] - $_POST['cantidadFaltanteCancelada']
+            ];
             $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $_POST['idInsumo']), "Insumo");
+            //update estado de la Orden de Compra
+            $estadoOC = ($this->checkOCCancelada($_POST['idOC']) ? 4 : ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2));
+            $ordenDeCompra = [
+                'idEstadoOC' => $estadoOC
+            ];
+            $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Insumo',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
-        //update estado de la Orden de Compra
-        $estadoOC = ($this->checkOCCancelada($_POST['idOC']) ? 4 : ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2));
-        $ordenDeCompra = [
-            'idEstadoOC' => $estadoOC
-        ];
-        $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
-        return json_encode($update);
     }
 
     private function getInsumo($idInsumo)

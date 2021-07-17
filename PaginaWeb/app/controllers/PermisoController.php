@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\MyInterface;
 use App\Models\PermisoModel;
+use Exception;
 
 define("table", "permisos");
 
@@ -32,23 +33,59 @@ class PermisoController extends Controller implements MyInterface
 
     public function create()
     {
-        $permiso['nombre'] = $_POST['nombre'];
-        $insert = $this->model->insert(table, $permiso, "Permiso");
-        return json_encode($insert);
+        try {
+            $this->model->startTransaction();
+            $permiso['nombre'] = $_POST['nombre'];
+            $insert = $this->model->insert(table, $permiso, "Permiso");
+            $this->model->commit();
+            return json_encode($insert);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                        "tipo" => 'Permiso',
+                        "operacion" => "insert",
+                        "estado" => false,
+                        "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function update()
     {
-        $permiso = [
-            'nombre' => $_POST['nombre']
-        ];
-        $update = $this->model->update(table, $permiso, array('id' => $_POST['id']), "Permiso");
-        return json_encode($update);
+        try {
+            $this->model->startTransaction();
+            $permiso = [
+                'nombre' => $_POST['nombre']
+            ];
+            $update = $this->model->update(table, $permiso, array('id' => $_POST['id']), "Permiso");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Permiso',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function delete()
     {
-        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Permiso");
-        return json_encode($delete);
+        try {
+            $this->model->startTransaction();
+            $delete = $this->model->delete(table, array('id' => $_POST['id']), "Permiso");
+            $this->model->commit();
+            return json_encode($delete);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                "tipo" => 'Permiso',
+                "operacion" => "delete",
+                "estado" => false,
+                "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 }

@@ -45,6 +45,21 @@ class QueryBuilder
         return $cleaned_params;
     }
 
+    public function startTransaction()
+    {
+        $this->pdo->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->pdo->commit();
+    }
+
+    public function rollback()
+    {
+        $this->pdo->rollBack();
+    }
+
     /**
      * Select all records from a database table.
      *
@@ -81,12 +96,7 @@ class QueryBuilder
                              "mensaje" => $this->pdo->lastInsertId());
             }
         } catch (Exception $e) {
-            if ($e->errorInfo[1] == 1062) { //clave duplicada
-                return array("estado" => false,
-                            "mensaje" => "El nombre ya existe.. (clave duplicada)");
-            } else {
-                return $e;
-            }
+            return $e;
         }
     }
 
@@ -129,12 +139,7 @@ class QueryBuilder
                             "mensaje" => $this->pdo->lastInsertId());
             }
         } catch (Exception $e) {
-            if ($e->errorInfo[1] == 1062) { //clave duplicada
-                return array("estado" => false,
-                            "mensaje" => "El nombre ya existe.. (clave duplicada)");
-            } else {
-                return $e;
-            }
+            return $e;
         }
     }
 
@@ -152,12 +157,7 @@ class QueryBuilder
                              "mensaje" => "Eliminado Correctamente");
             }
         } catch (Exception $e) {
-            if ($e->errorInfo[1] == 1451) { //no puede eliminar (o updatear) una fila padre
-                return array("estado" => false,
-                            "mensaje" => "No se puede eliminar una fila padre (FK)");
-            } else {
-                return $e;
-            }
+            return $e;
         }
     }
 

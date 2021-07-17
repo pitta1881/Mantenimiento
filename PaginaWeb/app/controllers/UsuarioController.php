@@ -7,6 +7,7 @@ use App\Core\MyInterface;
 use App\Models\UsuarioModel;
 use App\Models\RolModel;
 use App\Models\PersonaModel;
+use Exception;
 
 define("table", "usuarios");
 
@@ -38,61 +39,108 @@ class UsuarioController extends Controller implements MyInterface
 
     public function create()
     {
-        $usuario = [
-            'nick' => $_POST['nick'],
-            'password' => $_POST['password'],
-            'idPersona' => $_POST['idPersona'],
-        ];
-        $insert = $this->model->insert(table, $usuario, "Usuario");
-        if ($insert['estado']) { //si falla la insercion(seguramente x nick repetido)
+        try {
+            $this->model->startTransaction();
+            $usuario = [
+                'nick' => $_POST['nick'],
+                'password' => $_POST['password'],
+                'idPersona' => $_POST['idPersona'],
+            ];
+            $insert = $this->model->insert(table, $usuario, "Usuario");
             foreach ($_POST['idRol'] as $key => $value) {
                 $RxU = [
-                    'idRol' => $value,
-                    'idUsuario' => $insert['mensaje']
-                ];
+                'idRol' => $value,
+                'idUsuario' => $insert['mensaje']
+            ];
                 $this->model->insert(tableRxU, $RxU, "RxU");
             }
+            $this->model->commit();
+            return json_encode($insert);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Usuario',
+                    "operacion" => "insert",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
-        return json_encode($insert);
     }
 
     public function update()
     {
-        $usuario = [
-            'password' => $_POST['password']
-        ];
-        $update = $this->model->update(table, $usuario, array('id' => $_POST['id']), "Usuario");
-        return json_encode($update);
+        try {
+            $this->model->startTransaction();
+            $usuario = [
+                'password' => $_POST['password']
+            ];
+            $update = $this->model->update(table, $usuario, array('id' => $_POST['id']), "Usuario");
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Usuario',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function updateRolesUsuario()
     {
-        $this->model->delete(tableRxU, array(['idUsuario'] => $_POST['id']), "RxU");
-        foreach ($_POST['idRol'] as $key => $value) {
-            $RxU = [
-                'idRol' => $value,
-                'idUsuario' => $_POST['id']
-            ];
-            $this->model->insert(tableRxU, $RxU, "RxU");
-        }
-        if ($_POST['id'] == $_SESSION['idUser']) {
-            $usuario['idUsuario'] = $_SESSION['idUser'];
-            $_SESSION['listaRoles'] = $this->model->buscarRoles_x_Usuario($usuario);
-            $_SESSION['rolActual'] = $_SESSION['listaRoles'][0];
-            if (sizeof($_SESSION['listaRoles']) > 1) {
-                $_SESSION['firstOrUnique'] = false;
-            } else {
-                $_SESSION['firstOrUnique'] = true;
+        try {
+            $this->model->startTransaction();
+            $this->model->delete(tableRxU, array('idUsuario' => $_POST['id']), "RxU");
+            foreach ($_POST['idRol'] as $key => $value) {
+                $RxU = [
+                    'idRol' => $value,
+                    'idUsuario' => $_POST['id']
+                ];
+                $update = $this->model->insert(tableRxU, $RxU, "Usuario");
             }
-            $_SESSION['listaPermisos'] = $this->model->getPermisos();
-            redirect('home');
+            if ($_POST['id'] == $_SESSION['idUser']) {
+                $usuario['idUsuario'] = $_SESSION['idUser'];
+                $_SESSION['listaRoles'] = $this->model->buscarRoles_x_Usuario($usuario);
+                $_SESSION['rolActual'] = $_SESSION['listaRoles'][0];
+                if (sizeof($_SESSION['listaRoles']) > 1) {
+                    $_SESSION['firstOrUnique'] = false;
+                } else {
+                    $_SESSION['firstOrUnique'] = true;
+                }
+                $_SESSION['listaPermisos'] = $this->model->getPermisos();
+                return json_encode(array('redirect' => true));
+            }
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Rol',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
     }
 
     public function delete()
     {
-        $this->model->delete(tableRxU, array('idUsuario' => $_POST['id']), "RxU");
-        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Usuario");
-        return json_encode($delete);
+        try {
+            $this->model->startTransaction();
+            $this->model->delete(tableRxU, array('idUsuario' => $_POST['id']), "RxU");
+            $delete = $this->model->delete(table, array('id' => $_POST['id']), "Usuario");
+            $this->model->commit();
+            return json_encode($delete);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                "tipo" => 'Usuario',
+                "operacion" => "delete",
+                "estado" => false,
+                "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 }

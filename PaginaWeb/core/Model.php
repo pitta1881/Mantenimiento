@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\App;
+use Exception;
 
 define("tableRxP", "roles_x_permisos");
 define("tableRxU", "roles_x_usuarios");
@@ -44,6 +45,21 @@ abstract class Model
     {
         $this->db = App::get('database');
         date_default_timezone_set("America/Argentina/Buenos_Aires");
+    }
+
+    public function startTransaction()
+    {
+        $this->db->startTransaction();
+    }
+
+    public function commit()
+    {
+        return $this->db->commit();
+    }
+
+    public function rollback()
+    {
+        $this->db->rollback();
     }
 
     public function getPermisos($rolEntrada = null)
@@ -118,10 +134,14 @@ abstract class Model
         $retorno = array(   "tipo" => $tipo,
                             "operacion" => "insert");
         $datos = $this->db->insert($table, $datos);
-        $retorno = array_merge($retorno, array(
-            "estado" => $datos["estado"],
-            "mensaje" => $datos["mensaje"]
-        ));
+        if(!is_array($datos)){
+            throw new Exception($datos->getMessage(), 1);
+        } else {
+            $retorno = array_merge($retorno, array(
+                "estado" => $datos["estado"],
+                "mensaje" => $datos["mensaje"]
+            ));
+        }
         return $retorno;
     }
 
@@ -137,10 +157,14 @@ abstract class Model
             ));
         } else {
             $datos = $this->db->update($table, $datos, $where);
-            $retorno = array_merge($retorno, array(
-                "estado" => $datos["estado"],
-                "mensaje" => $datos["mensaje"]
-            ));
+            if(!is_array($datos)){
+                throw new Exception($datos->getMessage(), 1);
+            } else {
+                $retorno = array_merge($retorno, array(
+                    "estado" => $datos["estado"],
+                    "mensaje" => $datos["mensaje"]
+                ));
+            }
         }
         return $retorno;
     }
@@ -157,10 +181,14 @@ abstract class Model
             ));
         } else {
             $datos = $this->db->delete($table, $where);
-            $retorno = array_merge($retorno, array(
-                "estado" => $datos["estado"],
-                "mensaje" => $datos["mensaje"]
-            ));
+            if(!is_array($datos)){
+                throw new Exception($datos->getMessage(), 1);
+            } else {
+                $retorno = array_merge($retorno, array(
+                    "estado" => $datos["estado"],
+                    "mensaje" => $datos["mensaje"]
+                ));
+            }
         }
         return $retorno;
     }

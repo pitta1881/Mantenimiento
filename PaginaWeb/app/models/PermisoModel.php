@@ -8,7 +8,7 @@ class PermisoModel extends Model
 {
     public function getFichaOne($table, $where)
     {
-        return $this->getFichaOneModel($table, $where, 'retornoUnoLogic');
+        return $this->getFichaOneModel($table, $where);
     }
 
     public function getFichaAll($table)

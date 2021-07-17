@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\MyInterface;
 use App\Models\RolModel;
+use Exception;
 
 define("table", "roles");
 
@@ -32,36 +33,72 @@ class RolController extends Controller implements MyInterface
 
     public function create()
     {
-        $rol['nombre'] = $_POST['nombre'];
-        $insert = $this->model->insert(table, $rol, "Rol");
-        return json_encode($insert);
+        try {
+            $this->model->startTransaction();
+            $rol['nombre'] = $_POST['nombre'];
+            $insert = $this->model->insert(table, $rol, "Rol");
+            $this->model->commit();
+            return json_encode($insert);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Rol',
+                    "operacion" => "insert",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function update()
     {
-        $this->model->delete(tableRxP, array('idRol' => $_POST["id"]), "RxP");
-        if (isset($_POST["permisos"])) {
-            $permisos= $_POST["permisos"];
-            for ($i=0;$i<count($permisos);$i++) {
-                $rol = [
-                    'idRol' => $_POST["id"],
-                    'idPermiso' => $permisos[$i]
-                ];
-                $insert = $this->model->insert(tableRxP, $rol, "RxP");
+        try {
+            $this->model->startTransaction();
+            $this->model->delete(tableRxP, array('idRol' => $_POST["id"]), "RxP");
+            if (isset($_POST["permisos"])) {
+                $permisos= $_POST["permisos"];
+                for ($i=0;$i<count($permisos);$i++) {
+                    $rol = [
+                        'idRol' => $_POST["id"],
+                        'idPermiso' => $permisos[$i]
+                    ];
+                    $insert = $this->model->insert(tableRxP, $rol, "RxP");
+                }
             }
+            $update = $insert;
+            $update['tipo'] = 'Rol';
+            $update['operacion'] = 'update';
+            $_SESSION['listaPermisos'] = $this->model->getPermisos();
+            $this->model->commit();
+            return json_encode($update);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                    "tipo" => 'Rol',
+                    "operacion" => "update",
+                    "estado" => false,
+                    "mensaje" => $e->getMessage());
+            return json_encode($error);
         }
-        $update = $insert;
-        $update['tipo'] = 'Rol';
-        $update['operacion'] = 'update';
-        $_SESSION['listaPermisos'] = $this->model->getPermisos();
-        return json_encode($update);
     }
 
     public function delete()
     {
-        $this->model->delete(tableRxP, array('idRol' => $_POST['id']), "RxP");
-        $delete = $this->model->delete(table, array('id' => $_POST['id']), "Rol");
-        return json_encode($delete);
+        try {
+            $this->model->startTransaction();
+            $this->model->delete(tableRxP, array('idRol' => $_POST['id']), "RxP");
+            $delete = $this->model->delete(table, array('id' => $_POST['id']), "Rol");
+            $this->model->commit();
+            return json_encode($delete);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                "tipo" => 'Especializacion',
+                "operacion" => "delete",
+                "estado" => false,
+                "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
 
     public function getPermisos()
