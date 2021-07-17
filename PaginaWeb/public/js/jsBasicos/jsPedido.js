@@ -433,7 +433,7 @@ async function asignarAgentesInsumos(e) {
     });
 
     datosDisponibles.agentes.forEach(element => {
-        if (element.listaEspecializaciones.some(esp => esp.id == btn.dataset.idespecializacion) && element.idEstadoPersona == 1) {
+        if (element.listaEspecializaciones.some(esp => esp.id == btn.dataset.idespecializacion) && element.idEstadoPersona != 2) {
             agenteItem = ``;
             let especializacionHTML = ``;
             element.listaEspecializaciones.forEach(especializacion => {
@@ -445,6 +445,9 @@ async function asignarAgentesInsumos(e) {
             : 
                 (Number(element.tareasActuales) >= 10 
                 ? `<a class="btn btn-danger" data-toggle="tooltip" title="Agente con demasiadas tareas actuales" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` 
+                : 
+                Number(element.idEstadoPersona == 3)
+                ? `<a class="btn btn-danger" data-toggle="tooltip" title="Agente con licencia" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` 
                 : `<button type="button" class="btn btn-sm btn-outline-primary btn-agregar" data-toggle="tooltip" title="Agregar Agente" data-placement="top">Agregar</button>
                 <input type="number" data-name="idAgente" value="${element.id}" hidden>
                 <button type="button" class="btn btn-sm btn-outline-success m-auto btn-agente-added" data-toggle="tooltip" title="Agregado" data-placement="top"><i class="fal fa-check-circle fa-lg"></i></button>`
