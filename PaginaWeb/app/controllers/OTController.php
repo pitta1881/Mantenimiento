@@ -51,9 +51,6 @@ class OTController extends Controller implements MyInterface{
                 'fecha' => $ahora,
                 'idUsuario' => $_SESSION['idUser'],
                 'idEstado' => 2,
-                'idEspecializacion' => '',
-                'idPrioridad' => '',
-                'descripcion' => '',
                 'observacion' => 'Tarea Asignada a la Orden de Trabajo Nº '.$insert['mensaje']
             ];
             $this->model->insert(tableHistorialTarea, $historialTarea, "historialTarea");
@@ -70,6 +67,7 @@ class OTController extends Controller implements MyInterface{
     private function getIdHistorial($idTarea, $idPedido)
     {
         $datos['unaTarea'] = $this->modelTarea->getFichaOne(tableTareas, array('id'=>$idTarea, 'idPedido' => $idPedido));
+        //var_dump($datos['unaTarea']);
         return end($datos['unaTarea']['historial'])['id'] + 1;
     }
 }

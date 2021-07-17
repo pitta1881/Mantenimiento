@@ -71,13 +71,14 @@ async function loadTableTareasNewOT() {
     tareasSinOT.tareas.forEach(element => {
         let agentesHTML = '';
         let insumosHTML = '';
+        let addItem = ``;
+
         element.agentes.forEach(agente => {
             agentesHTML += `<li class="text-left">${agente.nombre.slice(0,1)}. ${agente.apellido}</li>`
         })
         element.insumos.forEach(insumo => {
             insumosHTML += `<li class="text-left">${insumo.nombre.slice(0,1)}. ${insumo.descripcion}</li>`
         })
-        let addItem = ``;
         addItem = ` 
         ${  (element.agentes.length == 0) 
             ? `<a class="btn btn-warning btn-sm" data-toggle="tooltip" title="Debe asginar al menos un Agente a esta Tarea" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` 

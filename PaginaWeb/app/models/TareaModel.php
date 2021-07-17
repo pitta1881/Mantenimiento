@@ -46,7 +46,7 @@ class TareaModel extends Model
     }
 
     public function getTareasSinOT(){
-        $tareasSinOT = $this->db->selectAllWhere(tableTareas, 'idOrdenDeTrabajo is null');
+        $tareasSinOT = $this->db->selectAllWhere(tableTareas, 'idOrdenDeTrabajo is null and idEstado = 1');
         foreach ($tareasSinOT as &$tarea) {
             $tarea = $this->retornoUnoLogic($tarea);
         }

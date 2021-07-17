@@ -65,7 +65,7 @@ async function loadTablePedido() {
                 <i class="fal fa-pencil-alt fa-lg fa-fw"></i>
             </button>`;
             }
-            if (element.idEstado == 1 && element.tareasAsignadas == 0 && permisosRolActual.some(item => item == 14)) {
+            if (element.idEstado == 1 && (element.tareasAsignadas == 0 || element.tareas.every(tarea => tarea.idEstado == 4)) && permisosRolActual.some(item => item == 14)) {
                 btnTrash = ` 
             <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="delete" data-target="#modalDelete" title="Cancelar Pedido" data-toggle="tooltip" data-placement="top">
                 <i class="fal fa-trash-alt fa-lg fa-fw"></i>
@@ -219,12 +219,13 @@ async function loadTableTareas(datos) {
             <td><ul class="p-0 m-0 pl-3">${insumosHTML ? insumosHTML : '-'}</ul></td>
             <td>
                 <div class="btn-group btn-group-sm float-none" role="group">
-                    ${btnAsignar}    
-                    ${btnDesasignar}    
-                    ${btnPencil}
-                    ${btnTrash}
-                    ${(tarea.idEstado != 1) ?
-                        `<a href="/ordendetrabajo">Orden de Trabajo Nº ${tarea.idOrdenDeTrabajo}</a>` : ''
+                    ${(tarea.idEstado == 1) ?
+                        btnAsignar+
+                        btnDesasignar+
+                        btnPencil+
+                        btnTrash
+                        : (tarea.idEstado == 4) ? '-':
+                        `<a href="/ordendetrabajo">Orden de Trabajo Nº ${tarea.idOrdenDeTrabajo}</a>`
                     }
                 </div>
             </td>            
@@ -432,7 +433,7 @@ async function asignarAgentesInsumos(e) {
     });
 
     datosDisponibles.agentes.forEach(element => {
-        if (element.listaEspecializaciones.some(esp => esp.id == btn.dataset.idespecializacion)) {
+        if (element.listaEspecializaciones.some(esp => esp.id == btn.dataset.idespecializacion) && element.idEstadoPersona == 1) {
             agenteItem = ``;
             let especializacionHTML = ``;
             element.listaEspecializaciones.forEach(especializacion => {

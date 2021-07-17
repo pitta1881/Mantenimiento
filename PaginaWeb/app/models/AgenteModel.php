@@ -24,9 +24,10 @@ class AgenteModel extends Model
 
     public function retornoUnoLogic($datoUno)
     {
-        $persona = $this->db->selectWhatWhere(tablePersonas, 'nombre,apellido', array('id' => $datoUno['idPersona']))[0];
+        $persona = $this->db->selectWhatWhere(tablePersonas, 'nombre,apellido,idEstadoPersona', array('id' => $datoUno['idPersona']))[0];
         $datoUno['nombre']=$persona['nombre'];
         $datoUno['apellido']=$persona['apellido'];
+        $datoUno['idEstadoPersona'] = $persona['idEstadoPersona'];
         $datoUno['listaTareas'] = $this->db->selectAllWhere(tableAxT, array('idAgente' => $datoUno['id']));
         $datoUno['listaEspecializaciones'] = $this->db->selectWhatWhere(tableExA, 'idEspecializacion', array('idAgente' => $datoUno['id']));
         foreach ($datoUno['listaEspecializaciones'] as &$especializacion) {
