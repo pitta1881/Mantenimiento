@@ -137,7 +137,9 @@ CREATE TABLE OrdenesDeTrabajo (
     fechaInicio DATETIME NOT NULL,
     fechaFin DATETIME,
     idEstado INTEGER NOT NULL,
-    FOREIGN KEY (idEstado) REFERENCES Estados (id)
+    idUsuario INTEGER NOT NULL,
+    FOREIGN KEY (idEstado) REFERENCES Estados (id),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
 );
 
 CREATE TABLE Tareas (

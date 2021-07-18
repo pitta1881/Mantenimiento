@@ -119,7 +119,7 @@
 //rutas OT
     $router->get('ordendetrabajo', 'OTController@index');
     $router->post('ordendetrabajo/create', 'OTController@create');
-    $router->post('ordendetrabajo/update', 'OTController@update');
+    $router->post('ordendetrabajo/updateTareas', 'OTController@update');
     $router->post('ordendetrabajo/fichaOne', 'OTController@fichaOne');
     $router->post('ordendetrabajo/fichaAll', 'OTController@fichaAll');
 

@@ -17,6 +17,7 @@ loadTable();
 loadTooltips();
 modalDrag();
 loadListenerActionButtons({
+    'visualize': visualizarOTParticular,
     'loadTable': loadTable
 });
 loadScriptValidarCampos(loadTable);
@@ -107,23 +108,23 @@ async function loadTableTareasNewOT() {
     });
     $('#tableTareas tbody').html(textoInner);
     loadScriptOrdenarPagTablas('tableTareas', '0,1,2,3,4,5', [6, 7, 8], 'Tareas Registradas', false);
-    loadEventosTableTareasNewOT();
+    loadEventosTableTareas('tableTareas');
 }
 
-function loadEventosTableTareasNewOT() {
-    $(`#tableTareas .btn-agregar`).on("click", function () {
+function loadEventosTableTareas(idTable) {
+    $(`#${idTable} .btn-agregar`).on("click", function () {
         $(this).toggle();
         $(this).siblings(".btn-tarea-added").toggle();
-        $(`#tableTareas`).parents('form').find('button[type=submit]').attr('disabled', false);
+        $(`#${idTable}`).parents('form').find('button[type=submit]').attr('disabled', false);
         changeLSTareas.call(this);
     })
 
-    $(`#tableTareas .btn-tarea-added`).on("click", function () {
+    $(`#${idTable} .btn-tarea-added`).on("click", function () {
         $(this).toggle();
         $(this).siblings(".btn-agregar").toggle();
         changeLSTareas.call(this);
         if (JSON.parse(localStorage.getItem('tareas')).length == 0) {
-            $(`#tableTareas`).parents('form').find('button[type=submit]').attr('disabled', true);
+            $(`#${idTable}`).parents('form').find('button[type=submit]').attr('disabled', true);
         }
     })
 
@@ -143,4 +144,88 @@ function loadEventosTableTareasNewOT() {
         }
         localStorage.setItem('tareas', JSON.stringify(tareas));
     }
+}
+
+function loadTableTareasOT(table, datos) {
+    $(`#${table}`).parents('form').find('button[type=submit]').attr('disabled', true);
+    $('#' + table).DataTable().clear().destroy();
+    localStorage.setItem('tareas', '[]');
+    let textoInner = ``;
+    datos.tareas.forEach(tarea => {
+        let agentesHTML = '';
+        let insumosHTML = '';
+        tarea.agentes.forEach(agente => {
+            agentesHTML += `<li class="text-left">${agente.nombre.slice(0,1)}. ${agente.apellido}</li>`
+        })
+        tarea.insumos.forEach(insumo => {
+            insumosHTML += `<li class="text-left">${insumo.nombre.slice(0,1)}. ${insumo.descripcion}</li>`
+        })
+        textoInner += `
+        <tr>
+            <td>${tarea.idPedido}</td>
+            <td>${tarea.id}</td>
+            <td>${tarea.descripcion}</td>
+            <td>${tarea.sectorNombre}</td>
+            <td>${tarea.prioridadNombre}</td>
+            <td>${tarea.estadoNombre}</td>
+            <td><ul class="p-0 m-0 pl-3">${agentesHTML ? agentesHTML : '-'}</ul></td>
+            <td><ul class="p-0 m-0 pl-3">${insumosHTML ? insumosHTML : '-'}</ul></td>
+            ${(table === 'miTablaListaTareas' ? '': `<td>` +
+            (tarea.idEstado == 1 || tarea.idEstado == 2 ? 
+                `<button type="button" class="btn btn-sm btn-outline-primary btn-agregar" data-toggle="tooltip" title="Marcar Tarea Terminada" data-placement="top">Terminado</button>
+                <input type="number" data-name="idTarea" value="${tarea.id}" hidden>
+                <input type="number" data-name="idPedido" value="${tarea.idPedido}" hidden>
+                <button type="button" class="btn btn-sm btn-outline-success m-auto btn-tarea-added" data-toggle="tooltip" title="Agregado" data-placement="top"><i class="fal fa-check-circle fa-lg"></i></button>
+            `: `-`) + `</td>`
+            )}
+            
+        </tr>
+        `
+    });
+    $('#' + table + ' tbody').html(textoInner);
+    $('input#idOTUpdateTarea').val(datos.id);
+    (table === 'miTablaListaTareas' ? loadScriptOrdenarPagTablas(table, '0,1,2,3,4,5', [6, 7], 'Tareas Asignadas', true, 'dlOrdenDeTrabajo') : loadScriptOrdenarPagTablas(table, '0,1,2,3,4,5', [6, 7, 8], 'Lista de Tareas', false))
+    loadEventosTableTareas('miTablaListaTareasUpd');
+}
+
+function visualizarOTParticular(datos) {
+    $('#nav-ordendetrabajo-tab').click();
+    loadDlOrdenDeTrabajo(datos);
+    (datos.idEstado == 5 ? $('#nav-listaTareasUpd-tab').hide() : (
+        $('#nav-listaTareasUpd-tab').show(),
+        loadTableTareasOT('miTablaListaTareasUpd', datos)
+    ));
+}
+
+function loadDlOrdenDeTrabajo(datos) {
+    let textoInner = ``;
+    textoInner += `
+    <div class="row m-0">
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Nº OT</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.id}</dd>
+    </div>
+    <div class="row m-0">
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Fecha Inicio</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fechaInicio}</dd>
+    </div>
+    <div class="row m-0">
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Fecha Fin</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fechaFin}</dd>
+    </div>
+    <div class="row m-0">
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Cant. Tareas</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.cantidadTareas}</dd>
+    </div>
+    <div class="row m-0">
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Estado</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.estadoNombre}</dd>
+    </div>
+    <div class="row m-0">
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">Usuario</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.nickUsuario}</dd>
+    </div>
+    <div class="row m-0">
+            `;
+    document.getElementById('dlOrdenDeTrabajo').innerHTML = textoInner;
+    loadTableTareasOT('miTablaListaTareas', datos)
 }

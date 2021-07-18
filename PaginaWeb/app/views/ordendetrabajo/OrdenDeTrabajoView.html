@@ -89,6 +89,83 @@ Gestion de Orden de Trabajo
 </div>
 {% endif %}
 
+{% if "21" in datos.datosSesion.listaPermisos %}
+<div class="modal fade" id="modalGeneral">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h3 class="modal-title m-0">Orden de Trabajo</h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<nav class="px-4">
+				<div class="nav nav-tabs" id="nav-tab" role="tablist">
+					<a class="nav-item nav-link active" id="nav-ordendetrabajo-tab" data-toggle="tab"
+						href="#nav-ordendetrabajo" role="tab" aria-controls="nav-ordendetrabajo"
+						aria-selected="true">Orden de Trabajo</a>
+					<a class="nav-item nav-link" id="nav-listaTareasUpd-tab" data-toggle="tab"
+						href="#nav-listaTareasUpd" role="tab" aria-controls="nav-listaTareasUpd"
+						aria-selected="true">Tareas</a>
+				</div>
+			</nav>
+			<div class="tab-content px-4 py-2" id="nav-tabContent">
+				<!--VER ORDEN DE TRABAJO UNO-->
+				<div class="tab-pane fade show active" id="nav-ordendetrabajo" role="tabpanel"
+					aria-labelledby="nav-ordendetrabajo-tab">
+					<dl class="m-0 p-0" id='dlOrdenDeTrabajo'></dl>
+					<!--VER Lista Tareas-->
+					<table id="miTablaListaTareas"
+						class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Nº Pedido</th>
+								<th>Nº Tarea</th>
+								<th>Descripcion Tarea</th>
+								<th>Sector</th>
+								<th>Prioridad</th>
+								<th>Estado</th>
+								<th>Agentes</th>
+								<th>Insumos</th>
+							</tr>
+						</thead>
+						<tbody id="tbodyListaTareas"></tbody>
+					</table>
+				</div>
+				<!--Tildar Ready en Lista Tareas-->
+				<div class="tab-pane fade" id="nav-listaTareasUpd" role="tabpanel"
+					aria-labelledby="nav-listaTareasUpd-tab">
+					<form action="updateTareas" method="post" id="formOTUpdTareas">
+						<input type="text" name="idOT" id="idOTUpdateTarea" hidden>
+						<table id="miTablaListaTareasUpd"
+							class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+							<thead>
+								<tr>
+									<th>Nº Pedido</th>
+									<th>Nº Tarea</th>
+									<th>Descripcion Tarea</th>
+									<th>Sector</th>
+									<th>Prioridad</th>
+									<th>Estado</th>
+									<th>Agentes</th>
+									<th>Insumos</th>
+									<th>Accion</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+							<button type="submit" class="btn btn-success" disabled>Enviar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+
 <!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}
 {% block javascripts %}

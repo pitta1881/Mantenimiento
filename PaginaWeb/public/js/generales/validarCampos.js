@@ -769,7 +769,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         });
 
     //orden de compra forms
-    $('#formOTNew').bootstrapValidator({
+    $('#formOTNew, #formOTUpdTareas').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
                 idUsuario: {
@@ -824,7 +824,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     value: localStorage.getItem('insumos')
                 });
             }
-            if (formNameID == 'formOTNew') {
+            if (formNameID == 'formOTNew' || formNameID == 'formOTUpdTareas') {
                 dataForm.push({
                     name: 'tareas',
                     value: localStorage.getItem('tareas')

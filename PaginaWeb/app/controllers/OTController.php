@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\MyInterface;
+use App\Models\AgenteModel;
 use App\Models\OTModel;
 use App\Models\PedidoModel;
 use App\Models\TareaModel;
@@ -18,6 +19,7 @@ class OTController extends Controller implements MyInterface
         $this->model = new OTModel();
         $this->modelTarea = new TareaModel();
         $this->modelPedido = new PedidoModel();
+        $this->modelAgente = new AgenteModel();
         session_start();
     }
 
@@ -40,9 +42,10 @@ class OTController extends Controller implements MyInterface
             $this->model->startTransaction();
             $ahora = date('Y-m-d H:i:s');
             $datosOT = [
-            'fechaInicio' => $ahora,
-            'idEstado' => 2
-        ];
+                'fechaInicio' => $ahora,
+                'idEstado' => 2,
+                'idUsuario' => $_SESSION['idUser']
+            ];
             $insert = $this->model->insert(tableOT, $datosOT, "Orden de Trabajo");
             $tareas = json_decode($_POST['tareas'], true);
             foreach ($tareas as $tarea) {
@@ -89,6 +92,62 @@ class OTController extends Controller implements MyInterface
 
     public function update()
     {
+        try {
+            $this->model->startTransaction();
+            $ahora = date('Y-m-d H:i:s');
+            $tareas = json_decode($_POST['tareas'], true);
+            foreach ($tareas as $tarea) {
+                //actualizo tabla Tarea e historial
+                $datos = [
+                    'idEstado' => 5
+                ];
+                $insert = $this->model->update(tableTareas, $datos, array('idPedido'=>$tarea['idPedido'],'id'=>$tarea['idTarea']), "Tarea");
+                $historialTarea = [
+                    'id' => $this->getIdHistorialTarea($tarea['idTarea'], $tarea['idPedido']),
+                    'idTarea' => $tarea['idTarea'],
+                    'idPedido' => $tarea['idPedido'],
+                    'fecha' => $ahora,
+                    'idUsuario' => $_SESSION['idUser'],
+                    'idEstado' => 5,
+                    'observacion' => 'Tarea Finalizada'
+                ];
+                $this->model->insert(tableHistorialTarea, $historialTarea, "historialTarea");
+                //actualizo cantidad tareas del agente
+                $datos['unaTarea'] = $this->modelTarea->getFichaOne(table, array('id'=>$tarea['idTarea'], 'idPedido' => $tarea['idPedido']));
+                foreach ($datos['unaTarea']['agentes'] as $agente) {
+                    $this->model->update(tableAgentes, array('tareasActuales' => $agente['tareasActuales']-1), array('id' => $agente['idAgente']), "Agente");
+                }
+            }
+            //verifico si terminaron todas las tareas correspondientes a un pedido o a una OT para ponerlas como terminadas
+            $datos['unaTarea'] = $this->modelTarea->getFichaOne(table, array('id'=>$tarea['idTarea'], 'idPedido' => $tarea['idPedido']));
+            $terminado = true;
+            foreach ($datos['unaTarea'] as $tarea) {
+                if (!$tarea['idEstado'] == 5 || !$tarea['idEstado'] == 4) {
+                    $terminado = false;
+                }
+            }
+            //actualizo tabla Pedido e historial
+            $historialPedido = [
+                    'id' => $this->getIdHistorialPedido($tarea['idPedido']),
+                    'idPedido' => $tarea['idPedido'],
+                    'fecha' => $ahora,
+                    'idUsuario' => $_SESSION['idUser'],
+                    'idEstado' => 2,
+                    'observacion' => 'La Tarea Nº '.$tarea['idTarea'].' se agregó a la OT Nº '.$insert['mensaje']
+                ];
+            $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
+            
+            $this->model->commit();
+            return json_encode($insert);
+        } catch (Exception $e) {
+            $this->model->rollback();
+            $error = array(
+                        "tipo" => 'Orden de Trabajo',
+                        "operacion" => "insert",
+                        "estado" => false,
+                        "mensaje" => $e->getMessage());
+            return json_encode($error);
+        }
     }
     
     public function delete()
