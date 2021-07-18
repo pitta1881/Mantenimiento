@@ -219,6 +219,37 @@
 		</div>
 	{% endif %}
 
+	<!--FINISH PEDIDO SI SOLO ESTÁ EN ESTADO EN CURSO Y TODAS SUS TAREAS ESTAN EN FINALIZADO O CANCELADO-->
+		<div class="modal fade" id="modalFinish">
+			<div class="modal-dialog" role="document">
+				<div
+					class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0" id="h3TitleModalFinish"></h3>
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<form action="finish" method="post" id="formPedidoFin">
+							<input type="text" name="id" id="finishID" hidden>
+							<div class="form-group required">
+								<label class="control-label" for="observacionFinish">Ingrese algún comentario final:</label>
+								<textarea class="form-control" rows="4" name="observacion" id="observacionFinish" required></textarea>
+							</div>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary btn-modal" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-danger btn-modal">Eliminar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	<!--MODAL GENERAL PEDIDOS-->
 	{% if "16" in datos.datosSesion.listaPermisos %}
 		<div class="modal fade" id="modalGeneral">

@@ -422,7 +422,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         });
 
     //pedidos forms
-    $('#formPedidoNew, #formPedidoUpd, #formPedidoDel').bootstrapValidator({
+    $('#formPedidoNew, #formPedidoUpd, #formPedidoDel, #formPedidoFin').bootstrapValidator({
             excluded: [':disabled'],
             fields: {
                 idUsuario: {

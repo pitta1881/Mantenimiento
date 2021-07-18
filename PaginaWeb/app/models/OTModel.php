@@ -21,6 +21,7 @@ class OTModel extends Model
         $datoUno['estadoNombre'] = $this->db->selectWhatWhere(tableEstados, 'nombre', array('id' => $datoUno['idEstado']))[0]['nombre'];
         $datoUno['cantidadTareas'] = $this->db->countWhatFromWhere(tableTareas, 'idOrdenDeTrabajo', array('idOrdenDeTrabajo' => $datoUno['id']))[0];
         $datoUno['tareas'] = $this->db->selectAllWhere(tableTareas, array('idOrdenDeTrabajo' => $datoUno['id']));
+        $datoUno['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $datoUno['idUsuario']))[0]['nick'];
         foreach ($datoUno['tareas'] as &$tarea) {
             $tarea = $this->verificarFechasyVacios($tarea);
             $tarea['nickUsuario'] = $this->db->selectWhatWhere(tableUsuarios, 'nick', array('id' => $tarea['idUsuario']))[0]['nick'];

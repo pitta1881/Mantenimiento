@@ -215,18 +215,6 @@ class TareaController extends Controller implements MyInterface
                     'stockComprometido' => $insumoRelacionado['stockComprometido'] - $insumo['cantidad']
                 ];
                 $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['idInsumo']), "Insumo");
-                $historialInsumo = [
-                    'id' => $this->getIdHistorialInsumo($insumo['idInsumo']),
-                    'idInsumo' => $insumo['idInsumo'],
-                    'fecha' => date('Y-m-d H:i:s'),
-                    'idUsuario' => $_SESSION['idUser'],
-                    'oldStock' => $insumoRelacionado['stockReal'],
-                    'newStock' => $insumoRelacionado['stockReal'] + $insumo['cantidad'],
-                    'inOrOut' => 1,
-                    'idTarea' => $idTarea,
-                    'idPedido' => $idPedido
-                ];
-                $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
             }
             $this->model->delete(tableIxT, array('idTarea' => $idTarea, 'idPedido' => $idPedido), "IxT");
         }
@@ -272,18 +260,6 @@ class TareaController extends Controller implements MyInterface
                         'stockComprometido' => $insumoRelacionado['stockComprometido'] + $insumo['cantidad']
                     ];
                     $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Tarea");
-                    $historialInsumo = [
-                        'id' => $this->getIdHistorialInsumo($insumo['id']),
-                        'idInsumo' => $insumo['id'],
-                        'fecha' => date('Y-m-d H:i:s'),
-                        'idUsuario' => $_SESSION['idUser'],
-                        'oldStock' => $insumoRelacionado['stockReal'],
-                        'newStock' => $insumoRelacionado['stockReal'] - $insumo['cantidad'],
-                        'inOrOut' => 0,
-                        'idTarea' => $idTarea,
-                        'idPedido' => $idPedido
-                    ];
-                    $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
                     $datos = [
                         'idTarea' => $idTarea,
                         'idPedido' => $idPedido,
@@ -334,18 +310,6 @@ class TareaController extends Controller implements MyInterface
                         'stockComprometido' => $insumoRelacionado['stockComprometido'] - $insumo['cantidad']
                     ];
                     $update = $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['id']), "Tarea");
-                    $historialInsumo = [
-                        'id' => $this->getIdHistorialInsumo($insumo['id']),
-                        'idInsumo' => $insumo['id'],
-                        'fecha' => date('Y-m-d H:i:s'),
-                        'idUsuario' => $_SESSION['idUser'],
-                        'oldStock' => $insumoRelacionado['stockReal'],
-                        'newStock' => $insumoRelacionado['stockReal'] + $insumo['cantidad'],
-                        'inOrOut' => 1,
-                        'idTarea' => $idTarea,
-                        'idPedido' => $idPedido
-                    ];
-                    $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
                     $datos = [
                         'fecha' => date('Y-m-d H:i:s'),
                         'cantidad' => $insumo['cantidadInicial'] - $insumo['cantidad']

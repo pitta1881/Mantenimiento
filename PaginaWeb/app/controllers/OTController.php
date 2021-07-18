@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\MyInterface;
 use App\Models\AgenteModel;
+use App\Models\InsumoModel;
 use App\Models\OTModel;
 use App\Models\PedidoModel;
 use App\Models\TareaModel;
@@ -20,6 +21,7 @@ class OTController extends Controller implements MyInterface
         $this->modelTarea = new TareaModel();
         $this->modelPedido = new PedidoModel();
         $this->modelAgente = new AgenteModel();
+        $this->modelInsumo = new InsumoModel();
         session_start();
     }
 
@@ -66,7 +68,7 @@ class OTController extends Controller implements MyInterface
                 ];
                 $this->model->insert(tableHistorialTarea, $historialTarea, "historialTarea");
                 //actualizo tabla Pedido e historial
-                $this->model->update(tablePedidos, array('idEstado'=> 2), array('idPedido'=>$tarea['idPedido']), "Pedido");
+                $this->model->update(tablePedidos, array('idEstado'=> 2), array('id'=>$tarea['idPedido']), "Pedido");
                 $historialPedido = [
                     'id' => $this->getIdHistorialPedido($tarea['idPedido']),
                     'idPedido' => $tarea['idPedido'],
@@ -98,10 +100,11 @@ class OTController extends Controller implements MyInterface
             $tareas = json_decode($_POST['tareas'], true);
             foreach ($tareas as $tarea) {
                 //actualizo tabla Tarea e historial
-                $datos = [
-                    'idEstado' => 5
+                $tareaUpdate = [
+                    'idEstado' => 5,
+                    'fechaFin' => $ahora
                 ];
-                $insert = $this->model->update(tableTareas, $datos, array('idPedido'=>$tarea['idPedido'],'id'=>$tarea['idTarea']), "Tarea");
+                $insert = $this->model->update(tableTareas, $tareaUpdate, array('idPedido'=>$tarea['idPedido'],'id'=>$tarea['idTarea']), "Tarea");
                 $historialTarea = [
                     'id' => $this->getIdHistorialTarea($tarea['idTarea'], $tarea['idPedido']),
                     'idTarea' => $tarea['idTarea'],
@@ -113,37 +116,54 @@ class OTController extends Controller implements MyInterface
                 ];
                 $this->model->insert(tableHistorialTarea, $historialTarea, "historialTarea");
                 //actualizo cantidad tareas del agente
-                $datos['unaTarea'] = $this->modelTarea->getFichaOne(table, array('id'=>$tarea['idTarea'], 'idPedido' => $tarea['idPedido']));
-                foreach ($datos['unaTarea']['agentes'] as $agente) {
+                $tareaRelacionada = $this->modelTarea->getFichaOne(tableTareas, array('id'=>$tarea['idTarea'], 'idPedido' => $tarea['idPedido']));
+                foreach ($tareaRelacionada['agentes'] as $agente) {
                     $this->model->update(tableAgentes, array('tareasActuales' => $agente['tareasActuales']-1), array('id' => $agente['idAgente']), "Agente");
                 }
-            }
-            //verifico si terminaron todas las tareas correspondientes a un pedido o a una OT para ponerlas como terminadas
-            $datos['unaTarea'] = $this->modelTarea->getFichaOne(table, array('id'=>$tarea['idTarea'], 'idPedido' => $tarea['idPedido']));
-            $terminado = true;
-            foreach ($datos['unaTarea'] as $tarea) {
-                if (!$tarea['idEstado'] == 5 || !$tarea['idEstado'] == 4) {
-                    $terminado = false;
+                //actualizo stock comprometido de insumos si tenia
+                foreach ($tareaRelacionada['insumos'] as $insumo) {
+                    $insumoRelacionado = $this->modelInsumo->getFichaOne(tableInsumos, array('id' => $insumo['idInsumo']));
+                    $insumoToUpdate = [
+                        'stockComprometido' => $insumoRelacionado['stockComprometido'] - $insumo['cantidad'],
+                        'stockReal' => $insumoRelacionado['stockReal'] - $insumo['cantidad']
+                    ];
+                    $this->model->update(tableInsumos, $insumoToUpdate, array('id' => $insumo['idInsumo']), "Insumo");
+                    $historialInsumo = [
+                        'id' => $this->getIdHistorialInsumo($insumo['idInsumo']),
+                        'idInsumo' => $insumo['idInsumo'],
+                        'fecha' => $ahora,
+                        'idUsuario' => $_SESSION['idUser'],
+                        'oldStock' => $insumoRelacionado['stockReal'],
+                        'newStock' => $insumoRelacionado['stockReal'] - $insumo['cantidad'],
+                        'inOrOut' => 0,
+                        'idTarea' => $tarea['idTarea'],
+                        'idPedido' => $tarea['idPedido']
+                    ];
+                    $this->model->insert(tableHistorialInsumo, $historialInsumo, "historialInsumo");
                 }
             }
-            //actualizo tabla Pedido e historial
-            $historialPedido = [
-                    'id' => $this->getIdHistorialPedido($tarea['idPedido']),
-                    'idPedido' => $tarea['idPedido'],
-                    'fecha' => $ahora,
-                    'idUsuario' => $_SESSION['idUser'],
-                    'idEstado' => 2,
-                    'observacion' => 'La Tarea Nº '.$tarea['idTarea'].' se agregó a la OT Nº '.$insert['mensaje']
+            //verifico si terminaron todas las tareas correspondientes a una OT
+            $otTerminado = true;
+            $ordendetrabajo = $this->model->getFichaOne(table, array('id'=>$_POST['idOT']));
+            foreach ($ordendetrabajo['tareas'] as $tarea) {
+                if (!($tarea['idEstado'] == 5)) {
+                    $otTerminado = false;
+                }
+            }
+            if ($otTerminado) {
+                $ordendetrabajoUpdate = [
+                    'idEstado' => 5,
+                    'fechaFin' => $ahora
                 ];
-            $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
-            
+                $this->model->update(table, $ordendetrabajoUpdate, array('id' => $_POST['idOT']), "Orden de Trabajo");
+            }
             $this->model->commit();
             return json_encode($insert);
         } catch (Exception $e) {
             $this->model->rollback();
             $error = array(
                         "tipo" => 'Orden de Trabajo',
-                        "operacion" => "insert",
+                        "operacion" => "update",
                         "estado" => false,
                         "mensaje" => $e->getMessage());
             return json_encode($error);
@@ -165,5 +185,11 @@ class OTController extends Controller implements MyInterface
     {
         $datos['unPedido'] = $this->modelPedido->getFichaOne(tablePedidos, array('id'=>$idPedido));
         return end($datos['unPedido']['historial'])['id'] + 1;
+    }
+
+    private function getIdHistorialInsumo($idInsumo)
+    {
+        $datos['unInsumo'] = $this->modelInsumo->getFichaOne(tableInsumos, array('id'=>$idInsumo));
+        return (empty($datos['unInsumo']['historial']) ? 1 : end($datos['unInsumo']['historial'])['id'] + 1);
     }
 }

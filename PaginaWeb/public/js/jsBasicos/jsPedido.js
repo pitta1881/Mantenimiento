@@ -21,6 +21,7 @@ modalDrag();
 loadListenerActionButtons({
     'update': modificarModal,
     'delete': deleteModal,
+    'finish': finishModal,
     'visualize': visualizarPedidoGeneral,
     'visualize-2': {
         'callback': visualizarSectorPedido,
@@ -51,6 +52,7 @@ async function loadTablePedido() {
             let btnEye = ``;
             let btnPencil = ``;
             let btnTrash = ``;
+            let btnFinish = ``;
             (element.usado || element.id == 1 ? disabled = `disabled` : ``);
             if (permisosRolActual.some(item => item == 16)) {
                 btnEye = ` 
@@ -58,7 +60,6 @@ async function loadTablePedido() {
                 <i class="fal fa-eye fa-lg fa-fw"></i>
             </button>`;
             }
-
             if (element.idEstado != 4 && element.idEstado != 5 && permisosRolActual.some(item => item == 15)) {
                 btnPencil = ` 
             <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="update" data-target="#modalUpdate" title="Editar Pedido" data-toggle="tooltip" data-placement="top">
@@ -69,6 +70,13 @@ async function loadTablePedido() {
                 btnTrash = ` 
             <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="delete" data-target="#modalDelete" title="Cancelar Pedido" data-toggle="tooltip" data-placement="top">
                 <i class="fal fa-trash-alt fa-lg fa-fw"></i>
+            </button>
+            `;
+            }
+            if (element.idEstado == 2 && element.tareas.every(tarea => tarea.idEstado == 4 || tarea.idEstado == 5)) {
+                btnFinish = ` 
+            <button type="button" class="btn btn-outline-primary" data-id='${element.id}' data-abm="finish" data-target="#modalFinish" title="Finalizar Pedido" data-toggle="tooltip" data-placement="top">
+                <i class="fal fa-check-circle fa-lg fa-fw"></i>
             </button>
             `;
             }
@@ -90,6 +98,7 @@ async function loadTablePedido() {
                     ${btnEye}
                     ${btnPencil}
                     ${btnTrash}
+                    ${btnFinish}
                 </div>
             </td>
         </tr>
@@ -155,7 +164,7 @@ async function loadTableTareas(datos) {
     $('#miTablaTarea').DataTable().clear().destroy();
     let permisosRolActual = await getPermisosRolActual();
     let textoInner = ``;
-    if (datos.idEstado == 4 || datos.idEstado == 6) {
+    if (datos.idEstado == 4 || datos.idEstado == 5 || datos.idEstado == 6) {
         $('button[data-target="#modalNewTarea"]').hide();
     } else {
         $('button[data-target="#modalNewTarea"]').show();
@@ -240,7 +249,7 @@ async function loadTableTareas(datos) {
     $('.desasignarAgentesInsumos').on('click', desasignarAgentesInsumos);
     $('.updateTarea').on('click', modificarTareaModal)
     $('.deleteTarea').on('click', deleteModalTarea)
-    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,45,6,7', [8, 9, 10], 'Tareas Registradas', true, 'nav-pedido');
+    loadScriptOrdenarPagTablas('miTablaTarea', '0,1,2,3,4,5,6,7', [8, 9, 10], 'Tareas Registradas', true, 'nav-pedido');
 }
 
 function visualizarSectorPedido(datos) {
@@ -303,6 +312,11 @@ async function modificarTareaModal(e) {
 function deleteModal(datos) {
     $('#h3TitleModalDelete').text("Cancelar Pedido " + datos['id']);
     $('#deleteID').attr('value', datos['id']);
+}
+
+function finishModal(datos) {
+    $('#h3TitleModalFinish').text("Finalizar Pedido " + datos['id']);
+    $('#finishID').attr('value', datos['id']);
 }
 
 async function deleteModalTarea(e) {

@@ -103,7 +103,7 @@ function loadHistorial(datos) {
             <td>${myDate[0]} ${myDate[1]}</td>
             <td>${element.nickUsuario}</td>
             <td>${(element.inOrOut == 0 ? `Salida` : `Entrada`)}</td>
-            <td>${element.newStock - element.oldStock}</td>
+            <td>${Math.abs(element.newStock - element.oldStock)}</td>
             <td>${element.oldStock}</td>
             <td>${element.newStock}</td>
             <td>${(element.idOC != null ? `

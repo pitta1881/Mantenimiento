@@ -117,7 +117,7 @@ async function loadTableInsumosUpdateOCNewOC() {
     fichaAll.forEach(element => {
         let carritoItem = ``;
         carritoItem = ` 
-            <button type="button" class="btn btn-outline-primary btn-agregar" data-toggle="tooltip" title="Agregar Insumo" data-placement="top">Agregar
+            <button type="button" class="btn btn-outline-primary btn-agregar">Agregar
                 ${(Number(element.stockReal) < Number(element.stockMinimo) ? `<a class="btn btn-danger btn-badge-insumo-alert" data-toggle="tooltip" title="Stock por debajo del mínimo" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` : ``)}
             </button>
             <button type="button" class="btn btn-minus-cart btn-md btn-primary border-right-0 border"><i class="fal fa-minus"></i></button>

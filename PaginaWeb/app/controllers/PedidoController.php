@@ -142,9 +142,9 @@ class PedidoController extends Controller implements MyInterface
                 'id' => $this->getIdHistorial($_POST['id']),
                 'idPedido' => $_POST['id'],
                 'fecha' => $ahora,
-                'idEstado' => 4,
+                'idEstado' => 5,
                 'idUsuario' => $_SESSION['idUser'],
-                'observacion' => 'Pedido Finalizado'
+                'observacion' => 'Pedido Finalizado > '.$_POST['observacion']
             ];
             $this->model->insert(tableHistorialPedido, $historialPedido, "historialPedido");
             $this->model->commit();

@@ -139,7 +139,7 @@ CREATE TABLE OrdenesDeTrabajo (
     idEstado INTEGER NOT NULL,
     idUsuario INTEGER NOT NULL,
     FOREIGN KEY (idEstado) REFERENCES Estados (id),
-    FOREIGN KEY (idUsuario) REFERENCES Usuarios (id),
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios (id)
 );
 
 CREATE TABLE Tareas (
