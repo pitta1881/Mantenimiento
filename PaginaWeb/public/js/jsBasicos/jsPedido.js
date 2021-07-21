@@ -375,9 +375,9 @@ async function desasignarAgentesInsumos(e) {
     datosTarea.agentes.forEach(element => {
         agenteItem = ``;
         agenteItem = `
-                <button type="button" class="btn btn-outline-primary btn-agregar" data-toggle="tooltip" title="Agregar Agente" data-placement="top">Eliminar</button>
+                <button type="button" class="btn btn-outline-primary btn-agregar" data-toggle="tooltip" title="Seleccionar Agente" data-placement="top">Eliminar</button>
                 <input type="number" data-name="idAgente" value="${element.idAgente}" hidden>
-                <button type="button" class="btn btn-sm btn-outline-danger m-auto btn-agente-added" data-toggle="tooltip" title="Agregado" data-placement="top"><i class="fal fa-check-circle fa-lg"></i></button>
+                <button type="button" class="btn btn-sm btn-outline-danger m-auto btn-agente-added" data-toggle="tooltip" title="Seleccionado" data-placement="top"><i class="fal fa-check-circle fa-lg"></i></button>
                 `;
         agentesHTML += `
         <tr>
@@ -425,7 +425,7 @@ async function asignarAgentesInsumos(e) {
             (Number(element.stockReal - element.stockComprometido) <= 0 
             ? `<a class="btn btn-danger" data-toggle="tooltip" title="Sin Stock" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` 
             : `
-            <button type="button" class="btn btn-outline-primary btn-agregar" data-toggle="tooltip" title="Agregar Insumo" data-placement="top">Agregar</button>
+            <button type="button" class="btn btn-outline-primary btn-agregar" data-toggle="tooltip" title="Seleccionar Insumo" data-placement="top">Agregar</button>
             <button type="button" class="btn btn-minus-cart btn-md btn-primary border-right-0 border"><i class="fal fa-minus"></i></button>
             <input type="number" data-name="idInsumo" value="${element.id}" hidden>
             <input type="number" data-name="cantidadInsumo" class="input-cart" placeholder="0" value="0" min="0" max="${element.stockReal - element.stockComprometido}" readonly>
@@ -462,9 +462,9 @@ async function asignarAgentesInsumos(e) {
                 : 
                 Number(element.idEstadoPersona == 3)
                 ? `<a class="btn btn-danger" data-toggle="tooltip" title="Agente con licencia" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` 
-                : `<button type="button" class="btn btn-sm btn-outline-primary btn-agregar" data-toggle="tooltip" title="Agregar Agente" data-placement="top">Agregar</button>
+                : `<button type="button" class="btn btn-sm btn-outline-primary btn-agregar" data-toggle="tooltip" title="Seleccionar Agente" data-placement="top">Agregar</button>
                 <input type="number" data-name="idAgente" value="${element.id}" hidden>
-                <button type="button" class="btn btn-sm btn-outline-success m-auto btn-agente-added" data-toggle="tooltip" title="Agregado" data-placement="top"><i class="fal fa-check-circle fa-lg"></i></button>`
+                <button type="button" class="btn btn-sm btn-outline-success m-auto btn-agente-added" data-toggle="tooltip" title="Seleccionado" data-placement="top"><i class="fal fa-check-circle fa-lg"></i></button>`
         )}`;
             agentesHTML += `
         <tr>

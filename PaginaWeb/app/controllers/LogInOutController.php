@@ -53,4 +53,10 @@ class LogInOutController extends Controller
         session_destroy();
         redirect('');
     }
+
+    public function logIn()
+    {
+        $datos['error'] = true;
+        return view('/login', compact('datos'));
+    }
 }
