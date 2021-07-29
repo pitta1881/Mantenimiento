@@ -1,6 +1,5 @@
 canvas {
-    box-shadow: 0px 0px 2px 1px #ff8100;
-    width: 100%;
+    box-shadow: 0px 0px 4px 1px #d8d8d8;
 }
 
 .homeBoxes {
@@ -11,4 +10,12 @@ canvas {
 
 .boxTitle {
     font-weight: 500;
+}
+
+.homeCharts canvas {
+    max-height: 400px;
+}
+
+.tooltip {
+    opacity: 1;
 }

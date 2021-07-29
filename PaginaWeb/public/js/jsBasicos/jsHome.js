@@ -1,10 +1,10 @@
 const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
 ];
 const data = {
     labels: labels,
@@ -62,3 +62,40 @@ var myChart4 = new Chart(
         type: 'doughnut'
     }
 );
+
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        themeSystem: 'bootstrap',
+        height: 'auto',
+        defaultAllDay: true,
+        eventColor: 'red',
+        eventDidMount: function (info) {
+            var tooltip = new Tooltip(info.el, {
+                html: true,
+                title: `${info.event.extendedProps.title}<br>
+                        ${info.event.extendedProps.description}`,
+                placement: 'top',
+                trigger: 'hover',
+                container: 'body'
+            });
+            console.log(tooltip)
+        },
+        events: [{ // this object will be "parsed" into an Event Object
+            title: 'Cambiar Focos pabellon 3', // a property!
+            description: 'description for Birthday Party',
+            start: '2021-07-25', // a property!
+        }, { // this object will be "parsed" into an Event Object
+            title: 'Revisar estufas', // a property!
+            description: 'description for Birthday Party',
+            start: '2021-07-25', // a property!
+        }, { // this object will be "parsed" into an Event Object
+            title: 'Cambiar Focos pabellon 3', // a property!
+            description: 'description for Birthday Party',
+            start: '2021-07-28', // a property!
+        }]
+    });
+    calendar.render();
+});
