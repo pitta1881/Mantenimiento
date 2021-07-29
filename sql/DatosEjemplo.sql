@@ -1,61 +1,62 @@
-INSERT INTO `Roles` (`nombre`)
-VALUES ('superAdmin'),
-    ('Operador')
+
+INSERT INTO `Roles` (`id`,`nombre`)
+VALUES (1,'superAdmin'),
+    (2,'Operador')
 ;
 
-INSERT INTO `Permisos` (`nombre`)
-VALUES ('alta usuario'),
-    ('baja usuario'),
-    ('modificar usuario'),
-    ('visualizar usuario'),
-    ('alta permisos'),
-    ('baja permisos'),
-    ('modificar permisos'),
-    ('visualizar permisos'),
-    ('alta roles'),
-    ('baja roles'),
-    ('modificar roles'),
-    ('visualizar roles'),
-    ('alta pedidos'),
-    ('baja pedidos'),
-    ('modificar pedidos'),
-    ('visualizar pedidos'),
-    ('alta tareas'),
-    ('baja tareas'),
-    ('modificar tareas'),
-    ('visualizar tareas'),
-    ('alta ot'),
-    ('baja ot'),
-    ('modificar ot'),
-    ('visualizar ot'),
-    ('alta sectores'),
-    ('baja sectores'),
-    ('modificar sectores'),
-    ('visualizar sectores'),
-    ('alta agentes'),
-    ('baja agentes'),
-    ('modificar agentes'),
-    ('visualizar agentes'),
-    ('alta especialidades'),
-    ('baja especialidades'),
-    ('modificar especialid'),
-    ('visualizar especiali'),
-    ('alta eventos'),
-    ('baja eventos'),
-    ('modificar eventos'),
-    ('visualizar eventos'),
-    ('alta insumos'),
-    ('baja insumos'),
-    ('modificar insumos'),
-    ('visualizar insumos'),
-    ('alta persona'),
-    ('baja persona'),
-    ('modificar persona'),
-    ('visualizar persona'),
-    ('alta oc'),
-    ('baja oc'),
-    ('modificar oc'),
-    ('visualizar oc')
+INSERT INTO `Permisos` (`id`,`nombre`)
+VALUES (1,'alta usuario'),
+    (2,'baja usuario'),
+    (3,'modificar usuario'),
+    (4,'visualizar usuario'),
+    (5,'alta permisos'),
+    (6,'baja permisos'),
+    (7,'modificar permisos'),
+    (8,'visualizar permisos'),
+    (9,'alta roles'),
+    (10,'baja roles'),
+    (11,'modificar roles'),
+    (12,'visualizar roles'),
+    (13,'alta pedidos'),
+    (14,'baja pedidos'),
+    (15,'modificar pedidos'),
+    (16,'visualizar pedidos'),
+    (17,'alta tareas'),
+    (18,'baja tareas'),
+    (19,'modificar tareas'),
+    (20,'visualizar tareas'),
+    (21,'alta ot'),
+    (22,'baja ot'),
+    (23,'modificar ot'),
+    (24,'visualizar ot'),
+    (25,'alta sectores'),
+    (26,'baja sectores'),
+    (27,'modificar sectores'),
+    (28,'visualizar sectores'),
+    (29,'alta agentes'),
+    (30,'baja agentes'),
+    (31,'modificar agentes'),
+    (32,'visualizar agentes'),
+    (33,'alta especialidades'),
+    (34,'baja especialidades'),
+    (35,'modificar especialid'),
+    (36,'visualizar especiali'),
+    (37,'alta eventos'),
+    (38,'baja eventos'),
+    (39,'modificar eventos'),
+    (40,'visualizar eventos'),
+    (41,'alta insumos'),
+    (42,'baja insumos'),
+    (43,'modificar insumos'),
+    (44,'visualizar insumos'),
+    (45,'alta persona'),
+    (46,'baja persona'),
+    (47,'modificar persona'),
+    (48,'visualizar persona'),
+    (49,'alta oc'),
+    (50,'baja oc'),
+    (51,'modificar oc'),
+    (52,'visualizar oc')
 ;
 
 INSERT INTO `Roles_x_Permisos` (`idRol`, `idPermiso`)
@@ -148,10 +149,10 @@ VALUES (1, 1),
     (2, 52)
 ;
 
-INSERT INTO `EstadosPersona` (`nombre`)
-VALUES ("Activo"),
-    ('Baja'),
-    ('Licencia')
+INSERT INTO `EstadosPersona` (`id`,`nombre`)
+VALUES (1,"Activo"),
+    (2,'Baja'),
+    (3,'Licencia')
 ;
 
 INSERT INTO `Personas`
@@ -165,76 +166,76 @@ VALUES (
         1
 );
 
-INSERT INTO `Usuarios` (`nick`, `password`, `idPersona`)
-VALUES ('admin', 'admin', 00000000)
+INSERT INTO `Usuarios` (`id`,`nick`, `password`, `idPersona`)
+VALUES (1,'admin', 'admin', 00000000)
 ;
 
 INSERT INTO `Roles_x_Usuarios` (`idRol`, `idUsuario`)
 VALUES (1, 1)
 ;
 
-INSERT INTO `TiposSector` (`nombre`)
-VALUES ('HOSPITAL'),
-    ('CASA COMUNITARIA'),
-    ('CASA PARTICULAR')
+INSERT INTO `TiposSector` (`id`,`nombre`)
+VALUES (1,'HOSPITAL'),
+    (2,'CASA COMUNITARIA'),
+    (3,'CASA PARTICULAR')
 ;
 
-INSERT INTO `Especializaciones` (`nombre`)
-VALUES ('Plomeria'),
-    ('Albanileria'),
-    ('Pintureria'),
-    ('Electricidad'),
-    ('Mecanico'),
-    ('Herreria'),
-    ('Restauracion'),
-    ('Carpinteria'),
-    ('General')
+INSERT INTO `Especializaciones` (`id`,`nombre`)
+VALUES (1,'Plomeria'),
+    (2,'Albanileria'),
+    (3,'Pintureria'),
+    (4,'Electricidad'),
+    (5,'Mecanico'),
+    (6,'Herreria'),
+    (7,'Restauracion'),
+    (8,'Carpinteria'),
+    (9,'General')
 ;
 
-INSERT INTO `Estados` (`nombre`)
-VALUES ('Iniciado'),
-    ('En Curso'),
-    ('Pendiente'),
-    ('Cancelado'),
-    ('Finalizado'),
-    ('Cumplido')
+INSERT INTO `Estados` (`id`,`nombre`)
+VALUES (1,'Iniciado'),
+    (2,'En Curso'),
+    (3,'Pendiente'),
+    (4,'Cancelado'),
+    (5,'Finalizado'),
+    (6,'Cumplido')
 ;
 
-INSERT INTO `Prioridades` (`nombre`)
-VALUES ('Baja'),
-    ('Media'),
-    ('Alta'),
-    ('Urgente')
+INSERT INTO `Prioridades` (`id`,`nombre`)
+VALUES (1,'Baja'),
+    (2,'Media'),
+    (3,'Alta'),
+    (4,'Urgente')
 ;
 
-INSERT INTO `EstadosOrdenesDeCompra` (`nombre`)
-VALUES ('Iniciado'),
-    ('Parcial'),
-    ('Completo'),
-    ('Cancelado'),
-    ('Parcial Completo')
+INSERT INTO `EstadosOrdenesDeCompra` (`id`,`nombre`)
+VALUES (1,'Iniciado'),
+    (2,'Parcial'),
+    (3,'Completo'),
+    (4,'Cancelado'),
+    (5,'Parcial Completo')
 ;
 
-INSERT INTO `TiposOrdenesDeCompra` (`nombre`)
-VALUES ('Orden De Compra'),
-    ('Fondo Rotatorio'),
-    ('Aprobacion de Presupuesto')
+INSERT INTO `TiposOrdenesDeCompra` (`id`,`nombre`)
+VALUES (1,'Orden De Compra'),
+    (2,'Fondo Rotatorio'),
+    (3,'Aprobacion de Presupuesto')
 ;
 
-INSERT INTO `Medidas` (`nombre`)
-VALUES ('Unid.'),
-    ('gr'),
-    ('kg'),
-    ('mm'),
-    ('m'),
-    ('ml'),
-    ('lt'),
-    ('mm3'),
-    ('cm3'),
-    ('m3')
+INSERT INTO `Medidas` (`id`,`nombre`)
+VALUES (1,'Unid.'),
+    (2,'gr'),
+    (3,'kg'),
+    (4,'mm'),
+    (5,'m'),
+    (6,'ml'),
+    (7,'lt'),
+    (8,'mm3'),
+    (9,'cm3'),
+    (10,'m3')
 ;
 
-INSERT INTO `Insumos` (
+INSERT INTO `Insumos` (`id`,
         `nombre`,
         `descripcion`,
         `stockReal`,
@@ -243,31 +244,31 @@ INSERT INTO `Insumos` (
         `stockMinimo`,
         `idMedida`
     )
-VALUES ('tornillo', 'cruz chico', 10, 0, 0, 80, 1),
-    ('tornillo', 'cruz mediano', 200, 0, 0, 80, 1),
-    ('tornillo', 'cruz largo', 15, 0, 0, 80, 1),
-    ('tornillo', 'liso chico', 200, 0, 0, 80, 1),
-    ('tornillo', 'liso mediano', 340, 0, 0, 80, 1),
-    ('tornillo', 'liso largo', 45, 0, 0, 80, 1),
-    ('clavo', 'madero corto', 450, 0, 0, 100, 1),
-    ('clavo', 'madero mediano', 55, 0, 0, 100, 1),
-    ('clavo', 'madero largo', 50, 0, 0, 100, 1),
-    ('clavo', 'chapa corto', 150, 0, 0, 100, 1),
-    ('clavo', 'chapa mediano', 25, 0, 0, 100, 1),
-    ('clavo', 'chapa largo', 25, 0, 0, 100, 1),
-    ('tuerca', 'chica', 150, 0, 0, 200, 1),
-    ('tuerca', 'mediana', 250, 0, 0, 200, 1),
-    ('tuerca', 'grande', 0, 0, 0, 200, 1),
-    ('fisher', 'chico', 0, 0, 0, 50, 1),
-    ('fisher', 'mediano', 12, 0, 0, 50, 1),
-    ('fisher', 'grande', 321, 0, 0, 50, 1),
-    ('codo', '24cm', 50, 0, 0, 20, 1),
-    ('codo', 'en T 12cm', 20, 0, 0, 20, 1),
-    ('codo', 'en L 5cm', 44, 0, 0, 20, 1),
-    ('Lampara Led', '40w caliente', 5, 0, 0, 5, 1),
-    ('Lampara Led', '40w fria', 10, 0, 0, 5, 1),
-    ('Lampara Led', '5w caliente', 2, 0, 0, 5, 1),
-    ('Lampara Led', '5w fria', 8, 0, 0, 5, 1)
+VALUES (1,'tornillo', 'cruz chico', 10, 0, 0, 80, 1),
+    (2,'tornillo', 'cruz mediano', 200, 0, 0, 80, 1),
+    (3,'tornillo', 'cruz largo', 15, 0, 0, 80, 1),
+    (4,'tornillo', 'liso chico', 200, 0, 0, 80, 1),
+    (5,'tornillo', 'liso mediano', 340, 0, 0, 80, 1),
+    (6,'tornillo', 'liso largo', 45, 0, 0, 80, 1),
+    (7,'clavo', 'madero corto', 450, 0, 0, 100, 1),
+    (8,'clavo', 'madero mediano', 55, 0, 0, 100, 1),
+    (9,'clavo', 'madero largo', 50, 0, 0, 100, 1),
+    (10,'clavo', 'chapa corto', 150, 0, 0, 100, 1),
+    (11,'clavo', 'chapa mediano', 25, 0, 0, 100, 1),
+    (12,'clavo', 'chapa largo', 25, 0, 0, 100, 1),
+    (13,'tuerca', 'chica', 150, 0, 0, 200, 1),
+    (14,'tuerca', 'mediana', 250, 0, 0, 200, 1),
+    (15,'tuerca', 'grande', 0, 0, 0, 200, 1),
+    (16,'fisher', 'chico', 0, 0, 0, 50, 1),
+    (17,'fisher', 'mediano', 12, 0, 0, 50, 1),
+    (18,'fisher', 'grande', 321, 0, 0, 50, 1),
+    (19,'codo', '24cm', 50, 0, 0, 20, 1),
+    (20,'codo', 'en T 12cm', 20, 0, 0, 20, 1),
+    (21,'codo', 'en L 5cm', 44, 0, 0, 20, 1),
+    (22,'Lampara Led', '40w caliente', 5, 0, 0, 5, 1),
+    (23,'Lampara Led', '40w fria', 10, 0, 0, 5, 1),
+    (24,'Lampara Led', '5w caliente', 2, 0, 0, 5, 1),
+    (25,'Lampara Led', '5w fria', 8, 0, 0, 5, 1)
 ;
 
 INSERT INTO `Personas` (
@@ -371,14 +372,14 @@ VALUES (
     )
 ;
 
-INSERT INTO `Agentes` (`idPersona`)
-VALUES (26585543),
-    (39447859),
-    (17145072),
-    (16131891),
-    (22456368),
-    (19917833),
-    (24205172)
+INSERT INTO `Agentes` (`id`,`idPersona`)
+VALUES (1,26585543),
+    (2,39447859),
+    (3,17145072),
+    (4,16131891),
+    (5,22456368),
+    (6,19917833),
+    (7,24205172)
 ;
 
 INSERT INTO `Especializaciones_x_Agentes` (`idEspecializacion`, `idAgente`)
@@ -409,98 +410,98 @@ VALUES (1, 1),
 (9, 7)
 ;
 
-INSERT INTO `Sectores` (
+INSERT INTO `Sectores` (`id`,
         `nombre`,
         `responsable`,
         `telefono`,
         `email`,
         `idTipoSector`
     )
-VALUES (
+VALUES (1,
         'Contabilidad',
         'Marcela',
         206,
         'contabilidad@mail.com',
         '1'
     ),
-    (
+    (2,
         'Direccion',
         'Gustavo',
         220,
         'direccion@mail.com',
         '1'
     ),
-    (
+    (3,
         'Rehabilitacion',
         'Andrea',
         NULL,
         'rehab@mail.com',
         '1'
     ),
-    (
+    (4,
         'Guardia Medica',
         'Fernando',
         256,
         NULL,
         '1'
     ),
-    (
+    (5,
         'Porteria', 
         'Pedro', 
         333, 
         NULL,
         '1'
     ),
-    (
+    (6,
         'Vacunatorio',
         'Roberto',
         456,
         'vacunatorio@mail.com',
         '1'
     ),
-    (
+    (7,
         'Infraestructura',
         'Pablo',
         196,
         'infraestructura@mail.com',
         '1'
     ),
-    (
+    (8,
         'Pabellon 1',
         'Leandro',
         111,
         'pab1@mail.com',
         '1'
     ),
-    (
+    (9,
         'Pabellon 2',
         'Ezequiel',
         222,
         'pab2@mail.com',
         '1'
     ),
-    (
+    (10,
         'Pabellon 3',
         'Mauro',
         543,
         'pab3@mail.com',
         '1'
     ),
-    (
+    (11,
         'Equipamiento Medico',
         'Marcela',
         200,
         NULL,
         '1'
     ),
-    (
+    (12,
         'Casa 3',
         'Alfonso',
         963,
         'zonab@mail.com',
         '2'
     ),
-    (
+    (13,
         'Casa 10',
         'Adriana',
         963,
