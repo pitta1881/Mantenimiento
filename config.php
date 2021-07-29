@@ -1,12 +1,14 @@
 <?php
 use Monolog\Logger as MonologLogger;
 
+$url = parse_url('mysql://b505b21199e632:634eb2a3@us-cdbr-east-04.cleardb.com/heroku_534a038bf628016');
+
 return [
     'database' => [
-        'name' => 'Mantenimiento',
-        'username' => 'root',
-        'password' => '',
-        'connection' => 'mysql:host=127.0.0.1',
+        'name' => 'heroku_534a038bf628016',
+        'username' => 'b505b21199e632',
+        'password' => '634eb2a3',
+        'connection' => 'us-cdbr-east-04.cleardb.com',
         'options' => [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]
