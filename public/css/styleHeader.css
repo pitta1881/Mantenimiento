@@ -1,0 +1,19 @@
+#divReloj {
+  color: white;
+  font-size: 0.8rem;
+}
+
+.divheaderurl {
+  font-size: 0.7rem;
+  color: darkgrey;
+  text-align: left;
+}
+
+.divheaderprofile {
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.mx-background-top-linear {
+  background: linear-gradient(90deg, rgb(12, 27, 50) 0%, rgb(44, 97, 177) 40%, rgb(44, 97, 177) 60%, rgb(12, 27, 50) 100%);
+}

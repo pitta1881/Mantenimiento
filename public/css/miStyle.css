@@ -1,0 +1,102 @@
+a {
+    text-decoration: none !important;
+}
+
+html {
+    font-size: 1.0rem !important;
+}
+
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    margin: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.btn-modal {
+    padding: 10px;
+}
+
+button:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.3 !important;
+}
+
+@media print {
+
+    #miTabla2_filter,
+    .dt-buttons,
+    .pagination * {
+        visibility: hidden;
+    }
+
+    #miTabla2_filter,
+    .dt-buttons,
+    .pagination {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    dt,
+    dd {
+        display: inline-block;
+    }
+
+    #miTabla2 {
+        overflow: hidden;
+    }
+}
+
+.form-group.required .control-label:after {
+    content: "*";
+    color: red;
+}
+
+.btn-minus-cart,
+.btn-plus-cart,
+.input-cart,
+.btn-agente-added,
+.btn-tarea-added {
+    display: none;
+}
+
+.input-cart,
+.input-recibido {
+    width: 30px;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    /* Firefox */
+}
+
+.btn-badge-insumo-alert {
+    position: absolute;
+    top: -15px;
+    padding: 0 3px;
+}
+
+@media (min-width: 768px) {
+    .modal-xl {
+        width: 90%;
+        max-width: 1200px;
+    }
+
+    .modal-xxl {
+        width: 90%;
+        max-width: 1500px;
+    }
+}
