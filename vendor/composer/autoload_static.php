@@ -104,7 +104,7 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'App\\Models\\InsumoModel' => __DIR__ . '/../..' . '/app/models/InsumoModel.php',
         'App\\Models\\LogInOutModel' => __DIR__ . '/../..' . '/app/models/LogInOutModel.php',
         'App\\Models\\OCModel' => __DIR__ . '/../..' . '/app/models/OCModel.php',
-        'App\\Models\\OrdenDeTrabajo' => __DIR__ . '/../..' . '/app/models/OrdenDeTrabajo.php',
+        'App\\Models\\OTModel' => __DIR__ . '/../..' . '/app/models/OTModel.php',
         'App\\Models\\PedidoModel' => __DIR__ . '/../..' . '/app/models/PedidoModel.php',
         'App\\Models\\PermisoModel' => __DIR__ . '/../..' . '/app/models/PermisoModel.php',
         'App\\Models\\PersonaModel' => __DIR__ . '/../..' . '/app/models/PersonaModel.php',
@@ -762,12 +762,13 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'Twig_Util_TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
         '__TwigTemplate_0142debda95308cd4945d2edfff9efbfc3f7ae4938f2a425d65456be7747a16f' => __DIR__ . '/../..' . '/app/views/cache/9f/9febd644e20776455550e3698b96421ad4810e53ba8f19dc7bf8d9311866a56c.php',
         '__TwigTemplate_0c0337b814a8b900de1eb13977f4f0bc6f135360608d607311523a5df4d4e9f6' => __DIR__ . '/../..' . '/app/views/cache/fc/fcc6b0bb12cafa8df96bbc32463acb7f0752e7dd6653b91b215d46e11bf8293d.php',
-        '__TwigTemplate_1ab67209470dfaf0e53bb810fab55bb68409577ea5fb83d4fe3b8b3f3297c4e9' => __DIR__ . '/../..' . '/app/views/cache/52/526dfb7c7df5a366605ab37094d5daf0eeef1ec91fd3d1f4de5d46b2386cd199.php',
+        '__TwigTemplate_449d09df2686f995cfcd34995d510a24f715521c656faf8ff8254a9f2c148826' => __DIR__ . '/../..' . '/app/views/cache/1d/1dd73db19745fd3b92181c365497248dda8026d885ef43a8cd8511bc30205dfe.php',
+        '__TwigTemplate_5bb21cfc1ab4c7aa7354524503989cc8b1e98ada8be7c15a52d452613e682d1c' => __DIR__ . '/../..' . '/app/views/cache/8b/8beade1fbb87d9dd2efb6986367e31480427ee30fd69b86755fae01bec3b30fe.php',
         '__TwigTemplate_6ba86282e0337082979a48e047e577b8fcfe5dce8f0473de49e83b7c663024ae' => __DIR__ . '/../..' . '/app/views/cache/0f/0f8e4688e084064a3280aaf8a8403918e588630973c249e4161d270988829fa0.php',
         '__TwigTemplate_90346a5035837af01efffd47453f6051f17e6a44d0cf0057d920ac8f1aff1f5f' => __DIR__ . '/../..' . '/app/views/cache/c8/c8f2b6dd2100cc10c56ee73c8fb1d6594fabd072f5cf5998bc534fb231ff0d01.php',
         '__TwigTemplate_b761844ead56743f5dda235a528185b22300b04516364fa3bb2cde4b584d5531' => __DIR__ . '/../..' . '/app/views/cache/42/42d5675a26e5a019ff57ebd52c88a9f7b8a47359c4e47590418279d1a1ee948b.php',
-        '__TwigTemplate_bf949403c9f1700aacb95ec0b64dcd7e5e7bbb96493d563d08f26cc900132a4b' => __DIR__ . '/../..' . '/app/views/cache/f4/f4c2d55859d14d61bc1be0e2a7d1123c1fcfea72ed703ec5b38f138c61ffaae1.php',
         '__TwigTemplate_d943cbcf03c28ccb426d2cfd75e192d45f69ce5d73901a05cac5a662eb1e18ad' => __DIR__ . '/../..' . '/app/views/cache/4f/4f9bcc3fb9146c6601dee4c8ed951282a0048b02af468e55adbd3478b9f11918.php',
+        '__TwigTemplate_e3c2ea36ebdb0b09f9475fb91037bb9bacdf111c30cb89d211332a73aef9640b' => __DIR__ . '/../..' . '/app/views/cache/ed/ed90205c102903ccf4ff8f8e926635e96015dd484390c39fbc41635f964c1a8b.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

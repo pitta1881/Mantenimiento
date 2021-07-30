@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '9b9a143ff1fcd7312359569cf015c5e29f89b75c',
+    'reference' => '27a42ba97610a33a970c387911804a739bd00ad0',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '9b9a143ff1fcd7312359569cf015c5e29f89b75c',
+      'reference' => '27a42ba97610a33a970c387911804a739bd00ad0',
     ),
     'monolog/monolog' => 
     array (
@@ -44,6 +44,15 @@
       array (
         0 => '1.0.0',
       ),
+    ),
+    'symfony/apache-pack' => 
+    array (
+      'pretty_version' => 'v1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3aa5818d73ad2551281fc58a75afd9ca82622e6c',
     ),
     'symfony/polyfill-mbstring' => 
     array (
