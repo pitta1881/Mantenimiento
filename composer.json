@@ -12,5 +12,8 @@
         "monolog/monolog": "^1.23",
         "twig/twig": "^2.0",
         "symfony/apache-pack": "^1.0"
+    },
+    "require-dev": {
+        "heroku/heroku-buildpack-php": "*"
     }
 }
