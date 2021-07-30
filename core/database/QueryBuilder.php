@@ -231,7 +231,6 @@ class QueryBuilder
         try {
             $statement = $this->pdo->prepare($sql);
             $statement->execute($parameters);
-            var_dump($statement);
             return $statement->fetchAll(PDO::FETCH_COLUMN);
         } catch (Exception $e) {
             return false;

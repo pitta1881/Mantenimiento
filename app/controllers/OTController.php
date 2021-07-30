@@ -177,7 +177,6 @@ class OTController extends Controller implements MyInterface
     private function getIdHistorialTarea($idTarea, $idPedido)
     {
         $datos['unaTarea'] = $this->modelTarea->getFichaOne(tableTareas, array('id'=>$idTarea, 'idPedido' => $idPedido));
-        //var_dump($datos['unaTarea']);
         return end($datos['unaTarea']['historial'])['id'] + 1;
     }
 
