@@ -64,13 +64,13 @@ abstract class Model
 
     public function getPermisos($rolEntrada = null)
     {
+        var_dump($_SESSION);
         if (!is_null($rolEntrada)) {
             $rol['idRol'] = $rolEntrada;
         } else {
             $rol['idRol'] = $_SESSION['rolActual']['id'];
         }
         var_dump($rol);
-        var_dump(tableRxP);
         return $this->db->selectWhatWherePerm(tableRxP, 'idPermiso', $rol);
     }
 

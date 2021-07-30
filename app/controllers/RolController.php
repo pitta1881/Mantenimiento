@@ -103,7 +103,6 @@ class RolController extends Controller implements MyInterface
 
     public function getPermisos()
     {
-        var_dump('funcion getPermisos');
         $listaPermisos = $this->model->getPermisos();          //en cada clase q implementa ésta, defino que es 'table'
         if ($listaPermisos) {
             http_response_code(200);
