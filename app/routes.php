@@ -2,7 +2,7 @@
 
 //rutas logIn-logOut
     $router->get('', 'LogInOutController@index');
-    $router->post('login/validar', 'LogInOutController@validarLogin');
+    $router->post('login', 'LogInOutController@validarLogin');
     $router->get('logOut', 'LogInOutController@logOut');
 
 //rutas Home
