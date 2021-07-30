@@ -69,6 +69,8 @@ abstract class Model
         } else {
             $rol['idRol'] = $_SESSION['rolActual']['id'];
         }
+        var_dump($rol);
+        var_dump(tableRxP);
         return $this->db->selectWhatWherePerm(tableRxP, 'idPermiso', $rol);
     }
 
@@ -134,7 +136,7 @@ abstract class Model
         $retorno = array(   "tipo" => $tipo,
                             "operacion" => "insert");
         $datos = $this->db->insert($table, $datos);
-        if(!is_array($datos)){
+        if (!is_array($datos)) {
             throw new Exception($datos->getMessage(), 1);
         } else {
             $retorno = array_merge($retorno, array(
@@ -157,7 +159,7 @@ abstract class Model
             ));
         } else {
             $datos = $this->db->update($table, $datos, $where);
-            if(!is_array($datos)){
+            if (!is_array($datos)) {
                 throw new Exception($datos->getMessage(), 1);
             } else {
                 $retorno = array_merge($retorno, array(
@@ -181,7 +183,7 @@ abstract class Model
             ));
         } else {
             $datos = $this->db->delete($table, $where);
-            if(!is_array($datos)){
+            if (!is_array($datos)) {
                 throw new Exception($datos->getMessage(), 1);
             } else {
                 $retorno = array_merge($retorno, array(
