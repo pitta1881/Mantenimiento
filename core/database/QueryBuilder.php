@@ -163,7 +163,7 @@ class QueryBuilder
 
     public function selectAllWhere($table, $where)
     {
-        if(!is_array($where) and strpos($where, 'null') !== false){
+        if (!is_array($where) and strpos($where, 'null') !== false) {
             $statement = $this->pdo->prepare(
                 "SELECT * FROM {$table} WHERE {$where}"
             );
@@ -231,6 +231,7 @@ class QueryBuilder
         try {
             $statement = $this->pdo->prepare($sql);
             $statement->execute($parameters);
+            var_dump($statement);
             return $statement->fetchAll(PDO::FETCH_COLUMN);
         } catch (Exception $e) {
             return false;
