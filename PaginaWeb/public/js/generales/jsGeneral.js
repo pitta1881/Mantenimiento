@@ -30,7 +30,7 @@ function visualizarUpdateModalRxP(datos, modificar) {
     var disableChk = '';
     var headerAlert = 'Detalle Rol';
     if (modificar) {
-        btnEnviar = "<button type='submit' class='btn btn-success btn-modal float-left'>Enviar</button>";
+        btnEnviar = "<button type='submit' class='btn btn-success btn-modal float-left'>Aceptar</button>";
         headerAlert = "Modificar permisos del Rol"
     } else {
         modificable = " onclick='javascript: return false;'";
