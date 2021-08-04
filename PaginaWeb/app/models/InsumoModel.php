@@ -36,4 +36,9 @@ class InsumoModel extends Model
         }
         return $datoUno;
     }
+
+    public function insumoExist($nombre, $descripcion)
+    {
+        return $this->db->buscarIfExists(tableInsumos, array('nombre' => $nombre, 'descripcion' => $descripcion));
+    }
 }

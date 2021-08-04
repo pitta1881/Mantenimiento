@@ -35,16 +35,20 @@ class InsumoController extends Controller implements MyInterface
     {
         try {
             $this->model->startTransaction();
-            $insumo = [
-            'nombre' => $_POST['nombre'],
-            'descripcion' => $_POST['descripcion'],
-            'stockReal' => $_POST['stock'],
-            'stockMinimo' => $_POST['stockMinimo'],
-            'idMedida' => $_POST['idMedida']
-        ];
-            $insert = $this->model->insert(table, $insumo, "Insumo");
-            $this->model->commit();
-            return json_encode($insert);
+            if (!$this->model->insumoExist($_POST['nombre'], $_POST['descripcion'])) {
+                $insumo = [
+                    'nombre' => $_POST['nombre'],
+                    'descripcion' => $_POST['descripcion'],
+                    'stockReal' => $_POST['stock'],
+                    'stockMinimo' => $_POST['stockMinimo'],
+                    'idMedida' => $_POST['idMedida']
+                ];
+                $insert = $this->model->insert(table, $insumo, "Insumo");
+                $this->model->commit();
+                return json_encode($insert);
+            } else {
+                throw new Exception('El insumo ya existe', 1);
+            }
         } catch (Exception $e) {
             $this->model->rollback();
             $error = array(
@@ -60,15 +64,19 @@ class InsumoController extends Controller implements MyInterface
     {
         try {
             $this->model->startTransaction();
-            $insumo = [
-            'nombre' => $_POST['nombre'],
-            'descripcion' => $_POST['descripcion'],
-            'stockMinimo' => $_POST['stockMinimo'],
-            'idMedida' => $_POST['idMedida']
-        ];
-            $update = $this->model->update(table, $insumo, array('id' => $_POST['id']), "Insumo");
-            $this->model->commit();
-            return json_encode($update);
+            if (!$this->model->insumoExist($_POST['nombre'], $_POST['descripcion'])) {
+                $insumo = [
+                    'nombre' => $_POST['nombre'],
+                    'descripcion' => $_POST['descripcion'],
+                    'stockMinimo' => $_POST['stockMinimo'],
+                    'idMedida' => $_POST['idMedida']
+                ];
+                $update = $this->model->update(table, $insumo, array('id' => $_POST['id']), "Insumo");
+                $this->model->commit();
+                return json_encode($update);
+            } else {
+                throw new Exception('El insumo ya existe', 1);
+            }
         } catch (Exception $e) {
             $this->model->rollback();
             $error = array(
