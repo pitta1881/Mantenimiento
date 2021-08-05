@@ -37,16 +37,25 @@
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+				<script>
+					$(document).ajaxStart(function () {
+					 	$("#loader").show();
+					});				 
+					$(document).ajaxStop(function () {
+					 	$("#loader").hide();
+					});
+				</script>
 			{% endblock %}
 		{% endblock %}
 	</head>
 
 	<body class="d-flex">
+		<div id="loader"></div>
 		{% include 'partials/nav.html' with {datos:datos} only %}
 		<main class="container-fluid text-center">
 			{% include 'partials/header.html' with {datos:datos} only %}
 			{% block main %}{% endblock %}
-		</main>
+		</main>		
 	</body>
 
 </html>

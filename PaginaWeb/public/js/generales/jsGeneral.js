@@ -193,6 +193,7 @@ function getFichaOne(whereJson, urlConsulta) {
         body: formdata,
         redirect: 'follow'
     };
+    $("#loader").show();
     let miJson = fetch((urlConsulta || url) + "fichaOne", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
@@ -200,6 +201,9 @@ function getFichaOne(whereJson, urlConsulta) {
         })
         .catch(error => {
             return false
+        })
+        .finally(() => {
+            $("#loader").hide();
         });
     return miJson;
 }
@@ -214,6 +218,7 @@ function getFichaAll(urlParam, filterStart = null, filterEnd = null) {
     }
     requestOptions.method = 'POST';
     requestOptions.redirect = 'follow';
+    $("#loader").show();
     let miJson = fetch((urlParam || url) + "fichaAll", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
@@ -221,6 +226,9 @@ function getFichaAll(urlParam, filterStart = null, filterEnd = null) {
         })
         .catch(error => {
             return false
+        })
+        .finally(() => {
+            $("#loader").hide();
         });
     return miJson;
 }
@@ -230,6 +238,7 @@ function getPermisosRolActual() {
         method: 'GET',
         redirect: 'follow'
     };
+    $("#loader").show();
     let miJson = fetch('/permisosRolActual', requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
@@ -237,6 +246,9 @@ function getPermisosRolActual() {
         })
         .catch(error => {
             return false
+        })
+        .finally(() => {
+            $("#loader").hide();
         });
     return miJson;
 }
@@ -246,6 +258,7 @@ function getAgentesInsumos() {
         method: 'POST',
         redirect: 'follow'
     };
+    $("#loader").show();
     let miJson = fetch("/tarea/getAgentesInsumos/", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
@@ -253,6 +266,9 @@ function getAgentesInsumos() {
         })
         .catch(error => {
             return false
+        })
+        .finally(() => {
+            $("#loader").hide();
         });
     return miJson;
 }
@@ -262,6 +278,7 @@ function getTareasSinOT() {
         method: 'POST',
         redirect: 'follow'
     };
+    $("#loader").show();
     let miJson = fetch("/tarea/getTareasSinOT/", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {
@@ -269,6 +286,9 @@ function getTareasSinOT() {
         })
         .catch(error => {
             return false
+        })
+        .finally(() => {
+            $("#loader").hide();
         });
     return miJson;
 }
