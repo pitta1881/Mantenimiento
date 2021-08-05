@@ -26,7 +26,15 @@ abstract class Controller
 
     public function fichaAll()
     {
-        $misFichas = $this->model->getFichaAll(table);          //en cada clase q implementa ésta, defino que es 'table'
+        $start = null;
+        $end = null;
+        if (isset($_POST['start']) && !is_null($_POST['start']) && $_POST['start'] != 'null') {
+            $start = $_POST['start'];
+        }
+        if (isset($_POST['end']) && !is_null($_POST['end']) && $_POST['end'] != 'null') {
+            $end = $_POST['end'];
+        }
+        $misFichas = $this->model->getFichaAll(table, $start, $end);          //en cada clase q implementa ésta, defino que es 'table'
         if (is_null($misFichas)) {
             http_response_code(404);
         } else {

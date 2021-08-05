@@ -84,9 +84,9 @@ abstract class Model
 
 
     //1er param = tabla en donde buscar
-    public function getFichaAllModel($table, $callback = null, $arrayTablaComparaIfUsado = null)
+    public function getFichaAllModel($table, $callback = null, $arrayTablaComparaIfUsado = null, $start = null, $end = null)
     {
-        $retornoTodos = $this->db->selectAll($table);
+        $retornoTodos = $this->db->selectAll($table, $start, $end);
         $retornoTodos = $this->ordenar($table, $retornoTodos);
         foreach ($retornoTodos as &$retornoUno) {
             $retornoUno = $this->verificarFechasyVacios($retornoUno);

@@ -79,7 +79,8 @@ async function loadTable() {
         textoInner += `
         <tr>
             <td>${element.id}</td>
-            <td>${element.fecha}</td>
+            <td>${element.fechaInicio}</td>
+            <td>${element.fechaFin}</td>
             <td>${element.estadoNombre}</td>
             <td>${element.tipoNombre}</td>
             <td>$${element.costoEstimado}</td>
@@ -97,7 +98,7 @@ async function loadTable() {
         `;
     });
     $('#miTabla tbody').html(textoInner);
-    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6,7', [8], 'Ordenes de Compra Registrados');
+    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6,7,8', [9], 'Ordenes de Compra Registrados');
 }
 
 function modificarTipoModal(datos) {
@@ -167,8 +168,12 @@ function loadDlOrdenDeCompra(datos) {
         <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.id}</dd>
     </div>
     <div class="row m-0">
-        <dt class="p-0 col-sm-3 col-lg-2 text-left">Fecha</dt>
-        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fecha}</dd>
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">F. Inicio</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fechaInicio}</dd>
+    </div>
+    <div class="row m-0">
+        <dt class="p-0 col-sm-3 col-lg-2 text-left">F. Fin</dt>
+        <dd class="p-0 m-0 col-sm-9 col-lg-10 text-left">${datos.fechaFin}</dd>
     </div>
     <div class="row m-0">
         <dt class="p-0 col-sm-3 col-lg-2 text-left">Estado</dt>

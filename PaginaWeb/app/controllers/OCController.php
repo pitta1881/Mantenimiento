@@ -41,7 +41,7 @@ class OCController extends Controller implements MyInterface
             $ahora = date('Y-m-d H:i:s');
             //crear Orden De Compra
             $ordenDeCompra = [
-                'fecha' => $ahora,
+                'fechaInicio' => $ahora,
                 'costoEstimado' => $_POST['costoEstimado'],
                 'idEstadoOC' => 1,
                 'idTipoOrdenDeCompra' => $_POST['idTiposOC'],
@@ -164,6 +164,11 @@ class OCController extends Controller implements MyInterface
             $ordenDeCompra = [
                 'idEstadoOC' => ($this->checkOCCompleto($_POST['idOC']) ? 3 : 2)
             ];
+            if ($this->checkOCCompleto($_POST['idOC'])) {
+                $ordenDeCompra = [
+                    'fechaFin' => $ahora
+                ];
+            }
             $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
             $this->model->commit();
             return json_encode($update);
@@ -199,6 +204,11 @@ class OCController extends Controller implements MyInterface
             $ordenDeCompra = [
                 'idEstadoOC' => $estadoOC
             ];
+            if ($this->checkOCCancelada($_POST['idOC']) || $this->checkOCCompleto($_POST['idOC'])) {
+                $ordenDeCompra = [
+                    'fechaFin' => date('Y-m-d H:i:s')
+                ];
+            }
             $this->model->update(table, $ordenDeCompra, array('id' => $_POST['idOC']), "Orden De Compra");
             $this->model->commit();
             return json_encode($update);

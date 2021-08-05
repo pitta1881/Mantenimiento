@@ -52,4 +52,10 @@ class HomeController extends Controller
         $datos['datosSesion'] = $_SESSION;
         return view('/administracion/AdministracionView', compact('datos'));
     }
+
+    public function getBoxes()
+    {
+        $datos = $this->model->getBoxes();
+        return json_encode($datos);
+    }
 }

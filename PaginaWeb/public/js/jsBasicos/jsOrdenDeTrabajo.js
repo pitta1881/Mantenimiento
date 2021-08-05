@@ -82,7 +82,7 @@ async function loadTableTareasNewOT() {
         })
         addItem = ` 
         ${  (element.agentes.length == 0) 
-            ? `<a href="/pedidos" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Debe asginar al menos un Agente a esta Tarea" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` 
+            ? `<a href="/pedidos/" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Debe asginar al menos un Agente a esta Tarea" data-placement="top"><i class="fal fa-exclamation-circle"></i></a>` 
                 : `<button type="button" class="btn btn-sm btn-outline-primary btn-agregar" data-toggle="tooltip" title="Agregar Tarea" data-placement="top">Agregar</button>
                 <input type="number" data-name="idTarea" value="${element.id}" hidden>
                 <input type="number" data-name="idPedido" value="${element.idPedido}" hidden>

@@ -204,11 +204,16 @@ function getFichaOne(whereJson, urlConsulta) {
     return miJson;
 }
 
-function getFichaAll(urlParam) {
-    let requestOptions = {
-        method: 'POST',
-        redirect: 'follow'
-    };
+function getFichaAll(urlParam, filterStart = null, filterEnd = null) {
+    let requestOptions = {};
+    if (filterStart || filterEnd) {
+        let data = new FormData();
+        data.append("start", filterStart);
+        data.append("end", filterEnd);
+        requestOptions.body = data;
+    }
+    requestOptions.method = 'POST';
+    requestOptions.redirect = 'follow';
     let miJson = fetch((urlParam || url) + "fichaAll", requestOptions)
         .then(handleJsonResponse)
         .then(datos => {

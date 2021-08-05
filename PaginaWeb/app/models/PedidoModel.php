@@ -11,12 +11,12 @@ class PedidoModel extends Model
         return $this->getFichaOneModel($table, $where, 'retornoUnoLogic');
     }
 
-    public function getFichaAll($table)
+    public function getFichaAll($table, $start = null, $end = null)
     {
-        return $this->getFichaAllModel($table, 'retornoUnoLogic');
+        return $this->getFichaAllModel($table, 'retornoUnoLogic', null, $start, $end);
     }
 
-    public function retornoUnoLogic( $datoUno)
+    public function retornoUnoLogic($datoUno)
     {
         $datoUno['tareasAsignadas'] = $this->db->countWhatFromWhere(tableTareas, 'id', array('idPedido' => $datoUno['id']))[0];
         $datoUno['sectorNombre'] = $this->db->selectWhatWhere(tableSectores, 'nombre', array('id' => $datoUno['idSector']))[0]['nombre'];

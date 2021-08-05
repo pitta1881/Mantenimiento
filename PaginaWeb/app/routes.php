@@ -7,6 +7,7 @@
 
 //rutas Home
     $router->get('home', 'HomeController@index');
+    $router->get('home/boxes', 'HomeController@getBoxes');
     $router->get('administracion', 'HomeController@administracionCards');
     $router->get('changeRoles', 'HomeController@changeRol');
 

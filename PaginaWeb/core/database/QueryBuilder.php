@@ -65,11 +65,18 @@ class QueryBuilder
      *
      * @param string $table
      */
-    public function selectAll($table)
+    public function selectAll($table, $start = null, $end = null)
     {
-        $statement = $this->pdo->prepare(
-            "SELECT * FROM {$table}"
-        );
+        if (is_null($start) && is_null($end)) {
+            $query = "SELECT * FROM {$table}";
+        } elseif (!is_null($start) && is_null($end)) {
+            $query = "SELECT * FROM {$table} WHERE `fechaInicio` >= '$start'";
+        } elseif (is_null($start) && !is_null($end)) {
+            $query = "SELECT * FROM {$table} WHERE `fechaFin` <= '$end'";
+        } else {
+            $query = "SELECT * FROM {$table} WHERE `fechaInicio` >= '$start' AND `fechaFin` <= '$end'";
+        }
+        $statement = $this->pdo->prepare($query);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -241,8 +248,13 @@ class QueryBuilder
     {
         $columnaCompara = array_key_first($parameters);
         $datoColumnaCompara = $parameters[$columnaCompara];
+        if (is_null($datoColumnaCompara)) {
+            $query = "SELECT COUNT(%s) from %s where %s is null";
+        } else {
+            $query = "SELECT COUNT(%s) from %s where %s='%s'";
+        }
         $sql = sprintf(
-            "SELECT COUNT(%s) from %s where %s='%s'",
+            $query,
             $what,
             $table,
             $columnaCompara,

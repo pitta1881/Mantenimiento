@@ -11,7 +11,7 @@ class OCModel extends Model
         return $this->getFichaOneModel($table, $where, 'retornoUnoLogic');
     }
 
-    public function getFichaAll($table)
+    public function getFichaAll($table, $start = null, $end = null)
     {
         $comparaTablasIfUsado = array(
             array(  "tabla" => tablePedidos,
@@ -27,10 +27,10 @@ class OCModel extends Model
                     "comparaKeyDest" => "idUsuario"
                 )
         );
-        return $this->getFichaAllModel($table, 'retornoUnoLogic', $comparaTablasIfUsado);
+        return $this->getFichaAllModel($table, 'retornoUnoLogic', $comparaTablasIfUsado, $start, $end);
     }
 
-    public function retornoUnoLogic( $datoUno)
+    public function retornoUnoLogic($datoUno)
     {
         $datoUno['estadoNombre']=$this->db->selectWhatWhere(tableEstadosOC, 'nombre', array('id' => $datoUno['idEstadoOC']))[0]['nombre'];
         $datoUno['tipoNombre']=$this->db->selectWhatWhere(tableTiposOC, 'nombre', array('id' => $datoUno['idTipoOrdenDeCompra']))[0]['nombre'];

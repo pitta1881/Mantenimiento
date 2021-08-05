@@ -11,9 +11,9 @@ class OTModel extends Model
         return $this->getFichaOneModel($table, $where, 'retornoUnoLogic');
     }
 
-    public function getFichaAll($table)
+    public function getFichaAll($table, $start = null, $end = null)
     {
-        return $this->getFichaAllModel($table, 'retornoUnoLogic');
+        return $this->getFichaAllModel($table, 'retornoUnoLogic', null, $start, $end);
     }
 
     public function retornoUnoLogic($datoUno)

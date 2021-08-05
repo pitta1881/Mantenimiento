@@ -2,72 +2,212 @@ import {
     getFichaAll
 } from '/public/js/generales/jsGeneral.js';
 
-const labels = [
-    'Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-];
-const data = {
-    labels: labels,
-    datasets: [{
-        label: 'My First dataset',
-        backgroundColor: [
-            'rgba(255, 99, 132,0.8)',
-            'rgba(75, 192, 192,0.8)',
-            'rgba(255, 205, 86,0.8)',
-            'rgba(201, 203, 207,0.8)',
-            'rgba(54, 162, 235,0.8)',
-            'rgba(154, 62, 35,0.8)'
-        ],
-        data: [0, 10, 5, 2, 20, 30],
-    }]
-};
+document.addEventListener('DOMContentLoaded', function () {
+    loadBoxes();
+    loadCharts();
+    loadCalendar();
+});
 
-const config = {
-    data,
-    options: {
-        plugins: {
-            title: {
-                display: true,
-                text: 'Custom Chart Title'
-            },
-            subtitle: {
-                display: true,
-                text: 'Custom Chart Subtitle'
-            }
+async function loadBoxes() {
+    const boxes = await $.get('/home/boxes')
+        .done(function (data) {
+            data = JSON.parse(data);
+            $('#box-pedidos').text(data.countPedidosActivos)
+            $('#box-tareas').text(data.countTareasSinAsignar)
+            $('#box-ot').text(data.countOTActivos)
+            $('#box-eventos').text(data.countEventosHoy)
+        })
+
+}
+
+async function loadCharts() {
+
+    let dateSixMonthBefore = new Date();
+    dateSixMonthBefore.setMonth(dateSixMonthBefore.getMonth() - 6);
+    dateSixMonthBefore.setDate(1);
+    const startDate = dateSixMonthBefore.toISOString().split('T')[0];
+    const [allOT, allPedidos, allOC] = await Promise.allSettled([getFichaAll('/ordendetrabajo/', startDate), getFichaAll('/pedidos/', startDate), getFichaAll('/ordendecompra/', startDate)]);
+
+    //labels 6 meses anteriores incluido este
+    const labelsMonths = [];
+    var monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    var today = new Date();
+    var d;
+    var month;
+    var year;
+    for (var i = 5; i >= 0; i -= 1) {
+        d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+        month = monthNames[d.getMonth()];
+        year = d.getFullYear();
+        labelsMonths.push(`${month}/${year.toString().slice(2)}`);
+    }
+
+    let countOTPerMonth = new Array(12).fill(0);
+    let countOCPerMonth = new Array(12).fill(0);
+    let countPedidosPerMonth = new Array(12).fill(0);
+    let arrayEspecializaciones = [];
+    let arraySectores = [];
+    let indiceCount = dateSixMonthBefore.getMonth() + 1;
+
+    //count ots ultimos 6 meses
+    allOT.value.forEach(ot => {
+        let fechaInicioOT = new Date(ot.fechaInicio.split(' ')[0].split('/').reverse().join(','))
+        countOTPerMonth[fechaInicioOT.getMonth()] += 1;
+    });
+    if (indiceCount < 6) {
+        countOTPerMonth = (countOTPerMonth.slice(indiceCount, today.getMonth() + 1));
+    } else {
+        countOTPerMonth = (countOTPerMonth.slice(indiceCount).concat(countOTPerMonth.slice(0, indiceCount - 6)));
+    }
+
+    //count ocs ultimos 6 meses
+    allOC.value.forEach(oc => {
+        let fechaInicioOC = new Date(oc.fechaInicio.split(' ')[0].split('/').reverse().join(','))
+        countOCPerMonth[fechaInicioOC.getMonth()] += 1;
+    });
+    if (indiceCount < 6) {
+        countOCPerMonth = (countOCPerMonth.slice(indiceCount, today.getMonth() + 1));
+    } else {
+        countOCPerMonth = (countOCPerMonth.slice(indiceCount).concat(countOCPerMonth.slice(0, indiceCount - 6)));
+    }
+
+    //count pedidos ultimos 6 meses
+    allPedidos.value.forEach(pedido => {
+        let fechaInicioPedido = new Date(pedido.fechaInicio.split(' ')[0].split('/').reverse().join(','))
+        countPedidosPerMonth[fechaInicioPedido.getMonth()] += 1;
+        let indexSector = arraySectores.findIndex(sector => sector.nombre == pedido.sectorNombre)
+        if (indexSector == -1) {
+            arraySectores.push({
+                nombre: pedido.sectorNombre,
+                cuenta: 1
+            });
+        } else {
+            arraySectores[indexSector].cuenta = arraySectores[indexSector].cuenta + 1;
         }
+        pedido.tareas.forEach(tarea => {
+            let indexEspecializacion = arrayEspecializaciones.findIndex(especializacion => especializacion.nombre == tarea.especializacionNombre)
+            if (indexEspecializacion == -1) {
+                arrayEspecializaciones.push({
+                    nombre: tarea.especializacionNombre,
+                    cuenta: 1
+                });
+            } else {
+                arrayEspecializaciones[indexEspecializacion].cuenta = arrayEspecializaciones[indexEspecializacion].cuenta + 1;
+            }
+        })
+    });
+    if (indiceCount < 6) {
+        countPedidosPerMonth = (countPedidosPerMonth.slice(indiceCount, today.getMonth() + 1));
+    } else {
+        countPedidosPerMonth = (countPedidosPerMonth.slice(indiceCount).concat(countPedidosPerMonth.slice(0, indiceCount - 6)));
     }
-};
 
-var myChart = new Chart(
-    $('#chartOT'), {
-        ...config,
-        type: 'line'
-    }
-);
-var myChart2 = new Chart(
-    $('#chartPedidos'), {
-        ...config,
-        type: 'bar'
-    }
-);
-var myChart3 = new Chart(
-    $('#chartTareas'), {
-        ...config,
-        type: 'pie'
-    }
-);
-var myChart4 = new Chart(
-    $('#chartOC'), {
-        ...config,
-        type: 'doughnut'
-    }
-);
+    var myChart = new Chart(
+        $('#chartOT'), {
+            data: {
+                labels: labelsMonths,
+                datasets: [{
+                    backgroundColor: countOTPerMonth.map(() => tinycolor.random().toHexString()),
+                    data: countOTPerMonth,
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Ordenes de Trabajo'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'OTs Creadas últimos 6 meses'
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            },
+            type: 'line'
+        }
+    );
 
-document.addEventListener('DOMContentLoaded', async function () {
+    var myChart2 = new Chart(
+        $('#chartPedidos'), {
+            data: {
+                labels: labelsMonths,
+                datasets: [{
+                    backgroundColor: countPedidosPerMonth.map(() => tinycolor.random().toHexString()),
+                    data: countPedidosPerMonth,
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Pedidos'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'Pedidos Creados últimos 6 meses'
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            },
+            type: 'line'
+        }
+    );
+    var myChart3 = new Chart(
+        $('#chartEspecialidades'), {
+            data: {
+                labels: arrayEspecializaciones.map(especializacion => especializacion.nombre),
+                datasets: [{
+                    backgroundColor: arrayEspecializaciones.map(() => tinycolor.random().toHexString()),
+                    data: arrayEspecializaciones.map(especializacion => especializacion.cuenta),
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Especialidades'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'Especialidades mas solicitadas últimos 6 meses'
+                    }
+                }
+            },
+            type: 'doughnut'
+        }
+    );
+    var myChart4 = new Chart(
+        $('#chartSectores'), {
+            data: {
+                labels: arraySectores.map(sector => sector.nombre),
+                datasets: [{
+                    backgroundColor: arraySectores.map(() => tinycolor.random().toHexString()),
+                    data: arraySectores.map(sector => sector.cuenta),
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sectores'
+                    },
+                    subtitle: {
+                        display: true,
+                        text: 'Sectores con más pedidos últimos 6 meses'
+                    }
+                }
+            },
+            type: 'pie'
+        }
+    );
+}
+
+async function loadCalendar() {
     const allEventos = await getFichaAll('/eventos/');
     const arrayEventos = allEventos.flatMap(evento => {
         let randomColor = tinycolor.random().toHexString();
@@ -111,4 +251,4 @@ document.addEventListener('DOMContentLoaded', async function () {
         events: arrayEventos
     });
     calendar.render();
-});
+}
