@@ -1,3 +1,7 @@
+import {
+    getFichaAll
+} from '/public/js/generales/jsGeneral.js';
+
 const labels = [
     'Enero',
     'Febrero',
@@ -63,7 +67,30 @@ var myChart4 = new Chart(
     }
 );
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
+    const allEventos = await getFichaAll('/eventos/');
+    const arrayEventos = allEventos.flatMap(evento => {
+        let randomColor = tinycolor.random().toHexString();
+        let fecha = evento.fechaInicio.split(' ')[0].split('/').reverse().join('-');
+        let retorno = [];
+        const repeatMany = evento.periodicidad < 4 ? 20 : 10;
+        for (let index = 0; index < repeatMany; index++) {
+            fecha = new Date(fecha);
+            fecha = new Date(fecha.setDate(fecha.getDate() + (index == 0 ? 0 : Number(evento.periodicidad)))).toISOString().split('T')[0];
+            retorno.push({
+                id: evento.id,
+                title: `Evnt. Nº ${evento.id}`,
+                subtitle: evento.nombre,
+                description: evento.descripcion,
+                start: fecha,
+                url: `/eventos?id=${evento.id}`,
+                backgroundColor: randomColor,
+                borderColor: tinycolor(randomColor).brighten(50).toHexString(),
+                textColor: tinycolor.mostReadable(randomColor, ["black", "grey", "white"]).toHexString()
+            });
+        }
+        return retorno
+    })
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -71,31 +98,17 @@ document.addEventListener('DOMContentLoaded', function () {
         themeSystem: 'bootstrap',
         height: 'auto',
         defaultAllDay: true,
-        eventColor: 'red',
         eventDidMount: function (info) {
             var tooltip = new Tooltip(info.el, {
                 html: true,
-                title: `${info.event.extendedProps.title}<br>
-                        ${info.event.extendedProps.description}`,
-                placement: 'top',
+                title: `<strong>Titulo</strong>: ${info.event.extendedProps.subtitle}<br>
+                        <strong>Descripcion</strong>: ${info.event.extendedProps.description}`,
+                placement: 'left',
                 trigger: 'hover',
                 container: 'body'
             });
-            console.log(tooltip)
         },
-        events: [{ // this object will be "parsed" into an Event Object
-            title: 'Cambiar Focos pabellon 3', // a property!
-            description: 'description for Birthday Party',
-            start: '2021-07-25', // a property!
-        }, { // this object will be "parsed" into an Event Object
-            title: 'Revisar estufas', // a property!
-            description: 'description for Birthday Party',
-            start: '2021-07-25', // a property!
-        }, { // this object will be "parsed" into an Event Object
-            title: 'Cambiar Focos pabellon 3', // a property!
-            description: 'description for Birthday Party',
-            start: '2021-07-28', // a property!
-        }]
+        events: arrayEventos
     });
     calendar.render();
 });

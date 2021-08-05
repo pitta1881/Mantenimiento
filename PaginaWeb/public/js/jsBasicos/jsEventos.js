@@ -91,7 +91,14 @@ async function loadTable() {
     $('.btn-submit-pedido').on('click', function () {
         $(this).children('form').submit();
     })
-    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5', [6], 'Eventos Registrados');
+    await loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5', [6], 'Eventos Registrados')
+    if ($('#filtroEvento').length) {
+        $('#miTabla_0').siblings('.btn').click();
+        $('#miTabla_0').val($('#filtroEvento').val());
+        $('#miTabla_0').change();
+        window.history.replaceState(null, null, window.location.pathname + '/');
+    }
+
 }
 
 function modificarModal(datos) {

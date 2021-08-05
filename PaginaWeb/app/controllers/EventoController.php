@@ -19,6 +19,9 @@ class EventoController extends Controller implements MyInterface
     
     public function index()
     {
+        if (isset($_GET['id'])) {
+            $datos['idFiltro'] = $_GET['id'];
+        }
         $_SESSION['urlHeader'] = array(
             array("url" => "/home",
                  "nombre" => "HOME"),

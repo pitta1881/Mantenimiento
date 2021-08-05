@@ -153,6 +153,9 @@
 		<div id="containerModalDelete"></div>
 	{% endif %}
 
+	{% if datos.idFiltro %}
+		<input id='filtroEvento' value="{{datos.idFiltro}}" hidden>;
+	{% endif %}
 
 	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}
