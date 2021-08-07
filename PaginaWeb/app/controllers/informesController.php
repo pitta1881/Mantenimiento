@@ -3,62 +3,33 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Models\informes;
+use App\Models\InformeModel;
+use App\Models\PedidoModel;
 
-class informesController extends Controller
+class InformesController extends Controller
 {
-   public function __construct()
+    public function __construct()
     {
-      $this->model = new informes();
-         
-   
-   }
-
-
-   public function vistaAdministracionInformes(){
-      
-         
-         $permisos=$this->model->getPermisos($_SESSION['rol']);
-         $datos['permisos']= $permisos;
-  
-        
-        return view('/informes/vistaInforme',compact('datos'));
+        $this->model = new InformeModel();
+        $this->modelPedido = new PedidoModel();
+        session_start();
     }
-     public function getDatos(){
 
-  
-  $permisos=$this->model->getPermisos($_SESSION['rol']);
-  $datos['permisos']= $permisos;
-      
-      
-         if($_POST['filtro']=="Reparaciones_por_sector"){
-        $fechaDesde=$_POST['fechaInicio'];
-        $fechaHasta=$_POST['fechaFin'];
- 
-             $sectores=$this->model->getSectores($fechaDesde,$fechaHasta);
+    public function index()
+    {
+        $_SESSION['urlHeader'] = array(
+            array("url" => "/home",
+            "nombre" => "HOME"),
+            array("url" => "/informes",
+            "nombre" => "INFORMES")
+        );
+        $datos['datosSesion'] = $_SESSION;
+        return view('/informes/InformesView', compact('datos'));
+    }
 
-             //$todosSectores=json_encode($sectores);
-        $datos["filtro"]=$_POST['filtro'];
- 
-             return view('/informes/repaPorSectores',compact('datos','sectores'));
-
-         }  
-      if($_POST['filtro']== "Especializacion_por_tarea"){
-      $fechaDesde=$_POST['fechaInicio'];
-        $fechaHasta=$_POST['fechaFin'];
-          $especializaciones=$this->model->getEspXtarea($fechaDesde,$fechaHasta);
-   
-       return view('/informes/especializacionXpedidos',compact('datos','especializaciones'));
-      }
-        if($_POST['filtro']== "Estados"){
-    $fechaDesde=$_POST['fechaInicio'];
-        $fechaHasta=$_POST['fechaFin'];
-            $estados=$this->model->getEstados($fechaDesde,$fechaHasta);
- 
-       return view('/informes/estadoPedidos',compact('datos','estados'));
-      
-      
-      }
-     }
-
+    public function readFiltros()
+    {
+        $what = $this->modelPedido->getFichaAll(tablePedidos, $_POST['start'], $_POST['end']);
+        return json_encode($what);
+    }
 }

@@ -21,17 +21,17 @@ async function loadBoxes() {
 }
 
 async function loadCharts() {
-
+    let today = new Date;
     let dateSixMonthBefore = new Date();
     dateSixMonthBefore.setMonth(dateSixMonthBefore.getMonth() - 6);
     dateSixMonthBefore.setDate(1);
     const startDate = dateSixMonthBefore.toISOString().split('T')[0];
-    const [allOT, allPedidos, allOC] = await Promise.allSettled([getFichaAll('/ordendetrabajo/', startDate), getFichaAll('/pedidos/', startDate), getFichaAll('/ordendecompra/', startDate)]);
+    const endDate = today.toISOString().split('T')[0];
+    const [allOT, allPedidos] = await Promise.allSettled([getFichaAll('/ordendetrabajo/', startDate, endDate), getFichaAll('/pedidos/', startDate, endDate)]);
 
     //labels 6 meses anteriores incluido este
     const labelsMonths = [];
     var monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-    var today = new Date();
     var d;
     var month;
     var year;
@@ -43,7 +43,6 @@ async function loadCharts() {
     }
 
     let countOTPerMonth = new Array(12).fill(0);
-    let countOCPerMonth = new Array(12).fill(0);
     let countPedidosPerMonth = new Array(12).fill(0);
     let arrayEspecializaciones = [];
     let arraySectores = [];
@@ -58,17 +57,6 @@ async function loadCharts() {
         countOTPerMonth = (countOTPerMonth.slice(indiceCount, today.getMonth() + 1));
     } else {
         countOTPerMonth = (countOTPerMonth.slice(indiceCount).concat(countOTPerMonth.slice(0, indiceCount - 6)));
-    }
-
-    //count ocs ultimos 6 meses
-    allOC.value.forEach(oc => {
-        let fechaInicioOC = new Date(oc.fechaInicio.split(' ')[0].split('/').reverse().join(','))
-        countOCPerMonth[fechaInicioOC.getMonth()] += 1;
-    });
-    if (indiceCount < 6) {
-        countOCPerMonth = (countOCPerMonth.slice(indiceCount, today.getMonth() + 1));
-    } else {
-        countOCPerMonth = (countOCPerMonth.slice(indiceCount).concat(countOCPerMonth.slice(0, indiceCount - 6)));
     }
 
     //count pedidos ultimos 6 meses
@@ -159,11 +147,29 @@ async function loadCharts() {
     );
     var myChart3 = new Chart(
         $('#chartEspecialidades'), {
+            plugins: [ChartDataLabels],
             data: {
                 labels: arrayEspecializaciones.map(especializacion => especializacion.nombre),
                 datasets: [{
                     backgroundColor: arrayEspecializaciones.map(() => tinycolor.random().toHexString()),
                     data: arrayEspecializaciones.map(especializacion => especializacion.cuenta),
+                    datalabels: {
+                        align: 'center',
+                        anchor: 'center',
+                        backgroundColor: 'black',
+                        borderColor: 'white',
+                        borderRadius: 25,
+                        borderWidth: 2,
+                        display: function (context) {
+                            return context.dataset.data[context.dataIndex] !== 0; // or >= 1 or ...
+                        },
+                        color: 'white',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: Math.round,
+                        padding: 6
+                    },
                 }]
             },
             options: {
@@ -183,11 +189,29 @@ async function loadCharts() {
     );
     var myChart4 = new Chart(
         $('#chartSectores'), {
+            plugins: [ChartDataLabels],
             data: {
                 labels: arraySectores.map(sector => sector.nombre),
                 datasets: [{
                     backgroundColor: arraySectores.map(() => tinycolor.random().toHexString()),
                     data: arraySectores.map(sector => sector.cuenta),
+                    datalabels: {
+                        align: 'center',
+                        anchor: 'center',
+                        backgroundColor: 'black',
+                        borderColor: 'white',
+                        borderRadius: 25,
+                        borderWidth: 2,
+                        display: function (context) {
+                            return context.dataset.data[context.dataIndex] !== 0; // or >= 1 or ...
+                        },
+                        color: 'white',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: Math.round,
+                        padding: 6
+                    },
                 }]
             },
             options: {

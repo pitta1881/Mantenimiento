@@ -112,3 +112,11 @@ input[type=number] {
     background: rgba(0, 0, 0, 0.75) url("../res/loading2.gif") no-repeat center center;
     z-index: 10000;
 }
+
+#container-canvas.hide {
+    display: none;
+}
+
+#canvasSingle {
+    max-height: 600px;
+}

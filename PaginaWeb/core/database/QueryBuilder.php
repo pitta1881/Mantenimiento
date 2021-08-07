@@ -69,12 +69,8 @@ class QueryBuilder
     {
         if (is_null($start) && is_null($end)) {
             $query = "SELECT * FROM {$table}";
-        } elseif (!is_null($start) && is_null($end)) {
-            $query = "SELECT * FROM {$table} WHERE `fechaInicio` >= '$start'";
-        } elseif (is_null($start) && !is_null($end)) {
-            $query = "SELECT * FROM {$table} WHERE `fechaFin` <= '$end'";
         } else {
-            $query = "SELECT * FROM {$table} WHERE `fechaInicio` >= '$start' AND `fechaFin` <= '$end'";
+            $query = "SELECT * FROM {$table} WHERE `fechaInicio` >= '$start' AND `fechaInicio` <= '$end'";
         }
         $statement = $this->pdo->prepare($query);
         $statement->execute();

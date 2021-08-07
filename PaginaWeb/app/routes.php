@@ -1,5 +1,9 @@
 <?php
 
+//utils
+    $router->get('not_found', 'ProjectController@internalError');
+    $router->get('internal_error', 'ProjectController@internalError');
+
 //rutas logIn-logOut
     $router->get('', 'LogInOutController@index');
     $router->post('login/validar', 'LogInOutController@validarLogin');
@@ -126,8 +130,5 @@
 
 
 // rutas informes
-    $router->get('informe/administracion', 'informesController@vistaAdministracionInformes');
-    $router->post('informe/datos', 'informesController@getDatos');
-    $router->get('not_found', 'ProjectController@internalError');
-    $router->get('internal_error', 'ProjectController@internalError');
-    $router->post('informePedidos', 'PedidoController@getDatos');
+    $router->get('informes', 'InformesController@index');
+    $router->post('informes/filtros', 'InformesController@readFiltros');
