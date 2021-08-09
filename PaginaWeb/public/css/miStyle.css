@@ -113,7 +113,7 @@ input[type=number] {
     z-index: 10000;
 }
 
-#container-canvas.hide {
+#canvas-footer.hide {
     display: none;
 }
 

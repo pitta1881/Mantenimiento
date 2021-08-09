@@ -1,10 +1,10 @@
-import {
-    getFichaAll
-} from '/public/js/generales/jsGeneral.js';
+import loadPedidos from '/public/js/jsBasicos/subinformes/pedidos.js';
+import loadEspecialidades from '/public/js/jsBasicos/subinformes/especialidades.js';
+import loadSectores from '/public/js/jsBasicos/subinformes/sectores.js';
+import loadOrdenesDeTrabajo from '/public/js/jsBasicos/subinformes/ordenesdetrabajo.js';
+import loadOrdenesDeCompra from '/public/js/jsBasicos/subinformes/ordenesdecompra.js';
 
-var monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 var myChart;
-
 
 const labelsConfigLine = {
     align: 'start',
@@ -141,32 +141,32 @@ document.addEventListener('DOMContentLoaded', async function () {
         switch ($(this).val()) {
             case 'especializacion':
                 $('#subdataset').html(`
-                    <option disabled selected>Seleccione una opcion</option>
-                    <option value="esp-1">Especializaciones más solicitados</option>
+                    <option disabled>Seleccione una opcion</option>
+                    <option value="esp-1">Especializaciones más solicitadas</option>
                 `)
                 break;
             case 'oc':
                 $('#subdataset').html(`
-                    <option disabled selected>Seleccione una opcion</option>
-                    <option>Ordenes de Compra creadas</option>
+                    <option disabled>Seleccione una opcion</option>
+                    <option value="oc-1">Ordenes de Compra creadas</option>
                 `)
                 break;
             case 'ot':
                 $('#subdataset').html(`
-                    <option disabled selected>Seleccione una opcion</option>
-                    <option>Ordenes de Trabajo creadas</option>
+                    <option disabled>Seleccione una opcion</option>
+                    <option value="ot-1">Ordenes de Trabajo creadas</option>
                 `)
                 break;
             case 'pedido':
                 $('#subdataset').html(`
-                    <option disabled selected>Seleccione una opcion</option>
+                    <option disabled>Seleccione una opcion</option>
                     <option value="ped-1">Pedidos creados</option>
                 `)
                 break;
             case 'sector':
                 $('#subdataset').html(`
-                    <option disabled selected>Seleccione una opcion</option>
-                    <option>Sectores con más pedidos</option>
+                    <option disabled>Seleccione una opcion</option>
+                    <option value="sec-1">Sectores con más pedidos</option>
                 `)
                 break;
 
@@ -180,12 +180,25 @@ document.addEventListener('DOMContentLoaded', async function () {
         $.post($(this).attr('action'), $(this).serializeArray())
             .done(datos => {
                 datos = JSON.parse(datos)
+                let startDateArray = $('#fechaInicio').val().split('-')
+                let endDateArray = $('#fechaFin').val().split('-')
+                let startAsDate = new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2], 0, 0, 0, 0)
+                let vista = $('#vista').val();
                 switch ($('#subdataset').val()) {
                     case 'esp-1':
-                        console.log('espec')
+                        config = loadEspecialidades(config, datos);
+                        break;
+                    case 'sec-1':
+                        config = loadSectores(config, datos);
+                        break;
+                    case 'ot-1':
+                        config = loadOrdenesDeTrabajo(config, datos, startAsDate, endDateArray, vista);
+                        break;
+                    case 'oc-1':
+                        config = loadOrdenesDeCompra(config, datos, startAsDate, endDateArray, vista);
                         break;
                     case "ped-1":
-                        config = loadPedidos(datos, $('#fechaInicio').val(), $('#fechaFin').val());
+                        config = loadPedidos(config, datos, startAsDate, endDateArray, vista);
                         break;
                     default:
                         break;
@@ -193,41 +206,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (typeof myChart !== "undefined") {
                     myChart.destroy();
                 }
+                $('#title').val($('#dataset option:selected').text());
+                $('#subtitle').val($('#subdataset option:selected').text());
+                config.options.plugins.title.text = $('#dataset option:selected').text();
+                config.options.plugins.subtitle.text = $('#subdataset option:selected').text();
                 myChart = new Chart($('#canvasSingle'), config);
-                $('#container-canvas').removeClass('hide');
+                $('#canvas-footer').removeClass('hide');
             })
     })
 });
-
-function loadPedidos(datos, start, end) {
-    const diferenciaDias = diffDates(start, end);
-    let labelsMonths = [];
-    let labelsDaysMonth = [];
-    var today = new Date();
-    var d;
-    var month;
-    var year;
-    for (var i = 11; i >= 0; i -= 1) {
-        d = new Date(today.getFullYear(), today.getMonth() - i, 1);
-        month = monthNames[d.getMonth()];
-        year = d.getFullYear();
-        labelsMonths.push(`${month}/${year.toString().slice(2)}`);
-    }
-    let countPedidosPerMonth = new Array(12).fill(0);
-    datos.forEach(pedido => {
-        let fechaInicioPedido = new Date(pedido.fechaInicio.split(' ')[0].split('/').reverse().join(','))
-        countPedidosPerMonth[fechaInicioPedido.getMonth() + 4] += 1;
-    });
-    config.data.labels = labelsMonths;
-    config.data.datasets[0].backgroundColor = countPedidosPerMonth.map(() => tinycolor.random().toHexString())
-    config.data.datasets[0].data = countPedidosPerMonth;
-    return config;
-}
-
-function diffDates(start, end) {
-    const date1 = new Date(start);
-    const date2 = new Date(end);
-    const diffTime = Math.abs(date2 - date1);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-}

@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\InformeModel;
+use App\Models\OCModel;
+use App\Models\OTModel;
 use App\Models\PedidoModel;
 
 class InformesController extends Controller
@@ -12,6 +14,8 @@ class InformesController extends Controller
     {
         $this->model = new InformeModel();
         $this->modelPedido = new PedidoModel();
+        $this->modelOT = new OTModel();
+        $this->modelOC = new OCModel();
         session_start();
     }
 
@@ -29,7 +33,23 @@ class InformesController extends Controller
 
     public function readFiltros()
     {
-        $what = $this->modelPedido->getFichaAll(tablePedidos, $_POST['start'], $_POST['end']);
+        $fin = $_POST['end'].' 23:59:59';
+        switch ($_POST['dataset']) {
+            case 'pedido':
+            case 'sector':
+            case 'especializacion':
+                $what = $this->modelPedido->getFichaAll(tablePedidos, $_POST['start'], $fin);
+                break;
+            case 'ot':
+                $what = $this->modelOT->getFichaAll(tableOT, $_POST['start'], $fin);
+                break;
+            case 'oc':
+                $what = $this->modelOC->getFichaAll(tableOC, $_POST['start'], $fin);
+                break;
+            default:
+                # code...
+                break;
+        }
         return json_encode($what);
     }
 }

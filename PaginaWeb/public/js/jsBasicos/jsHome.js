@@ -25,8 +25,8 @@ async function loadCharts() {
     let dateSixMonthBefore = new Date();
     dateSixMonthBefore.setMonth(dateSixMonthBefore.getMonth() - 6);
     dateSixMonthBefore.setDate(1);
-    const startDate = dateSixMonthBefore.toISOString().split('T')[0];
-    const endDate = today.toISOString().split('T')[0];
+    const startDate = dateSixMonthBefore.toISOString().split('T').join(' ');
+    const endDate = today.toISOString().split('T').join(' ');
     const [allOT, allPedidos] = await Promise.allSettled([getFichaAll('/ordendetrabajo/', startDate, endDate), getFichaAll('/pedidos/', startDate, endDate)]);
 
     //labels 6 meses anteriores incluido este

@@ -27,7 +27,16 @@ Gestion de Informes
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group required col-lg-6">
+      <div class="form-group required col-lg-4">
+        <label class="control-label" for="vista">Vista:</label>
+        <select name="vista" id="vista" class="form-control custom-select" required>
+          <option disabled selected>Seleccione una opcion</option>
+          <option value="dia">Día</option>
+          <option value="mes">Mes</option>
+          <option value="año">Año</option>
+        </select>
+      </div>
+      <div class="form-group required col-lg-4">
         <label class="control-label" for="dataset">Dataset:</label>
         <select name="dataset" id="dataset" class="form-control custom-select" required>
           <option disabled selected>Seleccione una opcion</option>
@@ -38,10 +47,10 @@ Gestion de Informes
           <option value="sector">Sectores</option>
         </select>
       </div>
-      <div class="form-group required col-lg-6">
+      <div class="form-group required col-lg-4">
         <label class="control-label" for="subdataset">Subdataset:</label>
         <select name="subdataset" id="subdataset" class="form-control custom-select" required>
-          <option disabled selected>Seleccione una opcion</option>
+          <option disabled>Seleccione una opcion</option>
         </select>
       </div>
     </div>
@@ -56,12 +65,12 @@ Gestion de Informes
       </div>
     </div>
     <div class="row justify-content-center mb-4">
-      <button type="submit" class="btn btn-success mx-2">Filtrar</button>
+      <button type="submit" class="btn btn-success mx-2">Crear Informe</button>
     </div>
   </form>
-  <div id="container-canvas" class="">
+  <div id="container-canvas">
     <canvas id="canvasSingle" class="p-2"></canvas>
-    <div class="row justify-content-center my-4">
+    <div id="canvas-footer" class="row justify-content-center my-4 hide">
       <button type="button" id="btn-download" class="btn btn-primary mx-2">Descargar</button>
       <button type="button" id="btn-print" class="btn btn-primary mx-2">Imprimir</button>
     </div>
