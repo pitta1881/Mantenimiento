@@ -64,6 +64,9 @@ class RolController extends Controller implements MyInterface
                     ];
                     $insert = $this->model->insert(tableRxP, $rol, "RxP");
                 }
+            } else {
+                $insert['estado'] = true;
+                $insert['mensaje'] = 1;
             }
             $update = $insert;
             $update['tipo'] = 'Rol';
