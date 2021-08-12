@@ -2,7 +2,7 @@ export default function loadEspecialidades(config, datos) {
     let dataJson = [];
     datos.forEach(pedido => {
         pedido.tareas.forEach(tarea => {
-            let indexEspecializacion = dataJson.findIndex(especializacion => especializacion.nombre == tarea.especializacionNombre)
+            let indexEspecializacion = dataJson.findIndex(especializacion => especializacion.label == tarea.especializacionNombre)
             if (indexEspecializacion == -1) {
                 dataJson.push({
                     label: tarea.especializacionNombre,

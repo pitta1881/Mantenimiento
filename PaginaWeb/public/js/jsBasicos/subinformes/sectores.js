@@ -1,7 +1,7 @@
 export default function loadSectores(config, datos) {
     let dataJson = [];
     datos.forEach(pedido => {
-        let indexSector = dataJson.findIndex(sector => sector.nombre == pedido.sectorNombre)
+        let indexSector = dataJson.findIndex(sector => sector.label == pedido.sectorNombre)
         if (indexSector == -1) {
             dataJson.push({
                 label: pedido.sectorNombre,
