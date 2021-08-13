@@ -237,7 +237,7 @@ async function loadCalendar() {
         let randomColor = tinycolor.random().toHexString();
         let fecha = evento.fechaInicio.split(' ')[0].split('/').reverse().join('-');
         let retorno = [];
-        const repeatMany = evento.periodicidad < 4 ? 20 : 10;
+        const repeatMany = evento.periodicidad < 4 ? 40 : 40;
         for (let index = 0; index < repeatMany; index++) {
             fecha = new Date(fecha);
             fecha = new Date(fecha.setDate(fecha.getDate() + (index == 0 ? 0 : Number(evento.periodicidad)))).toISOString().split('T')[0];

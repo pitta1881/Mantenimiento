@@ -114,3 +114,19 @@ table.table th,
 table.table td {
   vertical-align: middle;
 }
+
+
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  cursor: pointer;
+  *cursor: hand;
+   color: #4682b4 !important; 
+
+}
+
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  border: 1px solid white;
+  background: linear-gradient(rgb(255, 129, 0) 0%, rgb(255, 129, 0) 100%);
+  color: white !important;
+}
