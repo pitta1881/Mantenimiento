@@ -1,4 +1,5 @@
 USE Mantenimiento;
+SET NAMES 'utf8' COLLATE 'utf8_general_ci';
 CREATE TABLE Roles (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(30) NOT NULL,
@@ -25,15 +26,37 @@ CREATE TABLE EstadosPersona (
     UNIQUE(nombre)
 );
 
+CREATE TABLE Provincias (
+    id INTEGER PRIMARY KEY,
+    nombre VARCHAR(60) NOT NULL,
+    UNIQUE(nombre)
+);
+
+CREATE TABLE Ciudades (
+    id INTEGER PRIMARY KEY,
+    nombre VARCHAR(60) NOT NULL,
+    idProvincia INTEGER NOT NULL,
+    FOREIGN KEY (idProvincia) REFERENCES Provincias(id)
+);
+
+CREATE TABLE Direccion (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    idCiudad INTEGER NOT NULL,
+    calle VARCHAR(50) NOT NULL,
+    numero VARCHAR(50) NOT NULL,
+    FOREIGN KEY (idCiudad) REFERENCES Ciudades(id)
+);
+
 CREATE TABLE Personas (
     id INTEGER PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL,
     apellido VARCHAR(30) NOT NULL,
-    direccion VARCHAR(50),
+    idDireccion INTEGER NOT NULL,
     fechaNacimiento DATE NOT NULL,
-    email VARCHAR(30),
+    email VARCHAR(30) NOT NULL,
     idEstadoPersona INTEGER NOT NULL,
-    FOREIGN KEY (idEstadoPersona) REFERENCES EstadosPersona(id)
+    FOREIGN KEY (idEstadoPersona) REFERENCES EstadosPersona(id),
+    FOREIGN KEY (idDireccion) REFERENCES Direccion(id)
 );
 
 CREATE TABLE Usuarios (

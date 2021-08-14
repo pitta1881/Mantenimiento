@@ -93,7 +93,7 @@ function visualizarPersonaAgente(datos) {
         `<strong>DNI:</strong> ${datos.id}
         <br> <strong>Nombre y Apellido:</strong> ${datos.nombre} ${datos.apellido}
         <br> <strong>Fecha de Nacimiento:</strong> ${datos.fechaNacimiento}
-        <br> <strong>Direccion:</strong> ${datos.direccion} 
+        <br> <strong>Direccion:</strong> ${datos.direccion.provinciaNombre}-${datos.direccion.ciudadNombre} ${datos.direccion.calle} ${datos.direccion.numero} 
         <br> <strong>Email:</strong> ${datos.email}
         `
     );

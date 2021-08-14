@@ -1,190 +1,241 @@
 {% extends "base.html" %}
 {% block title %}
-	Gestion de Usuarios
+Gestion de Usuarios
 {% endblock %}
 {% block main %}
-	<div>
-		<h2 class="titulo-tabla">Personas Registradas
-		</h2>
+<div>
+	<h2 class="titulo-tabla">Personas Registradas
+	</h2>
 
-		<!-- BOTON NEW PERSONA -->
-		{% if "45" in datos.datosSesion.listaPermisos %}
-			<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalNew">
-				<i class="fal fa-plus"></i>
-				Crear Nuevo</button>
-		{% endif %}
-
-		<!-- TABLA PERSONAS -->
-		<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
-			<thead>
-				<tr>
-					<th>DNI</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Direccion</th>
-					<th>Email</th>
-					<th>Fecha de Nacimiento</th>
-					<th>Estado</th>
-					<th>Accion</th>
-				</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
-	</div>
-
-	<!-- MODALES NEW, UPDATE Y DELETE -->
-	<!--NEW PERSONA-->
+	<!-- BOTON NEW PERSONA -->
 	{% if "45" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalNew">
-			<div class="modal-dialog modal-lg">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0">Alta de Persona</h3>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<form action="create" method="post" id="formPersonaNew">
-							<div class="form-row">
-								<div class="form-group required col-lg-4">
-									<label class="control-label" for="id">DNI:</label>
-									<input type="number" id="id" name="id" class="form-control" autofocus>
-								</div>
-								<div class="form-group required col-lg-4">
-									<label class="control-label" for="nombre">Nombre:</label>
-									<input type="text" name="nombre" id="nombre" class="form-control">
-								</div>
-								<div class="form-group required col-lg-4">
-									<label class="control-label" for="apellido">Apellido:</label>
-									<input type="text" name="apellido" id="apellido" class="form-control">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label" for="direccion">Direccion:</label>
-								<input type="text" name="direccion" id="direccion" class="form-control">
-							</div>
-							<div class="form-row">
-								<div class="form-group col-lg-6">
-									<label class="control-label" for="email">Email:</label>
-									<input type="email" name="email" id="email" class="form-control">
-								</div>
-								<div class="form-group required col-lg-6">
-									<label class="control-label" for="fechaNacimiento">Fecha De Nacimiento:</label>
-									<input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
-								</div>
-							</div>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-success">Aceptar</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+	<button type="button" id="btn-newPersona" class="btn btn-success btn-lg" data-toggle="modal"
+		data-target="#modalNew">
+		<i class="fal fa-plus"></i>
+		Crear Nuevo</button>
 	{% endif %}
 
-	<!--MODIFICAR PERSONA-->
-	{% if "47" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalUpdate">
-			<div class="modal-dialog modal-lg">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<!-- TABLA PERSONAS -->
+	<table id="miTabla" class="table table-bordered table-sm table-responsive-lg table-striped table-hover">
+		<thead>
+			<tr>
+				<th>DNI</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Direccion</th>
+				<th>Email</th>
+				<th>Fecha de Nacimiento</th>
+				<th>Estado</th>
+				<th>Accion</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>
+
+<!-- MODALES NEW, UPDATE Y DELETE -->
+<!--NEW PERSONA-->
+{% if "45" in datos.datosSesion.listaPermisos %}
+<div class="modal fade" id="modalNew">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h3 class="modal-title m-0">Alta de Persona</h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<form action="create" method="post" id="formPersonaNew">
+					<div class="form-row">
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="id">DNI:</label>
+							<input type="number" id="id" name="id" class="form-control" autofocus>
+						</div>
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="nombre">Nombre:</label>
+							<input type="text" name="nombre" id="nombre" class="form-control">
+						</div>
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="apellido">Apellido:</label>
+							<input type="text" name="apellido" id="apellido" class="form-control">
+						</div>
 					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<form action="update" method="post" id="formPersonaUpd">
-							<div class="form-row">
-								<div class="form-group col-lg-4">
-									<label class="control-label" for="id">DNI:</label>
-									<input type="number" name="id" id="updateID" class="form-control" readonly>
-								</div>
-								<div class="form-group required col-lg-4">
-									<label class="control-label" for="nombreAnteriorUpdate">Nombre:</label>
-									<input type="text" name="nombre" id="nombreAnteriorUpdate" class="form-control">
-								</div>
-								<div class="form-group required col-lg-4">
-									<label class="control-label" for="apellidoAnteriorUpdate">Apellido:</label>
-									<input type="text" name="apellido" id="apellidoAnteriorUpdate" class="form-control">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label" for="direccionAnteriorUpdate">Direccion:</label>
-								<input type="text" name="direccion" id="direccionAnteriorUpdate" class="form-control">
-							</div>
-							<div class="form-row">
-								<div class="form-group col-lg-6">
-									<label class="control-label" for="emailAnteriorUpdate">Email:</label>
-									<input type="email" name="email" id="emailAnteriorUpdate" class="form-control">
-								</div>
-								<div class="form-group required col-lg-6">
-									<label class="control-label" for="fechaAnteriorUpdate">Fecha De Nacimiento:</label>
-									<input type="date" name="fechaNacimiento" id="fechaAnteriorUpdate" class="form-control" max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
-								</div>
-							</div>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-success">Aceptar</button>
-							</div>
-						</form>
+					<div class="form-row">
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="provincia">Provincia:</label>
+							<select name="idProvincia" id="provincia" class="form-control custom-select">
+								<option value="" selected disabled>Seleccione una Provincia</option>
+								{% for provincia in datos.provincias %}
+								<option value="{{ provincia.id }}">{{ provincia.nombre }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="ciudad">Ciudad:</label>
+							<select name="idCiudad" id="ciudad" class="form-control custom-select">
+								<option value="" selected disabled>Seleccione una Ciudad</option>
+								{% for ciudad in datos.ciudades %}
+								<option value="{{ ciudad.id }}" data-provincia="{{ ciudad.idProvincia }}" hidden>
+									{{ ciudad.nombre }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group required col-lg-2">
+							<label class="control-label" for="calle">Calle:</label>
+							<input type="text" name="calle" id="calle" class="form-control">
+						</div>
+						<div class="form-group required col-lg-2">
+							<label class="control-label" for="numero">Número:</label>
+							<input type="text" name="numero" id="numero" class="form-control">
+						</div>
 					</div>
-				</div>
+					<div class="form-row">
+						<div class="form-group required col-lg-6">
+							<label class="control-label" for="email">Email:</label>
+							<input type="email" name="email" id="email" class="form-control">
+						</div>
+						<div class="form-group required col-lg-6">
+							<label class="control-label" for="fechaNacimiento">Fecha De Nacimiento:</label>
+							<input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control"
+								max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
+						</div>
+					</div>
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+						<button type="submit" class="btn btn-success">Aceptar</button>
+					</div>
+				</form>
 			</div>
 		</div>
-	{% endif %}
+	</div>
+</div>
+{% endif %}
 
-	<!--MODIFICAR ESTADO-->
-	{% if "47" in datos.datosSesion.listaPermisos %}
-		<div class="modal fade" id="modalEstadoUpdate">
-			<div class="modal-dialog modal-xs">
-				<div
-					class="modal-content">
-					<!-- Modal Header -->
-					<div class="modal-header">
-						<h3 class="modal-title m-0">Cambiar Estado</h3>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
+<!--MODIFICAR PERSONA-->
+{% if "47" in datos.datosSesion.listaPermisos %}
+<div class="modal fade" id="modalUpdate">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h3 class="modal-title m-0" id="h3TitleModalUpdate"></h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<form action="update" method="post" id="formPersonaUpd">
+					<input type="text" name="idDireccion" id="idDireccionUpd" hidden>
+					<div class="form-row">
+						<div class="form-group col-lg-4">
+							<label class="control-label" for="id">DNI:</label>
+							<input type="number" name="id" id="updateID" class="form-control" readonly>
+						</div>
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="nombreAnteriorUpdate">Nombre:</label>
+							<input type="text" name="nombre" id="nombreAnteriorUpdate" class="form-control">
+						</div>
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="apellidoAnteriorUpdate">Apellido:</label>
+							<input type="text" name="apellido" id="apellidoAnteriorUpdate" class="form-control">
+						</div>
 					</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<form action="updateEstadoPersona" method="post" id="formPersonaEstadoUpd">
-							<input type="text" name="idPersona" id="updateEstadoID" hidden>
-							<div class="form-group required">
-								<label class="control-label" for="estadoUpdate">Nuevo Estado:</label>
-								<select name="idEstadoPersona" id="estadoUpdate" class="form-control custom-select">
-									<option disabled selected>Seleccione una opcion</option>
-									{% for estado in datos.todosEstados %}
-										<option value="{{ estado.id }}">{{ estado.nombre }}</option>
-									{% endfor %}
-								</select>
-							</div>
-							<!-- Modal Footer -->
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-								<button type="submit" class="btn btn-success">Aceptar</button>
-							</div>
-						</form>
+					<div class="form-row">
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="provinciaAnteriorUpd">Provincia:</label>
+							<select name="idProvincia" id="provinciaAnteriorUpd" class="form-control custom-select">
+								<option value="" selected disabled>Seleccione una Provincia</option>
+								{% for provincia in datos.provincias %}
+								<option value="{{ provincia.id }}">{{ provincia.nombre }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group required col-lg-4">
+							<label class="control-label" for="ciudadAnteriorUpd">Ciudad:</label>
+							<select name="idCiudad" id="ciudadAnteriorUpd" class="form-control custom-select">
+								<option value="" selected disabled>Seleccione una Ciudad</option>
+								{% for ciudad in datos.ciudades %}
+								<option value="{{ ciudad.id }}" data-provincia="{{ ciudad.idProvincia }}" hidden>
+									{{ ciudad.nombre }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="form-group required col-lg-2">
+							<label class="control-label" for="calleAnteriorUpd">Calle:</label>
+							<input type="text" name="calle" id="calleAnteriorUpd" class="form-control">
+						</div>
+						<div class="form-group required col-lg-2">
+							<label class="control-label" for="numeroAnteriorUpd">Número:</label>
+							<input type="text" name="numero" id="numeroAnteriorUpd" class="form-control">
+						</div>
 					</div>
-				</div>
+					<div class="form-row">
+						<div class="form-group required col-lg-6">
+							<label class="control-label" for="emailAnteriorUpdate">Email:</label>
+							<input type="email" name="email" id="emailAnteriorUpdate" class="form-control">
+						</div>
+						<div class="form-group required col-lg-6">
+							<label class="control-label" for="fechaAnteriorUpdate">Fecha De Nacimiento:</label>
+							<input type="date" name="fechaNacimiento" id="fechaAnteriorUpdate" class="form-control"
+								max="{{ datos.minimo18 }}" min="{{ datos.maximo70 }}">
+						</div>
+					</div>
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+						<button type="submit" class="btn btn-success">Aceptar</button>
+					</div>
+				</form>
 			</div>
 		</div>
-	{% endif %}
+	</div>
+</div>
+{% endif %}
 
-	<!--ELIMINAR PERSONA SI NO ESTA USADO-->
-	{% if "46" in datos.datosSesion.listaPermisos %}
-		<div id="containerModalDelete"></div>
-	{% endif %}
-	<!-- FIN MODALES NEW, UPDATE Y DELETE -->
+<!--MODIFICAR ESTADO-->
+{% if "47" in datos.datosSesion.listaPermisos %}
+<div class="modal fade" id="modalEstadoUpdate">
+	<div class="modal-dialog modal-xs">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h3 class="modal-title m-0">Cambiar Estado</h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<form action="updateEstadoPersona" method="post" id="formPersonaEstadoUpd">
+					<input type="text" name="idPersona" id="updateEstadoID" hidden>
+					<div class="form-group required">
+						<label class="control-label" for="estadoUpdate">Nuevo Estado:</label>
+						<select name="idEstadoPersona" id="estadoUpdate" class="form-control custom-select">
+							<option disabled selected>Seleccione una opcion</option>
+							{% for estado in datos.todosEstados %}
+							<option value="{{ estado.id }}">{{ estado.nombre }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<!-- Modal Footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+						<button type="submit" class="btn btn-success">Aceptar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+
+<!--ELIMINAR PERSONA SI NO ESTA USADO-->
+{% if "46" in datos.datosSesion.listaPermisos %}
+<div id="containerModalDelete"></div>
+{% endif %}
+<!-- FIN MODALES NEW, UPDATE Y DELETE -->
 {% endblock %}
 {% block javascripts %}
-	{{ parent() }}
-	{% include 'partials/scriptsDatatables.html' %}
-	<script src="/public/js/jsBasicos/jsPersona.js" type="module"></script>
+{{ parent() }}
+{% include 'partials/scriptsDatatables.html' %}
+<script src="/public/js/jsBasicos/jsPersona.js" type="module"></script>
 {% endblock %}

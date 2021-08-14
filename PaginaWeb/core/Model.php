@@ -33,6 +33,9 @@ define("tableTiposOC", "tiposordenesdecompra");
 define("tableEstadosOC", "estadosordenesdecompra");
 define("tableEventos", "eventos");
 define("tableOT", "ordenesdetrabajo");
+define("tableProvincias", "provincias");
+define("tableCiudades", "ciudades");
+define("tableDirecciones", "direccion");
 
 /**
  * Clase abstracta para manejar los modelos

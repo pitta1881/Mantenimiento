@@ -20,6 +20,8 @@ class PersonaController extends Controller implements MyInterface
     public function index()
     {
         $datos['todosEstados'] = $this->model->getFichaAllModel(tableEstadosPersona);
+        $datos['provincias'] = $this->model->getFichaAllModel(tableProvincias);
+        $datos['ciudades'] = $this->model->getFichaAllModel(tableCiudades);
         $datos['minimo18'] = date('Y-m-d', strtotime('18 years ago'));
         $datos['maximo70'] = date('Y-m-d', strtotime('70 years ago'));
         $_SESSION['urlHeader'] = array(
@@ -38,11 +40,17 @@ class PersonaController extends Controller implements MyInterface
     {
         try {
             $this->model->startTransaction();
+            $direccion = [
+                'idCiudad' => $_POST['idCiudad'],
+                'calle' => $_POST['calle'],
+                'numero' => $_POST['numero']
+            ];
+            $insert = $this->model->insert(tableDirecciones, $direccion, "Direccion");
             $persona = [
                 'id' => $_POST['id'],
                 'nombre' => $_POST['nombre'],
                 'apellido' => $_POST['apellido'],
-                'direccion' => $_POST['direccion'],
+                'idDireccion' => $insert['mensaje'],
                 'email' => $_POST['email'],
                 'fechaNacimiento' => $_POST['fechaNacimiento'],
                 'idEstadoPersona' => 1
@@ -65,10 +73,15 @@ class PersonaController extends Controller implements MyInterface
     {
         try {
             $this->model->startTransaction();
+            $direccion = [
+                'idCiudad' => $_POST['idCiudad'],
+                'calle' => $_POST['calle'],
+                'numero' => $_POST['numero']
+            ];
+            $update = $this->model->update(tableDirecciones, $direccion, array('id' => $_POST['idDireccion']), "Direccion");
             $persona = [
                 'nombre' => $_POST['nombre'],
                 'apellido' => $_POST['apellido'],
-                'direccion' => $_POST['direccion'],
                 'email' => $_POST['email'],
                 'fechaNacimiento' => $_POST['fechaNacimiento']
             ];

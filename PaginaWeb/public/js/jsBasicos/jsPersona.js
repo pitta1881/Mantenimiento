@@ -22,6 +22,8 @@ loadListenerActionButtons({
     'loadTable': loadTable,
 });
 loadScriptValidarCampos(loadTable);
+handleBtnNewPersona();
+handleProvCiud();
 
 //--PERSONA--\\
 async function loadTable() {
@@ -59,7 +61,7 @@ async function loadTable() {
             <td>${element.id}</td>
             <td>${element.nombre}</td>
             <td>${element.apellido}</td>
-            <td>${element.direccion}</td>
+            <td>${element.direccion.provinciaNombre}-${element.direccion.ciudadNombre} ${element.direccion.calle} ${element.direccion.numero}</td>
             <td>${element.email}</td>
             <td>${element.fechaNacimiento}</td>
             <td>${element.estadoNombre}</td>
@@ -82,9 +84,14 @@ function modificarModal(datos) {
     var myDate = datos['fechaNacimiento'].split("/").reverse().join("-");
     $('#h3TitleModalUpdate').text("Modificar Persona '" + datos['nombre'] + " " + datos['apellido'] + "'");
     $('#updateID').attr('value', datos['id']).val(datos['id']);
+    $('#idDireccionUpd').attr('value', datos['idDireccion']).val(datos['idDireccion']);
     $('#nombreAnteriorUpdate').attr('value', datos['nombre']).val(datos['nombre']);
     $('#apellidoAnteriorUpdate').attr('value', datos['apellido']).val(datos['apellido']);
-    $('#direccionAnteriorUpdate').attr('value', datos['direccion']).val(datos['direccion']);
+    $(`#provinciaAnteriorUpd option[value=${datos['direccion'].idProvincia}]`).prop('selected', true);
+    $('#provinciaAnteriorUpd').change()
+    $(`#ciudadAnteriorUpd option[value=${datos['direccion'].idCiudad}]`).prop('selected', true);
+    $('#calleAnteriorUpd').attr('value', datos['direccion'].calle).val(datos['direccion'].calle);
+    $('#numeroAnteriorUpd').attr('value', datos['direccion'].numero).val(datos['direccion'].numero);
     $('#emailAnteriorUpdate').attr('value', datos['email']).val(datos['email']);
     $('#fechaAnteriorUpdate').attr('value', myDate).val(myDate);
 }
@@ -96,4 +103,19 @@ function modificarEstadoModal(datos) {
 
 function deleteModal(datos) {
     document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Persona ${datos['nombre']} ${datos['apellido']}`);
+}
+
+function handleBtnNewPersona() {
+    $('#btn-newPersona').on('click', function () {
+        $('select[name=idCiudad] option').attr('hidden', true);
+        $('select[name=idCiudad] option:disabled').attr('hidden', false).prop('selected', true);
+    })
+}
+
+function handleProvCiud() {
+    $('#provincia, #provinciaAnteriorUpd').on('change', function () {
+        $(this).parents('form').find('select[name=idCiudad] option').attr('hidden', true).prop('selected', false);
+        $(this).parents('form').find('select[name=idCiudad] option:disabled').attr('hidden', false).prop('selected', true);
+        $(this).parents('form').find(`select[name=idCiudad] option[data-provincia=${$(this).val()}]`).attr('hidden', false);
+    })
 }

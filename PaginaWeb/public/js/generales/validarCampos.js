@@ -51,6 +51,10 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     validators: {
                         notEmpty: {
                             message: 'Ingrese una Contraseña'
+                        },
+                        regexp: {
+                            regexp: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                            message: 'Mínimo 8 caracteres, 1 número y 1 mayúscula<br>'
                         }
                     }
                 },
@@ -142,20 +146,39 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                         }
                     }
                 },
-                direccion: {
+                idProvincia: {
                     validators: {
-                        stringLength: {
-                            max: 50,
-                            message: 'Máximo 50 caracteres<br>'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9º" ]+$/,
-                            message: 'Caracter no permitido'
+                        notEmpty: {
+                            message: 'Seleccione una Provincia'
+                        }
+                    }
+                },
+                idCiudad: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Seleccione una Ciudad'
+                        }
+                    }
+                },
+                calle: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese una Calle'
+                        }
+                    }
+                },
+                numero: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ingrese un Nº de Calle'
                         }
                     }
                 },
                 email: {
                     validators: {
+                        notEmpty: {
+                            message: 'Ingrese un Email'
+                        },
                         emailAddress: {
                             message: 'Debe ingresar un Email válido'
                         }
