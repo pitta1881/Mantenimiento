@@ -62,7 +62,7 @@ CREATE TABLE Personas (
 CREATE TABLE Usuarios (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     nick VARCHAR(30) NOT NULL,
-    password VARCHAR(30) NOT NULL,
+    password TEXT NOT NULL,
     idPersona INTEGER,
     UNIQUE (nick),
     UNIQUE (idPersona),

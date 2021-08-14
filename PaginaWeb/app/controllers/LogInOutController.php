@@ -27,24 +27,28 @@ class LogInOutController extends Controller
     {
         $user = [
             'nick' => $_POST['nick'],
-            'password' => $_POST['password']
         ];
         $userMatch = $this->model->buscarUsuario(table, $user);
         if (empty($userMatch)) {
-            return $this->logIn(true);
+            return $this->logInError();
         } else {
-            session_start();
-            $_SESSION['idUser'] = $userMatch['idUsuario'];
-            $_SESSION['nickUser'] = $_POST['nick'];
-            $_SESSION['listaRoles'] = $this->model->buscarRoles_x_Usuario($userMatch);
-            if (sizeof($_SESSION['listaRoles']) > 1) {
-                $_SESSION['firstOrUnique'] = false;
+            if (password_verify($_POST['password'], $userMatch['password'])) {
+                $usuario['idUsuario'] = $userMatch['id'];
+                session_start();
+                $_SESSION['idUser'] = $userMatch['id'];
+                $_SESSION['nickUser'] = $_POST['nick'];
+                $_SESSION['listaRoles'] = $this->model->buscarRoles_x_Usuario($usuario);
+                if (sizeof($_SESSION['listaRoles']) > 1) {
+                    $_SESSION['firstOrUnique'] = false;
+                } else {
+                    $_SESSION['firstOrUnique'] = true;
+                }
+                $_SESSION['rolActual'] = $_SESSION['listaRoles'][0];
+                $_SESSION['listaPermisos'] = $this->model->getPermisos();
+                redirect('home');
             } else {
-                $_SESSION['firstOrUnique'] = true;
+                return $this->logInError();
             }
-            $_SESSION['rolActual'] = $_SESSION['listaRoles'][0];
-            $_SESSION['listaPermisos'] = $this->model->getPermisos();
-            redirect('home');
         }
     }
 
@@ -54,7 +58,7 @@ class LogInOutController extends Controller
         redirect('');
     }
 
-    public function logIn()
+    public function logInError()
     {
         $datos['error'] = true;
         return view('/login', compact('datos'));

@@ -43,7 +43,7 @@ class UsuarioController extends Controller implements MyInterface
             $this->model->startTransaction();
             $usuario = [
                 'nick' => $_POST['nick'],
-                'password' => $_POST['password'],
+                'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
                 'idPersona' => $_POST['idPersona'],
             ];
             $insert = $this->model->insert(table, $usuario, "Usuario");
@@ -72,7 +72,7 @@ class UsuarioController extends Controller implements MyInterface
         try {
             $this->model->startTransaction();
             $usuario = [
-                'password' => $_POST['password']
+                'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
             ];
             $update = $this->model->update(table, $usuario, array('id' => $_POST['id']), "Usuario");
             $this->model->commit();

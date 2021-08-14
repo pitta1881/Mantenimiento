@@ -747,9 +747,9 @@ INSERT INTO `personas` (`id`, `nombre`, `apellido`, `idDireccion`, `fechaNacimie
 ;
 
 INSERT INTO `usuarios` (`id`, `nick`, `password`, `idPersona`) VALUES
-(1, 'admin', 'admin', 0),
-(2, 'pitta1881', '123', 11188169),
-(3, 'mantenimiento', '1234', 10548951);
+(1, 'admin', '$2y$10$xrWskYLI9rcMeVv6r5L42.bZJvhDdH1ENQE3ur6G9BtXVov6Ixyjm', 0),
+(2, 'pitta1881', '$2y$10$owUf9dorMI6CFq2SoBQ.neR9OSf33IuJgH0xk7tAEskFJtHuZY1Yy', 11188169),
+(3, 'mantenimiento', '$2y$10$HOvbqoVG0zfqCFplbTZpDusUE8DeCA8tLlgrQTKPU.H8iIDDrOZJW', 10548951);
 
 INSERT INTO `roles_x_usuarios` (`idRol`, `idUsuario`) VALUES
 (1, 1),
