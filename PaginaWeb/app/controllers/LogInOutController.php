@@ -17,11 +17,7 @@ class LogInOutController extends Controller
 
     public function index($errorLogin = null)
     {
-        $alertas = [
-            'errorLogin' => $errorLogin
-        ];
-        $datos['alertas'] = $alertas;
-        return view('login', compact('datos'));
+        return view('login');
     }
 
     public function validarLogin()
