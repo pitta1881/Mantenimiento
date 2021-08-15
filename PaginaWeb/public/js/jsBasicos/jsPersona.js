@@ -77,7 +77,8 @@ async function loadTable() {
         }
     });
     $('#miTabla tbody').html(textoInner);
-    loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6', [7], 'Personas Registradas');
+    await loadScriptOrdenarPagTablas('miTabla', '0,1,2,3,4,5,6', [7], 'Personas Registradas');
+    $('#miTabla_2').parents('th').click();
 }
 
 function modificarModal(datos) {
