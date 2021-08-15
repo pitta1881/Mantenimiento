@@ -28,6 +28,10 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         array (
             'Monolog\\' => 8,
         ),
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -50,6 +54,10 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
         'App\\' => 
         array (
@@ -74,6 +82,7 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'App\\Controllers\\EspecializacionController' => __DIR__ . '/../..' . '/app/controllers/EspecializacionController.php',
         'App\\Controllers\\EventoController' => __DIR__ . '/../..' . '/app/controllers/EventoController.php',
         'App\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/controllers/HomeController.php',
+        'App\\Controllers\\InformesController' => __DIR__ . '/../..' . '/app/controllers/InformesController.php',
         'App\\Controllers\\InsumoController' => __DIR__ . '/../..' . '/app/controllers/InsumoController.php',
         'App\\Controllers\\LogInOutController' => __DIR__ . '/../..' . '/app/controllers/LogInOutController.php',
         'App\\Controllers\\OCController' => __DIR__ . '/../..' . '/app/controllers/OCController.php',
@@ -86,7 +95,6 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'App\\Controllers\\SectorController' => __DIR__ . '/../..' . '/app/controllers/SectorController.php',
         'App\\Controllers\\TareaController' => __DIR__ . '/../..' . '/app/controllers/TareaController.php',
         'App\\Controllers\\UsuarioController' => __DIR__ . '/../..' . '/app/controllers/UsuarioController.php',
-        'App\\Controllers\\informesController' => __DIR__ . '/../..' . '/app/controllers/informesController.php',
         'App\\Core\\App' => __DIR__ . '/../..' . '/core/App.php',
         'App\\Core\\Controller' => __DIR__ . '/../..' . '/core/Controller.php',
         'App\\Core\\Database\\Connection' => __DIR__ . '/../..' . '/core/database/Connection.php',
@@ -101,10 +109,11 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'App\\Models\\EspecializacionModel' => __DIR__ . '/../..' . '/app/models/EspecializacionModel.php',
         'App\\Models\\EventoModel' => __DIR__ . '/../..' . '/app/models/EventoModel.php',
         'App\\Models\\HomeModel' => __DIR__ . '/../..' . '/app/models/HomeModel.php',
+        'App\\Models\\InformeModel' => __DIR__ . '/../..' . '/app/models/InformeModel.php',
         'App\\Models\\InsumoModel' => __DIR__ . '/../..' . '/app/models/InsumoModel.php',
         'App\\Models\\LogInOutModel' => __DIR__ . '/../..' . '/app/models/LogInOutModel.php',
         'App\\Models\\OCModel' => __DIR__ . '/../..' . '/app/models/OCModel.php',
-        'App\\Models\\OrdenDeTrabajo' => __DIR__ . '/../..' . '/app/models/OrdenDeTrabajo.php',
+        'App\\Models\\OTModel' => __DIR__ . '/../..' . '/app/models/OTModel.php',
         'App\\Models\\PedidoModel' => __DIR__ . '/../..' . '/app/models/PedidoModel.php',
         'App\\Models\\PermisoModel' => __DIR__ . '/../..' . '/app/models/PermisoModel.php',
         'App\\Models\\PersonaModel' => __DIR__ . '/../..' . '/app/models/PersonaModel.php',
@@ -112,7 +121,6 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'App\\Models\\SectorModel' => __DIR__ . '/../..' . '/app/models/SectorModel.php',
         'App\\Models\\TareaModel' => __DIR__ . '/../..' . '/app/models/TareaModel.php',
         'App\\Models\\UsuarioModel' => __DIR__ . '/../..' . '/app/models/UsuarioModel.php',
-        'App\\Models\\informes' => __DIR__ . '/../..' . '/app/models/informes.php',
         'CallableTestClass' => __DIR__ . '/..' . '/twig/twig/test/Twig/Tests/Node/Expression/CallTest.php',
         'ComposerAutoloaderInit2dc0a7831106f98f19ff2a356e8d6af8' => __DIR__ . '/..' . '/composer/autoload_real.php',
         'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
@@ -124,6 +132,11 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'CorruptCache' => __DIR__ . '/..' . '/twig/twig/test/Twig/Tests/EnvironmentTest.php',
         'CountableStub' => __DIR__ . '/..' . '/twig/twig/test/Twig/Tests/IntegrationTest.php',
         'CustomExtensionTest' => __DIR__ . '/..' . '/twig/twig/test/Twig/Tests/CustomExtensionTest.php',
+        'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
+        'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
+        'Firebase\\JWT\\JWK' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWK.php',
+        'Firebase\\JWT\\JWT' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWT.php',
+        'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
         'FooObject' => __DIR__ . '/..' . '/twig/twig/test/Twig/Tests/Extension/SandboxTest.php',
         'InvalidOperatorExtension' => __DIR__ . '/..' . '/twig/twig/test/Twig/Tests/CustomExtensionTest.php',
         'IteratorAggregateStub' => __DIR__ . '/..' . '/twig/twig/test/Twig/Tests/IntegrationTest.php',
@@ -762,12 +775,25 @@ class ComposerStaticInit2dc0a7831106f98f19ff2a356e8d6af8
         'Twig_Util_TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
         '__TwigTemplate_0142debda95308cd4945d2edfff9efbfc3f7ae4938f2a425d65456be7747a16f' => __DIR__ . '/../..' . '/app/views/cache/9f/9febd644e20776455550e3698b96421ad4810e53ba8f19dc7bf8d9311866a56c.php',
         '__TwigTemplate_0c0337b814a8b900de1eb13977f4f0bc6f135360608d607311523a5df4d4e9f6' => __DIR__ . '/../..' . '/app/views/cache/fc/fcc6b0bb12cafa8df96bbc32463acb7f0752e7dd6653b91b215d46e11bf8293d.php',
-        '__TwigTemplate_1ab67209470dfaf0e53bb810fab55bb68409577ea5fb83d4fe3b8b3f3297c4e9' => __DIR__ . '/../..' . '/app/views/cache/52/526dfb7c7df5a366605ab37094d5daf0eeef1ec91fd3d1f4de5d46b2386cd199.php',
+        '__TwigTemplate_1b274a78973ce85938bbe0631708e6113c1c6e14dc78a09ba2981a4e609a717b' => __DIR__ . '/../..' . '/app/views/cache/52/522604e368b289d56c5604a40f6be531a9a08b6531bb40d2aa632c61926bebfc.php',
+        '__TwigTemplate_3670aa0e01a3009f8da9a86c2cfc51ed98c8c390dba71243965987795879a15a' => __DIR__ . '/../..' . '/app/views/cache/a0/a0ad60406695d51597512324903daf57a800b3b617695ee11acf066ff16c4f7c.php',
+        '__TwigTemplate_449d09df2686f995cfcd34995d510a24f715521c656faf8ff8254a9f2c148826' => __DIR__ . '/../..' . '/app/views/cache/1d/1dd73db19745fd3b92181c365497248dda8026d885ef43a8cd8511bc30205dfe.php',
+        '__TwigTemplate_502f75139d2eba95d400e75f32df275abee6560fda0aba7f2b6df77826f3230b' => __DIR__ . '/../..' . '/app/views/cache/de/de50d7610a6c0725e5dcb0df5cfdbf2bf5ae3b9fb67e9cc6a40b4fa97f55c233.php',
+        '__TwigTemplate_53f1b7cff9fbfa2b9ba3545aeb17e8a6d3a57e4a0a867c4d6bca5020450541f5' => __DIR__ . '/../..' . '/app/views/cache/98/9870b302d4b68ef30057f74d446b462eb60c07f2cc9013b8f27b9a856d7d8686.php',
+        '__TwigTemplate_5bb21cfc1ab4c7aa7354524503989cc8b1e98ada8be7c15a52d452613e682d1c' => __DIR__ . '/../..' . '/app/views/cache/8b/8beade1fbb87d9dd2efb6986367e31480427ee30fd69b86755fae01bec3b30fe.php',
         '__TwigTemplate_6ba86282e0337082979a48e047e577b8fcfe5dce8f0473de49e83b7c663024ae' => __DIR__ . '/../..' . '/app/views/cache/0f/0f8e4688e084064a3280aaf8a8403918e588630973c249e4161d270988829fa0.php',
+        '__TwigTemplate_82079bd5a0b560cc6a953c061c4b8ea44c762d9b13b5e486cf5a740618be71e2' => __DIR__ . '/../..' . '/app/views/cache/9b/9bc135ca4f1b37cc09a7d04d0f2c01f32da9b48c87bc5f7009e93e8ef575ae09.php',
+        '__TwigTemplate_8d6f2a218b422244080ee97c656fdbe1cf053666fbec19760aec8e5aa6bddfe4' => __DIR__ . '/../..' . '/app/views/cache/60/6031050c2352c563139887c483bb71ca3599ccc768faf4b94224b3abe7927aaf.php',
         '__TwigTemplate_90346a5035837af01efffd47453f6051f17e6a44d0cf0057d920ac8f1aff1f5f' => __DIR__ . '/../..' . '/app/views/cache/c8/c8f2b6dd2100cc10c56ee73c8fb1d6594fabd072f5cf5998bc534fb231ff0d01.php',
+        '__TwigTemplate_93f33081dcbdbff011b817769d360cce5d0d242900fbd769d7cff9326f5c3b64' => __DIR__ . '/../..' . '/app/views/cache/9d/9d2f778b9255e2874868b1472febf27e403fc35c6a945135051276d066c75236.php',
         '__TwigTemplate_b761844ead56743f5dda235a528185b22300b04516364fa3bb2cde4b584d5531' => __DIR__ . '/../..' . '/app/views/cache/42/42d5675a26e5a019ff57ebd52c88a9f7b8a47359c4e47590418279d1a1ee948b.php',
         '__TwigTemplate_bf949403c9f1700aacb95ec0b64dcd7e5e7bbb96493d563d08f26cc900132a4b' => __DIR__ . '/../..' . '/app/views/cache/f4/f4c2d55859d14d61bc1be0e2a7d1123c1fcfea72ed703ec5b38f138c61ffaae1.php',
+        '__TwigTemplate_d1699c618332796b14ee5489be0456745148dc297967c2be355d1427009168fc' => __DIR__ . '/../..' . '/app/views/cache/01/01335aa0728975e0c288362d7fd17a11e950e32075abf8f4786049c0e986d2a2.php',
+        '__TwigTemplate_d941851deb2515eaea0324b81fc3804d781e9a045db600295416b87adf04a90f' => __DIR__ . '/../..' . '/app/views/cache/4b/4b9db431a7640365dd4d50ccded9b4b8f3f54120585b90f18f6df9e70cfe69c1.php',
         '__TwigTemplate_d943cbcf03c28ccb426d2cfd75e192d45f69ce5d73901a05cac5a662eb1e18ad' => __DIR__ . '/../..' . '/app/views/cache/4f/4f9bcc3fb9146c6601dee4c8ed951282a0048b02af468e55adbd3478b9f11918.php',
+        '__TwigTemplate_e3c2ea36ebdb0b09f9475fb91037bb9bacdf111c30cb89d211332a73aef9640b' => __DIR__ . '/../..' . '/app/views/cache/ed/ed90205c102903ccf4ff8f8e926635e96015dd484390c39fbc41635f964c1a8b.php',
+        '__TwigTemplate_f18e9f6783683c02848ee7b7bf0344eda87e47c6cbe3a678e4989bf6afc5dd77' => __DIR__ . '/../..' . '/app/views/cache/3c/3c0b85f20cdc263c2f63c9d388892c3d8fe65b42ecbef092872e034adfc6b3db.php',
+        '__TwigTemplate_fb705d39cdb9d2c951a7c665e5f13d1043db52b0cd77f120b504052ab83749a3' => __DIR__ . '/../..' . '/app/views/cache/b2/b2667d089ecb757599c0c36409ac8c5da8e692ba3a971c9cc6b4f867f717f6a8.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -7,6 +7,7 @@ use App\Models\LogInOutModel;
 
 define("table", "usuarios");
 
+
 class LogInOutController extends Controller
 {
     public function __construct()
@@ -29,9 +30,7 @@ class LogInOutController extends Controller
             'nick' => $_POST['nick'],
         ];
         $userMatch = $this->model->buscarUsuario(table, $user);
-        if (empty($userMatch)) {
-            return $this->logInError();
-        } else {
+        if (!empty($userMatch)) {
             if (password_verify($_POST['password'], $userMatch['password'])) {
                 $usuario['idUsuario'] = $userMatch['id'];
                 session_start();
@@ -45,22 +44,30 @@ class LogInOutController extends Controller
                 }
                 $_SESSION['rolActual'] = $_SESSION['listaRoles'][0];
                 $_SESSION['listaPermisos'] = $this->model->getPermisos();
-                redirect('home');
-            } else {
-                return $this->logInError();
+                $token = null;
+                if (isset($_POST['rememberme'])) {
+                    $token = $this->model->setRememberme($userMatch);
+                }
+                return json_encode(
+                    array('login' => true,
+                    'token' => $token)
+                );
             }
         }
+        return json_encode(
+            array('login' => false)
+        );
+    }
+
+    public function validarToken()
+    {
+        $data = $this->model->validarToken($_POST['token']);
+        return json_encode($data);
     }
 
     public function logOut()
     {
         session_destroy();
         redirect('');
-    }
-
-    public function logInError()
-    {
-        $datos['error'] = true;
-        return view('/login', compact('datos'));
     }
 }

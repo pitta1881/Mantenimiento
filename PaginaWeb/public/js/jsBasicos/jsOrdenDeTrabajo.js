@@ -21,7 +21,7 @@ loadListenerActionButtons({
     'loadTable': loadTable
 });
 loadScriptValidarCampos(loadTable);
-localStorage.clear();
+sessionStorage.clear();
 
 $(function () {
     $('#btnCreateOT').on('click', function () {
@@ -67,7 +67,7 @@ async function loadTableTareasNewOT() {
     $(`#tableTareas`).parents('form').find('button[type=submit]').attr('disabled', true);
     let tareasSinOT = await getTareasSinOT();
     $('#tableTareas').DataTable().clear().destroy();
-    localStorage.setItem('tareas', '[]');
+    sessionStorage.setItem('tareas', '[]');
     let textoInner = ``;
     tareasSinOT.tareas.forEach(element => {
         let agentesHTML = '';
@@ -123,13 +123,13 @@ function loadEventosTableTareas(idTable) {
         $(this).toggle();
         $(this).siblings(".btn-agregar").toggle();
         changeLSTareas.call(this);
-        if (JSON.parse(localStorage.getItem('tareas')).length == 0) {
+        if (JSON.parse(sessionStorage.getItem('tareas')).length == 0) {
             $(`#${idTable}`).parents('form').find('button[type=submit]').attr('disabled', true);
         }
     })
 
     function changeLSTareas() {
-        let tareas = JSON.parse(localStorage.getItem('tareas')) || [];
+        let tareas = JSON.parse(sessionStorage.getItem('tareas')) || [];
         let idTareaElegida = $(this).siblings('[data-name=idTarea]').val();
         let idPedidoElegida = $(this).siblings('[data-name=idPedido]').val();
         let tareaToSelect = {
@@ -142,14 +142,14 @@ function loadEventosTableTareas(idTable) {
         } else {
             tareas.push(tareaToSelect);
         }
-        localStorage.setItem('tareas', JSON.stringify(tareas));
+        sessionStorage.setItem('tareas', JSON.stringify(tareas));
     }
 }
 
 function loadTableTareasOT(table, datos) {
     $(`#${table}`).parents('form').find('button[type=submit]').attr('disabled', true);
     $('#' + table).DataTable().clear().destroy();
-    localStorage.setItem('tareas', '[]');
+    sessionStorage.setItem('tareas', '[]');
     let textoInner = ``;
     datos.tareas.forEach(tarea => {
         let agentesHTML = '';

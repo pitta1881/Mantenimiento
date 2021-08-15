@@ -21,7 +21,7 @@ loadListenerActionButtons({
     'loadTable': loadTable
 });
 loadScriptValidarCampos(loadTable);
-localStorage.clear();
+sessionStorage.clear();
 
 $(function () {
     $('#btnCreateOC').on('click', function () {
@@ -30,7 +30,7 @@ $(function () {
     })
 
     $('#modalCheckAndSetCosto').on('show.bs.modal', function (event) {
-        let itemsCarrito = JSON.parse(localStorage.getItem('insumos'));
+        let itemsCarrito = JSON.parse(sessionStorage.getItem('insumos'));
         let carritoInner = ``;
         itemsCarrito.forEach(element => {
             carritoInner += `
@@ -266,7 +266,7 @@ function loadTableInsumosOC(table, datos) {
 }
 
 function loadEventosTableInsumosUpdateOC() {
-    localStorage.removeItem('insumosUpdate');
+    sessionStorage.removeItem('insumosUpdate');
 
     $(".btn-minus-recibido").on("click", function () {
         let inputCart = $(this).siblings('.input-recibido');
@@ -293,7 +293,7 @@ function loadEventosTableInsumosUpdateOC() {
     })
 
     function changeLSInsumoUpdate() {
-        let insumosUpdate = JSON.parse(localStorage.getItem('insumosUpdate')) || [];
+        let insumosUpdate = JSON.parse(sessionStorage.getItem('insumosUpdate')) || [];
         let idInsumoElegido = Number($(this).siblings('[data-name=idInsumo]').val());
         let cantidadInicial = Number($(this).siblings('[data-name=cantidadInicialInsumo]').val());
         let cantidadInsumoElegido = Number($(this).siblings('[data-name=cantidadInsumo]').val());
@@ -318,7 +318,7 @@ function loadEventosTableInsumosUpdateOC() {
         } else {
             insumosUpdate.push(insumoToChange);
         }
-        localStorage.setItem('insumosUpdate', JSON.stringify(insumosUpdate));
+        sessionStorage.setItem('insumosUpdate', JSON.stringify(insumosUpdate));
     }
 }
 
@@ -354,7 +354,7 @@ function loadEventosTableInsumosNewOC() {
     })
 
     function changeLSInsumo() {
-        let insumos = JSON.parse(localStorage.getItem('insumos')) || [];
+        let insumos = JSON.parse(sessionStorage.getItem('insumos')) || [];
         let idInsumoElegido = $(this).siblings('[data-name=idInsumo]').val();
         let nombreInsumoElegido = $(this).siblings('[data-name=nombre]').val();
         let cantidadInsumoElegido = $(this).siblings('[data-name=cantidadInsumo]').val();
@@ -373,6 +373,6 @@ function loadEventosTableInsumosNewOC() {
         } else {
             insumos.push(insumoToChange);
         }
-        localStorage.setItem('insumos', JSON.stringify(insumos));
+        sessionStorage.setItem('insumos', JSON.stringify(insumos));
     }
 }

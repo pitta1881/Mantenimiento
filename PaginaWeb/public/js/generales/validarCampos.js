@@ -820,37 +820,37 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
         const formNameID = $(form).attr('id');
         let dataForm = $(form).serializeArray();
         if (formNameID == 'formOCNew') {
-            localStorage.setItem('idTiposOC', dataForm.find(element => element.name === 'idTiposOC')['value']);
+            sessionStorage.setItem('idTiposOC', dataForm.find(element => element.name === 'idTiposOC')['value']);
             $('#modalCheckAndSetCosto').modal('show');
         } else {
             if (formNameID == 'formCheckAndSetCosto') {
                 dataForm.push({
                     name: 'idTiposOC',
-                    value: JSON.parse(localStorage.getItem('idTiposOC'))
+                    value: JSON.parse(sessionStorage.getItem('idTiposOC'))
                 }, {
                     name: 'insumos',
-                    value: localStorage.getItem('insumos')
+                    value: sessionStorage.getItem('insumos')
                 });
             }
             if (formNameID == 'formOCUpdInsumos') {
                 dataForm.push({
                     name: 'insumos',
-                    value: localStorage.getItem('insumosUpdate')
+                    value: sessionStorage.getItem('insumosUpdate')
                 });
             }
             if (formNameID == 'formAsignaciones' || formNameID == 'formDesasignaciones') {
                 dataForm.push({
                     name: 'agentes',
-                    value: localStorage.getItem('agentes')
+                    value: sessionStorage.getItem('agentes')
                 }, {
                     name: 'insumos',
-                    value: localStorage.getItem('insumos')
+                    value: sessionStorage.getItem('insumos')
                 });
             }
             if (formNameID == 'formOTNew' || formNameID == 'formOTUpdTareas') {
                 dataForm.push({
                     name: 'tareas',
-                    value: localStorage.getItem('tareas')
+                    value: sessionStorage.getItem('tareas')
                 });
             }
             $.post($(form).attr('action'), dataForm)
@@ -864,7 +864,7 @@ export default async function validarForm(callbackGetFichaAll, callbackAfterRelo
                     if (formNameID == 'formUsuarioNew' || formNameID == 'formAgenteNew') {
                         $(`#${formNameID} option[value=${dataForm.find(element => element.name == 'idPersona').value}]`).remove();
                     }
-                    localStorage.clear();
+                    sessionStorage.clear();
                 });
         }
     }

@@ -38,7 +38,7 @@ loadListenerActionButtons({
     'loadTable': loadTablePedido
 });
 loadScriptValidarCampos(loadTablePedido);
-localStorage.clear();
+sessionStorage.clear();
 
 //--PEDIDOS--\\
 async function loadTablePedido() {
@@ -336,8 +336,8 @@ async function desasignarAgentesInsumos(e) {
         "idPedido": btn.dataset.idpedido,
         "id": btn.dataset.idtarea
     }, "/tarea/");
-    localStorage.setItem('agentes', '[]');
-    localStorage.setItem('insumos', '[]');
+    sessionStorage.setItem('agentes', '[]');
+    sessionStorage.setItem('insumos', '[]');
     $('#desasignacionIDTarea').val(btn.dataset.idtarea);
     $('#desasignacionIDPedido').val(btn.dataset.idpedido);
     $('#tableAgentesDesasignar').DataTable().clear().destroy();
@@ -403,8 +403,8 @@ async function desasignarAgentesInsumos(e) {
 
 async function asignarAgentesInsumos(e) {
     let datosDisponibles = await getAgentesInsumos();
-    localStorage.setItem('agentes', '[]');
-    localStorage.setItem('insumos', '[]');
+    sessionStorage.setItem('agentes', '[]');
+    sessionStorage.setItem('insumos', '[]');
     let btn = (e.target.closest('[data-target]'));
     $('#asignacionIDTarea').val(btn.dataset.idtarea);
     $('#asignacionIDPedido').val(btn.dataset.idpedido);
@@ -502,13 +502,13 @@ function loadEventosTableAgentes(idTable) {
         $(this).toggle();
         $(this).siblings(".btn-agregar").toggle();
         changeLSAgentes.call(this);
-        if (JSON.parse(localStorage.getItem('agentes')).length == 0 && JSON.parse(localStorage.getItem('insumos')).length == 0) {
+        if (JSON.parse(sessionStorage.getItem('agentes')).length == 0 && JSON.parse(sessionStorage.getItem('insumos')).length == 0) {
             $(`#${idTable}`).parents('form').find('button[type=submit]').attr('disabled', true);
         }
     })
 
     function changeLSAgentes() {
-        let agentes = JSON.parse(localStorage.getItem('agentes')) || [];
+        let agentes = JSON.parse(sessionStorage.getItem('agentes')) || [];
         let idAgenteElegido = $(this).siblings('[data-name=idAgente]').val();
         let agenteToChange = {
             'id': idAgenteElegido
@@ -519,7 +519,7 @@ function loadEventosTableAgentes(idTable) {
         } else {
             agentes.push(agenteToChange);
         }
-        localStorage.setItem('agentes', JSON.stringify(agentes));
+        sessionStorage.setItem('agentes', JSON.stringify(agentes));
     }
 }
 
@@ -545,7 +545,7 @@ function loadEventosTableInsumos(idTable) {
         }
         inputCart.val(Number(inputCart.val()) - 1);
         changeLSInsumo.call(this);
-        if (JSON.parse(localStorage.getItem('agentes')).length == 0 && JSON.parse(localStorage.getItem('insumos')).length == 0) {
+        if (JSON.parse(sessionStorage.getItem('agentes')).length == 0 && JSON.parse(sessionStorage.getItem('insumos')).length == 0) {
             $(`#${idTable}`).parents('form').find('button[type=submit]').attr('disabled', true);
         }
     })
@@ -560,7 +560,7 @@ function loadEventosTableInsumos(idTable) {
     })
 
     function changeLSInsumo() {
-        let insumos = JSON.parse(localStorage.getItem('insumos')) || [];
+        let insumos = JSON.parse(sessionStorage.getItem('insumos')) || [];
         let idInsumoElegido = $(this).siblings('[data-name=idInsumo]').val();
         let cantidadInicial = $(this).siblings('[data-name=cantidadInicial]').val();
         let cantidadInsumoElegido = $(this).siblings('[data-name=cantidadInsumo]').val();
@@ -579,6 +579,6 @@ function loadEventosTableInsumos(idTable) {
         } else {
             insumos.push(insumoToChange);
         }
-        localStorage.setItem('insumos', JSON.stringify(insumos));
+        sessionStorage.setItem('insumos', JSON.stringify(insumos));
     }
 }
