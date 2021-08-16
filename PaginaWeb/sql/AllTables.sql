@@ -55,6 +55,7 @@ CREATE TABLE Personas (
     fechaNacimiento DATE NOT NULL,
     email VARCHAR(30) NOT NULL,
     idEstadoPersona INTEGER NOT NULL,
+    UNIQUE(email),
     FOREIGN KEY (idEstadoPersona) REFERENCES EstadosPersona(id),
     FOREIGN KEY (idDireccion) REFERENCES Direccion(id)
 );

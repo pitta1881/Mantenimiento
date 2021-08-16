@@ -6,3 +6,5 @@ logs/*.log
 Proyecto Mantenimiento v5\.ldb
 
 logs/
+
+.env

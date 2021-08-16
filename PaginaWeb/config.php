@@ -1,12 +1,15 @@
 <?php
 use Monolog\Logger as MonologLogger;
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 return [
     'database' => [
-        'name' => 'Mantenimiento',
-        'username' => 'root',
-        'password' => '',
-        'connection' => 'mysql:host=127.0.0.1',
+        'name' => $_ENV['DBNAME'],
+        'username' => $_ENV['DBUSER'],
+        'password' => $_ENV['DBPASSWORD'],
+        'connection' => $_ENV['DBCONNECTION'],
         'options' => [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]

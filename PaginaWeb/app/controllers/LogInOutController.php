@@ -64,4 +64,9 @@ class LogInOutController extends Controller
         session_destroy();
         redirect('');
     }
+
+    public function recoverPassword()
+    {
+        return json_encode($this->model->recoverPassword($_POST['email']));
+    }
 }
