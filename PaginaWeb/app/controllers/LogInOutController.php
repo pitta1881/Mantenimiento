@@ -40,10 +40,8 @@ class LogInOutController extends Controller
                 }
                 $_SESSION['rolActual'] = $_SESSION['listaRoles'][0];
                 $_SESSION['listaPermisos'] = $this->model->getPermisos();
-                $token = null;
-                if (isset($_POST['rememberme'])) {
-                    $token = $this->model->setRememberme($userMatch);
-                }
+                $remember = isset($_POST['rememberme']) ? true : false;
+                $token = $this->model->setToken($userMatch, $remember);
                 return json_encode(
                     array('login' => true,
                     'token' => $token)

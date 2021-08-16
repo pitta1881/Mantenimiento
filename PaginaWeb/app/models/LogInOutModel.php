@@ -19,13 +19,15 @@ class LogInOutModel extends Model
         }
     }
 
-    public function setRememberme($usuario)
+    public function setToken($usuario, $mustRemember)
     {
+        $data = array('usuario' => $usuario, 'remember' => $mustRemember);
         $time = time();
         $token = array(
             'iat' => $time, // Tiempo que inició el token
             'exp' => $time + (60*60*24*30), // Tiempo que expirará el token (+30 dias)
-            'data' => $usuario
+            //'exp' => $time + (5), // Tiempo que expirará el token (+5 segundos)
+            'data' => $data
         );
         return JWT::encode($token, $this->key);
     }
@@ -34,10 +36,10 @@ class LogInOutModel extends Model
     {
         try {
             $data = JWT::decode($token, $this->key, array('HS256'))->data;
-            if ($this->db->buscarIfExists(tableUsuarios, array('nick' => $data->nick, 'password' => $data->password))) {
-                return array('login' => true);
+            if ($this->db->buscarIfExists(tableUsuarios, array('nick' => $data->usuario->nick, 'password' => $data->usuario->password))) {
+                return array('login' => true, 'remember' => $data->remember);
             } else {
-                return array('login' => false,'info' => 'Usuario o Contraseña invalidos');
+                return array('login' => false,'info' => 'Usuario o Contraseña inválidos');
             }
         } catch (\Throwable $th) {
             return array('login' => false,'info' => $th->getMessage());

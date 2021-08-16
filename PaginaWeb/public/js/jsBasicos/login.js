@@ -10,7 +10,7 @@ $('form').on('submit', function (e) {
                     }
                     location.replace('/home');
                 } else {
-                    alertify.alert('Error', 'Usuario o Contraseña invalidos', function () {});
+                    alertify.alert('Error', 'Usuario o Contraseña inválidos', function () {});
                 }
             });
     }
@@ -24,7 +24,7 @@ $(function () {
             })
             .done(function (data) {
                 data = JSON.parse(data);
-                if (data.login) {
+                if (data.login && data.remember) {
                     location.replace('/home');
                 }
             });
