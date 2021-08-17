@@ -65,6 +65,7 @@ CREATE TABLE Usuarios (
     nick VARCHAR(30) NOT NULL,
     password TEXT NOT NULL,
     idPersona INTEGER,
+    codeRecover TEXT NOT NULL,
     UNIQUE (nick),
     UNIQUE (idPersona),
     FOREIGN KEY (idPersona) REFERENCES Personas (id)
