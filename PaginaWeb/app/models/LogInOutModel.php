@@ -53,6 +53,10 @@ class LogInOutModel extends Model
     public function recoverPassword($email)
     {
         if ($this->db->buscarIfExists(tablePersonas, array('email' => $email))) {
+            $idPersona = $this->db->selectWhatWhere(tablePersonas, 'id', array('email' => $email))[0]['id'];
+            $usuario = $this->db->selectAllWhere(tableUsuarios, array('idPersona' => $idPersona))[0];
+            $uniqueCode = uniqid($usuario['id'].'_');
+            $this->update(tableUsuarios, array('codeRecover' => $uniqueCode), array('id' => $usuario['id']), "Usuario");
             $mail = new PHPMailer(true);
             try {
                 //Server settings
@@ -73,7 +77,7 @@ class LogInOutModel extends Model
                 //Content
                 $mail->isHTML(true);                                  //Set email format to HTML
                 $mail->Subject = 'Recuperar Contraseña - Sistema de Mantenimiento HNDBS';
-                $mail->Body    = 'Para recuperar su contraseña por favor haga click en el siguiente link <a href="#">Link</a>';
+                $mail->Body    = 'Para recuperar su contraseña por favor haga click en el siguiente <a href="http://190.244.127.192:8888/resetPassword?q='.$uniqueCode.'">Link</a>';
             
                 $mail->send();
                 return array('status' => true);
@@ -82,6 +86,15 @@ class LogInOutModel extends Model
             }
         } else {
             return array('status' => false, 'info' => 'Email no encontrado');
+        }
+    }
+
+    public function verificarUniqueid($idUsuario, $codeRecover)
+    {
+        if ($this->db->buscarIfExists(tableUsuarios, array('id' => $idUsuario, 'codeRecover' => $codeRecover))) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

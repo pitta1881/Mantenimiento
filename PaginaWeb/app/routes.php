@@ -4,12 +4,14 @@
     $router->get('not_found', 'ProjectController@internalError');
     $router->get('internal_error', 'ProjectController@internalError');
     
-    //rutas logIn-logOut-recoverPassword
+//rutas logIn-logOut-recoverPassword
     $router->get('', 'LogInOutController@index');
     $router->post('login/validar', 'LogInOutController@validarLogin');
     $router->post('validarToken', 'LogInOutController@validarToken');
     $router->get('logOut', 'LogInOutController@logOut');
     $router->post('passwordRecover', 'LogInOutController@recoverPassword');
+    $router->get('resetPassword', 'LogInOutController@resetPassword');
+    $router->post('resetPassword', 'LogInOutController@resetPasswordNew');
 
 //rutas Home
     $router->get('home', 'HomeController@index');

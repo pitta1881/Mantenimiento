@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="/public/alertifyjs/css/themes/default.min.css" />
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/public/Login_v18/vendor/bootstrap/css/bootstrap.min.css">
+	<link href="/public/bootstrapvalidator/bootstrapValidator.css" rel="stylesheet" type="text/css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/public/Login_v18/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<!--===============================================================================================-->
@@ -17,19 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="/public/Login_v18/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/public/Login_v18/css/main.css">
 	<!--===============================================================================================-->
-	<style>
-		#loader {
-			display: none;
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			width: 100%;
-			background: rgba(0, 0, 0, 0.75) url("/public/res/loading2.gif") no-repeat center center;
-			z-index: 10000;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="/public/css/login.css">
 </head>
 <main>
 
@@ -110,6 +99,42 @@
 			</div>
 		</div>
 
+		{% if datos.usuarioResetPassword %}
+		<div class="modal fade" id="modalResetPassword">
+			<div class="modal-dialog modal-xs">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h3 class="modal-title m-0">Resetear Contraseña</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<p class="text-center mb-2">Por favor ingrese una nueva contraseña.</p>
+						<form action="resetPassword" method="post" id="formResetPassword">
+							<input type="text" name="id" value="{{ datos.usuarioResetPassword.0 }}" hidden>
+							<div class="form-group required">
+								<label class="control-label" for="passReset">Contraseña:</label>
+								<input type="password" name="password" id="passReset" class="form-control" required>
+							</div>
+							<div class="form-group required">
+								<label class="control-label" for="passwordConfirm">Repetir Contraseña:</label>
+								<input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control"
+									required>
+							</div>
+							<!-- Modal Footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+								<button type="submit" class="btn btn-success">Aceptar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% endif %}
+
 
 		<!--===============================================================================================-->
 		<script src="/public/Login_v18/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -121,6 +146,15 @@
 		<script src="/public/Login_v18/js/main.js"></script>
 		<script src="/public/js/generales/misAlertas.js"></script>
 		<script src="/public/js/jsBasicos/login.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js">
+		</script>
+
+		{% if datos.usuarioResetPassword %}
+		<script>
+			$('#modalResetPassword').modal('show')
+		</script>
+		{% endif %}
 	</body>
 </main>
 

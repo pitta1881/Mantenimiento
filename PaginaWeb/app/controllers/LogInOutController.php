@@ -69,4 +69,26 @@ class LogInOutController extends Controller
     {
         return json_encode($this->model->recoverPassword($_POST['email']));
     }
+
+    public function resetPassword()
+    {
+        $datos['usuarioResetPassword'] = explode("_", $_GET['q']);
+        if ($this->model->verificarUniqueid($datos['usuarioResetPassword'][0], $_GET['q'])) {
+            return view('login', compact('datos'));
+        };
+    }
+
+    public function resetPasswordNew()
+    {
+        try {
+            $usuario = [
+                'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                'codeRecover' => null
+            ];
+            $update = $this->model->update(table, $usuario, array('id' => $_POST['id']), "Usuario");
+            return json_encode(array('status' => true));
+        } catch (\Throwable $th) {
+            return json_encode(array('status' => false, 'info' => $th->getMessage()));
+        }
+    }
 }
