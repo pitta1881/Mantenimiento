@@ -62,7 +62,321 @@ CREATE TABLE `agentes_x_tareas` (
   `idPedido` int(11) NOT NULL,
   `idAgente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--
+-- Volcado de datos para la tabla `agentes_x_tareas`
+--
 
+INSERT INTO `agentes_x_tareas` (`idTarea`, `idPedido`, `idAgente`) VALUES
+
+(1, 21, 1),
+(2, 21, 1),
+
+(1, 22, 1),
+(2, 22, 1),
+
+(1, 23, 1),
+(2, 23, 1),
+
+(1, 24, 1),
+(2, 24, 1),
+
+(1, 25, 1),
+(2, 25, 1),
+
+(1, 26, 1),
+(2, 26, 1),
+
+(1, 27, 1),
+(2, 27, 1),
+
+(1, 28, 1),
+(2, 29, 1),
+
+(1, 30, 1),
+(2, 30, 1),
+
+(1, 31, 1),
+(2, 31, 1),
+
+(1, 32, 1),
+(2, 32, 1),
+
+(1, 33, 1),
+(2, 33, 1),
+
+(1, 34, 1),
+(2, 34, 1),
+
+(1, 35, 1),
+(2, 35, 1),
+
+(1, 36, 1),
+(2, 36, 1),
+
+(1, 37, 1),
+(2, 37, 1),
+
+(1, 38, 1),
+(2, 38, 1),
+
+(1, 39, 1),
+(2, 39, 1),
+
+(1, 40, 1),
+(2, 40, 1),
+
+(1, 41, 1),
+(2, 41, 1),
+
+(1, 42, 1),
+(2, 42, 1),
+
+(1, 43,1),
+(2, 43, 1),
+
+(1, 44, 1),
+(2, 44, 1),
+
+(1, 45, 1),
+(2, 45, 1),
+
+(1, 46, 1),
+(2, 46, 1),
+
+(1, 47, 1),
+(2, 47, 1),
+
+(1, 48, 1),
+(2, 48, 1),
+
+(1, 49, 1),
+(2, 49, 1),
+
+(1, 50, 1),
+(2, 50, 1),
+
+(1, 51, 1),
+(2, 51, 1),
+
+(1, 52, 1),
+(2, 52, 1),
+
+(1, 53, 1),
+(2, 53, 1),
+
+(1, 54, 1),
+(2, 54, 1),
+
+(1, 55, 1),
+(2, 55, 1),
+
+(1, 56, 1),
+(2, 56, 1),
+
+(1, 57, 1),
+(2, 57, 1),
+
+(1, 58, 1),
+(2, 58, 1),
+
+(1, 59, 1),
+(2, 59, 1),
+
+(1, 60, 1),
+(2, 60, 1),
+
+
+(1, 61, 1),
+(2, 61, 1),
+
+(1,62, 1),
+(2, 62, 1),
+
+(1, 63, 1),
+(2, 63, 1),
+
+(1, 64, 1),
+(2, 64, 1),
+
+(1, 65, 1),
+(2, 65, 1),
+
+(1, 66, 1),
+(2, 66, 1),
+
+(1, 67, 1),
+(2, 67, 1),
+
+(1, 68, 1),
+(2, 68, 1),
+
+(1, 69, 1),
+(2, 69, 1),
+
+(1, 70, 1),
+(2, 70, 1),
+
+(1, 71, 1),
+(2, 71, 1),
+
+(1, 72, 1),
+(2, 72, 1),
+
+(1, 73, 1),
+(2, 73, 1),
+
+(1, 74, 1),
+(2, 74, 1),
+
+(1, 75, 1),
+(2, 75, 1),
+
+(1, 76, 1),
+(2, 76, 1),
+
+(1, 77, 1),
+(2, 77, 1),
+
+(1, 78, 1),
+(2, 78, 1),
+
+(1, 79, 1),
+(2, 79, 1),
+
+(1, 80, 1),
+(2, 80, 1),
+
+(1, 81, 1),
+(2, 81, 1),
+
+(1, 82, 1),
+(2, 82, 1),
+
+(1, 83, 1),
+(2, 83, 1),
+
+(1, 84, 1),
+(2, 84, 1),
+
+(1, 85, 1),
+(2, 85, 1),
+
+(1, 86, 1),
+(2, 86, 1),
+
+
+
+(1, 87, 1),
+(2, 87, 1),
+
+(1, 88, 1),
+(2, 88, 1),
+
+(1, 89, 1),
+(2, 89, 1),
+
+(1, 90, 1),
+(2, 90, 1),
+
+(1, 91, 1),
+(2, 91, 1),
+
+(1, 92, 1),
+(2, 92, 1),
+
+(1, 93, 1),
+(2, 93, 1),
+
+(1, 94, 1),
+(2, 94, 1),
+
+(1, 95, 1),
+(2, 95, 1),
+
+(1, 96, 1),
+(2, 96, 1),
+
+(1, 97, 1),
+(2, 97, 1),
+
+
+(1, 98, 1),
+(2, 98, 1),
+
+(1, 99, 1),
+(2, 99, 1),
+
+(1, 100, 1),
+(2, 100, 1),
+
+(1, 101, 1),
+(2, 101, 1),
+
+(1,102, 1),
+(2, 102, 1),
+
+(1, 103, 1),
+(2, 103, 1),
+
+(1, 104, 1),
+(2, 104, 1),
+
+(1, 105, 1),
+(2, 105, 1),
+
+(1, 106, 1),
+(2, 106, 1),
+
+(1, 107, 1),
+(2, 107, 1),
+
+(1, 108, 1),
+(2, 108, 1),
+
+(1, 109, 1),
+(2, 109, 1),
+
+(1, 110, 1),
+(2, 110, 1),
+
+(1, 111, 1),
+(2, 111, 1),
+
+(1, 112, 1),
+(2, 112, 1),
+
+(1, 113, 1),
+(2, 113, 1),
+
+(1, 114, 1),
+(2, 114, 1),
+
+(1, 115, 1),
+(2, 115, 1),
+
+(1, 116, 1),
+(2, 116, 1),
+
+(1, 117, 1),
+(2, 117, 1),
+
+(1, 118, 1),
+(2, 118, 1),
+
+(1, 119, 1),
+(2, 119, 1),
+
+(1, 120, 1),
+(2, 120, 1),
+
+(1, 121, 1),
+(2, 121, 1),
+
+(1, 122, 1),
+(2, 122, 1),
+
+(1, 123, 1),
+(2, 123, 1);
 -- --------------------------------------------------------
 
 --
@@ -285,88 +599,102 @@ CREATE TABLE `historialpedido` (
 
 INSERT INTO `historialpedido` (`id`, `idPedido`, `fecha`, `idUsuario`, `idEstado`, `idSector`, `idPrioridad`, `descripcion`, `observacion`) VALUES
 (1, 1, '2021-07-05 18:15:35', 3, 1, 1, 2, 'test 1 pedidos', 'Pedido Creado'),
-(1, 2, '2021-07-05 18:19:00', 3, 1, 1, 3, 'as das dsak', 'Pedido Creado'),
-(1, 3, '2021-07-11 20:39:57', 3, 1, 26, 2, 'Acondicionar casa particular para nuevos pacientes', 'Pedido Creado'),
-(1, 4, '2021-07-11 20:46:04', 3, 1, 29, 3, 'Acondicionar sala de diagnostico\r\n', 'Pedido Creado'),
-(1, 5, '2021-07-12 20:50:49', 3, 1, 24, 2, 'Problemas con el techo en la oficina, se llueve en varios puntos\r\n', 'Pedido Creado'),
-(1, 6, '2021-07-12 20:51:51', 3, 1, 25, 2, 'busncar en la enfermera\r\nd', 'Pedido Creado'),
-(1, 7, '2021-07-13 21:07:29', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Pedido Creado'),
-(1, 8, '2021-07-13 21:12:11', 3, 1, 21, 2, 'Verificar estado de las camilla utilizadas por los pacientes', 'Pedido Creado'),
-(1, 9, '2021-07-14 12:15:53', 3, 1, 25, 2, 'Se necesita arreglar los gabinetes de enfermeria, las puertas no cierran. Verificar lugar de guardado', 'Pedido Creado'),
-(1, 10, '2021-07-14 12:30:20', 3, 1, 24, 2, 'Remodelar sala de espera de la guardia. Sillas en mal estado', 'Pedido Creado'),
-(1, 11, '2021-07-15 16:48:06', 1, 1, 29, 2, 'Reacondicionar gazebos 3 y 4.\r\n', 'Pedido Creado'),
-(1, 12, '2021-07-16 16:51:01', 1, 1, 30, 2, 'Reacondicionar canteros de la entrada\r\n', 'Pedido Creado'),
-(1, 13, '2021-07-17 16:56:52', 1, 1, 11, 3, 'Verificar  estado de las piletas y canillas\r\n', 'Pedido Creado'),
-(1, 14, '2021-07-18 17:02:22', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Pedido Creado'),
-(1, 15, '2021-07-19 17:06:43', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y6', 'Pedido Creado'),
-(1, 16, '2021-07-20 17:25:00', 1, 1, 22, 1, 'Reacondiconar fachada del edificio', 'Pedido Creado'),
-(1, 17, '2021-07-21 17:35:18', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Pedido Creado'),
-(1, 18, '2021-07-22 17:48:29', 1, 1, 30, 4, 'No funciona el timbre de la porteria', 'Pedido Creado'),
-(1, 19, '2021-07-23 17:53:10', 1, 1, 24, 2, 'Restaurar salon de actos de sector', 'Pedido Creado'),
-(1, 20, '2021-07-24 17:56:16', 1, 1, 6, 4, 'Se necesita de forma urgente cambiar un inodoro, esta inundando todo el baño', 'Pedido Creado'),
-
 (2, 1, '2021-07-05 18:15:52', 3, 1, 11, 2, 'test 1 pedidos', 'Tarea Creada > test tarea 1'),
-(2, 2, '2021-07-05 18:20:34', 3, 1, 11, 3, 'as das dsak', 'Tarea Creada > asd sad wa'),
-(2, 3, '2021-07-11 20:41:05', 3, 1, 26, 2, 'Acondicionar casa particular para nuevos pacientes', 'Tarea Creada > Revisar estado general del techo'),
-(2, 4, '2021-07-11 20:48:20', 3, 1, 29, 3, 'Acondicionar sala de diagnostico\r\n', 'Tarea Creada > Cambiar ceramicas rotas del piso '),
-(2, 5, '2021-07-12 20:55:28', 3, 1, 24, 2, 'Problemas con el techo en la oficina, se llueve en varios puntos\r\n', 'Tarea Creada > Quitar parte de la chapa del techo y revestimiento interior'),
-(2, 6, '2021-07-12 20:52:32', 3, 4, NULL, NULL, NULL, 'Pedido Cancelado > Pedido no autorizado. No esta bien descripta la necesidad\r\n'),
-(2, 7, '2021-07-13 21:08:50', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Tarea Creada > Crear espacio en la pared para instalar un aire acondicionado frio/calor'),
-(2, 9, '2021-07-14 12:21:00', 3, 1, 25, 2, 'Se necesita arreglar los gabinetes de enfermeria, las puertas no cierran. Verificar lugar de guardado', 'Tarea Creada > Fabricar y colocar 2 puertas de los gabinetes '),
-(2, 10, '2021-07-14 12:31:01', 3, 1, 24, 2, 'Remodelar sala de espera de la guardia. Sillas en mal estado', 'Tarea Creada > Quitar del suelo las silla de la sala de espera'),
-(2, 11, '2021-07-15 16:48:56', 1, 1, 29, 2, 'Reacondicionar gazebos 3 y 4.\r\n', 'Tarea Creada > Desarmar gazebos y verificar si necesitan mantenimiento'),
-(2, 12, '2021-07-16 16:51:43', 1, 1, 30, 2, 'Reacondicionar canteros de la entrada\r\n', 'Tarea Creada > Retirar malezas y restos de plantas de los canteros'),
-(2, 13, '2021-07-17 16:58:31', 1, 1, 11, 3, 'Verificar  estado de las piletas y canillas\r\n', 'Tarea Creada > Verificar estado de las cañerias y destapar las que se encuentren en mal estado'),
-(2, 14, '2021-07-18 17:02:55', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > Quitar cortinas del escenario y quitar las butacas'),
-(2, 15, '2021-07-19 17:07:11', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y6', 'Tarea Creada > Verificar estado de los enchufes y si funcionan'),
-(2, 16, '2021-07-20 17:25:34', 1, 1, 22, 1, 'Reacondiconar fachada del edificio', 'Tarea Creada > Quitar todo el reboque y las partes con humedad\r\n'),
-(2, 17, '2021-07-21 17:35:57', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Tarea Creada > Quitar baldosas del acceso'),
-(2, 18, '2021-07-22 17:48:58', 1, 1, 30, 4, 'No funciona el timbre de la porteria', 'Tarea Creada > Revisar la conexion electrica del timbre'),
-(2, 19, '2021-07-23 17:53:57', 1, 1, 24, 2, 'Restaurar salon de actos de sector', 'Tarea Creada > Realizar tareas de restauracion de las ventanas'),
-(2, 20, '2021-07-24 17:56:38', 1, 1, 6, 4, 'Se necesita de forma urgente cambiar un inodoro, esta inundando todo el baño', 'Tarea Creada > Cortar el suministro del agua'),
-
 (3, 1, '2021-07-05 18:16:01', 3, 1, 11, 2, 'test 1 pedidos', 'Tarea Creada > test tarea 2'),
-(3, 3, '2021-07-11 20:41:50', 3, 1, 26, 2, 'Acondicionar casa particular para nuevos pacientes', 'Tarea Creada > Revisar estado del revoque y humedad de la pared'),
-(3, 4, '2021-07-11 20:49:17', 3, 1, 29, 3, 'Acondicionar sala de diagnostico\r\n', 'Tarea Creada > Repintar pared de la sala de rayos'),
-(3, 5, '2021-07-12 20:56:19', 3, 1, 24, 2, 'Problemas con el techo en la oficina, se llueve en varios puntos\r\n', 'Tarea Creada > Cambiar y construir tirantes'),
-(3, 7, '2021-07-13 21:09:46', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Tarea Creada > Instalar enchufe en la pared para conectar el a/c'),
-(3, 9, '2021-07-14 12:21:39', 3, 1, 25, 2, 'Se necesita arreglar los gabinetes de enfermeria, las puertas no cierran. Verificar lugar de guardado', 'Tarea Creada > Cambiar cerradura de los gabinetes, se perdieron algunas llaves'),
-(3, 10, '2021-07-14 12:31:31', 3, 1, 24, 2, 'Remodelar sala de espera de la guardia. Sillas en mal estado', 'Tarea Creada > Colocar silla nuevas '),
-(3, 11, '2021-07-15 16:49:38', 1, 1, 29, 2, 'Reacondicionar gazebos 3 y 4.\r\n', 'Tarea Creada > Fabricar partes metalicas de los gazebos que esten en mal estado'),
-(3, 12, '2021-07-16 16:54:06', 1, 1, 30, 2, 'Reacondicionar canteros de la entrada\r\n', 'Tarea Creada > Reacondicionar la tierra de los canteros, mejorar estado'),
-(3, 13, '2021-07-17 16:59:16', 1, 1, 11, 3, 'Verificar  estado de las piletas y canillas\r\n', 'Tarea Creada > Cambiar cañerias que esten rotas o no puedan ser reparadas'),
-(3, 14, '2021-07-18 17:03:25', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > Cambiar tablas rotas del escenario'),
-(3, 15, '2021-07-19 17:07:46', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y6', 'Tarea Creada > Agregar dos enchufes a cada sala'),
-(3, 16, '2021-07-20 17:30:35', 1, 1, 22, 1, 'Reacondiconar fachada del edificio', 'Tarea Creada > Rebocar las paredes de la fachada'),
-(3, 17, '2021-07-21 17:36:19', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Tarea Creada > Colocar las baldosas'),
-(3, 18, '2021-07-22 17:49:27', 1, 1, 30, 4, 'No funciona el timbre de la porteria', 'Tarea Creada > Cambiar timbre por uno nuevo'),
-(3, 19, '2021-07-23 17:54:18', 1, 1, 24, 2, 'Restaurar salon de actos de sector', 'Tarea Creada > Realizar tareas de restauracion del piso'),
-(3, 20, '2021-07-24 17:57:06', 1, 1, 6, 4, 'Se necesita de forma urgente cambiar un inodoro, esta inundando todo el baño', 'Tarea Creada > Quitar y colocar un nuevo inodoro'),
 
+
+(1, 2, '2021-07-05 18:19:00', 3, 1, 1, 3, 'as das dsak', 'Pedido Creado'),
+(2, 2, '2021-07-05 18:20:34', 3, 1, 11, 3, 'as das dsak', 'Tarea Creada > asd sad wa'),
 (4, 2, '2021-07-05 18:30:24', 3, 2, 7, 3, 'as das dsak', 'Pedido Modificado'),
+
+(1, 3, '2021-07-11 20:39:57', 3, 1, 26, 2, 'Acondicionar casa particular para nuevos pacientes', 'Pedido Creado'),
+(2, 3, '2021-07-11 20:41:05', 3, 1, 26, 2, 'Acondicionar casa particular para nuevos pacientes', 'Tarea Creada > Revisar estado general del techo'),
+(3, 3, '2021-07-11 20:41:50', 3, 1, 26, 2, 'Acondicionar casa particular para nuevos pacientes', 'Tarea Creada > Revisar estado del revoque y humedad de la pared'),
 (4, 3, '2021-07-11 20:42:39', 3, 1, 26, 2, 'Acondicionar casa particular para nuevos pacientes', 'Tarea Creada > Arreglar ventada de la cocina'),
-(4, 4, '2021-07-11 20:49:51', 3, 1, 29, 3, 'Acondicionar sala de diagnostico\r\n', 'Tarea Creada > Reparar tomografo'),
-(4, 5, '2021-07-12 20:57:39', 3, 1, 24, 2, 'Problemas con el techo en la oficina, se llueve en varios puntos\r\n', 'Tarea Creada > Colocar chapas y recubrir el interior'),
-(4, 7, '2021-07-13 21:10:26', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Tarea Creada > Realizar la instalacion del aire acondicionado\r\n'),
-(4, 10, '2021-07-14 12:33:04', 3, 1, 24, 2, 'Remodelar sala de espera de la guardia. Sillas en mal estado', 'Tarea Creada > Cambiar ceramicos que se rompieron cuando se cambiaron las sillas'),
-(4, 11, '2021-07-15 16:50:24', 1, 1, 29, 2, 'Reacondicionar gazebos 3 y 4.\r\n', 'Tarea Creada > Rearmar gazebos '),
-(4, 12, '2021-07-16 16:54:58', 1, 1, 30, 2, 'Reacondicionar canteros de la entrada\r\n', 'Tarea Creada > Poner plantines de la temporada actual, de colores anaranjados.'),
-(4, 13, '2021-07-17 17:01:41', 1, 1, 11, 3, 'Verificar  estado de las piletas y canillas\r\n', 'Tarea Creada > Revisar canillas y arreglar las que goteen o no funcionen'),
-(4, 14, '2021-07-18 17:03:50', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > Realizar limpieza de las cortinas'),
-(4, 15, '2021-07-19 17:32:04', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y 6', 'Pedido Modificado'),
-(4, 16, '2021-07-20 17:31:15', 1, 1, 22, 1, 'Reacondiconar fachada del edificio', 'Tarea Creada > Pintar todas las paredes'),
-(4, 17, '2021-07-21 17:36:40', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Tarea Nº1 Modificada'),
-(4, 19, '2021-07-23 17:54:57', 1, 1, 24, 2, 'Restaurar salon de actos de sector', 'Tarea Creada > Realizar limpieza de las cortinas'),
 (5, 3, '2021-07-11 20:43:48', 3, 1, 26, 2, 'Acondicionar casa particular para nuevos pacientes', 'Tarea Creada > Cambiar instalación electrica del baño.'),
+
+(1, 4, '2021-07-11 20:46:04', 3, 1, 29, 3, 'Acondicionar sala de diagnostico\r\n', 'Pedido Creado'),
+(2, 4, '2021-07-11 20:48:20', 3, 1, 29, 3, 'Acondicionar sala de diagnostico\r\n', 'Tarea Creada > Cambiar ceramicas rotas del piso '),
+(3, 4, '2021-07-11 20:49:17', 3, 1, 29, 3, 'Acondicionar sala de diagnostico\r\n', 'Tarea Creada > Repintar pared de la sala de rayos'),
+(4, 4, '2021-07-11 20:49:51', 3, 1, 29, 3, 'Acondicionar sala de diagnostico\r\n', 'Tarea Creada > Reparar tomografo'),
+
+(1, 5, '2021-07-12 20:50:49', 3, 1, 24, 2, 'Problemas con el techo en la oficina, se llueve en varios puntos\r\n', 'Pedido Creado'),
+(2, 5, '2021-07-12 20:55:28', 3, 1, 24, 2, 'Problemas con el techo en la oficina, se llueve en varios puntos\r\n', 'Tarea Creada > Quitar parte de la chapa del techo y revestimiento interior'),
+(3, 5, '2021-07-12 20:56:19', 3, 1, 24, 2, 'Problemas con el techo en la oficina, se llueve en varios puntos\r\n', 'Tarea Creada > Cambiar y construir tirantes'),
+(4, 5, '2021-07-12 20:57:39', 3, 1, 24, 2, 'Problemas con el techo en la oficina, se llueve en varios puntos\r\n', 'Tarea Creada > Colocar chapas y recubrir el interior'),
+
+(1, 6, '2021-07-12 20:51:51', 3, 1, 25, 2, 'busncar en la enfermera\r\nd', 'Pedido Creado'),
+(2, 6, '2021-07-12 20:52:32', 3, 4, NULL, NULL, NULL, 'Pedido Cancelado > Pedido no autorizado. No esta bien descripta la necesidad\r\n'),
+
+(1, 7, '2021-07-13 21:07:29', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Pedido Creado'),
+(2, 7, '2021-07-13 21:08:50', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Tarea Creada > Crear espacio en la pared para instalar un aire acondicionado frio/calor'),
+(3, 7, '2021-07-13 21:09:46', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Tarea Creada > Instalar enchufe en la pared para conectar el a/c'),
+(4, 7, '2021-07-13 21:10:26', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Tarea Creada > Realizar la instalacion del aire acondicionado\r\n'),
 (5, 7, '2021-07-13 21:11:04', 3, 1, 27, 2, 'Se necesita instalar un sistema de ventilacion para el invierno/verano', 'Tarea Creada > Realizar pruebas de funcionamiento del aire acondicionado'),
+
+(1, 8, '2021-07-13 21:12:11', 3, 1, 21, 2, 'Verificar estado de las camilla utilizadas por los pacientes', 'Pedido Creado'),
+
+(1, 9, '2021-07-14 12:15:53', 3, 1, 25, 2, 'Se necesita arreglar los gabinetes de enfermeria, las puertas no cierran. Verificar lugar de guardado', 'Pedido Creado'),
+(2, 9, '2021-07-14 12:21:00', 3, 1, 25, 2, 'Se necesita arreglar los gabinetes de enfermeria, las puertas no cierran. Verificar lugar de guardado', 'Tarea Creada > Fabricar y colocar 2 puertas de los gabinetes '),
+(3, 9, '2021-07-14 12:21:39', 3, 1, 25, 2, 'Se necesita arreglar los gabinetes de enfermeria, las puertas no cierran. Verificar lugar de guardado', 'Tarea Creada > Cambiar cerradura de los gabinetes, se perdieron algunas llaves'),
+
+(1, 10, '2021-07-14 12:30:20', 3, 1, 24, 2, 'Remodelar sala de espera de la guardia. Sillas en mal estado', 'Pedido Creado'),
+(2, 10, '2021-07-14 12:31:01', 3, 1, 24, 2, 'Remodelar sala de espera de la guardia. Sillas en mal estado', 'Tarea Creada > Quitar del suelo las silla de la sala de espera'),
+(3, 10, '2021-07-14 12:31:31', 3, 1, 24, 2, 'Remodelar sala de espera de la guardia. Sillas en mal estado', 'Tarea Creada > Colocar silla nuevas '),
+(4, 10, '2021-07-14 12:33:04', 3, 1, 24, 2, 'Remodelar sala de espera de la guardia. Sillas en mal estado', 'Tarea Creada > Cambiar ceramicos que se rompieron cuando se cambiaron las sillas'),
+
+(1, 11, '2021-07-15 16:48:06', 1, 1, 29, 2, 'Reacondicionar gazebos 3 y 4.\r\n', 'Pedido Creado'),
+(2, 11, '2021-07-15 16:48:56', 1, 1, 29, 2, 'Reacondicionar gazebos 3 y 4.\r\n', 'Tarea Creada > Desarmar gazebos y verificar si necesitan mantenimiento'),
+(3, 11, '2021-07-15 16:49:38', 1, 1, 29, 2, 'Reacondicionar gazebos 3 y 4.\r\n', 'Tarea Creada > Fabricar partes metalicas de los gazebos que esten en mal estado'),
+(4, 11, '2021-07-15 16:50:24', 1, 1, 29, 2, 'Reacondicionar gazebos 3 y 4.\r\n', 'Tarea Creada > Rearmar gazebos '),
+
+(1, 12, '2021-07-16 16:51:01', 1, 1, 30, 2, 'Reacondicionar canteros de la entrada\r\n', 'Pedido Creado'),
+(2, 12, '2021-07-16 16:51:43', 1, 1, 30, 2, 'Reacondicionar canteros de la entrada\r\n', 'Tarea Creada > Retirar malezas y restos de plantas de los canteros'),
+(3, 12, '2021-07-16 16:54:06', 1, 1, 30, 2, 'Reacondicionar canteros de la entrada\r\n', 'Tarea Creada > Reacondicionar la tierra de los canteros, mejorar estado'),
+(4, 12, '2021-07-16 16:54:58', 1, 1, 30, 2, 'Reacondicionar canteros de la entrada\r\n', 'Tarea Creada > Poner plantines de la temporada actual, de colores anaranjados.'),
+
+(1, 13, '2021-07-17 16:56:52', 1, 1, 11, 3, 'Verificar  estado de las piletas y canillas\r\n', 'Pedido Creado'),
+(2, 13, '2021-07-17 16:58:31', 1, 1, 11, 3, 'Verificar  estado de las piletas y canillas\r\n', 'Tarea Creada > Verificar estado de las cañerias y destapar las que se encuentren en mal estado'),
+(3, 13, '2021-07-17 16:59:16', 1, 1, 11, 3, 'Verificar  estado de las piletas y canillas\r\n', 'Tarea Creada > Cambiar cañerias que esten rotas o no puedan ser reparadas'),
+(4, 13, '2021-07-17 17:01:41', 1, 1, 11, 3, 'Verificar  estado de las piletas y canillas\r\n', 'Tarea Creada > Revisar canillas y arreglar las que goteen o no funcionen'),
+
+(1, 14, '2021-07-18 17:02:22', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Pedido Creado'),
+(2, 14, '2021-07-18 17:02:55', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > Quitar cortinas del escenario y quitar las butacas'),
+(3, 14, '2021-07-18 17:03:25', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > Cambiar tablas rotas del escenario'),
+(4, 14, '2021-07-18 17:03:50', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > Realizar limpieza de las cortinas'),
 (5, 14, '2021-07-18 17:05:35', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > CAmbiar tapizado de las butacas'),
+(6, 14, '2021-07-18 17:05:54', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > Rearmar el teatro'),
+
+(1, 15, '2021-07-19 17:06:43', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y6', 'Pedido Creado'),
+(2, 15, '2021-07-19 17:07:11', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y6', 'Tarea Creada > Verificar estado de los enchufes y si funcionan'),
+(3, 15, '2021-07-19 17:07:46', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y6', 'Tarea Creada > Agregar dos enchufes a cada sala'),
+(4, 15, '2021-07-19 17:32:04', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y 6', 'Pedido Modificado'),
 (5, 15, '2021-07-19 17:32:04', 1, 1, 15, 1, 'Cambiar instalacion electrica de las salas 3,4,5 y 6', 'Pedido Modificado'),
+
+(1, 16, '2021-07-20 17:25:00', 1, 1, 22, 1, 'Reacondiconar fachada del edificio', 'Pedido Creado'),
+(2, 16, '2021-07-20 17:25:34', 1, 1, 22, 1, 'Reacondiconar fachada del edificio', 'Tarea Creada > Quitar todo el reboque y las partes con humedad\r\n'),
+(3, 16, '2021-07-20 17:30:35', 1, 1, 22, 1, 'Reacondiconar fachada del edificio', 'Tarea Creada > Rebocar las paredes de la fachada'),
+(4, 16, '2021-07-20 17:31:15', 1, 1, 22, 1, 'Reacondiconar fachada del edificio', 'Tarea Creada > Pintar todas las paredes'),
+
+(1, 17, '2021-07-21 17:35:18', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Pedido Creado'),
+(2, 17, '2021-07-21 17:35:57', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Tarea Creada > Quitar baldosas del acceso'),
+(3, 17, '2021-07-21 17:36:19', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Tarea Creada > Colocar las baldosas'),
+(4, 17, '2021-07-21 17:36:40', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Tarea Nº1 Modificada'),
 (5, 17, '2021-07-21 17:36:40', 1, 1, 16, 2, 'Arreglar accesos al edificio', 'Tarea Nº1 Modificada'),
-(6, 14, '2021-07-18 17:05:54', 1, 1, 12, 2, 'Reacondicionar teatro\r\n', 'Tarea Creada > Rearmar el teatro');
 
 
+(1, 18, '2021-07-22 17:48:29', 1, 1, 30, 4, 'No funciona el timbre de la porteria', 'Pedido Creado'),
+(2, 18, '2021-07-22 17:48:58', 1, 1, 30, 4, 'No funciona el timbre de la porteria', 'Tarea Creada > Revisar la conexion electrica del timbre'),
+(3, 18, '2021-07-22 17:49:27', 1, 1, 30, 4, 'No funciona el timbre de la porteria', 'Tarea Creada > Cambiar timbre por uno nuevo'),
 
+(1, 19, '2021-07-23 17:53:10', 1, 1, 24, 2, 'Restaurar salon de actos de sector', 'Pedido Creado'),
+(2, 19, '2021-07-23 17:53:57', 1, 1, 24, 2, 'Restaurar salon de actos de sector', 'Tarea Creada > Realizar tareas de restauracion de las ventanas'),
+(3, 19, '2021-07-23 17:54:18', 1, 1, 24, 2, 'Restaurar salon de actos de sector', 'Tarea Creada > Realizar tareas de restauracion del piso'),
+(4, 19, '2021-07-23 17:54:57', 1, 1, 24, 2, 'Restaurar salon de actos de sector', 'Tarea Creada > Realizar limpieza de las cortinas'),
 
+(1, 20, '2021-07-24 17:56:16', 1, 1, 6, 4, 'Se necesita de forma urgente cambiar un inodoro, esta inundando todo el baño', 'Pedido Creado'),
+(2, 20, '2021-07-24 17:56:38', 1, 1, 6, 4, 'Se necesita de forma urgente cambiar un inodoro, esta inundando todo el baño', 'Tarea Creada > Cortar el suministro del agua'),
+(3, 20, '2021-07-24 17:57:06', 1, 1, 6, 4, 'Se necesita de forma urgente cambiar un inodoro, esta inundando todo el baño', 'Tarea Creada > Quitar y colocar un nuevo inodoro');
 
 
 
@@ -396,56 +724,76 @@ CREATE TABLE `historialtarea` (
 INSERT INTO `historialtarea` (`id`, `idTarea`, `idPedido`, `fecha`, `idUsuario`, `idEstado`, `idPrioridad`, `idEspecializacion`, `descripcion`, `observacion`) VALUES
 (1, 1, 1, '2021-07-05 18:15:52', 3, 1, 2, 3, 'test tarea 1', 'Tarea Creada'),
 (1, 2, 1, '2021-07-05 18:16:01', 3, 1, 3, 7, 'test tarea 2', 'Tarea Creada'),
+
 (1, 1, 2, '2021-07-05 18:20:34', 3, 1, 2, 4, 'asd sad wa', 'Tarea Creada'),
+
 (1, 1, 3, '2021-07-11 20:41:05', 3, 1, 2, 9, 'Revisar estado general del techo', 'Tarea Creada'),
 (1, 2, 3, '2021-07-11 20:41:50', 3, 1, 2, 2, 'Revisar estado del revoque y humedad de la pared', 'Tarea Creada'),
 (1, 3, 3, '2021-07-11 20:42:39', 3, 1, 2, 8, 'Arreglar ventada de la cocina', 'Tarea Creada'),
 (1, 4, 3, '2021-07-11 20:43:48', 3, 1, 3, 4, 'Cambiar instalación electrica del baño.', 'Tarea Creada'),
+
 (1, 1, 4, '2021-07-11 20:48:20', 3, 1, 1, 2, 'Cambiar ceramicas rotas del piso ', 'Tarea Creada'),
 (1, 2, 4, '2021-07-11 20:49:17', 3, 1, 1, 3, 'Repintar pared de la sala de rayos', 'Tarea Creada'),
 (1, 3, 4, '2021-07-11 20:49:51', 3, 1, 4, 5, 'Reparar tomografo', 'Tarea Creada'),
+
 (1, 1, 5, '2021-07-12 20:55:28', 3, 1, 1, 2, 'Quitar parte de la chapa del techo y revestimiento interior', 'Tarea Creada'),
 (1, 2, 5, '2021-07-12 20:56:19', 3, 1, 2, 8, 'Cambiar y construir tirantes', 'Tarea Creada'),
 (1, 3, 5, '2021-07-12 20:57:39', 3, 1, 2, 2, 'Colocar chapas y recubrir el interior', 'Tarea Creada'),
+
 (1, 1, 7, '2021-07-13 21:08:50', 3, 1, 2, 2, 'Crear espacio en la pared para instalar un aire acondicionado frio/calor', 'Tarea Creada'),
 (1, 2, 7, '2021-07-13 21:09:46', 3, 1, 2, 4, 'Instalar enchufe en la pared para conectar el a/c', 'Tarea Creada'),
 (1, 3, 7, '2021-07-13 21:10:26', 3, 1, 2, 1, 'Realizar la instalacion del aire acondicionado\r\n', 'Tarea Creada'),
 (1, 4, 7, '2021-07-13 21:11:04', 3, 1, 2, 9, 'Realizar pruebas de funcionamiento del aire acondicionado', 'Tarea Creada'),
+
 (1, 1, 9, '2021-07-14 12:21:00', 3, 1, 2, 8, 'Fabricar y colocar 2 puertas de los gabinetes ', 'Tarea Creada'),
 (1, 2, 9, '2021-07-14 12:21:39', 3, 1, 2, 11, 'Cambiar cerradura de los gabinetes, se perdieron algunas llaves', 'Tarea Creada'),
+
 (1, 1, 10, '2021-07-14 12:31:01', 3, 1, 2, 9, 'Quitar del suelo las silla de la sala de espera', 'Tarea Creada'),
 (1, 2, 10, '2021-07-14 12:31:31', 3, 1, 2, 2, 'Colocar silla nuevas ', 'Tarea Creada'),
 (1, 3, 10, '2021-07-14 12:33:04', 3, 1, 2, 2, 'Cambiar ceramicos que se rompieron cuando se cambiaron las sillas', 'Tarea Creada'),
+
 (1, 1, 11, '2021-07-15 16:48:56', 1, 1, 2, 9, 'Desarmar gazebos y verificar si necesitan mantenimiento', 'Tarea Creada'),
 (1, 2, 11, '2021-07-15 16:49:38', 1, 1, 2, 6, 'Fabricar partes metalicas de los gazebos que esten en mal estado', 'Tarea Creada'),
 (1, 3, 11, '2021-07-15 16:50:24', 1, 1, 2, 9, 'Rearmar gazebos ', 'Tarea Creada'),
+
 (1, 1, 12, '2021-07-16 16:51:43', 1, 1, 1, 10, 'Retirar malezas y restos de plantas de los canteros', 'Tarea Creada'),
 (1, 2, 12, '2021-07-16 16:54:06', 1, 1, 1, 10, 'Reacondicionar la tierra de los canteros, mejorar estado', 'Tarea Creada'),
 (1, 3, 12, '2021-07-16 16:54:58', 1, 1, 1, 10, 'Poner plantines de la temporada actual, de colores anaranjados.', 'Tarea Creada'),
+
 (1, 1, 13, '2021-07-17 16:58:31', 1, 1, 2, 1, 'Verificar estado de las cañerias y destapar las que se encuentren en mal estado', 'Tarea Creada'),
 (1, 2, 13, '2021-07-17 16:59:16', 1, 1, 2, 1, 'Cambiar cañerias que esten rotas o no puedan ser reparadas', 'Tarea Creada'),
 (1, 3, 13, '2021-07-17 17:01:41', 1, 1, 2, 1, 'Revisar canillas y arreglar las que goteen o no funcionen', 'Tarea Creada'),
+
 (1, 1, 14, '2021-07-18 17:02:55', 1, 1, 2, 9, 'Quitar cortinas del escenario y quitar las butacas', 'Tarea Creada'),
 (1, 2, 14, '2021-07-18 17:03:25', 1, 1, 2, 8, 'Cambiar tablas rotas del escenario', 'Tarea Creada'),
 (1, 3, 14, '2021-07-18 17:03:50', 1, 1, 2, 7, 'Realizar limpieza de las cortinas', 'Tarea Creada'),
 (1, 4, 14, '2021-07-18 17:05:35', 1, 1, 2, 7, 'CAmbiar tapizado de las butacas', 'Tarea Creada'),
 (1, 5, 14, '2021-07-18 17:05:54', 1, 1, 2, 9, 'Rearmar el teatro', 'Tarea Creada'),
+
 (1, 1, 15, '2021-07-19 17:07:11', 1, 1, 2, 4, 'Verificar estado de los enchufes y si funcionan', 'Tarea Creada'),
 (1, 2, 15, '2021-07-19 17:07:46', 1, 1, 2, 4, 'Agregar dos enchufes a cada sala', 'Tarea Creada'),
+
 (1, 1, 16, '2021-07-20 17:25:34', 1, 1, 1, 2, 'Quitar todo el reboque y las partes con humedad\r\n', 'Tarea Creada'),
 (1, 2, 16, '2021-07-20 17:30:35', 1, 1, 1, 2, 'Rebocar las paredes de la fachada', 'Tarea Creada'),
 (1, 3, 16, '2021-07-20 17:31:15', 1, 1, 1, 3, 'Pintar todas las paredes', 'Tarea Creada'),
+
 (1, 1, 17, '2021-07-21 17:35:57', 1, 1, 1, 2, 'Quitar baldosas del acceso', 'Tarea Creada'),
+(2, 1, 17, '2021-07-21 17:36:40', 1, 1, 1, 2, 'Quitar baldosas del acceso que esten en mal estado', 'Tarea Modificada'),
+(3, 1, 17, '2021-07-21 17:36:40', 1, 1, 1, 2, 'Quitar baldosas del acceso que esten en mal estado', 'Tarea Modificada'),
 (1, 2, 17, '2021-07-21 17:36:19', 1, 1, 1, 2, 'Colocar las baldosas', 'Tarea Creada'),
+
+
+
 (1, 1, 18, '2021-07-22 17:48:58', 1, 1, 3, 4, 'Revisar la conexion electrica del timbre', 'Tarea Creada'),
 (1, 2, 18, '2021-07-22 17:49:27', 1, 1, 3, 4, 'Cambiar timbre por uno nuevo', 'Tarea Creada'),
+
 (1, 1, 19, '2021-07-23 17:53:57', 1, 1, 2, 7, 'Realizar tareas de restauracion de las ventanas', 'Tarea Creada'),
 (1, 2, 19, '2021-07-23 17:54:18', 1, 1, 2, 7, 'Realizar tareas de restauracion del piso', 'Tarea Creada'),
 (1, 3, 19, '2021-07-23 17:54:57', 1, 1, 2, 9, 'Realizar limpieza de las cortinas', 'Tarea Creada'),
+
 (1, 1, 20, '2021-07-24 17:56:38', 1, 1, 4, 1, 'Cortar el suministro del agua', 'Tarea Creada'),
-(1, 2, 20, '2021-07-24 17:57:06', 1, 1, 3, 1, 'Quitar y colocar un nuevo inodoro', 'Tarea Creada'),
-(2, 1, 17, '2021-07-21 17:36:40', 1, 1, 1, 2, 'Quitar baldosas del acceso que esten en mal estado', 'Tarea Modificada'),
-(3, 1, 17, '2021-07-21 17:36:40', 1, 1, 1, 2, 'Quitar baldosas del acceso que esten en mal estado', 'Tarea Modificada');
+(1, 2, 20, '2021-07-24 17:57:06', 1, 1, 3, 1, 'Quitar y colocar un nuevo inodoro', 'Tarea Creada');
+
 
 -- --------------------------------------------------------
 
@@ -605,7 +953,117 @@ CREATE TABLE `ordenesdetrabajo` (
   `idUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `ordenesdetrabajo` (`id`, `fechaInicio`, `fechaFin`, `idEstado`, `idUsuario`) VALUES
 
+(21, '2021-03-1 22:03:49', '2021-03-2 22:03:49', 5, 1),
+(22, '2021-03-2 22:03:49', '2021-03-3 22:03:49', 5, 1),
+(23, '2021-03-3 22:03:49', '2021-03-4 22:03:49', 5, 1),
+(24, '2021-03-4 22:03:49', '2021-03-5 22:03:49', 5, 1),
+(25, '2021-03-5 22:03:49', '2021-03-6 22:03:49', 5, 1),
+(26, '2021-03-6 22:03:49', '2021-03-8 22:03:49', 5, 1),
+(27, '2021-03-8 22:03:49', '2021-03-9 22:03:49', 5, 1),
+(28, '2021-03-9 22:03:49', '2021-03-10 22:03:49', 5, 1),
+(29, '2021-03-10 22:03:49', '2021-03-11 22:03:49', 5, 1),
+(30, '2021-03-11 22:03:49', '2021-03-12 22:03:49', 5, 1),
+(31, '2021-03-12 22:03:49', '2021-03-13 22:03:49', 5, 1),
+(32, '2021-03-13 22:03:49', '2021-03-15 22:03:49', 5, 1),
+(33, '2021-03-15 22:03:49', '2021-03-16 22:03:49', 5, 1),
+(34, '2021-03-16 22:03:49', '2021-03-17 22:03:49', 5, 1),
+(35, '2021-03-17 22:03:49', '2021-03-18 22:03:49', 5, 1),
+(36, '2021-03-18 22:03:49', '2021-03-19 22:03:49', 5, 1),
+(37, '2021-03-19 22:03:49', '2021-03-20 22:03:49', 5, 1),
+(38, '2021-03-20 22:03:49', '2021-03-22 22:03:49', 5, 1),
+(39, '2021-03-22 22:03:49', '2021-03-23 22:03:49', 5, 1),
+(40, '2021-03-23 22:03:49', '2021-03-24 22:03:49', 5, 1),
+(41, '2021-03-24 22:03:49', '2021-03-25 22:03:49', 5, 1),
+(42, '2021-03-25 22:03:49', '2021-03-26 22:03:49', 5, 1),
+(43, '2021-03-26 22:03:49', '2021-03-27 22:03:49', 5, 1),
+(44, '2021-03-27 22:03:49', '2021-03-29 22:03:49', 5, 1),
+(45, '2021-03-29 22:03:49', '2021-03-30 22:03:49', 5, 1),
+(46, '2021-03-30 22:03:49', '2021-04-1 22:03:49', 5, 1),
+
+
+(47, '2021-04-1 22:03:49', '2021-04-2 22:03:49', 5, 1),
+(48, '2021-04-2 22:03:49', '2021-04-3 22:03:49', 5, 1),
+(49, '2021-04-3 22:03:49', '2021-04-7 22:03:49', 5, 1),
+(50, '2021-04-7 22:03:49', '2021-04-5 22:03:49', 5, 1),
+(51, '2021-04-5 22:03:49', '2021-04-6 22:03:49', 5, 1),
+(52, '2021-04-6 22:03:49', '2021-04-8 22:03:49', 5, 1),
+(53, '2021-04-8 22:03:49', '2021-04-9 22:03:49', 5, 1),
+(54, '2021-04-9 22:03:49', '2021-04-10 22:03:49', 5, 1),
+(55, '2021-04-10 22:03:49', '2021-04-12 22:03:49', 5, 1),
+(56, '2021-04-12 22:03:49', '2021-04-13 22:03:49', 5, 1),
+(57, '2021-04-13 22:03:49', '2021-04-14 22:03:49', 5, 1),
+(58, '2021-04-14 22:03:49', '2021-04-15 22:03:49', 5, 1),
+(59, '2021-04-15 22:03:49', '2021-04-16 22:03:49', 5, 1),
+(60, '2021-04-16 22:03:49', '2021-04-17 22:03:49', 5, 1),
+(61, '2021-04-17 22:03:49', '2021-04-19 22:03:49', 5, 1),
+(62, '2021-04-19 22:03:49', '2021-04-20 22:03:49', 5, 1),
+(63, '2021-04-20 22:03:49', '2021-04-21 22:03:49', 5, 1),
+(64, '2021-04-21 22:03:49', '2021-04-22 22:03:49', 5, 1),
+(65, '2021-04-22 22:03:49', '2021-04-23 22:03:49', 5, 1),
+(66, '2021-04-23 22:03:49', '2021-04-24 22:03:49', 5, 1),
+(67, '2021-04-24 22:03:49', '2021-04-26 22:03:49', 5, 1),
+(68, '2021-04-26 22:03:49', '2021-04-27 22:03:49', 5, 1),
+(69, '2021-04-27 22:03:49', '2021-04-28 22:03:49', 5, 1),
+(70, '2021-04-28 22:03:49', '2021-04-29 22:03:49', 5, 1),
+(71, '2021-04-29 22:03:49', '2021-04-30 22:03:49', 5, 1),
+(72, '2021-04-30 22:03:49', '2021-05-1 22:03:49', 5, 1),
+
+
+(73, '2021-05-1 22:03:49', '2021-05-3 22:03:49', 5, 1),
+(74, '2021-05-3 22:03:49', '2021-05-4 22:03:49', 5, 1),
+(75, '2021-05-4 22:03:49', '2021-05-5 22:03:49', 5, 1),
+(76, '2021-05-5 22:03:49', '2021-05-6 22:03:49', 5, 1),
+(77, '2021-05-6 22:03:49', '2021-05-7 22:03:49', 5, 1),
+(78, '2021-05-7 22:03:49', '2021-05-8 22:03:49', 5, 1),
+(79, '2021-05-8 22:03:49', '2021-05-10 22:03:49', 5, 1),
+(80, '2021-05-10 22:03:49', '2021-05-11 22:03:49', 5, 1),
+(81, '2021-05-11 22:03:49', '2021-05-12 22:03:49', 5, 1),
+(82, '2021-05-12 22:03:49', '2021-05-13 22:03:49', 5, 1),
+(83, '2021-05-13 22:03:49', '2021-05-14 22:03:49', 5, 1),
+(84, '2021-05-14 22:03:49', '2021-05-15 22:03:49', 5, 1),
+(85, '2021-05-15 22:03:49', '2021-05-17 22:03:49', 5, 1),
+(86, '2021-05-17 22:03:49', '2021-05-18 22:03:49', 5, 1),
+(87, '2021-05-18 22:03:49',  '2021-05-19 22:03:49', 5, 1),
+(88, '2021-05-19 22:03:49', '2021-05-20 22:03:49', 5, 1),
+(89, '2021-05-20 22:03:49', '2021-05-21 22:03:49', 5, 1),
+(90, '2021-05-21 22:03:49', '2021-05-22 22:03:49', 5, 1),
+(91, '2021-05-22 22:03:49', '2021-05-24 22:03:49', 5, 1),
+(92, '2021-05-24 22:03:49', '2021-05-25 22:03:49', 5, 1),
+(93, '2021-05-25 22:03:49', '2021-05-26 22:03:49', 5, 1),
+(94, '2021-05-26 22:03:49', '2021-05-27 22:03:49', 5, 1),
+(95, '2021-05-27 22:03:49', '2021-05-28 22:03:49', 5, 1),
+(96, '2021-05-28 22:03:49', '2021-05-29 22:03:49', 5, 1),
+(97, '2021-05-29 22:03:49', '2021-06-1 22:03:49', 5, 1),
+
+
+(98, '2021-06-1 22:03:49', '2021-06-2 22:03:49', 5, 1),
+(99, '2021-06-2 22:03:49', '2021-06-3 22:03:49', 5, 1),
+(100, '2021-06-3 22:03:49', '2021-06-4 22:03:49', 5, 1),
+(101, '2021-06-4 22:03:49', '2021-06-5 22:03:49', 5, 1),
+(102, '2021-06-5 22:03:49', '2021-06-7 22:03:49', 5, 1),
+(103, '2021-06-7 22:03:49', '2021-06-8 22:03:49', 5, 1),
+(104, '2021-06-8 22:03:49', '2021-06-9 22:03:49', 5, 1),
+(105, '2021-06-9 22:03:49', '2021-06-10 22:03:49', 5, 1),
+(106, '2021-06-10 22:03:49', '2021-06-11 22:03:49', 5, 1),
+(107, '2021-06-11 22:03:49', '2021-06-12 22:03:49', 5, 1),
+(108, '2021-06-12 22:03:49', '2021-06-14 22:03:49', 5, 1),
+(109, '2021-06-14 22:03:49', '2021-06-15 22:03:49', 5, 1),
+(110, '2021-06-15 22:03:49', '2021-06-16 22:03:49', 5, 1),
+(111, '2021-06-16 22:03:49', '2021-06-17 22:03:49', 5, 1),
+(112, '2021-06-17 22:03:49', '2021-06-18 22:03:49', 5, 1),
+(113, '2021-06-18 22:03:49', '2021-06-19 22:03:49', 5, 1),
+(114, '2021-06-19 22:03:49', '2021-06-21 22:03:49', 5, 1),
+(115, '2021-06-21 22:03:49', '2021-06-22 22:03:49', 5, 1),
+(116, '2021-06-22 22:03:49', '2021-06-23 22:03:49', 5, 1),
+(117, '2021-06-23 22:03:49', '2021-06-24 22:03:49', 5, 1),
+(118, '2021-06-24 22:03:49', '2021-06-25 22:03:49', 5, 1),
+(119, '2021-06-25 22:03:49', '2021-06-26 22:03:49', 5, 1),
+(120, '2021-06-26 22:03:49', '2021-06-28 22:03:49', 5, 1),
+(121, '2021-06-28 22:03:49', '2021-06-29 22:03:49', 5, 1),
+(122, '2021-06-29 22:03:49', '2021-06-30 22:03:49', 5, 1),
+(123, '2021-06-30 22:03:49', '2021-07-1 22:03:49', 5, 1);
 
 --
 -- Estructura de tabla para la tabla `pedidos`
@@ -648,116 +1106,117 @@ INSERT INTO `pedidos` (`id`, `descripcion`, `fechaInicio`, `fechaFin`, `idUsuari
 (18, 'No funciona el timbre de la porteria', '2021-07-22 17:48:29', NULL, 3, 1, 30, 4),
 (19, 'Restaurar salon de actos de sector', '2021-07-23 17:53:10', NULL, 3, 1, 24, 2),
 (20, 'Se necesita de forma urgente cambiar un inodoro, esta inundando todo el baño', '2021-07-24 17:56:16', NULL, 3, 1, 6, 4),
-(21, 'Descripcion', '2021-03-1 21:03:49', NULL, 3, 1, 22, 2),
-(22, 'Descripcion', '2021-03-2 21:03:49', NULL, 3, 1, 24, 2),
-(23, 'Descripcion', '2021-03-3 21:03:49', NULL, 3, 1, 17, 2),
-(24, 'Descripcion', '2021-03-4 21:03:49', NULL, 3, 1, 18, 2),
-(25, 'Descripcion', '2021-03-5 21:03:49', NULL, 3, 1, 17, 2),
-(26, 'Descripcion', '2021-03-6 21:03:49', NULL, 3, 1, 25, 2),
-(27, 'Descripcion', '2021-03-8 21:03:49', NULL, 3, 1, 10, 2),
-(28, 'Descripcion', '2021-03-9 21:03:49', NULL, 3, 1, 12, 2),
-(29, 'Descripcion', '2021-03-10 21:03:49', NULL, 3, 1, 15, 2),
-(30, 'Descripcion', '2021-03-11 21:03:49', NULL, 3, 1, 1, 2),
-(31, 'Descripcion', '2021-03-12 21:03:49', NULL, 3, 1, 3, 2),
-(32, 'Descripcion', '2021-03-13 21:03:49', NULL, 3, 1, 5, 2),
-(33, 'Descripcion', '2021-03-15 21:03:49', NULL, 3, 1, 27, 2),
-(34, 'Descripcion', '2021-03-16 21:03:49', NULL, 3, 1, 27, 2),
-(35, 'Descripcion', '2021-03-17 21:03:49', NULL, 3, 1, 27, 2),
-(36, 'Descripcion', '2021-03-18 21:03:49', NULL, 3, 1, 27, 2),
-(37, 'Descripcion', '2021-03-19 21:03:49', NULL, 3, 1, 27, 2),
-(38, 'Descripcion', '2021-03-20 21:03:49', NULL, 3, 1, 27, 2),
-(39, 'Descripcion', '2021-03-22 21:03:49', NULL, 3, 1, 27, 2),
-(40, 'Descripcion', '2021-03-23 21:03:49', NULL, 3, 1, 27, 2),
-(41, 'Descripcion', '2021-03-24 21:03:49', NULL, 3, 1, 27, 2),
-(42, 'Descripcion', '2021-03-25 21:03:49', NULL, 3, 1, 27, 2),
-(43, 'Descripcion', '2021-03-26 21:03:49', NULL, 3, 1, 27, 2),
-(44, 'Descripcion', '2021-03-27 21:03:49', NULL, 3, 1, 27, 2),
-(45, 'Descripcion', '2021-03-29 21:03:49', NULL, 3, 1, 27, 2),
-(46, 'Descripcion', '2021-03-30 21:03:49', NULL, 3, 1, 27, 2),
+
+(21, 'Descripcion', '2021-03-1 22:03:49', '2021-03-2 22:03:49', 3, 5, 22, 2),
+(22, 'Descripcion', '2021-03-2 22:03:49', '2021-03-3 22:03:49', 3, 5, 24, 2),
+(23, 'Descripcion', '2021-03-3 22:03:49', '2021-03-4 22:03:49', 3, 5, 17, 2),
+(24, 'Descripcion', '2021-03-4 22:03:49', '2021-03-5 22:03:49', 3, 5, 18, 2),
+(25, 'Descripcion', '2021-03-5 22:03:49', '2021-03-6 22:03:49', 3, 5, 17, 2),
+(26, 'Descripcion', '2021-03-6 22:03:49', '2021-03-8 22:03:49', 3, 5, 25, 2),
+(27, 'Descripcion', '2021-03-8 22:03:49', '2021-03-9 22:03:49', 3, 5, 10, 2),
+(28, 'Descripcion', '2021-03-9 22:03:49','2021-03-10 22:03:49', 3, 5, 12, 2),
+(29, 'Descripcion','2021-03-10 22:03:49','2021-03-11 22:03:49', 3, 5, 15, 2),
+(30, 'Descripcion','2021-03-11 22:03:49','2021-03-12 22:03:49', 3, 5, 1, 2),
+(31, 'Descripcion','2021-03-12 22:03:49','2021-03-13 22:03:49', 3, 5, 3, 2),
+(32, 'Descripcion','2021-03-13 22:03:49','2021-03-15 22:03:49', 3, 5, 5, 2),
+(33, 'Descripcion','2021-03-15 22:03:49','2021-03-16 22:03:49', 3, 5, 14, 2),
+(34, 'Descripcion','2021-03-16 22:03:49','2021-03-17 22:03:49', 3, 5, 2, 2),
+(35, 'Descripcion','2021-03-17 22:03:49','2021-03-18 22:03:49', 3, 5, 7, 2),
+(36, 'Descripcion','2021-03-18 22:03:49','2021-03-19 22:03:49', 3, 5, 5, 2),
+(37, 'Descripcion','2021-03-19 22:03:49','2021-03-20 22:03:49', 3, 5, 22, 2),
+(38, 'Descripcion','2021-03-20 22:03:49','2021-03-22 22:03:49', 3, 5, 17, 2),
+(39, 'Descripcion','2021-03-22 22:03:49','2021-03-23 22:03:49', 3, 5, 12, 2),
+(40, 'Descripcion','2021-03-23 22:03:49','2021-03-24 22:03:49', 3, 5, 15, 2),
+(41, 'Descripcion','2021-03-24 22:03:49','2021-03-25 22:03:49', 3, 5, 6, 2),
+(42, 'Descripcion','2021-03-25 22:03:49','2021-03-26 22:03:49', 3, 5, 7, 2),
+(43, 'Descripcion','2021-03-26 22:03:49','2021-03-27 22:03:49', 3, 5, 9, 2),
+(44, 'Descripcion','2021-03-27 22:03:49','2021-03-29 22:03:49', 3, 5, 13, 2),
+(45, 'Descripcion','2021-03-29 22:03:49','2021-03-30 22:03:49', 3, 5, 18, 2),
+(46, 'Descripcion','2021-03-30 22:03:49', '2021-04-1 22:03:49', 3, 5, 2, 2),
 
 
-(47, 'Descripcion', '2021-04-1 21:03:49', NULL, 3, 1, 27, 2),
-(48, 'Descripcion', '2021-04-2 21:03:49', NULL, 3, 1, 27, 2),
-(49, 'Descripcion', '2021-04-3 21:03:49', NULL, 3, 1, 27, 2),
-(50, 'Descripcion', '2021-04-7 21:03:49', NULL, 3, 1, 27, 2),
-(51, 'Descripcion', '2021-04-5 21:03:49', NULL, 3, 1, 27, 2),
-(52, 'Descripcion', '2021-04-6 21:03:49', NULL, 3, 1, 27, 2),
-(53, 'Descripcion', '2021-04-8 21:03:49', NULL, 3, 1, 27, 2),
-(54, 'Descripcion', '2021-04-9 21:03:49', NULL, 3, 1, 27, 2),
-(55, 'Descripcion', '2021-04-10 21:03:49', NULL, 3, 1, 27, 2),
-(56, 'Descripcion', '2021-04-12 21:03:49', NULL, 3, 1, 27, 2),
-(57, 'Descripcion', '2021-04-13 21:03:49', NULL, 3, 1, 27, 2),
-(58, 'Descripcion', '2021-04-14 21:03:49', NULL, 3, 1, 27, 2),
-(59, 'Descripcion', '2021-04-15 21:03:49', NULL, 3, 1, 27, 2),
-(60, 'Descripcion', '2021-04-16 21:03:49', NULL, 3, 1, 27, 2),
-(61, 'Descripcion', '2021-04-17 21:03:49', NULL, 3, 1, 27, 2),
-(62, 'Descripcion', '2021-04-19 21:03:49', NULL, 3, 1, 27, 2),
-(63, 'Descripcion', '2021-04-20 21:03:49', NULL, 3, 1, 27, 2),
-(64, 'Descripcion', '2021-04-21 21:03:49', NULL, 3, 1, 27, 2),
-(65, 'Descripcion', '2021-04-22 21:03:49', NULL, 3, 1, 27, 2),
-(66, 'Descripcion', '2021-04-23 21:03:49', NULL, 3, 1, 27, 2),
-(67, 'Descripcion', '2021-04-24 21:03:49', NULL, 3, 1, 27, 2),
-(68, 'Descripcion', '2021-04-26 21:03:49', NULL, 3, 1, 27, 2),
-(69, 'Descripcion', '2021-04-27 21:03:49', NULL, 3, 1, 27, 2),
-(70, 'Descripcion', '2021-04-28 21:03:49', NULL, 3, 1, 27, 2),
-(71, 'Descripcion', '2021-04-29 21:03:49', NULL, 3, 1, 27, 2),
-(72, 'Descripcion', '2021-04-30 21:03:49', NULL, 3, 1, 27, 2),
+(47, 'Descripcion', '2021-04-1 22:03:49', '2021-04-2 22:03:49', 3, 5, 2, 2),
+(48, 'Descripcion', '2021-04-2 22:03:49', '2021-04-3 22:03:49', 3, 5, 27, 2),
+(49, 'Descripcion', '2021-04-3 22:03:49', '2021-04-7 22:03:49', 3, 5, 11, 2),
+(50, 'Descripcion', '2021-04-7 22:03:49', '2021-04-5 22:03:49', 3, 5, 4, 2),
+(51, 'Descripcion', '2021-04-5 22:03:49', '2021-04-6 22:03:49', 3, 5, 2, 2),
+(52, 'Descripcion', '2021-04-6 22:03:49', '2021-04-8 22:03:49', 3, 5, 23, 2),
+(53, 'Descripcion', '2021-04-8 22:03:49', '2021-04-9 22:03:49', 3, 5, 25, 2),
+(54, 'Descripcion', '2021-04-9 22:03:49','2021-04-10 22:03:49', 3, 5, 12, 2),
+(55, 'Descripcion','2021-04-10 22:03:49','2021-04-12 22:03:49', 3, 5, 14, 2),
+(56, 'Descripcion','2021-04-12 22:03:49','2021-04-13 22:03:49', 3, 5, 17, 2),
+(57, 'Descripcion','2021-04-13 22:03:49','2021-04-14 22:03:49', 3, 5, 19, 2),
+(58, 'Descripcion','2021-04-14 22:03:49','2021-04-15 22:03:49', 3, 5, 20, 2),
+(59, 'Descripcion','2021-04-15 22:03:49','2021-04-16 22:03:49', 3, 5, 22, 2),
+(60, 'Descripcion','2021-04-16 22:03:49','2021-04-17 22:03:49', 3, 5, 21, 2),
+(61, 'Descripcion','2021-04-17 22:03:49','2021-04-19 22:03:49', 3, 5, 25, 2),
+(62, 'Descripcion','2021-04-19 22:03:49','2021-04-20 22:03:49', 3, 5, 26, 2),
+(63, 'Descripcion','2021-04-20 22:03:49','2021-04-21 22:03:49', 3, 5, 22, 2),
+(64, 'Descripcion','2021-04-21 22:03:49','2021-04-22 22:03:49', 3, 5, 12, 2),
+(65, 'Descripcion','2021-04-22 22:03:49','2021-04-23 22:03:49', 3, 5, 15, 2),
+(66, 'Descripcion','2021-04-23 22:03:49','2021-04-24 22:03:49', 3, 5, 18, 2),
+(67, 'Descripcion','2021-04-24 22:03:49','2021-04-26 22:03:49', 3, 5, 11, 2),
+(68, 'Descripcion','2021-04-26 22:03:49','2021-04-27 22:03:49', 3, 5, 20, 2),
+(69, 'Descripcion','2021-04-27 22:03:49','2021-04-28 22:03:49', 3, 5, 13, 2),
+(70, 'Descripcion','2021-04-28 22:03:49','2021-04-29 22:03:49', 3, 5, 11, 2),
+(71, 'Descripcion','2021-04-29 22:03:49','2021-04-30 22:03:49', 3, 5, 5, 2),
+(72, 'Descripcion','2021-04-30 22:03:49', '2021-05-1 22:03:49', 3, 5, 7, 2),
 
 
-(73, 'Descripcion', '2021-05-1 21:03:49', NULL, 3, 1, 27, 2),
-(74, 'Descripcion', '2021-05-3 21:03:49', NULL, 3, 1, 27, 2),
-(75, 'Descripcion', '2021-05-4 21:03:49', NULL, 3, 1, 27, 2),
-(76, 'Descripcion', '2021-05-5 21:03:49', NULL, 3, 1, 27, 2),
-(77, 'Descripcion', '2021-05-6 21:03:49', NULL, 3, 1, 27, 2),
-(78, 'Descripcion', '2021-05-7 21:03:49', NULL, 3, 1, 27, 2),
-(79, 'Descripcion', '2021-05-8 21:03:49', NULL, 3, 1, 27, 2),
-(80, 'Descripcion', '2021-05-10 21:03:49', NULL, 3, 1, 27, 2),
-(81, 'Descripcion', '2021-05-11 21:03:49', NULL, 3, 1, 27, 2),
-(82, 'Descripcion', '2021-05-12 21:03:49', NULL, 3, 1, 27, 2),
-(83, 'Descripcion', '2021-05-13 21:03:49', NULL, 3, 1, 27, 2),
-(84, 'Descripcion', '2021-05-14 21:03:49', NULL, 3, 1, 27, 2),
-(85, 'Descripcion', '2021-05-15 21:03:49', NULL, 3, 1, 27, 2),
-(86, 'Descripcion', '2021-05-17 21:03:49', NULL, 3, 1, 27, 2),
-(87, 'Descripcion', '2021-05-18 21:03:49', NULL, 3, 1, 27, 2),
-(88, 'Descripcion', '2021-05-19 21:03:49', NULL, 3, 1, 27, 2),
-(89, 'Descripcion', '2021-05-20 21:03:49', NULL, 3, 1, 27, 2),
-(90, 'Descripcion', '2021-05-21 21:03:49', NULL, 3, 1, 27, 2),
-(91, 'Descripcion', '2021-05-22 21:03:49', NULL, 3, 1, 27, 2),
-(92, 'Descripcion', '2021-05-24 21:03:49', NULL, 3, 1, 27, 2),
-(93, 'Descripcion', '2021-05-25 21:03:49', NULL, 3, 1, 27, 2),
-(94, 'Descripcion', '2021-05-26 21:03:49', NULL, 3, 1, 27, 2),
-(95, 'Descripcion', '2021-05-27 21:03:49', NULL, 3, 1, 27, 2),
-(96, 'Descripcion', '2021-05-28 21:03:49', NULL, 3, 1, 27, 2),
-(97, 'Descripcion', '2021-05-29 21:03:49', NULL, 3, 1, 27, 2),
+(73, 'Descripcion', '2021-05-1 22:03:49', '2021-05-3 22:03:49', 3, 5, 27, 2),
+(74, 'Descripcion', '2021-05-3 22:03:49', '2021-05-4 22:03:49', 3, 5, 12, 2),
+(75, 'Descripcion', '2021-05-4 22:03:49', '2021-05-5 22:03:49', 3, 5, 7, 2),
+(76, 'Descripcion', '2021-05-5 22:03:49', '2021-05-6 22:03:49', 3, 5, 4, 2),
+(77, 'Descripcion', '2021-05-6 22:03:49', '2021-05-7 22:03:49', 3, 5, 9, 2),
+(78, 'Descripcion', '2021-05-7 22:03:49', '2021-05-8 22:03:49', 3, 5, 25, 2),
+(79, 'Descripcion', '2021-05-8 22:03:49','2021-05-10 22:03:49', 3, 5, 15, 2),
+(80, 'Descripcion','2021-05-10 22:03:49','2021-05-11 22:03:49', 3,5, 13, 2),
+(81, 'Descripcion','2021-05-11 22:03:49','2021-05-12 22:03:49', 3, 5, 18, 2),
+(82, 'Descripcion','2021-05-12 22:03:49','2021-05-13 22:03:49', 3, 5, 23, 2),
+(83, 'Descripcion','2021-05-13 22:03:49','2021-05-14 22:03:49', 3, 5, 20, 2),
+(84, 'Descripcion','2021-05-14 22:03:49','2021-05-15 22:03:49', 3, 5, 10, 2),
+(85, 'Descripcion','2021-05-15 22:03:49','2021-05-17 22:03:49', 3, 5, 5, 2),
+(86, 'Descripcion','2021-05-17 22:03:49','2021-05-18 22:03:49', 3, 5, 7, 2),
+(87, 'Descripcion','2021-05-18 22:03:49','2021-05-19 22:03:49', 3, 5, 2, 2),
+(88, 'Descripcion','2021-05-19 22:03:49','2021-05-20 22:03:49', 3, 5, 1, 2),
+(89, 'Descripcion','2021-05-20 22:03:49','2021-05-21 22:03:49', 3, 5, 17, 2),
+(90, 'Descripcion','2021-05-21 22:03:49','2021-05-22 22:03:49', 3, 5, 10, 2),
+(91, 'Descripcion','2021-05-22 22:03:49','2021-05-24 22:03:49', 3, 5, 20, 2),
+(92, 'Descripcion','2021-05-24 22:03:49','2021-05-25 22:03:49', 3, 5, 14, 2),
+(93, 'Descripcion','2021-05-25 22:03:49','2021-05-26 22:03:49', 3, 5, 24, 2),
+(94, 'Descripcion','2021-05-26 22:03:49','2021-05-27 22:03:49', 3, 5, 4, 2),
+(95, 'Descripcion','2021-05-27 22:03:49','2021-05-28 22:03:49', 3, 5, 8, 2),
+(96, 'Descripcion','2021-05-28 22:03:49','2021-05-29 22:03:49', 3, 5, 5, 2),
+(97, 'Descripcion','2021-05-29 22:03:49', '2021-06-1 22:03:49', 3, 5, 2, 2),
 
 
 
-(98, 'Descripcion', '2021-06-1 21:03:49', NULL, 3, 1, 27, 2),
-(99, 'Descripcion', '2021-06-2 21:03:49', NULL, 3, 1, 27, 2),
-(100, 'Descripcion', '2021-06-3 21:03:49', NULL, 3, 1, 27, 2),
-(101, 'Descripcion', '2021-06-4 21:03:49', NULL, 3, 1, 27, 2),
-(102, 'Descripcion', '2021-06-5 21:03:49', NULL, 3, 1, 27, 2),
-(103, 'Descripcion', '2021-06-7 21:03:49', NULL, 3, 1, 27, 2),
-(104, 'Descripcion', '2021-06-8 21:03:49', NULL, 3, 1, 27, 2),
-(105, 'Descripcion', '2021-06-9 21:03:49', NULL, 3, 1, 27, 2),
-(106, 'Descripcion', '2021-06-10 21:03:49', NULL, 3, 1, 27, 2),
-(107, 'Descripcion', '2021-06-11 21:03:49', NULL, 3, 1, 27, 2),
-(108, 'Descripcion', '2021-06-12 21:03:49', NULL, 3, 1, 27, 2),
-(109, 'Descripcion', '2021-06-14 21:03:49', NULL, 3, 1, 27, 2),
-(110, 'Descripcion', '2021-06-15 21:03:49', NULL, 3, 1, 27, 2),
-(111, 'Descripcion', '2021-06-16 21:03:49', NULL, 3, 1, 27, 2),
-(112, 'Descripcion', '2021-06-17 21:03:49', NULL, 3, 1, 27, 2),
-(113, 'Descripcion', '2021-06-18 21:03:49', NULL, 3, 1, 27, 2),
-(114, 'Descripcion', '2021-06-19 21:03:49', NULL, 3, 1, 27, 2),
-(115, 'Descripcion', '2021-06-21 21:03:49', NULL, 3, 1, 27, 2),
-(116, 'Descripcion', '2021-06-22 21:03:49', NULL, 3, 1, 27, 2),
-(117, 'Descripcion', '2021-06-23 21:03:49', NULL, 3, 1, 27, 2),
-(118, 'Descripcion', '2021-06-24 21:03:49', NULL, 3, 1, 27, 2),
-(119, 'Descripcion', '2021-06-25 21:03:49', NULL, 3, 1, 27, 2),
-(120, 'Descripcion', '2021-06-26 21:03:49', NULL, 3, 1, 27, 2),
-(121, 'Descripcion', '2021-06-28 21:03:49', NULL, 3, 1, 27, 2),
-(122, 'Descripcion', '2021-06-29 21:03:49', NULL, 3, 1, 27, 2),
-(123, 'Descripcion', '2021-06-30 21:03:49', NULL, 3, 1, 27, 2);
+(98, 'Descripcion', '2021-06-1 22:03:49', '2021-06-2 22:03:49', 3, 5, 20, 2),
+(99, 'Descripcion', '2021-06-2 22:03:49', '2021-06-3 22:03:49', 3, 5, 2, 2),
+(100, 'Descripcion', '2021-06-3 22:03:49', '2021-06-4 22:03:49', 3, 5, 7, 2),
+(101, 'Descripcion', '2021-06-4 22:03:49', '2021-06-5 22:03:49', 3, 5, 14, 2),
+(102, 'Descripcion', '2021-06-5 22:03:49', '2021-06-7 22:03:49', 3, 5, 21, 2),
+(103, 'Descripcion', '2021-06-7 22:03:49', '2021-06-8 22:03:49', 3, 5, 17, 2),
+(104, 'Descripcion', '2021-06-8 22:03:49', '2021-06-9 22:03:49', 3, 5, 11, 2),
+(105, 'Descripcion', '2021-06-9 22:03:49','2021-06-10 22:03:49', 3, 5, 4, 2),
+(106, 'Descripcion','2021-06-10 22:03:49','2021-06-11 22:03:49', 3, 5, 2, 2),
+(107, 'Descripcion','2021-06-11 22:03:49','2021-06-12 22:03:49', 3, 5, 20, 2),
+(108, 'Descripcion','2021-06-12 22:03:49','2021-06-14 22:03:49', 3, 5, 12, 2),
+(109, 'Descripcion','2021-06-14 22:03:49','2021-06-15 22:03:49', 3, 5, 7, 2),
+(110, 'Descripcion','2021-06-15 22:03:49','2021-06-16 22:03:49', 3, 5, 1, 2),
+(111, 'Descripcion','2021-06-16 22:03:49','2021-06-17 22:03:49', 3, 5, 3, 2),
+(112, 'Descripcion','2021-06-17 22:03:49','2021-06-18 22:03:49', 3, 5, 6, 2),
+(113, 'Descripcion','2021-06-18 22:03:49','2021-06-19 22:03:49', 3, 5, 9, 2),
+(114, 'Descripcion','2021-06-19 22:03:49','2021-06-21 22:03:49', 3, 5, 14, 2),
+(115, 'Descripcion','2021-06-21 22:03:49','2021-06-22 22:03:49', 3, 5, 18, 2),
+(116, 'Descripcion','2021-06-22 22:03:49','2021-06-23 22:03:49', 3, 5, 20, 2),
+(117, 'Descripcion','2021-06-23 22:03:49','2021-06-24 22:03:49', 3, 5, 26, 2),
+(118, 'Descripcion','2021-06-24 22:03:49','2021-06-25 22:03:49', 3, 5, 24, 2),
+(119, 'Descripcion','2021-06-25 22:03:49','2021-06-26 22:03:49', 3, 5, 25, 2),
+(120, 'Descripcion','2021-06-26 22:03:49','2021-06-28 22:03:49', 3, 5, 2, 2),
+(121, 'Descripcion','2021-06-28 22:03:49','2021-06-29 22:03:49', 3, 5, 4, 2),
+(122, 'Descripcion','2021-06-29 22:03:49','2021-06-30 22:03:49', 3, 5, 27, 2),
+(123, 'Descripcion','2021-06-30 22:03:49', '2021-07-1 22:03:49', 3, 5, 3, 2);
 
 
 -- --------------------------------------------------------
@@ -1765,8 +2224,339 @@ INSERT INTO `tareas` (`id`, `fechaInicio`, `fechaFin`, `descripcion`, `idPedido`
 (3, '2021-07-20 17:54:57', NULL, 'Realizar limpieza de las cortinas', 19, NULL, 3, 9, 1, 2),
 (4, '2021-07-11 20:43:48', NULL, 'Cambiar instalación electrica del baño.', 3, NULL, 3, 4, 1, 3),
 (4, '2021-07-11 21:11:04', NULL, 'Realizar pruebas de funcionamiento del aire acondicionado', 7, NULL, 3, 9, 1, 2),
-(4, '2021-07-18 17:05:35', NULL, 'CAmbiar tapizado de las butacas', 14, NULL, 3, 7, 1, 2),
-(5, '2021-07-18 17:05:54', NULL, 'Rearmar el teatro', 14, NULL, 3, 9, 1, 2);
+(4, '2021-07-18 17:05:35', NULL, 'Cambiar tapizado de las butacas', 14, NULL, 3, 7, 1, 2),
+(5, '2021-07-18 17:05:54', NULL, 'Rearmar el teatro', 14, NULL, 3, 9, 1, 2),
+
+(1, '2021-03-1 21:03:49', '2021-03-2 21:03:49', 'descripción de tarea', 21, 21, 3, 1, 5, 1),
+(2, '2021-03-1 21:03:49', '2021-03-2 21:03:49', 'descripción de tarea', 21, 21, 3, 2, 5, 1),
+
+(1, '2021-03-2 21:03:49', '2021-03-2 21:03:49', 'descripción de tarea',22, 22, 3, 3, 5, 1),
+(2, '2021-03-2 21:03:49', '2021-03-3 21:03:49', 'descripción de tarea', 22, 22, 3, 4, 5, 1),
+
+(1, '2021-03-3 21:03:49', '2021-03-4 21:03:49', 'descripción de tarea', 23, 23, 3, 5, 5, 1),
+(2, '2021-03-3 21:03:49', '2021-03-4 21:03:49', 'descripción de tarea', 23, 23, 3, 6, 5, 1),
+
+(1, '2021-03-4 21:03:49', '2021-03-5 21:03:49', 'descripción de tarea', 24, 24, 3, 7, 5, 1),
+(2, '2021-03-4 21:03:49', '2021-03-5 21:03:49', 'descripción de tarea', 24, 24, 3, 8, 5, 1),
+
+(1, '2021-03-5 21:03:49', '2021-03-6 21:03:49', 'descripción de tarea', 25, 25, 3, 9, 5, 1),
+(2, '2021-03-5 21:03:49', '2021-03-6 21:03:49', 'descripción de tarea', 25, 25, 3, 10, 5, 1),
+
+(1, '2021-03-6 21:03:49', '2021-03-8 21:03:49', 'descripción de tarea', 26, 26, 3, 11, 5, 1),
+(2, '2021-03-6 21:03:49', '2021-03-8 21:03:49', 'descripción de tarea', 26, 26, 3, 1, 5, 1),
+
+
+
+(1, '2021-03-8 21:03:49', '2021-03-9 21:03:49', 'descripción de tarea', 27, 27, 3, 4, 5, 1),
+(2, '2021-03-8 21:03:49', '2021-03-9 21:03:49', 'descripción de tarea', 27, 27, 3, 5, 5, 1),
+
+(1, '2021-03-9 21:03:49', '2021-03-10 21:03:49', 'descripción de tarea', 28, 28, 3, 6, 5, 1),
+(2, '2021-03-9 21:03:49', '2021-03-10 21:03:49', 'descripción de tarea', 28, 28, 3, 7, 5, 1),
+
+(1, '2021-03-10 21:03:49', '2021-03-11 21:03:49', 'descripción de tarea', 29, 29, 3, 8, 5, 1),
+(2, '2021-03-10 21:03:49', '2021-03-11 21:03:49', 'descripción de tarea', 29, 29, 3, 9, 5, 1),
+
+(1, '2021-03-11 21:03:49', '2021-03-12 21:03:49', 'descripción de tarea', 30, 30, 3, 10, 5, 1),
+(2, '2021-03-11 21:03:49', '2021-03-12 21:03:49', 'descripción de tarea', 30, 30, 3, 11, 5, 1),
+
+(1, '2021-03-12 21:03:49', '2021-03-13 21:03:49', 'descripción de tarea', 31, 31, 3, 1, 5, 1),
+(2, '2021-03-12 21:03:49', '2021-03-13 21:03:49', 'descripción de tarea', 31, 31, 3, 2, 5, 1),
+
+(1, '2021-03-13 21:03:49', '2021-03-15 21:03:49', 'descripción de tarea', 32, 32, 3, 3, 5, 1),
+(2, '2021-03-13 21:03:49', '2021-03-15 21:03:49', 'descripción de tarea', 32, 32, 3, 4, 5, 1),
+
+
+
+(1, '2021-03-15 21:03:49', '2021-03-16 21:03:49', 'descripción de tarea', 33, 33, 3, 7, 5, 1),
+(2, '2021-03-15 21:03:49', '2021-03-16 21:03:49', 'descripción de tarea', 33, 33, 3, 8, 5, 1),
+
+(1, '2021-03-16 21:03:49', '2021-03-17 21:03:49', 'descripción de tarea', 34, 34, 3, 9, 5, 1),
+(2, '2021-03-16 21:03:49', '2021-03-17 21:03:49', 'descripción de tarea', 34, 34, 3, 10, 5, 1),
+
+(1, '2021-03-17 21:03:49', '2021-03-18 21:03:49', 'descripción de tarea', 35, 35, 3, 11, 5, 1),
+(2, '2021-03-17 21:03:49', '2021-03-18 21:03:49', 'descripción de tarea', 35, 35, 3, 1, 5, 1),
+
+(1, '2021-03-18 21:03:49', '2021-03-19 21:03:49', 'descripción de tarea', 36, 36, 3, 2, 5, 1),
+(2, '2021-03-18 21:03:49', '2021-03-19 21:03:49', 'descripción de tarea', 36, 36, 3, 3, 5, 1),
+
+(1, '2021-03-19 21:03:49', '2021-03-20 21:03:49', 'descripción de tarea', 37, 37, 3, 4, 5, 1),
+(2, '2021-03-19 21:03:49', '2021-03-20 21:03:49', 'descripción de tarea', 37, 37, 3, 5, 5, 1),
+
+(1, '2021-03-20 21:03:49', '2021-03-23 21:03:49', 'descripción de tarea', 38, 38, 3, 6, 5, 1),
+(2, '2021-03-20 21:03:49', '2021-03-23 21:03:49', 'descripción de tarea', 38, 38, 3, 7, 5, 1),
+
+
+(1, '2021-03-23 21:03:49', '2021-03-24 21:03:49', 'descripción de tarea', 39, 39, 3, 10, 5, 1),
+(2, '2021-03-23 21:03:49', '2021-03-24 21:03:49', 'descripción de tarea', 39, 39, 3, 11, 5, 1),
+
+(1, '2021-03-24 21:03:49', '2021-03-25 21:03:49', 'descripción de tarea', 40, 40, 3, 1, 5, 1),
+(2, '2021-03-24 21:03:49', '2021-03-25 21:03:49', 'descripción de tarea', 40, 40, 3, 2, 5, 1),
+
+(1, '2021-03-25 21:03:49', '2021-03-26 21:03:49', 'descripción de tarea', 41, 41, 3, 3, 5, 1),
+(2, '2021-03-25 21:03:49', '2021-03-26 21:03:49', 'descripción de tarea', 41, 41, 3, 4, 5, 1),
+
+(1, '2021-03-26 21:03:49', '2021-03-27 21:03:49', 'descripción de tarea', 42, 42, 3, 5, 5, 1),
+(2, '2021-03-26 21:03:49', '2021-03-27 21:03:49', 'descripción de tarea', 42, 42, 3, 6, 5, 1),
+
+(1, '2021-03-27 21:03:49', '2021-03-29 21:03:49', 'descripción de tarea', 43, 43, 3, 2, 5, 1),
+(2, '2021-03-27 21:03:49', '2021-03-29 21:03:49', 'descripción de tarea', 43, 43, 3, 3, 5, 1),
+
+(1, '2021-03-29 21:03:49', '2021-03-30 21:03:49', 'descripción de tarea', 44, 44, 3, 5, 5, 1),
+(2, '2021-03-29 21:03:49', '2021-03-30 21:03:49', 'descripción de tarea', 44, 44, 3, 6, 5, 1),
+
+(1, '2021-03-30 21:03:49', '2021-04-1 21:03:49', 'descripción de tarea', 45, 45, 3, 8, 5, 1),
+(2, '2021-03-30 21:03:49', '2021-04-1 21:03:49', 'descripción de tarea', 45, 45, 3, 9, 5, 1),
+
+(1, '2021-04-1 21:03:49', '2021-04-2 21:03:49', 'descripción de tarea', 46, 46, 3, 7, 5, 1),
+(2, '2021-04-1 21:03:49', '2021-04-2 21:03:49', 'descripción de tarea', 46, 46, 3, 8, 5, 1),
+
+(1, '2021-04-2 21:03:49', '2021-04-3 21:03:49', 'descripción de tarea', 47, 47, 3, 9, 5, 1),
+(2, '2021-04-2 21:03:49', '2021-04-3 21:03:49', 'descripción de tarea', 47, 47, 3, 10, 5, 1),
+
+(1, '2021-04-3 21:03:49', '2021-04-5 21:03:49', 'descripción de tarea', 48, 48, 3, 11, 5, 1),
+(2, '2021-04-3 21:03:49', '2021-04-5 21:03:49', 'descripción de tarea', 48, 48, 3, 1, 5, 1),
+
+
+
+(1, '2021-04-5 21:03:49', '2021-04-6 21:03:49', 'descripción de tarea', 49, 49, 3, 4, 5, 1),
+(2, '2021-04-5 21:03:49', '2021-04-6 21:03:49', 'descripción de tarea', 49, 49, 3, 5, 5, 1),
+
+(1, '2021-04-6 21:03:49', '2021-04-7 21:03:49', 'descripción de tarea', 50, 50, 3, 6, 5, 1),
+(2, '2021-04-6 21:03:49', '2021-04-7 21:03:49', 'descripción de tarea', 50, 50, 3, 7, 5, 1),
+
+(1, '2021-04-7 21:03:49', '2021-04-8 21:03:49', 'descripción de tarea', 51, 51, 3, 8, 5, 1),
+(2, '2021-04-7 21:03:49', '2021-04-8 21:03:49', 'descripción de tarea', 51, 51, 3, 9, 5, 1),
+
+(1, '2021-04-8 21:03:49', '2021-04-9 21:03:49', 'descripción de tarea', 52, 52, 3, 10, 5, 1),
+(2, '2021-04-8 21:03:49', '2021-04-9 21:03:49', 'descripción de tarea', 52, 52, 3, 11, 5, 1),
+
+(1, '2021-04-9 21:03:49', '2021-04-10 21:03:49', 'descripción de tarea', 53, 53, 3, 1, 5, 1),
+(2, '2021-04-9 21:03:49', '2021-04-10 21:03:49', 'descripción de tarea', 53, 53, 3, 2, 5, 1),
+
+(1, '2021-04-10 21:03:49', '2021-04-12 21:03:49', 'descripción de tarea', 54, 54, 3, 3, 5, 1),
+(2, '2021-04-10 21:03:49', '2021-04-12 21:03:49', 'descripción de tarea', 54, 54, 3, 4, 5, 1),
+
+
+
+(1, '2021-04-12 21:03:49', '2021-04-13 21:03:49', 'descripción de tarea', 55, 55, 3, 7, 5, 1),
+(2, '2021-04-12 21:03:49', '2021-04-13 21:03:49', 'descripción de tarea', 55, 55, 3, 8, 5, 1),
+
+(1, '2021-04-13 21:03:49', '2021-04-14 21:03:49', 'descripción de tarea', 56, 56, 3, 9, 5, 1),
+(2, '2021-04-13 21:03:49', '2021-04-14 21:03:49', 'descripción de tarea', 56, 56, 3, 10,5, 1),
+
+(1, '2021-04-14 21:03:49', '2021-04-15 21:03:49', 'descripción de tarea', 57, 57, 3, 11,5, 1),
+(2, '2021-04-14 21:03:49', '2021-04-15 21:03:49', 'descripción de tarea', 57, 57, 3, 1, 5, 1),
+
+
+(1, '2021-04-15 21:03:49', '2021-04-16 21:03:49', 'descripción de tarea', 58, 58, 3, 2, 5, 1),
+(2, '2021-04-15 21:03:49', '2021-04-16 21:03:49', 'descripción de tarea', 58, 58, 3, 3, 5, 1),
+
+(1, '2021-04-16 21:03:49',  '2021-04-17 21:03:49', 'descripción de tarea',59, 59, 3, 4, 5, 1),
+(2, '2021-04-16 21:03:49',  '2021-04-17 21:03:49', 'descripción de tarea', 59, 59, 3, 5, 5, 1),
+
+(1, '2021-04-17 21:03:49', '2021-04-19 21:03:49', 'descripción de tarea', 60, 60, 3, 6, 5, 1),
+(2, '2021-04-17 21:03:49', '2021-04-19 21:03:49', 'descripción de tarea', 60, 60, 3, 7, 5, 1),
+
+
+
+(1, '2021-04-19 21:03:49', '2021-04-20 21:03:49', 'descripción de tarea', 61, 61, 3, 10, 5, 1),
+(2, '2021-04-19 21:03:49', '2021-04-20 21:03:49', 'descripción de tarea', 61, 61, 3, 11, 5, 1),
+
+(1, '2021-04-20 21:03:49', '2021-04-21 21:03:49', 'descripción de tarea', 62, 62, 3, 1, 5, 1),
+(2, '2021-04-20 21:03:49', '2021-04-21 21:03:49', 'descripción de tarea', 62, 62, 3, 2, 5, 1),
+
+(1, '2021-04-21 21:03:49', '2021-04-22 21:03:49', 'descripción de tarea', 63, 63, 3, 3, 5, 1),
+(2, '2021-04-21 21:03:49', '2021-04-22 21:03:49', 'descripción de tarea', 63, 63, 3, 4, 5, 1),
+
+(1, '2021-04-22 21:03:49', '2021-04-23 21:03:49', 'descripción de tarea', 64, 64, 3, 5, 5, 1),
+(2, '2021-04-22 21:03:49', '2021-04-23 21:03:49', 'descripción de tarea', 64, 64, 3, 6, 5, 1),
+
+(1, '2021-04-23 21:03:49', '2021-04-24 21:03:49', 'descripción de tarea', 65, 65, 3, 7, 5, 1),
+(2, '2021-04-23 21:03:49', '2021-04-24 21:03:49', 'descripción de tarea', 65, 65, 3, 8, 5, 1),
+
+(1, '2021-04-24 21:03:49',  '2021-04-26 21:03:49', 'descripción de tarea', 66, 66, 3, 9, 5, 1),
+(2, '2021-04-24 21:03:49',  '2021-04-26 21:03:49', 'descripción de tarea', 66, 66, 3, 10,5, 1),
+
+
+
+(1, '2021-04-26 21:03:49', '2021-04-27 21:03:49', 'descripción de tarea', 67, 67, 3, 2, 5, 1),
+(2, '2021-04-26 21:03:49', '2021-04-27 21:03:49', 'descripción de tarea', 67, 67, 3, 3, 5, 1),
+
+(1, '2021-04-27 21:03:49', '2021-04-28 21:03:49', 'descripción de tarea', 68, 68, 3, 2, 5, 1),
+(2, '2021-04-27 21:03:49', '2021-04-28 21:03:49', 'descripción de tarea', 68, 68, 3, 3, 5, 1),
+
+(1, '2021-04-28 21:03:49', '2021-04-29 21:03:49', 'descripción de tarea', 69, 69, 3, 5, 5, 1),
+(2, '2021-04-28 21:03:49', '2021-04-29 21:03:49', 'descripción de tarea', 69, 69, 3, 6, 5, 1),
+
+(1, '2021-04-29 21:03:49', '2021-04-30 21:03:49', 'descripción de tarea', 70, 70, 3, 8, 5, 1),
+(2, '2021-04-29 21:03:49', '2021-04-30 21:03:49', 'descripción de tarea', 70, 70, 3, 9, 5, 1),
+
+(1, '2021-04-30 21:03:49', '2021-05-1 21:03:49', 'descripción de tarea', 71, 71, 3, 11,5, 1),
+(2, '2021-04-30 21:03:49', '2021-05-1 21:03:49', 'descripción de tarea', 71, 71, 3, 1, 5, 1),
+
+(1, '2021-05-1 21:03:49', '2021-05-3 21:03:49', 'descripción de tarea', 72, 72, 3, 10, 5, 1),
+(2, '2021-05-1 21:03:49', '2021-05-3 21:03:49', 'descripción de tarea', 72, 72, 3, 11, 5, 1),
+
+
+(1, '2021-05-3 21:03:49', '2021-05-4 21:03:49', 'descripción de tarea', 73, 73, 3, 3, 5, 1),
+(2, '2021-05-3 21:03:49', '2021-05-4 21:03:49', 'descripción de tarea', 73, 73, 3, 4, 5, 1),
+
+(1, '2021-05-4 21:03:49', '2021-05-5 21:03:49', 'descripción de tarea', 74, 74, 3, 5, 5, 1),
+(2, '2021-05-4 21:03:49', '2021-05-5 21:03:49', 'descripción de tarea', 74, 74, 3, 6, 5, 1),
+
+(1, '2021-05-5 21:03:49', '2021-05-6 21:03:49', 'descripción de tarea', 75, 75, 3, 7, 5, 1),
+(2, '2021-05-5 21:03:49', '2021-05-6 21:03:49', 'descripción de tarea', 75, 75, 3, 8, 5, 1),
+
+(1, '2021-05-6 21:03:49', '2021-05-7 21:03:49', 'descripción de tarea', 76, 76, 3, 9, 5, 1),
+(2, '2021-05-6 21:03:49', '2021-05-7 21:03:49', 'descripción de tarea', 76, 76, 3, 10, 5, 1),
+
+(1, '2021-05-7 21:03:49', '2021-05-8 21:03:49', 'descripción de tarea', 77, 77, 3, 11, 5, 1),
+(2, '2021-05-7 21:03:49', '2021-05-8 21:03:49', 'descripción de tarea', 77, 77, 3, 1, 5, 1),
+
+(1, '2021-05-8 21:03:49', '2021-05-10 21:03:49', 'descripción de tarea', 78, 78, 3, 2, 5, 1),
+(2, '2021-05-8 21:03:49', '2021-05-10 21:03:49', 'descripción de tarea', 78, 78, 3, 3, 5, 1),
+
+
+
+(1, '2021-05-10 21:03:49', '2021-05-11 21:03:49', 'descripción de tarea', 79, 79, 3, 6, 5, 1),
+(2, '2021-05-10 21:03:49', '2021-05-11 21:03:49', 'descripción de tarea', 79, 79, 3, 7, 5, 1),
+
+(1, '2021-05-11 21:03:49', '2021-05-12 21:03:49', 'descripción de tarea', 80, 80, 3, 8, 5, 1),
+(2, '2021-05-11 21:03:49', '2021-05-12 21:03:49', 'descripción de tarea', 80, 80, 3, 9, 5, 1),
+
+
+
+(1, '2021-05-12 21:03:49', '2021-05-13 21:03:49', 'descripción de tarea', 81, 81, 3, 4, 5, 1),
+(2, '2021-05-12 21:03:49', '2021-05-13 21:03:49', 'descripción de tarea', 81, 81, 3, 5, 5, 1),
+
+(1, '2021-05-13 21:03:49', '2021-05-14 21:03:49', 'descripción de tarea', 82, 82, 3, 6, 5, 1),
+(2, '2021-05-13 21:03:49', '2021-05-14 21:03:49', 'descripción de tarea', 82, 82, 3, 7, 5, 1),
+
+(1, '2021-05-14 21:03:49', '2021-05-15 21:03:49', 'descripción de tarea', 83, 83, 3, 8, 5, 1),
+(2, '2021-05-14 21:03:49', '2021-05-15 21:03:49', 'descripción de tarea', 83, 83, 3, 9, 5, 1),
+
+(1, '2021-05-15 21:03:49', '2021-05-17 21:03:49', 'descripción de tarea', 84, 84, 3, 10,5, 1),
+(2, '2021-05-15 21:03:49', '2021-05-17 21:03:49', 'descripción de tarea', 84, 84, 3, 11, 5, 1),
+
+
+(1, '2021-05-17 21:03:49', '2021-05-18 21:03:49', 'descripción de tarea', 85, 85, 3, 3, 5, 1),
+(2, '2021-05-17 21:03:49', '2021-05-18 21:03:49', 'descripción de tarea', 85, 85, 3, 4, 5, 1),
+
+(1, '2021-05-18 21:03:49', '2021-05-19 21:03:49', 'descripción de tarea', 86, 86, 3, 5, 5, 1),
+(2, '2021-05-18 21:03:49', '2021-05-19 21:03:49', 'descripción de tarea', 86, 86, 3, 6, 5, 1),
+
+(1, '2021-05-19 21:03:49', '2021-05-20 21:03:49', 'descripción de tarea', 87, 87, 3, 7, 5, 1),
+(2, '2021-05-19 21:03:49', '2021-05-20 21:03:49', 'descripción de tarea', 87, 87, 3, 8, 5, 1),
+
+(1, '2021-05-20 21:03:49', '2021-05-21 21:03:49', 'descripción de tarea', 88, 88, 3, 9, 5, 1),
+(2, '2021-05-20 21:03:49', '2021-05-21 21:03:49', 'descripción de tarea', 88, 88, 3, 10, 5, 1),
+
+(1, '2021-05-21 21:03:49', '2021-05-22 21:03:49', 'descripción de tarea', 89, 89, 3, 11, 5, 1),
+(2, '2021-05-21 21:03:49', '2021-05-22 21:03:49', 'descripción de tarea', 89, 89, 3, 1, 5, 1),
+
+(1, '2021-05-22 21:03:49', '2021-05-24 21:03:49', 'descripción de tarea', 90, 90, 3, 2, 5, 1),
+(2, '2021-05-22 21:03:49', '2021-05-24 21:03:49', 'descripción de tarea', 90, 90, 3, 3, 5, 1),
+
+(1, '2021-05-24 21:03:49', '2021-05-25 21:03:49', 'descripción de tarea', 91, 91, 3, 6, 5, 1),
+(2, '2021-05-24 21:03:49', '2021-05-25 21:03:49', 'descripción de tarea', 91, 91, 3, 7, 5, 1),
+
+(1, '2021-05-25 21:03:49', '2021-05-26 21:03:49', 'descripción de tarea', 92, 92, 3, 8, 5, 1),
+(2, '2021-05-25 21:03:49', '2021-05-26 21:03:49', 'descripción de tarea', 92, 92, 3, 9, 5, 1),
+
+(1, '2021-05-26 21:03:49',  '2021-05-27 21:03:49', 'descripción de tarea', 93, 93, 3, 1, 5, 1),
+(2, '2021-05-26 21:03:49',  '2021-05-27 21:03:49', 'descripción de tarea', 93, 93, 3, 2, 5, 1),
+
+(1, '2021-05-27 21:03:49', '2021-05-28 21:03:49', 'descripción de tarea', 94, 94, 3, 4, 5, 1),
+(2, '2021-05-27 21:03:49', '2021-05-28 21:03:49', 'descripción de tarea', 94, 94, 3, 5, 5, 1),
+
+(1, '2021-05-28 21:03:49', '2021-05-29 21:03:49', 'descripción de tarea', 95, 95, 3, 1, 5, 1),
+(2, '2021-05-28 21:03:49', '2021-05-29 21:03:49', 'descripción de tarea', 95, 95, 3, 2, 5, 1),
+
+(1, '2021-05-29 21:03:49', '2021-06-1 21:03:49', 'descripción de tarea', 96, 96, 3, 4, 5, 1),
+(2, '2021-05-29 21:03:49', '2021-06-1 21:03:49', 'descripción de tarea', 96, 96, 3, 5, 5, 1),
+
+(1, '2021-06-1 21:03:49', '2021-06-2 21:03:49', 'descripción de tarea', 97, 97, 3, 10, 5, 1),
+(2, '2021-06-1 21:03:49', '2021-06-2 21:03:49', 'descripción de tarea', 97, 97, 3, 11, 5, 1),
+
+(1, '2021-06-2 21:03:49', '2021-06-3 21:03:49', 'descripción de tarea', 98, 98, 3, 1, 5, 1),
+(2, '2021-06-2 21:03:49', '2021-06-3 21:03:49', 'descripción de tarea', 98, 98, 3, 2, 5, 1),
+
+(1, '2021-06-3 21:03:49', '2021-06-4 21:03:49', 'descripción de tarea', 99, 99, 3, 3,5, 1),
+(2, '2021-06-3 21:03:49', '2021-06-4 21:03:49', 'descripción de tarea', 99,99, 3, 4, 5, 1),
+
+(1, '2021-06-4 21:03:49', '2021-06-5 21:03:49', 'descripción de tarea', 100, 100, 3, 5, 5, 1),
+(2, '2021-06-4 21:03:49', '2021-06-5 21:03:49', 'descripción de tarea', 100, 100, 3, 6, 5, 1),
+
+(1, '2021-06-5 21:03:49', '2021-06-7 21:03:49', 'descripción de tarea',101,101, 3, 7, 5, 1),
+(2, '2021-06-5 21:03:49', '2021-06-7 21:03:49', 'descripción de tarea', 101, 101, 3, 8, 5, 1),
+
+
+(1, '2021-06-7 21:03:49', '2021-06-8 21:03:49', 'descripción de tarea', 102, 102, 3, 11, 5, 1),
+(2, '2021-06-7 21:03:49', '2021-06-8 21:03:49', 'descripción de tarea', 102, 102, 3, 1, 5, 1),
+
+(1, '2021-06-8 21:03:49', '2021-06-9 21:03:49', 'descripción de tarea', 103, 103, 3, 2, 5, 1),
+(2, '2021-06-8 21:03:49', '2021-06-9 21:03:49', 'descripción de tarea', 103, 103, 3, 3, 5, 1),
+
+(1, '2021-06-9 21:03:49', '2021-06-10 21:03:49', 'descripción de tarea', 104, 104, 3, 4, 5, 1),
+(2, '2021-06-9 21:03:49', '2021-06-10 21:03:49', 'descripción de tarea', 104, 104, 3, 5, 5, 1),
+
+(1, '2021-06-10 21:03:49', '2021-06-11 21:03:49', 'descripción de tarea', 105, 105, 3, 6, 5, 1),
+(2, '2021-06-10 21:03:49', '2021-06-11 21:03:49', 'descripción de tarea', 105, 105, 3, 7, 5, 1),
+
+(1, '2021-06-11 21:03:49', '2021-06-12 21:03:49', 'descripción de tarea', 106, 106, 3, 8, 5, 1),
+(2, '2021-06-11 21:03:49', '2021-06-12 21:03:49', 'descripción de tarea', 106, 106, 3, 9, 5, 1),
+
+(1, '2021-06-12 21:03:49', '2021-06-13 21:03:49', 'descripción de tarea', 107, 107, 3, 10,5, 1),
+(2, '2021-06-12 21:03:49', '2021-06-13 21:03:49', 'descripción de tarea', 107, 107, 3, 11, 5, 1),
+
+
+(1, '2021-06-14 21:03:49', '2021-06-15 21:03:49', 'descripción de tarea', 108, 108, 3, 3, 5, 1),
+(2, '2021-06-14 21:03:49', '2021-06-15 21:03:49', 'descripción de tarea', 108, 108, 3, 4, 5, 1),
+
+(1, '2021-06-15 21:03:49', '2021-06-16 21:03:49', 'descripción de tarea', 109, 109, 3, 5, 5, 1),
+(2, '2021-06-15 21:03:49', '2021-06-16 21:03:49', 'descripción de tarea', 109, 109, 3, 6, 5, 1),
+
+(1, '2021-06-16 21:03:49',  '2021-06-17 21:03:49', 'descripción de tarea', 110, 110, 3, 7, 5, 1),
+(2, '2021-06-16 21:03:49',  '2021-06-17 21:03:49', 'descripción de tarea', 110, 110, 3, 8, 5, 1),
+
+(1, '2021-06-17 21:03:49', '2021-06-18 21:03:49', 'descripción de tarea', 111, 111, 3, 9, 5, 1),
+(2, '2021-06-17 21:03:49', '2021-06-18 21:03:49', 'descripción de tarea', 111, 111, 3, 10, 5, 1),
+
+(1, '2021-06-18 21:03:49', '2021-06-19 21:03:49', 'descripción de tarea', 112, 112, 3, 11, 5, 1),
+(2, '2021-06-18 21:03:49', '2021-06-19 21:03:49', 'descripción de tarea', 112, 112, 3, 1, 5, 1),
+
+(1, '2021-06-19 21:03:49', '2021-06-20 21:03:49', 'descripción de tarea', 113, 113, 3, 2, 5, 1),
+(2, '2021-06-19 21:03:49', '2021-06-20 21:03:49', 'descripción de tarea', 113, 113, 3, 3, 5, 1),
+
+(1, '2021-06-21 21:03:49', '2021-06-22 21:03:49', 'descripción de tarea', 114, 114, 3, 6, 5, 1),
+(2, '2021-06-21 21:03:49', '2021-06-22 21:03:49', 'descripción de tarea', 114, 114, 3, 7, 5, 1),
+
+(1, '2021-06-22 21:03:49', '2021-06-23 21:03:49', 'descripción de tarea', 115, 115, 3, 8, 5, 1),
+(2, '2021-06-22 21:03:49', '2021-06-23 21:03:49', 'descripción de tarea', 115, 115, 3, 9, 5, 1),
+
+(1, '2021-06-23 21:03:49', '2021-06-24 21:03:49', 'descripción de tarea', 116, 116, 3, 10, 5, 1),
+(2, '2021-06-23 21:03:49', '2021-06-24 21:03:49', 'descripción de tarea', 116, 116, 3, 11, 5, 1),
+
+(1, '2021-06-24 21:03:49', '2021-06-25 21:03:49', 'descripción de tarea', 117, 117, 3, 1, 5, 1),
+(2, '2021-06-24 21:03:49', '2021-06-25 21:03:49', 'descripción de tarea', 117, 117, 3, 2, 5, 1),
+
+(1, '2021-06-25 21:03:49', '2021-06-26 21:03:49', 'descripción de tarea', 118, 118, 3, 3, 5, 1),
+(2, '2021-06-25 21:03:49', '2021-06-26 21:03:49', 'descripción de tarea', 118, 118, 3, 4, 5, 1),
+
+(1, '2021-06-26 21:03:49', '2021-06-27 21:03:49', 'descripción de tarea', 119, 119, 3, 9, 5, 1),
+(2, '2021-06-26 21:03:49', '2021-06-27 21:03:49', 'descripción de tarea', 119, 119, 3, 10, 5, 1),
+
+(1, '2021-06-27 21:03:49', '2021-06-28 21:03:49', 'descripción de tarea', 120, 120, 3, 1, 5, 1),
+(2, '2021-06-27 21:03:49', '2021-06-28 21:03:49', 'descripción de tarea', 120, 120, 3, 2, 5, 1),
+
+(1, '2021-06-28 21:03:49', '2021-06-29 21:03:49', 'descripción de tarea', 121, 121, 3, 4, 5, 1),
+(2, '2021-06-28 21:03:49', '2021-06-29 21:03:49', 'descripción de tarea', 121, 121, 3, 5, 5, 1),
+
+(1, '2021-06-29 21:03:49', '2021-06-30 21:03:49', 'descripción de tarea', 122, 122, 3, 5, 5, 1),
+(2, '2021-06-29 21:03:49', '2021-06-30 21:03:49', 'descripción de tarea', 122, 122, 3, 6, 5, 1),
+
+(1, '2021-06-30 21:03:49', '2021-07-01 21:03:49', 'descripción de tarea', 123, 123, 3, 5, 5, 1),
+(2, '2021-06-30 21:03:49', '2021-07-01 21:03:49', 'descripción de tarea', 123, 123, 3, 6, 5, 1);
 
 -- --------------------------------------------------------
 
