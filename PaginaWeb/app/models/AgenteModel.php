@@ -29,6 +29,15 @@ class AgenteModel extends Model
         $datoUno['apellido']=$persona['apellido'];
         $datoUno['idEstadoPersona'] = $persona['idEstadoPersona'];
         $datoUno['listaTareas'] = $this->db->selectAllWhere(tableAxT, array('idAgente' => $datoUno['id']));
+        $listaTareasActualesIniciado = array();
+        $listaTareasActualesEnCurso = array();
+        foreach ($datoUno['listaTareas'] as &$tarea) {
+            $tareasActualesIniciado = $this->db->selectAllWhere(tableTareas, array('id' => $tarea['idTarea'], 'idPedido' => $tarea['idPedido'], 'idEstado' => 1));
+            $tareasActualesEnCurso = $this->db->selectAllWhere(tableTareas, array('id' => $tarea['idTarea'], 'idPedido' => $tarea['idPedido'], 'idEstado' => 2));
+            (empty($datoUno['listaTareasActualesIniciado']) ? $listaTareasActualesIniciado = $tareasActualesIniciado : array_push($listaTareasActualesIniciado, $tareasActualesIniciado));
+            (empty($datoUno['listaTareasActualesEnCurso']) ? $listaTareasActualesEnCurso = $tareasActualesEnCurso : array_push($listaTareasActualesEnCurso, $tareasActualesEnCurso));
+        };
+        $datoUno['listaTareasActuales'] = array_merge($listaTareasActualesIniciado, $listaTareasActualesEnCurso);
         $datoUno['listaEspecializaciones'] = $this->db->selectWhatWhere(tableExA, 'idEspecializacion', array('idAgente' => $datoUno['id']));
         foreach ($datoUno['listaEspecializaciones'] as &$especializacion) {
             $returnEspecializacion = $this->db->selectWhatWhere(tableEspecializaciones, 'id, nombre', array('id' => $especializacion['idEspecializacion']))[0];

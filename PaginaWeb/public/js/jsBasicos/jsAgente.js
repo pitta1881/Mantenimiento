@@ -6,6 +6,7 @@ import {
     loadTooltips,
     modalDrag,
     loadScriptOrdenarPagTablas,
+    getFichaOne,
     getFichaAll,
     getPermisosRolActual,
     modalGenDelete
@@ -23,6 +24,7 @@ loadListenerActionButtons({
         'callback': visualizarModal,
         'url': "/administracion/personas/"
     },
+    'tareasActuales': loadTareasActuales,
     'loadTable': loadTable
 });
 loadScriptValidarCampos(loadTable);
@@ -37,6 +39,7 @@ async function loadTable() {
         let disabled = ``;
         let especializacionHTML = ``;
         let btnEye = ``;
+        let btnList = ``;
         let btnPencil = ``;
         let btnTrash = ``;
         (element.usado ? disabled = `disabled` : ``);
@@ -61,6 +64,12 @@ async function loadTable() {
                 <i class="fal fa-trash-alt fa-lg fa-fw"></i>
             </button>`;
         }
+        (element.tareasActuales === '0' ? '' :
+            btnList = `
+            <button type="button" class="btn btn-outline-primary" data-id="${element.id}" data-abm="tareasActuales" data-target="#modalTareasActuales" data-toggle="tooltip" title="Ver Tareas Actuales" data-placement="top">
+                <i class="fal fa-list fa-lg fa-fw"></i>
+            </button>
+        `);
         textoInner += `
         <tr>
             <td>
@@ -74,9 +83,10 @@ async function loadTable() {
             <td>${element.tareasActuales}</td>
             <td>
                 <div class="btn-group btn-group-sm float-none" role="group">
+                    ${btnList}                                 
                     ${btnEye}
                     ${btnPencil}
-                    ${btnTrash}                                  
+                    ${btnTrash} 
                 </div>
             </td>
         </tr>`;
@@ -101,4 +111,49 @@ function modificarModal(datos) {
 
 function deleteModal(datos) {
     document.getElementById('containerModalDelete').innerHTML = modalGenDelete(datos['id'], `Eliminar Agente ${datos['nombre']} ${datos['apellido']}`);
+}
+
+function loadTareasActuales(datos) {
+    $('#miTablaTareasActuales').DataTable().clear().destroy();
+    let textoInner = ``;
+    datos.listaTareasActuales.forEach(element => {
+        let myDate = element['fechaInicio'].split(" ");
+        myDate[0] = myDate[0].split("-").reverse().join("/");
+        textoInner += `
+        <tr>
+            <td>${element.id}</td>
+            <td>${element.idPedido}</td>
+            <td>${myDate[0]} ${myDate[1]}</td>
+            <td>${element.descripcion}</td>
+            <td>
+                <a href="#" data-abm="visualize-3" data-id-pedido=${element.idPedido} data-id-tarea=${element.id}>Pedido Nº ${element.idPedido} - Tarea Nº ${element.id}</a>
+            </td>
+        </tr>
+            `
+    });
+    $('#miTablaTareasActuales tbody').html(textoInner);
+    $('[data-abm=visualize-3]').on('click', function () {
+        visualizarPedidoTareaRelacionada($(this).data('id-pedido'), $(this).data('id-tarea'));
+    })
+    $('#h3TitleTareasActuales').text(`Tareas Actuales de ${datos.nombre} ${datos.apellido}`);
+    loadScriptOrdenarPagTablas('miTablaTareasActuales', '0,1,2,3,4', [], `Tareas Actuales ${datos.nombre} ${datos.descripcion}`);
+}
+
+async function visualizarPedidoTareaRelacionada(idPedido, idTarea) {
+    let datos = await getFichaOne({
+        "id": idTarea,
+        "idPedido": idPedido
+    }, "/tarea/");
+    alertify.alert(
+        "Detalles Tarea",
+        `<strong>ID Pedido:</strong> ${datos.idPedido}
+        <br><strong>ID Tarea:</strong> ${datos.id}
+        <br><strong>Fecha Inicio:</strong> ${datos.fechaInicio}
+        <br><strong>Fecha Fin:</strong> ${datos.fechaFin}
+        <br><strong>Descripcion:</strong> ${datos.descripcion}
+        <br><strong>Especializacion:</strong> ${datos.especializacionNombre}
+        <br><strong>Estado:</strong> ${datos.estadoNombre}
+        <br><strong>Prioridad:</strong> ${datos.prioridadNombre}
+        `
+    );
 }
